@@ -518,8 +518,9 @@
     <string name="latest_on_top">Latest on top</string>
   <string name="active_first">Active first</string>
   <string name="deactive_first">Deactive first</string>
+    <string name="search_for_services">Search for services</string>
 
-  <array name="stock_availbility">
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>

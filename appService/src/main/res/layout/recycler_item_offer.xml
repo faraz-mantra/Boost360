@@ -8,6 +8,7 @@
     <com.framework.views.customViews.CustomCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/cv_root"
         android:layout_marginTop="@dimen/size_12"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/size_4">
@@ -51,14 +52,25 @@
                 style="@style/Offers_Text_Subheading"
                 android:textColor="@color/black_4a4a4a"
                 android:layout_marginTop="@dimen/size_5"
+                android:fontFamily="@font/semi_bold"
+                android:textAllCaps="true"
+                android:includeFontPadding="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ctv_offers_heading"
-                tools:text="₹ 5,000 OFF on Simple Massage" />
-
-
+                tools:text="₹ 5,000 OFF" />
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/crb_status"
+                android:id="@+id/ctv_offers_category"
+                style="@style/Offers_Text_Subheading"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginStart="@dimen/size_5"
+                android:textColor="@color/black_4a4a4a"
+                app:layout_constraintStart_toEndOf="@+id/ctv_offers_pricing"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_offers_heading"
+                tools:text="on Simple Massage" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/cv_status"
                 style="@style/Offers_Custom_Radio_Button"
                 android:text="@string/active"
                 android:padding="@dimen/size_1"
