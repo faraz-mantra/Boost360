@@ -74,6 +74,7 @@
                         android:layout_marginBottom="@dimen/size_10"
                         android:gravity="center_vertical"
                         android:hint="@string/select_service"
+                        android:singleLine="true"
                         android:layout_height="wrap_content"
                         app:drawableEndCompat="@drawable/ic_arrow_down_orange"
                         app:layout_constraintStart_toStartOf="parent"

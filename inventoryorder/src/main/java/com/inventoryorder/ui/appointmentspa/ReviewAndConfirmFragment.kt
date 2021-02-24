@@ -30,12 +30,14 @@ import com.inventoryorder.ui.order.sheetOrder.AddDeliveryFeeBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.CreateOrderBottomSheetDialog
 import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmBinding>() {
 
-    private val GST_PERCENTAGE = 0.05
+    private val GST_PERCENTAGE = 1.18
     private var serviceFee = 0.0
     private var totalPrice = 0.0
     private var discountedPrice = 0.0
@@ -88,8 +90,10 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
         binding?.tvEmail?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.emailId
         binding?.textAmount?.text = "${selectedService?.Currency} $totalPrice"
         binding?.textActualAmount?.text =  "${selectedService?.Currency} $discountedPrice"
-        binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice)}"
-        binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
+        binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
+       // binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
+        binding?.textTotalPayableValue?.text = "${selectedService?.Currency} $discountedPrice"
+
 
         if (orderInitiateRequest?.buyerDetails?.GSTIN != null && orderInitiateRequest?.buyerDetails?.GSTIN?.isNotEmpty()==true) {
             binding?.tvGstin?.text = "GSTIN : ${orderInitiateRequest?.buyerDetails?.GSTIN}"
@@ -169,14 +173,15 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
 
     private fun onServiceFeeAdded(fee : Double) {
         serviceFee = fee
+        binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
 
         if (fee > 0.0) {
-            binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + calculateGST(discountedPrice) + fee}"
+            binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + fee}"
             binding?.textAdd?.text = "${selectedService?.Currency} $fee"
             binding?.textEdit?.visibility = View.VISIBLE
         } else {
             binding?.textAdd?.text = getString(R.string.add)
-            binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + calculateGST(discountedPrice) + fee}"
+            binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + fee}"
             binding?.textEdit?.visibility = View.INVISIBLE
         }
     }
@@ -253,7 +258,9 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
 
     private fun calculateGST(amount : Double) : Double {
-        return amount * GST_PERCENTAGE
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.CEILING
+        return df.format((amount - (df.format(amount / GST_PERCENTAGE).toDouble()))).toDouble()
     }
 
     private fun preparePaymentStatusOptions() {
