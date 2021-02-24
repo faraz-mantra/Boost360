@@ -21,6 +21,15 @@ class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<Se
     private var filteredList : ArrayList<ServiceItem> ?= null
 
 
+    fun initList(){
+        copyList = ArrayList<ServiceItem>();
+        if(list != null){
+            for(item in list){
+                copyList.add(item);
+            }
+        }
+    }
+
     override fun getCount(): Int {
         return list.size
     }
@@ -56,8 +65,8 @@ class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<Se
             filteredList = ArrayList()
 
             if (searchString != null && searchString.isNotEmpty()) {
-                for (item in list) {
-                    if (item.Name?.toLowerCase()?.startsWith(searchString.toString().toLowerCase()) == true) {
+                for (item in copyList) {
+                    if (item.Name?.toLowerCase()?.contains(searchString.toString().toLowerCase()) == true) {
                         filteredList?.add(item)
                     }
                 }
