@@ -35,11 +35,11 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? OrderItem
-    data?.let { setDataResponse(it) }
-    binding.mainView.setOnClickListener { listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal) }
+    data?.let { setDataResponse(position,it) }
+    binding.mainView.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal) }
   }
 
-  private fun setDataResponse(order: OrderItem) {
+  private fun setDataResponse(position: Int,order: OrderItem) {
     val statusValue = OrderStatusValue.fromStatusAppointment(order.status())?.value
     val statusIcon = OrderStatusValue.fromStatusAppointment(order.status())?.icon
 
@@ -65,7 +65,8 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
 
     binding.serviceLocation.icon.setImageResource(R.drawable.ic_service_location)
     binding.serviceLocation.title.text = "${getApplicationContext()?.getString(R.string.service_location)} :"
-    binding.serviceLocation.value.text = order.SellerDetails?.Address?.City ?: "NA"
+    binding.serviceLocation.value.text = "Business"
+//    binding.serviceLocation.value.text = order.SellerDetails?.Address?.City ?: "NA"
 
     binding.customer.icon.setImageResource(R.drawable.ic_customer)
     binding.customer.title.text = "${getApplicationContext()?.getString(R.string.customer)} :"
@@ -85,7 +86,7 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
     val btnStatusMenu = order.appointmentSpaButtonStatus()
     binding.lytStatusBtn.visible()
     if (btnStatusMenu.isNullOrEmpty().not()) {
-      when (val btnOrderMenu = btnStatusMenu.removeAt(0)) {
+      when (val btnOrderMenu = btnStatusMenu.removeFirst()) {
         OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT -> {
           colorCode = "#f16629"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
@@ -102,6 +103,10 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
           colorCode = "#9B9B9B"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
         }
+        OrderMenuModel.MenuStatus.SEND_RE_BOOKING-> {
+          colorCode = "#9B9B9B"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
+        }
         OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> {
           colorCode = "#FFB900"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_confirmed_order_btn_bkg, R.color.orange, R.drawable.ic_arrow_down_orange)
@@ -110,10 +115,14 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
           colorCode = "#78AF00"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_transit_order_btn_green, R.color.green_78AF00, R.drawable.ic_arrow_down_green)
         }
+        OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
+          colorCode = "#52AAC6"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
+        }
         else -> binding.lytStatusBtn.gone()
       }
       binding.btnAppointmentStatus.setOnClickListener {
-        listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.ORDER_BUTTON_CLICKED.ordinal)
+        listener?.onItemClick(position, order, RecyclerViewActionType.ORDER_BUTTON_CLICKED.ordinal)
       }
     } else binding.lytStatusBtn.gone()
 
@@ -121,7 +130,7 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
       binding.divider.gone()
       binding.ivDropdownAppointment.gone()
     } else {
-      binding.ivDropdownAppointment.setOnClickListener { listener?.onItemClickView(adapterPosition, it, order, RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal) }
+      binding.ivDropdownAppointment.setOnClickListener { listener?.onItemClickView(position, it, order, RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal) }
       binding.divider.visible()
       binding.ivDropdownAppointment.visible()
     }

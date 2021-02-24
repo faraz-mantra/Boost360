@@ -14,7 +14,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
-      android:text="@string/collect_pending_payment"
+      android:text="@string/starting_appointment_Q"
       android:textColor="@color/white"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/tvTitle"
       app:textType="BODY_1"
-      tools:text="Collect ₹11,000 for order ID #VDJNVBJD"
+      tools:text="Appointment ID #VDJNVBJD"
       tools:textColor="@color/dimgray" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -58,48 +58,55 @@
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_customer_name"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_20"
-          android:layout_marginEnd="@dimen/size_20"
-          android:text="Send payment link via(select atleast one option)"
+          android:drawableStart="@drawable/ic_customer_apt"
+          android:drawablePadding="@dimen/size_10"
+          android:text="@string/delivery_mode_store_pickup"
           android:textColor="@color/black_4a4a4a"
+          app:fontFamily="@font/regular"
           app:textType="HEADING_6" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-          android:id="@+id/online_payment_link_check"
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_phone_no"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_16"
-          android:layout_marginTop="@dimen/size_10"
-          android:orientation="vertical"
-          tools:visibility="visible">
+          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_8"
+          android:drawableStart="@drawable/ic_phone_apt"
+          android:drawablePadding="@dimen/size_10"
+          android:text="@string/delivery_mode_store_pickup"
+          android:textColor="@color/black_4a4a4a"
+          app:fontFamily="@font/regular"
+          app:textType="HEADING_6" />
 
-          <com.framework.views.customViews.CustomCheckBox
-            android:id="@+id/checkbox_sms"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/colorAccent"
-            android:checked="true"
-            android:clickable="false"
-            android:focusable="false"
-            android:textColor="@color/black_4a4a4a"
-            app:textType="HEADING_6"
-            tools:text="via SMS (+91-9876543243)" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_services"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_8"
+          android:drawableStart="@drawable/ic_service_apt"
+          android:drawablePadding="@dimen/size_10"
+          android:text="@string/delivery_mode_store_pickup"
+          android:textColor="@color/black_4a4a4a"
+          app:fontFamily="@font/regular"
+          app:textType="HEADING_6" />
 
-          <com.framework.views.customViews.CustomCheckBox
-            android:id="@+id/checkbox_email"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_4"
-            android:buttonTint="@color/colorAccent"
-            android:textColor="@color/black_4a4a4a"
-            app:textType="HEADING_6"
-            android:checked="true"
-            android:clickable="false"
-            android:focusable="false"
-            tools:text="via Email (brajmadhav@gmail.com)" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_staff_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_8"
+          android:drawableStart="@drawable/ic_staff_apt"
+          android:drawablePadding="@dimen/size_10"
+          android:text="@string/delivery_mode_store_pickup"
+          android:textColor="@color/black_4a4a4a"
+          app:fontFamily="@font/regular"
+          app:textType="HEADING_6" />
 
         <com.framework.views.customViews.CustomTextView
           android:layout_width="match_parent"
@@ -107,7 +114,7 @@
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_16"
           android:layout_marginEnd="@dimen/size_20"
-          android:text="@string/boost_will_send_payment_link_this_order"
+          android:text="@string/start_apt_service_desc"
           android:textColor="@color/grey_dark_2"
           app:fontFamily="@font/regular"
           app:textType="CAPTION" />
@@ -145,16 +152,16 @@
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/size_10"
         android:padding="@dimen/size_4"
-        android:text="@string/go_back"
+        android:text="@string/cancel"
         android:textAllCaps="true"
         android:textColor="@color/pinkish_grey"
         app:fontFamily="@font/semi_bold"
-        app:textType="BODY_3" />
+        app:textType="BODY_1" />
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonDone"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_36"
+        android:layout_height="@dimen/size_38"
         android:layout_gravity="center"
         android:background="@drawable/button_rounded_6"
         android:gravity="center"
@@ -162,11 +169,11 @@
         android:paddingEnd="@dimen/size_28"
         android:shadowRadius="0"
         android:stateListAnimator="@null"
-        android:text="@string/send_payment_link"
+        android:text="@string/start_appointment"
         android:textAllCaps="true"
         android:textColor="@color/white"
-        app:fontFamily="@font/bold"
-        app:textType="CAPTION"
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_1"
         tools:ignore="UnusedAttribute" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>

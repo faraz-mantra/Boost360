@@ -10,12 +10,13 @@ import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
 import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
+import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
+import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedRequest
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.rest.repositories.*
-import com.inventoryorder.rest.services.WithFloatTwoDataSource
 
 class OrderCreateViewModel : BaseViewModel() {
 
@@ -59,6 +60,13 @@ class OrderCreateViewModel : BaseViewModel() {
     return InventoryOrderRepository.sendPaymentReminder(clientId, orderId).toLiveData()
   }
 
+  fun sendReBookingReminder(clientId: String?, orderId: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.sendReBookingReminder(clientId, orderId).toLiveData()
+  }
+  fun sendOrderFeedbackRequest(clientId: String?, request: FeedbackRequest?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.sendOrderFeedbackRequest(clientId, request).toLiveData()
+  }
+
   fun cancelOrder(clientId: String?, orderId: String?, cancellingEntity: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.cancelOrder(clientId, orderId, cancellingEntity).toLiveData()
   }
@@ -69,6 +77,10 @@ class OrderCreateViewModel : BaseViewModel() {
 
   fun markCodPaymentDone(clientId: String?, orderId: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.markCodPaymentDone(clientId, orderId).toLiveData()
+  }
+
+  fun markPaymentReceivedMerchant(clientId: String?, request: PaymentReceivedRequest?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.markPaymentReceivedMerchant(clientId, request).toLiveData()
   }
 
   fun markAsShipped(clientId: String?, request: MarkAsShippedRequest?): LiveData<BaseResponse> {
@@ -127,11 +139,11 @@ class OrderCreateViewModel : BaseViewModel() {
     return ProductOrderRepository.sendMail(request).toLiveData()
   }
 
-  fun getSearchListing(fpTag : String, fpId : String, searchString : String, offset : Int, limit : Int) : LiveData<BaseResponse> {
+  fun getSearchListing(fpTag: String, fpId: String, searchString: String, offset: Int, limit: Int): LiveData<BaseResponse> {
     return NowFloatsRepository.getSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
   }
 
-  fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) : LiveData<BaseResponse> {
+  fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest): LiveData<BaseResponse> {
     return NowFloatsRepository.getBookingSlots(bookingSlotsRequest).toLiveData()
   }
 }

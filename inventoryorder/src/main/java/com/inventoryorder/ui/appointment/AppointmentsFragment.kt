@@ -26,6 +26,8 @@ import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.bottomsheet.FilterModel
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.model.orderRequest.extraProperty.ExtraPropertiesOrder
+import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
+import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedRequest
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequestItem
@@ -43,12 +45,14 @@ import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.*
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener {
 
@@ -346,42 +350,65 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
       adapter = adapterMenu
     }
     mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
-    mPopupWindow.showAsDropDown(view, 0, 0)
+    if (orderAdapter != null && orderAdapter!!.list().size - 1 == position) {
+      orderMenuView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+      mPopupWindow.showAsDropDown(view, view.x.roundToInt(), view.y.roundToInt() - orderMenuView.measuredHeight, Gravity.NO_GRAVITY)
+    } else mPopupWindow.showAsDropDown(view, 0, 0)
   }
 
   private fun clickActionAptButton(orderMenu: OrderMenuModel.MenuStatus, orderItem: OrderItem) {
     when (orderMenu) {
       OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT -> {
-        val sheetConfirm = ConfirmBottomSheetDialog()
+        val sheetConfirm = ConfirmAptSheetDialog()
         sheetConfirm.setData(orderItem)
         sheetConfirm.onClicked = { apiConfirmApt(it) }
-        sheetConfirm.show(this.parentFragmentManager, ConfirmBottomSheetDialog::class.java.name)
+        sheetConfirm.show(this.parentFragmentManager, ConfirmAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
-        val sheetRequestPayment = RequestPaymentBottomSheetDialog()
+        val sheetRequestPayment = RequestPaymentAptSheetDialog()
         sheetRequestPayment.setData(orderItem)
         sheetRequestPayment.onClicked = {
           showProgress()
           sendPaymentLinkApt(getString(R.string.payment_request_send))
         }
-        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
+        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
         this.orderItem = orderItem
-        val sheetCancel = CancelBottomSheetDialog()
+        val sheetCancel = CancelAptSheetDialog()
         sheetCancel.setData(orderItem)
         sheetCancel.onClicked = this@AppointmentsFragment::apiCancelApt
-        sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
+        sheetCancel.show(this.parentFragmentManager, CancelAptSheetDialog::class.java.name)
       }
-      OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
+      OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> {
+        val markPaymentDoneSheet = MarkPaymentDoneAptSheetDialog()
+        markPaymentDoneSheet.setData(orderItem)
+        markPaymentDoneSheet.onClicked = { markReceivedPaymentRequest(it) }
+        markPaymentDoneSheet.show(this.parentFragmentManager, MarkPaymentDoneAptSheetDialog::class.java.name)
+      }
       OrderMenuModel.MenuStatus.MARK_AS_SERVED -> {
-        val sheetDelivered = DeliveredBottomSheetDialog()
-        sheetDelivered.setData(orderItem)
-        sheetDelivered.onClicked = { serveCustomer(it) }
-        sheetDelivered.show(this.parentFragmentManager, DeliveredBottomSheetDialog::class.java.name)
+        val sheetServed = ServedAptSheetDialog()
+        sheetServed.setData(orderItem)
+        sheetServed.onClicked = { serveCustomer("") }
+        sheetServed.show(this.parentFragmentManager, ServedAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.START_APPOINTMENT -> {
-        showShortToast("Coming soon...")
+        val sheetStartApt = StartAptSheetDialog()
+        sheetStartApt.setData(orderItem)
+        sheetStartApt.onClicked = { startApt(it) }
+        sheetStartApt.show(this.parentFragmentManager, StartAptSheetDialog::class.java.name)
+      }
+      OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
+        val sheetFeedbackApt = SendFeedbackAptSheetDialog()
+        sheetFeedbackApt.setData(orderItem)
+        sheetFeedbackApt.onClicked = { sendFeedbackRequestApt(it) }
+        sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
+      }
+      OrderMenuModel.MenuStatus.SEND_RE_BOOKING -> {
+        val sheetReBookingApt = SendReBookingAptSheetDialog()
+        sheetReBookingApt.setData(orderItem)
+        sheetReBookingApt.onClicked = { sendReBookingRequestApt() }
+        sheetReBookingApt.show(this.parentFragmentManager, SendReBookingAptSheetDialog::class.java.name)
       }
       else -> {
       }
@@ -390,15 +417,36 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun startApt(markAsShippedRequest: MarkAsShippedRequest) {
     showProgress()
-    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
+    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         apiGetAptDetails()
-        showLongToast(resources.getString(R.string.order_shipped))
+        showLongToast(resources.getString(R.string.apt_start_success))
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
+
+  private fun sendReBookingRequestApt() {
+    showProgress()
+    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        apiGetAptDetails()
+        showLongToast(resources.getString(R.string.re_booking_reminder))
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
+
+  private fun sendFeedbackRequestApt(request: FeedbackRequest) {
+    showProgress()
+    viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        apiGetAptDetails()
+        showLongToast(resources.getString(R.string.appointment_feedback_requested))
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -408,18 +456,13 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun serveCustomer(message: String) {
     showProgress()
-    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
+    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         if (message.isNotEmpty()) {
-          updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
+          updateReason(resources.getString(R.string.appointment_serve), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
         } else {
           apiGetAptDetails()
-          showLongToast(resources.getString(R.string.order_cancel))
+          showLongToast(resources.getString(R.string.appointment_serve))
         }
       } else {
         showLongToast(it.message())
@@ -430,19 +473,14 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun apiCancelApt(cancellingEntity: String, reasonText: String) {
     showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         val data = it as? OrderConfirmStatus
         if (reasonText.isNotEmpty()) {
-          updateReason(resources.getString(R.string.order_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
+          updateReason(resources.getString(R.string.appointment_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
         } else {
           apiGetAptDetails()
-          showLongToast(resources.getString(R.string.order_cancel))
+          showLongToast(resources.getString(R.string.appointment_cancel))
         }
       } else {
         showLongToast(it.message())
@@ -462,17 +500,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun apiConfirmApt(isSendPaymentLink: Boolean) {
     showProgress()
-    viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
+    viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        if (isSendPaymentLink) sendPaymentLinkApt(getString(R.string.order_confirmed))
+        if (isSendPaymentLink) sendPaymentLinkApt(getString(R.string.appointment_confirmed))
         else {
           apiGetAptDetails()
-          showLongToast(getString(R.string.order_confirmed))
+          showLongToast(getString(R.string.appointment_confirmed))
         }
       } else {
         showLongToast(it.message())
@@ -488,18 +521,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     })
   }
 
-
-  private fun markCodPaymentRequest() {
+  private fun markReceivedPaymentRequest(request: PaymentReceivedRequest) {
     showProgress()
-    viewModel?.markCodPaymentDone(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
+    viewModel?.markPaymentReceivedMerchant(clientId, request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         apiGetAptDetails()
-        showLongToast(getString(R.string.order_payment_done))
+        showLongToast(getString(R.string.payment_confirmed))
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -512,13 +539,13 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
       hideProgress()
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
-        if (position != null && orderList.size > position!!) {
+        if (position != null && orderAdapter != null && orderAdapter!!.list().size > position!!) {
+          response.recyclerViewType = RecyclerViewItemType.APPOINTMENT_ITEM_TYPE.getLayout()
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()
       } else loadNewData()
     })
   }
-
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
@@ -528,7 +555,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
       if (isRefresh != null && isRefresh) clickFilterItem(filterItem)
     }
   }
-
 
   private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = "", type: String = QueryObject.QueryKey.ReferenceNumber.name): OrderFilterRequest {
     val requestFil: OrderFilterRequest?

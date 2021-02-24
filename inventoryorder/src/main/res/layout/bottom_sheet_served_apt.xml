@@ -14,7 +14,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
-      android:text="Marking as ‘Customer Served’"
+      android:text="@string/marking_as_customer_served"
       android:textColor="@color/white"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

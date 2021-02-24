@@ -50,6 +50,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener {
 
@@ -214,7 +215,10 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       adapter = adapterMenu
     }
     mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
-    mPopupWindow.showAsDropDown(view, 0, 0)
+    if (orderAdapter != null && orderAdapter!!.list().size - 1 == position) {
+      orderMenuView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+      mPopupWindow.showAsDropDown(view, view.x.roundToInt(), view.y.roundToInt() - orderMenuView.measuredHeight, Gravity.NO_GRAVITY)
+    } else mPopupWindow.showAsDropDown(view, 0, 0)
   }
 
   private fun clickActionOrderButton(orderMenu: OrderMenuModel.MenuStatus, orderItem: OrderItem) {
@@ -253,17 +257,13 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         sheetShipped.onClicked = { shippedOrder(it) }
         sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
       }
+      else -> {}
     }
   }
 
   private fun shippedOrder(markAsShippedRequest: MarkAsShippedRequest) {
     showProgress()
     viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
         apiGetOrderDetails()
         showLongToast(resources.getString(R.string.order_shipped))
@@ -277,17 +277,12 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun deliveredOrder(message: String) {
     showProgress()
     viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
         if (message.isNotEmpty()) {
           updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
         } else {
           apiGetOrderDetails()
-          showLongToast(resources.getString(R.string.order_cancel))
+          showLongToast(resources.getString(R.string.order_delivery))
         }
       } else {
         showLongToast(it.message())
@@ -299,11 +294,6 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
     showProgress()
     viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
         val data = it as? OrderConfirmStatus
         if (reasonText.isNotEmpty()) {
@@ -331,11 +321,6 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun apiConfirmOrder(isSendPaymentLink: Boolean) {
     showProgress()
     viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
         if (isSendPaymentLink) sendPaymentLinkOrder(getString(R.string.order_confirmed))
         else {
@@ -360,14 +345,9 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun markCodPaymentRequest() {
     showProgress()
     viewModel?.markCodPaymentDone(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
         apiGetOrderDetails()
-        showLongToast(getString(R.string.order_payment_done))
+        showLongToast(getString(R.string.payment_confirmed))
       } else {
         showLongToast(it.message())
         hideProgress()

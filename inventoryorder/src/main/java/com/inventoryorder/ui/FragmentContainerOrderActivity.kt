@@ -168,10 +168,12 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)
       FragmentType.ALL_APPOINTMENT_SPA_VIEW,
-      FragmentType.ALL_APPOINTMENT_VIEW -> resources.getString(R.string.appointments)
+      FragmentType.ALL_APPOINTMENT_VIEW,
+      -> resources.getString(R.string.appointments)
       FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
       FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
-      FragmentType.APPOINTMENT_DETAIL_VIEW -> getString(R.string.appointment_details)
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      -> getString(R.string.appointment_details)
       FragmentType.ORDER_DETAIL_VIEW,
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
       -> "# XXXXXXX"
@@ -350,7 +352,11 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun onBackPressed() {
-    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData() ?: billingDetailFragment?.getBundleData() ?: addCustomerFragment?.getBundleData() ?: orderPlacedFragment?.getBundleData() ?: reviewAndConfirmFragment?.getBundleData() ?: spaAppointmentFragment?.getBundleData()
+    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?:
+    videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData() ?:
+    billingDetailFragment?.getBundleData() ?: addCustomerFragment?.getBundleData() ?:
+    orderPlacedFragment?.getBundleData() ?: reviewAndConfirmFragment?.getBundleData() ?:
+    spaAppointmentFragment?.getBundleData() ?: appointmentSpaDetailsFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
       intent.putExtra(IntentConstant.RESULT_DATA.name, it)

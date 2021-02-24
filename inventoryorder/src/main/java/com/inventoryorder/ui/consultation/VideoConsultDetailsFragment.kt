@@ -47,7 +47,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private var orderItem: OrderItem? = null
   private var serviceLocationsList = LocationsModel().getData()
-  private var isRefresh: Boolean? = null
+  private var isRefresh: Boolean = false
   private var countDownTimer: CountDownTimer? = null
 
   companion object {
@@ -169,13 +169,8 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     }
   }
 
-  fun getBundleData(): Bundle? {
-    isRefresh?.let {
-      val bundle = Bundle()
-      bundle.putBoolean(IntentConstant.IS_REFRESH.name, it)
-      return bundle
-    }
-    return null
+  fun getBundleData(): Bundle {
+    return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, isRefresh) }
   }
 
   private fun checkStatusConsultation(order: OrderItem) {

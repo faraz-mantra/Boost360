@@ -39,6 +39,8 @@ class OrderMenuModel(
 
     REQUEST_PAYMENT("Request Payment", R.color.black_4a4a4a),
     MARK_PAYMENT_DONE("Mark Payment Done", R.color.black_4a4a4a),
+    REQUEST_FEEDBACK("Request Feedback", R.color.black_4a4a4a),
+    SEND_RE_BOOKING("Rebooking Reminder", R.color.black_4a4a4a),
 
     CONFIRM_APPOINTMENT("Confirm Appointment", R.color.black_4a4a4a),
     CANCEL_APPOINTMENT("Cancel Appointment", R.color.watermelon_light_10),

@@ -49,7 +49,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     super.onClick(v)
     when (v) {
       binding?.vwNext -> {
-       onNextTapped()
+        onNextTapped()
       }
 
       binding?.textAddCustomerGstin -> {
@@ -72,12 +72,10 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
   }
 
   fun getBundleData(): Bundle? {
-    val bundle = Bundle()
-    shouldReInitiate?.let {
-      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+    return Bundle().apply {
+      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+      putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
     }
-    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
-    return bundle
   }
 
   private fun onNextTapped() {
@@ -139,7 +137,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     }
 
     var contactDetails = ContactDetails(fullName = name.toString(),
-            emailId = email.toString(), primaryContactNumber = phone.toString())
+        emailId = email.toString(), primaryContactNumber = phone.toString())
 
     /*var addrStr = StringBuilder()
     addrStr.append(address)

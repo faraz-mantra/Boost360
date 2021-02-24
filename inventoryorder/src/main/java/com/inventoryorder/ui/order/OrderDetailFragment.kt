@@ -48,7 +48,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private var deliverySheetDialog: DeliveryBottomSheetDialog? = null
   private var orderItem: OrderItem? = null
   private var deliveryList = DeliveryModel().getData()
-  private var isRefresh: Boolean? = null
+  private var isRefresh: Boolean = false
   private var productList: ArrayList<ProductResponse>? = null
   private var bottomButtonStatus: List<OrderMenuModel.MenuStatus>? = null
 
@@ -169,13 +169,8 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     }
   }
 
-  fun getBundleData(): Bundle? {
-    isRefresh?.let {
-      val bundle = Bundle()
-      bundle.putBoolean(IntentConstant.IS_REFRESH.name, it)
-      return bundle
-    }
-    return null
+  fun getBundleData(): Bundle {
+    return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, isRefresh) }
   }
 
   private fun setOrderDetails(order: OrderItem) {
@@ -239,23 +234,16 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-//      binding?.btnPickUp -> showBottomSheetDialog()
       binding?.buttonBottom -> if (bottomButtonStatus.isNullOrEmpty().not()) orderItem?.let { clickActionOrderButton(bottomButtonStatus!!.first(), it) }
       binding?.btnSendPaymentLink -> orderItem?.let { clickActionOrderButton(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, it) }
       binding?.tvCancelOrder -> orderItem?.let { clickActionOrderButton(OrderMenuModel.MenuStatus.CANCEL_ORDER, it) }
       binding?.tvCustomerContactNumber -> {
-        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { checkValidMobile(it) }!!)
-          openDialer()
-        else
-          showShortToast(getString(R.string.phone_invalid_format_error))
-
+        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { checkValidMobile(it) }!!) openDialer()
+        else showShortToast(getString(R.string.phone_invalid_format_error))
       }
       binding?.tvCustomerEmail -> {
-        if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
-          openEmailApp()
-        } else {
-          showShortToast(getString(R.string.email_invalid_format_error))
-        }
+        if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) openEmailApp()
+        else showShortToast(getString(R.string.email_invalid_format_error))
       }
     }
   }
@@ -296,13 +284,13 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         sheetShipped.onClicked = { shippedOrder(it) }
         sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
       }
+      else -> {}
     }
   }
 
 
   private fun openEmailApp() {
-    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-        "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
+    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
     startActivity(emailIntent)
   }
 
@@ -323,11 +311,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun shippedOrder(markAsShippedRequest: MarkAsShippedRequest) {
     showProgress()
     viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
         orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_shipped)) }
       } else {
@@ -340,17 +323,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun deliveredOrder(message: String) {
     showProgress()
     viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
         if (message.isNotEmpty()) {
           updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
-        } else {
-          orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_cancel)) }
-        }
+        } else orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_delivery)) }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -361,18 +337,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
     showProgress()
     viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
         val data = it as? OrderConfirmStatus
         if (reasonText.isNotEmpty()) {
           updateReason(resources.getString(R.string.order_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
-        } else {
-          orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_cancel)) }
-        }
+        } else orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_cancel)) }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -381,8 +350,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
-    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type,
-        existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
+    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type, existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
     viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner, {
       orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
     })
@@ -391,13 +359,8 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun markCodPaymentRequest() {
     showProgress()
     viewModel?.markCodPaymentDone(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.order_payment_done)) }
+        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.payment_confirmed)) }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -408,16 +371,9 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun apiConfirmOrder(isSendPaymentLink: Boolean) {
     showProgress()
     viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
       if (it.isSuccess()) {
         if (isSendPaymentLink) sendPaymentLinkOrder(getString(R.string.order_confirmed))
-        else {
-          orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.order_confirmed)) }
-        }
+        else orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.order_confirmed)) }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -426,20 +382,8 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun sendPaymentLinkOrder(message: String) {
-    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, { it1 ->
+    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
     })
-  }
-
-  private fun showBottomSheetDialog() {
-    showLongToast("Coming soon..")
-//    deliverySheetDialog = DeliveryBottomSheetDialog()
-//    deliverySheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
-//    deliverySheetDialog?.setList(deliveryList)
-//    deliverySheetDialog?.show(this@OrderDetailFragment.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
-  }
-
-  private fun clickDeliveryItem(deliveryItem: DeliveryModel?) {
-    deliveryList.forEach { it.isSelected = (it.deliveryOptionSelectedName == deliveryItem?.deliveryOptionSelectedName) }
   }
 }

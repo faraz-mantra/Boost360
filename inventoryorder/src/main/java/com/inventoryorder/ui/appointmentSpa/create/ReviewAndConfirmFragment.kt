@@ -32,10 +32,10 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   private var serviceFee = 0.0
   private var totalPrice = 0.0
   private var discountedPrice = 0.0
-  private var orderInitiateRequest : OrderInitiateRequest?= null
+  private var orderInitiateRequest: OrderInitiateRequest? = null
   var orderBottomSheet = OrderBottomSheet()
-  private var paymentStatus : String = PaymentDetailsN.STATUS.PENDING.name
-  private var selectedService : ServiceItem ?= null
+  private var paymentStatus: String = PaymentDetailsN.STATUS.PENDING.name
+  private var selectedService: ServiceItem? = null
   var shouldReInitiate = false
   var shouldRefresh = false
 
@@ -49,12 +49,10 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   fun getBundleData(): Bundle? {
-    val bundle = Bundle()
-    shouldReInitiate?.let {
-      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
-      bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
+    return Bundle().apply {
+      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+      putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
     }
-    return bundle
   }
 
   override fun onCreateView() {
@@ -78,7 +76,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     binding?.tvName?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.fullName?.capitalizeUtil()
     binding?.tvEmail?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.emailId
     binding?.textAmount?.text = "${selectedService?.Currency} $totalPrice"
-    binding?.textActualAmount?.text =  "${selectedService?.Currency} $discountedPrice"
+    binding?.textActualAmount?.text = "${selectedService?.Currency} $discountedPrice"
     binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice)}"
     binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
 
@@ -101,7 +99,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
 
   override fun onClick(v: View) {
     super.onClick(v)
-    when(v) {
+    when (v) {
       binding?.textAdd -> {
         showAddServiceFeeDialog()
       }
@@ -136,7 +134,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
   }
 
-  private fun onPaymentStatusSelected(bottomSheetOptionsItem : BottomSheetOptionsItem, orderBottomSheet : OrderBottomSheet) {
+  private fun onPaymentStatusSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
     binding?.tvPaymentStatus?.text = bottomSheetOptionsItem?.displayValue
     orderInitiateRequest?.paymentDetails?.status = bottomSheetOptionsItem?.serverValue
     paymentStatus = bottomSheetOptionsItem?.serverValue!!
@@ -149,7 +147,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     addDeliveryFeeBottomSheetDialog.show(this.parentFragmentManager, AddDeliveryFeeBottomSheetDialog::class.java.name)
   }
 
-  private fun onServiceFeeAdded(fee : Double) {
+  private fun onServiceFeeAdded(fee: Double) {
     serviceFee = fee
 
     if (fee > 0.0) {
@@ -191,7 +189,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     })
   }
 
-  private fun setUpAddress() : String {
+  private fun setUpAddress(): String {
     var addrStr = StringBuilder()
     addrStr.append(orderInitiateRequest?.buyerDetails?.address?.addressLine)
     if (orderInitiateRequest?.buyerDetails?.address?.city.isNullOrEmpty().not()) addrStr.append(", ${orderInitiateRequest?.buyerDetails?.address?.city}")
@@ -201,18 +199,19 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     return addrStr.toString()
   }
 
-  private fun parseDate(date : String) : String? {
+  private fun parseDate(date: String): String? {
     try {
       val df1 = SimpleDateFormat(DateUtils.FORMAT_YYYY_MM_DD, Locale.getDefault())
       var date = df1.parse(date)
       val df2 = SimpleDateFormat(DateUtils.SPA_REVIEW_DATE_FORMAT, Locale.getDefault())
       return df2.format(date)
-    } catch(e: Exception) {}
+    } catch (e: Exception) {
+    }
 
     return ""
   }
 
-  private fun calculateGST(amount : Double) : Double {
+  private fun calculateGST(amount: Double): Double {
     return amount * GST_PERCENTAGE
   }
 
