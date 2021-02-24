@@ -99,6 +99,10 @@ class OrderCreateViewModel : BaseViewModel() {
     return AssuredPurchaseRepository.confirmOrder(clientId, orderId).toLiveData()
   }
 
+  fun assuredPurchaseGetOrderDetails(clientId: String?, orderId: String?): LiveData<BaseResponse> {
+    return AssuredPurchaseRepository.getOrderDetails(clientId, orderId).toLiveData()
+  }
+
   fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest? = null, requestCancel: UpdateOrderNPropertyRequest? = null): LiveData<BaseResponse> {
     return AssuredPurchaseRepository.updateExtraPropertyOrder(clientId, request, requestCancel).toLiveData()
   }

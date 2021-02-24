@@ -6,6 +6,7 @@ import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.rest.EndPoints
+import com.inventoryorder.rest.response.order.OrderDetailResponse
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.Body
@@ -51,4 +52,10 @@ interface AssuredPurchaseDataSource {
           @Query("clientId") clientId: String?,
           @Query("orderId") orderId: String?,
   ): Observable<Response<OrderConfirmStatus>>
+
+  @GET(EndPoints.GET_ORDER_DETAIL_2_5)
+  fun getOrderDetailsV2_5(
+          @Query("clientId") clientId: String?,
+          @Query("orderId") orderId: String?,
+  ): Observable<Response<OrderDetailResponse>>
 }
