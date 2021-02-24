@@ -26,6 +26,7 @@ import com.inventoryorder.recyclerView.CustomArrayAdapter
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
+import kotlinx.android.synthetic.main.item_date_view.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,6 +47,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     private var currency = ""
     var shouldReInitiate = false
     var shouldRefresh = false
+    var dateCounter = 1
 
     companion object {
         @JvmStatic
@@ -63,7 +65,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         serviceList = ArrayList()
         startDate = getDateTime()
         setOnClickListener(binding?.buttonReviewDetails, binding?.textAddApptDateTime,
-                binding?.buttonReviewDetails, binding?.imageEdit)
+                binding?.buttonReviewDetails, binding?.imageEdit,
+                binding?.layoutCustomer?.textAddCustomerGstin,
+                binding?.layoutCustomer?.tvRemove)
     }
 
     override fun onClick(v: View) {
@@ -74,14 +78,34 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
             }
 
             binding?.textAddApptDateTime -> {
-                selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, this)
-                selectedDateTimeBottomSheetDialog?.onClicked = {onDialogDoneClicked(it)}
+                selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, dateCounter, this)
+                selectedDateTimeBottomSheetDialog?.onClicked = this::onDialogDoneClicked
                 selectedDateTimeBottomSheetDialog?.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
             }
 
+            binding?.layoutCustomer?.textAddCustomerGstin -> {
+
+                if (binding?.layoutCustomer?.lytCustomerGstn?.visibility == View.GONE) {
+                    binding?.layoutCustomer?.textAddCustomerGstin?.visibility = View.GONE
+                    binding?.layoutCustomer?.lytCustomerGstn?.visibility = View.VISIBLE
+                }
+            }
+
+            binding?.layoutCustomer?.tvRemove -> {
+                binding?.layoutCustomer?.textAddCustomerGstin?.visibility = View.VISIBLE
+                binding?.layoutCustomer?.lytCustomerGstn?.visibility = View.GONE
+            }
+
             binding?.imageEdit -> {
-                selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, this)
-                selectedDateTimeBottomSheetDialog?.onClicked = {onDialogDoneClicked(it)}
+
+                appointmentRequestModel?.staffId?.let {
+                    for ((index, value) in bookingSlotResponse?.Result?.get(0)?.Staff?.withIndex()!!) {
+                        value.isSelected = value._id == it
+                    }
+                }
+
+                selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, dateCounter, this)
+                selectedDateTimeBottomSheetDialog?.onClicked = this::onDialogDoneClicked
                 selectedDateTimeBottomSheetDialog?.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
             }
         }
@@ -190,7 +214,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         startFragmentOrderActivity(FragmentType.REVIEW_SPA_DETAILS, bundle, isResult = true)
     }
 
-    private fun onDialogDoneClicked(appointmentRequestModel: AppointmentRequestModel) {
+    private fun onDialogDoneClicked(appointmentRequestModel: AppointmentRequestModel, dateCounter : Int) {
         binding?.layoutShowSelectedSlot?.visibility = View.VISIBLE
         binding?.groupTiming?.visibility = View.GONE
 
@@ -199,6 +223,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         binding?.textBy?.text = appointmentRequestModel?.staffName
 
         this.appointmentRequestModel = appointmentRequestModel
+        this.dateCounter = dateCounter
     }
 
     fun getSearchListing() {
@@ -226,7 +251,6 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
     private fun setArrayAdapter() {
         serviceAdapter = CustomArrayAdapter(this.requireActivity(), R.layout.layout_service_item, serviceList!!)
-        serviceAdapter?.setNotifyOnChange(true)
         binding?.editServiceName?.threshold = 1
         binding?.editServiceName?.setAdapter(serviceAdapter)
         binding?.editServiceName?.onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->

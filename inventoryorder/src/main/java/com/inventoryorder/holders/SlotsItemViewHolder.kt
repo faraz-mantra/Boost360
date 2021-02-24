@@ -1,14 +1,11 @@
 package com.inventoryorder.holders
 
-import androidx.core.content.ContextCompat
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.ItemTimeSlotAppointmentBinding
-import com.inventoryorder.databinding.ItemTimeSlotBinding
 import com.inventoryorder.model.spaAppointment.bookingslot.response.Slots
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
-import kotlinx.coroutines.withContext
 
 class SlotsItemViewHolder(binding: ItemTimeSlotAppointmentBinding) : AppBaseRecyclerViewHolder<ItemTimeSlotAppointmentBinding>(binding) {
 
