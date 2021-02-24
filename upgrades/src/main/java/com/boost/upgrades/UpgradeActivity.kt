@@ -38,6 +38,7 @@ import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PAYMENT_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
+import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
@@ -135,7 +136,7 @@ class UpgradeActivity : AppCompatActivity() {
 //      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
       addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT, bundle)
       //update userdetails and buyitem
-      showingPopUp()
+      showingPopUp(checkNetworkType(applicationContext))
       supportFragmentManager.addOnBackStackChangedListener {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
         if (currentFragment != null) {
@@ -325,7 +326,7 @@ class UpgradeActivity : AppCompatActivity() {
     window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
   }
 
-  fun showingPopUp() {
+  fun showingPopUp(networkRecallTimer: Long) {
     if (loadingStatus && initialLoadUpgradeActivity == 0) {
       loaderStatus(true)
     }
@@ -375,12 +376,13 @@ class UpgradeActivity : AppCompatActivity() {
                 Handler().postDelayed({
                   if (initialLoadUpgradeActivity < 3) {
                     initialLoadUpgradeActivity += 1
-                    showingPopUp()
+                    showingPopUp(checkNetworkType(applicationContext))
                   } else {
                     loaderStatus(false)
                     Toasty.error(this, "Not able to Fetch data from database. Try Later..", Toast.LENGTH_LONG).show()
                   }
-                }, 1000)
+//                }, 1000)
+                }, networkRecallTimer)
               }
             }, {
               loaderStatus(false)
