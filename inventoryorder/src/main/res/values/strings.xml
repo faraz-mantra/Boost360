@@ -87,7 +87,8 @@
   <string name="confirm_appointment">CONFIRM APPOINTMENT</string>
   <string name="cancel_video_consultation">Cancel Video Consultation</string>
   <string name="call_details">Call Details</string>
-  <string name="cancel_appointment" tools:ignore="ExtraTranslation"><u>Cancel Appointment</u></string>
+  <string name="cancel_appointment"><u>Cancel Appointment</u></string>
+  <string name="cancel_appointment_n">Cancel Appointment</string>
   <string name="please_add_doctor_first">Doctor not added, please add first.</string>
   <string name="cancel_appointment_confirmation_message">Are you sure you want to cancel the appointment?</string>
   <string name="no">No</string>
@@ -130,8 +131,6 @@
   <string name="invoice">Invoice</string>
   <string name="customer_feedback_received">Customer feedback received</string>
   <string name="change">Change</string>
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="placing_order_is_super_easy">Placing order is super easy.</string>
   <string name="select_add_a_customer">Select/add a customer</string>
   <string name="select_products_services">Select products/services</string>
@@ -181,13 +180,18 @@
   <string name="done">Done</string>
   <string name="reason_for_cancellation_optional">Reason for Cancellation (optional)</string>
   <string name="type_if_there_are_any_known_reason">Type, if there are any known reason...</string>
+  <string name="type_if_there_are_any_feedback">Type, if there are any feedback...</string>
   <string name="boost_send_reason_for_cancellation_desc">Boost will send an email and an SMS to the customer on your behalf, informing them of the cancellation of this order and the reason for cancellation, if any.</string>
+  <string name="feedback_message_send_desc">An email and an SMS will be sent to the customer on your behalf, including the message that you have included along with feedback link.</string>
   <string name="confirming_your_order">Confirming your order?</string>
   <string name="delivery_mode_store_pickup">Delivery mode: <b>Store Pickup</b></string>
   <string name="send_online_payment_link_to_customer">Send online payment link to customer</string>
   <string name="boost_will_send_an_email_and_an_sms_confirmation_of_this_order">Boost will send an email and an SMS to the customer on your behalf, informing them of the confirmation of this order</string>
+  <string name="send_an_email_and_an_sms_confirmation_of_this_apt">An email and an SMS will be sent to the customer on your behalf, informing them of the confirmation of this appointment.</string>
   <string name="boost_along_payment_order">along with the payment link.</string>
   <string name="boost_will_send_payment_link_this_order">Boost will send payment link to the customer on your behalf. Upon successful payment it will reflect againt this order.</string>
+  <string name="send_re_booking_reminder_apt">A notification will be sent to this customer reminding to book this service again if interested.</string>
+  <string name="boost_will_send_payment_link_this_apt">A secure payment link will be sent to the customer on your behalf. Upon successful payment it will reflect againt this appointment.</string>
   <string name="collect_pending_payment">Collect Pending Payment</string>
   <string name="marking_as_delivered">Marking as Delivered</string>
   <string name="no_don_t_need_any_feedback">No, don’t need any feedback</string>
@@ -195,6 +199,7 @@
   <string name="want_to_request_customer_to_give_feedback">Want to request customer to give feedback?</string>
   <string name="type_the_message_that_you_want_to_include">Type the message that you want to include...</string>
   <string name="boost_will_send_an_email_and_an_sms_feedback_of_their_overall_buying_experiance">Boost will send an email and an SMS to the customer on your behalf, informing them about the order successfully getting delivered and requesting a feedback of their overall buying experience.</string>
+  <string name="customer_informing_service_complete_desc">An email and SMS will be sent to this customer informing about service completion and requesting a feedback on the overall appointment experience.</string>
   <string name="request_feedback">REQUEST FEEDBACK</string>
   <string name="confirmed_delivered">Delivered</string>
   <string name="marking_as_shipped">Marking as Shipped</string>
@@ -336,4 +341,13 @@
   <string name="call_customer">CALL CUSTOMER</string>
   <string name="contact_number_not_available">Customer contact number not available</string>
   <string name="customer_email_not_available">Customer email not available</string>
+  <string name="cancelling_appointment">Cancelling appointment?</string>
+  <string name="note_sent_to_the_customer_reason_for_cancellation_if_any"><b>NOTE:</b> An email and SMS will be sent to the customer informing about the cancellation of this appointment and the reason for cancellation, if any.</string>
+  <string name="the_customer">The customer</string>
+  <string name="your_business">Your business</string>
+  <string name="don_t_cancel">Don’t cancel</string>
+  <string name="confirming_appointment">Confirming appointment?</string>
+  <string name="request_pending_payment">Request Pending Payment</string>
+  <string name="send_payment_link_via_select_atleast_one_option"><b>Send payment link via</b> (select atleast one option)</string>
+  <string name="send_reminder">Send reminder</string>
 </resources>

@@ -43,6 +43,7 @@ import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.CancelAptSheetDialog
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
@@ -346,7 +347,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
       adapter = adapterMenu
     }
     mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
-    mPopupWindow.showAsDropDown(view, 0, 0)
+    mPopupWindow.showAsDropDown(view, 0, 0, Gravity.NO_GRAVITY)
   }
 
   private fun clickActionAptButton(orderMenu: OrderMenuModel.MenuStatus, orderItem: OrderItem) {
@@ -368,10 +369,10 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
       }
       OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
         this.orderItem = orderItem
-        val sheetCancel = CancelBottomSheetDialog()
+        val sheetCancel = CancelAptSheetDialog()
         sheetCancel.setData(orderItem)
         sheetCancel.onClicked = this@AppointmentSpaFragment::apiCancelApt
-        sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
+        sheetCancel.show(this.parentFragmentManager, CancelAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
       OrderMenuModel.MenuStatus.MARK_AS_SERVED -> {

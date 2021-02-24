@@ -18,4 +18,9 @@ data class BillingDetailsN(
     var NetAmount: Double? = null,
     var TaxDetails: Any? = null,
     val TransactionCharges: Double? = null,
-) : Serializable
+) : Serializable{
+
+  fun getCurrencyCodeValue(): String? {
+    return CurrencyCode
+  }
+}
