@@ -15,7 +15,9 @@ import com.inventoryorder.model.order.orderbottomsheet.BottomSheetOptionsItem
 import com.inventoryorder.model.order.orderbottomsheet.OrderBottomSheet
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.PaymentDetails
+import com.inventoryorder.model.orderRequest.ShippingDetails
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.spaAppointment.ServiceItem
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
@@ -107,6 +109,13 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
             }
 
             binding?.buttonReviewDetails -> {
+
+                var shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
+                        deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = serviceFee,
+                        currencyCode = orderInitiateRequest?.items?.get(0)?.productDetails?.currencyCode)
+                orderInitiateRequest?.shippingDetails = shippingDetails
+
+
                 createAppointment()
 
             /*    //TODO : to be removed after dry run
@@ -146,7 +155,6 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
         serviceFee = fee
 
         if (fee > 0.0) {
-            orderInitiateRequest?.transactionCharges = fee
             binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + calculateGST(discountedPrice) + fee}"
             binding?.textAdd?.text = "${selectedService?.Currency} $fee"
             binding?.textEdit?.visibility = View.VISIBLE
