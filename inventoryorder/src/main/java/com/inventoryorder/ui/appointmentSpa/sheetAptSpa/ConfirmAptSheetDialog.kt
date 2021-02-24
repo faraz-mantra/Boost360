@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.order.sheetOrder
+package com.inventoryorder.ui.appointmentSpa.sheetAptSpa
 
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -8,18 +8,19 @@ import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.utils.fromHtml
 import com.inventoryorder.R
+import com.inventoryorder.databinding.BottomSheetConfirmAptBinding
 import com.inventoryorder.databinding.BottomSheetConfirmOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 
-class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBinding, BaseViewModel>() {
+class ConfirmAptSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmAptBinding, BaseViewModel>() {
 
   var isCheckLink: Boolean = true
   var onClicked: (isCheckLink: Boolean) -> Unit = {}
   private var orderItem: OrderItem? = null
 
   override fun getLayout(): Int {
-    return R.layout.bottom_sheet_confirm_order
+    return R.layout.bottom_sheet_confirm_apt
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
@@ -48,6 +49,8 @@ class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBi
     } else binding?.checkboxEmail?.gone()
 
 
+    binding?.txtSymbol?.text=orderItem?.BillingDetails?.getCurrencyCodeValue()?:"INR"
+    binding?.txtPrice?.text="${orderItem?.BillingDetails?.AmountPayableByBuyer?:0.0}"
     val isPaymentDone = (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))
     binding?.txtDeliveryMode?.text = fromHtml("Delivery mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.deliveryType()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
     binding?.txtPaymentMode?.text = fromHtml("Payment mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.methodValue()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
