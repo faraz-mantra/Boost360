@@ -9,6 +9,7 @@ import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentReviewAndConfirmBinding
 import com.inventoryorder.model.OrderConfirmStatus
@@ -28,6 +29,7 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.order.sheetOrder.AddDeliveryFeeBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.CreateOrderBottomSheetDialog
+import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
 import java.math.RoundingMode
@@ -226,10 +228,17 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
                 return@Observer
             }
             if (it.isSuccess()) {
-                showShortToast(getString(R.string.appointment_created_successfully))
+
+                var bundle = Bundle()
+                bundle.putString(IntentConstant.TYPE_APPOINTMENT.name, "appt")
+                bundle.putSerializable(IntentConstant.ORDER_ID.name, order?._id)
+                bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, prefData)
+                startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
+
+             /*   showShortToast(getString(R.string.appointment_created_successfully))
                 shouldReInitiate = true
                 shouldRefresh = true
-                (activity as FragmentContainerOrderActivity).onBackPressed()
+                (activity as FragmentContainerOrderActivity).onBackPressed()*/
             } else {
                 showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
             }

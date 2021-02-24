@@ -94,8 +94,8 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     setUpContactDetailsInfo()
     setUpAddress()
 
-    binding?.textAmount?.text = totalPrice.toString()
-    binding?.textTotalPayableAmount?.text = totalPrice.toString()
+    binding?.textAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} $totalPrice"
+    binding?.textTotalPayableAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} $totalPrice"
     binding?.layoutOrderShippingAddress?.textAddrTitle?.text = getString(R.string.billing_address)
 
     setAdapterOrderList()
@@ -375,7 +375,8 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       }
       if (it.isSuccess()) {
         var bundle = Bundle()
-        bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, orderInitiateResponse)
+        bundle.putSerializable(IntentConstant.ORDER_ID.name, orderInitiateResponse?.data?._id)
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
       } else {
         showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))

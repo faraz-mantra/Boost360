@@ -31,6 +31,7 @@ object EndPoints {
   const val POST_INITIATE_ORDER = "api/assuredPurchase/v2/InitiateOrder"
   const val POST_INITIATE_APPOINTMENT = "api/assuredPurchase/v2.5/InitiateOrder"
   const val GET_CONFIRM_ORDER_2_5 = "api/assuredPurchase/v2.5/ConfirmOrder"
+  const val GET_ORDER_DETAIL_2_5 = "api/assuredPurchase/v2.5/GetOrderDetails"
   const val POST_UPDATE_ORDER = "api/assuredPurchase/v2/UpdateOrder"
 
   const val GET_SELLER_SUMMARY_URL = "api/assuredPurchase/v2/SellerSummary"
