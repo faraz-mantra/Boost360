@@ -331,4 +331,6 @@
     <string name="view_appointment_details">View appointments details</string>
     <string name="view_appointment_dashboard">View appointment dashboard</string>
     <string name="appointment_created_successfully">Appointment created successfully</string>
+    <string name="dummy_gst">GSTIN : 77BIO000000000</string>
+    <string name="enter_valid_gstin_number">Please enter valid GSTIN number</string>
 </resources>

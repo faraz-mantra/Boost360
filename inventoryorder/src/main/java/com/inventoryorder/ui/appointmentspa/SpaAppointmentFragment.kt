@@ -3,6 +3,7 @@ package com.inventoryorder.ui.appointmentspa
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.PatternMatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -12,6 +13,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentSpaAppointmentBinding
@@ -32,6 +34,7 @@ import kotlinx.android.synthetic.main.item_date_view.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBinding>(), SelectDateTimeBottomSheetDialog.DateChangedListener {
@@ -158,6 +161,11 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
             return
         }
 
+        if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
+            showShortToast(getString(R.string.enter_valid_gstin_number))
+            return
+        }
+
         if (address.isEmpty()) {
             showShortToast(getString(R.string.customer_address_cannot_be_empty))
             return
@@ -278,6 +286,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
             if (it.isSuccess()) {
                 bookingSlotResponse = (it as? BookingSlotResponse)
+
+                bookingSlotResponse?.Result?.get(0)?.Staff?.get(0)?.isSelected = true
+
                 selectedDateTimeBottomSheetDialog?.setData(bookingSlotResponse!!, selectedService!!)
                 binding?.groupTiming?.visibility = View.VISIBLE
             } else {
