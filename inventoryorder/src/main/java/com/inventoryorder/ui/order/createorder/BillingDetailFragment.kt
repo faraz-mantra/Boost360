@@ -43,12 +43,12 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   private var createOrderRequest = OrderInitiateRequest()
   private var totalPrice = 0.0
   private var deliveryFee = 0.0
-  private var selectedDeliveryType : String = OrderItem.OrderMode.PICKUP.name
+  private var selectedDeliveryType: String = OrderItem.OrderMode.PICKUP.name
   var orderBottomSheet = OrderBottomSheet()
   var deliveryTypeBottomSheet = OrderBottomSheet()
   private var shouldFinish = false
   var shouldReInitiate = false
-  private var paymentStatus : String = PaymentDetailsN.STATUS.PENDING.name
+  private var paymentStatus: String = PaymentDetailsN.STATUS.PENDING.name
 
   companion object {
     @JvmStatic
@@ -73,20 +73,16 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     prepareDeliveryTypeOptions()
 
     setOnClickListener(binding?.ivOptions, binding?.tvDeliveryType, binding?.tvPaymentMode,
-            binding?.tvPaymentStatus, binding?.buttonConfirmOrder, binding?.buttonGoBack,
-            binding?.textAddDeliveryFee, binding?.textAddDeliveryFeeEdit, binding?.tvAddMore)
+        binding?.tvPaymentStatus, binding?.buttonConfirmOrder, binding?.buttonGoBack,
+        binding?.textAddDeliveryFee, binding?.textAddDeliveryFeeEdit, binding?.tvAddMore)
   }
 
-  fun getBundleData(): Bundle? {
-    val bundle = Bundle()
-    shouldFinish?.let {
-      bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
+  fun getBundleData(): Bundle {
+    return Bundle().apply {
+      putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish);
+      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate);
+      putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest);
     }
-    shouldReInitiate?.let {
-      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
-    }
-    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
-    return bundle
   }
 
   private fun setUpData() {
@@ -124,7 +120,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   }
 
   override fun onClick(v: View) {
-    when(v) {
+    when (v) {
 
       binding?.ivOptions -> {
         showPopUp(binding?.ivOptions!!)
@@ -150,8 +146,8 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
         var paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
         var shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
-                deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = deliveryFee,
-                currencyCode = createOrderRequest?.items?.get(0)?.productDetails?.currencyCode)
+            deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = deliveryFee,
+            currencyCode = createOrderRequest?.items?.get(0)?.productDetails?.currencyCode)
 
         createOrderRequest.mode = selectedDeliveryType!!
         createOrderRequest.paymentDetails = paymentDetails
@@ -227,15 +223,15 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     deliveryTypeBottomSheet.items = optionsList
   }
 
-  private fun onDeliveryTypeSelected(bottomSheetOptionsItem : BottomSheetOptionsItem, orderBottomSheet : OrderBottomSheet) {
+  private fun onDeliveryTypeSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
     binding?.tvDeliveryType?.text = bottomSheetOptionsItem?.displayValue
     selectedDeliveryType = bottomSheetOptionsItem?.serverValue!!
     binding?.tvDeliveryType?.text = bottomSheetOptionsItem?.displayValue!!
-   // paymentStatus = bottomSheetOptionsItem?.serverValue!!
+    // paymentStatus = bottomSheetOptionsItem?.serverValue!!
     this.deliveryTypeBottomSheet = orderBottomSheet
   }
 
-  private fun onPaymentStatusSelected(bottomSheetOptionsItem : BottomSheetOptionsItem, orderBottomSheet : OrderBottomSheet) {
+  private fun onPaymentStatusSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
     binding?.tvPaymentStatus?.text = bottomSheetOptionsItem?.displayValue
     createOrderRequest?.paymentDetails?.status = bottomSheetOptionsItem?.serverValue
     paymentStatus = bottomSheetOptionsItem?.serverValue!!
@@ -248,7 +244,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     addDeliveryFeeBottomSheetDialog.show(this.parentFragmentManager, AddDeliveryFeeBottomSheetDialog::class.java.name)
   }
 
-  private fun onDeliveryFeeAdded(value : Double) {
+  private fun onDeliveryFeeAdded(value: Double) {
 
     if (value > 0) {
       deliveryFee = value
@@ -293,14 +289,14 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
     textEditCustomerInfo.setOnClickListener {
       val editCustomerInfoBottomSheetDialog = EditCustomerInfoBottomSheetDialog(createOrderRequest?.buyerDetails?.contactDetails!!)
-      editCustomerInfoBottomSheetDialog.onClicked = {onCustomerInfo(it)}
+      editCustomerInfoBottomSheetDialog.onClicked = { onCustomerInfo(it) }
       editCustomerInfoBottomSheetDialog.show(this.parentFragmentManager, EditCustomerInfoBottomSheetDialog::class.java.name)
       popupWindow.dismiss()
     }
 
     textEditCustomerAddr.setOnClickListener {
       val editCustomerAddressBottomSheetDialog = EditCustomerAddressBottomSheetDialog(createOrderRequest?.buyerDetails?.address!!)
-      editCustomerAddressBottomSheetDialog.onClicked = {onCustomerAddress(it)}
+      editCustomerAddressBottomSheetDialog.onClicked = { onCustomerAddress(it) }
       editCustomerAddressBottomSheetDialog.show(this.parentFragmentManager, EditCustomerAddressBottomSheetDialog::class.java.name)
       popupWindow.dismiss()
     }

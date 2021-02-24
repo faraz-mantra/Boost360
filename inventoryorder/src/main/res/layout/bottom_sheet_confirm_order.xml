@@ -66,6 +66,7 @@
           android:drawablePadding="@dimen/size_10"
           android:text="@string/delivery_mode_store_pickup"
           android:textColor="@color/black_4a4a4a"
+          app:fontFamily="@font/regular"
           app:textType="HEADING_6" />
 
         <com.framework.views.customViews.CustomTextView
@@ -78,6 +79,7 @@
           android:drawablePadding="@dimen/size_10"
           android:text="@string/delivery_mode_store_pickup"
           android:textColor="@color/black_4a4a4a"
+          app:fontFamily="@font/regular"
           app:textType="HEADING_6" />
 
         <com.framework.views.customViews.CustomTextView
@@ -86,11 +88,12 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_6"
-          tools:drawableStart="@drawable/ic_order_status_pending"
           android:drawablePadding="@dimen/size_10"
           android:text="@string/delivery_mode_store_pickup"
           android:textColor="@color/black_4a4a4a"
-          app:textType="HEADING_6" />
+          app:fontFamily="@font/regular"
+          app:textType="HEADING_6"
+          tools:drawableStart="@drawable/ic_order_status_pending" />
 
         <View
           android:id="@+id/line"

@@ -65,6 +65,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
 
     binding.serviceLocation.icon.setImageResource(R.drawable.ic_service_location)
     binding.serviceLocation.title.text = "${getApplicationContext()?.getString(R.string.service_location)} :"
+    binding.serviceLocation.value.text = "Business"
     binding.serviceLocation.value.text = order.SellerDetails?.Address?.City ?: "NA"
 
     binding.customer.icon.setImageResource(R.drawable.ic_customer)
@@ -84,7 +85,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     val btnStatusMenu = order.appointmentButtonStatus()
     binding.lytStatusBtn.visible()
     if (btnStatusMenu.isNullOrEmpty().not()) {
-      when (val btnOrderMenu = btnStatusMenu.removeAt(0)) {
+      when (val btnOrderMenu = btnStatusMenu.removeFirst()) {
         OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT -> {
           colorCode = "#f16629"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
@@ -101,6 +102,10 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
           colorCode = "#9B9B9B"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
         }
+        OrderMenuModel.MenuStatus.SEND_RE_BOOKING-> {
+          colorCode = "#9B9B9B"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
+        }
         OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> {
           colorCode = "#FFB900"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_confirmed_order_btn_bkg, R.color.orange, R.drawable.ic_arrow_down_orange)
@@ -108,6 +113,10 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
         OrderMenuModel.MenuStatus.MARK_AS_SERVED -> {
           colorCode = "#78AF00"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_transit_order_btn_green, R.color.green_78AF00, R.drawable.ic_arrow_down_green)
+        }
+        OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
+          colorCode = "#52AAC6"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
         }
         else -> binding.lytStatusBtn.gone()
       }

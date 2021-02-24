@@ -108,9 +108,9 @@
   <string name="reschedule_consultation">Reschedule consultation</string>
   <string name="copy_video_call_link">Copy video call link</string>
   <string name="open_consultation_window">OPEN CONSULTATION WINDOW</string>
-  <string name="appointment_confirmed">Appointment confirmed.</string>
+  <string name="appointment_confirmed">Appointment confirmed successfully!</string>
   <string name="order_confirmed">Order confirmed successfully!</string>
-  <string name="order_payment_done">Payment confirmed successfully!</string>
+  <string name="payment_confirmed">Payment confirmed successfully!</string>
   <string name="payment_request_send">Payment reminder sent successfully!</string>
   <string name="time_remaining">Time remaining</string>
   <string name="_00_00_00">00:00:00</string>
@@ -176,7 +176,7 @@
   <string name="cancelling_the_order">Cancelling the order?</string>
   <string name="your_store">Your Store</string>
   <string name="customer">Customer</string>
-  <string name="cancellation_requested_by">Cancellation requested by</string>
+  <string name="cancellation_requested_by">Cancelling requested by</string>
   <string name="done">Done</string>
   <string name="reason_for_cancellation_optional">Reason for Cancellation (optional)</string>
   <string name="type_if_there_are_any_known_reason">Type, if there are any known reason...</string>
@@ -187,11 +187,12 @@
   <string name="delivery_mode_store_pickup">Delivery mode: <b>Store Pickup</b></string>
   <string name="send_online_payment_link_to_customer">Send online payment link to customer</string>
   <string name="boost_will_send_an_email_and_an_sms_confirmation_of_this_order">Boost will send an email and an SMS to the customer on your behalf, informing them of the confirmation of this order</string>
-  <string name="send_an_email_and_an_sms_confirmation_of_this_apt">An email and an SMS will be sent to the customer on your behalf, informing them of the confirmation of this appointment.</string>
+  <string name="send_an_email_and_an_sms_confirmation_of_this_apt">An email and an SMS will be sent to the customer on your behalf, informing them of the confirmation of this appointment</string>
   <string name="boost_along_payment_order">along with the payment link.</string>
   <string name="boost_will_send_payment_link_this_order">Boost will send payment link to the customer on your behalf. Upon successful payment it will reflect againt this order.</string>
   <string name="send_re_booking_reminder_apt">A notification will be sent to this customer reminding to book this service again if interested.</string>
   <string name="boost_will_send_payment_link_this_apt">A secure payment link will be sent to the customer on your behalf. Upon successful payment it will reflect againt this appointment.</string>
+  <string name="start_apt_service_desc">An email will be sent to the customer notifying them about appointment service appointment being started.</string>
   <string name="collect_pending_payment">Collect Pending Payment</string>
   <string name="marking_as_delivered">Marking as Delivered</string>
   <string name="no_don_t_need_any_feedback">No, don’t need any feedback</string>
@@ -217,9 +218,15 @@
   <string name="paste_consignment_id">Paste Consignment ID</string>
   <string name="consignment_tracking_url_provided_by_vendor">Consignment tracking URL (provided by vendor)</string>
   <string name="paste_consignment_tracking_url">Paste consignment tracking URL</string>
+  <string name="appointment_cancel">Appointment cancel successfully!</string>
   <string name="order_cancel">Order cancel successfully!</string>
   <string name="order_shipped">Order shipped successfully!</string>
+  <string name="apt_start_success">Appointment start successfully!</string>
+  <string name="apt_served_success">Appointment served successfully!</string>
+  <string name="re_booking_reminder">Reminder send successfully!</string>
+  <string name="appointment_feedback_requested">Appointment feedback requested!</string>
   <string name="order_delivery">Order delivery successfully!</string>
+  <string name="appointment_serve">Appointment served successfully!</string>
   <string name="cancellation_reason_not_update">Cancellation reason not update</string>
   <string name="include_a_message_optional">Include a Message (optional)</string>
   <string name="add">Add</string>
@@ -343,6 +350,7 @@
   <string name="customer_email_not_available">Customer email not available</string>
   <string name="cancelling_appointment">Cancelling appointment?</string>
   <string name="note_sent_to_the_customer_reason_for_cancellation_if_any"><b>NOTE:</b> An email and SMS will be sent to the customer informing about the cancellation of this appointment and the reason for cancellation, if any.</string>
+  <string name="payment_done_merchant_desc"><b>NOTE:</b> Payment status once confirmed can not be changed unless appointment is cancelled and refund is initiated.</string>
   <string name="the_customer">The customer</string>
   <string name="your_business">Your business</string>
   <string name="don_t_cancel">Don’t cancel</string>
@@ -350,4 +358,14 @@
   <string name="request_pending_payment">Request Pending Payment</string>
   <string name="send_payment_link_via_select_atleast_one_option"><b>Send payment link via</b> (select atleast one option)</string>
   <string name="send_reminder">Send reminder</string>
+  <string name="marking_as_customer_served">Marking as ‘Customer Served’</string>
+  <string name="start_appointment">Start appointment</string>
+  <string name="starting_appointment_Q">Starting appointment?</string>
+  <string name="how_did_customer_pay_you"><b>How did customer pay you?</b></string>
+  <string name="payment_info">Payment info</string>
+  <string name="cash_payment">Cash</string>
+  <string name="card_payment">Card</string>
+  <string name="upi_payment">UPI</string>
+  <string name="others_payment">Others</string>
+  <string name="confirm_payment">Confirm Payment</string>
 </resources>
