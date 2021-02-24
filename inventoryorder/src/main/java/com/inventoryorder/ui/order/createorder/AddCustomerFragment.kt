@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.inventoryorder.R
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentAddCustomerBinding
@@ -18,6 +19,7 @@ import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import java.lang.StringBuilder
+import java.util.regex.Pattern
 
 class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() {
 
@@ -112,6 +114,10 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
       return
     }
 
+    if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
+      showShortToast(getString(R.string.enter_valid_gstin_number))
+      return
+    }
 
     if (address.isEmpty()) {
       showShortToast(getString(R.string.customer_address_cannot_be_empty))

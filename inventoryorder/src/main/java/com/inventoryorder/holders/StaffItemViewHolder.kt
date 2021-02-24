@@ -24,10 +24,14 @@ class StaffItemViewHolder(binding: StaffItemBinding) : AppBaseRecyclerViewHolder
 
         if (data?.Image != null && data?.Image?.isNotEmpty()==true) {
             Picasso.get().load(item?.Image).into(binding?.imageStaff)
+            binding?.imageAnybody?.visibility = View.GONE
+            binding?.imageStaff?.visibility = View.VISIBLE
         }
 
         if (data?.Name?.equals("anybody", true)==true) {
-            Picasso.get().load(R.drawable.ic_anybody).into(binding?.imageStaff)
+            //Picasso.get().load(R.drawable.ic_anybody).into(binding?.imageAnybody)
+            binding?.imageAnybody?.visibility = View.VISIBLE
+            binding?.imageStaff?.visibility = View.GONE
         }
 
         binding?.textStaffName?.text = item?.Name

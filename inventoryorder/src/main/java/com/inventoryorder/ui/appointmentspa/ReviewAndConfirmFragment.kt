@@ -91,6 +91,11 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
         binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice)}"
         binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
 
+        if (orderInitiateRequest?.buyerDetails?.GSTIN != null && orderInitiateRequest?.buyerDetails?.GSTIN?.isNotEmpty()==true) {
+            binding?.tvGstin?.text = "GSTIN : ${orderInitiateRequest?.buyerDetails?.GSTIN}"
+            binding?.tvGstin?.visibility = View.VISIBLE
+        }
+
         orderInitiateRequest?.gstCharges = calculateGST(discountedPrice)
         var paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
         orderInitiateRequest?.paymentDetails = paymentDetails
