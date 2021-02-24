@@ -148,7 +148,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     if (pinCode.isNullOrEmpty().not()) addrStr.append(", $pinCode")*/
 
     var billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
-    var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress)
+    var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress, GSTIN = gstNo.toString())
 
     createOrderRequest.buyerDetails = buyerDetails
 

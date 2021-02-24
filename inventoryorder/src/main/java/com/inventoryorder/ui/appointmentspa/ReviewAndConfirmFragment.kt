@@ -11,12 +11,17 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentReviewAndConfirmBinding
+import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.OrderInitiateResponse
+import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.order.orderbottomsheet.BottomSheetOptionsItem
 import com.inventoryorder.model.order.orderbottomsheet.OrderBottomSheet
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.PaymentDetails
 import com.inventoryorder.model.orderRequest.ShippingDetails
+import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.spaAppointment.ServiceItem
 import com.inventoryorder.ui.BaseInventoryFragment
@@ -40,6 +45,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     private var selectedService : ServiceItem ?= null
     var shouldReInitiate = false
     var shouldRefresh = false
+    var prefData : PreferenceData ?= null
 
     companion object {
         @JvmStatic
@@ -65,6 +71,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
         totalPrice = arguments?.getDouble(IntentConstant.TOTAL_PRICE.name) ?: 0.0
         discountedPrice = arguments?.getDouble(IntentConstant.DISCOUNTED_PRICE.name) ?: 0.0
         selectedService = arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
+        prefData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
        // orderInitiateRequest?.sellerID = preferenceData?.fpTag.toString()
 
         preparePaymentStatusOptions()
@@ -95,6 +102,10 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
             binding?.tvEmail?.visibility = View.GONE
         } else {
             binding?.tvEmail?.visibility = View.VISIBLE
+        }
+
+        if (totalPrice == discountedPrice) {
+            binding?.textAmount?.visibility = View.GONE
         }
 
         binding?.tvPhone?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.primaryContactNumber.toString()
@@ -176,18 +187,40 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
             if (it.isSuccess()) {
                 hideProgress()
 
-                showShortToast(getString(R.string.appointment_created_successfully))
+                /*showShortToast(getString(R.string.appointment_created_successfully))
                 shouldReInitiate = true
                 shouldRefresh = true
-                (activity as FragmentContainerOrderActivity).onBackPressed()
+                (activity as FragmentContainerOrderActivity).onBackPressed()*/
 
                /* var orderInitiateResponse = (it as? OrderInitiateResponse)
                 var bundle = Bundle()
                 bundle.putString(IntentConstant.TYPE_APPOINTMENT.name, "appt")
                 bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, orderInitiateResponse)
                 startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)*/
+
+                var orderInitiateResponse = (it as? OrderInitiateResponse)
+                apiConfirmOrder(orderInitiateResponse?.data!!)
             } else {
                 hideProgress()
+                showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
+            }
+        })
+    }
+
+    private fun apiConfirmOrder(order: OrderItem?) {
+        showProgress()
+        viewModel?.confirmOrder(prefData?.clientId, order?._id)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            if (it.error is NoNetworkException) {
+                showShortToast(resources.getString(R.string.internet_connection_not_available))
+                return@Observer
+            }
+            if (it.isSuccess()) {
+                showShortToast(getString(R.string.appointment_created_successfully))
+                shouldReInitiate = true
+                shouldRefresh = true
+                (activity as FragmentContainerOrderActivity).onBackPressed()
+            } else {
                 showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
             }
         })
