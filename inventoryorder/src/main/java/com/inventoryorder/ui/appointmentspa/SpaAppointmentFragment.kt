@@ -254,6 +254,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     private fun setArrayAdapter() {
         serviceAdapter = CustomArrayAdapter(this.requireActivity(), R.layout.layout_service_item, serviceList!!)
         binding?.editServiceName?.threshold = 1
+        (serviceAdapter as CustomArrayAdapter).initList();
         binding?.editServiceName?.setAdapter(serviceAdapter)
         binding?.editServiceName?.onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->
             selectedService = serviceList?.get(pos)
