@@ -188,7 +188,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
                 primaryContactNumber = phone.toString())
 
         var billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
-        var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress)
+        var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress, GSTIN = gstNo.toString())
 
         var appointmentsList = ArrayList<AppointmentRequestModel>()
         appointmentsList.add(appointmentRequestModel)
