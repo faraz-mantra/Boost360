@@ -101,78 +101,55 @@ public class Get_FP_Details_Service {
             });
             bus.post(new Get_FP_Details_Event(get_fp_details_model));
           } else {
-            activity.runOnUiThread(new Runnable() {
-              @Override
-              public void run() {
-                if (activity == null || activity.isFinishing()) {
-                  return;
-                }
-                Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
-                WebEngageController.trackEvent(
-                    "[Android] Get_FP_Details FP Data Null",
-                    "[Android] Get_FP_Details FP Data Null",
-                    fpID);
+            activity.runOnUiThread(() -> {
+              if (activity.isFinishing()) return;
+              Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
+              WebEngageController.trackEvent("[Android] Get_FP_Details FP Data Null", "[Android] Get_FP_Details FP Data Null", fpID);
 
-                if (WebSiteAddressActivity.pd != null) {
-                  WebSiteAddressActivity.pd.dismiss();
-                }
-                if (SplashScreen_Activity.pd != null) {
-                  SplashScreen_Activity.pd.dismiss();
-                }
+              if (WebSiteAddressActivity.pd != null) {
+                WebSiteAddressActivity.pd.dismiss();
+              }
+              if (SplashScreen_Activity.pd != null) {
+                SplashScreen_Activity.pd.dismiss();
+              }
 
-                if (Login_MainActivity.progressDialog != null && Login_MainActivity.progressDialog.isShowing()) {
-                  Login_MainActivity.progressDialog.dismiss();
-                }
-
+              if (Login_MainActivity.progressDialog != null && Login_MainActivity.progressDialog.isShowing()) {
+                Login_MainActivity.progressDialog.dismiss();
               }
             });
             bus.post(response);
           }
         } catch (Exception e) {
-          WebEngageController.trackEvent(
-              "[Android] Get_FP_Details Service Exception",
-              "[Android] Get_FP_Details Service Exception",
-              e.getMessage());
+          WebEngageController.trackEvent("[Android] Get_FP_Details Service Exception", "[Android] Get_FP_Details Service Exception", e.getMessage());
+          bus.post(e.getLocalizedMessage());
         }
       }
 
       @Override
       public void failure(RetrofitError error) {
         Log.d("", "" + error.getMessage());
-        WebEngageController.trackEvent(
-            "[Android] Failed to load data in Get_FP_Details",
-            "[Android] Failed to load data in Get_FP_Details",
-            fpID);
-
+        WebEngageController.trackEvent("[Android] Failed to load data in Get_FP_Details", "[Android] Failed to load data in Get_FP_Details", fpID);
         try {
-          activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-              //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
-              if (WebSiteAddressActivity.pd != null) {
-                WebSiteAddressActivity.pd.dismiss();
-              }
-              if (SplashScreen_Activity.pd != null) {
-                try {
-                  SplashScreen_Activity.pd.dismiss();
-                } catch (Exception e) {
-                  e.printStackTrace();
-                }
+          activity.runOnUiThread(() -> {
+            //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
+            if (WebSiteAddressActivity.pd != null) {
+              WebSiteAddressActivity.pd.dismiss();
+            }
+            if (SplashScreen_Activity.pd != null) {
+              try {
+                SplashScreen_Activity.pd.dismiss();
+              } catch (Exception e) {
+                e.printStackTrace();
               }
             }
           });
-
           MixPanelController.track(EventKeysWL.GET_FP_FAILURE_EVENT, null);
-
           bus.post(error);
         } catch (Exception e) {
-
+          bus.post(e.getLocalizedMessage());
         }
-
       }
     });
-
-
   }
 
   public static void autoPull(Activity activity, String fpID) {
@@ -235,23 +212,20 @@ public class Get_FP_Details_Service {
         Log.d("", "" + error.getMessage());
         try {
           bus.post(new NfxGetTokensResponse());
-          activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-              //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
-              if (WebSiteAddressActivity.pd != null) {
-                WebSiteAddressActivity.pd.dismiss();
-              }
-              if (SplashScreen_Activity.pd != null) {
-                bus.post(new NfxGetTokensResponse());
-                try {
-                  SplashScreen_Activity.pd.dismiss();
-                } catch (Exception e) {
-                  e.printStackTrace();
-                }
-              }
-
+          activity.runOnUiThread(() -> {
+            //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
+            if (WebSiteAddressActivity.pd != null) {
+              WebSiteAddressActivity.pd.dismiss();
             }
+            if (SplashScreen_Activity.pd != null) {
+              bus.post(new NfxGetTokensResponse());
+              try {
+                SplashScreen_Activity.pd.dismiss();
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            }
+
           });
         } catch (Exception e) {
 
