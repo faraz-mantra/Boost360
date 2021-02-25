@@ -333,4 +333,10 @@
     <string name="appointment_created_successfully">Appointment created successfully</string>
     <string name="dummy_gst">GSTIN : 77BIO000000000</string>
     <string name="enter_valid_gstin_number">Please enter valid GSTIN number</string>
+    <string name="please_use_below_link">Please use below link to download invoice</string>
+    <string name="str_order_invoice">Order invoice</string>
+    <string name="str_share_invoice">Share invoice...</string>
+    <string name="error_sharing_invoice_please_try_again">Error sharing invoice, please try again.</string>
+    <string name="invalid_invoice_url">Invalid invoice url.</string>
+    <string name="permission_denied_to_read_your_external_storage">Permission denied to read your External storage</string>
 </resources>

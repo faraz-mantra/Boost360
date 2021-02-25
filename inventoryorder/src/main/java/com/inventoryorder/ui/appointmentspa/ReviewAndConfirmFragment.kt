@@ -9,6 +9,7 @@ import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
+import com.inventoryorder.constant.AppConstant.Companion.GST_PERCENTAGE
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentReviewAndConfirmBinding
@@ -39,7 +40,6 @@ import java.util.*
 
 class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmBinding>() {
 
-    private val GST_PERCENTAGE = 1.18
     private var serviceFee = 0.0
     private var totalPrice = 0.0
     private var discountedPrice = 0.0
@@ -230,7 +230,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
             if (it.isSuccess()) {
 
                 var bundle = Bundle()
-                bundle.putString(IntentConstant.TYPE_APPOINTMENT.name, "appt")
+                bundle.putString(IntentConstant.TYPE_APPOINTMENT.name, AppConstant.TYPE_APPOINTMENT)
                 bundle.putSerializable(IntentConstant.ORDER_ID.name, order?._id)
                 bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, prefData)
                 startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)

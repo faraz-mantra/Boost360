@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.inventoryorder.R
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentOrderDetailBinding
@@ -25,6 +26,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() {
 
     var shouldReInitiate = false
+    var shouldRefresh = false
     var type : String ?= null
     var orderId : String ?= null
     var orderResponse : OrderItem ?= null
@@ -54,7 +56,7 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
     private fun setData(orderItem: OrderItem) {
 
-        if (type.equals("appt", true)) {
+        if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) {
             binding?.tvName?.text = getString(R.string.appointment_booked_and_confirmed_successfully)
 
             binding?.linearPaymentStatus?.visibility = View.VISIBLE
@@ -85,8 +87,8 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
     fun getBundleData(): Bundle? {
         val bundle = Bundle()
+        if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
         shouldReInitiate?.let {
-            bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldReInitiate)
             bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
         }
         return bundle
@@ -119,6 +121,7 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
         when(v) {
             binding?.buttonInitiateNewOrder -> {
                 shouldReInitiate = true
+                if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) shouldRefresh = true
                 (activity as FragmentContainerOrderActivity).onBackPressed()
             }
 

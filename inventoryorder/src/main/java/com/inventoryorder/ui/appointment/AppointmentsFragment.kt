@@ -40,6 +40,7 @@ import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
+import com.inventoryorder.ui.order.INVOICE_URL
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
@@ -90,7 +91,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     super.onClick(v)
     when (v) {
       binding?.btnAdd -> {
-//        showLongToast("Coming soon...")
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
@@ -100,6 +100,11 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         } else {
           startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
         }
+
+       /*
+        var bundle = Bundle()
+        bundle.putSerializable(INVOICE_URL, "http://www.orimi.com/pdf-test.pdf")
+        startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, bundle)*/
       }
     }
   }
