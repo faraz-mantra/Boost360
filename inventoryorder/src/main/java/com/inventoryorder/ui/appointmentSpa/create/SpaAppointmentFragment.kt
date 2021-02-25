@@ -11,6 +11,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentSpaAppointmentBinding
@@ -27,19 +28,19 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import kotlinx.android.synthetic.main.item_date_view.*
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBinding>(), SelectDateTimeBottomSheetDialog.DateChangedListener {
 
-  private var serviceList: ArrayList<ServiceItem>? = null
-  private var serviceAdapter: ArrayAdapter<ServiceItem>? = null
+  private var serviceList : ArrayList<ServiceItem> ?= null
+  private var serviceAdapter : ArrayAdapter<ServiceItem> ?= null
   private var startDate = ""
-  private var bookingSlotResponse: BookingSlotResponse? = null
-  private var selectedService: ServiceItem? = null
-  private var selectedDateTimeBottomSheetDialog: SelectDateTimeBottomSheetDialog? = null
+  private var bookingSlotResponse : BookingSlotResponse ?= null
+  private var selectedService : ServiceItem ?= null
+  private var selectedDateTimeBottomSheetDialog : SelectDateTimeBottomSheetDialog ?= null
   private var orderInitiateRequest = OrderInitiateRequest()
   private var appointmentRequestModel = AppointmentRequestModel()
   private var totalPrice = 0.0
@@ -53,7 +54,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): SpaAppointmentFragment {
       val fragment = SpaAppointmentFragment()
-      fragment.setTargetFragment(newInstance(), 0)
+      fragment.setTargetFragment(this.newInstance(), 0)
       fragment.arguments = bundle
       return fragment
     }
@@ -72,7 +73,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
   override fun onClick(v: View) {
     super.onClick(v)
-    when (v) {
+    when(v) {
       binding?.buttonReviewDetails -> {
         validateForm()
       }
@@ -97,11 +98,13 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       }
 
       binding?.imageEdit -> {
+
         appointmentRequestModel?.staffId?.let {
           for ((index, value) in bookingSlotResponse?.Result?.get(0)?.Staff?.withIndex()!!) {
             value.isSelected = value._id == it
           }
         }
+
         selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, dateCounter, this)
         selectedDateTimeBottomSheetDialog?.onClicked = this::onDialogDoneClicked
         selectedDateTimeBottomSheetDialog?.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
@@ -110,10 +113,12 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
   }
 
   fun getBundleData(): Bundle? {
-    return Bundle().apply {
-      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
-      putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
+    val bundle = Bundle()
+    shouldReInitiate?.let {
+      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+      bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
     }
+    return bundle
   }
 
   private fun validateForm() {
@@ -127,7 +132,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     val pinCode = binding?.layoutBillingAddr?.editPin?.text ?: ""
     val gstNo = binding?.layoutCustomer?.editGstin?.text ?: ""
 
-    if (appointmentRequestModel._id == null || appointmentRequestModel?._id?.isEmpty() == true) {
+    if (appointmentRequestModel._id == null ||  appointmentRequestModel?._id?.isEmpty()==true) {
       showShortToast(getString(R.string.please_select_staff_and_time_slot))
       return
     }
@@ -149,6 +154,11 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
     if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
       showShortToast(getString(R.string.please_enter_valid_email))
+      return
+    }
+
+    if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
+      showShortToast(getString(R.string.enter_valid_gstin_number))
       return
     }
 
@@ -177,18 +187,20 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       return
     }
 
-    val contactDetails = ContactDetails(fullName = name.toString(), emailId = email.toString(), primaryContactNumber = phone.toString())
+    var contactDetails = ContactDetails(fullName = name.toString(),
+        emailId = email.toString(),
+        primaryContactNumber = phone.toString())
 
-    val billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
-    val buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress)
+    var billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
+    var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress, GSTIN = gstNo.toString())
 
-    val appointmentsList = ArrayList<AppointmentRequestModel>()
+    var appointmentsList = ArrayList<AppointmentRequestModel>()
     appointmentsList.add(appointmentRequestModel)
 
-    val productDetails = ProductDetails(extraProperties = ExtraProperties(appointment = appointmentsList))
+    var productDetails = ProductDetails(extraProperties = ExtraProperties(appointment = appointmentsList))
 
-    val items = ArrayList<ItemsItem>()
-    val item = ItemsItem(productOrOfferId = selectedService?._id, quantity = 1, type = "SERVICE", productDetails = productDetails)
+    var items = ArrayList<ItemsItem>()
+    var item = ItemsItem(productOrOfferId = selectedService?._id, quantity = 1, type = "SERVICE", productDetails = productDetails)
 
     items.add(item)
 
@@ -198,7 +210,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     orderInitiateRequest?.items?.get(0)?.productDetails?.name = selectedService?.Name
     orderInitiateRequest?.sellerID = preferenceData?.fpTag ?: ""
 
-    val bundle = Bundle()
+    var bundle = Bundle()
     bundle?.putSerializable(IntentConstant.ORDER_REQUEST.name, orderInitiateRequest)
     bundle?.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
     bundle?.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
@@ -208,7 +220,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     startFragmentOrderActivity(FragmentType.REVIEW_SPA_DETAILS, bundle, isResult = true)
   }
 
-  private fun onDialogDoneClicked(appointmentRequestModel: AppointmentRequestModel, dateCounter: Int) {
+  private fun onDialogDoneClicked(appointmentRequestModel: AppointmentRequestModel, dateCounter : Int) {
     binding?.layoutShowSelectedSlot?.visibility = View.VISIBLE
     binding?.groupTiming?.visibility = View.GONE
 
@@ -246,28 +258,34 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
   private fun setArrayAdapter() {
     serviceAdapter = CustomArrayAdapter(this.requireActivity(), R.layout.layout_service_item, serviceList!!)
     binding?.editServiceName?.threshold = 1
+    (serviceAdapter as CustomArrayAdapter).initList();
     binding?.editServiceName?.setAdapter(serviceAdapter)
     binding?.editServiceName?.onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->
       selectedService = serviceList?.get(pos)
       totalPrice = selectedService?.Price ?: 0.0
       discountedPrice = selectedService?.DiscountedPrice ?: 0.0
       currency = selectedService?.Currency ?: ""
-      val bookingSlotsRequest = BookingSlotsRequest(BatchType = "DAILY",
+      var bookingSlotsRequest = BookingSlotsRequest(BatchType = "DAILY",
           ServiceId = serviceList?.get(pos)?._id!!,
           DateRange = DateRange(StartDate = startDate, EndDate = startDate))
       getBookingSlots(bookingSlotsRequest)
     }
   }
 
-  private fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) {
+  fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) {
     viewModel?.getBookingSlots(bookingSlotsRequest)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
+
       if (it.error is NoNetworkException) {
         showLongToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
+
       if (it.isSuccess()) {
         bookingSlotResponse = (it as? BookingSlotResponse)
+
+        bookingSlotResponse?.Result?.get(0)?.Staff?.get(0)?.isSelected = true
+
         selectedDateTimeBottomSheetDialog?.setData(bookingSlotResponse!!, selectedService!!)
         binding?.groupTiming?.visibility = View.VISIBLE
       } else {
@@ -277,20 +295,21 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     })
   }
 
-  private fun getDateTime(): String {
+  private fun getDateTime() : String {
     val c = Calendar.getInstance().time
     val df = SimpleDateFormat(DateUtils.FORMAT_YYYY_MM_DD, Locale.getDefault())
     return df.format(c)
   }
 
-  private fun getDisplayDate(date: String): String {
+  private fun getDisplayDate(date : String) : String {
     try {
       val currentDateFormat = SimpleDateFormat(DateUtils.FORMAT_YYYY_MM_DD, Locale.getDefault())
       val displayDateFormat = SimpleDateFormat(DateUtils.SPA_DISPLAY_DATE, Locale.getDefault())
-      val currentDate = currentDateFormat.parse(date)
+
+      var currentDate = currentDateFormat.parse(date)
       return displayDateFormat.format(currentDate!!)
-    } catch (ex: Exception) {
-    }
+    } catch (ex : Exception) {}
+
     return ""
   }
 
@@ -305,7 +324,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
       shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)!!
       shouldRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name)
-      if (shouldReInitiate) {
+      if (shouldReInitiate != null && shouldReInitiate) {
         (context as FragmentContainerOrderActivity).onBackPressed()
       }
     }
