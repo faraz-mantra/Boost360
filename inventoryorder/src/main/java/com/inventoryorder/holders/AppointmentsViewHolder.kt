@@ -79,7 +79,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     }
 
     binding.textWorkType.text = order.firstItemForAptConsult()?.Product?.Name
-
+    activity?.let { binding.statusView.background= ContextCompat.getDrawable(it, R.drawable.ic_new_order_bg) }
     //settings up button
     var colorCode = "#9B9B9B"
     val btnStatusMenu = order.appointmentButtonStatus()
@@ -92,6 +92,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
         }
         OrderMenuModel.MenuStatus.START_APPOINTMENT -> {
           colorCode = "#f16629"
+          activity?.let { binding.statusView.background= ContextCompat.getDrawable(it, R.drawable.ic_new_order_bg_green) }
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_green, R.color.white, R.drawable.ic_arrow_down_white)
         }
         OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {

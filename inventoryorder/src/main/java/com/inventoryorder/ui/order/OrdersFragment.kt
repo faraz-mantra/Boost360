@@ -362,6 +362,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
         if (position != null && orderList.size > position!!) {
+          orderListFinalList= orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()
       } else loadNewData()
