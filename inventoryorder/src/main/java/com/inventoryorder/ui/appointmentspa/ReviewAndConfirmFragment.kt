@@ -301,6 +301,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
         if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
             val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
             shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)!!
+            shouldRefresh = bundle.getBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
             if (shouldReInitiate != null && shouldReInitiate) {
                 (context as FragmentContainerOrderActivity).onBackPressed()
             }
