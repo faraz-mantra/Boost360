@@ -127,14 +127,65 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     })
   }
 
+  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
+    if (isFirst || isSearch) binding?.progress?.visible()
+    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
+      binding?.progress?.gone()
+      if (it.isSuccess()) {
+        val response = (it as? InventoryOrderListResponse)?.Data
+        if (isSearch.not()) {
+          if (isRefresh) orderListFinalList.clear()
+          if (response != null && response.Items.isNullOrEmpty().not()) {
+            orderList.clear()
+            removeLoader()
+            val list = response.Items ?: ArrayList()
+            TOTAL_ELEMENTS = response.total()
+            orderListFinalList.addAll(list)
+            orderList.addAll(orderListFinalList)
+            isLastPageD = (orderListFinalList.size == TOTAL_ELEMENTS)
+            setAdapterNotify(orderList)
+          } else emptyView()
+        } else {
+          if (response != null && response.Items.isNullOrEmpty().not()) {
+            orderList.clear()
+            orderList.addAll(response.Items!!)
+            setAdapterNotify(orderList)
+          } else if (orderListFinalList.isNullOrEmpty().not()) {
+            orderList.clear()
+            orderList.addAll(orderListFinalList)
+            setAdapterNotify(orderList)
+          } else emptyView()
+        }
+      } else showLongToast(it.message())
+    })
+  }
+
+  private fun removeLoader() {
+    if (isLoadingD) {
+      orderAdapter?.removeLoadingFooter()
+      isLoadingD = false
+    }
+  }
+
+  private fun setAdapterNotify(items: ArrayList<OrderItem>) {
+    binding?.orderRecycler?.visible()
+    binding?.errorView?.gone()
+    if (orderAdapter != null) {
+      orderAdapter?.notify(getNewList(items))
+    } else setAdapterOrderList(getNewList(items))
+  }
+
+  private fun getNewList(items: ArrayList<OrderItem>): ArrayList<OrderItem> {
+    val list = ArrayList<OrderItem>()
+    list.addAll(items)
+    return list
+  }
+
+
   private fun apiSellerSummary() {
     binding?.progress?.visible()
     viewModel?.getSellerSummary(clientId, fpTag)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        errorOnSummary(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      if (it.isSuccess()) {
         val response = it as? OrderSummaryResponse
         setToolbarTitle(resources.getString(R.string.orders) + " (${response?.Data?.TotalOrders ?: 0})")
         typeList = response?.Data?.getOrderType()
@@ -411,64 +462,6 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   }
 
-  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
-    if (isFirst || isSearch) binding?.progress?.visible()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
-      binding?.progress?.gone()
-      if (it.error is NoNetworkException) {
-        errorView(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val response = (it as? InventoryOrderListResponse)?.Data
-        if (isSearch.not()) {
-          if (isRefresh) orderListFinalList.clear()
-          if (response != null && response.Items.isNullOrEmpty().not()) {
-            orderList.clear()
-            removeLoader()
-            val list = response.Items ?: ArrayList()
-            TOTAL_ELEMENTS = response.total()
-            orderListFinalList.addAll(list)
-            orderList.addAll(orderListFinalList)
-            isLastPageD = (orderListFinalList.size == TOTAL_ELEMENTS)
-            setAdapterNotify(orderList)
-          } else errorView("No order available.")
-        } else {
-          if (response != null && response.Items.isNullOrEmpty().not()) {
-            orderList.clear()
-            orderList.addAll(response.Items!!)
-            setAdapterNotify(orderList)
-          } else if (orderListFinalList.isNullOrEmpty().not()) {
-            orderList.clear()
-            orderList.addAll(orderListFinalList)
-            setAdapterNotify(orderList)
-          } else errorView("No order available.")
-        }
-      } else errorView(it.message ?: "No order available.")
-    })
-  }
-
-  private fun removeLoader() {
-    if (isLoadingD) {
-      orderAdapter?.removeLoadingFooter()
-      isLoadingD = false
-    }
-  }
-
-  private fun setAdapterNotify(items: ArrayList<OrderItem>) {
-    binding?.orderRecycler?.visible()
-    binding?.errorTxt?.gone()
-    if (orderAdapter != null) {
-      orderAdapter?.notify(getNewList(items))
-    } else setAdapterOrderList(getNewList(items))
-  }
-
-  private fun getNewList(items: ArrayList<OrderItem>): ArrayList<OrderItem> {
-    val list = ArrayList<OrderItem>()
-    list.addAll(items)
-    return list
-  }
-
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     val searchItem = menu.findItem(R.id.menu_item_search)
@@ -517,10 +510,9 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     }
   }
 
-  private fun errorView(error: String) {
+  private fun emptyView() {
     binding?.orderRecycler?.gone()
-    binding?.errorTxt?.visible()
-    binding?.errorTxt?.text = error
+    binding?.errorView?.visible()
   }
 
   private fun getRequestFilterData(statusList: ArrayList<String>, paymentStatus: String? = null, operatorType: String = QueryObject.Operator.EQ.name, searchTxt: String = ""): OrderFilterRequest {
