@@ -159,7 +159,6 @@
   <string name="contact_support">Contact Support</string>
   <string name="update_bank_detail">Update Bank Detail</string>
   <string name="add_bank_detail">Add Bank Detail</string>
-  <string name="boost_payment_gateway">Boost payment gateway</string>
   <string name="external_url">External URL</string>
   <string name="the_service_can_be_offered_either_at_the_business_location_or_at_client_s_location">The service can be offered either at the business location or at client’s location.</string>
   <string name="please_add_bank_detail">Please add bank account detail.</string>
@@ -468,8 +467,45 @@
   <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="image_uploading">Uploading Image, please wait...</string>
     <string name="error_select_service">Please select at least one service provided by this staff</string>
+    <string name="catalog_setup">Catalog setup</string>
+  <string name="service_categories_catalog_display_text_napplicable_tax_slabs">Service categories, Catalog display text,\napplicable tax slabs</string>
+    <string name="decide_what_you_want_to_call_the_catalog_tab_on_your_website_and_the_default_tax_for_your_all_services">Decide what you want to call the catalog tab on your website and the default tax % for your all services.</string>
+  <string name="current_display_name">Current display name</string>
+    <string name="it_is_not_advised_to_change_it_very_often_with_every_such_change_the_url_of_catalog_page_changes_which_may_cause_search_related_issues_and_a_drop_in_search_rank_leading_to_less_traffic">It is NOT ADVISED to change it very often. With every such change, the URL of catalog page changes, which may cause search related issues and a drop in search rank leading to less traffic.</string>
+  <string name="url_https_sravansclinics_com_services">URL: https://sravansclinics.com/services</string>
+    <string name="default_tax_rate_for_services">Default tax rate for services</string>
+  <string name="what_are_text_rates">What are text rates?</string>
+  <string name="tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_">Tax slabs are a rate at which any service is taxable (determined by GST council of India). This is used to back calculate the final paybale amount while placing an order at the checkout page on your website.</string>
+  <string name="how_does_default_rate_work">How does default rate work?</string>
+  <string name="this_will_be_used_as_defau">This will be used as default tax rate for any service in your catalog in case you’ve not entered any specific tax% for that product.</string>
+  <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to recieve money for all your online appointments.</string>
+  <string name="payment_gateway">Payment gateway</string>
+  <string name="boost_360_payment_gateway">Boost 360 payment gateway is a premium service which ensures payment protection to you and your customers. With this your customers will be able to pay you upfront digitally by all popular payment methods such as Credit Card, Debit Card, UPI etc.. We charge 3% as convenience fees which includes bank charges for providing the Boost payment gateway services)</string>
+    <string name="boost_payment_gateway">Boost payment gateway</string>
+    <string name="read_boost_360_terms_and_conditions">Read boost 360 terms and conditions</string>
+    <string name="at_customer_s_location_coming_soon">at customer’s location (Coming soon)</string>
+    <string name="accept_cod_payments">Accept COD payments</string>
+  <string name="at_business_location">at business location</string>
+  <string name="connected_bank_account">Connected bank account</string>
+    <string name="add_a_bank_account">Add a bank account</string>
+  <string name="refund_policy">Refund policy</string>
+  <string name="last_updated_on_24_jan_2020">Last updated on 24 Jan 2020</string>
+  <string name="cancellation_policy">Cancellation policy</string>
+  <string name="privacy_policy">Privacy policy</string>
+  <string name="term_of_condition">Terms of service</string>
+  <string name="default_policy">Default policy</string>
+  <string name="not_updated_since_start_of_website">Not updated since start of website</string>
+  <string name="setup_tax_invoice_for_customer_purchases">Setup tax invoice for customer purchases</string>
+  <string name="signature_bank_details_upi_id_for_non_prepaid_sales">Signature, bank details, UPI ID for non-prepaid sales</string>
+    <string name="view_sample_invoice">View sample invoice</string>
+  <string name="no_search_result_found">No search result found!</string>
+  <string name="seems_that_the_keyword_you_have_entered_does_not_match_to_any_settings">Seems that the keyword you have entered does not match to any settings.</string>
+  <string name="custom_text">Custom text</string>
+  <string name="this_is_a_text_that_appears_on_your_catalog_menu_on_your_website_and_its_url">This is a text that appears on your catalog menu on your website and its URL.</string>
+  <string name="catalog_display_name">Catalog display name</string>
+  <string name="enter_custom_display_text">Enter custom display text</string>
 
-    <array name="stock_availbility">
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>
