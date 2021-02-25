@@ -215,7 +215,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       adapter = adapterMenu
     }
     mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
-    if (orderAdapter != null && orderAdapter!!.list().size - 1 == position) {
+    if (orderAdapter != null && orderAdapter!!.list().size > 2 && orderAdapter!!.list().size - 1 == position) {
       orderMenuView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
       mPopupWindow.showAsDropDown(view, view.x.roundToInt(), view.y.roundToInt() - orderMenuView.measuredHeight, Gravity.NO_GRAVITY)
     } else mPopupWindow.showAsDropDown(view, 0, 0)
@@ -257,7 +257,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         sheetShipped.onClicked = { shippedOrder(it) }
         sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
       }
-      else -> {}
+      else -> {
+      }
     }
   }
 
