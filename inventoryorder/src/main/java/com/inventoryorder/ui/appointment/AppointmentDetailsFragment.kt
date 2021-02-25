@@ -4,9 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.PopupWindow
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -18,7 +16,9 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
+import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentAppointmentDetailsBinding
@@ -40,10 +40,12 @@ import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.*
+import com.inventoryorder.ui.order.INVOICE_URL
 import com.inventoryorder.ui.order.sheetOrder.CancelBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.ConfirmBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.DeliveredBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.RequestPaymentBottomSheetDialog
+import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -268,6 +270,15 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     mPopupWindow.showAsDropDown(view, 0, 0)
   }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
+    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
+      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+    }
+  }
+
 
   fun getBundleData(): Bundle {
     return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, isRefresh) }
