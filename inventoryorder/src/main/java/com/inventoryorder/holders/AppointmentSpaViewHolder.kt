@@ -35,11 +35,11 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? OrderItem
-    data?.let { setDataResponse(position,it) }
+    data?.let { setDataResponse(position, it) }
     binding.mainView.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal) }
   }
 
-  private fun setDataResponse(position: Int,order: OrderItem) {
+  private fun setDataResponse(position: Int, order: OrderItem) {
     val statusValue = OrderStatusValue.fromStatusAppointment(order.status())?.value
     val statusIcon = OrderStatusValue.fromStatusAppointment(order.status())?.icon
 
@@ -72,7 +72,7 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
     binding.customer.title.text = "${getApplicationContext()?.getString(R.string.customer)} :"
     binding.customer.value.text = order.BuyerDetails?.ContactDetails?.FullName?.capitalizeUtil()
 
-    val itemAptSpa=order.firstItemForAptConsult()
+    val itemAptSpa = order.firstItemForAptConsult()
     if (!itemAptSpa?.Product?.ImageUri.isNullOrEmpty()) {
       Picasso.get().load(itemAptSpa?.Product?.ImageUri).into(binding.imageServiceProvider)
     } else {
@@ -80,8 +80,7 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
     }
 
     binding.textWorkType.text = itemAptSpa?.Product?.Name
-
-    //settings up button
+    activity?.let { binding.statusView.background= ContextCompat.getDrawable(it, R.drawable.ic_new_order_bg) }    //settings up button
     var colorCode = "#9B9B9B"
     val btnStatusMenu = order.appointmentSpaButtonStatus()
     binding.lytStatusBtn.visible()
@@ -93,6 +92,7 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
         }
         OrderMenuModel.MenuStatus.START_APPOINTMENT -> {
           colorCode = "#f16629"
+          activity?.let { binding.statusView.background= ContextCompat.getDrawable(it, R.drawable.ic_new_order_bg_green) }
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_green, R.color.white, R.drawable.ic_arrow_down_white)
         }
         OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
@@ -103,7 +103,7 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
           colorCode = "#9B9B9B"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
         }
-        OrderMenuModel.MenuStatus.SEND_RE_BOOKING-> {
+        OrderMenuModel.MenuStatus.SEND_RE_BOOKING -> {
           colorCode = "#9B9B9B"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
         }
