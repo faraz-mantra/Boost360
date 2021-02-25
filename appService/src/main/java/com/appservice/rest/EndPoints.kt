@@ -83,5 +83,13 @@ object EndPoints {
   const val DELETE_PRODUCT_IMAGE = "api/v1/product_images/delete-data"
   const val FP_ONBOARDING_UPDATE_DATA = "api/v1/fp_onboarding/update-data"
 
+
+  //TODO BOOST KIT DEV API
+  const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
+  const val WEB_ACTION_TESTIMONIAL = "kitsune/v1/ListWebActionDetails/{themeID}"
+  const val GET_TESTIMONIAL = "api/v1/{testimonials}/get-data"
+  const val ADD_TESTIMONIAL = "api/v1/{testimonials}/add-data"
+  const val UPDATE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
+  const val DELETE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
 }
 
