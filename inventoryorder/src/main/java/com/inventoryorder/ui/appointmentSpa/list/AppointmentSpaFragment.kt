@@ -140,10 +140,6 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     if (isFirst || isSearch) binding?.progress?.visible()
     viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
-      if (it.error is NoNetworkException) {
-        errorView(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
@@ -160,7 +156,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
             setToolbarTitle(resources.getString(R.string.appointments) + " ($TOTAL_ELEMENTS)")
-          } else errorView(resources.getString(R.string.no_appointments))
+          } else emptyView()
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             val list = response.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
@@ -171,9 +167,9 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
-          } else errorView(resources.getString(R.string.no_appointments))
+          } else emptyView()
         }
-      } else errorView(resources.getString(R.string.no_appointments))
+      } else showLongToast(it.message())
     })
   }
 
@@ -199,10 +195,9 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     } else setAdapterAppointmentList(getDateWiseFilter(items))
   }
 
-  private fun errorView(error: String) {
+  private fun emptyView() {
     binding?.bookingRecycler?.gone()
     binding?.errorView?.visible()
-    binding?.errorTxt?.text = error
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {

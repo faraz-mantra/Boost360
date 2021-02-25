@@ -74,7 +74,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
         Log.d("TAG", "onSuccess");
     }
 
-    fun onFailure(it: BaseResponse) {
+   open fun onFailure(it: BaseResponse) {
 
     }
 

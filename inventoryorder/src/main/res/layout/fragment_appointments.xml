@@ -69,7 +69,6 @@
             app:srcCompat="@drawable/ic_empty_appointment_icon" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/error_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_10"

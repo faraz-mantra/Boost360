@@ -378,5 +378,8 @@
   <string name="permission_denied_to_read_your_external_storage">Permission denied to read your External storage</string>
   <string name="no_appointment_so_far">No appointments so far!</string>
   <string name="tap_below_button_to_log_a_sample_offline_appointment">Tap below button to log a sample offline appointment.</string>
+  <string name="tap_below_button_to_log_a_sample_offline_order">Tap below button to log a sample offline order.</string>
   <string name="make_a_sample_appointment">Make a sample appointment</string>
+  <string name="make_a_sample_order">Make a sample order</string>
+  <string name="no_orders_so_far">No orders so far!</string>
 </resources>
