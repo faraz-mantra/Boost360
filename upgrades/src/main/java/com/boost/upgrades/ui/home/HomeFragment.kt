@@ -39,14 +39,12 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
-import com.boost.upgrades.ui.marketplace_offers.MarketPlaceOfferFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.MARKET_OFFER_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
@@ -676,23 +674,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 }
             }
         })
-        viewModel.promoBannerAndMarketOfferResult().observe(this, androidx.lifecycle.Observer {
-            if (it.size > 0) {
-                if (shimmer_view_banner.isShimmerStarted) {
-                    shimmer_view_banner.stopShimmer()
-                    shimmer_view_banner.visibility = View.GONE
-                }
-//                updateBannerViewPager(it)
-                banner_layout.visibility = View.VISIBLE
-            } else {
-                if (shimmer_view_banner.isShimmerStarted) {
-                    shimmer_view_banner.stopShimmer()
-                    shimmer_view_banner.visibility = View.GONE
-                }
-                banner_layout.visibility = View.GONE
-            }
-
-        })
 
         viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
@@ -1036,43 +1017,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                         (activity as UpgradeActivity).addFragment(
                                 webViewFragment,
                                 Constants.WEB_VIEW_FRAGMENT
-                        )
-                    }
-                } else if (!item!!.coupon_code.isNullOrBlank()) {
-                    if (item!!.coupon_code != null) {
-//Log.v("coupon_code", " "+ item.coupon_code + " "+ item.title)
-                        CompositeDisposable().add(
-                                AppDatabase.getInstance(requireActivity().application)!!
-                                        .marketOffersDao()
-                                        .getMarketOffersByCouponCode(item!!.coupon_code)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .doOnError {  }
-                                        .subscribe({
-                                            var selectedMarketOfferModel: MarketPlaceOffers? = null
-                                            var item = it
-
-                                            selectedMarketOfferModel = MarketPlaceOffers( coupon_code = item.coupon_code,
-                                                    extra_information = item.extra_information!!,
-                                                    createdon = item.createdon!!,
-                                                    updatedon = item.updatedon!!,
-                                                    _kid = item._kid!!,
-                                                    websiteid = item.websiteid!!,
-                                                    isarchived = item.isarchived!!,
-                                                    expiry_date = item.expiry_date!!,
-                                                    title = item.title!!,
-                                                    exclusive_to_categories = Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                                    image = PrimaryImage(item.image),
-                                            )
-                                            val marketPlaceOfferFragment = MarketPlaceOfferFragment.newInstance()
-                                            val args = Bundle()
-                                            args.putString("marketOffersData", Gson().toJson(selectedMarketOfferModel))
-                                            marketPlaceOfferFragment.arguments = args
-                                            (activity as UpgradeActivity).addFragment(marketPlaceOfferFragment, MARKET_OFFER_FRAGMENT)
-
-                                        }, {
-                                            it.printStackTrace()
-                                        })
                         )
                     }
                 }
