@@ -133,7 +133,58 @@
     <item name="android:inputType">text</item>
     <item name="android:drawablePadding">@dimen/size_8</item>
   </style>
-  
+  <style name="AppointmentSettings_Image">
+    <item name="android:layout_width">@dimen/size_38</item>
+    <item name="layout_constraintBottom_toBottomOf">parent</item>
+    <item name="layout_constraintTop_toTopOf">parent</item>
+    <item name="layout_constraintStart_toStartOf">parent</item>
+    <item name="android:layout_height">@dimen/size_38</item>
+  </style>
+  <style name="AppointmentSetting_Text_Heading" >
+    <item name="android:textColor">@color/black_4a4a4a</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:includeFontPadding">true</item>
+    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  <style name="AppointmentSetting_Text_Content" parent="AppointmentSetting_Text_Heading" >
+    <item name="android:textSize">11sp</item>
+    <item name="android:includeFontPadding">true</item>
+    <item name="android:textStyle">normal</item>
+    <item name="android:fontFamily">@font/open_sans</item>
+  </style>
+  <style name="Appointment.ButtonStyle" parent="ButtonStyle.Rounded">
+    <item name="android:background">@drawable/bg_button_proceed_4</item>
+    <item name="android:paddingStart">@dimen/size_60</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:gravity">center</item>
+    <item name="android:paddingTop">@dimen/size_8</item>
+    <item name="android:paddingBottom">@dimen/size_8</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">@dimen/size_36</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:paddingEnd">@dimen/size_60</item>
+  </style>
+  <style name="Appointment.ButtonStyle.Rounded.Solid.Stroke" parent="Appointment.ButtonStyle">
+    <item name="android:background">@drawable/appointment_button_stroke_orange</item>
+    <item name="android:paddingStart">@dimen/size_60</item>
+    <item name="android:paddingEnd">@dimen/size_60</item>
+    <item name="android:textColor">@color/yellow_ffb900</item>
+  </style>
+  <style name="Appointment_Toggle">
+    <item name="android:layout_width">@dimen/size_54</item>
+    <item name="android:layout_height">@dimen/size_24</item>
+    <item name="colorBorder">@color/transparent</item>
+    <item name="colorOff">@color/gray_bbb</item>
+    <item name="colorOn">@color/light_green_1</item>
+    <item name="textOff">NO</item>
+    <item name="textOn">YES</item>
+    <item name="txtColorOff">@color/white</item>
+    <item name="txtColorOn">@color/white</item>
+  </style>
   <style name="MaterialAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
     <item name="android:colorPrimary">@color/white</item>
     <item name="colorAccent">@color/colorAccent</item>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_100"
+        android:background="@color/yellow_ffb900"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/size_20"
+            app:queryHint="ABCD" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/match_match"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="@dimen/size_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView3"
+                style="@style/AppointmentSettings_Image"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_business_services_pro"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/AppointmentSetting_Text_Heading"
+                android:text="@string/catalog_setup"
+                android:id="@+id/text_heading"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.073"
+                app:layout_constraintStart_toEndOf="@+id/customImageView3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.39" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView3"
+                style="@style/AppointmentSetting_Text_Content"
+                android:layout_marginTop="@dimen/size_5"
+                android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_heading"
+                app:layout_constraintTop_toBottomOf="@id/text_heading" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:tint="@color/yellow_ffb900"
+                app:layout_constraintHorizontal_bias="0.905"
+                app:layout_constraintStart_toEndOf="@+id/text_heading"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="?android:attr/listDivider" />
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView3"
+                style="@style/AppointmentSettings_Image"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_business_services_pro"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/AppointmentSetting_Text_Heading"
+                android:text="@string/catalog_setup"
+                android:id="@+id/text_heading"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.073"
+                app:layout_constraintStart_toEndOf="@+id/customImageView3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.39" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView3"
+                style="@style/AppointmentSetting_Text_Content"
+                android:layout_marginTop="@dimen/size_5"
+                android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_heading"
+                app:layout_constraintTop_toBottomOf="@id/text_heading" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:tint="@color/yellow_ffb900"
+                app:layout_constraintHorizontal_bias="0.905"
+                app:layout_constraintStart_toEndOf="@+id/text_heading"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="?android:attr/listDivider" />
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView3"
+                style="@style/AppointmentSettings_Image"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_business_services_pro"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/AppointmentSetting_Text_Heading"
+                android:text="@string/catalog_setup"
+                android:id="@+id/text_heading"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.073"
+                app:layout_constraintStart_toEndOf="@+id/customImageView3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.39" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView3"
+                style="@style/AppointmentSetting_Text_Content"
+                android:layout_marginTop="@dimen/size_5"
+                android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_heading"
+                app:layout_constraintTop_toBottomOf="@id/text_heading" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:tint="@color/yellow_ffb900"
+                app:layout_constraintHorizontal_bias="0.905"
+                app:layout_constraintStart_toEndOf="@+id/text_heading"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="?android:attr/listDivider" />
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView3"
+                style="@style/AppointmentSettings_Image"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_business_services_pro"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/AppointmentSetting_Text_Heading"
+                android:text="@string/catalog_setup"
+                android:id="@+id/text_heading"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.073"
+                app:layout_constraintStart_toEndOf="@+id/customImageView3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.39" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView3"
+                style="@style/AppointmentSetting_Text_Content"
+                android:layout_marginTop="@dimen/size_5"
+                android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_heading"
+                app:layout_constraintTop_toBottomOf="@id/text_heading" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:tint="@color/yellow_ffb900"
+                app:layout_constraintHorizontal_bias="0.905"
+                app:layout_constraintStart_toEndOf="@+id/text_heading"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="?android:attr/listDivider" />
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView3"
+                style="@style/AppointmentSettings_Image"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_business_services_pro"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/AppointmentSetting_Text_Heading"
+                android:text="@string/catalog_setup"
+                android:id="@+id/text_heading"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.073"
+                app:layout_constraintStart_toEndOf="@+id/customImageView3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.39" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView3"
+                style="@style/AppointmentSetting_Text_Content"
+                android:layout_marginTop="@dimen/size_5"
+                android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_heading"
+                app:layout_constraintTop_toBottomOf="@id/text_heading" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:tint="@color/yellow_ffb900"
+                app:layout_constraintHorizontal_bias="0.905"
+                app:layout_constraintStart_toEndOf="@+id/text_heading"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="?android:attr/listDivider" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

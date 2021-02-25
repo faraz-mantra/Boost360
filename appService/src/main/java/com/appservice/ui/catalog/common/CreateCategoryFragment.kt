@@ -34,7 +34,7 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ba
 
     override fun onCreateView() {
         super.onCreateView()
-        setToolbarTitle("Categories (${list.size})")
+//        setToolbarTitle("Categories (${list.size})")
         binding?.rvCategory?.apply {
             val adapterN = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(list), this@CreateCategoryFragment)
             adapter = adapterN
