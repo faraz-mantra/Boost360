@@ -119,6 +119,7 @@ class MarketPlaceOfferFragment : BaseFragment() {
             val clipboard: ClipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText(avail_coupon_txt.text, avail_coupon_txt.text)
             clipboard.setPrimaryClip(clip)
+            (activity as UpgradeActivity).popFragmentFromBackStack()
             Toast.makeText(activity, "Coupon " + avail_coupon_txt.text + " copied!!" , Toast.LENGTH_SHORT).show()
         }
 
