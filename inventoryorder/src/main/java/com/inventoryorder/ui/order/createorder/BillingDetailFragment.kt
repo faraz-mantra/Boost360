@@ -18,6 +18,7 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentBillingDetailBinding
 import com.inventoryorder.model.OrderInitiateResponse
+import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.order.orderbottomsheet.BottomSheetOptionsItem
 import com.inventoryorder.model.order.orderbottomsheet.OrderBottomSheet
 import com.inventoryorder.model.orderRequest.*
@@ -34,6 +35,9 @@ import com.inventoryorder.ui.appointmentSpa.create.CreateOrderBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
+import java.lang.reflect.Method
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 
 class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding>(), RecyclerItemClickListener {
@@ -43,12 +47,12 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   private var createOrderRequest = OrderInitiateRequest()
   private var totalPrice = 0.0
   private var deliveryFee = 0.0
-  private var selectedDeliveryType: String = OrderItem.OrderMode.PICKUP.name
+  private var selectedDeliveryType : String = OrderItem.OrderMode.PICKUP.name
   var orderBottomSheet = OrderBottomSheet()
   var deliveryTypeBottomSheet = OrderBottomSheet()
   private var shouldFinish = false
   var shouldReInitiate = false
-  private var paymentStatus: String = PaymentDetailsN.STATUS.PENDING.name
+  private var paymentStatus : String = PaymentDetailsN.STATUS.PENDING.name
 
   companion object {
     @JvmStatic
@@ -73,16 +77,20 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     prepareDeliveryTypeOptions()
 
     setOnClickListener(binding?.ivOptions, binding?.tvDeliveryType, binding?.tvPaymentMode,
-        binding?.tvPaymentStatus, binding?.buttonConfirmOrder, binding?.buttonGoBack,
-        binding?.textAddDeliveryFee, binding?.textAddDeliveryFeeEdit, binding?.tvAddMore)
+            binding?.tvPaymentStatus, binding?.buttonConfirmOrder, binding?.buttonGoBack,
+            binding?.textAddDeliveryFee, binding?.textAddDeliveryFeeEdit, binding?.tvAddMore)
   }
 
-  fun getBundleData(): Bundle {
-    return Bundle().apply {
-      putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish);
-      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate);
-      putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest);
+  fun getBundleData(): Bundle? {
+    val bundle = Bundle()
+    shouldFinish?.let {
+      bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
     }
+    shouldReInitiate?.let {
+      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+    }
+    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
+    return bundle
   }
 
   private fun setUpData() {
@@ -90,9 +98,10 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     setUpContactDetailsInfo()
     setUpAddress()
 
-    binding?.textAmount?.text = totalPrice.toString()
-    binding?.textTotalPayableAmount?.text = totalPrice.toString()
+    binding?.textAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} $totalPrice"
+    binding?.textTotalPayableAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} $totalPrice"
     binding?.layoutOrderShippingAddress?.textAddrTitle?.text = getString(R.string.billing_address)
+    binding?.textGstAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} ${calculateGST(totalPrice + deliveryFee)}"
 
     setAdapterOrderList()
   }
@@ -120,7 +129,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   }
 
   override fun onClick(v: View) {
-    when (v) {
+    when(v) {
 
       binding?.ivOptions -> {
         showPopUp(binding?.ivOptions!!)
@@ -146,8 +155,8 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
         var paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
         var shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
-            deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = deliveryFee,
-            currencyCode = createOrderRequest?.items?.get(0)?.productDetails?.currencyCode)
+                deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = deliveryFee,
+                currencyCode = createOrderRequest?.items?.get(0)?.productDetails?.currencyCode)
 
         createOrderRequest.mode = selectedDeliveryType!!
         createOrderRequest.paymentDetails = paymentDetails
@@ -223,15 +232,15 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     deliveryTypeBottomSheet.items = optionsList
   }
 
-  private fun onDeliveryTypeSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
+  private fun onDeliveryTypeSelected(bottomSheetOptionsItem : BottomSheetOptionsItem, orderBottomSheet : OrderBottomSheet) {
     binding?.tvDeliveryType?.text = bottomSheetOptionsItem?.displayValue
     selectedDeliveryType = bottomSheetOptionsItem?.serverValue!!
     binding?.tvDeliveryType?.text = bottomSheetOptionsItem?.displayValue!!
-    // paymentStatus = bottomSheetOptionsItem?.serverValue!!
+   // paymentStatus = bottomSheetOptionsItem?.serverValue!!
     this.deliveryTypeBottomSheet = orderBottomSheet
   }
 
-  private fun onPaymentStatusSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
+  private fun onPaymentStatusSelected(bottomSheetOptionsItem : BottomSheetOptionsItem, orderBottomSheet : OrderBottomSheet) {
     binding?.tvPaymentStatus?.text = bottomSheetOptionsItem?.displayValue
     createOrderRequest?.paymentDetails?.status = bottomSheetOptionsItem?.serverValue
     paymentStatus = bottomSheetOptionsItem?.serverValue!!
@@ -244,7 +253,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     addDeliveryFeeBottomSheetDialog.show(this.parentFragmentManager, AddDeliveryFeeBottomSheetDialog::class.java.name)
   }
 
-  private fun onDeliveryFeeAdded(value: Double) {
+  private fun onDeliveryFeeAdded(value : Double) {
 
     if (value > 0) {
       deliveryFee = value
@@ -252,14 +261,16 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       binding?.textAddDeliveryFeeEdit?.visibility = View.VISIBLE
       binding?.textAddDeliveryFee?.visibility = View.GONE
       binding?.textAddDeliveryFeeValue?.visibility = View.VISIBLE
-      binding?.textTotalPayableAmount?.text = (totalPrice + value).toString()
+      binding?.textTotalPayableAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} ${totalPrice + value}"
     } else if (value == 0.0) {
       deliveryFee = 0.0
       binding?.textAddDeliveryFeeEdit?.visibility = View.GONE
       binding?.textAddDeliveryFee?.visibility = View.VISIBLE
       binding?.textAddDeliveryFeeValue?.visibility = View.GONE
-      binding?.textTotalPayableAmount?.text = totalPrice.toString()
+      binding?.textTotalPayableAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} $totalPrice"
     }
+
+    binding?.textGstAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} ${calculateGST(totalPrice + deliveryFee)}"
   }
 
   private fun setAdapterOrderList() {
@@ -289,14 +300,14 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
     textEditCustomerInfo.setOnClickListener {
       val editCustomerInfoBottomSheetDialog = EditCustomerInfoBottomSheetDialog(createOrderRequest?.buyerDetails?.contactDetails!!)
-      editCustomerInfoBottomSheetDialog.onClicked = { onCustomerInfo(it) }
+      editCustomerInfoBottomSheetDialog.onClicked = {onCustomerInfo(it)}
       editCustomerInfoBottomSheetDialog.show(this.parentFragmentManager, EditCustomerInfoBottomSheetDialog::class.java.name)
       popupWindow.dismiss()
     }
 
     textEditCustomerAddr.setOnClickListener {
       val editCustomerAddressBottomSheetDialog = EditCustomerAddressBottomSheetDialog(createOrderRequest?.buyerDetails?.address!!)
-      editCustomerAddressBottomSheetDialog.onClicked = { onCustomerAddress(it) }
+      editCustomerAddressBottomSheetDialog.onClicked = {onCustomerAddress(it)}
       editCustomerAddressBottomSheetDialog.show(this.parentFragmentManager, EditCustomerAddressBottomSheetDialog::class.java.name)
       popupWindow.dismiss()
     }
@@ -339,7 +350,9 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
   private fun createOrder() {
     showProgress()
-    viewModel?.postOrderInitiate(AppConstant.CLIENT_ID_2, createOrderRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+   // viewModel?.postOrderInitiate(AppConstant.CLIENT_ID_2, createOrderRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+
+    viewModel?.postAppointment(AppConstant.CLIENT_ID_2, createOrderRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
       if (it.error is NoNetworkException) {
         hideProgress()
         showLongToast(resources.getString(R.string.internet_connection_not_available))
@@ -348,11 +361,31 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       if (it.isSuccess()) {
         hideProgress()
         var orderInitiateResponse = (it as? OrderInitiateResponse)
-        var bundle = Bundle()
+        apiConfirmOrder(orderInitiateResponse = orderInitiateResponse!!)
+       /* var bundle = Bundle()
         bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, orderInitiateResponse)
-        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
+        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)*/
       } else {
         hideProgress()
+        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
+      }
+    })
+  }
+
+  private fun apiConfirmOrder(orderInitiateResponse: OrderInitiateResponse) {
+    showProgress()
+    viewModel?.confirmOrder(preferenceData?.clientId, orderInitiateResponse?.data?._id)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        var bundle = Bundle()
+        bundle.putSerializable(IntentConstant.ORDER_ID.name, orderInitiateResponse?.data?._id)
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
+      } else {
         showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
       }
     })
@@ -368,5 +401,11 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
         (context as FragmentContainerOrderActivity).onBackPressed()
       }
     }
+  }
+
+  private fun calculateGST(amount : Double) : Double {
+    val df = DecimalFormat("#.##")
+    df.roundingMode = RoundingMode.CEILING
+    return df.format((amount - (df.format(amount / AppConstant.GST_PERCENTAGE).toDouble()))).toDouble()
   }
 }

@@ -163,6 +163,7 @@
                 style="@style/EditTextStyle"
                 android:layout_marginTop="@dimen/size_6"
                 android:layout_marginBottom="@dimen/size_10"
+                android:inputType="textCapCharacters"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_customer_s_gstin"
                 app:layout_constraintStart_toStartOf="parent"

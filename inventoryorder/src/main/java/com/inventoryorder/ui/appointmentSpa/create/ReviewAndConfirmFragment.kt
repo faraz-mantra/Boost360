@@ -9,35 +9,45 @@ import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
+import com.inventoryorder.constant.AppConstant.Companion.GST_PERCENTAGE
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentReviewAndConfirmBinding
+import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.OrderInitiateResponse
+import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.order.orderbottomsheet.BottomSheetOptionsItem
 import com.inventoryorder.model.order.orderbottomsheet.OrderBottomSheet
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.PaymentDetails
 import com.inventoryorder.model.orderRequest.ShippingDetails
+import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.spaAppointment.ServiceItem
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
+import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmBinding>() {
 
-  private val GST_PERCENTAGE = 0.05
   private var serviceFee = 0.0
   private var totalPrice = 0.0
   private var discountedPrice = 0.0
-  private var orderInitiateRequest: OrderInitiateRequest? = null
+  private var orderInitiateRequest : OrderInitiateRequest?= null
   var orderBottomSheet = OrderBottomSheet()
-  private var paymentStatus: String = PaymentDetailsN.STATUS.PENDING.name
-  private var selectedService: ServiceItem? = null
+  private var paymentStatus : String = PaymentDetailsN.STATUS.PENDING.name
+  private var selectedService : ServiceItem ?= null
   var shouldReInitiate = false
   var shouldRefresh = false
+  var prefData : PreferenceData ?= null
 
   companion object {
     @JvmStatic
@@ -49,10 +59,12 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   fun getBundleData(): Bundle? {
-    return Bundle().apply {
-      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
-      putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
+    val bundle = Bundle()
+    shouldReInitiate?.let {
+      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+      bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
     }
+    return bundle
   }
 
   override fun onCreateView() {
@@ -61,6 +73,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     totalPrice = arguments?.getDouble(IntentConstant.TOTAL_PRICE.name) ?: 0.0
     discountedPrice = arguments?.getDouble(IntentConstant.DISCOUNTED_PRICE.name) ?: 0.0
     selectedService = arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
+    prefData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     // orderInitiateRequest?.sellerID = preferenceData?.fpTag.toString()
 
     preparePaymentStatusOptions()
@@ -76,9 +89,16 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     binding?.tvName?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.fullName?.capitalizeUtil()
     binding?.tvEmail?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.emailId
     binding?.textAmount?.text = "${selectedService?.Currency} $totalPrice"
-    binding?.textActualAmount?.text = "${selectedService?.Currency} $discountedPrice"
-    binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice)}"
-    binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
+    binding?.textActualAmount?.text =  "${selectedService?.Currency} $discountedPrice"
+    binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
+    // binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
+    binding?.textTotalPayableValue?.text = "${selectedService?.Currency} $discountedPrice"
+
+
+    if (orderInitiateRequest?.buyerDetails?.GSTIN != null && orderInitiateRequest?.buyerDetails?.GSTIN?.isNotEmpty()==true) {
+      binding?.tvGstin?.text = "GSTIN : ${orderInitiateRequest?.buyerDetails?.GSTIN}"
+      binding?.tvGstin?.visibility = View.VISIBLE
+    }
 
     orderInitiateRequest?.gstCharges = calculateGST(discountedPrice)
     var paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
@@ -93,13 +113,17 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
       binding?.tvEmail?.visibility = View.VISIBLE
     }
 
+    if (totalPrice == discountedPrice) {
+      binding?.textAmount?.visibility = View.GONE
+    }
+
     binding?.tvPhone?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.primaryContactNumber.toString()
     binding?.tvAddress?.text = setUpAddress()
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
-    when (v) {
+    when(v) {
       binding?.textAdd -> {
         showAddServiceFeeDialog()
       }
@@ -134,7 +158,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
   }
 
-  private fun onPaymentStatusSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
+  private fun onPaymentStatusSelected(bottomSheetOptionsItem : BottomSheetOptionsItem, orderBottomSheet : OrderBottomSheet) {
     binding?.tvPaymentStatus?.text = bottomSheetOptionsItem?.displayValue
     orderInitiateRequest?.paymentDetails?.status = bottomSheetOptionsItem?.serverValue
     paymentStatus = bottomSheetOptionsItem?.serverValue!!
@@ -147,16 +171,17 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     addDeliveryFeeBottomSheetDialog.show(this.parentFragmentManager, AddDeliveryFeeBottomSheetDialog::class.java.name)
   }
 
-  private fun onServiceFeeAdded(fee: Double) {
+  private fun onServiceFeeAdded(fee : Double) {
     serviceFee = fee
+    binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
 
     if (fee > 0.0) {
-      binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + calculateGST(discountedPrice) + fee}"
+      binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + fee}"
       binding?.textAdd?.text = "${selectedService?.Currency} $fee"
       binding?.textEdit?.visibility = View.VISIBLE
     } else {
       binding?.textAdd?.text = getString(R.string.add)
-      binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + calculateGST(discountedPrice) + fee}"
+      binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + fee}"
       binding?.textEdit?.visibility = View.INVISIBLE
     }
   }
@@ -172,16 +197,19 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
       if (it.isSuccess()) {
         hideProgress()
 
-        showShortToast(getString(R.string.appointment_created_successfully))
+        /*showShortToast(getString(R.string.appointment_created_successfully))
         shouldReInitiate = true
         shouldRefresh = true
-        (activity as FragmentContainerOrderActivity).onBackPressed()
+        (activity as FragmentContainerOrderActivity).onBackPressed()*/
 
         /* var orderInitiateResponse = (it as? OrderInitiateResponse)
          var bundle = Bundle()
          bundle.putString(IntentConstant.TYPE_APPOINTMENT.name, "appt")
          bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, orderInitiateResponse)
          startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)*/
+
+        var orderInitiateResponse = (it as? OrderInitiateResponse)
+        apiConfirmOrder(orderInitiateResponse?.data!!)
       } else {
         hideProgress()
         showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
@@ -189,7 +217,33 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     })
   }
 
-  private fun setUpAddress(): String {
+  private fun apiConfirmOrder(order: OrderItem?) {
+    showProgress()
+    viewModel?.confirmOrder(prefData?.clientId, order?._id)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.isSuccess()) {
+
+        var bundle = Bundle()
+        bundle.putString(IntentConstant.TYPE_APPOINTMENT.name, AppConstant.TYPE_APPOINTMENT)
+        bundle.putSerializable(IntentConstant.ORDER_ID.name, order?._id)
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, prefData)
+        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
+
+        /*   showShortToast(getString(R.string.appointment_created_successfully))
+           shouldReInitiate = true
+           shouldRefresh = true
+           (activity as FragmentContainerOrderActivity).onBackPressed()*/
+      } else {
+        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
+      }
+    })
+  }
+
+  private fun setUpAddress() : String {
     var addrStr = StringBuilder()
     addrStr.append(orderInitiateRequest?.buyerDetails?.address?.addressLine)
     if (orderInitiateRequest?.buyerDetails?.address?.city.isNullOrEmpty().not()) addrStr.append(", ${orderInitiateRequest?.buyerDetails?.address?.city}")
@@ -199,20 +253,21 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     return addrStr.toString()
   }
 
-  private fun parseDate(date: String): String? {
+  private fun parseDate(date : String) : String? {
     try {
       val df1 = SimpleDateFormat(DateUtils.FORMAT_YYYY_MM_DD, Locale.getDefault())
       var date = df1.parse(date)
       val df2 = SimpleDateFormat(DateUtils.SPA_REVIEW_DATE_FORMAT, Locale.getDefault())
       return df2.format(date)
-    } catch (e: Exception) {
-    }
+    } catch(e: Exception) {}
 
     return ""
   }
 
-  private fun calculateGST(amount: Double): Double {
-    return amount * GST_PERCENTAGE
+  private fun calculateGST(amount : Double) : Double {
+    val df = DecimalFormat("#.##")
+    df.roundingMode = RoundingMode.CEILING
+    return df.format((amount - (df.format(amount / GST_PERCENTAGE).toDouble()))).toDouble()
   }
 
   private fun preparePaymentStatusOptions() {
@@ -244,6 +299,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
       shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)!!
+      shouldRefresh = bundle.getBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
       if (shouldReInitiate != null && shouldReInitiate) {
         (context as FragmentContainerOrderActivity).onBackPressed()
       }

@@ -18,14 +18,22 @@ class SlotsItemViewHolder(binding: ItemTimeSlotAppointmentBinding) : AppBaseRecy
         binding?.textTime?.text = splitStr[0]
         binding?.textAmPm?.text = splitStr[1]
 
-        if (data?.isSelected) {
-            binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_blue)
+        if (data?.IsAvailable == true) {
+            if (data?.isSelected) {
+                binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_blue)
+            } else {
+                binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_edit_txt)
+            }
         } else {
-            binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_edit_txt)
+            binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_slotinactive)
+            binding?.textTime?.setTextColor(getColor(R.color.light_grey_2)!!)
+            binding?.textAmPm?.setTextColor(getColor(R.color.light_grey_2)!!)
         }
 
         binding?.linearRoot?.setOnClickListener {
-            listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.TIME_SLOT_CLICKED.ordinal)
+            if (data?.IsAvailable == true) {
+                listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.TIME_SLOT_CLICKED.ordinal)
+            }
         }
     }
 }

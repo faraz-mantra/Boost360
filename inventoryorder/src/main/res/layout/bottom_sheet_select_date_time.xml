@@ -92,7 +92,7 @@
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/text_select_date_time"
                         style="@style/FormHeading"
-                        android:layout_marginTop="@dimen/size_30"
+                        android:layout_marginTop="@dimen/size_20"
                         android:text="@string/select_date_and_time" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -113,8 +113,8 @@
                             android:layout_marginBottom="@dimen/size_2"
                             android:background="@drawable/bg_rounded_grey"
                             android:gravity="center"
-                            android:paddingStart="@dimen/size_8"
-                            android:paddingEnd="@dimen/size_8"
+                            android:paddingStart="@dimen/size_5"
+                            android:paddingEnd="@dimen/size_5"
                             android:textColor="@color/black_4a4a4a"
                             app:srcCompat="@drawable/ic_filled_arrow_left" />
 
@@ -136,8 +136,8 @@
                             android:layout_marginBottom="@dimen/size_2"
                             android:background="@drawable/bg_rounded_grey_right"
                             android:gravity="center"
-                            android:paddingStart="@dimen/size_8"
-                            android:paddingEnd="@dimen/size_8"
+                            android:paddingStart="@dimen/size_5"
+                            android:paddingEnd="@dimen/size_5"
                             android:textColor="@color/black_4a4a4a"
                             app:srcCompat="@drawable/ic_filled_arrow_right" />
                     </androidx.appcompat.widget.LinearLayoutCompat>

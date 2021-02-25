@@ -64,12 +64,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_5"
-                        tools:text="@string/dummy_name"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/regular"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:textType="HEADING_4" />
+                        app:textType="HEADING_4"
+                        tools:text="@string/dummy_name" />
 
                     <com.framework.views.customViews.CustomImageView
                         android:id="@+id/iv_options"
@@ -87,31 +87,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_5"
-                    tools:text="@string/dummy_email"
                     android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/regular"
-                    app:textType="BODY_1" />
+                    app:textType="BODY_1"
+                    tools:text="@string/dummy_email" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
-                    tools:text="@string/dummy_phone"
                     android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/regular"
-                    app:textType="BODY_1" />
+                    app:textType="BODY_1"
+                    tools:text="@string/dummy_phone" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_gst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
-                    tools:text="@string/dummy_gstin"
                     android:textColor="@color/black_4a4a4a"
                     android:visibility="gone"
                     app:fontFamily="@font/regular"
-                    app:textType="BODY_1" />
+                    app:textType="BODY_1"
+                    tools:text="@string/dummy_gstin" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -199,12 +199,12 @@
                             android:layout_weight="1"
                             android:drawableEnd="@drawable/ic_arrow_down_orange"
                             android:drawablePadding="@dimen/size_8"
+                            android:drawableTint="@color/grey_dark_2"
                             android:ellipsize="end"
                             android:gravity="right"
                             android:includeFontPadding="false"
                             android:maxLines="1"
                             android:text="@string/str_cash_on_delivery"
-                            android:drawableTint="@color/grey_dark_2"
                             android:textColor="@color/grey_dark_2"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_1" />
@@ -275,9 +275,9 @@
                 layout="@layout/layout_order_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginStart="@dimen/size_30"
-                android:layout_marginEnd="@dimen/size_20" />
+                android:layout_marginEnd="@dimen/size_20"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
@@ -381,21 +381,21 @@
                         android:includeFontPadding="false"
                         android:maxLines="1"
                         android:paddingEnd="@dimen/size_20"
-                        tools:text="₹ 15,000.00"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/semi_bold"
-                        app:textType="BODY_1" />
+                        app:textType="BODY_1"
+                        tools:text="₹ 15,000.00" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_30"
-                    android:visibility="gone"
                     android:layout_marginTop="@dimen/size_10"
                     android:layout_marginEnd="@dimen/size_10"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="0dp"
@@ -451,12 +451,12 @@
                         android:gravity="start"
                         android:includeFontPadding="false"
                         android:maxLines="1"
+                        android:paddingStart="@dimen/size_10"
                         android:paddingEnd="@dimen/size_20"
                         android:text="@string/edit"
-                        android:visibility="gone"
-                        android:paddingStart="@dimen/size_10"
                         android:textAllCaps="true"
                         android:textColor="@color/orange"
+                        android:visibility="gone"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
 
@@ -482,14 +482,43 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:includeFontPadding="false"
-                        android:visibility="gone"
                         android:maxLines="1"
                         android:paddingEnd="@dimen/size_20"
-                        tools:text="@string/add"
                         android:textAllCaps="true"
                         android:textColor="@color/orange"
+                        android:visibility="gone"
                         app:fontFamily="@font/semi_bold"
-                        app:textType="BODY_1" />
+                        app:textType="BODY_1"
+                        tools:text="@string/add" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_30"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_10">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_gst"
+                        style="@style/EditTextLabelStyle"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/gst"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/linear_service"
+                        app:layout_constraintTop_toBottomOf="@id/linear_service" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_gst_amount"
+                        style="@style/EditTextLabelStyle"
+                        android:fontFamily="@font/semi_bold"
+                        android:paddingEnd="@dimen/size_20"
+                        android:text="@string/inr_1200"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/linear_service"
+                        app:layout_constraintTop_toBottomOf="@id/linear_service" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <View
@@ -530,11 +559,11 @@
                         android:includeFontPadding="false"
                         android:maxLines="1"
                         android:paddingEnd="@dimen/size_10"
-                        tools:text="₹ 15,000.00"
                         android:textAllCaps="true"
                         android:textColor="@color/black_2A2A2A"
                         app:fontFamily="@font/semi_bold"
-                        app:textType="BODY_1" />
+                        app:textType="BODY_1"
+                        tools:text="₹ 15,000.00" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -546,9 +575,9 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/size_30"
-                android:layout_height="wrap_content">
+                android:padding="@dimen/size_30">
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/button_confirm_order"
