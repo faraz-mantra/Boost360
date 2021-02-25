@@ -109,6 +109,8 @@
                   android:ellipsize="end"
                   android:includeFontPadding="false"
                   android:maxLines="1"
+                  android:gravity="center_vertical"
+                  android:textAlignment="gravity"
                   android:textColor="@color/colorAccent"
                   app:autoSizeMaxTextSize="16sp"
                   app:autoSizeMinTextSize="8sp"

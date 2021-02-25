@@ -177,6 +177,11 @@
   <string name="other_information">Other Information</string>
   <string name="product_details">Product details</string>
   <string name="additional_information">Additional Info</string>
+  <string name="testimonial_title">Testimonials</string>
+  <string name="testimonial_add">Add Testimonial</string>
+  <string name="testimonial_edit">Edit Testimonial</string>
+  <string name="error_getting_web_action">Error getting web action list!</string>
+  <string name="add_a_testimonial">ADD A TESTIMONIAL</string>
   <!--staff module strings-->
   <string name="what_services_you_give">What services do you give?</string>
   <string name="you_don_t_h">In order to add staff members, please first add all the services your business offers.</string>

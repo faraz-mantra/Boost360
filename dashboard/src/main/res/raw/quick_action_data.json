@@ -83,11 +83,11 @@
           "quickActionType": "ADD_PHOTO_GALLERY",
           "title": "Post new\nphotos"
         },
-        {
-          "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Add an\nappointment",
-          "isNew": true
-        },
+//        {
+//          "quickActionType": "PLACE_APPOINTMENT",
+//          "title": "Add an\nappointment",
+//          "isNew": true
+//        },
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"

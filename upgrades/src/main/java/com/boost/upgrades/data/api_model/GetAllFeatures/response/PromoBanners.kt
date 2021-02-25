@@ -33,5 +33,7 @@ data class PromoBanners(
     @SerializedName("coupon_code")
     val coupon_code: String,
     @SerializedName("extra_information")
-    val extra_information: String
+    val extra_information: String,
+    @SerializedName("expiry_date")
+    val expiry_date: String
 ):Serializable

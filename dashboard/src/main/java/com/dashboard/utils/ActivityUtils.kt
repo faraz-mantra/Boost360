@@ -36,6 +36,7 @@ const val RIA_NODE_DATA = "riaNodeDatas"
 
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
+    session.fpTag
     WebEngageController.trackEvent("Digital Channel Page", "startview", session.fpTag);
     val bundle = Bundle()
     session.setHeader(WA_KEY)
