@@ -504,6 +504,14 @@
   <string name="this_is_a_text_that_appears_on_your_catalog_menu_on_your_website_and_its_url">This is a text that appears on your catalog menu on your website and its URL.</string>
   <string name="catalog_display_name">Catalog display name</string>
   <string name="enter_custom_display_text">Enter custom display text</string>
+    <string name="your_catalog_display_name_is_successfully_saved_and_">Your catalog display name is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>
+  <string name="successfully_published">Successfully published</string>
+  <string name="https_sravansclinics_com_packages">https://sravansclinics.com/packages</string>
+    <string name="confirming_change">Confirming change?</string>
+  <string name="this_will_reflact_on_your_website_instantly">This will reflact on your website instantly.</string>
+  <string name="new_display_text_packages"><b>New display text:</b> Packages</string>
+  <string name="new_page_url_https_sravansclinics_com_packages"><b>New page URL:</b><br/>https://sravansclinics.com/packages</string>
+  <string name="i_understand_that_url_change_may_have_a_negative_impact_on_the_search">I understand that URL change may have a negative impact on the search ranking of my website since few previously indexed pages may sometime show a 404 error.</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
