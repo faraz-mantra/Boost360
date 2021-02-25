@@ -379,9 +379,8 @@ class UpgradeActivity : AppCompatActivity() {
                             showingPopUp(checkNetworkType(applicationContext))
                           } else {
                             loaderStatus(false)
-                            Toasty.error(this, "Not able to Fetch data from database. Try Later..", Toast.LENGTH_LONG).show()
+                            Toasty.error(this, "Critical error occurred while loading the Addon Marketplace. Please close the app and try again.\n\nIf the issue persists, please get in touch with the Support Team.", Toast.LENGTH_LONG).show()
                           }
-//                }, 1000)
                         }, networkRecallTimer) // networkRecallTimer works based on the network speed
                       }
                     }, {
