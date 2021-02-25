@@ -34,6 +34,8 @@ import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import java.lang.reflect.Method
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 
 class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding>(), RecyclerItemClickListener {
@@ -97,6 +99,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     binding?.textAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} $totalPrice"
     binding?.textTotalPayableAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} $totalPrice"
     binding?.layoutOrderShippingAddress?.textAddrTitle?.text = getString(R.string.billing_address)
+    binding?.textGstAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} ${calculateGST(totalPrice + deliveryFee)}"
 
     setAdapterOrderList()
   }
@@ -256,14 +259,16 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       binding?.textAddDeliveryFeeEdit?.visibility = View.VISIBLE
       binding?.textAddDeliveryFee?.visibility = View.GONE
       binding?.textAddDeliveryFeeValue?.visibility = View.VISIBLE
-      binding?.textTotalPayableAmount?.text = (totalPrice + value).toString()
+      binding?.textTotalPayableAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} ${totalPrice + value}"
     } else if (value == 0.0) {
       deliveryFee = 0.0
       binding?.textAddDeliveryFeeEdit?.visibility = View.GONE
       binding?.textAddDeliveryFee?.visibility = View.VISIBLE
       binding?.textAddDeliveryFeeValue?.visibility = View.GONE
-      binding?.textTotalPayableAmount?.text = totalPrice.toString()
+      binding?.textTotalPayableAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} $totalPrice"
     }
+
+    binding?.textGstAmount?.text = "${createOrderRequest?.items?.get(0)?.productDetails?.currencyCode} ${calculateGST(totalPrice + deliveryFee)}"
   }
 
   private fun setAdapterOrderList() {
@@ -394,5 +399,11 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
         (context as FragmentContainerOrderActivity).onBackPressed()
       }
     }
+  }
+
+  private fun calculateGST(amount : Double) : Double {
+    val df = DecimalFormat("#.##")
+    df.roundingMode = RoundingMode.CEILING
+    return df.format((amount - (df.format(amount / AppConstant.GST_PERCENTAGE).toDouble()))).toDouble()
   }
 }
