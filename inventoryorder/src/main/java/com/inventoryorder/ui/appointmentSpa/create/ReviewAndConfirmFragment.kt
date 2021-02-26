@@ -41,13 +41,13 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   private var serviceFee = 0.0
   private var totalPrice = 0.0
   private var discountedPrice = 0.0
-  private var orderInitiateRequest : OrderInitiateRequest?= null
+  private var orderInitiateRequest: OrderInitiateRequest? = null
   var orderBottomSheet = OrderBottomSheet()
-  private var paymentStatus : String = PaymentDetailsN.STATUS.PENDING.name
-  private var selectedService : ServiceItem ?= null
+  private var paymentStatus: String = PaymentDetailsN.STATUS.PENDING.name
+  private var selectedService: ServiceItem? = null
   var shouldReInitiate = false
   var shouldRefresh = false
-  var prefData : PreferenceData ?= null
+  var prefData: PreferenceData? = null
 
   companion object {
     @JvmStatic
@@ -89,13 +89,13 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     binding?.tvName?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.fullName?.capitalizeUtil()
     binding?.tvEmail?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.emailId
     binding?.textAmount?.text = "${selectedService?.Currency} $totalPrice"
-    binding?.textActualAmount?.text =  "${selectedService?.Currency} $discountedPrice"
+    binding?.textActualAmount?.text = "${selectedService?.Currency} $discountedPrice"
     binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
     // binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
     binding?.textTotalPayableValue?.text = "${selectedService?.Currency} $discountedPrice"
 
 
-    if (orderInitiateRequest?.buyerDetails?.GSTIN != null && orderInitiateRequest?.buyerDetails?.GSTIN?.isNotEmpty()==true) {
+    if (orderInitiateRequest?.buyerDetails?.GSTIN != null && orderInitiateRequest?.buyerDetails?.GSTIN?.isNotEmpty() == true) {
       binding?.tvGstin?.text = "GSTIN : ${orderInitiateRequest?.buyerDetails?.GSTIN}"
       binding?.tvGstin?.visibility = View.VISIBLE
     }
@@ -123,21 +123,17 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
 
   override fun onClick(v: View) {
     super.onClick(v)
-    when(v) {
+    when (v) {
       binding?.textAdd -> {
         showAddServiceFeeDialog()
       }
 
       binding?.buttonReviewDetails -> {
-
-        var shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
+        val shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
             deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = serviceFee,
-            currencyCode = orderInitiateRequest?.items?.get(0)?.productDetails?.currencyCode)
+            currencyCode = orderInitiateRequest?.items?.get(0)?.productDetails?.getCurrencyCodeValue() ?: "INR")
         orderInitiateRequest?.shippingDetails = shippingDetails
-
-
         createAppointment()
-
         /*    //TODO : to be removed after dry run
             var orderInitiateResponse = OrderInitiateResponse(statusN = "SUCCESS", data = OrderItem(), messageN = "")
             var bundle = Bundle()
@@ -158,7 +154,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
   }
 
-  private fun onPaymentStatusSelected(bottomSheetOptionsItem : BottomSheetOptionsItem, orderBottomSheet : OrderBottomSheet) {
+  private fun onPaymentStatusSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
     binding?.tvPaymentStatus?.text = bottomSheetOptionsItem?.displayValue
     orderInitiateRequest?.paymentDetails?.status = bottomSheetOptionsItem?.serverValue
     paymentStatus = bottomSheetOptionsItem?.serverValue!!
@@ -171,7 +167,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     addDeliveryFeeBottomSheetDialog.show(this.parentFragmentManager, AddDeliveryFeeBottomSheetDialog::class.java.name)
   }
 
-  private fun onServiceFeeAdded(fee : Double) {
+  private fun onServiceFeeAdded(fee: Double) {
     serviceFee = fee
     binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
 
@@ -243,7 +239,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     })
   }
 
-  private fun setUpAddress() : String {
+  private fun setUpAddress(): String {
     var addrStr = StringBuilder()
     addrStr.append(orderInitiateRequest?.buyerDetails?.address?.addressLine)
     if (orderInitiateRequest?.buyerDetails?.address?.city.isNullOrEmpty().not()) addrStr.append(", ${orderInitiateRequest?.buyerDetails?.address?.city}")
@@ -253,18 +249,19 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     return addrStr.toString()
   }
 
-  private fun parseDate(date : String) : String? {
+  private fun parseDate(date: String): String? {
     try {
       val df1 = SimpleDateFormat(DateUtils.FORMAT_YYYY_MM_DD, Locale.getDefault())
       var date = df1.parse(date)
       val df2 = SimpleDateFormat(DateUtils.SPA_REVIEW_DATE_FORMAT, Locale.getDefault())
       return df2.format(date)
-    } catch(e: Exception) {}
+    } catch (e: Exception) {
+    }
 
     return ""
   }
 
-  private fun calculateGST(amount : Double) : Double {
+  private fun calculateGST(amount: Double): Double {
     val df = DecimalFormat("#.##")
     df.roundingMode = RoundingMode.CEILING
     return df.format((amount - (df.format(amount / GST_PERCENTAGE).toDouble()))).toDouble()
