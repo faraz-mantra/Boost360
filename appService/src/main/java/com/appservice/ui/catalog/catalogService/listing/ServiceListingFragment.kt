@@ -232,7 +232,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.action_service_configuration -> {
-
+        startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
         return true
       }
       else -> super.onOptionsItemSelected(item)

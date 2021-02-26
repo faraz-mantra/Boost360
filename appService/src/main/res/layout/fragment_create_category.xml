@@ -6,8 +6,7 @@
     <data />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    style="@style/match_match"
         android:orientation="vertical">
 
         <com.framework.views.viewgroups.BaseRecyclerView
@@ -20,17 +19,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/size_30"
             tools:itemCount="5"
             tools:listitem="@layout/item_create_category" />
 
         <com.framework.views.customViews.CustomButton
             android:id="@+id/customButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+           style="@style/match_wrap"
             android:layout_marginHorizontal="@dimen/size_16"
             android:layout_marginBottom="@dimen/size_16"
-            android:background="@drawable/bg_button_proceed"
-            android:text="DONE"
+            android:background="@drawable/bg_button_proceed_4"
+            android:text="@string/done"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

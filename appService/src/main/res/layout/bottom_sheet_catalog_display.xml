@@ -30,13 +30,11 @@
                     tools:textColor="@color/black_4a4a4a" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:includeFontPadding="false"
                     android:text="@string/this_is_a_text_that_appears_on_your_catalog_menu_on_your_website_and_its_url"
                     android:textColor="@color/white"
                     android:textSize="12sp"
-                    app:fontFamily="@font/italic"
                     tools:textColor="@color/warm_grey" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -63,21 +61,23 @@
                     android:layout_height="wrap_content"
                     android:text="@string/custom_text" />
             </RadioGroup>
+
             <com.framework.views.customViews.CustomTextField
                 android:id="@+id/edt_gst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_20"
                 android:layout_marginTop="@dimen/size_5"
+                android:layout_marginBottom="@dimen/size_20"
                 android:background="@drawable/bg_rect_edit_txt"
                 android:drawableTint="@color/pinkish_grey"
-                android:padding="@dimen/size_12"
                 android:hint="@string/enter_custom_display_text"
-                android:layout_marginHorizontal="@dimen/size_20"
+                android:padding="@dimen/size_12"
                 android:singleLine="true"
-                android:layout_marginBottom="@dimen/size_20"
                 android:textColor="@color/warm_grey_10"
                 android:textColorHint="@color/primary_grey"
                 tools:ignore="UnusedAttribute" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,6 +101,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:textType="HEADING_6" />
+
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_cancel"
                     android:layout_width="@dimen/size_110"
