@@ -512,8 +512,20 @@
   <string name="new_display_text_packages"><b>New display text:</b> Packages</string>
   <string name="new_page_url_https_sravansclinics_com_packages"><b>New page URL:</b><br/>https://sravansclinics.com/packages</string>
   <string name="i_understand_that_url_change_may_have_a_negative_impact_on_the_search">I understand that URL change may have a negative impact on the search ranking of my website since few previously indexed pages may sometime show a 404 error.</string>
+    <string name="boost_auto_generates_the_customer_policies_using_policy_generator_you_can_still_customise_few_of_these">Boost auto-generates the customer policies using policy generator. You can still customise few of these.</string>
+  <string name="appointment_settings">Appointment settings</string>
+  <string name="payment_collection_setup">Payment collection setup</string>
+  <string name="policies_for_customer">Policies for customers</string>
+  <string name="customer_invoice_setup">Customer invoice setup</string>
+    <string name="preferred_payment_gateway_connected_bank_account">Preferred payment gateway,\nConnected bank account</string>
+  <string name="gst_declearation_bank_upi_appointments">GST declaration, Bank UPI for offline appointments,\nSignature</string>
+  <string name="refund_cancllation_privacy_policies">Refund, cancellation, privacy policies for your \ncustomers</string>
+    <string name="search_settings">search settings</string>
+    <string name="done">DONE</string>
+  <string name="current_selection">Current selection</string>
+    <string name="rename">RENAME</string>
 
-  <array name="stock_availbility">
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>

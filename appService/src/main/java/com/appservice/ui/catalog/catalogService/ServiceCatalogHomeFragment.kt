@@ -8,7 +8,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentServiceHomeContainerBinding
 import com.appservice.ui.catalog.catalogService.listing.ServiceListingFragment
-import com.appservice.ui.catalog.common.CreateCategoryFragment
+import com.appservice.appointment.CreateCategoryFragment
 import com.framework.models.BaseViewModel
 
 class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerBinding, BaseViewModel>() {

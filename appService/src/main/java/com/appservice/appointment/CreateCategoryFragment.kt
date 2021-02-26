@@ -1,17 +1,22 @@
-package com.appservice.ui.catalog.common
+package com.appservice.appointment
 
+import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
+import android.view.*
+import android.widget.PopupWindow
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.FragmentType
+import com.appservice.constant.RecyclerViewActionType
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.databinding.FragmentCreateCategoryBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.ui.catalog.startFragmentActivity
 import com.framework.models.BaseViewModel
+import com.framework.views.customViews.CustomTextView
 import kotlinx.android.synthetic.main.fragment_create_category.*
 import kotlinx.android.synthetic.main.toolbar_catalog.*
 import java.io.Serializable
@@ -53,11 +58,24 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ba
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_create_category,menu)
+        inflater.inflate(R.menu.menu_service_listing, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+         return when (item.itemId) {
+            R.id.action_service_configuration -> {
+                startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+
+        }
     }
 }
 
