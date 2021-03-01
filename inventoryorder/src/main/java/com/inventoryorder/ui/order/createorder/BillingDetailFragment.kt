@@ -77,8 +77,8 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
   fun getBundleData(): Bundle {
     val bundle = Bundle()
-    shouldFinish.let { bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish) }
-    shouldReInitiate.let { bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate) }
+    bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
+    bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
     bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
     return bundle
   }
@@ -130,15 +130,15 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       }
 
       binding?.buttonConfirmOrder -> {
+        val currency = createOrderRequest.items?.firstOrNull()?.productDetails?.getCurrencyCodeValue() ?: "INR"
         val paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
         val shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
-            deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = deliveryFee,
-            currencyCode = createOrderRequest.items?.get(0)?.productDetails?.currencyCode)
+            deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = deliveryFee, currencyCode = currency)
 
         createOrderRequest.mode = selectedDeliveryType
         createOrderRequest.paymentDetails = paymentDetails
         createOrderRequest.shippingDetails = shippingDetails
-        createOrderRequest.sellerID = preferenceData?.fpTag.toString()
+        createOrderRequest.sellerID = preferenceData?.fpTag
         createOrderRequest.shippingDetails?.shippingCost = deliveryFee
         createOrder()
       }
@@ -352,7 +352,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
   private fun apiConfirmOrder(orderInitiateResponse: OrderInitiateResponse) {
     showProgress()
-    viewModel?.confirmOrder(preferenceData?.clientId, orderInitiateResponse.data._id)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+    viewModel?.confirmOrder(preferenceData?.clientId, orderInitiateResponse.data._id)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       if (it.isSuccess()) {
         val bundle = Bundle()
@@ -369,8 +369,9 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
-      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)!!
-      if (shouldReInitiate) (context as? FragmentContainerOrderActivity)?.onBackPressed()
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
+      shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
+      if (shouldReInitiate || shouldFinish) (context as? FragmentContainerOrderActivity)?.onBackPressed()
     }
   }
 

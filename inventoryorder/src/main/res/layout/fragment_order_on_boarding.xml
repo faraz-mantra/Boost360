@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_50"
-        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_16"
         android:maxEms="7"
         android:text="@string/placing_order_is_super_easy"
         android:textColor="@color/black_4a4a4a"

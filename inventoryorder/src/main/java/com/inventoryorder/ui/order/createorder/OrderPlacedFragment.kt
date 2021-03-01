@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
+import com.framework.utils.NumbersToWords
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
@@ -25,111 +26,102 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 
 class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() {
 
-    var shouldReInitiate = false
-    var shouldRefresh = false
-    var type : String ?= null
-    var orderId : String ?= null
-    var orderResponse : OrderItem ?= null
+  var shouldReInitiate = false
+  var shouldRefresh = false
+  var type: String? = null
+  var orderId: String? = null
+  var orderResponse: OrderItem? = null
 
-    companion object {
-        @JvmStatic
-        fun newInstance(bundle: Bundle? = null): OrderPlacedFragment {
-            val fragment = OrderPlacedFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
+  companion object {
+    @JvmStatic
+    fun newInstance(bundle: Bundle? = null): OrderPlacedFragment {
+      val fragment = OrderPlacedFragment()
+      fragment.arguments = bundle
+      return fragment
+    }
+  }
+
+  override fun onCreateView() {
+    super.onCreateView()
+    type = arguments?.getString(IntentConstant.TYPE_APPOINTMENT.name)
+    orderId = arguments?.getString(IntentConstant.ORDER_ID.name)
+    getOrderDetails()
+    setOnClickListener(binding?.buttonInitiateNewOrder, binding?.textInvoice, binding?.buttonConfirmOrder)
+  }
+
+  private fun setData(orderItem: OrderItem) {
+    if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) {
+      binding?.tvName?.text = getString(R.string.appointment_booked_and_confirmed_successfully)
+
+      binding?.linearPaymentStatus?.visibility = View.VISIBLE
+      binding?.textPaymentStatus?.text = orderItem.PaymentDetails?.statusValue() ?: ""
+      binding?.textOrderIdValue?.text = "#${orderItem.ReferenceNumber}"
+      binding?.textName?.text = orderItem.BuyerDetails?.ContactDetails?.FullName ?: ""
+      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem.BillingDetails?.GrossAmount ?: 0.0}"
+
+      binding?.linearItemQty?.visibility = View.GONE
+      binding?.linearPaymentMode?.visibility = View.GONE
+      binding?.linearDeliveryStatus?.visibility = View.GONE
+      binding?.linearDeliveryType?.visibility = View.GONE
+      binding?.appointmentText?.visibility = View.VISIBLE
+
+      binding?.buttonConfirmOrder?.text = getString(R.string.view_appointment_details)
+      binding?.buttonInitiateNewOrder?.text = getString(R.string.view_appointment_dashboard)
+    } else {
+      binding?.textOrderIdValue?.text = "#${orderItem.ReferenceNumber}"
+      binding?.textName?.text = orderItem.BuyerDetails?.ContactDetails?.FullName ?: ""
+      NumbersToWords.solution(orderItem.Items?.size ?: 0)
+      binding?.textCount?.text = "${NumbersToWords.solution(orderItem.Items?.size ?: 0)} (${orderItem.Items?.size})"
+      binding?.textPaymentLink?.text = orderItem.PaymentDetails?.Method ?: ""
+      binding?.textDeliveryStatus?.text = orderItem.LogisticsDetails?.statusValue() ?: ""
+      binding?.textDeliveryType?.text = orderItem.LogisticsDetails?.DeliveryMode ?: ""
+      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
     }
 
-    override fun onCreateView() {
-        super.onCreateView()
+  }
 
-       // orderInitiateResponse = arguments?.getSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name) as OrderInitiateResponse?
-        type = arguments?.getString(IntentConstant.TYPE_APPOINTMENT.name)
-        orderId = arguments?.getString(IntentConstant.ORDER_ID.name)
+  fun getBundleData(): Bundle {
+    val bundle = Bundle()
+    if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
+    bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+    if (!shouldRefresh || !shouldReInitiate) bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, true)
+    return bundle
+  }
 
-        getOrderDetails()
+  private fun getOrderDetails() {
+    showProgress()
+    viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.isSuccess()) {
+        orderResponse = (it as? OrderDetailResponse)?.Data
+        setData(orderItem = orderResponse!!)
+      } else showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
+    })
+  }
 
-       // if (orderInitiateResponse != null) setData()
-
-        setOnClickListener(binding?.buttonInitiateNewOrder, binding?.textInvoice)
-    }
-
-    private fun setData(orderItem: OrderItem) {
-
-        if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) {
-            binding?.tvName?.text = getString(R.string.appointment_booked_and_confirmed_successfully)
-
-            binding?.linearPaymentStatus?.visibility = View.VISIBLE
-            binding?.textPaymentStatus?.text = orderItem?.PaymentDetails?.Status ?: ""
-            binding?.textOrderIdValue?.text = orderItem?.ReferenceNumber ?: ""
-            binding?.textName?.text = orderItem?.BuyerDetails?.ContactDetails?.FullName ?: ""
-            binding?.textTotalAmount?.text = "${orderItem?.BillingDetails?.CurrencyCode} ${orderItem?.BillingDetails?.GrossAmount}"
-
-            binding?.linearItemQty?.visibility = View.GONE
-            binding?.linearPaymentMode?.visibility = View.GONE
-            binding?.linearDeliveryStatus?.visibility = View.GONE
-            binding?.linearDeliveryType?.visibility = View.GONE
-            binding?.appointmentText?.visibility = View.VISIBLE
-
-            binding?.buttonConfirmOrder?.text = getString(R.string.view_appointment_details)
-            binding?.buttonInitiateNewOrder?.text = getString(R.string.view_appointment_dashboard)
-        } else {
-            binding?.textOrderIdValue?.text = orderItem?.ReferenceNumber ?: ""
-            binding?.textName?.text = orderItem?.BuyerDetails?.ContactDetails?.FullName ?: ""
-            binding?.textCount?.text = orderItem?.Items?.size.toString() ?: ""
-            binding?.textPaymentLink?.text = orderItem?.PaymentDetails?.Method ?: ""
-            binding?.textDeliveryStatus?.text = orderItem?.LogisticsDetails?.Status ?: ""
-            binding?.textDeliveryType?.text = orderItem?.LogisticsDetails?.DeliveryMode ?: ""
-            binding?.textTotalAmount?.text = "${orderItem?.BillingDetails?.CurrencyCode} ${orderItem?.BillingDetails?.GrossAmount}"
-        }
-
-    }
-
-    fun getBundleData(): Bundle? {
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.buttonInitiateNewOrder -> {
+        shouldReInitiate = true
+        if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) shouldRefresh = true
+        (activity as? FragmentContainerOrderActivity)?.onBackPressed()
+      }
+      binding?.textInvoice -> {
         val bundle = Bundle()
-        if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
-        shouldReInitiate?.let {
-            bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+        bundle.putSerializable(INVOICE_URL, orderResponse?.BillingDetails?.InvoiceUrl)
+        startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, bundle)
+      }
+      binding?.buttonConfirmOrder -> {
+        val bundle = Bundle()
+        bundle.putString(IntentConstant.ORDER_ID.name, orderResponse?._id)
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+        if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) {
+          startFragmentOrderActivity(FragmentType.APPOINTMENT_SPA_DETAIL_VIEW, bundle, isResult = true)
+        } else {
+          startFragmentOrderActivity(FragmentType.ORDER_DETAIL_VIEW, bundle, isResult = true)
         }
-        return bundle
+      }
     }
-
-    private fun getOrderDetails() {
-        showProgress()
-        viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
-            hideProgress()
-            if (it.error is NoNetworkException) {
-                showShortToast(resources.getString(R.string.internet_connection_not_available))
-                return@Observer
-            }
-            if (it.isSuccess()) {
-                orderResponse = (it as? OrderDetailResponse)?.Data
-                setData(orderItem = orderResponse!!)
-              /*  var bundle = Bundle()
-                bundle.putSerializable(IntentConstant.ORDER_ID.name, orderId)
-                bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-                startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)*/
-            } else {
-                showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
-            }
-        })
-    }
-
-    override fun onClick(v: View) {
-        super.onClick(v)
-
-        when(v) {
-            binding?.buttonInitiateNewOrder -> {
-                shouldReInitiate = true
-                if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) shouldRefresh = true
-                (activity as FragmentContainerOrderActivity).onBackPressed()
-            }
-
-            binding?.textInvoice -> {
-                var bundle = Bundle()
-                bundle.putSerializable(INVOICE_URL, orderResponse?.BillingDetails?.InvoiceUrl)
-                startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, bundle)
-            }
-        }
-    }
+  }
 }

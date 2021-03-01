@@ -208,7 +208,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     orderInitiateRequest?.mode = OrderItem.OrderMode.APPOINTMENT.name
     orderInitiateRequest?.items = items
     orderInitiateRequest?.items?.get(0)?.productDetails?.name = selectedService?.Name
-    orderInitiateRequest?.sellerID = preferenceData?.fpTag ?: ""
+    orderInitiateRequest?.sellerID = preferenceData?.fpTag
 
     var bundle = Bundle()
     bundle?.putSerializable(IntentConstant.ORDER_REQUEST.name, orderInitiateRequest)

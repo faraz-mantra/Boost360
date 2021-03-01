@@ -177,7 +177,7 @@ data class OrderItem(
     return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
-        LogisticsDetails != null && LogisticsDetailsN.STSTUS.from(LogisticsDetails.status()) == LogisticsDetailsN.STSTUS.NOT_INITIATED)
+        LogisticsDetails != null && LogisticsDetailsN.LogisticsStatus.from(LogisticsDetails.status()) == LogisticsDetailsN.LogisticsStatus.NOT_INITIATED)
   }
 
   fun orderBtnStatus(): ArrayList<OrderMenuModel.MenuStatus> {
