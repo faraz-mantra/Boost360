@@ -24,6 +24,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
   private var createOrderRequest = OrderInitiateRequest()
   private var shouldReInitiate: Boolean = false
   private var shouldFinish: Boolean = false
+  private var addMore: Boolean = false
 
   companion object {
     @JvmStatic
@@ -151,9 +152,10 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
         createOrderRequest = req
         setUpData()
       }
-      shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name)?:false
+      addMore = bundle?.getBoolean(IntentConstant.ADD_MORE_ITEM.name) ?: false
+      shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
       shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
-      if (shouldFinish || shouldReInitiate) (context as? FragmentContainerOrderActivity)?.onBackPressed()
+      if (shouldFinish || shouldReInitiate || addMore) (context as? FragmentContainerOrderActivity)?.onBackPressed()
     }
   }
 

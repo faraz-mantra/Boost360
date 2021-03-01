@@ -198,11 +198,12 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
       val req = bundle?.getSerializable(IntentConstant.ORDER_REQUEST.name) as? OrderInitiateRequest
       val shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
       val shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
+      val addMore = bundle?.getBoolean(IntentConstant.ADD_MORE_ITEM.name) ?: false
       totalPrice = 0.0
       totalCartItems = 0
       if (shouldFinish) {
         (context as? FragmentContainerOrderActivity)?.onBackPressed()
-      } else if (req != null && shouldReInitiate.not()) {
+      } else if (req != null && shouldReInitiate.not() && addMore) {
         createOrderRequest = req
         finalProductList.forEach { prod ->
           val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }

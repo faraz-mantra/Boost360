@@ -50,6 +50,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   private var orderBottomSheet = OrderBottomSheet()
   private var deliveryTypeBottomSheet = OrderBottomSheet()
   private var shouldFinish = false
+  private var addMore = false
   private var shouldReInitiate = false
   private var paymentStatus: String = PaymentDetailsN.STATUS.PENDING.name
 
@@ -78,6 +79,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   fun getBundleData(): Bundle {
     return Bundle().apply {
       putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
+      putBoolean(IntentConstant.ADD_MORE_ITEM.name, addMore)
       putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
       putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
     }
@@ -156,7 +158,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       }
 
       binding?.tvAddMore -> {
-        shouldFinish = true
+        addMore = true
         (context as? FragmentContainerOrderActivity)?.onBackPressed()
       }
     }
@@ -305,7 +307,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       val removeItemBottomSheetDialog = RemoveItemBottomSheetDialog()
       removeItemBottomSheetDialog.onClicked = {
         if (it) {
-          if (createOrderRequest.items?.size ?: 0 > position) {
+          if ((createOrderRequest.items?.size ?: 0) > 1) {
             createOrderRequest.items?.removeAt(position)
             itemsAdapter?.notify(createOrderRequest.items)
             getTotalPayableAmount()
