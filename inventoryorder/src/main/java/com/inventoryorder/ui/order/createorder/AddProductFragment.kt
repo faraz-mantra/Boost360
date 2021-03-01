@@ -67,12 +67,12 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         productList.clear()
         productList.addAll(finalProductList)
         productList = productList.filter { it.getNameValue().startsWith(query) || it.getNameValue().contains(query) } as ArrayList<ProductItem>
-        setAdapterOrderList(productList)
+        setAdapterOrderList()
       }
       finalProductList.isNullOrEmpty().not() -> {
         productList.clear()
         productList.addAll(finalProductList)
-        setAdapterOrderList(productList)
+        setAdapterOrderList()
       }
       else -> {
         binding?.tvNoProducts?.visibility = View.VISIBLE
@@ -126,7 +126,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
           productList.addAll(finalProductList)
           binding?.tvNoProducts?.visibility = View.GONE
           binding?.productRecycler?.visibility = View.VISIBLE
-          setAdapterOrderList(productList)
+          setAdapterOrderList()
         } else {
           binding?.tvNoProducts?.visibility = View.VISIBLE
           binding?.productRecycler?.visibility = View.GONE
@@ -139,14 +139,14 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, true) }
   }
 
-  private fun setAdapterOrderList(list: ArrayList<ProductItem>) {
+  private fun setAdapterOrderList() {
     if (itemsAdapter == null) {
       binding?.productRecycler?.apply {
-        itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this@AddProductFragment)
+        itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
         adapter = itemsAdapter
         itemsAdapter?.runLayoutAnimation(this)
       }
-    } else itemsAdapter?.notify(list)
+    } else itemsAdapter?.notifyDataSetChanged()
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
