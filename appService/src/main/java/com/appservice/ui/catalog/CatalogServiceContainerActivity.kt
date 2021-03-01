@@ -44,7 +44,9 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     private var fragmentCatalogSettings: FragmentCatalogSettings? = null
     private var fragmentCustomerInvoiceSetup: FragmentCustomerInvoiceSetup? = null
     private var fragmentCustomerPolicies: FragmentCustomerPolicies? = null
-    private var fragmentPaymentSettings: FragmentPaymentSettings? = null
+    private var fragmentPaymentCollectionsSettings: FragmentPaymentCollectionsSettings? = null
+    private var fragmentAccountAddHome: FragmentAccountAddHome? = null
+    private  var fragmentAddAccountDetails:FragmentAddAccountDetails? = null
 
     override fun getLayout(): Int {
         return com.framework.R.layout.activity_fragment_container
@@ -69,7 +71,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         return when (type) {
             FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
             FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
-            FragmentType.APPOINTMENT_PAYMENT_SETTINGS, -> R.style.CatalogTheme
+            FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME,FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS
+            -> R.style.CatalogTheme
             FragmentType.APPOINTMENT_SETTINGS -> R.style.CatalogTheme_FragmentAppointment
             FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
             else -> super.customTheme()
@@ -89,7 +92,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
             FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT,
             FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
-            FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_PAYMENT_SETTINGS,
+            FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
+            FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES,
             -> ContextCompat.getColor(this, R.color.orange)
             else -> super.getToolbarBackgroundColor()
         }
@@ -106,10 +110,10 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
     override fun getNavigationIcon(): Drawable? {
         return when (type) {
-            FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_DETAIL_VIEW,
-            FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT,
+            FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
+            FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES,
             FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
-            FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_PAYMENT_SETTINGS,
+            FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_PAYMENT_SETTINGS,
             -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
             else -> super.getNavigationIcon()
         }
@@ -132,6 +136,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.APPOINTMENT_PAYMENT_SETTINGS -> getString(R.string.payment_collection_setup)
             FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES -> getString(R.string.policies_for_customer)
             FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE -> getString(R.string.customer_invoice_setup)
+            FragmentType.APPOINTMENT_CATALOG_SETTINGS -> getString(R.string.catalog_setup)
+            FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS->getString(R.string.my_bank_account)
             else -> super.getToolbarTitle()
         }
     }
@@ -143,6 +149,15 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         }
     }
 
+    override fun isHideToolbar(): Boolean {
+        return when (type) {
+            FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME -> {
+                true
+            }
+            else -> super.isHideToolbar()
+        }
+
+    }
 
     private fun shouldAddToBackStack(): Boolean {
         return when (type) {
@@ -196,8 +211,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
                 fragmentCustomerInvoiceSetup
             }
             FragmentType.APPOINTMENT_PAYMENT_SETTINGS -> {
-                fragmentPaymentSettings = FragmentPaymentSettings.newInstance()
-                fragmentPaymentSettings
+                fragmentPaymentCollectionsSettings = FragmentPaymentCollectionsSettings.newInstance()
+                fragmentPaymentCollectionsSettings
             }
             FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES -> {
                 fragmentCustomerPolicies = FragmentCustomerPolicies.newInstance()
@@ -206,6 +221,17 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.APPOINTMENT_SETTINGS -> {
                 fragmentAppointmentSettings = FragmentAppointmentSettings.newInstance()
                 fragmentAppointmentSettings
+            }
+            FragmentType.APPOINTMENT_CATALOG_SETTINGS -> {
+                fragmentCatalogSettings = FragmentCatalogSettings.newInstance()
+                fragmentCatalogSettings
+            }
+            FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME -> {
+                fragmentAccountAddHome = FragmentAccountAddHome.newInstance()
+                fragmentAccountAddHome
+            }   FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS -> {
+                fragmentAddAccountDetails = FragmentAddAccountDetails.newInstance()
+                fragmentAddAccountDetails
             }
             else -> throw IllegalFragmentTypeException()
         }
@@ -224,7 +250,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         serviceCatalogHomeFragment?.onActivityResult(requestCode, resultCode, data)
         fragmentAppointmentSettings?.onActivityResult(requestCode, resultCode, data)
         fragmentCustomerPolicies?.onActivityResult(requestCode, resultCode, data)
-        fragmentPaymentSettings?.onActivityResult(requestCode, resultCode, data)
+        fragmentPaymentCollectionsSettings?.onActivityResult(requestCode, resultCode, data)
         fragmentCustomerInvoiceSetup?.onActivityResult(requestCode, resultCode, data)
         serviceCatalogHomeFragment?.onActivityResult(requestCode, resultCode, data)
     }

@@ -2,13 +2,13 @@ package com.appservice.appointment
 
 import android.view.View
 import com.appservice.R
-import com.appservice.databinding.BottomSheetSuccessfullyPublishedBinding
+import com.appservice.databinding.BottomSheetWhyDoWeNeedBankAccountBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class BottomSheetSuccessfullyUpdated: BaseBottomSheetDialog<BottomSheetSuccessfullyPublishedBinding, BaseViewModel>() {
+class BottomSheetWhyVerifyAccount : BaseBottomSheetDialog<BottomSheetWhyDoWeNeedBankAccountBinding, BaseViewModel>() {
     override fun getLayout(): Int {
-        return R.layout.bottom_sheet_successfully_published
+        return R.layout.bottom_sheet_why_do_we_need_bank_account
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
@@ -16,13 +16,13 @@ class BottomSheetSuccessfullyUpdated: BaseBottomSheetDialog<BottomSheetSuccessfu
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding?.civCancel)
+        setOnClickListener(binding?.understoodBtn)
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding?.civCancel -> {
+            binding?.understoodBtn -> {
                 dismiss()
             }
         }

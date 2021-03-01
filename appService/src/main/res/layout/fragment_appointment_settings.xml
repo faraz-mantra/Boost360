@@ -30,8 +30,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
-                android:foreground="?attr/selectableItemBackground"
-                >
+                android:id="@+id/catalog_setup"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/civ_catalog_setup"
@@ -76,8 +77,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
-                android:foreground="?attr/selectableItemBackground"
-                >
+                android:id="@+id/payment_collection_setup"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/civ_payment_collection"
@@ -122,8 +124,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
-                android:foreground="?attr/selectableItemBackground"
-                >
+                android:id="@+id/customer_invoice_setup"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/civ_customer_invoice_setup"
@@ -169,6 +172,7 @@
             <View style="@style/HorizontalDivider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/policies_for_customer"
                 style="@style/match_wrap"
                 android:foreground="?attr/selectableItemBackground"
                 >
