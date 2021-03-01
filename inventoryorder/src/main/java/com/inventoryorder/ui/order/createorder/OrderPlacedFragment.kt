@@ -1,27 +1,20 @@
 package com.inventoryorder.ui.order.createorder
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.utils.NumbersToWords
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
-import com.inventoryorder.databinding.FragmentOrderDetailBinding
 import com.inventoryorder.databinding.FragmentOrderPlacedBinding
-import com.inventoryorder.model.OrderInitiateResponse
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.order.INVOICE_URL
-import com.inventoryorder.ui.order.OrderInvoiceFragment
 import com.inventoryorder.ui.startFragmentOrderActivity
 
 class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() {
@@ -81,7 +74,7 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
   fun getBundleData(): Bundle {
     val bundle = Bundle()
     if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) bundle.putBoolean(IntentConstant.IS_REFRESH.name, true)
-    bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+    bundle.putBoolean(IntentConstant.SHOULD_RE_INITIATE.name, shouldReInitiate)
     if (!shouldReInitiate) bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, true)
     return bundle
   }

@@ -63,8 +63,9 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
 
   fun getBundleData(): Bundle {
     return Bundle().apply {
-      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+      putBoolean(IntentConstant.SHOULD_RE_INITIATE.name, shouldReInitiate)
       putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
+      putBoolean(IntentConstant.ADD_MORE_ITEM.name, addMore)
       putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
     }
   }
@@ -154,7 +155,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
       }
       addMore = bundle?.getBoolean(IntentConstant.ADD_MORE_ITEM.name) ?: false
       shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
-      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_RE_INITIATE.name) ?: false
       if (shouldFinish || shouldReInitiate || addMore) (context as? FragmentContainerOrderActivity)?.onBackPressed()
     }
   }

@@ -80,7 +80,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     return Bundle().apply {
       putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
       putBoolean(IntentConstant.ADD_MORE_ITEM.name, addMore)
-      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+      putBoolean(IntentConstant.SHOULD_RE_INITIATE.name, shouldReInitiate)
       putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
     }
   }
@@ -371,7 +371,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
-      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_RE_INITIATE.name) ?: false
       shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
       if (shouldReInitiate || shouldFinish) (context as? FragmentContainerOrderActivity)?.onBackPressed()
     }
