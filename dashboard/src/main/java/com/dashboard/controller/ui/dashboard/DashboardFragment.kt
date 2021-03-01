@@ -737,7 +737,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       if (it.isSuccess()) {
         val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
         if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
-          urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.active_whatsapp_number}*"
+          urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.getNumberPlus91()}*"
         }
       }
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
