@@ -343,6 +343,7 @@
           android:layout_marginTop="@dimen/size_5"
           android:layout_weight="1"
           android:gravity="center"
+          android:paddingBottom="@dimen/size_30"
           android:text="@string/an_email_and_sms_with_the_appointment_details_and_gst_incoice_have_been_sent_to_the_customer_notifying_about_the_confirmation_along_with_a_secure_payment_link"
           android:textColor="@color/grey_dark_2"
           android:textSize="10sp"

@@ -75,6 +75,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
       View.VISIBLE
     } ?: View.GONE
     var colorCode = "#9B9B9B"
+    activity?.let { binding.statusView.background= ContextCompat.getDrawable(it, R.drawable.ic_new_order_bg) }
     val btnStatusMenu = order.orderBtnStatus()
     binding.lytStatusBtn.visible()
     if (btnStatusMenu.isNullOrEmpty().not()) {
@@ -91,15 +92,24 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
           colorCode = "#9B9B9B"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
         }
+        OrderMenuModel.MenuStatus.SEND_RE_BOOKING-> {
+          colorCode = "#9B9B9B"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
+        }
         OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> {
           colorCode = "#FFB900"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_confirmed_order_btn_bkg, R.color.orange, R.drawable.ic_arrow_down_orange)
         }
         OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
-          colorCode = "#52AAC6"
-          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
+          colorCode = "#78AF00"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_transit_order_btn_green, R.color.green_78AF00, R.drawable.ic_arrow_down_green)
         }
         OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
+          colorCode = "#f16629"
+          activity?.let { binding.statusView.background = ContextCompat.getDrawable(it, R.drawable.ic_new_order_bg_green) }
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_green, R.color.white, R.drawable.ic_arrow_down_white)
+        }
+        OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
           colorCode = "#52AAC6"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
         }

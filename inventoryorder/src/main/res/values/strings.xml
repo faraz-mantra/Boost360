@@ -161,10 +161,11 @@
   <string name="next">Next</string>
   <string name="shipping_address">Shipping Address</string>
   <string name="type_the_product_name">Type the product name</string>
-  <string name="add_product"><![CDATA[Add <products>]]></string>
+  <string name="add_product">Add products></string>
   <string name="item_total">Item Total</string>
   <string name="proceed">Proceed</string>
   <string name="review_billing_details">Review billing details</string>
+  <string name="review_confirm">Review &amp; confirm</string>
   <string name="invoice_preview">Invoice preview</string>
   <string name="please_edit_review_the_order_details_and_confirm">Please edit/review the order details and confirm</string>
   <string name="billing_to">Billing to</string>
@@ -183,6 +184,7 @@
   <string name="type_if_there_are_any_feedback">Type, if there are any feedback...</string>
   <string name="boost_send_reason_for_cancellation_desc">Boost will send an email and an SMS to the customer on your behalf, informing them of the cancellation of this order and the reason for cancellation, if any.</string>
   <string name="feedback_message_send_desc">An email and an SMS will be sent to the customer on your behalf, including the message that you have included along with feedback link.</string>
+  <string name="feedback_message_order_send_desc"><b>Note:</b> Boost will send an email and an SMS to the customer on your behalf, including the message that you have included along with feedback link.</string>
   <string name="confirming_your_order">Confirming your order?</string>
   <string name="delivery_mode_store_pickup">Delivery mode: <b>Store Pickup</b></string>
   <string name="send_online_payment_link_to_customer">Send online payment link to customer</string>
@@ -191,6 +193,7 @@
   <string name="boost_along_payment_order">along with the payment link.</string>
   <string name="boost_will_send_payment_link_this_order">Boost will send payment link to the customer on your behalf. Upon successful payment it will reflect againt this order.</string>
   <string name="send_re_booking_reminder_apt">A notification will be sent to this customer reminding to book this service again if interested.</string>
+  <string name="send_re_booking_reminder_order"><b>Note:</b> Boost will send an email and an SMS to the customer on your behalf, including the message that you have included along with re-ordering link.</string>
   <string name="boost_will_send_payment_link_this_apt">A secure payment link will be sent to the customer on your behalf. Upon successful payment it will reflect againt this appointment.</string>
   <string name="start_apt_service_desc">An email will be sent to the customer notifying them about appointment service appointment being started.</string>
   <string name="collect_pending_payment">Collect Pending Payment</string>
@@ -225,6 +228,7 @@
   <string name="apt_served_success">Appointment served successfully!</string>
   <string name="re_booking_reminder">Reminder send successfully!</string>
   <string name="appointment_feedback_requested">Appointment feedback requested!</string>
+  <string name="order_feedback_requested">Order feedback requested!</string>
   <string name="order_delivery">Order delivery successfully!</string>
   <string name="appointment_serve">Appointment served successfully!</string>
   <string name="cancellation_reason_not_update">Cancellation reason not update</string>

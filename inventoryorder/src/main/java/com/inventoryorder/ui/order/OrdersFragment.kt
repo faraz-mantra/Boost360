@@ -26,6 +26,7 @@ import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.model.orderRequest.extraProperty.ExtraPropertiesOrder
+import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequestItem
@@ -45,6 +46,10 @@ import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.SendFeedbackAptSheetDialog
+import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.SendReBookingAptSheetDialog
+import com.inventoryorder.ui.order.createorder.SendFeedbackOrderSheetDialog
+import com.inventoryorder.ui.order.createorder.SendReBookingOrderSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
@@ -98,9 +103,9 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         if (!PreferencesUtils.instance.getData(PreferenceConstant.SHOW_CREATE_ORDER_WELCOME, false)) {
-          startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle)
+          startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle,isResult = true)
         } else {
-          startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle)
+          startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle,isResult = true)
         }
       }
     }
@@ -108,6 +113,12 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
     binding?.orderRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+        if (dy > 0 && binding?.btnAdd?.visibility == View.VISIBLE) binding?.btnAdd?.hide()
+        else if (dy < 0 && binding?.btnAdd?.visibility != View.VISIBLE) binding?.btnAdd?.show()
+      }
+
       override fun loadMoreItems() {
         if (!isLastPageD && !isSearchItem) {
           isLoadingD = true
@@ -308,6 +319,18 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         sheetShipped.onClicked = { shippedOrder(it) }
         sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
       }
+      OrderMenuModel.MenuStatus.SEND_RE_BOOKING -> {
+        val sheetReBookingApt = SendReBookingOrderSheetDialog()
+        sheetReBookingApt.setData(orderItem)
+        sheetReBookingApt.onClicked = { sendReBookingRequestOrder() }
+        sheetReBookingApt.show(this.parentFragmentManager, SendReBookingAptSheetDialog::class.java.name)
+      }
+      OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
+        val sheetFeedbackApt = SendFeedbackOrderSheetDialog()
+        sheetFeedbackApt.setData(orderItem)
+        sheetFeedbackApt.onClicked = { sendFeedbackRequestOrder(it) }
+        sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
+      }
       else -> {
       }
     }
@@ -315,7 +338,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun shippedOrder(markAsShippedRequest: MarkAsShippedRequest) {
     showProgress()
-    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         apiGetOrderDetails()
         showLongToast(resources.getString(R.string.order_shipped))
@@ -328,7 +351,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun deliveredOrder(message: String) {
     showProgress()
-    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         if (message.isNotEmpty()) {
           updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
@@ -345,7 +368,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
     showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         val data = it as? OrderConfirmStatus
         if (reasonText.isNotEmpty()) {
@@ -372,7 +395,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun apiConfirmOrder(isSendPaymentLink: Boolean) {
     showProgress()
-    viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         if (isSendPaymentLink) sendPaymentLinkOrder(getString(R.string.order_confirmed))
         else {
@@ -393,10 +416,35 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     })
   }
 
+  private fun sendFeedbackRequestOrder(request: FeedbackRequest) {
+    showProgress()
+    viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        apiGetOrderDetails()
+        showLongToast(resources.getString(R.string.order_feedback_requested))
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
+
+  private fun sendReBookingRequestOrder() {
+    showProgress()
+    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        apiGetOrderDetails()
+        showLongToast(resources.getString(R.string.re_booking_reminder))
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
 
   private fun markCodPaymentRequest() {
     showProgress()
-    viewModel?.markCodPaymentDone(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.markCodPaymentDone(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         apiGetOrderDetails()
         showLongToast(getString(R.string.payment_confirmed))
@@ -413,7 +461,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
         if (position != null && orderList.size > position!!) {
-          orderListFinalList= orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
+          orderListFinalList = orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()
       } else loadNewData()
@@ -505,8 +553,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == 101 && resultCode == RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
-      val isRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name)
-      if (isRefresh != null && isRefresh) loadNewData()
+      val isRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name)?:false
+      if (isRefresh) loadNewData()
     }
   }
 

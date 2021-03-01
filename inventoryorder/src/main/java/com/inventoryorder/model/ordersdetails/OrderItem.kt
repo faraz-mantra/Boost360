@@ -202,16 +202,31 @@ data class OrderItem(
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.CONFIRM_ORDER, OrderMenuModel.MenuStatus.CANCEL_ORDER)
       else arrayListOf(OrderMenuModel.MenuStatus.CONFIRM_ORDER, OrderMenuModel.MenuStatus.CANCEL_ORDER, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
-    } else if ((statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING || statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED ||
-            statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED || statusOrder == OrderSummaryModel.OrderStatus.ORDER_COMPLETED) &&
+    } else if (statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING
+        && (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))) {
+
+      return arrayListOf(OrderMenuModel.MenuStatus.REQUEST_FEEDBACK)
+
+    } else if (statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING && method != PaymentDetailsN.METHOD.FREE &&
+        (statusPayment == PaymentDetailsN.STATUS.PENDING || statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
+
+      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.REQUEST_FEEDBACK)
+      else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.REQUEST_FEEDBACK, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
+
+    } else if (statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING && method != PaymentDetailsN.METHOD.FREE &&
+        method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.INITIATED || statusPayment == PaymentDetailsN.STATUS.INPROCESS)) {
+
+      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_FEEDBACK)
+      else arrayListOf(OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE, OrderMenuModel.MenuStatus.REQUEST_FEEDBACK)
+
+    } else if ((statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED || statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED || statusOrder == OrderSummaryModel.OrderStatus.ORDER_COMPLETED) &&
         method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.PENDING || statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
 
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT)
       else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
-    } else if ((statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING || statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED ||
-            statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED || statusOrder == OrderSummaryModel.OrderStatus.ORDER_COMPLETED)
-        && method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.INITIATED || statusPayment == PaymentDetailsN.STATUS.INPROCESS)) {
+    } else if ((statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED || statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED || statusOrder == OrderSummaryModel.OrderStatus.ORDER_COMPLETED) &&
+        method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.INITIATED || statusPayment == PaymentDetailsN.STATUS.INPROCESS)) {
 
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf()
       else arrayListOf(OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
@@ -279,6 +294,10 @@ data class OrderItem(
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SHIPPED, OrderMenuModel.MenuStatus.CANCEL_ORDER)
       else arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SHIPPED, OrderMenuModel.MenuStatus.CANCEL_ORDER, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
+    } else if (statusOrder == OrderSummaryModel.OrderStatus.ORDER_CANCELLED) {
+
+      return arrayListOf(OrderMenuModel.MenuStatus.SEND_RE_BOOKING)
+
     }
     return arrayListOf()
   }
@@ -309,8 +328,8 @@ data class OrderItem(
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
       else arrayListOf(OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
-    } else if (statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING
-        && (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))) {
+    } else if (statusOrder == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING && (method == PaymentDetailsN.METHOD.FREE ||
+            (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))) {
 
       return arrayListOf(OrderMenuModel.MenuStatus.REQUEST_FEEDBACK)
 
@@ -408,7 +427,7 @@ data class OrderItem(
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.START_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
       else arrayListOf(OrderMenuModel.MenuStatus.START_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
-    }else if(statusOrder == OrderSummaryModel.OrderStatus.ORDER_CANCELLED){
+    } else if (statusOrder == OrderSummaryModel.OrderStatus.ORDER_CANCELLED) {
 
       return arrayListOf(OrderMenuModel.MenuStatus.SEND_RE_BOOKING)
 

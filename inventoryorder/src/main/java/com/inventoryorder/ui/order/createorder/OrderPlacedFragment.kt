@@ -27,7 +27,6 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() {
 
   var shouldReInitiate = false
-  var shouldRefresh = false
   var type: String? = null
   var orderId: String? = null
   var orderResponse: OrderItem? = null
@@ -70,7 +69,6 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
     } else {
       binding?.textOrderIdValue?.text = "#${orderItem.ReferenceNumber}"
       binding?.textName?.text = orderItem.BuyerDetails?.ContactDetails?.FullName ?: ""
-      NumbersToWords.solution(orderItem.Items?.size ?: 0)
       binding?.textCount?.text = "${NumbersToWords.solution(orderItem.Items?.size ?: 0)} (${orderItem.Items?.size})"
       binding?.textPaymentLink?.text = orderItem.PaymentDetails?.Method ?: ""
       binding?.textDeliveryStatus?.text = orderItem.LogisticsDetails?.statusValue() ?: ""
@@ -82,9 +80,9 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
   fun getBundleData(): Bundle {
     val bundle = Bundle()
-    if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
+    if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) bundle.putBoolean(IntentConstant.IS_REFRESH.name, true)
     bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
-    if (!shouldRefresh || !shouldReInitiate) bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, true)
+    if (!shouldReInitiate) bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, true)
     return bundle
   }
 
@@ -104,7 +102,6 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
     when (v) {
       binding?.buttonInitiateNewOrder -> {
         shouldReInitiate = true
-        if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) shouldRefresh = true
         (activity as? FragmentContainerOrderActivity)?.onBackPressed()
       }
       binding?.textInvoice -> {

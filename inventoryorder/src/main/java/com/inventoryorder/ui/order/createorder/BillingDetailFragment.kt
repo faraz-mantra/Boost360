@@ -76,11 +76,11 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   }
 
   fun getBundleData(): Bundle {
-    val bundle = Bundle()
-    bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
-    bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
-    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
-    return bundle
+    return Bundle().apply {
+      putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
+      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+      putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
+    }
   }
 
   private fun setUpData() {
