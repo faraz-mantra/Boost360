@@ -25,6 +25,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
@@ -134,6 +135,10 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     })
   }
 
+  fun getBundleData(): Bundle {
+    return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, true) }
+  }
+
   private fun setAdapterOrderList(list: ArrayList<ProductItem>) {
     if (itemsAdapter == null) {
       binding?.productRecycler?.apply {
@@ -196,7 +201,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
       totalPrice = 0.0
       totalCartItems = 0
       if (shouldFinish) {
-        baseActivity.finish()
+        (context as? FragmentContainerOrderActivity)?.onBackPressed()
       } else if (req != null && shouldReInitiate.not()) {
         createOrderRequest = req
         finalProductList.forEach { prod ->

@@ -182,7 +182,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.new_apppointment_camel_case)
       FragmentType.ADD_CUSTOMER -> getString(R.string.add_a_customer)
       FragmentType.ADD_PRODUCT -> getString(R.string.add_product)
-      FragmentType.BILLING_DETAIL -> getString(R.string.review_billing_details)
+      FragmentType.BILLING_DETAIL -> getString(R.string.review_confirm)
       FragmentType.ORDER_INVOICE_VIEW -> getString(R.string.invoice_preview)
       FragmentType.CREATE_SPA_APPOINTMENT -> getString(R.string.adding_appointment)
       FragmentType.REVIEW_SPA_DETAILS -> getString(R.string.string_review_and_confirm)
@@ -190,6 +190,18 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     }
   }
 
+  override fun getSubtitleAlpha(): Float? {
+    return null
+  }
+
+  override fun getToolbarSubTitle(): String? {
+    return when (type) {
+      FragmentType.ADD_PRODUCT -> "STEP 1/3"
+      FragmentType.ADD_CUSTOMER -> "STEP 2/3"
+      FragmentType.BILLING_DETAIL -> "STEP 3/3"
+      else -> super.getToolbarSubTitle()
+    }
+  }
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
@@ -352,11 +364,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun onBackPressed() {
-    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?:
-    videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData() ?:
-    billingDetailFragment?.getBundleData() ?: addCustomerFragment?.getBundleData() ?:
-    orderPlacedFragment?.getBundleData() ?: reviewAndConfirmFragment?.getBundleData() ?:
-    spaAppointmentFragment?.getBundleData() ?: appointmentSpaDetailsFragment?.getBundleData()
+    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData() ?: billingDetailFragment?.getBundleData() ?: addCustomerFragment?.getBundleData() ?: orderPlacedFragment?.getBundleData() ?: reviewAndConfirmFragment?.getBundleData() ?: spaAppointmentFragment?.getBundleData()
+    ?: appointmentSpaDetailsFragment?.getBundleData() ?: addProductFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
       intent.putExtra(IntentConstant.RESULT_DATA.name, it)

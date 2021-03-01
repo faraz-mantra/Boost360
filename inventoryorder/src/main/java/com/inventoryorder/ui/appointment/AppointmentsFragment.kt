@@ -113,8 +113,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     binding?.bookingRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
       override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-        if (dy > 0 && binding?.btnAdd?.visibility === View.VISIBLE) binding?.btnAdd?.hide()
-        else if (dy < 0 && binding?.btnAdd?.visibility !== View.VISIBLE) binding?.btnAdd?.show()
+        if (dy > 0 && binding?.btnAdd?.visibility == View.VISIBLE) binding?.btnAdd?.hide()
+        else if (dy < 0 && binding?.btnAdd?.visibility != View.VISIBLE) binding?.btnAdd?.show()
       }
 
       override fun loadMoreItems() {

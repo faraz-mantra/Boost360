@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
@@ -13,7 +12,6 @@ import com.inventoryorder.constant.AppConstant.Companion.GST_PERCENTAGE
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentReviewAndConfirmBinding
-import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.OrderInitiateResponse
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.order.orderbottomsheet.BottomSheetOptionsItem
@@ -23,7 +21,6 @@ import com.inventoryorder.model.orderRequest.PaymentDetails
 import com.inventoryorder.model.orderRequest.ShippingDetails
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
-import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.spaAppointment.ServiceItem
 import com.inventoryorder.ui.BaseInventoryFragment
@@ -42,12 +39,12 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   private var totalPrice = 0.0
   private var discountedPrice = 0.0
   private var orderInitiateRequest: OrderInitiateRequest? = null
-  var orderBottomSheet = OrderBottomSheet()
+  private var orderBottomSheet = OrderBottomSheet()
   private var paymentStatus: String = PaymentDetailsN.STATUS.PENDING.name
   private var selectedService: ServiceItem? = null
-  var shouldReInitiate = false
-  var shouldRefresh = false
-  var prefData: PreferenceData? = null
+  private var shouldReInitiate = false
+  private var shouldRefresh = false
+  private var prefData: PreferenceData? = null
 
   companion object {
     @JvmStatic
@@ -58,13 +55,11 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
   }
 
-  fun getBundleData(): Bundle? {
-    val bundle = Bundle()
-    shouldReInitiate?.let {
-      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
-      bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
+  fun getBundleData(): Bundle {
+    return Bundle().apply {
+      putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
+      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
     }
-    return bundle
   }
 
   override fun onCreateView() {
@@ -101,7 +96,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
 
     orderInitiateRequest?.gstCharges = calculateGST(discountedPrice)
-    var paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
+    val paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
     orderInitiateRequest?.paymentDetails = paymentDetails
 
     if (selectedService?.Image != null && selectedService?.Image?.isNotEmpty() == true)
@@ -124,27 +119,16 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.textAdd -> {
-        showAddServiceFeeDialog()
-      }
-
+      binding?.textAdd -> showAddServiceFeeDialog()
       binding?.buttonReviewDetails -> {
         val shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
             deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = serviceFee,
             currencyCode = orderInitiateRequest?.items?.get(0)?.productDetails?.getCurrencyCodeValue() ?: "INR")
         orderInitiateRequest?.shippingDetails = shippingDetails
         createAppointment()
-        /*    //TODO : to be removed after dry run
-            var orderInitiateResponse = OrderInitiateResponse(statusN = "SUCCESS", data = OrderItem(), messageN = "")
-            var bundle = Bundle()
-            bundle.putString(IntentConstant.TYPE_APPOINTMENT.name, "appt")
-            bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, orderInitiateResponse)
-            startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)*/
       }
 
-      binding?.textEdit -> {
-        showAddServiceFeeDialog()
-      }
+      binding?.textEdit -> showAddServiceFeeDialog()
 
       binding?.tvPaymentStatus -> {
         val createOrderBottomSheetDialog = CreateOrderBottomSheetDialog(orderBottomSheet)
@@ -184,28 +168,11 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
 
   private fun createAppointment() {
     showProgress()
-    viewModel?.postAppointment(AppConstant.CLIENT_ID_2, orderInitiateRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-      if (it.error is NoNetworkException) {
-        hideProgress()
-        showLongToast(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
+    viewModel?.postAppointment(AppConstant.CLIENT_ID_2, orderInitiateRequest)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         hideProgress()
-
-        /*showShortToast(getString(R.string.appointment_created_successfully))
-        shouldReInitiate = true
-        shouldRefresh = true
-        (activity as FragmentContainerOrderActivity).onBackPressed()*/
-
-        /* var orderInitiateResponse = (it as? OrderInitiateResponse)
-         var bundle = Bundle()
-         bundle.putString(IntentConstant.TYPE_APPOINTMENT.name, "appt")
-         bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, orderInitiateResponse)
-         startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)*/
-
-        var orderInitiateResponse = (it as? OrderInitiateResponse)
-        apiConfirmOrder(orderInitiateResponse?.data!!)
+        val orderInitiateResponse = (it as? OrderInitiateResponse)
+        apiConfirmOrder(orderInitiateResponse?.data)
       } else {
         hideProgress()
         showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
@@ -215,24 +182,14 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
 
   private fun apiConfirmOrder(order: OrderItem?) {
     showProgress()
-    viewModel?.confirmOrder(prefData?.clientId, order?._id)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+    viewModel?.confirmOrder(prefData?.clientId, order?._id)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
       if (it.isSuccess()) {
-
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString(IntentConstant.TYPE_APPOINTMENT.name, AppConstant.TYPE_APPOINTMENT)
         bundle.putSerializable(IntentConstant.ORDER_ID.name, order?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, prefData)
         startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
-
-        /*   showShortToast(getString(R.string.appointment_created_successfully))
-           shouldReInitiate = true
-           shouldRefresh = true
-           (activity as FragmentContainerOrderActivity).onBackPressed()*/
       } else {
         showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
       }
@@ -240,24 +197,23 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   private fun setUpAddress(): String {
-    var addrStr = StringBuilder()
-    addrStr.append(orderInitiateRequest?.buyerDetails?.address?.addressLine)
-    if (orderInitiateRequest?.buyerDetails?.address?.city.isNullOrEmpty().not()) addrStr.append(", ${orderInitiateRequest?.buyerDetails?.address?.city}")
-    if (orderInitiateRequest?.buyerDetails?.address?.region.isNullOrEmpty().not()) addrStr.append(", ${orderInitiateRequest?.buyerDetails?.address?.region}")
-    if (orderInitiateRequest?.buyerDetails?.address?.zipcode.isNullOrEmpty().not()) addrStr.append(", ${orderInitiateRequest?.buyerDetails?.address?.zipcode}")
+    val addSlr = StringBuilder()
+    addSlr.append(orderInitiateRequest?.buyerDetails?.address?.addressLine)
+    if (orderInitiateRequest?.buyerDetails?.address?.city.isNullOrEmpty().not()) addSlr.append(", ${orderInitiateRequest?.buyerDetails?.address?.city}")
+    if (orderInitiateRequest?.buyerDetails?.address?.region.isNullOrEmpty().not()) addSlr.append(", ${orderInitiateRequest?.buyerDetails?.address?.region}")
+    if (orderInitiateRequest?.buyerDetails?.address?.zipcode.isNullOrEmpty().not()) addSlr.append(", ${orderInitiateRequest?.buyerDetails?.address?.zipcode}")
 
-    return addrStr.toString()
+    return addSlr.toString()
   }
 
   private fun parseDate(date: String): String? {
     try {
       val df1 = SimpleDateFormat(DateUtils.FORMAT_YYYY_MM_DD, Locale.getDefault())
-      var date = df1.parse(date)
+      val date = df1.parse(date)
       val df2 = SimpleDateFormat(DateUtils.SPA_REVIEW_DATE_FORMAT, Locale.getDefault())
       return df2.format(date)
     } catch (e: Exception) {
     }
-
     return ""
   }
 
@@ -270,15 +226,15 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   private fun preparePaymentStatusOptions() {
     orderBottomSheet.title = getString(R.string.str_payment_status)
 
-    var optionsList = ArrayList<BottomSheetOptionsItem>()
+    val optionsList = ArrayList<BottomSheetOptionsItem>()
 
-    var bottomSheetOptionsItem2 = BottomSheetOptionsItem()
+    val bottomSheetOptionsItem2 = BottomSheetOptionsItem()
     bottomSheetOptionsItem2.title = getString(R.string.playment_already_received)
     bottomSheetOptionsItem2.description = getString(R.string.customer_paid_via_cash_card_upi)
     bottomSheetOptionsItem2.displayValue = getString(R.string.payment_received)
     bottomSheetOptionsItem2.serverValue = PaymentDetailsN.STATUS.INITIATED.name
 
-    var bottomSheetOptionsItem1 = BottomSheetOptionsItem()
+    val bottomSheetOptionsItem1 = BottomSheetOptionsItem()
     bottomSheetOptionsItem1.title = getString(R.string.collect_later)
     bottomSheetOptionsItem1.description = getString(R.string.send_payment_to_customer)
     bottomSheetOptionsItem1.displayValue = getString(R.string.collect_later)
@@ -292,14 +248,11 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
-      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)!!
-      shouldRefresh = bundle.getBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
-      if (shouldReInitiate != null && shouldReInitiate) {
-        (context as FragmentContainerOrderActivity).onBackPressed()
-      }
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
+      shouldRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name) ?: false
+      if (shouldReInitiate || shouldRefresh) (context as? FragmentContainerOrderActivity)?.onBackPressed()
     }
   }
 }

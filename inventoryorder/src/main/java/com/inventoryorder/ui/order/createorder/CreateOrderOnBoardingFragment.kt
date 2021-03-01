@@ -37,7 +37,7 @@ class CreateOrderOnBoardingFragment : BaseInventoryFragment<FragmentOrderOnBoard
         PreferencesUtils.instance.saveData(PreferenceConstant.SHOW_CREATE_ORDER_WELCOME, true)
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
-        startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle)
+        startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle, isResult = true)
         (context as? FragmentContainerOrderActivity)?.finish()
       }
       binding?.ivClose -> baseActivity.onNavPressed()
