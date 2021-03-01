@@ -20,7 +20,7 @@ data class BillingDetailsN(
     val TransactionCharges: Double? = null,
 ) : Serializable{
 
-  fun getCurrencyCodeValue(): String? {
-    return CurrencyCode
+  fun getCurrencyCodeValue(): String {
+    return if (CurrencyCode.isNullOrEmpty().not()) CurrencyCode!! else "INR"
   }
 }

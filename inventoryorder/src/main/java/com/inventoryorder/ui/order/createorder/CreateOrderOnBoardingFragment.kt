@@ -1,6 +1,5 @@
 package com.inventoryorder.ui.order.createorder
 
-import android.app.Fragment
 import android.os.Bundle
 import android.view.View
 import com.framework.utils.PreferencesUtils
@@ -41,9 +40,7 @@ class CreateOrderOnBoardingFragment : BaseInventoryFragment<FragmentOrderOnBoard
         startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle)
         (context as? FragmentContainerOrderActivity)?.finish()
       }
-      binding?.ivClose -> {
-        (context as? FragmentContainerOrderActivity)?.finish()
-      }
+      binding?.ivClose -> baseActivity.onNavPressed()
     }
   }
 }

@@ -3,7 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,10 +11,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/white"
-      android:fillViewport="true"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      android:fillViewport="true">
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -254,14 +251,12 @@
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
       android:background="@color/white"
       android:gravity="end|center_vertical"
-      android:paddingEnd="@dimen/size_16"
       android:paddingTop="@dimen/size_10"
+      android:paddingEnd="@dimen/size_16"
       android:paddingBottom="@dimen/size_16"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
       tools:ignore="RtlSymmetry">
 
       <com.framework.views.customViews.CustomTextView
@@ -299,5 +294,5 @@
           app:fontFamily="@font/bold" />
       </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
-  </androidx.constraintlayout.widget.ConstraintLayout>
+  </FrameLayout>
 </layout>

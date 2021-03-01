@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.Observer
 import com.framework.extensions.afterTextChanged
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.inventoryorder.R
@@ -28,7 +29,6 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), RecyclerItemClickListener {
 
@@ -191,30 +191,33 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
       val req = bundle?.getSerializable(IntentConstant.ORDER_REQUEST.name) as? OrderInitiateRequest
-      if (req != null) {
-        totalPrice = 0.0
-        totalCartItems = 0
+      val shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
+      val shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
+      totalPrice = 0.0
+      totalCartItems = 0
+      if (shouldFinish) {
+        baseActivity.finish()
+      } else if (req != null && shouldReInitiate.not()) {
         createOrderRequest = req
-        createOrderRequest.items?.forEach { prodAdd ->
-          totalPrice+=prodAdd.getPayablePriceAmount()
-          finalProductList.forEach lit@{
-            if (prodAdd.productOrOfferId.equals(it._id)) {
-              it.productQuantityAdded = prodAdd.quantity
-              totalCartItems+=prodAdd.quantity
-              return@lit
-            }
-          }
+        finalProductList.forEach { prod ->
+          val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
+          if (addedProduct != null) {
+            totalPrice += addedProduct.getPayablePriceAmount()
+            prod.productQuantityAdded = addedProduct.quantity
+            totalCartItems += addedProduct.quantity
+          } else prod.productQuantityAdded = 0
         }
         productList.clear()
         productList.addAll(finalProductList)
         itemsAdapter?.notifyDataSetChanged()
-      }
-      val shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
-      if (shouldReInitiate) {
-        totalPrice = 0.0
-        totalCartItems = 0
+        if (totalCartItems > 0) {
+          val productD = createOrderRequest.items?.firstOrNull()?.productDetails
+          binding?.tvItemTotalPrice?.text = "${productD?.getCurrencyCodeValue() ?: "INR"} $totalPrice"
+          binding?.layoutTotalPricePanel?.visible()
+        } else binding?.layoutTotalPricePanel?.gone()
+      } else {
         createOrderRequest = OrderInitiateRequest()
-        binding?.layoutTotalPricePanel?.visibility = View.GONE
+        binding?.layoutTotalPricePanel?.gone()
         getItemList(fpTag, CLIENT_ID_1)
       }
     }

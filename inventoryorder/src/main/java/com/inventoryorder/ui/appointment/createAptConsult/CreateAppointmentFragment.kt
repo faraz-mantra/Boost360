@@ -443,7 +443,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           items.add(ItemsItem(type = serviceData?.getType() ?: "NO_ITEM", productOrOfferId = serviceData?.id ?: "NO_ITEM", quantity = 1, productDetails = productDetails))
 
           orderInitiateRequest.paymentDetails = paymentDetails
-          orderInitiateRequest.sellerID = session?.fpTag.toString()
+          orderInitiateRequest.sellerID = session?.fpTag
           orderInitiateRequest.buyerDetails = buyerDetail
           orderInitiateRequest.mode = OrderItem.OrderMode.APPOINTMENT.name
           orderInitiateRequest.shippingDetails = shippingDetails

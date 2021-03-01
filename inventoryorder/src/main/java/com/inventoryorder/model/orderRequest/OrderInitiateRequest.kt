@@ -11,7 +11,7 @@ data class OrderInitiateRequest(
     @SerializedName("ShippingDetails")
     var shippingDetails: ShippingDetails? = null,
     @SerializedName("SellerID")
-    var sellerID: String = "",
+    var sellerID: String? = null,
     @SerializedName("PaymentDetails")
     var paymentDetails: PaymentDetails? = null,
     @SerializedName("Items")
