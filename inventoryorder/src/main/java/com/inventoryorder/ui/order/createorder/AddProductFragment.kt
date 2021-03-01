@@ -3,10 +3,7 @@ package com.inventoryorder.ui.order.createorder
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import androidx.lifecycle.Observer
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -38,6 +35,8 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
   private var itemsAdapter: AppBaseRecyclerViewAdapter<ProductItem>? = null
   private var totalPrice = 0.0
   private var totalCartItems = 0
+  private var shouldReInitiate = false
+  private var shouldFinish = false
   private var createOrderRequest = OrderInitiateRequest()
 
   companion object {
@@ -136,7 +135,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
   }
 
   fun getBundleData(): Bundle {
-    return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, true) }
+    return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, (shouldReInitiate || shouldFinish)) }
   }
 
   private fun setAdapterOrderList() {
@@ -196,14 +195,14 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
       val req = bundle?.getSerializable(IntentConstant.ORDER_REQUEST.name) as? OrderInitiateRequest
-      val shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
-      val shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_RE_INITIATE.name) ?: false
+      shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
       val addMore = bundle?.getBoolean(IntentConstant.ADD_MORE_ITEM.name) ?: false
       totalPrice = 0.0
       totalCartItems = 0
       if (shouldFinish) {
         (context as? FragmentContainerOrderActivity)?.onBackPressed()
-      } else if (req != null && shouldReInitiate.not() && addMore) {
+      } else if (addMore && req != null) {
         createOrderRequest = req
         finalProductList.forEach { prod ->
           val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
@@ -221,7 +220,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
           binding?.tvItemTotalPrice?.text = "${productD?.getCurrencyCodeValue() ?: "INR"} $totalPrice"
           binding?.layoutTotalPricePanel?.visible()
         } else binding?.layoutTotalPricePanel?.gone()
-      } else {
+      } else if (shouldReInitiate) {
         createOrderRequest = OrderInitiateRequest()
         binding?.layoutTotalPricePanel?.gone()
         getItemList(fpTag, CLIENT_ID_1)

@@ -114,7 +114,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
   fun getBundleData(): Bundle? {
     return Bundle().apply {
-      putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+      putBoolean(IntentConstant.SHOULD_RE_INITIATE.name, shouldReInitiate)
       putBoolean(IntentConstant.IS_REFRESH.name,  shouldRefresh)
     }
   }
@@ -318,7 +318,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
-      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name) ?: false
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_RE_INITIATE.name) ?: false
       shouldRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name) ?: false
       if (shouldReInitiate || shouldRefresh ) (context as? FragmentContainerOrderActivity)?.onBackPressed()
     }
