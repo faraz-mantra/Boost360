@@ -524,6 +524,7 @@
   <string name="please_enter_discount_amount">Please enter discount amount.</string>
   <string name="please_enter_positive_discount_value">Please enter positive discount value</string>
   <string name="please_mark_offer_availibility">Please mark offer availability</string>
+  <string name="inactive">INACTIVE</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

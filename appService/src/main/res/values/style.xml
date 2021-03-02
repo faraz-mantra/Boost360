@@ -30,7 +30,7 @@
     <style name="ThemeOverlay.SearchView.Offer" parent="Widget.AppCompat.SearchView.ActionBar">
         <item name="submitBackground">@android:color/transparent</item>
         <item name="closeIconTint">@color/gray_828282</item>
-        <item name="android:textColor">@color/gray_4e4e4e</item>
+        <item name="textColor">@color/gray_4e4e4e</item>
         <item name="hintTextColor">@color/gray_light_3</item>
     </style>
     <style name="OffersThemeBase" parent="AppTheme.cataloge">

@@ -26,7 +26,7 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
     private var listServices: ArrayList<DataItemOfferService>? = null
     private var serviceIds: ArrayList<String>? = null
     override fun onCreateView() {
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.OffersThemeBase)
         init()
 
     }

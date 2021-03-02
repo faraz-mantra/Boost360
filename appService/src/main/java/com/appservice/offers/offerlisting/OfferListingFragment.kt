@@ -25,10 +25,7 @@ import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentOfferListingBinding
 import com.appservice.offers.FilterOffersByBottomSheet
-import com.appservice.offers.models.OfferListingRequest
-import com.appservice.offers.models.OfferListingResponse
-import com.appservice.offers.models.OfferModel
-import com.appservice.offers.models.Result
+import com.appservice.offers.models.*
 import com.appservice.offers.startOfferFragmentActivity
 import com.appservice.offers.viewmodel.OfferViewModel
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
@@ -36,7 +33,6 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.ui.UserSession
-import com.appservice.ui.catalog.catalogService.listing.ServiceListingFragment
 import com.framework.extensions.gone
 import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
@@ -49,6 +45,7 @@ import java.util.*
 class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferViewModel>(), RecyclerItemClickListener {
     private val list: ArrayList<OfferModel> = arrayListOf()
     private val finalList: ArrayList<OfferModel> = arrayListOf()
+    private val isRefresh: Boolean = false
     private var adapterOffers: AppBaseRecyclerViewAdapter<OfferModel>? = null
     private var layoutManagerN: LinearLayoutManager? = null
     private var targetMap: Target? = null
@@ -88,11 +85,10 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
     }
 
         private fun opeFilterByBottomSheet() {
-        val createdSuccess = FilterOffersByBottomSheet()
-//        createdSuccess.setData(isEdit)
-//        createdSuccess.onClicked = { clickSuccessCreate(it) }
-        createdSuccess.show(this@OfferListingFragment.parentFragmentManager, FilterOffersByBottomSheet::class.java.name)
-    }
+            val createdSuccess = FilterOffersByBottomSheet()
+            createdSuccess.onClicked = { fetchOfferListing(isFirst = true, sortBy = SortBy(0, it), offSet = offSet, limit = limit) }
+            createdSuccess.show(this@OfferListingFragment.parentFragmentManager, FilterOffersByBottomSheet::class.java.name)
+        }
     private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
         binding?.rvListing?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun loadMoreItems() {
@@ -122,9 +118,9 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
         }
     }
 
-    private fun fetchOfferListing(isProgress: Boolean = true, isFirst: Boolean = false, offSet: Int, limit: Int) {
+    private fun fetchOfferListing(isProgress: Boolean = true, isFirst: Boolean = false, filter: Filter? = null, sortBy: SortBy? = null, offSet: Int, limit: Int) {
         if (isFirst && isProgress) showProgress()
-        viewModel?.getOfferListing(OfferListingRequest(floatingPointTag = UserSession.fpTag, limit = limit, offset = offSet))?.observeOnce(viewLifecycleOwner, {
+        viewModel?.getOfferListing(OfferListingRequest(floatingPointTag = UserSession.fpTag, filter = filter, sortBy = sortBy, limit = limit, offset = offSet))?.observeOnce(viewLifecycleOwner, {
             if (it.isSuccess()) {
                 setOffersDataItem((it as? OfferListingResponse)?.result, isFirst)
             } else if (isFirst) showShortToast(it.errorMessage())
