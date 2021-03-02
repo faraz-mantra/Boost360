@@ -472,9 +472,9 @@
   <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="image_uploading">Uploading Image, please wait...</string>
-    <string name="error_select_service">Please select at least one service provided by this staff</string>
+  <string name="error_select_service">Please select at least one service provided by this staff</string>
 
-    <array name="stock_availbility">
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>

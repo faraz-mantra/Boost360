@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
+import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
@@ -406,16 +407,25 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   }
 }
 
-fun getBundleData(session: UserSessionManager): Bundle {
+fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent("Staff Page", "startview", session?.fpTag)
+    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle =  getBundleData(session))
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun getBundleData(session: UserSessionManager?): Bundle {
   val bundle = Bundle()
-  bundle.putBoolean(com.appservice.constant.IntentConstant.NON_PHYSICAL_EXP_CODE.name, session.isNonPhysicalProductExperienceCode)
+  bundle.putBoolean(com.appservice.constant.IntentConstant.NON_PHYSICAL_EXP_CODE.name, session?.isNonPhysicalProductExperienceCode?:false)
   bundle.putString(com.appservice.constant.IntentConstant.CURRENCY_TYPE.name, "INR")
-  bundle.putString(com.appservice.constant.IntentConstant.FP_ID.name, session.fPID)
-  bundle.putString(com.appservice.constant.IntentConstant.FP_TAG.name, session.fpTag)
-  bundle.putString(com.appservice.constant.IntentConstant.USER_PROFILE_ID.name, session.userProfileId)
+  bundle.putString(com.appservice.constant.IntentConstant.FP_ID.name, session?.fPID)
+  bundle.putString(com.appservice.constant.IntentConstant.FP_TAG.name, session?.fpTag)
+  bundle.putString(com.appservice.constant.IntentConstant.USER_PROFILE_ID.name, session?.userProfileId)
   bundle.putString(com.appservice.constant.IntentConstant.CLIENT_ID.name, clientId)
-  bundle.putString(com.appservice.constant.IntentConstant.EXTERNAL_SOURCE_ID.name, session.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID))
-  bundle.putString(com.appservice.constant.IntentConstant.APPLICATION_ID.name, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))
+  bundle.putString(com.appservice.constant.IntentConstant.EXTERNAL_SOURCE_ID.name, session?.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID))
+  bundle.putString(com.appservice.constant.IntentConstant.APPLICATION_ID.name, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))
   return bundle
 }
 

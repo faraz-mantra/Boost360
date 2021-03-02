@@ -96,7 +96,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     layoutManager?.let { scrollPagingListener(it) }
     requestFilter = getRequestFilterData(arrayListOf())
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
-    binding?.swipeRefresh?.setColorSchemeColors(Color.YELLOW,Color.MAGENTA, Color.YELLOW)
+    binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener {loadNewData()}
   }
 

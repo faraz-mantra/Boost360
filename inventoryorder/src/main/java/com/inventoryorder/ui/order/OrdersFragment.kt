@@ -93,7 +93,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
-    binding?.swipeRefresh?.setColorSchemeColors(Color.YELLOW,Color.MAGENTA, Color.YELLOW)
+    binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener {
       if (typeList.isNullOrEmpty()) apiSellerSummary() else loadNewData()
     }
