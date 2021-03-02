@@ -1,5 +1,6 @@
 package com.appservice.appointment
 
+import android.view.View
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentCustomerInvoiceSetupBinding
@@ -13,9 +14,38 @@ class FragmentCustomerInvoiceSetup:AppBaseFragment<FragmentCustomerInvoiceSetupB
     override fun getViewModelClass(): Class<BaseViewModel> {
         return BaseViewModel::class.java
     }
+
     companion object {
         fun newInstance(): FragmentCustomerInvoiceSetup {
             return FragmentCustomerInvoiceSetup()
         }
+    }
+
+    override fun onCreateView() {
+        super.onCreateView()
+        setOnClickListener(binding?.gstinContainer, binding?.editPurchases)
+
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when (v) {
+            binding?.gstinContainer -> {
+                showEnterBusinessGSTIN()
+            }
+            binding?.editPurchases -> {
+                showTaxInvoicesForPurchases()
+            }
+        }
+    }
+
+    private fun showTaxInvoicesForPurchases() {
+        val bottomSheetTaxInvoicesForPurchases = BottomSheetTaxInvoicesForPurchases()
+        bottomSheetTaxInvoicesForPurchases.show(parentFragmentManager, BottomSheetTaxInvoicesForPurchases::class.java.name)
+    }
+
+    private fun showEnterBusinessGSTIN() {
+        val bottomSheetEnterGSTDetails = BottomSheetEnterGSTDetails()
+        bottomSheetEnterGSTDetails.show(parentFragmentManager, BottomSheetEnterGSTDetails::class.java.name)
     }
 }

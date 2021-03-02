@@ -46,7 +46,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     private var fragmentCustomerPolicies: FragmentCustomerPolicies? = null
     private var fragmentPaymentCollectionsSettings: FragmentPaymentCollectionsSettings? = null
     private var fragmentAccountAddHome: FragmentAccountAddHome? = null
-    private  var fragmentAddAccountDetails:FragmentAddAccountDetails? = null
+    private var fragmentAddAccountDetails: FragmentAddAccountDetails? = null
 
     override fun getLayout(): Int {
         return com.framework.R.layout.activity_fragment_container
@@ -71,7 +71,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         return when (type) {
             FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
             FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
-            FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME,FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS
+            FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
             -> R.style.CatalogTheme
             FragmentType.APPOINTMENT_SETTINGS -> R.style.CatalogTheme_FragmentAppointment
             FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
@@ -137,7 +137,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES -> getString(R.string.policies_for_customer)
             FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE -> getString(R.string.customer_invoice_setup)
             FragmentType.APPOINTMENT_CATALOG_SETTINGS -> getString(R.string.catalog_setup)
-            FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS->getString(R.string.my_bank_account)
+            FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS -> getString(R.string.my_bank_account)
             else -> super.getToolbarTitle()
         }
     }
@@ -229,7 +229,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME -> {
                 fragmentAccountAddHome = FragmentAccountAddHome.newInstance()
                 fragmentAccountAddHome
-            }   FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS -> {
+            }
+            FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS -> {
                 fragmentAddAccountDetails = FragmentAddAccountDetails.newInstance()
                 fragmentAddAccountDetails
             }
