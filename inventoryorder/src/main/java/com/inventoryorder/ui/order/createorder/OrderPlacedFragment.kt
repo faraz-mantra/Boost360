@@ -53,7 +53,6 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
       binding?.linearItemQty?.visibility = View.GONE
       binding?.linearPaymentMode?.visibility = View.GONE
-      binding?.linearDeliveryStatus?.visibility = View.GONE
       binding?.linearDeliveryType?.visibility = View.GONE
       binding?.appointmentText?.visibility = View.VISIBLE
 
@@ -63,8 +62,8 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
       binding?.textOrderIdValue?.text = "#${orderItem.ReferenceNumber}"
       binding?.textName?.text = orderItem.BuyerDetails?.ContactDetails?.FullName ?: ""
       binding?.textCount?.text = "${NumbersToWords.solution(orderItem.Items?.size ?: 0)} (${orderItem.Items?.size})"
-      binding?.textPaymentLink?.text = orderItem.PaymentDetails?.Method ?: ""
-      binding?.textDeliveryStatus?.text = orderItem.LogisticsDetails?.statusValue() ?: ""
+      binding?.textPaymentLink?.text = orderItem.PaymentDetails?.methodValue() ?: ""
+      binding?.textPaymentStatus?.text = orderItem.PaymentDetails?.statusValue() ?: ""
       binding?.textDeliveryType?.text = orderItem.LogisticsDetails?.DeliveryMode ?: ""
       binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
     }
@@ -81,11 +80,11 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
   private fun getOrderDetails() {
     showProgress()
-    viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       if (it.isSuccess()) {
         orderResponse = (it as? OrderDetailResponse)?.Data
-        setData(orderItem = orderResponse!!)
+        orderResponse?.let { it1 -> setData(it1) }
       } else showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
     })
   }

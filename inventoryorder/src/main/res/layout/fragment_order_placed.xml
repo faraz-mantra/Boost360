@@ -187,7 +187,7 @@
           </LinearLayout>
 
           <LinearLayout
-            android:id="@+id/linear_delivery_status"
+            android:id="@+id/linear_payment_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -197,22 +197,22 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_5"
               android:layout_weight="1"
-              android:text="@string/str_delivery_status"
+              android:text="@string/str_payment_status"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/regular"
               app:textType="BODY_1" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_delivery_status"
+              android:id="@+id/text_payment_status"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_5"
               android:layout_weight="1"
               android:gravity="end"
-              android:text="@string/pending_not_received"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
-              app:textType="BODY_1" />
+              app:textType="BODY_1"
+              tools:text="@string/store_pickup" />
           </LinearLayout>
 
           <LinearLayout
@@ -244,35 +244,6 @@
               app:textType="BODY_1" />
           </LinearLayout>
 
-          <LinearLayout
-            android:id="@+id/linear_payment_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <com.framework.views.customViews.CustomTextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_5"
-              android:layout_weight="1"
-              android:text="@string/str_payment_status"
-              android:textColor="@color/black_4a4a4a"
-              app:fontFamily="@font/regular"
-              app:textType="BODY_1" />
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_payment_status"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_5"
-              android:layout_weight="1"
-              android:gravity="end"
-              android:textColor="@color/black_4a4a4a"
-              app:fontFamily="@font/semi_bold"
-              app:textType="BODY_1"
-              tools:text="@string/store_pickup" />
-          </LinearLayout>
 
           <View
             android:layout_width="match_parent"

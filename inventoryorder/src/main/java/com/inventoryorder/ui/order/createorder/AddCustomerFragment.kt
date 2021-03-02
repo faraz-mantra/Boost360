@@ -17,6 +17,8 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
+import com.onboarding.nowfloats.model.CityDataModel
+import com.onboarding.nowfloats.ui.CitySearchDialog
 import java.util.regex.Pattern
 
 class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() {
@@ -38,7 +40,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
   override fun onCreateView() {
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Add Customer", "ORDERS", it) }
-    setOnClickListener(binding?.vwNext, binding?.textAddCustomerGstin, binding?.tvRemove, binding?.textGoBack)
+    setOnClickListener(binding?.vwNext, binding?.textAddCustomerGstin, binding?.tvRemove, binding?.textGoBack,binding?.layoutBillingAddr?.editCity)
     createOrderRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
     setUpData()
   }
@@ -58,6 +60,11 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
         binding?.lytCustomerGstn?.visibility = View.GONE
       }
       binding?.textGoBack -> (context as? FragmentContainerOrderActivity)?.onBackPressed()
+      binding?.layoutBillingAddr?.editCity->{
+        val dialog = CitySearchDialog()
+        dialog.onClicked = { setCityState(it) }
+        dialog.show(parentFragmentManager, dialog.javaClass.name)
+      }
     }
   }
 
@@ -168,5 +175,10 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     binding?.layoutBillingAddr?.editCity?.setText(createOrderRequest.buyerDetails?.address?.city ?: "")
     binding?.layoutBillingAddr?.editState?.setText(createOrderRequest.buyerDetails?.address?.region ?: "")
     binding?.layoutBillingAddr?.editPin?.setText(createOrderRequest.buyerDetails?.address?.zipcode ?: "")
+  }
+
+  private fun setCityState(cityDataModel: CityDataModel) {
+    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName())
+    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName())
   }
 }
