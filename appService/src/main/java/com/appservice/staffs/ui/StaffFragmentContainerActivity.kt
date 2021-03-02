@@ -69,7 +69,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
       UserSession.apply {
         fpTag = intent.getStringExtra(IntentConstant.FP_TAG.name)
         fpId = intent.getStringExtra(IntentConstant.FP_ID.name)
-        customerID = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
+        clientId = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
       }
     }
   }

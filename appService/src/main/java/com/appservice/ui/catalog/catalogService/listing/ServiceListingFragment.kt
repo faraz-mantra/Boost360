@@ -194,7 +194,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     inflater.inflate(R.menu.menu_service_listing, menu)
     val searchItem = menu.findItem(R.id.action_search)
     val searchView = searchItem.actionView as? SearchView
-    val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
+    val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
     val searchCloseIcon = searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
     searchCloseIcon?.setColorFilter(resources.getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
     searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))

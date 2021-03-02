@@ -475,7 +475,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onClick(v: View) {
     super.onClick(v)
-    //TODO: Track the share_business_card_initiated even in Firebase & Webengage
+    // Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
       binding?.filterBusinessReport -> bottomSheetFilter(BUSINESS_REPORT, FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT))
       binding?.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT))
@@ -530,13 +530,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
-      QuickActionItem.QuickActionType.LIST_STAFF -> {
-        val bundle = Bundle()
-        bundle.putString(IntentConstant.FP_TAG.name, session?.fpTag)
-        bundle.putString(IntentConstant.FP_ID.name, session?.fPID)
-        bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
-        startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = bundle)
-      }
+      QuickActionItem.QuickActionType.LIST_STAFF -> baseActivity.startListStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,
       QuickActionItem.QuickActionType.LIST_PRODUCT,
       QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,
