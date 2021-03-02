@@ -13,7 +13,7 @@ class OfferCreatedSuccessFullyBottomSheet: BaseBottomSheetDialog<BottomSheetOffe
     var onClicked: (value: String) -> Unit = { }
     var isEdit: Boolean = false
     override fun getLayout(): Int {
-        return R.layout.bottom_sheet_service_created_successfully
+        return R.layout.bottom_sheet_offers_created_successfully
     }
 
     fun setData(isEdit: Boolean) {

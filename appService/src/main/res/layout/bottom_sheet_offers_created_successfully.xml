@@ -5,8 +5,7 @@
     <data></data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+     style="@style/match_wrap"
         android:background="@drawable/bottoms_sheet_top20dp_white"
         android:orientation="vertical">
 
@@ -28,8 +27,7 @@
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -41,8 +39,7 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/txt_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/size_4"
                 android:fontFamily="@font/open_sans"
@@ -70,8 +67,7 @@
                 android:text="@string/view_on_website" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/size_20"
                 android:layout_marginBottom="@dimen/size_20"

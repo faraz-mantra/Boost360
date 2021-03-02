@@ -69,17 +69,22 @@
                             android:text="@string/_992x640px_or_higher" />
 
                         <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/ctv_add_featured_image"
                             style="@style/Offers_Text_Header"
                             android:layout_marginTop="@dimen/size_20"
-                            android:id="@+id/ctv_add_featured_image"
                             android:text="@string/add_featured_image"
                             android:textAllCaps="true"
                             android:textColor="@color/yellow_ffb900" />
-
                     </LinearLayout>
-
                 </FrameLayout>
 
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_change_picture"
+                    style="@style/Offers.ButtonStyle.Rounded.Solid.Stroke"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="bottom"
+                    android:text="@string/change_picture"
+                    android:visibility="gone" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
@@ -97,7 +102,7 @@
                 <com.framework.views.customViews.CustomTextView
                     style="@style/Offers_Text_Title"
                     android:layout_marginTop="@dimen/size_36"
-                    android:text="@string/offer_title" />
+                    android:text="@string/appointment_offer_title" />
 
                 <com.framework.views.customViews.CustomTextField
                     android:id="@+id/ctv_offer_title"
@@ -144,94 +149,90 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    <LinearLayout
-                        android:id="@+id/ll_service_apply_to"
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_select_the_service"
                         style="@style/match_wrap"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/size_8"
+                        android:paddingTop="@dimen/size_10"
+                        android:paddingEnd="@dimen/size_5"
+                        android:paddingBottom="@dimen/size_10">
 
                         <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/ll_offers"
                             style="@style/match_wrap"
-                            android:orientation="horizontal"
-                            android:id="@+id/ll_select_the_service"
-                            android:paddingStart="@dimen/size_8"
-                            android:paddingTop="@dimen/size_10"
-                            android:paddingEnd="@dimen/size_5"
-                            android:paddingBottom="@dimen/size_10">
+                            android:orientation="vertical">
 
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:id="@+id/ll_offers"
-                                style="@style/match_wrap"
-                                android:orientation="vertical">
+                            <LinearLayout
+                                style="@style/wrap_wrap"
+                                android:layout_marginHorizontal="@dimen/size_10"
+                                android:orientation="horizontal">
 
-                                <LinearLayout
-                                    style="@style/wrap_wrap"
-                                    android:layout_marginHorizontal="@dimen/size_10"
-                                    android:orientation="horizontal">
-
-                                    <com.framework.views.customViews.CustomImageView
-                                        android:layout_width="@dimen/size_16"
-                                        android:layout_height="@dimen/size_16"
-                                        android:layout_gravity="center"
-                                        android:layout_marginEnd="@dimen/size_8"
-                                        app:srcCompat="@drawable/ic_info_circular_orange" />
-
-                                    <com.framework.views.customViews.CustomTextView
-                                        style="@style/Offers_Text_Title.SubHeading"
-                                        android:text="@string/select_the_service_where_you_want_to_add_offer" />
-                                </LinearLayout>
-
-
-                                <com.framework.views.customViews.CustomButton
-                                    android:id="@+id/btn_select_services"
-                                    style="@style/Offers.ButtonStyle.Rounded.Solid.Stroke"
+                                <com.framework.views.customViews.CustomImageView
+                                    android:layout_width="@dimen/size_16"
+                                    android:layout_height="@dimen/size_16"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="@dimen/size_20"
-                                    android:layout_marginBottom="@dimen/size_10"
-                                    android:text="@string/select_service"
-                                    android:visibility="gone" />
+                                    android:layout_marginEnd="@dimen/size_8"
+                                    app:srcCompat="@drawable/ic_info_circular_orange" />
+
+                                <com.framework.views.customViews.CustomTextView
+                                    style="@style/Offers_Text_Title.SubHeading"
+                                    android:text="@string/select_the_service_where_you_want_to_add_offer" />
+                            </LinearLayout>
 
 
-                                <LinearLayout
-                                    style="@style/match_wrap"
-                                    android:layout_marginHorizontal="@dimen/size_10"
-                                    android:layout_marginTop="@dimen/size_20"
-                                    android:layout_marginBottom="@dimen/size_10"
-                                    android:background="@drawable/dashed_rectangle_offers"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:orientation="vertical"
-                                    android:padding="@dimen/size_10"
+                            <com.framework.views.customViews.CustomButton
+                                android:id="@+id/btn_select_services"
+                                style="@style/Offers.ButtonStyle.Rounded.Solid.Stroke"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/size_20"
+                                android:layout_marginBottom="@dimen/size_10"
+                                android:text="@string/select_service"
+                                android:visibility="visible" />
+
+
+                            <LinearLayout
+                                android:id="@+id/ll_selected_service_view"
+                                style="@style/match_wrap"
+                                android:layout_marginHorizontal="@dimen/size_10"
+                                android:layout_marginTop="@dimen/size_20"
+                                android:layout_marginBottom="@dimen/size_10"
+                                android:background="@drawable/dashed_rectangle_offers"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="?attr/selectableItemBackground"
+                                android:orientation="vertical"
+                                android:padding="@dimen/size_10"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.framework.views.customViews.CustomTextView
+                                    android:id="@+id/ctv_additional_info"
+                                    style="@style/Offers_Text_Header"
+                                    android:layout_gravity="end"
+                                    android:text="@string/change"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/yellow_ffb900"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                                    <com.framework.views.customViews.CustomTextView
-                                        style="@style/Offers_Text_Header"
-                                        android:layout_gravity="end"
-                                        android:id="@+id/ctv_additional_info"
-                                        android:text="@string/change"
-                                        android:textAllCaps="true"
-                                        android:textColor="@color/yellow_ffb900"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintRight_toRightOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent" />
+                                <com.framework.views.customViews.CustomTextView
+                                    style="@style/Offers_Text_Title"
+                                    android:layout_marginTop="-10dp"
+                                    android:text="@string/additional_information_" />
 
-                                    <com.framework.views.customViews.CustomTextView
-                                        style="@style/Offers_Text_Title"
-                                        android:layout_marginTop="-10dp"
-                                        android:text="@string/additional_information_" />
+                                <com.framework.views.customViews.CustomTextView
+                                    style="@style/Offers_Text_Subheading"
+                                    android:text="@string/secondary_images_and_offer_tags" />
 
-                                    <com.framework.views.customViews.CustomTextView
-                                        style="@style/Offers_Text_Subheading"
-                                        android:text="@string/secondary_images_and_offer_tags" />
-
-                                </LinearLayout>
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
+                            </LinearLayout>
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
-                    </LinearLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -243,10 +244,10 @@
                 <com.framework.views.customViews.CustomTextField
                     android:id="@+id/ctv_discount_amount"
                     style="@style/Offers_Text_Field"
-                    android:drawablePadding="@dimen/size_5"
-                    android:inputType="numberDecimal"
                     android:drawableStart="@drawable/ic_indian_rupee"
-                    android:hint="@string/enter_discount_on_the_service_s" />
+                    android:drawablePadding="@dimen/size_5"
+                    android:hint="@string/enter_discount_on_the_service_s"
+                    android:inputType="numberDecimal" />
 
                 <com.framework.views.customViews.CustomTextView
                     style="@style/Offers_Text_Title"
@@ -268,14 +269,14 @@
                         <com.framework.views.customViews.CustomTextView
                             style="@style/Offers_Text_Title"
                             android:layout_width="@dimen/size_0"
-                            android:text="@string/applicable_to_all_services"
+                            android:text="@string/is_the_offer_available_to_customers"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/toggle_service_availability"
+                            app:layout_constraintRight_toLeftOf="@id/toggle_offer_availability"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.appservice.views.toggle.widget.LabeledSwitch
-                            android:id="@+id/toggle_service_availability"
+                            android:id="@+id/toggle_offer_availability"
                             style="@style/Offer_Label_Switch"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -285,6 +286,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <com.framework.views.customViews.CustomTextView
                     style="@style/Offers_Text_Title"
                     android:layout_marginTop="@dimen/size_20"
@@ -294,8 +296,9 @@
                     android:id="@+id/ctv_offers_description"
                     style="@style/Offers_Text_Field"
                     android:drawablePadding="@dimen/size_5"
-                    android:inputType="textMultiLine"
-                    android:hint="@string/describe_this_offer_in_around_2000_characters_at_max" />
+                    android:hint="@string/describe_this_offer_in_around_2000_characters_at_max"
+                    android:inputType="textMultiLine" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_other_info"
                     style="@style/match_wrap"
@@ -346,9 +349,9 @@
             <com.framework.views.customViews.CustomButton
                 android:id="@+id/cb_add_offer"
                 style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
+                android:layout_height="@dimen/size_44"
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginEnd="@dimen/size_20"
-                android:layout_height="@dimen/size_44"
                 android:layout_marginBottom="@dimen/size_14"
                 android:text="@string/add_offer"
                 app:layout_constraintBottom_toBottomOf="parent"

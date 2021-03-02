@@ -21,11 +21,9 @@ import com.appservice.offers.startOfferFragmentActivity
 import com.appservice.offers.viewmodel.OfferViewModel
 import com.appservice.rest.TaskCode
 import com.appservice.staffs.ui.UserSession
-import com.appservice.ui.catalog.catalogService.listing.CreateServiceSuccessBottomSheet
 import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.appservice.ui.model.ItemsItem
 import com.appservice.utils.getBitmap
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
@@ -62,13 +60,12 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding?.btnOtherInfo,binding?.clearImage,
-                binding?.toggleServiceApplicableTo,binding?.imageAddBtn,
-                binding?.ctvAdditionalInfo,
-                binding?.toggleServiceAvailability, binding?.cbAddOffer)
+        setOnClickListener(binding?.btnOtherInfo, binding?.clearImage, binding?.imageAddBtn,
+                binding?.ctvAdditionalInfo, binding?.btnChangePicture,
+                binding?.cbAddOffer, binding?.btnSelectServices)
         getBundleData()
         binding?.toggleServiceApplicableTo?.setOnToggledListener { _, isOn ->
-            when(isOn) {
+            when (isOn) {
                 true -> binding?.llSelectTheService?.gone()
                 false -> binding?.llSelectTheService?.visible()
             }
@@ -113,8 +110,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     private fun onPrimaryImageUploaded(it: BaseResponse) {
         hideProgress()
-//        uploadSecondaryImages()
-        openSuccessBottomSheet()
+        uploadSecondaryImages()
     }
 
     override fun onSuccess(it: BaseResponse) {
@@ -161,31 +157,39 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     private fun isValid(): Boolean {
         val offerTitle = binding?.ctvOfferTitle?.text.toString()
-        val offerDescription = binding?.ctvOffersDescription?.text.toString()
-        val discount = binding?.ctvDiscountAmount?.text.toString().toDoubleOrNull() ?: 0.0
-        val toggle = binding?.toggleServiceAvailability?.isOn ?: false
+        val offerDescription = binding?.ctvOffersDescription?.text.toString() ?: ""
+        val discount = binding?.ctvDiscountAmount?.text.toString().toDoubleOrNull()
+        val toggleOffer = binding?.toggleOfferAvailability?.isOn
+        val toggleServiceApplicableTo = binding?.toggleServiceApplicableTo?.isOn ?: false
 
         if (offerImage == null && offerModel?.featuredImage?.imageId.isNullOrEmpty()) {
             showLongToast(getString(R.string.add_offer_image))
             return false
-        } else if (offerDescription.isEmpty()) {
-            showLongToast(getString(R.string.add_offer_description))
-            return false
         } else if (offerTitle.isEmpty()) {
             showLongToast(getString(R.string.add_offer_title))
+            return false
+        } else if (discount == null) {
+            showLongToast(getString(R.string.please_enter_discount_amount))
+            return false
+        } else if (discount < 0) {
+            showLongToast(getString(R.string.please_enter_positive_discount_value))
+            return false
+        } else if (toggleOffer == null) {
+            showLongToast(getString(R.string.please_mark_offer_availibility))
             return false
         }
         offerModel?.ClientId = clientId
         offerModel?.FPTag = fpTag
         offerModel?.currencyCode = currencyType
         offerModel?.name = offerTitle
-        offerModel?.isAvailable = toggle
+        offerModel?.description = offerDescription
+        offerModel?.isAvailable = toggleOffer
         offerModel?.discountAmount = discount
         if (!isEdit) {
             offerModel?.category = offerModel?.category ?: ""
             offerModel?.tags = offerModel?.tags ?: ArrayList()
             offerModel?.otherSpecifications = offerModel?.otherSpecifications ?: ArrayList()
-            offerModel?.isAvailable = true
+            offerModel?.isAvailable = false
         }
         return true
     }
@@ -245,6 +249,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             if (mPaths.isNotEmpty()) {
                 offerImage = File(mPaths[0])
                 binding?.imageAddBtn?.gone()
+                binding?.btnChangePicture?.visible()
                 binding?.clearImage?.visible()
                 binding?.offerImageView?.visible()
                 offerImage?.getBitmap()?.let { binding?.offerImageView?.setImageBitmap(it) }
@@ -257,10 +262,10 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
     }
 
     private fun openSelectServiceBottomSheet() {
-        val createdSuccess = OfferSelectServiceBottomSheet()
-//        createdSuccess.setData(isEdit)
-//        createdSuccess.onClicked = { clickSuccessCreate(it) }
-        createdSuccess.show(this@AddNewOfferFragment.parentFragmentManager, OfferSelectServiceBottomSheet::class.java.name)
+        val selectedService = OfferSelectServiceBottomSheet()
+//        selectedService.setData(isEdit)
+//        selectedService.onClicked = { clickSuccessCreate(it = it) }
+        selectedService.show(this@AddNewOfferFragment.parentFragmentManager, OfferSelectServiceBottomSheet::class.java.name)
     }
 
     private fun openSuccessBottomSheet() {
@@ -286,21 +291,25 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     private fun updateUiPreviousData() {
         binding?.ctvOfferTitle?.setText(offerModel?.name)
+        binding?.toggleOfferAvailability?.isOn = offerModel?.isAvailable ?: false
         binding?.ctvOffersDescription?.setText(offerModel?.description)
-        if (offerModel?.isPriceToggleOn() == false) {
+        if (offerModel?.isPriceToggleOn() != true) {
             binding?.toggleServiceApplicableTo?.isOn = false
-            binding?.llServiceApplyTo?.gone()
+            binding?.llSelectTheService?.gone()
         } else if (offerModel?.isPriceToggleOn() == true) {
             binding?.toggleServiceApplicableTo?.isOn = true
-            binding?.llServiceApplyTo?.visible()
+            binding?.llSelectTheService?.visible()
         }
 //        binding?.price?.setText("${offerModel?.price ?: 0}")
         binding?.ctvDiscountAmount?.setText("${offerModel?.discountAmount ?: 0.0}")
         if (offerModel?.featuredImage?.imageId.isNullOrEmpty().not()) {
             binding?.imageAddBtn?.gone()
+            binding?.btnChangePicture?.visible()
             binding?.clearImage?.visible()
             binding?.offerImageView?.visible()
             binding?.offerImageView?.let { activity?.glideLoad(it, offerModel?.featuredImage?.actualImage, R.drawable.placeholder_image) }
+        } else {
+            binding?.btnChangePicture?.invisible()
         }
     }
 
@@ -313,16 +322,16 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         super.onClick(v)
         when (v) {
             binding?.btnOtherInfo -> {
-                val bundle =Bundle()
-                bundle.putSerializable(IntentConstant.OFFER_DATA.name,offerModel)
-                bundle.putSerializable(IntentConstant.OFFER_SECONDARY_IMAGE.name,secondaryImage)
+                val bundle = Bundle()
+                bundle.putSerializable(IntentConstant.OFFER_DATA.name, offerModel)
+                bundle.putSerializable(IntentConstant.OFFER_SECONDARY_IMAGE.name, secondaryImage)
 
-                startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_ADDITIONAL_INFO,bundle, isResult = true, requestCode = 101)
+                startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_ADDITIONAL_INFO, bundle, isResult = true, requestCode = 101)
             }
-            binding?.imageAddBtn -> openImagePicker()
+            binding?.imageAddBtn, binding?.btnChangePicture -> openImagePicker()
             binding?.clearImage -> clearImage()
             binding?.cbAddOffer -> if (isValid()) createUpdateApi()
-            binding?.ctvAdditionalInfo->{
+            binding?.ctvAdditionalInfo, binding?.btnSelectServices -> {
                 openSelectServiceBottomSheet()
             }
 
@@ -332,6 +341,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
     private fun clearImage() {
         binding?.imageAddBtn?.visible()
         binding?.clearImage?.gone()
+        binding?.btnChangePicture?.gone()
         binding?.offerImageView?.gone()
         offerModel?.featuredImage = null
         offerImage = null
