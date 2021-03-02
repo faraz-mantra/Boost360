@@ -3,7 +3,6 @@ package com.appservice.offers.selectservices
 import androidx.fragment.app.DialogFragment
 import com.appservice.R
 import com.appservice.constant.IntentConstant
-import com.appservice.constant.RecyclerViewItemType
 import com.appservice.databinding.BottomSheetSelectServiceListingBinding
 import com.appservice.offers.models.SelectServiceModel.DataItemOfferService
 import com.appservice.offers.viewmodel.OfferViewModel
@@ -20,6 +19,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectServiceListingBinding, OfferViewModel>(), RecyclerItemClickListener {
+     var onClicked: () -> Unit = {}
     private var isEdit: Boolean? = null
     lateinit var data: List<DataItemService?>
     var adapter: AppBaseRecyclerViewAdapter<DataItemOfferService>? = null
@@ -93,5 +93,9 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
 
     override fun getViewModelClass(): Class<OfferViewModel> {
         return OfferViewModel::class.java
+    }
+
+    fun setData(edit: Boolean) {
+
     }
 }

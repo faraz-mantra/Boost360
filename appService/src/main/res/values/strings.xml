@@ -224,7 +224,6 @@
   <string name="view_info">VIEW INFO</string>
   <string name="u_edit_info_u"><u>EDIT INFO</u></string>
   <string name="view_profile">VIEW INFO</string>
-  <string name="change_picture">CHANGE PICTURE</string>
   <string name="save_and_publish"><![CDATA[Save & Publish]]></string>
   <string name="year_of_experience">Year of Experience</string>
   <string name="edit"><u>EDIT</u></string>
@@ -481,7 +480,7 @@
   <string name="create_offer">Create Offer</string>
     <string name="this_is_the_cristmas_offer_of_this_year">This is the christmas offer of this year.<br/> Customers will get discount on Simp..</string>
   <string name="active">Active</string>
-    <string name="offer_title">Offer title*</string>
+    <string name="appointment_offer_title">Offer title*</string>
   <string name="_992x640px_or_higher">(992x640px or higher)</string>
   <string name="add_featured_image">Add featured image</string>
     <string name="write_the_offer_title">Write the offer title</string>
@@ -520,8 +519,13 @@
   <string name="deactive_first">Deactive first</string>
     <string name="search_for_services">Search for services</string>
     <string name="sort_offers_by">Sort offers by</string>
+    <string name="change_picture">CHANGE PICTURE</string>
+    <string name="is_the_offer_available_to_customers">Is the offer available to customers?</string>
+  <string name="please_enter_discount_amount">Please enter discount amount.</string>
+  <string name="please_enter_positive_discount_value">Please enter positive discount value</string>
+  <string name="please_mark_offer_availibility">Please mark offer availability</string>
 
-    <array name="stock_availbility">
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>
