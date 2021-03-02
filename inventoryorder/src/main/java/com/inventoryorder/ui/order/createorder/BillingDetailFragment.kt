@@ -69,7 +69,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     layoutManagerN = LinearLayoutManager(baseActivity)
     setOnClickListener(binding?.ivOptions, binding?.tvDeliveryType, binding?.tvPaymentMode, binding?.tvPaymentStatus, binding?.buttonConfirmOrder,
         binding?.buttonGoBack, binding?.textAddDeliveryFee, binding?.textAddDeliveryFeeEdit, binding?.tvAddMore)
-    createOrderRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+    createOrderRequest = (arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as? OrderInitiateRequest) ?: OrderInitiateRequest()
     setUpData()
     getTotalPayableAmount()
     preparePaymentStatusOptions()
@@ -104,12 +104,12 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   }
 
   private fun setUpAddress() {
-    val addrStr = StringBuilder()
-    addrStr.append(createOrderRequest.buyerDetails?.address?.addressLine)
-    if (createOrderRequest.buyerDetails?.address?.city.isNullOrEmpty().not()) addrStr.append(", ${createOrderRequest.buyerDetails?.address?.city}")
-    if (createOrderRequest.buyerDetails?.address?.region.isNullOrEmpty().not()) addrStr.append(", ${createOrderRequest.buyerDetails?.address?.region}")
-    if (createOrderRequest.buyerDetails?.address?.zipcode.isNullOrEmpty().not()) addrStr.append(", ${createOrderRequest.buyerDetails?.address?.zipcode}")
-    binding?.layoutOrderShippingAddress?.tvShippingAddress?.text = addrStr
+    val addressStr = StringBuilder()
+    addressStr.append(createOrderRequest.buyerDetails?.address?.addressLine)
+    if (createOrderRequest.buyerDetails?.address?.city.isNullOrEmpty().not()) addressStr.append(", ${createOrderRequest.buyerDetails?.address?.city}")
+    if (createOrderRequest.buyerDetails?.address?.region.isNullOrEmpty().not()) addressStr.append(", ${createOrderRequest.buyerDetails?.address?.region}")
+    if (createOrderRequest.buyerDetails?.address?.zipcode.isNullOrEmpty().not()) addressStr.append(", ${createOrderRequest.buyerDetails?.address?.zipcode}")
+    binding?.layoutOrderShippingAddress?.tvShippingAddress?.text = addressStr
   }
 
   override fun onClick(v: View) {
@@ -122,7 +122,6 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       }
 
       binding?.tvPaymentMode -> {
-
       }
 
       binding?.tvPaymentStatus -> {
@@ -136,7 +135,6 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
         val paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
         val shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
             deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = deliveryFee, currencyCode = currency)
-
         createOrderRequest.mode = selectedDeliveryType
         createOrderRequest.paymentDetails = paymentDetails
         createOrderRequest.shippingDetails = shippingDetails
@@ -149,9 +147,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
         showAddDeliveryFeeDialog()
       }
 
-      binding?.textAddDeliveryFeeEdit -> {
-        showAddDeliveryFeeDialog()
-      }
+      binding?.textAddDeliveryFeeEdit -> showAddDeliveryFeeDialog()
 
       binding?.buttonGoBack -> {
         (context as? FragmentContainerOrderActivity)?.onBackPressed()
@@ -166,46 +162,24 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
   private fun preparePaymentStatusOptions() {
     orderBottomSheet.title = getString(R.string.str_payment_status)
-
-    val optionsList = ArrayList<BottomSheetOptionsItem>()
-
-    val bottomSheetOptionsItem2 = BottomSheetOptionsItem()
-    bottomSheetOptionsItem2.title = getString(R.string.playment_already_received)
-    bottomSheetOptionsItem2.description = getString(R.string.customer_paid_via_cash_card_upi)
-    bottomSheetOptionsItem2.displayValue = getString(R.string.payment_received)
-    bottomSheetOptionsItem2.serverValue = PaymentDetailsN.STATUS.INITIATED.name
-
-    val bottomSheetOptionsItem1 = BottomSheetOptionsItem()
-    bottomSheetOptionsItem1.title = getString(R.string.collect_later)
-    bottomSheetOptionsItem1.description = getString(R.string.send_payment_to_customer)
-    bottomSheetOptionsItem1.displayValue = getString(R.string.collect_later)
-    bottomSheetOptionsItem1.isChecked = true
-    bottomSheetOptionsItem1.serverValue = PaymentDetailsN.STATUS.PENDING.name
-
-    optionsList.add(bottomSheetOptionsItem1)
-    optionsList.add(bottomSheetOptionsItem2)
-    orderBottomSheet.items = optionsList
+    orderBottomSheet.items = OrderBottomSheet().getPaymentStatusData(baseActivity)
   }
 
   private fun prepareDeliveryTypeOptions() {
     deliveryTypeBottomSheet.title = getString(R.string.delivery_type)
     deliveryTypeBottomSheet.decription = getString(R.string.select_how_you_want_customer_to_receive_this_order)
-
     val optionsList = ArrayList<BottomSheetOptionsItem>()
-
     val bottomSheetOptionsItem1 = BottomSheetOptionsItem()
     bottomSheetOptionsItem1.title = getString(R.string.store_pickup)
     bottomSheetOptionsItem1.description = getString(R.string.ask_customer_to_pick_the_order_from_your_store)
     bottomSheetOptionsItem1.displayValue = getString(R.string.store_pickup)
     bottomSheetOptionsItem1.isChecked = true
     bottomSheetOptionsItem1.serverValue = OrderItem.OrderMode.PICKUP.name
-
     val bottomSheetOptionsItem2 = BottomSheetOptionsItem()
     bottomSheetOptionsItem2.title = getString(R.string.home_delivery)
     bottomSheetOptionsItem2.description = getString(R.string.deliver_to_customer_via_your_shipping_partner)
     bottomSheetOptionsItem2.displayValue = getString(R.string.home_delivery)
     bottomSheetOptionsItem2.serverValue = OrderItem.OrderMode.DELIVERY.name
-
     optionsList.add(bottomSheetOptionsItem1)
     optionsList.add(bottomSheetOptionsItem2)
     deliveryTypeBottomSheet.items = optionsList
@@ -215,14 +189,13 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     binding?.tvDeliveryType?.text = bottomSheetOptionsItem.displayValue
     selectedDeliveryType = bottomSheetOptionsItem.serverValue!!
     binding?.tvDeliveryType?.text = bottomSheetOptionsItem.displayValue!!
-    // paymentStatus = bottomSheetOptionsItem?.serverValue!!
     this.deliveryTypeBottomSheet = orderBottomSheet
   }
 
   private fun onPaymentStatusSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
-    binding?.tvPaymentStatus?.text = bottomSheetOptionsItem.displayValue
-    createOrderRequest.paymentDetails?.status = bottomSheetOptionsItem.serverValue
-    paymentStatus = bottomSheetOptionsItem.serverValue!!
+    binding?.tvPaymentStatus?.text = bottomSheetOptionsItem.displayValue?:""
+    createOrderRequest.paymentDetails?.status = bottomSheetOptionsItem.serverValue?:""
+    paymentStatus = bottomSheetOptionsItem.serverValue ?: ""
     this.orderBottomSheet = orderBottomSheet
   }
 
@@ -269,7 +242,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     val focusable = true
     val popupWindow = PopupWindow(popupView, width, height, focusable)
     val textEditCustomerInfo = popupWindow.contentView.findViewById<MaterialTextView>(R.id.text_edit_customer_info)
-    val textEditCustomerAddr = popupWindow.contentView.findViewById<MaterialTextView>(R.id.text_edit_customer_addr)
+    val textEditCustomerAddress = popupWindow.contentView.findViewById<MaterialTextView>(R.id.text_edit_customer_addr)
     val pickAnotherCustomer = popupWindow.contentView.findViewById<MaterialTextView>(R.id.text_pick_customer)
 
     textEditCustomerInfo.setOnClickListener {
@@ -278,17 +251,13 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       editCustomerInfoBottomSheetDialog.show(this.parentFragmentManager, EditCustomerInfoBottomSheetDialog::class.java.name)
       popupWindow.dismiss()
     }
-    textEditCustomerAddr.setOnClickListener {
-      val editCustomerAddressBottomSheetDialog = EditCustomerAddressBottomSheetDialog(createOrderRequest.buyerDetails?.address!!)
-      editCustomerAddressBottomSheetDialog.onClicked = { onCustomerAddress(it) }
-      editCustomerAddressBottomSheetDialog.show(this.parentFragmentManager, EditCustomerAddressBottomSheetDialog::class.java.name)
+    textEditCustomerAddress.setOnClickListener {
+      val sheetAddress = EditCustomerAddressBottomSheetDialog(createOrderRequest.buyerDetails?.address!!)
+      sheetAddress.onClicked = { onCustomerAddress(it) }
+      sheetAddress.show(this.parentFragmentManager, EditCustomerAddressBottomSheetDialog::class.java.name)
       popupWindow.dismiss()
     }
-
-    pickAnotherCustomer.setOnClickListener {
-      popupWindow.dismiss()
-    }
-
+    pickAnotherCustomer.setOnClickListener { popupWindow.dismiss() }
     popupWindow.showAsDropDown(view, 0, -50)
   }
 

@@ -280,7 +280,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
         val sheetDelivered = DeliveredBottomSheetDialog()
         sheetDelivered.setData(orderItem)
-        sheetDelivered.onClicked = { deliveredOrder(it) }
+        sheetDelivered.onClicked = { s, b -> deliveredOrder(s, b) }
         sheetDelivered.show(this.parentFragmentManager, DeliveredBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
@@ -298,10 +298,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
         val sheetFeedbackApt = SendFeedbackOrderSheetDialog()
         sheetFeedbackApt.setData(orderItem)
-        sheetFeedbackApt.onClicked = { sendFeedbackRequestOrder(it) }
+        sheetFeedbackApt.onClicked = { sendFeedbackRequestOrder(it, getString(R.string.order_feedback_requested)) }
         sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
       }
-      else -> {}
+      else -> {
+      }
     }
   }
 
@@ -337,13 +338,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     })
   }
 
-  private fun deliveredOrder(message: String) {
+  private fun deliveredOrder(message: String, feedback: Boolean) {
     showProgress()
     viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        if (message.isNotEmpty()) {
-          updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
-        } else orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_delivery)) }
+        if (feedback) sendFeedbackRequestOrder(FeedbackRequest(orderItem?._id, message))
+        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_delivery)) }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -398,11 +398,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     })
   }
 
-  private fun sendFeedbackRequestOrder(request: FeedbackRequest) {
+  private fun sendFeedbackRequestOrder(request: FeedbackRequest, message: String? = null) {
     showProgress()
     viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.order_feedback_requested)) }
+        message?.let { it1 -> orderItem?._id?.let { it2 -> apiGetOrderDetails(it2, it1) } }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -421,6 +421,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       }
     })
   }
+
   private fun sendPaymentLinkOrder(message: String) {
     viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }

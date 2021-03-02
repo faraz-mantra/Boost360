@@ -323,6 +323,7 @@
   <string name="inr_1200">INR 1200</string>
   <string name="service_charges">Service Charges</string>
   <string name="gst">GST</string>
+  <string name="gst_inclusive">GST inclusive</string>
   <string name="dummy_address_long">24 Subhas chandra avenue, Kolkata, West Bengal-712484GSTIN : DBS987654321010</string>
   <string name="appointment_confirmation_description">An Email and SMS with the appointment details will be sent to customer notifying them about the confirmation along with a secure payment link.</string>
   <string name="string_review_and_confirm">Review and confirm</string>

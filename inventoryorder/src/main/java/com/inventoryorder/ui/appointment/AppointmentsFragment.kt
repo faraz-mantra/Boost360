@@ -2,6 +2,7 @@ package com.inventoryorder.ui.appointment
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
@@ -95,6 +96,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     layoutManager?.let { scrollPagingListener(it) }
     requestFilter = getRequestFilterData(arrayListOf())
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
+    binding?.swipeRefresh?.setColorSchemeColors(Color.YELLOW,Color.MAGENTA, Color.YELLOW)
+    binding?.swipeRefresh?.setOnRefreshListener {loadNewData()}
   }
 
   override fun onClick(v: View) {
@@ -137,9 +140,9 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
-    if (isFirst || isSearch) binding?.progress?.visible()
+    if (isFirst || isSearch)  showProgressLoad()
     viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
-      binding?.progress?.gone()
+      hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
@@ -171,6 +174,15 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         }
       } else showLongToast(it.message())
     })
+  }
+
+  private fun showProgressLoad() {
+    if (binding?.swipeRefresh?.isRefreshing == false) binding?.progress?.visible()
+  }
+
+  private fun hideProgressLoad() {
+    binding?.swipeRefresh?.isRefreshing = false
+    binding?.progress?.gone()
   }
 
   private fun onInClinicAptAddedOrUpdated(isAdded: Boolean) {

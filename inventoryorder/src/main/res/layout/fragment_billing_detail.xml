@@ -460,7 +460,7 @@
             style="@style/EditTextLabelStyle"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="@string/gst"
+            android:text="@string/gst_inclusive"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/linear_service"
             app:layout_constraintTop_toBottomOf="@id/linear_service" />

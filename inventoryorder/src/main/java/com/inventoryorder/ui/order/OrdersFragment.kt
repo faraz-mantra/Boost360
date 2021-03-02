@@ -2,6 +2,7 @@ package com.inventoryorder.ui.order
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
@@ -9,13 +10,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
-import com.framework.utils.saveData
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -94,6 +93,10 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
+    binding?.swipeRefresh?.setColorSchemeColors(Color.YELLOW,Color.MAGENTA, Color.YELLOW)
+    binding?.swipeRefresh?.setOnRefreshListener {
+      if (typeList.isNullOrEmpty()) apiSellerSummary() else loadNewData()
+    }
   }
 
   override fun onClick(v: View) {
@@ -103,9 +106,9 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         if (!PreferencesUtils.instance.getData(PreferenceConstant.SHOW_CREATE_ORDER_WELCOME, false)) {
-          startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle,isResult = true)
+          startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle, isResult = true)
         } else {
-          startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle,isResult = true)
+          startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle, isResult = true)
         }
       }
     }
@@ -139,9 +142,9 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   }
 
   private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
-    if (isFirst || isSearch) binding?.progress?.visible()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
-      binding?.progress?.gone()
+    if (isFirst || isSearch) showProgressLoad()
+    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, {
+      hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
@@ -194,7 +197,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
 
   private fun apiSellerSummary() {
-    binding?.progress?.visible()
+    showProgressLoad()
     viewModel?.getSellerSummary(clientId, fpTag)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
         val response = it as? OrderSummaryResponse
@@ -203,6 +206,15 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
       } else errorOnSummary(it?.message)
     })
+  }
+
+  private fun showProgressLoad() {
+    if (binding?.swipeRefresh?.isRefreshing == false) binding?.progress?.visible()
+  }
+
+  private fun hideProgressLoad() {
+    binding?.swipeRefresh?.isRefreshing = false
+    binding?.progress?.gone()
   }
 
   private fun setAdapterOrderList(list: ArrayList<OrderItem>) {
@@ -310,7 +322,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
         val sheetDelivered = DeliveredBottomSheetDialog()
         sheetDelivered.setData(orderItem)
-        sheetDelivered.onClicked = { deliveredOrder(it) }
+        sheetDelivered.onClicked = { s, b -> deliveredOrder(s, b) }
         sheetDelivered.show(this.parentFragmentManager, DeliveredBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
@@ -328,7 +340,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
         val sheetFeedbackApt = SendFeedbackOrderSheetDialog()
         sheetFeedbackApt.setData(orderItem)
-        sheetFeedbackApt.onClicked = { sendFeedbackRequestOrder(it) }
+        sheetFeedbackApt.onClicked = { sendFeedbackRequestOrder(it, resources.getString(R.string.order_feedback_requested)) }
         sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
       }
       else -> {
@@ -349,16 +361,13 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     })
   }
 
-  private fun deliveredOrder(message: String) {
+  private fun deliveredOrder(message: String, feedback: Boolean) {
     showProgress()
     viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        if (message.isNotEmpty()) {
-          updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
-        } else {
-          apiGetOrderDetails()
-          showLongToast(resources.getString(R.string.order_delivery))
-        }
+        if (feedback) sendFeedbackRequestOrder(FeedbackRequest(orderItem?._id, message))
+        apiGetOrderDetails()
+        showLongToast(resources.getString(R.string.order_delivery))
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -416,12 +425,12 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     })
   }
 
-  private fun sendFeedbackRequestOrder(request: FeedbackRequest) {
+  private fun sendFeedbackRequestOrder(request: FeedbackRequest, message: String? = null) {
     showProgress()
     viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         apiGetOrderDetails()
-        showLongToast(resources.getString(R.string.order_feedback_requested))
+        message?.let { it1 -> showLongToast(it1) }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -545,7 +554,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun errorOnSummary(message: String?) {
     binding?.typeRecycler?.gone()
     binding?.viewShadow?.gone()
-    binding?.progress?.gone()
+    hideProgressLoad()
     message?.let { showShortToast(it) }
   }
 
@@ -553,7 +562,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == 101 && resultCode == RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
-      val isRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name)?:false
+      val isRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name) ?: false
       if (isRefresh) loadNewData()
     }
   }
