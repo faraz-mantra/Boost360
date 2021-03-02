@@ -574,8 +574,13 @@
   <string name="brajmadhav1234_oksbi">brajmadhav1234@oksbi</string>
   <string name="signature">Signature</string>
     <string name="uploaded">Uploaded</string>
+    <string name="press_enter_on_keyboard_to_add_more_categories">Press enter on keyboard to add more categories</string>
+  <string name="enter_categories">Enter categories</string>
+  <string name="fli_p_covers">fli p covers</string>
+  <string name="add_another_category">Add another category</string>
+  <string name="add_new_category">Add new category</string>
 
-    <array name="stock_availbility">
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>

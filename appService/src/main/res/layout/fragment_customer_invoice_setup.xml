@@ -6,14 +6,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/gstin_container"
             style="@style/match_wrap"
             android:layout_marginHorizontal="@dimen/size_20"
             android:layout_marginTop="@dimen/size_20"
             android:background="@drawable/bg_rect_white_rounded_4"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
             android:padding="@dimen/size_20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +41,7 @@
                         style="@style/Appointment_Text_Title"
                         android:text="@string/gstin" />
 
-                    <view
+                    <Space
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
@@ -85,27 +82,24 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             style="@style/match_wrap"
             android:layout_marginHorizontal="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:background="@drawable/bg_rect_white_rounded_4"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
             android:paddingHorizontal="@dimen/size_10"
             android:paddingTop="@dimen/size_10"
             android:paddingBottom="@dimen/size_30"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+            app:layout_constraintTop_toBottomOf="@+id/gstin_container">
 
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/match_wrap"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -123,6 +117,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/edit_purchases"
                         style="@style/wrap_wrap"
                         android:layout_gravity="end"
                         android:includeFontPadding="false"
@@ -156,10 +151,11 @@
                     android:layout_marginTop="@dimen/size_5"
                     android:text="@string/brajmadhav1234_oksbi"
                     android:textSize="12sp" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/size_5"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/size_5">
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/signature_heading"

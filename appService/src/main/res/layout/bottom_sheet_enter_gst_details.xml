@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginBottom="@dimen/size_8"
-            android:text="@string/gst_details"
+            android:text="@string/enter_business_gstin"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,14 +52,14 @@
 
             <com.framework.views.customViews.CustomCheckBox
                 style="@style/match_wrap"
-                android:visibility="gone"
                 android:layout_gravity="top"
-                android:textSize="14sp"
-                android:textColor="@color/black_4a4a4a"
                 android:layout_marginHorizontal="@dimen/size_20"
                 android:layout_marginTop="@dimen/size_10"
                 android:paddingTop="@dimen/size_8"
-                android:text="@string/i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst" />
+                android:text="@string/i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="14sp"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 style="@style/match_wrap"
@@ -86,8 +86,6 @@
 
                 <com.framework.views.customViews.CustomTextView
                     style="@style/AppointmentSetting_Text_Heading"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_20"
                     android:layout_marginTop="@dimen/size_16"
                     android:layout_marginEnd="@dimen/size_20"
@@ -100,8 +98,7 @@
                     android:hint="@string/enter_business_name" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    style="@style/wrap_match"
                     android:layout_gravity="start"
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:layout_marginTop="@dimen/size_10"
@@ -140,8 +137,8 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/size_14">
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tvCancel"
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_cancel"
                     style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                     android:layout_height="@dimen/size_36"
                     android:layout_marginEnd="@dimen/size_10"
@@ -150,7 +147,7 @@
                     android:textColor="@color/pinkish_grey" />
 
                 <com.framework.views.customViews.CustomButton
-                    android:id="@+id/buttonDone"
+                    android:id="@+id/btn_save_changes"
                     style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/size_36"

@@ -1,13 +1,10 @@
 package com.appservice.appointment
 
-import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.widget.PopupWindow
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
-import com.appservice.constant.RecyclerViewActionType
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.databinding.FragmentCreateCategoryBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
@@ -16,7 +13,6 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
 import com.framework.models.BaseViewModel
-import com.framework.views.customViews.CustomTextView
 import kotlinx.android.synthetic.main.fragment_create_category.*
 import kotlinx.android.synthetic.main.toolbar_catalog.*
 import java.io.Serializable
@@ -44,7 +40,7 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ba
             val adapterN = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(list), this@CreateCategoryFragment)
             adapter = adapterN
         }
-
+setOnClickListener(binding?.btnAddNewCategory)
     }
 
     companion object {
@@ -68,7 +64,7 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ba
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-         return when (item.itemId) {
+        return when (item.itemId) {
             R.id.action_service_configuration -> {
                 startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
                 true
@@ -76,6 +72,20 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ba
             else -> super.onOptionsItemSelected(item)
 
         }
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when (v) {
+            binding?.btnAddNewCategory -> {
+                showCreateCategory()
+            }
+        }
+    }
+
+    private fun showCreateCategory() {
+        val bottomSheetCreateCategory = BottomSheetCreateCategory()
+        bottomSheetCreateCategory.show(parentFragmentManager, BottomSheetCreateCategory::class.java.name)
     }
 }
 

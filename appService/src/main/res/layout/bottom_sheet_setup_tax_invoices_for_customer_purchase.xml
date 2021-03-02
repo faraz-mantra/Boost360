@@ -43,24 +43,21 @@
                     android:id="@id/tvTitle"
                     style="@style/AppointmentSetting_Text_Heading"
                     android:layout_marginStart="@dimen/size_20"
-                    android:layout_marginBottom="@dimen/size_8"
-                    android:text="@string/upload_signature_to_print_on_invoice"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:text="@string/upload_signature_to_print_on_invoice" />
 
                 <FrameLayout
                     style="@style/match_wrap"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/size_20"
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:background="@drawable/blue_stroke"
                     android:foreground="?android:selectableItemBackground">
 
-                    <com.framework.views.customViews.CustomButton
+                    <com.framework.views.customViews.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/size_36"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="@dimen/size_20"
-                        android:background="@null"
                         android:drawableStart="@drawable/ic_upload_blue"
                         android:drawablePadding="@dimen/size_10"
                         android:gravity="center"
@@ -73,13 +70,13 @@
                 <include
                     android:id="@+id/layout_image_preview"
                     layout="@layout/item_preview_image"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/size_20"
-                    android:layout_marginTop="@dimen/size_10" />
+                    android:layout_marginTop="@dimen/size_20" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/btn_check_online_link"
                     style="@style/AppointmentSetting_Text_Heading"
                     android:layout_marginStart="@dimen/size_20"
                     android:layout_marginTop="@dimen/size_16"
@@ -91,8 +88,8 @@
                     android:id="@+id/online_payment_link_check"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_40"
                     android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginHorizontal="@dimen/size_20"
                     android:orientation="vertical"
                     android:visibility="gone"
                     tools:visibility="visible">
@@ -161,8 +158,8 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/size_14">
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tvCancel"
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btnCancel"
                     style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                     android:layout_height="@dimen/size_36"
                     android:layout_marginEnd="@dimen/size_10"
@@ -171,7 +168,7 @@
                     android:textColor="@color/pinkish_grey" />
 
                 <com.framework.views.customViews.CustomButton
-                    android:id="@+id/buttonDone"
+                    android:id="@+id/btn_save_changes"
                     style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/size_36"
