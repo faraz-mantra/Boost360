@@ -46,7 +46,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   private var totalPricePayable = 0.0
   private var totalPriceDiscount = 0.0
   private var deliveryFee = 0.0
-  private var selectedDeliveryType: String = OrderItem.OrderMode.PICKUP.name
+  private var selectedDeliveryType: String = OrderItem.OrderMode.DELIVERY.name
   private var orderBottomSheet = OrderBottomSheet()
   private var deliveryTypeBottomSheet = OrderBottomSheet()
   private var shouldFinish = false
@@ -73,7 +73,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     setUpData()
     getTotalPayableAmount()
     preparePaymentStatusOptions()
-    prepareDeliveryTypeOptions()
+//    prepareDeliveryTypeOptions()
   }
 
   fun getBundleData(): Bundle {
@@ -116,9 +116,9 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     when (v) {
       binding?.ivOptions -> showPopUp(binding?.ivOptions!!)
       binding?.tvDeliveryType -> {
-        val createOrderBottomSheetDialog = CreateOrderBottomSheetDialog(deliveryTypeBottomSheet)
-        createOrderBottomSheetDialog.onClicked = this::onDeliveryTypeSelected
-        createOrderBottomSheetDialog.show(this.parentFragmentManager, CreateOrderBottomSheetDialog::class.java.name)
+//        val createOrderBottomSheetDialog = CreateOrderBottomSheetDialog(deliveryTypeBottomSheet)
+//        createOrderBottomSheetDialog.onClicked = this::onDeliveryTypeSelected
+//        createOrderBottomSheetDialog.show(this.parentFragmentManager, CreateOrderBottomSheetDialog::class.java.name)
       }
 
       binding?.tvPaymentMode -> {
