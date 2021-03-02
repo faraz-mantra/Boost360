@@ -2,7 +2,6 @@ package com.appservice.offers
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Gravity

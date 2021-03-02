@@ -10,8 +10,7 @@ import com.framework.models.BaseViewModel
 
 class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersListingBinding, BaseViewModel>() {
 
-    private var filterType: Map<String, Int>? = mapOf()
-    var onClicked: (value: Map<String, Int>) -> Unit = { }
+    var onClicked: (value:  Int) -> Unit = { }
 
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_sort_offers_listing
@@ -36,21 +35,17 @@ class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersLis
 
     override fun onCreateView() {
         setOnClickListener(binding?.btnCancel, binding?.btnApply, binding?.radioGroupSorting, binding?.ctvReset)
-//        binding?.radioGroupSorting?.setOnCheckedChangeListener { group, checkedId ->
-//            if (checkedId != null) {
-//                val radioButton: RadioButton = group.findViewById(checkedId)
-//
-//            }
-
-
-//        }
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
             binding?.btnApply -> {
-//                onClicked()
+                if (binding?.radioGroupSorting!=null){
+                    val radioButton: RadioButton = binding?.radioGroupSorting!!.findViewById(binding?.radioGroupSorting!!.checkedRadioButtonId)
+                    showShortToast(radioButton.text.toString())
+                    onClicked(filters.getValue(radioButton.text.toString()))
+                }
                 dismiss()
             }
             binding?.btnCancel -> {

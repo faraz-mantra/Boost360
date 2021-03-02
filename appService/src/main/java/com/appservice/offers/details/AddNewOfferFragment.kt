@@ -76,8 +76,8 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         initOfferFromBundle(arguments)
         currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
         fpId = arguments?.getString(IntentConstant.FP_ID.name) ?: UserSession.fpId
-        fpTag = arguments?.getString(IntentConstant.FP_TAG.name)?: UserSession.fpTag
-        clientId = arguments?.getString(IntentConstant.CLIENT_ID.name)?: UserSession.clientId
+        fpTag = arguments?.getString(IntentConstant.FP_TAG.name) ?: UserSession.fpTag
+        clientId = arguments?.getString(IntentConstant.CLIENT_ID.name) ?: UserSession.clientId
         applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
         if (isEdit) menuDelete?.isVisible = true
     }
@@ -210,7 +210,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             val request = AddImageOffer.getInstance(clientId, 0, offerModel?.offerId!!, offerImage!!)
             hitApi(viewModel?.addOfferImages(request), R.string.error_offer_image)
         } else uploadSecondaryImages()
-        }
+    }
 
 
     private fun uploadSecondaryImages() {
@@ -228,7 +228,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
                     if (checkPosition == images.size) openSuccessBottomSheet()
                 })
             }
-        }else{
+        } else {
             openSuccessBottomSheet()
         }
     }
@@ -280,6 +280,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         when (it) {
             TypeSuccess.CLOSE.name -> {
                 val data = Intent()
+                isRefresh = true
                 data.putExtra(IntentConstant.IS_UPDATED.name, isRefresh)
                 appBaseActivity?.setResult(Activity.RESULT_OK, data)
                 appBaseActivity?.finish()
