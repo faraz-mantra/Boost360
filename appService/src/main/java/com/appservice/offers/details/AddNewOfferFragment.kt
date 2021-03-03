@@ -263,8 +263,15 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     private fun openSelectServiceBottomSheet() {
         val selectedService = OfferSelectServiceBottomSheet()
-//        selectedService.setData(isEdit)
-//        selectedService.onClicked = { clickSuccessCreate(it = it) }
+        selectedService.setData(isEdit)
+        selectedService.onClicked = {
+            with(binding!!) {
+                btnSelectServices.gone()
+                llSelectedServiceView.visible()
+                ctvServiceName.text = it?.name
+                ctvPriceTime.text = "₹ ${it?.discountedPrice} for ${it?.duration} min"
+            }
+        }
         selectedService.show(this@AddNewOfferFragment.parentFragmentManager, OfferSelectServiceBottomSheet::class.java.name)
     }
 
@@ -294,13 +301,13 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         binding?.ctvOfferTitle?.setText(offerModel?.name)
         binding?.toggleOfferAvailability?.isOn = offerModel?.isAvailable ?: false
         binding?.ctvOffersDescription?.setText(offerModel?.description)
-        if (offerModel?.isPriceToggleOn() != true) {
-            binding?.toggleServiceApplicableTo?.isOn = false
-            binding?.llSelectTheService?.gone()
-        } else if (offerModel?.isPriceToggleOn() == true) {
-            binding?.toggleServiceApplicableTo?.isOn = true
-            binding?.llSelectTheService?.visible()
-        }
+//        if (offerModel?.isPriceToggleOn() ==true) {
+//            binding?.toggleServiceApplicableTo?.isOn = false
+//            binding?.llSelectTheService?.gone()
+//        } else if (offerModel?.isPriceToggleOn() == false) {
+//            binding?.toggleServiceApplicableTo?.isOn = true
+//            binding?.llSelectTheService?.visible()
+//        }
 //        binding?.price?.setText("${offerModel?.price ?: 0}")
         binding?.ctvDiscountAmount?.setText("${offerModel?.discountAmount ?: 0.0}")
         if (offerModel?.featuredImage?.imageId.isNullOrEmpty().not()) {

@@ -46,7 +46,7 @@ class SelectServiceModel {
     )
 
     data class DataItemOfferService(
-            var isChecked: Boolean? = null,
+            var isChecked: Boolean? = false,
             @field:SerializedName("Type")
             val type: Any? = null,
 

@@ -77,7 +77,8 @@ data class OfferModel(
 		var tags: ArrayList<String>? = null,
 ) : Serializable, BaseResponse(), AppBaseRecyclerViewItem {
 	fun isPriceToggleOn(): Boolean {
-		return this.price!! > 0
+//		return this.price?:0> 0
+		return false
 	}
 
 	var recyclerViewItem = RecyclerViewItemType.OFFER_LISTING_VIEW.getLayout()

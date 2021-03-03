@@ -1,6 +1,6 @@
 package com.appservice.offers.selectservices
 
-import androidx.fragment.app.DialogFragment
+import android.view.View
 import com.appservice.R
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetSelectServiceListingBinding
@@ -19,16 +19,15 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectServiceListingBinding, OfferViewModel>(), RecyclerItemClickListener {
-     var onClicked: () -> Unit = {}
+    private var dataOffer: DataItemOfferService? = null
+    var onClicked: (dataOffer: DataItemOfferService?) -> Unit = {}
     private var isEdit: Boolean? = null
     lateinit var data: List<DataItemService?>
     var adapter: AppBaseRecyclerViewAdapter<DataItemOfferService>? = null
     private var listServices: ArrayList<DataItemOfferService>? = null
     private var serviceIds: ArrayList<String>? = null
     override fun onCreateView() {
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.OffersThemeBase)
         init()
-
     }
 
     private fun getBundleData() {
@@ -42,10 +41,10 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
         viewModel!!.getServiceListing(ServiceListRequest(
                 FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
         ).observe(viewLifecycleOwner, {
-            val services = ArrayList<DataItemOfferService>()
+            listServices = ArrayList()
             data = (it as ServiceListResponse).result!!.data!!
-            data.forEach { service -> services.add(DataItemOfferService(service?.isChecked, service?.type, service?.category, service?.secondaryTileImages, service?.price, service?.discountedPrice, service?.duration, service?.id, service?.image, service?.secondaryImages, service?.discountAmount, service?.name, service?.tileImage)) }
-            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = services, itemClickListener = this@OfferSelectServiceBottomSheet)
+            data.forEach { service -> listServices!!.add(DataItemOfferService(service?.isChecked, service?.type, service?.category, service?.secondaryTileImages, service?.price, service?.discountedPrice, service?.duration, service?.id, service?.image, service?.secondaryImages, service?.discountAmount, service?.name, service?.tileImage)) }
+            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = listServices!!, itemClickListener = this@OfferSelectServiceBottomSheet)
             binding?.rvServices?.adapter = adapter
 //            when {
 //                isEdit!! -> {
@@ -71,20 +70,9 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
 
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        val dataItem = item as DataItemOfferService
-        when (dataItem.isChecked) {
-            true -> {
-                dataItem.isChecked = false
-            }
-            else -> {
-                dataItem.isChecked = true
-            }
-        }
-        when (dataItem.isChecked) {
-            true -> listServices?.add(dataItem)
-            false -> listServices?.remove(dataItem)
-        }
-
+        this.dataOffer = item as DataItemOfferService
+        listServices?.forEach { if (it != item) it.isChecked = false }
+        adapter?.notifyDataSetChanged()
     }
 
     override fun getLayout(): Int {
@@ -97,5 +85,19 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
 
     fun setData(edit: Boolean) {
 
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when (v) {
+            binding?.btnApply -> {
+                if (dataOffer != null)
+                    onClicked(dataOffer)
+                dismiss()
+            }
+            binding?.btnCancel -> {
+                dismiss()
+            }
+        }
     }
 }
