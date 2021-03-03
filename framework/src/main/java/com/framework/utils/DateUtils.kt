@@ -28,6 +28,7 @@ object DateUtils {
   const val FORMAT_HH_MM_SS = "HH:mm:ss"
   const val FORMAT_HH_MM = "HH:mm"
   const val FORMAT_HH_MM_A = "hh:mm a"
+  const val FORMAT_HH_MMA = "hh:mma"
   const val FORMAT_H_MM_A = "h:mm a"
   const val SPA_DISPLAY_DATE = "EEE',' dd MMMM yyyy"
   const val SPA_REVIEW_DATE_FORMAT = "EEE',' MMM dd, yyyy"
@@ -68,6 +69,14 @@ object DateUtils {
     } catch (e: Exception) {
       null
     }
+  }
+
+  fun isBetweenValidTime(startTime: Date, endTime: Date, validateTime: Date): Boolean {
+    var validTimeFlag = false
+    if (endTime <= startTime) {
+      if (validateTime <= endTime || validateTime >= startTime) validTimeFlag = true
+    } else if (validateTime <= endTime && validateTime >= startTime) validTimeFlag = true
+    return validTimeFlag
   }
 
   fun getCurrentDate(): Date {

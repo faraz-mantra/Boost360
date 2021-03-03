@@ -33,6 +33,17 @@
         app:textType="BODY_1"
         tools:text="Monday" />
 
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_close_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/size_8"
+        android:text="@string/business_closed"
+        android:textColor="@color/black_4a4a4a_50"
+        android:visibility="gone"
+        app:textType="CAPTION" />
+
       <com.appservice.views.toggle.widget.LabeledSwitch
         android:id="@+id/toggle_on_off"
         android:layout_width="@dimen/size_54"
@@ -88,8 +99,7 @@
             android:id="@+id/spinner_start_timing"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
-            android:background="@drawable/spinner_catalog"
-            android:entries="@array/business_hours_arrays" />
+            android:background="@drawable/spinner_catalog" />
         </LinearLayout>
 
         <com.framework.views.customViews.CustomTextView
@@ -123,24 +133,24 @@
             android:id="@+id/spinner_end_timing"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
-            android:background="@drawable/spinner_catalog"
-            android:entries="@array/business_hours_arrays" />
+            android:background="@drawable/spinner_catalog" />
+          <!--   android:entries="@array/business_hours_arrays"-->
         </LinearLayout>
       </LinearLayout>
 
       <com.framework.views.customViews.CustomCheckBox
+        android:id="@+id/ccb_all_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ccb_all_day"
         android:layout_marginStart="@dimen/size_12"
         android:layout_marginTop="@dimen/size_8"
         android:layout_marginBottom="@dimen/size_12"
-        android:theme="@style/ActiveTheme"
+        android:clickable="true"
         android:text="@string/apply_same_on_all_working_days"
         android:textColor="@color/black_4a4a4a"
         android:textSize="13sp"
-        android:clickable="true"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        android:theme="@style/ActiveTheme" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
