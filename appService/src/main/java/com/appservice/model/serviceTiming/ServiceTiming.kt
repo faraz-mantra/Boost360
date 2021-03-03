@@ -3,6 +3,7 @@ package com.appservice.model.serviceTiming
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.model.serviceTiming.ServiceTiming.WeekdayValue.Companion.fromFullName
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
+import com.google.android.libraries.places.api.model.Place
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -13,7 +14,9 @@ data class ServiceTiming(
     var time: ServiceTime? = null,
     var isToggle: Boolean = false,
     var appliedOnPosition: Int? = null,
+    var businessTiming: BusinessHourTiming? = null,
 ) : Serializable, AppBaseRecyclerViewItem {
+
   override fun getViewType(): Int {
     return RecyclerViewItemType.SERVICE_TIMING_ITEM_VIEW.getLayout()
   }
@@ -21,6 +24,12 @@ data class ServiceTiming(
   fun getTimeData(): ServiceTime {
     this.time = this.time ?: ServiceTime()
     return time!!
+  }
+
+  fun isOpenDay(): Boolean {
+    return ((businessTiming?.startTime.isNullOrEmpty() || businessTiming?.startTime.equals("00:00") || businessTiming?.startTime.equals("00")).not() &&
+        (businessTiming?.endTime.isNullOrEmpty() || businessTiming?.endTime.equals("00:00") || businessTiming?.endTime.equals("00")).not())
+
   }
 
   fun getEmptyDataServiceTiming(isEdit: Boolean): ArrayList<ServiceTiming> {
@@ -40,7 +49,7 @@ data class ServiceTiming(
   fun getStringActive(list: ArrayList<ServiceTiming>?): String {
     var txtDays = ""
     list?.forEach {
-      if (it.isToggle) {
+      if (it.isToggle && it.isOpenDay()) {
         val value = fromFullName(it.day) ?: return@forEach
         txtDays = if (txtDays.isNotEmpty()) "$txtDays, ${value.sortName}" else value.sortName
       }
@@ -54,7 +63,12 @@ data class ServiceTiming(
     SUNDAY("Sunday", "Sun");
 
     companion object {
-      fun fromFullName(fullName: String?): WeekdayValue? = values().firstOrNull { it.fullName.equals(fullName, false) }
+      fun fromFullName(fullName: String?): WeekdayValue? = values().firstOrNull { it.fullName.equals(fullName, true) }
     }
   }
 }
+
+class BusinessHourTiming(
+    var startTime: String = "",
+    var endTime: String = "",
+) : Serializable

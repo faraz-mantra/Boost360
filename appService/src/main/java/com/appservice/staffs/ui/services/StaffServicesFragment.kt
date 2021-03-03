@@ -16,7 +16,7 @@ import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import kotlinx.android.synthetic.main.fragment_kyc_details.*
 import java.util.*
 
-class StaffServicesFragment() : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(), RecyclerItemClickListener {
+class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(), RecyclerItemClickListener {
   private var isEdit: Boolean? = null
   lateinit var data: List<DataItemService?>
   var adapter: AppBaseRecyclerViewAdapter<DataItemService>? = null

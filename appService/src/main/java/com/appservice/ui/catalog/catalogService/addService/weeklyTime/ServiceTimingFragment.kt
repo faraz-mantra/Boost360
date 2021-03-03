@@ -14,6 +14,8 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.framework.utils.DateUtils
+import com.framework.utils.DateUtils.parseDate
 import java.util.*
 
 class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, StaffViewModel>(), RecyclerItemClickListener {
@@ -43,6 +45,11 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
   private fun getBundleData() {
     this.serviceTimingList = arguments?.getSerializable(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
     this.isEdit = arguments?.getBoolean(IntentConstant.IS_EDIT.name) ?: false
+    if (this.isEdit.not()) updateTimingMapWithBusinessHour()
+  }
+
+  private fun updateTimingMapWithBusinessHour() {
+    this.serviceTimingList?.map { if (it.isOpenDay()) it.time = ServiceTime(it.businessTiming?.startTime, it.businessTiming?.endTime) }
   }
 
   private fun setServiceTimingAdapter(serviceTimingList: ArrayList<ServiceTiming>) {
@@ -66,16 +73,23 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
   }
 
   private fun applyOnAllDays(position: Int, serviceTiming: ServiceTiming?) {
-    val isNull = serviceTiming?.appliedOnPosition
+    val appliedOnP = serviceTiming?.appliedOnPosition
     adapterTiming?.list()?.forEach {
-      if (isNull != null) {
+      if (appliedOnP != null) {
         if (serviceTiming.day.equals(it.day)) it.appliedOnPosition = null
-        it.time = ServiceTime()
+        it.time = ServiceTime(it.businessTiming?.startTime, it.businessTiming?.endTime)
         it.isToggle = false
       } else {
-        it.time = serviceTiming?.time
-        it.isToggle = true
-        it.appliedOnPosition = position
+        val startDate = it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MMA)
+        val endDate = it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MMA)
+        val startDateNew = serviceTiming?.time?.from?.parseDate(DateUtils.FORMAT_HH_MMA)
+        val endDateNew = serviceTiming?.time?.to?.parseDate(DateUtils.FORMAT_HH_MMA)
+        if (startDate != null && endDate != null && startDateNew != null && endDateNew != null && DateUtils.isBetweenValidTime(startDate, endDate, startDateNew)
+            && DateUtils.isBetweenValidTime(startDate, endDate, endDateNew)) {
+          it.time = serviceTiming.time
+          it.isToggle = true
+          it.appliedOnPosition = position
+        } else it.isToggle = false
       }
     }
     adapterTiming?.notifyDataSetChanged()

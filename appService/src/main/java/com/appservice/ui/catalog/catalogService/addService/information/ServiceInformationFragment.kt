@@ -11,11 +11,14 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
+import com.appservice.constant.PreferenceConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
 import com.appservice.model.serviceProduct.BuyOnlineLink
+import com.appservice.model.serviceTiming.BusinessHourTiming
+import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
 import com.appservice.model.servicev1.DeleteSecondaryImageRequest
 import com.appservice.model.servicev1.ImageModel
@@ -35,6 +38,8 @@ import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModelV1>(), RecyclerItemClickListener {
 
@@ -86,17 +91,12 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun setUiText() {
-    val serviceTimingTxt = ServiceTiming().getStringActive(this.serviceTimingList)
-    if (serviceTimingTxt.isNotEmpty()) {
-      binding?.txtDaysActive?.text = serviceTimingTxt
-      binding?.txtDaysActive?.visible()
-    } else binding?.txtDaysActive?.gone()
-
-    ordersQuantity = product?.maxCodOrders?:0
+    bindTimingWithBusinessHour()
+    ordersQuantity = product?.maxCodOrders ?: 0
     binding?.cetSpecKey?.setText(product?.keySpecification?.key ?: "")
     binding?.cetSpecValue?.setText(product?.keySpecification?.value ?: "")
     binding?.edtBrand?.setText(product?.brandName ?: "")
-    binding?.cetWebsite?.setText(product?.BuyOnlineLink?.description?:"")
+    binding?.cetWebsite?.setText(product?.BuyOnlineLink?.description ?: "")
     binding?.cetWebsiteValue?.setText(product?.BuyOnlineLink?.url ?: "")
     binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
     if (product?.isPriceToggleOn() == true) {
@@ -121,6 +121,54 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     }
   }
 
+  private fun bindTimingWithBusinessHour() {
+    this.serviceTimingList?.forEach {
+      when (ServiceTiming.WeekdayValue.fromFullName(it.day)) {
+        ServiceTiming.WeekdayValue.SUNDAY -> {
+          val startSunday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_SUNDAY_START_TIME, "") ?: ""
+          val endSunday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_SUNDAY_END_TIME, "") ?: ""
+          it.businessTiming = BusinessHourTiming(startTime = startSunday, endTime = endSunday)
+        }
+        ServiceTiming.WeekdayValue.MONDAY -> {
+          val startMonday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_MONDAY_START_TIME, "") ?: ""
+          val endMonday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_MONDAY_END_TIME, "") ?: ""
+          it.businessTiming = BusinessHourTiming(startTime = startMonday, endTime = endMonday)
+        }
+        ServiceTiming.WeekdayValue.TUESDAY -> {
+          val startTuesday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_TUESDAY_START_TIME, "") ?: ""
+          val endTuesday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_TUESDAY_END_TIME, "") ?: ""
+          it.businessTiming = BusinessHourTiming(startTime = startTuesday, endTime = endTuesday)
+        }
+        ServiceTiming.WeekdayValue.WEDNESDAY -> {
+          val startWednesday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_WEDNESDAY_START_TIME, "") ?: ""
+          val endWednesday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_WEDNESDAY_END_TIME, "") ?: ""
+          it.businessTiming = BusinessHourTiming(startTime = startWednesday, endTime = endWednesday)
+        }
+        ServiceTiming.WeekdayValue.THURSDAY -> {
+          val startThursday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_THURSDAY_START_TIME, "") ?: ""
+          val endThursday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_THURSDAY_END_TIME, "") ?: ""
+          it.businessTiming = BusinessHourTiming(startTime = startThursday, endTime = endThursday)
+        }
+        ServiceTiming.WeekdayValue.FRIDAY -> {
+          val startFriday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_FRIDAY_START_TIME, "") ?: ""
+          val endFriday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_FRIDAY_END_TIME, "") ?: ""
+          it.businessTiming = BusinessHourTiming(startTime = startFriday, endTime = endFriday)
+        }
+        ServiceTiming.WeekdayValue.SATURDAY -> {
+          val startSaturday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_SATURDAY_START_TIME, "") ?: ""
+          val endSaturday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_SATURDAY_END_TIME, "") ?: ""
+          it.businessTiming = BusinessHourTiming(startTime = startSaturday, endTime = endSaturday)
+        }
+      }
+      if (it.time?.from.isNullOrEmpty() || it.time?.to.isNullOrEmpty()) it.time = ServiceTime(it.businessTiming?.startTime, it.businessTiming?.endTime)
+    }
+    val serviceTimingTxt = ServiceTiming().getStringActive(this.serviceTimingList)
+    if (serviceTimingTxt.isNotEmpty()) {
+      binding?.txtDaysActive?.text = serviceTimingTxt
+      binding?.txtDaysActive?.visible()
+    } else binding?.txtDaysActive?.gone()
+  }
+
   private fun specificationAdapter() {
     binding?.rvSpecification?.apply {
       adapterSpec = AppBaseRecyclerViewAdapter(baseActivity, specList, this@ServiceInformationFragment)
@@ -135,7 +183,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.edtGst -> openGStDetail()
+      binding?.edtGst -> {
+      } //openGStDetail()
       binding?.btnAddTag -> {
         val txtTag = binding?.edtServiceTag?.text.toString()
         if (txtTag.isNotEmpty()) {
@@ -220,7 +269,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
         product?.BuyOnlineLink = BuyOnlineLink(websiteName, websiteValue)
-        product?.GstSlab = gst.toIntOrNull() ?: 0;
+        product?.GstSlab = 18//gst.toIntOrNull() ?: 0;
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
         output.putExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)

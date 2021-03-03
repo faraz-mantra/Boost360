@@ -13,11 +13,14 @@ object DateUtils {
   const val FORMAT_SERVER_1_DATE = "yyyy-MM-dd'T'HH:mm:ss'Z'"
   const val FORMAT_SERVER_TO_LOCAL = "dd-MM-yyyy hh:mm a"
   const val FORMAT_SERVER_TO_LOCAL_1 = "dd-MM-yyyy HH:mm"
+  const val FORMAT_SERVER_TO_LOCAL_3 = "MMM dd, yyyy 'at' hh:mm a";
+  const val FORMAT_SERVER_TO_LOCAL_4 = "hh:mm a 'on' EEE',' dd MMM yyyy";
+  const val FORMAT_SERVER_TO_LOCAL_5 = "EEE',' dd MMM yyyy";
 
   //  const val FORMAT_SERVER_TO_LOCAL_2 = "EEE dd-MMM-yyyy hh:mm a"
   const val FORMAT_SERVER_TO_LOCAL_2 = "EEE',' dd MMMM',' hh:mm a"
   const val FORMAT_DD_MM_YYYY = "dd-MM-yyyy"
-  const val FORMAT_DD_MM_YYYY_N = "yyyy/MM/dd"
+  const val FORMAT_DD_MM_YYYY_N = "dd/MM/yyyy"
   const val FORMAT_DD_MM_YYYY_hh_mm_ss = "dd-MM-yyyy HH:mm:ss"
   const val FORMAT__DD__MM__YYYY = "dd MM yyyy"
   const val FORMAT_YYYY_MM_DD = "yyyy-MM-dd"
@@ -25,7 +28,10 @@ object DateUtils {
   const val FORMAT_HH_MM_SS = "HH:mm:ss"
   const val FORMAT_HH_MM = "HH:mm"
   const val FORMAT_HH_MM_A = "hh:mm a"
+  const val FORMAT_HH_MMA = "hh:mma"
   const val FORMAT_H_MM_A = "h:mm a"
+  const val SPA_DISPLAY_DATE = "EEE',' dd MMMM yyyy"
+  const val SPA_REVIEW_DATE_FORMAT = "EEE',' MMM dd, yyyy"
   private val dateFormater = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
   private val dateFormaterToday = SimpleDateFormat("HH:mm", Locale.getDefault())
   private val dateFormaterDate = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -63,6 +69,14 @@ object DateUtils {
     } catch (e: Exception) {
       null
     }
+  }
+
+  fun isBetweenValidTime(startTime: Date, endTime: Date, validateTime: Date): Boolean {
+    var validTimeFlag = false
+    if (endTime <= startTime) {
+      if (validateTime <= endTime || validateTime >= startTime) validTimeFlag = true
+    } else if (validateTime <= endTime && validateTime >= startTime) validTimeFlag = true
+    return validTimeFlag
   }
 
   fun getCurrentDate(): Date {
