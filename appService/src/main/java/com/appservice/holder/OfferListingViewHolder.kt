@@ -24,7 +24,7 @@ class OfferListingViewHolder(binding: RecyclerItemOfferBinding) : AppBaseRecycle
         binding.ctvOffersDescription.text = data.description
         binding.ctvOffersHeading.text = data.name
         binding.ctvOffersPricing.text = "₹ ${NumberFormat.getNumberInstance(Locale.US).format(data.discountAmount)} OFF"
-       if (data.category!=null) binding.ctvOffersCategory.text = "on ${data.category?:""}"
+       if (data.category.isNullOrEmpty().not()){ binding.ctvOffersCategory.text = "on ${data.category?:""}"}
         binding.root.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.OFFER_ITEM_CLICK.ordinal) }
         binding.shareData.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.OFFER_DATA_SHARE_CLICK.ordinal) }
         binding.shareWhatsapp.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.OFFER_WHATS_APP_SHARE.ordinal) }

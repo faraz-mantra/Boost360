@@ -33,12 +33,6 @@
         <item name="searchHintIcon">@null</item>
         <item name="closeIconTint">@color/white</item>
     </style>
-<!--    <style name="ThemeOverlay.SearchView.Offer" parent="Widget.AppCompat.SearchView.ActionBar">-->
-<!--        <item name="submitBackground">@android:color/transparent</item>-->
-<!--        <item name="closeIconTint">@color/gray_828282</item>-->
-<!--        <item name="textColor">@color/gray_4e4e4e</item>-->
-<!--        <item name="hintTextColor">@color/gray_light_3</item>-->
-<!--    </style>-->
     <style name="OffersThemeBase" parent="AppTheme.cataloge">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -68,21 +62,7 @@
 <!--        <item name="android:background">@drawable/rounded_stroke_grey_4</item>-->
 
     </style>
-<!--    <style name="SearchView.WhiteBackgroundOffers">-->
-<!--        <item name="android:layout_height">wrap_content</item>-->
-<!--        <item name="android:layout_width">match_parent</item>-->
-<!--        <item name="android:iconifiedByDefault">true</item>-->
-<!--        <item name="android:background">@drawable/rounded_stroke_grey_4</item>-->
-<!--        <item name="android:paddingStart">@dimen/size_5</item>-->
-<!--        <item name="searchIcon">@drawable/ic_search_black_24dp</item>-->
-<!--        <item name="android:paddingEnd">@dimen/size_4</item>-->
-<!--        <item name="android:layout_marginStart">@dimen/size_20</item>-->
-<!--        <item name="closeIconTint">@color/yellow_ffb900</item>-->
-<!--        <item name="textColor">@color/gray_828282</item>-->
-<!--        <item name="closeIcon">@drawable/ic_close_black</item>-->
-<!--        <item name="android:layout_marginEnd">@dimen/size_20</item>-->
-<!--        <item name="android:layout_gravity">center</item>-->
-<!--    </style>-->
+
     <style name="RadioService" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textColor">@color/black_4a4a4a</item>
         <item name="android:layout_height">match_parent</item>
