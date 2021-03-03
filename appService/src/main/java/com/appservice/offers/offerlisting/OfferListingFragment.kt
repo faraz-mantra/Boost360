@@ -300,7 +300,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
         if (actionType == RecyclerViewActionType.OFFER_ITEM_CLICK.ordinal) {
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.OFFER_DATA.name, offerItem)
-            startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_DETAILS_FRAGMENT, bundle, false, isResult = true)
+            startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_DETAILS_FRAGMENT, bundle, false, isResult = true,101)
         }
         if (actionType == RecyclerViewActionType.OFFER_WHATS_APP_SHARE.ordinal) {
             shareOfferItem = item

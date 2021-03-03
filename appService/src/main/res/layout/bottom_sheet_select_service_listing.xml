@@ -65,10 +65,9 @@
             <com.framework.views.viewgroups.BaseRecyclerView
                 android:id="@+id/rv_services"
                 style="@style/match_wrap"
-                android:layout_height="@dimen/size_220"
                 android:layout_marginHorizontal="@dimen/size_16"
-                android:layout_marginTop="@dimen/size_30"
-                android:layout_marginBottom="@dimen/size_30"
+                android:paddingVertical="@dimen/size_30"
+                android:clipToPadding="false"
                 android:orientation="vertical"
                 android:scrollbars="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
