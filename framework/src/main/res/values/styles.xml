@@ -35,7 +35,7 @@
 
   <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
     <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:backgroundDimEnabled">true</item>
   </style>
 
   <style name="MaterialDialogThemeFull" parent="MaterialDialogTheme">

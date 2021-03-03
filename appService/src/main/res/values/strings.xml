@@ -177,6 +177,11 @@
   <string name="other_information">Other Information</string>
   <string name="product_details">Product details</string>
   <string name="additional_information">Additional Info</string>
+  <string name="testimonial_title">Testimonials</string>
+  <string name="testimonial_add">Add Testimonial</string>
+  <string name="testimonial_edit">Edit Testimonial</string>
+  <string name="error_getting_web_action">Error getting web action list!</string>
+  <string name="add_a_testimonial">ADD A TESTIMONIAL</string>
   <!--staff module strings-->
   <string name="what_services_you_give">What services do you give?</string>
   <string name="you_don_t_h">In order to add staff members, please first add all the services your business offers.</string>
@@ -472,7 +477,7 @@
   <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="offer_update_and_published_live_on_your_website_or_share">Your offer is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="image_uploading">Uploading Image, please wait...</string>
-    <string name="error_select_service">Please select at least one service provided by this staff</string>
+  <string name="error_select_service">Please select at least one service provided by this staff</string>
     <string name="_18">18 %</string>
     <string name="no_offers_created_so_far">No offers created so far!</string>
     <string name="you_dont_have_any_offers_added_for_your_customers">You don’t have any offers added for your \ncustomers.</string>
@@ -529,6 +534,7 @@
   <string name="select_service_">Select service</string>
   <string name="done">Done</string>
   <string name="update_offer">Update offer</string>
+  <string name="business_closed">Business closed</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

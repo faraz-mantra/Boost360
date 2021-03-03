@@ -82,6 +82,7 @@
       android:textAllCaps="true"
       android:textColor="@color/yellow_ffb900"
       android:textSize="14sp"
+      android:visibility="invisible"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.496"

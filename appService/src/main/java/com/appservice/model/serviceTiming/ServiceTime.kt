@@ -6,7 +6,7 @@ import java.io.Serializable
 
 data class ServiceTime(
   @SerializedName("From")
-  var from: String? = "09:30AM",
+  var from: String? = "",
   @SerializedName("To")
-  var to: String? = "07:30PM"
+  var to: String? = ""
 ): Serializable

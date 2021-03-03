@@ -94,7 +94,7 @@ class WeeklyAppointmentViewHolder (binding: RecyclerItemSessionBinding) : AppBas
     }
 
     private fun getTimeSlotView(timeSlot: TimeSlot): View {
-        val itemView = LayoutInflater.from(binding.llTimeSlot.context).inflate(R.layout.item_time_slot, null, false);
+        val itemView = LayoutInflater.from(binding.llTimeSlot.context).inflate(R.layout.item_ts_staff, null, false);
         val fromSpinner = itemView.findViewById(R.id.spinner_start_timing) as AppCompatSpinner
         val toSpinner = itemView.findViewById(R.id.spinner_end_timing) as AppCompatSpinner
         sessionTimingHandler(fromSpinner, timeSlot, toSpinner)

@@ -33,9 +33,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.appservice.model.accountDetails.AccountDetailsResponse;
+import com.appservice.model.kycData.PaymentKycDataResponse;
 import com.boost.presignup.PreSignUpActivity;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
@@ -51,9 +52,11 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
+import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.helper.ui.KeyboardUtil;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -425,23 +428,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         new Get_FP_Details_Service(activity, fpId, clientId, bus);
     }
 
-    @Subscribe
-    public void post_getFPDetails(Get_FP_Details_Event response) {
-        // Close of Progress Bar
-
-//        API_Business_enquiries businessEnquiries = new API_Business_enquiries(null,session);
-//        businessEnquiries.getMessages();
-
-
-        //VISITOR and SUBSCRIBER COUNT API
-        GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
-        visit_subcribersCountAsyncTask.execute();
-
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-            progressDialog = null;
-        }
-
+    private void startDashboard() {
+        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
         dashboardIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dashboardIntent);
         finish();
@@ -469,26 +457,16 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
         String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/forgotPassword";
 
-        com.android.volley.Response.Listener<String> listener = new com.android.volley.Response.Listener<String>() {
-            public void onResponse(String response) {
-            }
+        com.android.volley.Response.Listener<String> listener = response -> {
         };
 
-        com.android.volley.Response.ErrorListener error = new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                if (!isFinishing() && dialog != null && dialog.isShowing()) {
-                    dialog.dismiss();
-                }
-                if (!isUpdatedOnServer) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
-                        }
-                    });
-                }
+        com.android.volley.Response.ErrorListener error = error1 -> {
+            error1.printStackTrace();
+            if (!isFinishing() && dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            if (!isUpdatedOnServer) {
+                runOnUiThread(() -> Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name)));
             }
         };
 
@@ -800,15 +778,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("message", new ArrayList<FloatsMessageModel>());
             dashboardIntent.putExtras(bundle);
-
             Date date = new Date(System.currentTimeMillis());
             String dateString = date.toString();
-
 //            MixPanelController.setProperties("LastLoginDate", dateString);
 //            MixPanelController.setProperties("LoggedIn", "True");
-
-            getFPDetails(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
-            registerChat(session.getFPID());
+            getFPDetails_retrofit(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
         } else {
             if (progressDialog != null) {
                 progressDialog.dismiss();
@@ -819,5 +793,97 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                 showBusinessProfileCreationStartScreen(session.getUserProfileId());
             }
         }
+    }
+
+    private void getFPDetails_retrofit(Activity activity, String fpId, String clientId, Bus bus) {
+        new Get_FP_Details_Service(activity, fpId, clientId, bus);
+    }
+
+    @Subscribe
+    public void post_getFPDetails(Get_FP_Details_Event response) {
+        // Close of Progress Bar
+//        API_Business_enquiries businessEnquiries = new API_Business_enquiries(null,session);
+//        businessEnquiries.getMessages();
+        //VISITOR and SUBSCRIBER COUNT API
+        fetchData();
+        new Handler().postDelayed(() -> Login_MainActivity.this.runOnUiThread(() -> {
+            GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
+            visit_subcribersCountAsyncTask.execute();
+            startDashboard();
+        }),2000);
+    }
+
+    @Subscribe
+    public void getResponse(Response response) {
+        startDashboard();
+    }
+
+    @Subscribe
+    public void getError(RetrofitError retrofitError) {
+        startDashboard();
+    }
+
+    @Subscribe
+    public void getErrorMessage(String error) {
+        startDashboard();
+    }
+
+    private void fetchData() {
+        try {
+            Util.addBackgroundImages();
+            getNfxTokenData();
+            registerChat(session.getFPID());
+            checkSelfBrandedKyc();
+            checkUserAccount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkSelfBrandedKyc() {
+        StoreInterface boostKit = Constants.restAdapterBoostKit.create(StoreInterface.class);
+        boostKit.getSelfBrandedKyc(getQuery(), new Callback<PaymentKycDataResponse>() {
+            @Override
+            public void success(PaymentKycDataResponse data, Response response) {
+                if (data.getData() != null && !data.getData().isEmpty()) session.setSelfBrandedKycAdd(true);
+                else session.setSelfBrandedKycAdd(false);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                BoostLog.d("Error KYC api", "message : " + error.getLocalizedMessage());
+            }
+        });
+    }
+
+    private String getQuery() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("fpTag", session.getFpTag());
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            return "";
+        }
+    }
+
+    private void checkUserAccount() {
+        StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
+        getAccountDetail.userAccountDetail(session.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
+            @Override
+            public void success(AccountDetailsResponse data, Response response) {
+                if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) session.setAccountSave(false);
+                else session.setAccountSave(true);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                BoostLog.d("Error account api", "message : " + error.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void getNfxTokenData() {
+        Get_FP_Details_Service.newNfxTokenDetails(this, session.getFPID(), bus);
+        Get_FP_Details_Service.autoPull(this, session.getFPID());
     }
 }

@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.createAptConsult
+package com.inventoryorder.ui.appointment.createAptConsult
 
 import android.app.Activity
 import android.app.TimePickerDialog
@@ -74,7 +74,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private var orderItem: OrderItem? = null
   private val product: ProductN?
     get() {
-      return orderItem?.firstItemForConsultation()?.product()
+      return orderItem?.firstItemForAptConsult()?.product()
     }
   private val extraItemConsult: ExtraPropertiesN?
     get() {
@@ -443,7 +443,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           items.add(ItemsItem(type = serviceData?.getType() ?: "NO_ITEM", productOrOfferId = serviceData?.id ?: "NO_ITEM", quantity = 1, productDetails = productDetails))
 
           orderInitiateRequest.paymentDetails = paymentDetails
-          orderInitiateRequest.sellerID = session?.fpTag.toString()
+          orderInitiateRequest.sellerID = session?.fpTag
           orderInitiateRequest.buyerDetails = buyerDetail
           orderInitiateRequest.mode = OrderItem.OrderMode.APPOINTMENT.name
           orderInitiateRequest.shippingDetails = shippingDetails
@@ -510,7 +510,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun hitApiAddAptConsult(response: OrderItem?) {
-    val item = response?.firstItemForConsultation()
+    val item = response?.firstItemForAptConsult()
     val itemExtra = item?.product()?.extraItemProductConsultation()
 
     val customerInfo = CustomerInfo(emailId = response?.BuyerDetails?.ContactDetails?.EmailId, name = response?.BuyerDetails?.ContactDetails?.FullName,
@@ -710,7 +710,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun getAptConsultDoctor() {
-    val dateTimeSlot = orderItem?.firstItemForConsultation()?.getScheduledDate()
+    val dateTimeSlot = orderItem?.firstItemForAptConsult()?.getScheduledDate()
     val requestQuery = "{\$and:[{WebsiteId: \'${preferenceData?.fpTag}\'}, {doctorId: \'${doctorData?.Id}\'}, {status: {\$ne: 'cancelled'}}, {dateTimeSlot: /$dateTimeSlot/}]}"
     viewModel?.getAllAptConsultDoctor(AUTHORIZATION_3, requestQuery)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
       if (it.error is NoNetworkException) {
