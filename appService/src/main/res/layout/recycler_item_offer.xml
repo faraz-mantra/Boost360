@@ -75,14 +75,13 @@
                 android:text="@string/active"
                 android:padding="@dimen/size_1"
                 android:drawablePadding="@dimen/size_5"
+                android:layout_marginTop="@dimen/size_5"
                 android:gravity="center_vertical"
                 android:drawableStart="@drawable/ic_dot_green"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/ctv_offers_pricing"
-                app:layout_constraintTop_toTopOf="@+id/ctv_offers_heading"
-                app:layout_constraintVertical_bias="0.349" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_offers_heading" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ll_share_buttons"
@@ -103,6 +102,7 @@
                     android:layout_width="@dimen/size_0"
                     android:gravity="start"
                     android:maxLines="2"
+                    android:paddingEnd="@dimen/size_15"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/shareData"
                     app:layout_constraintStart_toStartOf="parent"
