@@ -2,6 +2,7 @@ package com.appservice.offers.viewmodel
 
 import androidx.lifecycle.LiveData
 import com.appservice.offers.models.*
+import com.appservice.rest.repository.NowfloatsApiRepository
 import com.appservice.rest.repository.OfferNowFloatsRepository
 import com.appservice.rest.repository.StaffNowFloatsRepository
 import com.appservice.staffs.model.ServiceListRequest
@@ -37,7 +38,11 @@ class OfferViewModel : BaseViewModel() {
     fun getServiceListing(@Body request: ServiceListRequest?): LiveData<BaseResponse> {
         return StaffNowFloatsRepository.getServicesListing(request = request).toLiveData()
     }
+    fun getServiceDetails(serviceId: String?): LiveData<BaseResponse> {
+        return NowfloatsApiRepository.getServiceDetail(serviceId).toLiveData()
+    }
 
-
-
+    fun getSearchListings(fpTag: String?, fpId: String?, searchString: String?="", offset: Int?=0, limit: Int?=0):LiveData<BaseResponse>{
+        return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
+    }
 }

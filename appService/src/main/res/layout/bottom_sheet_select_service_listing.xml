@@ -7,6 +7,7 @@
     <data></data>
 
     <LinearLayout
+        android:theme="@style/OffersThemeBase"
         style="@style/match_match"
         android:orientation="vertical">
 
@@ -48,13 +49,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/match_match"
             android:background="@drawable/bottoms_sheet_top20dp_white"
-            android:orientation="vertical"
-            android:theme="@style/OffersThemeBase">
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_services"
-                style="@style/SearchView.WhiteBackgroundOffers"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:background="@drawable/rounded_stroke_grey_4"
                 android:layout_height="@dimen/size_44"
+                android:theme="@style/OfferThemeOverlay.SearchView"
                 android:layout_marginTop="@dimen/size_20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

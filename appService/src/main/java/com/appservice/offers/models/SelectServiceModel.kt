@@ -82,12 +82,16 @@ class SelectServiceModel {
 
             @field:SerializedName("TileImage")
             val tileImage: String? = null,
-            val recyclerViewItem: Int = RecyclerViewItemType.OFFER_SELECT_SERVICES.getLayout(),
+            var recyclerViewItem: Int = RecyclerViewItemType.OFFER_SELECT_SERVICES.getLayout(),
     ) : AppBaseRecyclerViewItem, Serializable {
         override fun getViewType(): Int {
             return recyclerViewItem
         }
 
+        fun getLoaderItem(): DataItemOfferService {
+            this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
+            return this
+        }
     }
 
 }

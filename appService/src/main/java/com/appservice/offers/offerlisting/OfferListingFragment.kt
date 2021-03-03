@@ -34,7 +34,6 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.ui.UserSession
 import com.framework.extensions.gone
-import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.NetworkUtils
@@ -45,7 +44,6 @@ import java.util.*
 class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferViewModel>(), RecyclerItemClickListener {
     private val list: ArrayList<OfferModel> = arrayListOf()
     private val finalList: ArrayList<OfferModel> = arrayListOf()
-    private val isRefresh: Boolean = false
     private var adapterOffers: AppBaseRecyclerViewAdapter<OfferModel>? = null
     private var layoutManagerN: LinearLayoutManager? = null
     private var targetMap: Target? = null
@@ -153,7 +151,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding?.fbAddOffer, binding?.offerListingEmptyView?.cbCreateOffers -> startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_DETAILS_FRAGMENT)
+            binding?.fbAddOffer, binding?.offerListingEmptyView?.cbCreateOffers -> startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_DETAILS_FRAGMENT,requestCode = 101)
             binding?.offerListingEmptyView?.cbWatchVideo -> {
                 //todo watch video
             }
@@ -170,10 +168,8 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
     }
 
     private fun setEmptyView(isEmpty: Boolean) {
-        binding?.progress?.invisible()
         binding?.offerListingEmptyView?.root?.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding?.rvListing?.visibility = if (isEmpty) View.GONE else View.VISIBLE
-        binding?.offerListSwipeRefresh?.isEnabled = isEmpty
     }
 
 
@@ -274,6 +270,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
     }
 
     override fun hideProgress() {
+        binding?.offerListSwipeRefresh?.isRefreshing = false
         binding?.progress?.gone()
     }
 

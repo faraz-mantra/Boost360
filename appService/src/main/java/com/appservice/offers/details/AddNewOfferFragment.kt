@@ -8,12 +8,15 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.LinearLayoutCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAddNewOffersBinding
 import com.appservice.model.FileModel
+import com.appservice.model.servicev1.ServiceDetailResponse
+import com.appservice.model.servicev1.ServiceModelV1
 import com.appservice.offers.OfferCreatedSuccessFullyBottomSheet
 import com.appservice.offers.models.*
 import com.appservice.offers.selectservices.OfferSelectServiceBottomSheet
@@ -44,6 +47,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
     private var currencyType: String? = "INR"
     private var fpId: String? = null
     private var fpTag: String? = null
+    private var serviceDetails: ServiceModelV1? = null
     private var clientId: String? = null
     private var applicationId: String? = null
     private var isEdit: Boolean = false
@@ -60,10 +64,10 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding?.btnOtherInfo, binding?.clearImage, binding?.imageAddBtn,
-                binding?.ctvAdditionalInfo, binding?.btnChangePicture,
-                binding?.cbAddOffer, binding?.btnSelectServices)
+        setOnClickListener(binding?.btnOtherInfo, binding?.clearImage, binding?.imageAddBtn, binding?.ctvChange, binding?.btnChangePicture, binding?.cbAddOffer, binding?.btnSelectServices)
         getBundleData()
+        binding?.toggleServiceApplicableTo?.isOn = true
+        binding?.toggleOfferAvailability?.isOn = true
         binding?.toggleServiceApplicableTo?.setOnToggledListener { _, isOn ->
             when (isOn) {
                 true -> binding?.llSelectTheService?.gone()
@@ -90,10 +94,11 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     private fun getOfferDetailObject(offerId: String?) {
         hitApi(viewModel?.getOfferDetails(OfferDetailsRequest(offerId)), R.string.error_getting_offer_details)
+
     }
 
     private fun createOfferAPI() {
-        hitApi(viewModel?.createOffer(offerModel), R.string.offer_adding_error);
+        hitApi(viewModel?.createOffer(offerModel), R.string.offer_adding_error)
     }
 
     // function will be called once service is created
@@ -120,8 +125,29 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             TaskCode.ADD_OFFER_IMAGE.ordinal -> onPrimaryImageUploaded(it)
             TaskCode.OFFER_DETAILS.ordinal -> onOfferDetailsResponseReceived(it)
             TaskCode.DELETE_OFFER.ordinal -> onDeleteOffer(it)
+            TaskCode.GET_SERVICE_DETAILS.ordinal -> onServiceDetailResponseReceived(it)
+
         }
     }
+
+    private fun onServiceDetailResponseReceived(it: BaseResponse) {
+        this.serviceDetails = (it as? ServiceDetailResponse)?.Result ?: return
+        with(binding!!) {
+            btnSelectServices.gone()
+            llSelectTheService.visible()
+            ctvChange.invisible()
+            llServicesSelectMessage.gone()
+            val layoutParams = llSelectedServiceView.layoutParams as LinearLayoutCompat.LayoutParams
+            layoutParams.setMargins(10,0,10,10)
+            llSelectedServiceView.layoutParams = layoutParams
+            toggleServiceApplicableTo.isOn = false
+            llSelectedServiceView.visible()
+            ctvServiceName.text = serviceDetails?.Name
+            ctvPriceTime.text = "₹ ${serviceDetails?.Price} for ${serviceDetails?.Duration} min"
+        }
+
+    }
+
 
     private fun onDeleteOffer(it: BaseResponse) {
         showLongToast(getString(R.string.offer_removed_successfully))
@@ -147,7 +173,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
                             d.dismiss()
                             showProgress()
                             val request = DeleteOfferRequest( offerModel?.offerId,clientId)
-                            hitApi(viewModel?.deleteOffer(request), R.string.removing_offer_failed);
+                            hitApi(viewModel?.deleteOffer(request), R.string.removing_offer_failed)
                         }.show()
                 true
             }
@@ -157,10 +183,9 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     private fun isValid(): Boolean {
         val offerTitle = binding?.ctvOfferTitle?.text.toString()
-        val offerDescription = binding?.ctvOffersDescription?.text.toString() ?: ""
+        val offerDescription = binding?.ctvOffersDescription?.text.toString()
         val discount = binding?.ctvDiscountAmount?.text.toString().toDoubleOrNull()
         val toggleOffer = binding?.toggleOfferAvailability?.isOn
-        val toggleServiceApplicableTo = binding?.toggleServiceApplicableTo?.isOn ?: false
 
         if (offerImage == null && offerModel?.featuredImage?.imageId.isNullOrEmpty()) {
             showLongToast(getString(R.string.add_offer_image))
@@ -189,7 +214,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             offerModel?.category = offerModel?.category ?: ""
             offerModel?.tags = offerModel?.tags ?: ArrayList()
             offerModel?.otherSpecifications = offerModel?.otherSpecifications ?: ArrayList()
-            offerModel?.isAvailable = false
+            offerModel?.isAvailable = toggleOffer
         }
         return true
     }
@@ -238,7 +263,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         if (offerModel?.offerId == null) {
             createOfferAPI()
         } else {
-            hitApi(viewModel?.updateOffer(offerModel), R.string.offer_updating_error);
+            hitApi(viewModel?.updateOffer(offerModel), R.string.offer_updating_error)
         }
     }
 
@@ -270,6 +295,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
                 llSelectedServiceView.visible()
                 ctvServiceName.text = it?.name
                 ctvPriceTime.text = "₹ ${it?.discountedPrice} for ${it?.duration} min"
+                offerModel?.referenceId = it?.id
             }
         }
         selectedService.show(this@AddNewOfferFragment.parentFragmentManager, OfferSelectServiceBottomSheet::class.java.name)
@@ -287,8 +313,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         when (it) {
             TypeSuccess.CLOSE.name -> {
                 val data = Intent()
-                isRefresh = true
-                data.putExtra(IntentConstant.IS_UPDATED.name, isRefresh)
+                data.putExtra(IntentConstant.IS_UPDATED.name, true)
                 appBaseActivity?.setResult(Activity.RESULT_OK, data)
                 appBaseActivity?.finish()
             }
@@ -301,14 +326,17 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         binding?.ctvOfferTitle?.setText(offerModel?.name)
         binding?.toggleOfferAvailability?.isOn = offerModel?.isAvailable ?: false
         binding?.ctvOffersDescription?.setText(offerModel?.description)
-//        if (offerModel?.isPriceToggleOn() ==true) {
-//            binding?.toggleServiceApplicableTo?.isOn = false
-//            binding?.llSelectTheService?.gone()
-//        } else if (offerModel?.isPriceToggleOn() == false) {
-//            binding?.toggleServiceApplicableTo?.isOn = true
-//            binding?.llSelectTheService?.visible()
-//        }
-//        binding?.price?.setText("${offerModel?.price ?: 0}")
+        binding?.ctvDiscountAmount?.isEnabled = false
+        binding?.toggleServiceApplicableTo?.isEnabled = false
+        binding?.clApplicableToAll?.setBackgroundColor(getColor(R.color.gray_light_3))
+        binding?.ctvDiscountAmount?.setBackgroundResource(R.drawable.rounded_stroke_grey_4_solid_gray)
+        if (offerModel?.referenceId.isNullOrEmpty() || offerModel?.referenceId?.isBlank() == true) {
+            binding?.toggleServiceApplicableTo?.isOn = true
+        } else {
+            hitApi(viewModel?.getServiceDetails(offerModel?.referenceId), R.string.error_getting_service_details)
+
+
+        }
         setToolbarTitle(getString(R.string.update_offer))
         binding?.cbAddOffer?.text = getString(R.string.update_offer)
         binding?.ctvDiscountAmount?.setText("${offerModel?.discountAmount ?: 0.0}")
@@ -340,7 +368,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             binding?.imageAddBtn, binding?.btnChangePicture -> openImagePicker()
             binding?.clearImage -> clearImage()
             binding?.cbAddOffer -> if (isValid()) createUpdateApi()
-            binding?.ctvAdditionalInfo, binding?.btnSelectServices -> {
+            binding?.ctvChange, binding?.btnSelectServices -> {
                 openSelectServiceBottomSheet()
             }
 

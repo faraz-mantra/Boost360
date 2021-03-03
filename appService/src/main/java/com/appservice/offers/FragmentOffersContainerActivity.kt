@@ -62,7 +62,10 @@ class FragmentOffersContainerActivity : AppBaseActivity<ActivityFragmentContaine
     }
 
     override fun customTheme(): Int? {
-     return   R.style.OffersThemeBase
+        return when (fragmentType) {
+            FragmentType.OFFER_ADDITIONAL_INFO -> R.style.OffersThemeBase_AdditionalInfo
+            else -> R.style.OffersThemeBase
+        }
     }
     override fun onCreateView() {
         super.onCreateView()

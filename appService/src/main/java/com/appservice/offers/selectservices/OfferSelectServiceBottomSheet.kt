@@ -1,6 +1,7 @@
 package com.appservice.offers.selectservices
 
 import android.view.View
+import android.widget.SearchView
 import com.appservice.R
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetSelectServiceListingBinding
@@ -25,6 +26,8 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
     lateinit var data: List<DataItemService?>
     var adapter: AppBaseRecyclerViewAdapter<DataItemOfferService>? = null
     private var listServices: ArrayList<DataItemOfferService>? = null
+    private var finalList: ArrayList<DataItemOfferService>? = arrayListOf()
+    private var copylist: ArrayList<DataItemOfferService>? = null
     private var serviceIds: ArrayList<String>? = null
     override fun onCreateView() {
         init()
@@ -46,18 +49,7 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
             data.forEach { service -> listServices!!.add(DataItemOfferService(service?.isChecked, service?.type, service?.category, service?.secondaryTileImages, service?.price, service?.discountedPrice, service?.duration, service?.id, service?.image, service?.secondaryImages, service?.discountAmount, service?.name, service?.tileImage)) }
             this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = listServices!!, itemClickListener = this@OfferSelectServiceBottomSheet)
             binding?.rvServices?.adapter = adapter
-//            when {
-//                isEdit!! -> {
-//                    data.forEach { datum ->
-//                        if (serviceIds?.contains(datum?.id) == true) {
-//                            datum?.isChecked = true
-//
-//                            listServices?.add(datum!!)
-//                        }
-//                    }
-//                }
-//            }
-//            adapter?.notifyDataSetChanged()
+            finalList?.addAll(listServices!!)
 
         })
     }
@@ -66,6 +58,35 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
         getBundleData()
         fetchServices()
         setOnClickListener(binding?.btnApply, binding?.btnCancel)
+        binding?.searchServices?.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrBlank().not()) {
+                    newText?.let { startFilter(it.trim().toLowerCase(Locale.ROOT)) }
+                }
+                return false
+            }
+        })
+        binding?.searchServices?.setOnCloseListener {
+            adapter?.notify(finalList!!)
+            true
+        }
+    }
+
+    private fun startFilter(query: String) {
+        copylist = arrayListOf()
+        copylist?.clear()
+        copylist?.addAll(finalList!!)
+        val searchList = ArrayList<DataItemOfferService>()
+        if (query.isNotEmpty() || query.isNotBlank()) {
+            finalList?.forEach { if (it.name?.toLowerCase(Locale.ROOT)?.contains(query) == true) searchList.add(it) }
+            adapter?.notify(searchList)
+        } else {
+            adapter?.notify(copylist!!)
+        }
     }
 
 
