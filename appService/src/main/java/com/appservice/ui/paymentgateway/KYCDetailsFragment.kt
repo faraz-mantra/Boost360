@@ -60,11 +60,6 @@ import kotlin.collections.ArrayList
 
 class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKitViewModel>(), RecyclerItemClickListener {
 
-  private val pref: SharedPreferences?
-    get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
-    }
-
   private val FILE_SELECT_CODE = 2000
   private var imagePickerMultiple: Boolean? = null
   private var bankStatementImage: File? = null
