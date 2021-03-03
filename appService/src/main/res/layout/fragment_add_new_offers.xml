@@ -123,6 +123,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         style="@style/match_wrap"
+                        android:id="@+id/cl_applicable_to_all"
                         android:layout_margin="1dp"
                         android:background="@drawable/bg_rect_edit_txt"
                         android:padding="@dimen/size_10">
@@ -153,6 +154,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/ll_select_the_service"
                         style="@style/match_wrap"
+                        android:visibility="gone"
                         android:orientation="horizontal"
                         android:paddingStart="@dimen/size_8"
                         android:paddingTop="@dimen/size_10"
@@ -166,6 +168,7 @@
 
                             <LinearLayout
                                 style="@style/wrap_wrap"
+                                android:id="@+id/ll_services_select_message"
                                 android:layout_marginHorizontal="@dimen/size_10"
                                 android:orientation="horizontal">
 
@@ -210,7 +213,7 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <com.framework.views.customViews.CustomTextView
-                                    android:id="@+id/ctv_additional_info"
+                                    android:id="@+id/ctv_change"
                                     style="@style/Offers_Text_Header"
                                     android:layout_gravity="end"
                                     android:text="@string/change"
