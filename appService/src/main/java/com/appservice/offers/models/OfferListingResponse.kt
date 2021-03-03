@@ -17,6 +17,14 @@ data class OfferListingResponse(
 		val result: Result? = null,
 ) : Serializable, BaseResponse()
 
+class OfferType {
+	companion object {
+		const val MERCHANT = 0
+		const val SERVICE = 1
+		const val PRODUCT = 2
+	}
+}
+
 data class OfferModel(
 		var isApplicableToAll: Boolean? = null,
 		@SerializedName(value = "clientId", alternate = ["ClientId"])
