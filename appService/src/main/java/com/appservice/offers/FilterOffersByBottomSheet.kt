@@ -21,15 +21,15 @@ class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersLis
     }
 
     companion object {
-        private const val CREATED_ON = 0
-        private const val ACTIVE = 1
-        private const val ASCENDING = 0
-        private const val DESCENDING = 1
+        private const val LATEST_ON_TOP = 0
+        private const val OLDEST_ON_TOP = 1
+        private const val ACTIVE_FIRST = 0
+        private const val DE_ACTIVE_FIRST = 1
         val filters: Map<String, Int> = mapOf(
-                Pair(AppServiceApplication.instance.getString(R.string.latest_on_top), CREATED_ON),
-                Pair(AppServiceApplication.instance.getString(R.string.latest_on_top), ACTIVE),
-                Pair(AppServiceApplication.instance.getString(R.string.latest_on_top), ASCENDING),
-                Pair(AppServiceApplication.instance.getString(R.string.latest_on_top), DESCENDING)
+                Pair(AppServiceApplication.instance.getString(R.string.latest_on_top), LATEST_ON_TOP),
+                Pair(AppServiceApplication.instance.getString(R.string.oldest_on_top), OLDEST_ON_TOP),
+                Pair(AppServiceApplication.instance.getString(R.string.active_first), ACTIVE_FIRST),
+                Pair(AppServiceApplication.instance.getString(R.string.deactive_first), DE_ACTIVE_FIRST)
         )
     }
 
