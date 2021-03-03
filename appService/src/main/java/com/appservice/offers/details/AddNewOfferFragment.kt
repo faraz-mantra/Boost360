@@ -146,7 +146,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
                         .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
                             d.dismiss()
                             showProgress()
-                            val request = DeleteOfferRequest(clientId, offerModel?.offerId)
+                            val request = DeleteOfferRequest( offerModel?.offerId,clientId)
                             hitApi(viewModel?.deleteOffer(request), R.string.removing_offer_failed);
                         }.show()
                 true
@@ -309,6 +309,8 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 //            binding?.llSelectTheService?.visible()
 //        }
 //        binding?.price?.setText("${offerModel?.price ?: 0}")
+        setToolbarTitle(getString(R.string.update_offer))
+        binding?.cbAddOffer?.text = getString(R.string.update_offer)
         binding?.ctvDiscountAmount?.setText("${offerModel?.discountAmount ?: 0.0}")
         if (offerModel?.featuredImage?.imageId.isNullOrEmpty().not()) {
             binding?.imageAddBtn?.gone()
@@ -333,7 +335,6 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
                 val bundle = Bundle()
                 bundle.putSerializable(IntentConstant.OFFER_DATA.name, offerModel)
                 bundle.putSerializable(IntentConstant.OFFER_SECONDARY_IMAGE.name, secondaryImage)
-
                 startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_ADDITIONAL_INFO, bundle, isResult = true, requestCode = 101)
             }
             binding?.imageAddBtn, binding?.btnChangePicture -> openImagePicker()

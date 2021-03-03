@@ -43,11 +43,10 @@
         <item name="colorBackgroundFloating">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="OfferBottomSheet" >
+    <style name="OfferBottomSheet" parent="BottomSheetTheme">
         <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:background">@android:color/transparent</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
     <style name="SearchView.WhiteBackgroundOffers">
         <item name="android:layout_height">wrap_content</item>
