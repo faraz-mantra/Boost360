@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -221,12 +222,14 @@
 
                                 <com.framework.views.customViews.CustomTextView
                                     style="@style/Offers_Text_Title"
+                                    android:id="@+id/ctv_service_name"
                                     android:layout_marginTop="-10dp"
-                                    android:text="@string/additional_information_" />
+                                    tools:text="@string/additional_information_" />
 
                                 <com.framework.views.customViews.CustomTextView
                                     style="@style/Offers_Text_Subheading"
-                                    android:text="@string/secondary_images_and_offer_tags" />
+                                    android:id="@+id/ctv_price_time"
+                                    tools:text="@string/secondary_images_and_offer_tags" />
 
                             </LinearLayout>
 

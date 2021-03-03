@@ -525,6 +525,9 @@
   <string name="please_enter_positive_discount_value">Please enter positive discount value</string>
   <string name="please_mark_offer_availibility">Please mark offer availability</string>
   <string name="inactive">INACTIVE</string>
+    <string name="select_or_search_the_service_in_which_you_want_to_add_offers_to">Select or search the service in which you want to add offers to.</string>
+  <string name="select_service_">Select service</string>
+  <string name="done">Done</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
