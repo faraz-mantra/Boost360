@@ -140,7 +140,7 @@ class FragmentOffersContainerActivity : AppBaseActivity<ActivityFragmentContaine
     }
 }
 
-fun Fragment.startOfferFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean? = false, requestCode: Int = 222) {
+fun Fragment.startOfferFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean? = false, requestCode: Int = 101) {
     val intent = Intent(activity, FragmentOffersContainerActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)

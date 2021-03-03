@@ -210,12 +210,14 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         offerModel?.description = offerDescription
         offerModel?.isAvailable = toggleOffer
         offerModel?.discountAmount = discount
+        offerModel?.offerType = OfferType.SERVICE
         if (!isEdit) {
             offerModel?.category = offerModel?.category ?: ""
             offerModel?.tags = offerModel?.tags ?: ArrayList()
             offerModel?.otherSpecifications = offerModel?.otherSpecifications ?: ArrayList()
             offerModel?.isAvailable = toggleOffer
         }
+
         return true
     }
 

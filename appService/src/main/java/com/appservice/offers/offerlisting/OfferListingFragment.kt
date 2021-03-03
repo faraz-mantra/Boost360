@@ -151,7 +151,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding?.fbAddOffer, binding?.offerListingEmptyView?.cbCreateOffers -> startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_DETAILS_FRAGMENT,requestCode = 101)
+            binding?.fbAddOffer, binding?.offerListingEmptyView?.cbCreateOffers -> startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_DETAILS_FRAGMENT,isResult = true,requestCode = 101)
             binding?.offerListingEmptyView?.cbWatchVideo -> {
                 //todo watch video
             }
