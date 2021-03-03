@@ -145,7 +145,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             ctvServiceName.text = serviceDetails?.Name
             ctvPriceTime.text = "₹ ${serviceDetails?.Price} for ${serviceDetails?.Duration} min"
         }
-
+        offerModel?.category = serviceDetails?.category
     }
 
 
