@@ -220,7 +220,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
         product?.BuyOnlineLink = BuyOnlineLink(websiteName, websiteValue)
-        product?.GstSlab = gst.toIntOrNull() ?: 0;
+        product?.GstSlab = 18//gst.toIntOrNull() ?: 0;
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
         output.putExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)

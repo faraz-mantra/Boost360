@@ -790,6 +790,7 @@
             android:drawableTint="@color/colorAccent"
             android:drawableEnd="@drawable/ic_arrow_right_grey_staff"
             android:editable="false"
+            android:clickable="false"
             android:focusable="false"
             android:hint="@string/_0"
             android:padding="@dimen/size_12"

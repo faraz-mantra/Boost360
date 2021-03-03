@@ -154,6 +154,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val p = data?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ItemsItem
     isEdit = (p != null && p.id.isNullOrEmpty().not())
     if (isEdit) getServiceDetailObject(p?.id) else this.product = ServiceModelV1()
+    this.product?.GstSlab=18
   }
 
   private fun getServiceDetailObject(serviceId: String?) {
