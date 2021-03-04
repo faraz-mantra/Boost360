@@ -1760,6 +1760,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="add_ons">Add-ons</string>
     <string name="subscriptions">Newsletter Subscriptions</string>
     <string name="shared_user_label">NowFloatsBoost</string>
+    <string name="shared_user_key">com.nowfloats.kb.boostapp.sharedkey</string>
     <string name="business_apps">Business Apps</string>
 
     <string-array name="about_tab_items">
