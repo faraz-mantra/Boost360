@@ -30,6 +30,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 
 class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, AccountViewModel>() {
 
@@ -128,7 +129,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     baseActivity.finish()
   }
 
-  private fun checkBankAccountDetail(result: Result?, isPendingToastShow: Boolean) {
+  private fun checkBankAccountDetail(result: AccountResult?, isPendingToastShow: Boolean) {
     if (result?.bankAccountDetails != null) {
       isUpdated = true
       uiUpdate(false)
@@ -148,11 +149,20 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         if (isPendingToastShow) showLongToast(resources.getString(R.string.account_verification_pending))
         (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.my_bank_account), resources.getDimensionPixelSize(R.dimen.size_10))
       }
+      onBankAccountAddedOrUpdated(true)
     } else {
       (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
       uiUpdate(true)
       isUpdated = false
+      onBankAccountAddedOrUpdated(false)
     }
+  }
+
+  private fun onBankAccountAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
+    instance.getDrScoreData()?.metricdetail?.boolean_add_bank_account = isAdded
+    instance.updateDocument()
   }
 
   private fun setEditTextAll(bankAccountDetails: BankAccountDetails?) {
@@ -168,7 +178,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     when (v) {
       binding?.submitBtn -> {
         if (isValid()) {
-          if (isUpdated.not()){
+          if (isUpdated.not()) {
             createApiAccount()
           } else {
             updateApiAccount()

@@ -15,6 +15,8 @@ import com.appservice.ui.catalog.catalogProduct.information.ProductInformationFr
 import com.appservice.ui.catalog.catalogProduct.product.ProductDetailFragment
 import com.appservice.ui.catalog.catalogService.information.ServiceInformationFragment
 import com.appservice.ui.catalog.catalogService.service.ServiceDetailFragment
+import com.appservice.ui.catalog.common.CreateCategoryFragment
+import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -30,7 +32,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var serviceInformationFragment: ServiceInformationFragment? = null
   private var productDetailFragment: ProductDetailFragment? = null
   private var productInformationFragment: ProductInformationFragment? = null
-  private var weeklyAppointmentFragment: StaffTimingFragment? = null
+  private var weeklyAppointmentFragment: WeeklyAppointmentFragment? = null
+  private var createCategoryFragment: CreateCategoryFragment? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -53,8 +56,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW -> R.style.CatalogTheme
-      FragmentType.SERVICE_INFORMATION, FragmentType.TIMING_STAFF -> R.style.CatalogTheme_Information
+      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,FragmentType.CREATE_CATEGORY -> R.style.CatalogTheme
+      FragmentType.SERVICE_INFORMATION, FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> R.style.CatalogTheme_Information
       else -> super.customTheme()
     }
   }
@@ -69,7 +72,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.orange)
+      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW ,FragmentType.CREATE_CATEGORY-> ContextCompat.getColor(this, R.color.orange)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -83,7 +86,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.TIMING_STAFF -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.WEEKLY_APPOINTMENT_FRAGMENT,FragmentType.CREATE_CATEGORY -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
 
       else -> super.getNavigationIcon()
     }
@@ -93,16 +96,17 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information)
       FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
-      FragmentType.PRODUCT_DETAIL_VIEW -> "Adding a product"
-      FragmentType.PRODUCT_INFORMATION -> "Other Info"
-      FragmentType.TIMING_STAFF -> "Weekly appointment schedule"
+      FragmentType.PRODUCT_DETAIL_VIEW -> resources.getString(R.string.product_details)
+      FragmentType.PRODUCT_INFORMATION -> resources.getString(R.string.additional_information)
+      FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> "Weekly appointment schedule"
+      FragmentType.CREATE_CATEGORY->"Categories"
       else -> super.getToolbarTitle()
     }
   }
 
   override fun getToolbarTitleGravity(): Int {
     return when (type) {
-      FragmentType.TIMING_STAFF -> Gravity.CENTER
+      FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> Gravity.CENTER
       else -> {
         Gravity.START
       }
@@ -125,8 +129,11 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
     return when (type) {
-      FragmentType.TIMING_STAFF -> {
-        weeklyAppointmentFragment = StaffTimingFragment.newInstance()
+      FragmentType.CREATE_CATEGORY -> {
+        createCategoryFragment = CreateCategoryFragment.newInstance()
+        createCategoryFragment
+      } FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> {
+        weeklyAppointmentFragment = WeeklyAppointmentFragment.newInstance()
         weeklyAppointmentFragment
       }
       FragmentType.SERVICE_DETAIL_VIEW -> {
@@ -157,14 +164,15 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     productInformationFragment?.onActivityResult(requestCode, resultCode, data)
     productDetailFragment?.onActivityResult(requestCode, resultCode, data)
     weeklyAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
+    createCategoryFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onBackPressed() {
     when (type) {
-      FragmentType.SERVICE_DETAIL_VIEW -> serviceDetailFragment?.onNavPressed()
-      FragmentType.SERVICE_INFORMATION -> serviceInformationFragment?.onNavPressed()
-      FragmentType.PRODUCT_INFORMATION -> productInformationFragment?.onNavPressed()
-      FragmentType.PRODUCT_DETAIL_VIEW -> productDetailFragment?.onNavPressed()
+//      FragmentType.SERVICE_DETAIL_VIEW -> serviceDetailFragment?.onNavPressed()
+//      FragmentType.SERVICE_INFORMATION -> serviceInformationFragment?.onNavPressed()
+//      FragmentType.PRODUCT_INFORMATION -> productInformationFragment?.onNavPressed()
+//      FragmentType.PRODUCT_DETAIL_VIEW -> productDetailFragment?.onNavPressed()
 //      FragmentType.TIMING_STAFF -> weeklyAppointmentFragment.
       else -> super.onBackPressed()
     }

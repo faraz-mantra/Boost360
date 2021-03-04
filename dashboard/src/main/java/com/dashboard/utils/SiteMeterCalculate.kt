@@ -3,8 +3,8 @@ package com.dashboard.utils
 import android.content.res.Resources
 import com.dashboard.AppDashboardApplication
 import com.dashboard.R
-import com.dashboard.model.live.SiteMeterModel
-import com.dashboard.model.live.siteMeter.SiteMeterScoreDetails
+import com.dashboard.model.live.drScore.siteMeter.SiteMeterModel
+import com.dashboard.model.live.drScore.siteMeter.SiteMeterScoreDetails
 import com.dashboard.pref.Key_Preferences
 import com.dashboard.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.dashboard.pref.UserSessionManager

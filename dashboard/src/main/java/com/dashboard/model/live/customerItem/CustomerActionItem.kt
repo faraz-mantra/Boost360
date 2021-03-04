@@ -27,20 +27,19 @@ data class CustomerActionItem(
     var subscriptionCount: String? = null,
 ) : Serializable, AppBaseRecyclerViewItem {
 
-  var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_CUSTOMER_ITEM_VIEW.getLayout()
+  var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_ENQUIRIES_ITEM_VIEW.getLayout()
   override fun getViewType(): Int {
     return recyclerViewItemType
   }
 
   fun getCountValue(): String? {
-    return when (CustomerActionItem.IconType.fromName(type)) {
-      CustomerActionItem.IconType.customer_orders,
-      CustomerActionItem.IconType.in_clinic_appointments,
-      -> orderCount
-      CustomerActionItem.IconType.video_consultations -> consultCount
-      CustomerActionItem.IconType.patient_customer_calls -> customerCalls
-      CustomerActionItem.IconType.patient_customer_messages -> messageCount
-      CustomerActionItem.IconType.newsletter_subscribers -> subscriptionCount
+    return when (IconType.fromName(type)) {
+      IconType.customer_orders,
+      IconType.in_clinic_appointments, -> orderCount
+      IconType.video_consultations -> consultCount
+      IconType.patient_customer_calls -> customerCalls
+      IconType.patient_customer_messages -> messageCount
+      IconType.newsletter_subscribers -> subscriptionCount
       else -> ""
     }
   }

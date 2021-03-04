@@ -25,7 +25,7 @@ import com.appservice.model.deviceId
 import com.appservice.model.pickUpAddress.PickUpAddressResponse
 import com.appservice.model.pickUpAddress.PickUpData
 import com.appservice.model.serviceProduct.BuyOnlineLink
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.ActionDataI
 import com.appservice.model.serviceProduct.addProductImage.ImageI
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
@@ -34,7 +34,7 @@ import com.appservice.model.serviceProduct.addProductImage.response.ProductImage
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.gstProduct.ActionDataG
 import com.appservice.model.serviceProduct.gstProduct.ProductGstDetailRequest
-import com.appservice.model.serviceProduct.gstProduct.response.DataG
+import com.appservice.model.serviceProduct.gstProduct.response.GstData
 import com.appservice.model.serviceProduct.gstProduct.response.ProductGstResponse
 import com.appservice.model.serviceProduct.gstProduct.update.ProductUpdateRequest
 import com.appservice.model.serviceProduct.gstProduct.update.SetGST
@@ -73,7 +73,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private var menuDelete: MenuItem? = null
   private var serviceImage: File? = null
-  private var product: Product? = null
+  private var product: CatalogProduct? = null
   private var isNonPhysicalExperience: Boolean? = null
   private var currencyType: String? = null
   private var fpId: String? = null
@@ -90,7 +90,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private var secondaryImage: ArrayList<FileModel> = ArrayList()
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
-  private var gstProductData: DataG? = null
+  private var gstProductData: GstData? = null
 
   private var productIdAdd: String? = null
   private var errorType: String? = null
@@ -114,19 +114,21 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     WebEngageController.trackEvent("Service product catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
     getBundleData()
     getPickUpAddress()
-//    binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(binding?.selectDeliveryConfig, binding?.vwPaymentConfig,
             binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
-    binding?.toggleService?.isOn = false
+    binding?.toggleService?.isOn = product?.isPriceToggleOn()!!
     binding?.payServiceView?.visibility = View.GONE
-//    binding?.ccbPayextra?.visibility = View.GONE
-    binding?.toggleService?.setOnToggledListener { _, isOn ->
-      binding?.payServiceView?.visibility = if (isOn) View.VISIBLE else View.GONE
-      binding?.freeServiceView?.visibility = if (isOn) View.GONE else View.VISIBLE
-//      binding?.ccbPayextra?.visibility = if (isOn) View.VISIBLE else View.GONE
+    binding?.toggleService?.setOnToggledListener { _, _ ->
+      initServiceToggle()
     }
+    initServiceToggle()
     listenerEditText()
+  }
+
+  private fun initServiceToggle() {
+    binding?.payServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.VISIBLE else View.GONE
+    binding?.freeServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.GONE else View.VISIBLE
   }
 
   private fun listenerEditText() {
@@ -138,7 +140,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val amountD = amount.toFloatOrNull() ?: 0F
     val distD = dist.toFloatOrNull() ?: 0F
     if (distD > amountD) {
-      showLongToast("Discount amount can't be greater than price")
+      showLongToast(resources.getString(R.string.discount_amount_cant_be_grater))
       binding?.discountEdt?.setText("")
       return
     }
@@ -182,7 +184,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun setBankAccountData() {
     if (bankAccountDetail != null) {
-      product?.paymentType = Product.PaymentType.ASSURED_PURCHASE.value
+      product?.paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountView?.visible()
       binding?.externalUrlView?.gone()
@@ -223,14 +225,15 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.tvDesc?.setText(product?.Description)
     binding?.edtServiceCategory?.setText(product?.category)
     binding?.edtServiceTime?.setText(product?.ShipmentDuration)
-    if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty()
+    if (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty()
             || !bankAccountDetail?.accountNumber.isNullOrEmpty()) {
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountName?.visible()
       binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
       binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
       binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-    } else if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
+    }
+    if (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value) {
       binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
       binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
       binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
@@ -263,7 +266,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun getBundleData() {
-    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
+    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
     currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name)
@@ -315,7 +318,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
               productIdAdd = productId
               addGstService(productId)
-            } else showError("Service adding error, please try again.")
+            } else showError(resources.getString(R.string.service_adding_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
         })
       }
@@ -333,14 +336,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         if ((it.error is NoNetworkException).not()) {
           if ((it.status == 200 || it.status == 201 || it.status == 202)) {
             updateGstService(product?.productId)
-          } else showError("Service updating error, please try again.")
+          } else showError(resources.getString(R.string.service_updating_error))
         } else showError(resources.getString(R.string.internet_connection_not_available))
       })
     }
   }
 
   private fun updateGstService(productId: String?) {
-    val gstData = gstProductData ?: DataG()
+    val gstData = gstProductData ?: GstData()
     val request = ProductUpdateRequest(false, query = String.format("{'product_id':'%s'}", productId))
     val setGST = SetGST(gstData.gstSlab?.toString() ?: "0.0", gstData.height?.toString() ?: "0.0",
         gstData.length?.toString() ?: "0.0", gstData.weight?.toString() ?: "0.0", gstData.width?.toString() ?: "0.0")
@@ -350,13 +353,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
-        } else showError("Service updating error, please try again.")
+        } else showError(resources.getString(R.string.service_updating_error))
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
   }
 
   private fun addGstService(productId: String?) {
-    val gstData = gstProductData ?: DataG()
+    val gstData = gstProductData ?: GstData()
     val request = ProductGstDetailRequest(ActionDataG(gstData.gstSlab ?: 0.0, 0.0, 0.0,
         merchantId = fpId, productId = productId, weight = 0.0, width = 0.0), fpId)
     viewModel?.addProductGstDetail(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
@@ -366,7 +369,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           uploadImageSingle(productId)
         } else {
           if (isEdit == false) errorType = "addGstService"
-          showError("Service adding error, please try again.")
+          showError(resources.getString(R.string.service_adding_error))
         }
       } else {
         if (isEdit == false) errorType = "addGstService"
@@ -376,7 +379,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun uploadImageSingle(productId: String?) {
-    showProgress("Uploading service image, please wait...")
+    showProgress(resources.getString(R.string.uploading_service_image))
     if (isEdit == true && serviceImage == null) {
       uploadSecondaryImage(productId)
       return
@@ -421,7 +424,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
-            } else showError("Secondary Service image uploading error, please try again.")
+            } else showError(resources.getString(R.string.secondary_service_image_upload_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
@@ -441,16 +444,16 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               Log.d(ServiceDetailFragment::class.java.name, "$it")
-            } else showLongToast("Add secondary image data error, please try again.")
+            } else showLongToast(resources.getString(R.string.add_secondary_image_service_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) "Service updated successfully." else "Service saved successfully.")
+            showLongToast(if (isEdit == true) resources.getString(R.string.services_updated_success) else resources.getString(R.string.services_saved))
             goBack()
           }
         })
       }
     } else {
-      showLongToast(if (isEdit == true) "Service updated successfully." else "Service saved successfully.")
+      showLongToast(if (isEdit == true) resources.getString(R.string.services_updated_success) else resources.getString(R.string.services_saved))
       goBack()
     }
   }
@@ -488,13 +491,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     }
 
     if (shipmentDuration.isNullOrEmpty()) {
-      showLongToast("Enter service duration.")
+      showLongToast(resources.getString(R.string.enter_service_duration))
       return false
     } else if (serviceName.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_service_name))
       return false
     } else if (serviceCategory.isBlank()) {
-      showLongToast("Enter service category")
+      showLongToast(resources.getString(R.string.enter_service_category))
       return false
     } else if (serviceDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_service_desc))
@@ -505,10 +508,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     } else if (toggle && (discount > amount)) {
       showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
       return false
-    } else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
+    } else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
       showLongToast(resources.getString(R.string.please_add_bank_detail))
       return false
-    } else if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
+    } else if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
       return false
     }
@@ -521,7 +524,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     product?.Description = serviceDesc
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
-    if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)) {
+    if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
       product?.BuyOnlineLink = BuyOnlineLink(externalUrl, externalUrlName)
     } else product?.BuyOnlineLink = BuyOnlineLink()
 
@@ -577,13 +580,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         serviceImage?.getBitmap()?.let { binding?.serviceImageView?.setImageBitmap(it) }
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
-      product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? Product
+      product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
       secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
-      gstProductData = data?.getSerializableExtra(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
+      gstProductData = data?.getSerializableExtra(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 202) {
       bankAccountDetail = data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name) as? BankAccountDetails
       if (bankAccountDetail != null) {
-        product?.paymentType = Product.PaymentType.ASSURED_PURCHASE.value
+        product?.paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
         binding?.bankAccountView?.visible()
         binding?.externalUrlView?.gone()
         binding?.bankAccountName?.visible()
@@ -619,7 +622,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.bankAccountView?.visible()
       binding?.externalUrlView?.gone()
       when (it) {
-        Product.PaymentType.ASSURED_PURCHASE.value -> {
+        CatalogProduct.PaymentType.ASSURED_PURCHASE.value -> {
           binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
           binding?.bankAccountName?.visible()
           binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
@@ -635,7 +638,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
 
         }
-        Product.PaymentType.UNIQUE_PAYMENT_URL.value -> {
+        CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value -> {
           binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
           binding?.bankAccountView?.gone()
           binding?.externalUrlView?.visible()
@@ -649,8 +652,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       }
     }
     dialog.onListenerChange = { goAddBankView() }
-    if (((product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) ||
-            (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
+    if (((product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) ||
+            (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
       product?.paymentType = ""
     }
     dialog.setDataPaymentGateway(bankAccountDetail, product?.paymentType)
@@ -693,9 +696,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
                 hideProgress()
                 if ((it.error is NoNetworkException).not()) {
                   if ((it.status == 200 || it.status == 201 || it.status == 202)) {
-                    showLongToast("Service removed successfully.")
+                    showLongToast(resources.getString(R.string.service_removed_successfully))
                     goBack()
-                  } else showError("Removing service failed, please try again.")
+                  } else showError(resources.getString(R.string.removing_service_failed))
                 } else showError(resources.getString(R.string.internet_connection_not_available))
               })
             }.show()

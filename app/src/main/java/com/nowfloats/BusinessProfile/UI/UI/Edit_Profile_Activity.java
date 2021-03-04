@@ -36,6 +36,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.BusinessProfile.UI.API.SetBusinessCategoryAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
@@ -498,6 +499,20 @@ public class Edit_Profile_Activity extends BaseActivity {
         //selectCats();
     }
 
+    private void onBusinessDescAddedOrUpdated(Boolean isAdded){
+        FirestoreManager instance = FirestoreManager.INSTANCE;
+        if(instance.getDrScoreData().getMetricdetail()==null) return;
+        instance.getDrScoreData().getMetricdetail().setBoolean_add_business_description(isAdded);
+        instance.updateDocument();
+    }
+
+    private void onBusinessNameAddedOrUpdated(Boolean isAdded){
+        FirestoreManager instance = FirestoreManager.INSTANCE;
+        if(instance.getDrScoreData().getMetricdetail()==null) return;
+        instance.getDrScoreData().getMetricdetail().setBoolean_add_business_name(isAdded);
+        instance.updateDocument();
+    }
+
     private boolean isValid() {
         if (msgtxt4buzzdescriptn.length() < 50) {
             Toast.makeText(getApplicationContext(), R.string.minimum_50_char_business_description_required, Toast.LENGTH_SHORT).show();
@@ -710,9 +725,12 @@ public class Edit_Profile_Activity extends BaseActivity {
     }
 
     private void initData() {
-
-        buzzdescription.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
-        buzzname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        String businessDesc=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION);
+        onBusinessDescAddedOrUpdated(!TextUtils.isEmpty(businessDesc));
+        buzzdescription.setText(businessDesc);
+        String businessName=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
+        onBusinessNameAddedOrUpdated(!TextUtils.isEmpty(businessName));
+        buzzname.setText(businessDesc);
         yourname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
         category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
         setProductCategory(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));

@@ -13,7 +13,7 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.FragmentType
 import com.dashboard.controller.ui.allAddOns.AllBoostAddonsFragment
-import com.dashboard.controller.ui.digitalScore.DigitalReadinessScoreFragment
+import com.dashboard.controller.ui.drScore.DigitalReadinessScoreFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding

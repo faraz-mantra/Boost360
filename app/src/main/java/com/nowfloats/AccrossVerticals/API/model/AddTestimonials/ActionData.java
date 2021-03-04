@@ -5,78 +5,45 @@ import com.google.gson.annotations.SerializedName;
 
 public class ActionData {
 
-    @SerializedName("title")
+    @SerializedName("name")
     @Expose
-    private String title;
-    @SerializedName("description")
-    @Expose
-    private String description;
+    private String name;
     @SerializedName("username")
     @Expose
     private String username;
-    @SerializedName("profileimage")
+    @SerializedName("customerName")
     @Expose
-    private Profileimage profileimage;
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getTestimonial() {
-        return testimonial;
-    }
-
-    public void setTestimonial(String testimonial) {
-        this.testimonial = testimonial;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
+    private String customerName;
     @SerializedName("city")
     @Expose
     private String city;
 
-    @SerializedName("testimonials")
+    @SerializedName("title")
+    @Expose
+    private String title;
+
+    @SerializedName("testimonial")
     @Expose
     private String testimonial;
-
-    @SerializedName("customerName")
+    @SerializedName("description")
     @Expose
-    private String customerName;
-
-    public ProfileImagee getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImagee(ProfileImagee profileImage) {
-        this.profileImage = profileImage;
-    }
-
-    @SerializedName("profileImage")
-    @Expose
-    private ProfileImagee profileImage;
-
-    public String getOurStory() {
-        return ourStory;
-    }
-
-    public void setOurStory(String ourStory) {
-        this.ourStory = ourStory;
-    }
-
+    private String description;
     @SerializedName("ourStory")
     @Expose
     private String ourStory;
+    @SerializedName("text")
+    @Expose
+    private String text;
+
+    @SerializedName("profileimage")
+    @Expose
+    private Profileimage profileimage;
+    @SerializedName("profileImage")
+    @Expose
+    private ProfileImagee profileImage;
+    @SerializedName("img")
+    @Expose
+    private ProfileImagee img;
 
     public String getName() {
         return name;
@@ -84,26 +51,6 @@ public class ActionData {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @SerializedName("name")
-    @Expose
-    private String name;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getUsername() {
@@ -114,6 +61,54 @@ public class ActionData {
         this.username = username;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getOurStory() {
+        return ourStory;
+    }
+
+    public void setOurStory(String ourStory) {
+        this.ourStory = ourStory;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTestimonial() {
+        return testimonial;
+    }
+
+    public void setTestimonial(String testimonial) {
+        this.testimonial = testimonial;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Profileimage getProfileimage() {
         return profileimage;
     }
@@ -122,4 +117,27 @@ public class ActionData {
         this.profileimage = profileimage;
     }
 
+    public ProfileImagee getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(ProfileImagee profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public ProfileImagee getImg() {
+        return img;
+    }
+
+    public void setImg(ProfileImagee img) {
+        this.img = img;
+    }
 }

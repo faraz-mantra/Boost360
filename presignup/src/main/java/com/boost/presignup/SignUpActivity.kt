@@ -19,8 +19,7 @@ import com.boost.presignup.datamodel.Apis
 import com.boost.presignup.datamodel.userprofile.ProfileProperties
 import com.boost.presignup.datamodel.userprofile.UserProfileRequest
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse
-import com.boost.presignup.utils.SmartLookController
-import com.boost.presignup.utils.Utils.hideSoftKeyBoard
+import com.boost.presignup.utils.Utils.hideKeyBoard
 import com.boost.presignup.utils.WebEngageController
 import com.framework.utils.showKeyBoard
 import com.google.firebase.auth.FirebaseAuth
@@ -127,8 +126,8 @@ class SignUpActivity : AppCompatActivity() {
     this.showKeyBoard(user_name)
     create_account_button.setOnClickListener {
       if (validateInput()) {
+        this.hideKeyBoard()
         openTNCDialog(true, "https://www.getboost360.com/tnc?src=android&stage=user_account_create", resources.getString(com.onboarding.nowfloats.R.string.boost360_terms_conditions))
-        hideSoftKeyBoard(applicationContext, it)
       }
     }
   }
@@ -165,7 +164,7 @@ class SignUpActivity : AppCompatActivity() {
             WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
             WebEngageController.setUserContactAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
             WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
-            SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
+//            SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
             val intent = Intent(applicationContext, SignUpConfirmation::class.java)
             intent.putExtra("profileUrl", profileUrl)
             intent.putExtra("person_name", personName)
@@ -210,7 +209,7 @@ class SignUpActivity : AppCompatActivity() {
               WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
               WebEngageController.setUserContactAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
               WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
-              SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
+//              SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
             }
           } else {
 //            email = "" // Remove previous email data.
@@ -323,7 +322,7 @@ class SignUpActivity : AppCompatActivity() {
             WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
             WebEngageController.setUserContactAttributes(email, userMobile, personName,responseResult?.Result?.ClientId)
             WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
-            SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
+//            SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
 
             val intent = Intent(applicationContext, SignUpConfirmation::class.java)
             intent.putExtra("profileUrl", profileUrl)

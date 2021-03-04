@@ -2,12 +2,11 @@ package com.boost.upgrades.ui.home
 
 import android.app.Application
 import android.content.Context
-import android.text.Html
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
 import com.boost.upgrades.data.model.*
 import com.boost.upgrades.data.remote.ApiInterface
@@ -18,10 +17,10 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import kotlin.collections.ArrayList
 
 class HomeViewModel(application: Application) : BaseViewModel(application) {
     var updatesResult: MutableLiveData<List<WidgetModel>> = MutableLiveData()
@@ -129,7 +128,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             for (i in 0.. size-1) {
                 var json_objectdetail: JSONObject =jsonarray_info.getJSONObject(i)
                 if(json_objectdetail.getString("experience_code") == expCode){
-                    categoryResult.postValue(json_objectdetail.getString("category_Name") )
+                    categoryResult.postValue(json_objectdetail.getString("category_Name"))
                 }
             }
         } catch (ioException: JSONException) {
@@ -137,7 +136,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun loadUpdates(fpid: String, clientId: String) {
+    fun loadUpdates(fpid: String, clientId: String, expCode: String?, fpTag: String?) {
+        Log.v("loadUpdates ", " " + expCode + " " + fpTag)
         updatesLoader.postValue(true)
 
         if (Utils.isConnectedToInternet(getApplication())) {
@@ -381,7 +381,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
                                         //promobanner
                                         if (it.Data[0].promo_banners != null && it.Data[0].promo_banners.size > 0) {
-                                            promoBanners.postValue(it.Data[0].promo_banners)
+//                                            promoBanners.value = it.Data[0].promo_banners.filter {  it1 -> it1.exclusive_to_categories.toString() == expCode }
+                                            val promoBannerFilter = (it.Data[0].promo_banners
+                                                    ?: ArrayList()).promoBannerFilter(expCode, fpTag)
+                                            promoBanners.postValue(promoBannerFilter)
                                         }
 
                                         //partnerZone
@@ -393,6 +396,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         if (it.Data[0].feedback_link != null && it.Data[0].feedback_link.isNotEmpty()) {
                                             feedbackLink.postValue(it.Data[0].feedback_link)
                                         }
+
                                     },
                                     {
                                         Log.e("GetAllFeatures", "error" + it.message)
@@ -431,7 +435,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                             .subscribe(
                                     {
                                         Log.e("GetAllFeatures", it.toString())
-
 
 
                                         //saving bundle info in bundle table
@@ -622,6 +625,41 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                     Log.i("emptyCouponTable", "Failure")
                 }
                 .subscribe()
+    }
+
+    fun <T, K, R> LiveData<T>.combineWith(
+            liveData: LiveData<K>,
+            block: (T?, K?) -> R
+    ): LiveData<R> {
+        val result = MediatorLiveData<R>()
+        result.addSource(this) {
+            result.value = block(this.value, liveData.value)
+        }
+        result.addSource(liveData) {
+            result.value = block(this.value, liveData.value)
+        }
+        return result
+    }
+    fun <T, A, B> LiveData<A>.combineAndCompute(other: LiveData<B>, onChange: (A, B) -> T): MediatorLiveData<T> {
+
+        var source1emitted = false
+        var source2emitted = false
+
+        val result = MediatorLiveData<T>()
+
+        val mergeF = {
+            val source1Value = this.value
+            val source2Value = other.value
+
+            if (source1emitted && source2emitted) {
+                result.value = onChange.invoke(source1Value!!, source2Value!! )
+            }
+        }
+
+        result.addSource(this) { source1emitted = true; mergeF.invoke() }
+        result.addSource(other) { source2emitted = true; mergeF.invoke() }
+
+        return result
     }
 
 }

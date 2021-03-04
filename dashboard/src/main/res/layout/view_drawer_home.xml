@@ -22,9 +22,9 @@
     <LinearLayout
       android:layout_width="0dp"
       android:layout_height="match_parent"
+      android:layout_weight="9"
       android:background="@color/white"
-      android:orientation="vertical"
-      android:layout_weight="9">
+      android:orientation="vertical">
 
       <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -156,10 +156,14 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:includeFontPadding="false"
-                android:text="@string/your_site_health"
+                android:text="@string/dr_score"
                 android:textAlignment="gravity"
                 android:textColor="@color/accent_dark"
-                app:textType="CAPTION" />
+                app:autoSizeMaxTextSize="12sp"
+                android:maxLines="1"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform" />
             </LinearLayout>
 
             <ProgressBar
@@ -206,10 +210,10 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:gravity="center"
-          android:orientation="horizontal"
           android:layout_marginTop="@dimen/size_2"
-          android:layout_marginBottom="@dimen/size_22">
+          android:layout_marginBottom="@dimen/size_22"
+          android:gravity="center"
+          android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="wrap_content"

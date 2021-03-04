@@ -15,6 +15,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -51,7 +52,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private var orderList = ArrayList<OrderItem>()
   private var orderListFilter = ArrayList<OrderItem>()
   private var layoutManager: LinearLayoutManager? = null
-  private var experienceCode: String? = null
   private var filterItem: FilterModel? = null
   private var filterList: ArrayList<FilterModel> = FilterModel().getDataAppointments()
   private var searchView: SearchView? = null
@@ -75,9 +75,9 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   override fun onCreateView() {
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on appointments", "APPOINTMENTS", it) }
-    experienceCode = arguments?.getString(IntentConstant.EXPERIENCE_CODE.name)?.trim()
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
+    binding?.btnAdd?.visibility=if (data?.experienceCode.equals("DOC",true) && data?.experienceCode.equals("HOS",true)) View.VISIBLE else View.GONE
     layoutManager = LinearLayoutManager(baseActivity)
     setOnClickListener(binding?.btnAdd)
     layoutManager?.let { scrollPagingListener(it) }
@@ -89,7 +89,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     super.onClick(v)
     when (v) {
       binding?.btnAdd -> {
-//        showLongToast("Coming soon...")
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
@@ -106,13 +105,15 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         errorView(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
           if (isRefresh) orderList.clear()
-          if (response != null && response.Items.isNullOrEmpty().not()) {
+          val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
+          onInClinicAptAddedOrUpdated(isDataNotEmpty)
+          if (isDataNotEmpty) {
             removeLoader()
-            val list = response.Items?.map { item ->
+            val list = response!!.Items?.map { item ->
               item.recyclerViewType = RecyclerViewItemType.BOOKINGS_ITEM_TYPE.getLayout();item
             } as ArrayList<OrderItem>
             TOTAL_ELEMENTS = response.total()
@@ -140,6 +141,13 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         errorView(resources.getString(R.string.no_appointments))
       }
     })
+  }
+
+  private fun onInClinicAptAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
+    instance.getDrScoreData()?.metricdetail?.boolean_create_sample_in_clinic_appointment = isAdded
+    instance.updateDocument()
   }
 
   private fun removeLoader() {

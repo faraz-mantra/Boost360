@@ -1,6 +1,7 @@
 package com.onboarding.nowfloats.model.business
 
 import com.framework.base.BaseRequest
+import java.io.Serializable
 
 data class BusinessCreateRequest(
     var autoFillSampleWebsiteData: Boolean? = null,
@@ -26,4 +27,4 @@ data class BusinessCreateRequest(
     var whatsAppNumber: String? = null,
     var whatsAppNotificationOptIn: Boolean? = null,
     var boostXWebsiteUrl: String? = null
-) : BaseRequest()
+) : BaseRequest(),Serializable

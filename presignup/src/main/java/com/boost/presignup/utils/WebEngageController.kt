@@ -67,6 +67,7 @@ object WebEngageController {
         trackEvent["fptag"] = event_value
         trackEvent["event_label"] = event_label
         weAnalytics.track(event_name, trackEvent)
+        weAnalytics.screenNavigated(event_name);
 
         //Firebase Analytics Event...
         FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value)

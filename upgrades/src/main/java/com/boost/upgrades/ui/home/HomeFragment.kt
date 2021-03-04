@@ -122,7 +122,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         return root
     }
 
-    override fun onResume(){
+    override fun onResume() {
         super.onResume()
     }
 
@@ -133,7 +133,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         setSpannableStrings()
         loadData()
         initMvvm()
-        (activity as UpgradeActivity)setBackListener(this)
+        (activity as UpgradeActivity) setBackListener (this)
 //    initYouTube()
         shimmer_view_package.startShimmer()
         shimmer_view_banner.startShimmer()
@@ -162,13 +162,13 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         if ((activity as UpgradeActivity).accountType != null) {
 //            recommended_features_account_type.setText((activity as UpgradeActivity).accountType!!.toLowerCase())
             recommended_features_section.visibility = View.VISIBLE
-            if(shimmer_view_recommended.isShimmerStarted) {
+            if (shimmer_view_recommended.isShimmerStarted) {
                 shimmer_view_recommended.stopShimmer()
                 shimmer_view_recommended.visibility = View.GONE
             }
         } else {
             recommended_features_section.visibility = View.GONE
-            if(shimmer_view_recommended.isShimmerStarted) {
+            if (shimmer_view_recommended.isShimmerStarted) {
                 shimmer_view_recommended.stopShimmer()
                 shimmer_view_recommended.visibility = View.GONE
             }
@@ -296,7 +296,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     ViewAllFeaturesFragment.newInstance(),
                     VIEW_ALL_FEATURE, args
             )
-        }else if (arguments?.getString("screenType") == "comparePackageSelection") {
+        } else if (arguments?.getString("screenType") == "comparePackageSelection") {
             if (progressDialog.isShowing) {
                 progressDialog.hide()
             }
@@ -431,7 +431,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
 
-        viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
+        viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid, (activity as UpgradeActivity).experienceCode, (activity as UpgradeActivity).fpTag)
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -528,7 +528,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         })
 
         viewModel.categoryResult().observe(this, androidx.lifecycle.Observer {
-            if(it != null){
+            if (it != null) {
                 recommended_features_account_type.setText(Html.fromHtml(it!!.toLowerCase()))
             }
 
@@ -682,23 +682,15 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-                /* if(shimmer_view_package.isShimmerStarted) {
-                    shimmer_view_package.stopShimmer()
-                    shimmer_view_package.visibility = View.GONE
-                }*/
-//                checkBannerDetails(it as ArrayList<PromoBanners>)
-                checkBannerDetailsNew(it as ArrayList<PromoBanners>)
-//                updateBannerViewPager(it)
+//                checkBannerDetails(it as ArrayList<PromoBanners>)F
+//                checkBannerDetailsNew(it as ArrayList<PromoBanners>)
+                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-                /* if(shimmer_view_package.isShimmerStarted) {
-                    shimmer_view_package.stopShimmer()
-                    shimmer_view_package.visibility = View.GONE
-                }*/
                 banner_layout.visibility = View.GONE
             }
         })
@@ -720,7 +712,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     fun updateRecycler(list: List<FeaturesModel>) {
-        if(shimmer_view_recomm_addons.isShimmerStarted) {
+        if (shimmer_view_recomm_addons.isShimmerStarted) {
             shimmer_view_recomm_addons.stopShimmer()
             shimmer_view_recomm_addons.visibility = View.GONE
         }
@@ -739,11 +731,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         }
 
-        if(shimmer_view_recomm_addons.isShimmerStarted) {
+        if (shimmer_view_recomm_addons.isShimmerStarted) {
             shimmer_view_recomm_addons.stopShimmer()
             shimmer_view_recomm_addons.visibility = View.GONE
         }
-        if(shimmer_view_addon_category.isShimmerStarted) {
+        if (shimmer_view_addon_category.isShimmerStarted) {
             shimmer_view_addon_category.stopShimmer()
             shimmer_view_addon_category.visibility = View.GONE
         }
@@ -779,6 +771,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
         videosListAdapter.addUpdates(list)
         videosListAdapter.notifyDataSetChanged()
+        video_sub_title.text = list.get(0).title
+        video_sub_desc.text = list.get(0).desc
     }
 
     fun updatePartnerViewPager(list: List<PartnerZone>) {
@@ -947,7 +941,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     override fun onPromoBannerClicked(item: PromoBanners?) {
 //        Log.v("PromoBannerClicked >>", item!!.cta_web_link.isNullOrBlank().toString()  + " "+item!!.cta_feature_key.isNullOrBlank().toString() )
-        if(!item!!.cta_feature_key.isNullOrBlank()){
+        val event_attributes: HashMap<String, Any> = HashMap()
+        item?.let { event_attributes.put("title", it.title) }
+//        (activity as UpgradeActivity).experienceCode?.let { event_attributes.put("category", it) }
+//        (activity as UpgradeActivity).fpTag?.let { event_attributes.put("customer", it) }
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Promo Banner Clicked", "ADDONS_MARKETPLACE", event_attributes)
+        if (!item!!.cta_feature_key.isNullOrBlank()) {
             if (item!!.cta_feature_key != null) {
                 val details = DetailsFragment.newInstance()
                 val args = Bundle()
@@ -956,8 +955,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
 
             }
-        }else{
-            if(!item!!.cta_bundle_identifier.isNullOrBlank()){
+        } else {
+            if (!item!!.cta_bundle_identifier.isNullOrBlank()) {
                 if (item!!.cta_bundle_identifier != null) {
                     CompositeDisposable().add(
                             AppDatabase.getInstance(requireActivity().application)!!
@@ -1007,8 +1006,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                     })
                     )
                 }
-            }else{
-                if(!item!!.cta_web_link.isNullOrBlank()){
+            } else {
+                if (!item!!.cta_web_link.isNullOrBlank()) {
                     if (item!!.cta_web_link != null) {
                         val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
                         val args = Bundle()
@@ -1184,6 +1183,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         videoPlayerWebView.setWebViewClient(WebViewClient())
         videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
 //    videoPlayerWebView.setWebChromeClient(WebChromeClient())
+        video_sub_title.text = videoItem.title
+        video_sub_desc.text = videoItem.desc
     }
 
     override fun onPackageAddToCart(item: Bundles?) {
@@ -1194,7 +1195,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             if (item != null) {
 
                 val itemIds = arrayListOf<String>()
-                for(i in item.included_features){
+                for (i in item.included_features) {
                     itemIds.add(i.feature_code)
                 }
 
@@ -1313,7 +1314,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     }
 
-    fun checkBannerDetails(list: ArrayList<PromoBanners>){
+    /*fun checkBannerDetails(list: ArrayList<PromoBanners>){
         for(singleItem in list){
 
             if (singleItem!!.cta_feature_key != null) {
@@ -1327,11 +1328,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                     try {
                                         if (it == 0) {
                                             for (singleBanner in list) {
-                                                /*  if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
-                                                      list.remove(singleBanner)
-                                                      notifyDataSetChanged()
-                                                      homeListener.onShowHidePromoBannerIndicator(list.size > 1)
-                                                  }*/
+//                                                  if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+//                                                      list.remove(singleBanner)
+//                                                      notifyDataSetChanged()
+//                                                      homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+//                                                  }
                                             }
                                             for (singleBanner in list) {
                                                 if (singleBanner.cta_feature_key == singleItem!!.cta_feature_key && singleItem!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
@@ -1409,9 +1410,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
 
 
-    }
+    }*/
 
-    fun checkBannerDetailsNew(list: ArrayList<PromoBanners>) {
+    /*fun checkBannerDetailsNew(list: ArrayList<PromoBanners>) {
         for(singleItem in list){
             if (singleItem!!.cta_feature_key != null && singleItem!!.cta_feature_key.isNotEmpty()) {
                 CompositeDisposable().add(
@@ -1504,10 +1505,143 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 )
             }
         }
-    }
+    }*/
+    /*fun checkBannerDetailsMarketOffer(list: ArrayList<PromoBanners>) {
+        for(singleItem in list){
+            if (singleItem!!.cta_feature_key != null && singleItem!!.cta_feature_key.isNotEmpty()) {
+                CompositeDisposable().add(
+                        AppDatabase.getInstance(activity!!.application)!!
+                                .featuresDao()
+                                .checkFeatureTableKeyExist(singleItem!!.cta_feature_key)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    try {
+                                        if (it == 0) {
+
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_feature_key == singleBanner!!.cta_feature_key) {
+
+                                                    if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_feature_key == singleBanner!!.cta_feature_key) {
+
+                                                    if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty()
+                                                            && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                }, {
+                                    it.printStackTrace()
+                                })
+                )
+            } else if (singleItem!!.cta_bundle_identifier != null && singleItem!!.cta_bundle_identifier.isNotEmpty()) {
+                CompositeDisposable().add(
+                        AppDatabase.getInstance(activity!!.application)!!
+                                .bundlesDao()
+                                .checkBundleKeyExist(singleItem!!.cta_bundle_identifier)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    try {
+                                        if (it == 0) {
+
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+
+                                                    if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+                                                    if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                }, {
+                                    it.printStackTrace()
+                                })
+                )
+            }
+            else {
+                for (singleBanner in list) {
+
+                    if (!singleBanner.coupon_code.isNullOrBlank() *//*|| singleBanner.coupon_code.isNotBlank()*//*) {
+                        Log.v("oldBannerOffer", " "+ singleBanner.title)
+                        if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                            Log.v("oldBannerOffer1", " "+ singleBanner.title)
+                            list.remove(singleBanner)
+//                            updateBannerViewPager(list)
+                        } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                            Log.v("oldBannerOffer2", " "+ singleBanner.title)
+                            list.remove(singleBanner)
+//                            updateBannerViewPager(list)
+                        }
+//                        updateBannerViewPager(list)
+                    }
+
+                    updateBannerViewPager(list)
+                }
+                for(singleBanner in list){
+                    Log.v("newMarketOffers", " "+ singleBanner.title + " "+singleBanner.cta_feature_key + " "+ singleBanner.coupon_code)
+
+                }
+            }
+//        else{
+//                for (singleBanner in list) {
+//                    Log.v("newMarketOffers", " "+ singleBanner.title)
+//                    if (singleBanner.coupon_code.isNotEmpty() || singleBanner.coupon_code.isNotBlank()) {
+//
+//                        if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+//                            list.remove(singleBanner)
+//                            updateBannerViewPager(list)
+//                        } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+//                            list.remove(singleBanner)
+//                            updateBannerViewPager(list)
+//                        }
+//                    }
+//                }
+//            }
+        }
+    }*/
 
     override fun backComparePress() {
-        if(prefs.getCompareState() == 1) {
+        if (prefs.getCompareState() == 1) {
             prefs.storeCompareState(0)
             val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
             val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)

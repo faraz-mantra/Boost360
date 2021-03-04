@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -20,7 +21,7 @@
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Business"
+        tools:text="Business"
         android:ellipsize="end"
         android:maxLines="1"
         android:id="@+id/txt_title"
@@ -31,11 +32,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_1"
-        android:text="3,45,890"
+        app:fontFamily="@font/barlow_medium"
         android:id="@+id/txt_value"
-        app:fontFamily="@font/barlow_semi_bold"
+        app:textType="HEADING_7"
         android:textColor="@color/colorAccent"
-        app:textType="HEADING_6" />
+        tools:text="3,45,890" />
     </LinearLayout>
 
   </androidx.appcompat.widget.LinearLayoutCompat>

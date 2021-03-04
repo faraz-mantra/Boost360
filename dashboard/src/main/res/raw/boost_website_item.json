@@ -19,7 +19,7 @@
         },
         {
           "title": "All Images",
-          "desc": "Upload and manage all your website images in one place. Images of your services, hospital and procedures helps build credibility for your medical practise.",
+          "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -59,7 +59,7 @@
         },
         {
           "title": "All Images",
-          "desc": "Upload and manage all your website images in one place. Images of your services, hospital and procedures helps build credibility for your medical practise.",
+          "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -99,7 +99,7 @@
         },
         {
           "title": "All Images",
-          "desc": "Upload and manage all your website images in one place. Images of your products, collections and store helps build credibility for your business.",
+          "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -139,7 +139,7 @@
         },
         {
           "title": "All Images",
-          "desc": "Upload and manage all your website images in one place. Images of your events, classrooms and campus helps build credibility for your institute.",
+          "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -261,7 +261,7 @@
         },
         {
           "title": "All Images",
-          "desc": "Upload and manage all your website images in one place. Images of your products, collections and store helps build credibility for your business.",
+          "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -315,7 +315,7 @@
         },
         {
           "title": "All Images",
-          "desc": "Upload and manage all your website images in one place. Images of your food items, kitchen and restaurant helps build credibility for your business.",
+          "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -341,7 +341,7 @@
       "action_item": [
         {
           "title": "Service Catalogue",
-          "desc": "Add and manage services you will be providing to your customers. This will make it easier for patients to schedule an appointment.",
+          "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
           "premiumCode": ""
@@ -355,7 +355,47 @@
         },
         {
           "title": "All Images",
-          "desc": "Upload and manage all your website images in one place. Images related to your services help build credibility for your business.",
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Add customer reviews and testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Pages",
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "SAL",
+      "action_item": [
+        {
+          "title": "Service Catalogue",
+          "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & Tips",
+          "desc": "Add updates like new services, DIY tips, offers, events etc. This is the information customers search online.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -381,7 +421,7 @@
       "action_item": [
         {
           "title": "Service Catalogue",
-          "desc": "Add and manage services you will be providing to your customers. This will make it easier for patients to schedule an appointment.",
+          "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
           "premiumCode": ""
@@ -395,7 +435,7 @@
         },
         {
           "title": "All Images",
-          "desc": "Upload and manage all your website images in one place. Images related to your services help build credibility for your business.",
+          "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""

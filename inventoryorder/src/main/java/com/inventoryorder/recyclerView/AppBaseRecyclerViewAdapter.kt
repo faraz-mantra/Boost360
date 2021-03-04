@@ -14,7 +14,7 @@ import com.inventoryorder.holders.*
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     activity: BaseActivity<*, *>,
     list: ArrayList<T>,
-    itemClickListener: RecyclerItemClickListener? = null
+    itemClickListener: RecyclerItemClickListener? = null,
 ) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
@@ -39,9 +39,10 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       APPOINTMENT_TYPE -> AppointmentTypeViewHolder(binding as ItemBottomSheetAppointmentTypeBinding)
       PICK_INVENTORY_NATURE -> PickInventoryNatureViewHolder(binding as ItemBottomSheetPickInventoryNatureBinding)
       FILTER_ORDER_ITEM -> FilterOrderViewHolder(binding as ItemBottomSheetFilterBinding)
-      TIME_SLOT_ITEM ->TimeSlotViewHolder(binding as ItemBottomTimeSlotBinding)
+      TIME_SLOT_ITEM -> TimeSlotViewHolder(binding as ItemBottomTimeSlotBinding)
       WEEK_TIMING_SELECTED -> WeekTimeViewHolder(binding as ItemWeekTimeSelectBinding)
       SERVICES_DEPARTMENT -> ServicesViewHolder(binding as ItemConsultationServicesBinding)
+      ORDER_MENU_ITEM -> OrderMenuHolder(binding as ItemOrderMenuBinding)
     }
   }
 
@@ -106,6 +107,11 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
         notifyItemRemoved(position)
       }
     }
+  }
+
+  open fun setRefreshItem(position: Int, t: T) {
+    list[position] = t
+    notifyItemChanged(position)
   }
 
   open fun getItem(position: Int): T? {

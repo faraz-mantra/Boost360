@@ -178,8 +178,21 @@ object Utils {
       ioException.printStackTrace()
       return null
     }
-    // print the data
-    Log.i("getAssetJsonData", json)
+    return json
+  }
+
+  fun getCityFromAssetJsonData(context: Context): String? {
+    val json: String
+    try {
+      val inputStream = context.getAssets().open("cities.json")
+      val size = inputStream.available()
+      val buffer = ByteArray(size)
+      inputStream.use { it.read(buffer) }
+      json = String(buffer)
+    } catch (ioException: IOException) {
+      ioException.printStackTrace()
+      return null
+    }
     return json
   }
 }
