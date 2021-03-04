@@ -104,7 +104,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
-    WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent("Dashboard Loaded", "pageview", session?.fpTag)
   }
 
   override fun onResume() {
@@ -171,7 +171,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
               override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                mCurrentPage= position
+                mCurrentPage = position
               }
 
               override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -730,6 +730,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.getNumberPlus91()}*"
         }
       }
+      if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDECall: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
       if (isShowLoader) visitingCardDetailText(urlStringN)
     })
