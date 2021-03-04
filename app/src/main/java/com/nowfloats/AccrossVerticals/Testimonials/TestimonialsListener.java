@@ -1,13 +1,13 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
 
-import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 
 public interface TestimonialsListener {
 
     void itemMenuOptionStatus(int pos,boolean status);
 
-    void editOptionClicked(Data data);
+    void editOptionClicked(TestimonialData data);
 
-    void deleteOptionClicked(Data data);
+    void deleteOptionClicked(TestimonialData data);
 }

@@ -20,29 +20,35 @@
       android:windowSoftInputMode="adjustPan" />
 
     <activity
-        android:name="com.appservice.ui.bankaccount.AccountFragmentContainerActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.account"
-        android:windowSoftInputMode="adjustPan" />
+      android:name="com.appservice.ui.bankaccount.AccountFragmentContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.account"
+      android:windowSoftInputMode="adjustPan" />
 
     <activity
-        android:name="com.appservice.ui.paymentgateway.PaymentGatewayContainerActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.payment"
-        android:windowSoftInputMode="adjustPan" />
+      android:name="com.appservice.ui.paymentgateway.PaymentGatewayContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.payment"
+      android:windowSoftInputMode="adjustPan" />
     <activity
-        android:name=".staffs.ui.StaffFragmentContainerActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppTheme_staff_home"
-        android:windowSoftInputMode="adjustPan" />
+      android:name=".staffs.ui.StaffFragmentContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme_staff_home"
+      android:windowSoftInputMode="adjustPan" />
+
+    <activity
+      android:name=".ui.testimonial.TestimonialContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/TestimonialTheme"
+      android:windowSoftInputMode="adjustPan" />
 
     <meta-data
-        android:name="preloaded_fonts"
-        android:resource="@array/preloaded_fonts" />
+      android:name="preloaded_fonts"
+      android:resource="@array/preloaded_fonts" />
 
-      <meta-data
-          android:name="preloaded_fonts"
-          android:resource="@array/preloaded_fonts" />
+    <meta-data
+      android:name="preloaded_fonts"
+      android:resource="@array/preloaded_fonts" />
 
   </application>
 </manifest>

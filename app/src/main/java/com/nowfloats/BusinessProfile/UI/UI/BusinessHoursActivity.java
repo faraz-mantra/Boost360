@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,21 +75,21 @@ import static com.framework.webengageconstant.EventValueKt.NULL;
  */
 
 public class BusinessHoursActivity extends AppCompatActivity implements View.OnTouchListener, TimePickerDialog.OnTimeSetListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
-    EditText etSunOpen,etSunClose,etMonOpen,etTueOpen,etWedOpen,etThuOpen,etFriOpen,etSatOpen,etSatClose,etFriClose,etMonClose,etThuClose,etTueClose,etWedClose;
+    EditText etSunOpen, etSunClose, etMonOpen, etTueOpen, etWedOpen, etThuOpen, etFriOpen, etSatOpen, etSatClose, etFriClose, etMonClose, etThuClose, etTueClose, etWedClose;
     int currentId = NO_ID;
     Toolbar toolbar;
-    TextView titleTextView,saveTextView;
+    TextView titleTextView, saveTextView;
     LinearLayout linearLayoutAllTime;
     private UserSessionManager session;
     CheckBox checkBoxAllTime;
-    private SwitchCompat switchSun ,switchMon,switchTue,switchWed,switchThu,switchFri,switchSat;
+    private SwitchCompat switchSun, switchMon, switchTue, switchWed, switchThu, switchFri, switchSat;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_hours_v2);
         Methods.isOnline(BusinessHoursActivity.this);
-        session = new UserSessionManager(getApplicationContext(),BusinessHoursActivity.this);
+        session = new UserSessionManager(getApplicationContext(), BusinessHoursActivity.this);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
@@ -107,7 +108,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 if (Methods.isOnline(BusinessHoursActivity.this)) {
                     WebEngageController.trackEvent(BUSINESS_HOURS_SAVED, BUSINESS_PROFILE, session.getFpTag());
                     uploadbusinessTimingsInfo();
-                }else{
+                } else {
                     Methods.snackbarNoInternet(BusinessHoursActivity.this);
                 }
             }
@@ -164,103 +165,107 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         updateTimings();
     }
 
-    private void uploadbusinessTimingsInfo(){
+    private void uploadbusinessTimingsInfo() {
+        if (!isValidInput()) {
+            Toast.makeText(this, this.getString(R.string.enter_valid_open_close_timing), Toast.LENGTH_SHORT).show();
+            return;
+        }
         String defaultTime = "00";
-        String mondayTime,tuesdayTime,wednesdayTime,thursdayTime,fridayTime,saturdayTime,sundayTime;
-        String[] profilesattr =new String[20];
+        String mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime, sundayTime;
+        String[] profilesattr = new String[20];
         profilesattr[0] = "TIME";
         JSONArray ja = new JSONArray();
         JSONObject dayData = new JSONObject();
 
         /*The clinic must be open for at least one day. If all days closed, then it means the business hours are not set.*/
-        Boolean openAtleastOneDayFlag = false;
+        boolean openAtleastOneDayFlag = false;
 
-        if(switchMon.isChecked()) {
-            mondayTime = etMonOpen.getText().toString().trim()+","+etMonClose.getText().toString().trim();
+        if (switchMon.isChecked()) {
+            mondayTime = etMonOpen.getText().toString().trim() + "," + etMonClose.getText().toString().trim();
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME, etMonOpen.getText().toString().trim());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME,etMonClose.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME, etMonClose.getText().toString().trim());
             openAtleastOneDayFlag = true;
-        }else{
-            mondayTime = defaultTime+","+defaultTime;
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME,"00");
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME,"00");
+        } else {
+            mondayTime = defaultTime + "," + defaultTime;
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME, "00");
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME, "00");
         }
 
-        if(switchTue.isChecked()) {
-            tuesdayTime = etTueOpen.getText().toString().trim()+","+etTueClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME,etTueOpen.getText().toString().trim());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME,etTueClose.getText().toString().trim());
+        if (switchTue.isChecked()) {
+            tuesdayTime = etTueOpen.getText().toString().trim() + "," + etTueClose.getText().toString().trim();
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME, etTueOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME, etTueClose.getText().toString().trim());
             openAtleastOneDayFlag = true;
-        }else{
-            tuesdayTime = defaultTime+","+defaultTime;
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME,"00");
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME,"00");
+        } else {
+            tuesdayTime = defaultTime + "," + defaultTime;
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME, "00");
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME, "00");
         }
 
-        if(switchWed.isChecked()) {
-            wednesdayTime =  etWedOpen.getText().toString().trim()+","+etWedClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME,etWedOpen.getText().toString().trim());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME,etWedClose.getText().toString().trim());
+        if (switchWed.isChecked()) {
+            wednesdayTime = etWedOpen.getText().toString().trim() + "," + etWedClose.getText().toString().trim();
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME, etWedOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME, etWedClose.getText().toString().trim());
             openAtleastOneDayFlag = true;
-        }else{
-            wednesdayTime = defaultTime+","+defaultTime;
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME,"00");
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME,"00");
+        } else {
+            wednesdayTime = defaultTime + "," + defaultTime;
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME, "00");
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME, "00");
         }
 
-        if(switchThu.isChecked()) {
-            thursdayTime = etThuOpen.getText().toString().trim()+","+etThuClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME,etThuOpen.getText().toString().trim());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME,etThuClose.getText().toString().trim());
+        if (switchThu.isChecked()) {
+            thursdayTime = etThuOpen.getText().toString().trim() + "," + etThuClose.getText().toString().trim();
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME, etThuOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME, etThuClose.getText().toString().trim());
             openAtleastOneDayFlag = true;
-        }else{
-            thursdayTime = defaultTime+","+defaultTime;
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME,"00");
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME,"00");
+        } else {
+            thursdayTime = defaultTime + "," + defaultTime;
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME, "00");
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME, "00");
         }
 
-        if(switchFri.isChecked()) {
-            fridayTime = etFriOpen.getText().toString().trim()+","+etFriClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME,etFriOpen.getText().toString().trim());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME,etFriClose.getText().toString().trim());
+        if (switchFri.isChecked()) {
+            fridayTime = etFriOpen.getText().toString().trim() + "," + etFriClose.getText().toString().trim();
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME, etFriOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME, etFriClose.getText().toString().trim());
             openAtleastOneDayFlag = true;
-        }else{
-            fridayTime = defaultTime+","+defaultTime;
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME,"00");
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME,"00");
+        } else {
+            fridayTime = defaultTime + "," + defaultTime;
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME, "00");
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME, "00");
         }
-        if(switchSat.isChecked()) {
-            saturdayTime =  etSatOpen.getText().toString().trim()+","+etSatClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME,etSatOpen.getText().toString().trim());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME,etSatClose.getText().toString().trim());
+        if (switchSat.isChecked()) {
+            saturdayTime = etSatOpen.getText().toString().trim() + "," + etSatClose.getText().toString().trim();
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME, etSatOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME, etSatClose.getText().toString().trim());
             openAtleastOneDayFlag = true;
-        }else{
-            saturdayTime = defaultTime+","+defaultTime;
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME,"00");
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME,"00");
+        } else {
+            saturdayTime = defaultTime + "," + defaultTime;
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME, "00");
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME, "00");
         }
-        if(switchSun.isChecked()) {
-            sundayTime =  etSunOpen.getText().toString().trim()+","+etSunClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME,etSunOpen.getText().toString().trim());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME,etSunClose.getText().toString().trim());
+        if (switchSun.isChecked()) {
+            sundayTime = etSunOpen.getText().toString().trim() + "," + etSunClose.getText().toString().trim();
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, etSunOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, etSunClose.getText().toString().trim());
             openAtleastOneDayFlag = true;
-        }else{
-            sundayTime = defaultTime+","+defaultTime;
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME,"00");
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME,"00");
+        } else {
+            sundayTime = defaultTime + "," + defaultTime;
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, "00");
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, "00");
         }
         JSONObject offerObj = new JSONObject();
         try {
             //offerObj.put("clientId", Constants.clientId);
             //offerObj.put("fpTag", (Constants.StoreTag).toUpperCase());
-            offerObj.put("key","TIMINGS");
+            offerObj.put("key", "TIMINGS");
             offerObj.put("value",
-                    sundayTime+"#" +
-                            mondayTime+"#" +
-                            tuesdayTime+"#" +
-                            wednesdayTime+"#" +
-                            thursdayTime+"#" +
-                            fridayTime+"#" +
+                    sundayTime + "#" +
+                            mondayTime + "#" +
+                            tuesdayTime + "#" +
+                            wednesdayTime + "#" +
+                            thursdayTime + "#" +
+                            fridayTime + "#" +
                             saturdayTime);
 
         } catch (JSONException e) {
@@ -276,95 +281,129 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             e.printStackTrace();
         }
 
-        UploadProfileAsyncTask upa = new UploadProfileAsyncTask(BusinessHoursActivity.this,dayData,profilesattr);
+        UploadProfileAsyncTask upa = new UploadProfileAsyncTask(BusinessHoursActivity.this, dayData, profilesattr);
         upa.execute();
         session.setBusinessHours(openAtleastOneDayFlag);
         onBusinessHourAddedOrUpdated(openAtleastOneDayFlag);
     }
 
-    private void onBusinessHourAddedOrUpdated(Boolean isAdded){
+    private boolean isValidInput() {
+        if (switchSun.isChecked()) {
+            if (etSunOpen.getText().toString().equals("00:00") || etSunClose.getText().toString().equals("00:00"))
+                return false;
+        }
+        if (switchMon.isChecked()) {
+            if (etMonOpen.getText().toString().equals("00:00") || etMonClose.getText().toString().equals("00:00"))
+                return false;
+        }
+        if (switchTue.isChecked()) {
+            if (etTueOpen.getText().toString().equals("00:00") || etTueClose.getText().toString().equals("00:00"))
+                return false;
+        }
+        if (switchWed.isChecked()) {
+            if (etWedOpen.getText().toString().equals("00:00") || etWedClose.getText().toString().equals("00:00"))
+                return false;
+        }
+        if (switchThu.isChecked()) {
+            if (etThuOpen.getText().toString().equals("00:00") || etThuClose.getText().toString().equals("00:00"))
+                return false;
+        }
+        if (switchFri.isChecked()) {
+            if (etFriOpen.getText().toString().equals("00:00") || etFriClose.getText().toString().equals("00:00"))
+                return false;
+        }
+        if (switchSat.isChecked()) {
+            if (etSatOpen.getText().toString().equals("00:00") || etSatClose.getText().toString().equals("00:00"))
+                return false;
+        }
+        return true;
+    }
+
+    private void onBusinessHourAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
+        if (instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_business_hours(isAdded);
         instance.updateDocument();
     }
 
-    private void updateTimings(){
-        boolean openOneFlag=false;
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("am")
+    private void updateTimings() {
+        boolean openOneFlag = false;
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("am")
                 || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etMonOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME));
             etMonClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME));
-          openOneFlag=true;
+            openOneFlag = true;
         } else {
             switchMon.setChecked(false);
-            setTextTimeOnSwitch(R.id.et_mon_open,R.id.et_mon_close,0,0,0,0);
+            setTextTimeOnSwitch(R.id.et_mon_open, R.id.et_mon_close, 0, 0, 0, 0);
         }
 
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("am")
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("am")
                 || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etTueOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME));
             etTueClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME));
-          openOneFlag=true;
+            openOneFlag = true;
         } else {
             switchTue.setChecked(false);
-            setTextTimeOnSwitch(R.id.et_tue_open,R.id.et_tue_close,0,0,0,0);
+            setTextTimeOnSwitch(R.id.et_tue_open, R.id.et_tue_close, 0, 0, 0, 0);
         }
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("am")
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("am")
                 || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etWedOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME));
             etWedClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME));
-          openOneFlag=true;
+            openOneFlag = true;
         } else {
             switchWed.setChecked(false);
-            setTextTimeOnSwitch(R.id.et_wed_open,R.id.et_wed_close,0,0,0,0);
+            setTextTimeOnSwitch(R.id.et_wed_open, R.id.et_wed_close, 0, 0, 0, 0);
         }
-       if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("am")
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("am")
                 || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etThuOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME));
             etThuClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME));
-         openOneFlag=true;
+            openOneFlag = true;
         } else {
-           switchThu.setChecked(false);
-           setTextTimeOnSwitch(R.id.et_thu_open,R.id.et_thu_close,0,0,0,0);
+            switchThu.setChecked(false);
+            setTextTimeOnSwitch(R.id.et_thu_open, R.id.et_thu_close, 0, 0, 0, 0);
         }
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("am")
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("am")
                 || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etFriOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME));
             etFriClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME));
-          openOneFlag=true;
+            openOneFlag = true;
         } else {
             switchFri.setChecked(false);
-            setTextTimeOnSwitch(R.id.et_fri_open,R.id.et_fri_close,0,0,0,0);
+            setTextTimeOnSwitch(R.id.et_fri_open, R.id.et_fri_close, 0, 0, 0, 0);
         }
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("am")
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("am")
                 || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etSatOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME));
             etSatClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME));
-          openOneFlag=true;
+            openOneFlag = true;
         } else {
             switchSat.setChecked(false);
-            setTextTimeOnSwitch(R.id.et_sat_open,R.id.et_sat_close,0,0,0,0);
+            setTextTimeOnSwitch(R.id.et_sat_open, R.id.et_sat_close, 0, 0, 0, 0);
         }
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("am")
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("am")
                 || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etSunOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME));
             etSunClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME));
-          openOneFlag=true;
+            openOneFlag = true;
         } else {
             switchSun.setChecked(false);
-            setTextTimeOnSwitch(R.id.et_sun_open,R.id.et_sun_close,0,0,0,0);
+            setTextTimeOnSwitch(R.id.et_sun_open, R.id.et_sun_close, 0, 0, 0, 0);
         }
 
-      onBusinessHourAddedOrUpdated(openOneFlag);
+        onBusinessHourAddedOrUpdated(openOneFlag);
     }
-    private void timePicker(){
+
+    private void timePicker() {
        /* TimePickerDialog dialog = TimePickerDialog.newInstance(this,0,0,false);
         dialog.setThemeDark(false);
         dialog.show(getFragmentManager(), "Timepickerdialog");*/
-        View parentView = LayoutInflater.from(this).inflate(R.layout.dialog_with_spinner,null);
+        View parentView = LayoutInflater.from(this).inflate(R.layout.dialog_with_spinner, null);
         final Spinner openSpinner = (Spinner) parentView.findViewById(R.id.spinner_all_open);
         final Spinner closeSpinner = (Spinner) parentView.findViewById(R.id.spinner_all_close);
         final CheckBox checkBox = (CheckBox) parentView.findViewById(R.id.chbx_same_time);
@@ -375,8 +414,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 R.array.business_hours_arrays, R.layout.layout_simple_text_item);
         openSpinner.setAdapter(adapter);
         closeSpinner.setAdapter(adapter);
-        MaterialDialog dialog  = new MaterialDialog.Builder(this)
-                .customView(parentView,true)
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .customView(parentView, true)
                 .autoDismiss(false)
                 .title("Select Time")
                 .positiveText("set")
@@ -386,7 +425,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        setSelectedTime(checkBox.isChecked(),openSpinner.getSelectedItem().toString(),closeSpinner.getSelectedItem().toString());
+                        setSelectedTime(checkBox.isChecked(), openSpinner.getSelectedItem().toString(), closeSpinner.getSelectedItem().toString());
                         dialog.dismiss();
                         currentId = NO_ID;
                     }
@@ -403,8 +442,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
     }
 
-    private void setSelectedTime(boolean isChecked,String openTime, String closeTime) {
-        if(isChecked){
+    private void setSelectedTime(boolean isChecked, String openTime, String closeTime) {
+        if (isChecked) {
             etMonClose.setText(closeTime);
             etMonOpen.setText(openTime);
             etTueClose.setText(closeTime);
@@ -419,7 +458,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             etSatOpen.setText(openTime);
             etSunClose.setText(closeTime);
             etSunOpen.setText(openTime);
-        }else {
+        } else {
             switch (currentId) {
                 case 0:
                     etMonClose.setText(closeTime);
@@ -455,14 +494,15 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-        String s = convertToString(hourOfDay,minute);
-        ((EditText)findViewById(currentId)).setText(s);
+        String s = convertToString(hourOfDay, minute);
+        ((EditText) findViewById(currentId)).setText(s);
         currentId = NO_ID;
     }
 
-    private String convertToString(int hourOfDay,int minute){
-        return String.format(Locale.ENGLISH,"%02d:%02d",hourOfDay>12?hourOfDay-12:hourOfDay,minute);
+    private String convertToString(int hourOfDay, int minute) {
+        return String.format(Locale.ENGLISH, "%02d:%02d", hourOfDay > 12 ? hourOfDay - 12 : hourOfDay, minute);
     }
+
     /*private String ConvertToTime(String time){
         String hours = time.substring(0,time.indexOf(":")+1);
         String minutes = time.substring(time.indexOf(":"),time.indexOf(" "));
@@ -526,7 +566,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id==android.R.id.home){
+        if (id == android.R.id.home) {
             //  NavUtils.navigateUpFromSameTask(this);
             // getSupportFragmentManager().popBackStack();
             finish();
@@ -535,98 +575,79 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         return super.onOptionsItemSelected(item);
     }
 
-    private void setTextTimeOnSwitch(int openId,int closeId,int openHoursTime,int openMinuteTime, int closeHoursTime, int closeMinuteTime){
-        if(openId !=-1)
-        {
-            ((EditText) findViewById(openId)).setText(convertToString(openHoursTime, openMinuteTime));
-        }
-
-        if (closeId != -1)
-        {
-            ((EditText)findViewById(closeId)).setText(convertToString(closeHoursTime,closeMinuteTime));
-        }
+    private void setTextTimeOnSwitch(int openId, int closeId, int openHoursTime, int openMinuteTime, int closeHoursTime, int closeMinuteTime) {
+        EditText openEdt = ((EditText) findViewById(openId));
+        EditText closeEdt = ((EditText) findViewById(closeId));
+        if (openId != -1) openEdt.setText(convertToString(openHoursTime, openMinuteTime));
+        if (closeId != -1) closeEdt.setText(convertToString(closeHoursTime, closeMinuteTime));
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.switch_sun:
-                if(!switchSun.isChecked()) {
+                if (!switchSun.isChecked()) {
                     WebEngageController.trackEvent(SUNDAY_MARKED_OFF, TOGGLE_SUNDAY, NULL);
                     setTextTimeOnSwitch(R.id.et_sun_open, R.id.et_sun_close, 0, 0, 0, 0);
-                }
-                else
-                {
+                } else {
                     WebEngageController.trackEvent(SUNDAY_MARKED_ON, TOGGLE_SUNDAY, NULL);
                 }
                 break;
             case R.id.switch_mon:
-                if(!switchMon.isChecked()) {
+                if (!switchMon.isChecked()) {
                     WebEngageController.trackEvent(MONDAY_MARKED_OFF, TOGGLE_MONDAY, NULL);
                     setTextTimeOnSwitch(R.id.et_mon_open, R.id.et_mon_close, 0, 0, 0, 0);
-                }
-                else
-                {
+                } else {
                     WebEngageController.trackEvent(MONDAY_MARKED_ON, TOGGLE_MONDAY, NULL);
                 }
                 break;
             case R.id.switch_tue:
-                if(!switchTue.isChecked()) {
+                if (!switchTue.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_tue_open, R.id.et_tue_close, 0, 0, 0, 0);
                     WebEngageController.trackEvent(TUESDAY_MARKED_OFF, TOGGLE_TUESDAY, NULL);
-                }
-                else
-                {
+                } else {
                     WebEngageController.trackEvent(TUESDAY_MARKED_ON, TOGGLE_TUESDAY, NULL);
                 }
                 break;
             case R.id.switch_wed:
-                if(!switchWed.isChecked()) {
+                if (!switchWed.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_wed_open, R.id.et_wed_close, 0, 0, 0, 0);
                     WebEngageController.trackEvent(WEDNESDAY_MARKED_OFF, TOGGLE_WEDNESDAY, NULL);
-                }
-                else
-                {
+                } else {
                     WebEngageController.trackEvent(WEDNESDAY_MARKED_ON, TOGGLE_WEDNESDAY, NULL);
                 }
                 break;
             case R.id.switch_thu:
-                if(!switchThu.isChecked()) {
+                if (!switchThu.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_thu_open, R.id.et_thu_close, 0, 0, 0, 0);
                     WebEngageController.trackEvent(THURSDAY_MARKED_OFF, TOGGLE_THURSDAY, NULL);
-                }
-                else
-                {
+                } else {
                     WebEngageController.trackEvent(THURSDAY_MARKED_ON, TOGGLE_THURSDAY, NULL);
                 }
                 break;
             case R.id.switch_fri:
-                if(!switchFri.isChecked()) {
+                if (!switchFri.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_fri_open, R.id.et_fri_close, 0, 0, 0, 0);
                     WebEngageController.trackEvent(FRIDAY_MARKED_OFF, TOGGLE_FRIDAY, NULL);
-                }
-                else
-                {
+                } else {
                     WebEngageController.trackEvent(FRIDAY_MARKED_ON, TOGGLE_FRIDAY, NULL);
                 }
                 break;
             case R.id.switch_sat:
-                if(!switchSat.isChecked()) {
+                if (!switchSat.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_sat_open, R.id.et_sat_close, 0, 0, 0, 0);
                     WebEngageController.trackEvent(SATURDAY_MARKED_OFF, TOGGLE_SATURDAY, NULL);
-                }
-                else
-                {
+                } else {
                     WebEngageController.trackEvent(SATURDAY_MARKED_ON, TOGGLE_SATURDAY, NULL);
                 }
                 break;
             case R.id.chbx_same_time:
-                if(checkBoxAllTime.isChecked()) {
-                    WebEngageController.trackEvent(STORE_TIMINGS,CLICKING_USE_SAME_TIME_FOR_WHOLE_WEEK,NULL);
+                if (checkBoxAllTime.isChecked()) {
+                    WebEngageController.trackEvent(STORE_TIMINGS, CLICKING_USE_SAME_TIME_FOR_WHOLE_WEEK, NULL);
                     linearLayoutAllTime.setVisibility(View.VISIBLE);
                     findViewById(R.id.et_all_close).setOnTouchListener(BusinessHoursActivity.this);
                     findViewById(R.id.et_all_open).setOnTouchListener(BusinessHoursActivity.this);
-                }else{
+                } else {
 
                 }
                 break;

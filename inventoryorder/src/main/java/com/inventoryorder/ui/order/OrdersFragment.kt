@@ -278,7 +278,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
           updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
         } else {
           apiGetOrderDetails()
-          showLongToast(resources.getString(R.string.order_cancel))
+          showLongToast(resources.getString(R.string.order_delivery))
         }
       } else {
         showLongToast(it.message())

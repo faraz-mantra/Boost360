@@ -2,13 +2,11 @@ package com.boost.upgrades.ui.home
 
 import android.app.Application
 import android.content.Context
-import android.text.Html
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
 import com.boost.upgrades.data.model.*
 import com.boost.upgrades.data.remote.ApiInterface
@@ -19,11 +17,9 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
 import kotlin.collections.ArrayList
 
 class HomeViewModel(application: Application) : BaseViewModel(application) {
@@ -36,8 +32,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var allVideoDetails: MutableLiveData<List<YoutubeVideoModel>> = MutableLiveData()
     var expertConnectDetails: MutableLiveData<ExpertConnect> = MutableLiveData()
     var promoBanners: MutableLiveData<List<PromoBanners>> = MutableLiveData()
-    var marketplaceOffers: MutableLiveData<List<PromoBanners>> = MutableLiveData()
-    var promoBannerAndMarketOfferResult: MediatorLiveData<List<PromoBanners>> = MediatorLiveData()
     var partnerZone: MutableLiveData<List<PartnerZone>> = MutableLiveData()
     var feedbackLink: MutableLiveData<String> = MutableLiveData()
 
@@ -84,10 +78,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun getPromoBanners(): LiveData<List<PromoBanners>> {
         return promoBanners
-    }
-
-    fun promoBannerAndMarketOfferResult(): LiveData<List<PromoBanners>> {
-        return promoBannerAndMarketOfferResult
     }
 
     fun getPartnerZone(): LiveData<List<PartnerZone>> {
@@ -138,7 +128,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             for (i in 0.. size-1) {
                 var json_objectdetail: JSONObject =jsonarray_info.getJSONObject(i)
                 if(json_objectdetail.getString("experience_code") == expCode){
-                    categoryResult.postValue(json_objectdetail.getString("category_Name") )
+                    categoryResult.postValue(json_objectdetail.getString("category_Name"))
                 }
             }
         } catch (ioException: JSONException) {
@@ -147,7 +137,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun loadUpdates(fpid: String, clientId: String, expCode: String?, fpTag: String?) {
-        Log.v("loadUpdates ", " "+ expCode + " "+ fpTag)
+        Log.v("loadUpdates ", " " + expCode + " " + fpTag)
         updatesLoader.postValue(true)
 
         if (Utils.isConnectedToInternet(getApplication())) {
@@ -392,14 +382,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         //promobanner
                                         if (it.Data[0].promo_banners != null && it.Data[0].promo_banners.size > 0) {
 //                                            promoBanners.value = it.Data[0].promo_banners.filter {  it1 -> it1.exclusive_to_categories.toString() == expCode }
-                                            val promoBannerFilter = (it.Data[0].promo_banners ?: ArrayList()).promoBannerFilter(expCode,fpTag)
+                                            val promoBannerFilter = (it.Data[0].promo_banners
+                                                    ?: ArrayList()).promoBannerFilter(expCode, fpTag)
                                             promoBanners.postValue(promoBannerFilter)
-//                                            promoBanners.postValue(it.Data[0].promo_banners)
-                                            Log.v("promoBanner1213", " " + "promoBanner1213")
-                                            /*promoBannerAndMarketOfferResult.addSource(promoBanners,{
-                                                Log.v("promoBanner12", " " + promoBanners)
-                                                promoBannerAndMarketOfferResult.setValue(it.distinct())
-                                            })*/
                                         }
 
                                         //partnerZone
@@ -412,17 +397,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                             feedbackLink.postValue(it.Data[0].feedback_link)
                                         }
 
-                                        //marketplace offers
-                                        if (it.Data[0].marketplace_offers != null && it.Data[0].marketplace_offers.size > 0) {
-//                                            marketplaceOffers.value = it.Data[0].marketplace_offers
-                                            marketplaceOffers.postValue(it.Data[0].marketplace_offers)
-                                            Log.v("MarketOffer2", " " + "MarketOffer2")
-                                            promoBannerAndMarketOfferResult.addSource(marketplaceOffers,{
-                                                Log.v("MarketOffer", " " + marketplaceOffers!!.value?.size.toString())
-                                                promoBannerAndMarketOfferResult.postValue(it)
-//                                                promoBannerAndMarketOfferResult.value = it
-                                                })
-                                        }
                                     },
                                     {
                                         Log.e("GetAllFeatures", "error" + it.message)
@@ -461,7 +435,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                             .subscribe(
                                     {
                                         Log.e("GetAllFeatures", it.toString())
-
 
 
                                         //saving bundle info in bundle table
@@ -652,6 +625,41 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                     Log.i("emptyCouponTable", "Failure")
                 }
                 .subscribe()
+    }
+
+    fun <T, K, R> LiveData<T>.combineWith(
+            liveData: LiveData<K>,
+            block: (T?, K?) -> R
+    ): LiveData<R> {
+        val result = MediatorLiveData<R>()
+        result.addSource(this) {
+            result.value = block(this.value, liveData.value)
+        }
+        result.addSource(liveData) {
+            result.value = block(this.value, liveData.value)
+        }
+        return result
+    }
+    fun <T, A, B> LiveData<A>.combineAndCompute(other: LiveData<B>, onChange: (A, B) -> T): MediatorLiveData<T> {
+
+        var source1emitted = false
+        var source2emitted = false
+
+        val result = MediatorLiveData<T>()
+
+        val mergeF = {
+            val source1Value = this.value
+            val source2Value = other.value
+
+            if (source1emitted && source2emitted) {
+                result.value = onChange.invoke(source1Value!!, source2Value!! )
+            }
+        }
+
+        result.addSource(this) { source1emitted = true; mergeF.invoke() }
+        result.addSource(other) { source2emitted = true; mergeF.invoke() }
+
+        return result
     }
 
 }
