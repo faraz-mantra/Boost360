@@ -131,8 +131,7 @@ public class SearchQueriesActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        SearchQueryApi searchQueryApi = Constants.restAdapterAnalytics.create(SearchQueryApi.class);
-
+        SearchQueryApi searchQueryApi = Constants.restAdapterAnalyticsWebApi.create(SearchQueryApi.class);
         searchQueryApi.getSearchQueries(map, new Callback<List<SearchAnalytics>>() {
 
             @Override

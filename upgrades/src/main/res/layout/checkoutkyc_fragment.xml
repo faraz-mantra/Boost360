@@ -155,7 +155,23 @@ Please confirm below details."
                     android:textSize="@dimen/_10sdp" />
 
 
-                <EditText
+<!--                <EditText
+                    android:id="@+id/business_city_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edit_fill_kyc"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="bottom"
+                    android:textSize="@dimen/txt_14sp"
+                    android:textFontWeight="400"
+                    android:hint="City name"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#4A4A4A"
+                    android:textColorHint="#4A4A4A" />-->
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/business_city_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -22,7 +22,7 @@
         android:layout_width="@dimen/size_56"
         android:layout_height="@dimen/size_56"
         android:layout_gravity="start|center_vertical"
-        android:layout_margin="@dimen/size_2"
+        android:layout_margin="@dimen/size_3"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/size_6">
 

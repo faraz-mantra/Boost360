@@ -15,6 +15,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.framework.utils.ValidationUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
@@ -95,9 +96,11 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
           if (isRefresh) orderList.clear()
-          if (response != null && response.Items.isNullOrEmpty().not()) {
+          val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
+          onVideoConsultAddedOrUpdated(isDataNotEmpty)
+          if (isDataNotEmpty) {
             removeLoader()
-            val list = response.Items?.map { item ->
+            val list = response!!.Items?.map { item ->
               item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item
             } as ArrayList<OrderItem>
             TOTAL_ELEMENTS = response.total()
@@ -125,6 +128,13 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         errorView(it.message ?: "No video consultation available.")
       }
     })
+  }
+
+  private fun onVideoConsultAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
+    instance.getDrScoreData()?.metricdetail?.boolean_create_sample_video_consultation = isAdded
+    instance.updateDocument()
   }
 
   private fun removeLoader() {
@@ -287,9 +297,9 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private fun startFilter(query: String) {
     if (query.isEmpty().not() && query.length > 2) {
       val isNumberWith91=(query.contains("+91"))
-      val isNumber= ValidationUtils.isNumeric(if (isNumberWith91) query.replace("+91","") else query)
+      val isNumber= ValidationUtils.isNumeric(if (isNumberWith91) query.replace("+91", "") else query)
       val type = if (isNumber) QueryObject.QueryKey.BuyerPrimaryContactNumber.name else QueryObject.QueryKey.BuyerFullName.name
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query,type=type), isSearch = true)
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query, type = type), isSearch = true)
     } else setAdapterNotify(orderList)
   }
 

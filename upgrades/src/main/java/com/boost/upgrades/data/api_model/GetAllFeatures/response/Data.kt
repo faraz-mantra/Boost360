@@ -1,6 +1,8 @@
 package com.boost.upgrades.data.api_model.GetAllFeatures.response
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
+import kotlin.collections.ArrayList
 
 data class Data(
         @SerializedName("_kid")
@@ -16,7 +18,7 @@ data class Data(
         @SerializedName("discount_coupons")
         val discount_coupons: List<DiscountCoupons>,
         @SerializedName("promo_banners")
-        val promo_banners: List<PromoBanners>,
+        val promo_banners: ArrayList<PromoBanners>,
         @SerializedName("partner_zone")
         val partner_zone: List<PartnerZone>,
         @SerializedName("isarchived")
@@ -38,5 +40,38 @@ data class Data(
         @SerializedName("feedback_link")
         val feedback_link: String,
         @SerializedName("_propertyName")
-        val propertyName: String
+        val propertyName: String,
+        @SerializedName("marketplace_offers")
+        val marketplace_offers: ArrayList<PromoBanners>,
 )
+
+fun ArrayList<PromoBanners>.promoBannerFilter(expCode: String?,fpTag: String?): ArrayList<PromoBanners> {
+        if (isNullOrEmpty()) return ArrayList()
+        val list = ArrayList<PromoBanners>()
+        forEach {
+                if (it.exclusive_to_categories.isNullOrEmpty().not()) {
+                        if (it.exclusive_to_categories!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == expCode?.toLowerCase() } != null) list.add(it)
+                }else if(it.exclusive_to_customers.isNullOrEmpty().not()){
+                        if (it.exclusive_to_customers!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == fpTag?.toLowerCase() } != null) list.add(it)
+                }else{
+                        if(it.cta_feature_key.isNullOrEmpty().not() || it.cta_feature_key.isNullOrBlank().not()
+                                || it.cta_bundle_identifier.isNullOrEmpty().not() || it.cta_bundle_identifier.isNullOrBlank().not() ){
+                                list.add(it)
+                        }
+                }
+        }
+        return list
+}
+
+fun ArrayList<PromoBanners>.promoMarketOfferFilter(expCode: String?,fpTag: String?): ArrayList<PromoBanners> {
+        if (isNullOrEmpty()) return ArrayList()
+        val list = ArrayList<PromoBanners>()
+        forEach {
+                if (it.exclusive_to_categories.isNullOrEmpty().not()) {
+                        if (it.exclusive_to_categories!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == expCode?.toLowerCase() } != null) list.add(it)
+                }else if(it.exclusive_to_customers.isNullOrEmpty().not()){
+                        if (it.exclusive_to_customers!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == fpTag?.toLowerCase() } != null) list.add(it)
+                }
+        }
+        return list
+}

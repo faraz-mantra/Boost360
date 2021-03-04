@@ -8,7 +8,7 @@ data class UpgradePremiumFeatureResponse(
     @SerializedName("Data")
   var `data`: ArrayList<PremiumFeatureData>? = null,
     @SerializedName("Extra")
-  var extra: Extra? = null
+  var extra: PremiumNExtra? = null
 ):BaseResponse(),Serializable{
 
 }

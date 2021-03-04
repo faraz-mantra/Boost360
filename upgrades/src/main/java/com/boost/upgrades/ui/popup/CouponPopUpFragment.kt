@@ -13,13 +13,17 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
+import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.ui.cart.CartViewModel
+import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.add_card_popup.*
 import kotlinx.android.synthetic.main.coupon_popup.*
+import kotlinx.android.synthetic.main.order_confirmation_fragment.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,6 +34,10 @@ class CouponPopUpFragment : DialogFragment() {
     private lateinit var viewModel: CartViewModel
 
     var couponsList: List<CouponsModel> = arrayListOf()
+
+    companion object {
+        fun newInstance() = CouponPopUpFragment()
+    }
 
     override fun onStart() {
         super.onStart()
@@ -55,10 +63,9 @@ class CouponPopUpFragment : DialogFragment() {
 
         loadAllCoupons()
         initMvvm()
-
         entered_coupon_value.setFilters(entered_coupon_value.filters + InputFilter.AllCaps())
 
-        entered_coupon_value.addTextChangedListener(object: TextWatcher{
+        entered_coupon_value.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -66,7 +73,7 @@ class CouponPopUpFragment : DialogFragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s!!.length<2){
+                if (s!!.length < 2) {
                     coupon_invalid.visibility = View.GONE
                 }
             }
@@ -81,25 +88,27 @@ class CouponPopUpFragment : DialogFragment() {
         enter_coupon_layout.setOnClickListener { }
 
         coupon_submit.setOnClickListener {
-            if(validateCouponCode()){
-                if(couponsList.size>0){
-                    coupon_invalid.visibility = View.GONE
-                    var validCouponCode:CouponsModel? = null
-                    for(singleCoupon in couponsList){
-                        if(entered_coupon_value.text.toString().toUpperCase(Locale.getDefault()) == singleCoupon.coupon_key.toUpperCase(Locale.getDefault())){
-                            validCouponCode = singleCoupon
-                            break
-                        }
-                    }
-                    if(validCouponCode==null){
-                        coupon_invalid.visibility = View.VISIBLE
-                    }else{
-                        dismiss()
-                        viewModel.addCouponCodeToCart(validCouponCode)
-                    }
-                }else{
-                    coupon_invalid.visibility = View.VISIBLE
-                }
+            if (validateCouponCode()) {
+//                if (couponsList.size > 0) {
+                    viewModel.getCouponRedeem(RedeemCouponRequest(arguments!!.getDouble("cartValue"), entered_coupon_value.text.toString(), (activity as UpgradeActivity).fpid!!), entered_coupon_value.text.toString())
+                    dismiss()
+                     /*coupon_invalid.visibility = View.GONE
+                     var validCouponCode:CouponsModel? = null
+                     for(singleCoupon in couponsList){
+                         if(entered_coupon_value.text.toString().toUpperCase(Locale.getDefault()) == singleCoupon.coupon_key.toUpperCase(Locale.getDefault())){
+                             validCouponCode = singleCoupon
+                             break
+                         }
+                     }
+                     if(validCouponCode==null){
+                         coupon_invalid.visibility = View.VISIBLE
+                     }else{
+                         dismiss()
+                         viewModel.addCouponCodeToCart(validCouponCode)
+                     }*/
+//                } else {
+//                    coupon_invalid.visibility = View.VISIBLE
+//                }
             }
         }
 
@@ -107,26 +116,26 @@ class CouponPopUpFragment : DialogFragment() {
 
     }
 
-    fun loadAllCoupons(){
+    fun loadAllCoupons() {
         viewModel.getAllCoupon()
     }
 
     @SuppressLint("FragmentLiveDataObserve")
-    fun initMvvm(){
+    fun initMvvm() {
         viewModel.updateAllCouponsResult().observe(this, Observer {
             couponsList = it
         })
     }
 
-    fun validateCouponCode(): Boolean{
-        if(entered_coupon_value.text.isEmpty()){
+    fun validateCouponCode(): Boolean {
+        if (entered_coupon_value.text.isEmpty()) {
             Toasty.error(requireContext(), "Field is Empty!!", Toast.LENGTH_LONG).show();
             return false
         }
         return true
     }
 
-    fun clearData(){
+    fun clearData() {
         entered_coupon_value.text.clear()
         coupon_invalid.visibility = View.GONE
     }
@@ -136,5 +145,18 @@ class CouponPopUpFragment : DialogFragment() {
         clearData()
     }
 
+    fun validateCouponCodeWithAPI(): Boolean {
+        var validCouponCode: CouponsModel? = null
+        for (singleCoupon in couponsList) {
+            if (entered_coupon_value.text.toString().toUpperCase(Locale.getDefault()) == singleCoupon.coupon_key.toUpperCase(Locale.getDefault())) {
+                validCouponCode = singleCoupon
+                break
+            }
+        }
+        if (validCouponCode == null) {
+            return false
+        }
+        return true
+    }
 
 }

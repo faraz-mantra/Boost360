@@ -134,147 +134,146 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_3"
               android:layout_marginTop="@dimen/size_36"
-              android:text="Service Name*"
+              android:text="@string/service_name"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
 
             <com.framework.views.customViews.CustomTextField
-                android:id="@+id/tv_service_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_5"
-                android:background="@drawable/bg_rect_edit_txt"
-                android:hint="Write the name of your service"
-                android:inputType="textCapWords"
-                android:padding="@dimen/size_12"
-                android:singleLine="true"
-                android:textColor="@color/warm_grey_10"
-                android:textColorHint="@color/primary_grey"
-                tools:ignore="UnusedAttribute" />
+              android:id="@+id/tv_service_name"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_5"
+              android:background="@drawable/bg_rect_edit_txt"
+              android:hint="@string/write_the_name_of_your_service"
+              android:inputType="textCapWords"
+              android:padding="@dimen/size_12"
+              android:singleLine="true"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey"
+              tools:ignore="UnusedAttribute" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_26"
+              android:orientation="vertical">
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_26"
-                android:orientation="vertical">
+                android:drawablePadding="@dimen/size_4"
+                android:includeFontPadding="false"
+                android:text="@string/service_category"
+                android:textColor="@color/black_4a4a4a"
+                app:drawableEndCompat="@drawable/ic_question_circular_blue"
+                app:drawableTint="@color/orange"
+                app:fontFamily="@font/semi_bold"
+                app:textType="BODY_3" />
 
               <com.framework.views.customViews.CustomTextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:drawablePadding="@dimen/size_4"
-                  android:includeFontPadding="false"
-                  android:text="Service category*"
-                  android:textColor="@color/black_4a4a4a"
-                  app:drawableEndCompat="@drawable/ic_question_circular_blue"
-                  app:drawableTint="@color/orange"
-                  app:fontFamily="@font/semi_bold"
-                  app:textType="BODY_3" />
-
-              <com.framework.views.customViews.CustomTextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:includeFontPadding="false"
-                  android:text="This will help you group multiple services under this category"
-                  android:textColor="@color/warm_grey"
-                  android:textSize="12sp"
-                  android:visibility="gone"
-                  app:fontFamily="@font/regular" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/this_will_help_you_group_multiple_services_under_this_category"
+                android:textColor="@color/warm_grey"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:fontFamily="@font/regular" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.framework.views.customViews.CustomTextField
-                android:id="@+id/edt_service_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_5"
-                android:clickable="true"
-                android:hint="Create a service category"
-                android:inputType="textCapWords"
-                android:padding="@dimen/size_12"
-                android:singleLine="true"
-                android:background="@drawable/bg_rect_edit_txt"
-                android:textColor="@color/warm_grey_10"
-                android:textColorHint="@color/primary_grey"
-                tools:ignore="UnusedAttribute"
-                android:focusable="true" />
+              android:id="@+id/edt_service_category"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_5"
+              android:background="@drawable/bg_rect_edit_txt"
+              android:clickable="true"
+              android:focusable="true"
+              android:hint="@string/create_a_service_category"
+              android:inputType="textCapWords"
+              android:padding="@dimen/size_12"
+              android:singleLine="true"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey"
+              tools:ignore="UnusedAttribute" />
 
             <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_3"
+              android:layout_marginTop="@dimen/size_20"
+              android:text="@string/service_description"
+              android:textColor="@color/black_4a4a4a"
+              app:fontFamily="@font/semi_bold"
+              app:textType="BODY_3" />
+
+            <com.framework.views.customViews.CustomTextField
+              android:id="@+id/tv_desc"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_5"
+              android:background="@drawable/bg_rect_edit_txt"
+              android:hint="@string/describe_this_service_in_around_2000_characters_at_max"
+              android:inputType="textMultiLine"
+              android:padding="@dimen/size_12"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey"
+              tools:ignore="UnusedAttribute" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_26"
+              android:orientation="vertical">
+
+              <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_3"
-                android:layout_marginTop="@dimen/size_20"
-                android:text="Service description*"
+                android:drawablePadding="@dimen/size_4"
+                android:includeFontPadding="false"
+                android:text="@string/service_duration_minutes"
                 android:textColor="@color/black_4a4a4a"
                 app:fontFamily="@font/semi_bold"
                 app:textType="BODY_3" />
 
-            <com.framework.views.customViews.CustomTextField
-                android:id="@+id/tv_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_5"
-                android:background="@drawable/bg_rect_edit_txt"
-                android:hint="Describe this service in around 2000 characters at max..."
-                android:inputType="textMultiLine"
-                android:padding="@dimen/size_12"
-                android:textColor="@color/warm_grey_10"
-                android:textColorHint="@color/primary_grey"
-                tools:ignore="UnusedAttribute" />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_26"
-                android:orientation="vertical">
-
               <com.framework.views.customViews.CustomTextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:drawablePadding="@dimen/size_4"
-                  android:includeFontPadding="false"
-                  android:text="Service duration (minutes)*"
-                  android:textColor="@color/black_4a4a4a"
-                  app:fontFamily="@font/semi_bold"
-                  app:textType="BODY_3" />
-
-              <com.framework.views.customViews.CustomTextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:includeFontPadding="false"
-                  android:text="This will help you group multiple services under this category"
-                  android:textColor="@color/warm_grey"
-                  android:textSize="12sp"
-                  android:visibility="gone"
-                  app:fontFamily="@font/regular" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/this_will_help_you_group_multiple_services_under_this_category"
+                android:textColor="@color/warm_grey"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:fontFamily="@font/regular" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.framework.views.customViews.CustomTextField
-                android:id="@+id/edt_service_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_5"
-                android:background="@drawable/bg_rect_edit_txt"
-                android:drawableStart="@drawable/ic_clock_gray"
-                android:drawablePadding="@dimen/size_8"
-                android:hint="Enter duration in minutes"
-                android:inputType="number"
-                android:padding="@dimen/size_12"
-                android:singleLine="true"
-                android:textColor="@color/warm_grey_10"
-                android:textColorHint="@color/primary_grey"
-                tools:ignore="UnusedAttribute" />
+              android:id="@+id/edt_service_time"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_5"
+              android:background="@drawable/bg_rect_edit_txt"
+              android:drawableStart="@drawable/ic_clock_gray"
+              android:drawablePadding="@dimen/size_8"
+              android:hint="@string/enter_duration_in_minutes"
+              android:inputType="number"
+              android:padding="@dimen/size_12"
+              android:singleLine="true"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey"
+              tools:ignore="UnusedAttribute" />
 
             <com.framework.views.customViews.CustomCheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_5"
-                android:visibility="gone"
-                android:text="Add buffer time before and after"
-                android:textColor="@color/primary_grey"
-                android:theme="@style/ActiveTheme" />
-
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_5"
+              android:text="@string/add_buffer_time_before_and_after"
+              android:textColor="@color/primary_grey"
+              android:theme="@style/ActiveTheme"
+              android:visibility="gone" />
 
 
             <com.framework.views.customViews.CustomTextView
@@ -282,9 +281,9 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_20"
               android:drawablePadding="@dimen/size_4"
-                android:includeFontPadding="false"
-                android:text="Pricing info"
-                android:drawableTint="@color/orange"
+              android:drawableTint="@color/orange"
+              android:includeFontPadding="false"
+              android:text="@string/pricing_info"
               android:textColor="@color/black_4a4a4a"
               app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/semi_bold"
@@ -294,7 +293,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="Select, how do you want to give this service to your clients."
+              android:text="@string/select_how_do_you_want_to_give_this_service_to_your_clients"
               android:textColor="@color/warm_grey"
               android:textSize="12sp"
               app:fontFamily="@font/regular" />
@@ -314,16 +313,16 @@
                 android:padding="@dimen/size_10">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Appointment for this service is paid?"
-                    android:textColor="@color/black_4f4f4f"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/semi_bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/toggle_service"
-                    app:layout_constraintTop_toTopOf="parent" />
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:text="@string/appointment_for_this_service_is_paid"
+                  android:textColor="@color/black_4f4f4f"
+                  android:textSize="12sp"
+                  app:fontFamily="@font/semi_bold"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintLeft_toLeftOf="parent"
+                  app:layout_constraintRight_toLeftOf="@id/toggle_service"
+                  app:layout_constraintTop_toTopOf="parent" />
 
                 <com.appservice.views.toggle.widget.LabeledSwitch
                   android:id="@+id/toggle_service"
@@ -342,14 +341,15 @@
 
 
               </androidx.constraintlayout.widget.ConstraintLayout>
+
               <com.framework.views.customViews.CustomCheckBox
-                  android:layout_width="match_parent"
-                  android:textColor="@color/primary_grey"
-                  android:id="@+id/ccb_payextra"
-                  android:theme="@style/ActiveTheme"
-                  android:visibility="gone"
-                  android:text="Price includes taxes"
-                  android:layout_height="wrap_content"/>
+                android:id="@+id/ccb_payextra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/price_includes_taxes"
+                android:textColor="@color/primary_grey"
+                android:theme="@style/ActiveTheme"
+                android:visibility="gone" />
 
               <LinearLayout
                 android:id="@+id/pay_service_view"
@@ -361,9 +361,9 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
-                  android:paddingLeft="@dimen/size_8"
+                  android:paddingStart="@dimen/size_8"
                   android:paddingTop="@dimen/size_10"
-                  android:paddingRight="@dimen/size_5"
+                  android:paddingEnd="@dimen/size_5"
                   android:paddingBottom="@dimen/size_10">
 
                   <androidx.appcompat.widget.LinearLayoutCompat
@@ -374,7 +374,7 @@
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Price with tax (INR)"
+                      android:text="@string/price_with_tax_inr"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
@@ -385,7 +385,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="@dimen/size_5"
                       android:background="@drawable/bg_rect_edit_txt"
-                      android:hint="XX,XXX"
+                      android:hint="@string/xx_xxx"
                       android:inputType="number"
                       android:maxLength="7"
                       android:padding="@dimen/size_8"
@@ -410,7 +410,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:singleLine="true"
-                      android:text="Discount amt. (INR)"
+                      android:text="@string/discount_amt_inr"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
@@ -421,7 +421,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="@dimen/size_5"
                       android:background="@drawable/bg_rect_edit_txt"
-                      android:hint="XXX"
+                      android:hint="@string/xxx"
                       android:inputType="number"
                       android:maxLength="6"
                       android:padding="@dimen/size_8"
@@ -446,7 +446,7 @@
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Final Price"
+                      android:text="@string/final_price"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
@@ -458,7 +458,7 @@
                       android:layout_marginTop="@dimen/size_5"
                       android:background="@null"
                       android:enabled="false"
-                      android:hint="INR XX,XXX"
+                      android:hint="@string/inr_xx_xxx"
                       android:inputType="number"
                       android:paddingTop="@dimen/size_8"
                       android:paddingRight="@dimen/size_8"
@@ -479,7 +479,7 @@
                   android:layout_marginStart="@dimen/size_8"
                   android:layout_marginTop="@dimen/size_10"
                   android:includeFontPadding="false"
-                  android:text="Select, how you want to receive money for your bookings."
+                  android:text="@string/select_how_you_want_to_receive_money_for_your_bookings"
                   android:textColor="@color/warm_grey"
                   android:textSize="12sp"
                   app:fontFamily="@font/regular" />
@@ -487,8 +487,8 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginLeft="@dimen/size_8"
-                  android:layout_marginRight="@dimen/size_10"
+                  android:layout_marginStart="@dimen/size_8"
+                  android:layout_marginEnd="@dimen/size_10"
                   android:layout_marginBottom="@dimen/size_10"
                   android:background="@drawable/shape_grey_stroke_rect_bkg"
                   android:orientation="vertical">
@@ -565,7 +565,7 @@
                           android:layout_marginTop="@dimen/size_3"
                           android:drawablePadding="@dimen/size_4"
                           android:includeFontPadding="false"
-                          android:text="Kotak Mahindra Bnak - 345547684878"
+                          android:text="@string/kotak_mahindra_bnak_345547684878"
                           android:textColor="@color/light_blue"
                           android:textSize="12sp"
                           android:visibility="gone"
@@ -596,7 +596,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/size_4"
                         android:includeFontPadding="false"
-                        android:text="Add External URL"
+                        android:text="@string/add_external_url"
                         android:textColor="@color/warm_grey"
                         android:textSize="12sp"
                         app:fontFamily="@font/regular" />
@@ -620,7 +620,7 @@
                           android:layout_height="wrap_content"
                           android:layout_weight="1.5"
                           android:background="@android:color/transparent"
-                          android:hint="Website name"
+                          android:hint="@string/website_name"
                           android:maxLines="1"
                           android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
@@ -639,9 +639,9 @@
                           android:layout_height="wrap_content"
                           android:layout_weight="1"
                           android:background="@android:color/transparent"
-                          android:hint="Paste your URL here"
+                          android:hint="@string/paste_your_url_here"
                           android:maxLines="1"
-                          android:paddingLeft="@dimen/size_8"
+                          android:paddingStart="@dimen/size_8"
                           android:singleLine="true"
                           android:textColor="@color/greyish_brown"
                           android:textColorHint="@color/primary_grey"
@@ -664,141 +664,143 @@
                 android:layout_marginTop="@dimen/size_10"
                 android:layout_marginBottom="@dimen/size_14"
                 android:includeFontPadding="false"
-                android:text="Clients can book this service for FREE."
+                android:text="@string/clients_can_book_this_service_for_free"
                 android:textColor="@color/warm_grey"
                 android:textSize="12sp"
                 android:visibility="gone"
                 app:fontFamily="@font/regular" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
             <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_20"
-                android:drawablePadding="@dimen/size_4"
-                android:includeFontPadding="false"
-                android:visibility="gone"
-                android:text="@string/service_delivery_configuration"
-                android:textColor="@color/black_4a4a4a"
-                app:fontFamily="@font/semi_bold"
-                app:textType="BODY_3" />
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_20"
+              android:drawablePadding="@dimen/size_4"
+              android:includeFontPadding="false"
+              android:text="@string/service_delivery_configuration"
+              android:textColor="@color/black_4a4a4a"
+              android:visibility="gone"
+              app:fontFamily="@font/semi_bold"
+              app:textType="BODY_3" />
+
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/select_delivery_config"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_5"
-                android:visibility="gone"
-                android:background="@drawable/bg_rect_edit_txt"
-                android:clickable="true"
-                android:drawableEnd="@drawable/ic_grey_drop_down"
-                android:drawableTint="@color/pinkish_grey"
-                android:focusable="true"
-                android:hint="Select service delivery config"
-                android:padding="@dimen/size_12"
-                android:singleLine="true"
-                android:textColor="@color/warm_grey_10"
-                android:textColorHint="@color/primary_grey"
-                tools:ignore="UnusedAttribute" />
-<!--            <com.framework.views.customViews.CustomTextView-->
-<!--                android:id="@+id/tvCustomerAddress"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:includeFontPadding="false"-->
-<!--                android:visibility="visible"-->
-<!--                android:text="Select, how do you want to give this service to your clients."-->
-<!--                android:textColor="@color/warm_grey"-->
-<!--                android:textSize="12sp"-->
-<!--                app:fontFamily="@font/regular" />-->
+              android:id="@+id/select_delivery_config"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_5"
+              android:background="@drawable/bg_rect_edit_txt"
+              android:clickable="true"
+              android:drawableEnd="@drawable/ic_grey_drop_down"
+              android:drawableTint="@color/pinkish_grey"
+              android:focusable="true"
+              android:hint="@string/select_service_delivery_config"
+              android:padding="@dimen/size_12"
+              android:singleLine="true"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey"
+              android:visibility="gone"
+              tools:ignore="UnusedAttribute" />
+            <!--            <com.framework.views.customViews.CustomTextView-->
+            <!--                android:id="@+id/tvCustomerAddress"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:includeFontPadding="false"-->
+            <!--                android:visibility="visible"-->
+            <!--                android:text="Select, how do you want to give this service to your clients."-->
+            <!--                android:textColor="@color/warm_grey"-->
+            <!--                android:textSize="12sp"-->
+            <!--                app:fontFamily="@font/regular" />-->
 
-<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/size_10"-->
-<!--                android:background="@drawable/shape_grey_stroke_rect_bkg"-->
-<!--                android:orientation="vertical">-->
+            <!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/size_10"-->
+            <!--                android:background="@drawable/shape_grey_stroke_rect_bkg"-->
+            <!--                android:orientation="vertical">-->
 
-<!--              &lt;!&ndash;android:background="@color/dodger_blue_ED73FE"&ndash;&gt;-->
-<!--              <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                  android:layout_width="match_parent"-->
-<!--                  android:layout_height="wrap_content"-->
-<!--                  android:background="@drawable/shape_blue_stroke_rect_title_bkg"-->
-<!--                  android:padding="@dimen/size_10">-->
+            <!--              &lt;!&ndash;android:background="@color/dodger_blue_ED73FE"&ndash;&gt;-->
+            <!--              <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                  android:layout_width="match_parent"-->
+            <!--                  android:layout_height="wrap_content"-->
+            <!--                  android:background="@drawable/shape_blue_stroke_rect_title_bkg"-->
+            <!--                  android:padding="@dimen/size_10">-->
 
-<!--                <com.framework.views.customViews.CustomTextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Both online and in-person"-->
-<!--                    android:textColor="@color/black_4f4f4f"-->
-<!--                    android:textSize="12sp"-->
-<!--                    app:fontFamily="@font/semi_bold"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+            <!--                <com.framework.views.customViews.CustomTextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="Both online and in-person"-->
+            <!--                    android:textColor="@color/black_4f4f4f"-->
+            <!--                    android:textSize="12sp"-->
+            <!--                    app:fontFamily="@font/semi_bold"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--                <com.framework.views.customViews.CustomTextView-->
-<!--                    android:id="@+id/vw_changeDeliverConfig"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/change"-->
-<!--                    android:textColor="@color/cerulean_blue"-->
-<!--                    android:textSize="10sp"-->
-<!--                    app:fontFamily="@font/semi_bold"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintRight_toRightOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:textAllCaps="true" />-->
+            <!--                <com.framework.views.customViews.CustomTextView-->
+            <!--                    android:id="@+id/vw_changeDeliverConfig"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="@string/change"-->
+            <!--                    android:textColor="@color/cerulean_blue"-->
+            <!--                    android:textSize="10sp"-->
+            <!--                    app:fontFamily="@font/semi_bold"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    app:layout_constraintRight_toRightOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent"-->
+            <!--                    app:textAllCaps="true" />-->
 
-<!--              </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <!--              </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-<!--              <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                  android:id="@+id/vw_changeDeliverLocation"-->
-<!--                  android:layout_width="match_parent"-->
-<!--                  android:layout_height="wrap_content"-->
-<!--                  android:padding="@dimen/size_10">-->
+            <!--              <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                  android:id="@+id/vw_changeDeliverLocation"-->
+            <!--                  android:layout_width="match_parent"-->
+            <!--                  android:layout_height="wrap_content"-->
+            <!--                  android:padding="@dimen/size_10">-->
 
-<!--                <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="@+id/iv_dropDown"-->
-<!--                    app:layout_constraintTop_toTopOf="parent">-->
+            <!--                <androidx.appcompat.widget.LinearLayoutCompat-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--                    app:layout_constraintRight_toLeftOf="@+id/iv_dropDown"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent">-->
 
-<!--                  <com.framework.views.customViews.CustomTextView-->
-<!--                      android:layout_width="wrap_content"-->
-<!--                      android:layout_height="wrap_content"-->
-<!--                      android:drawablePadding="@dimen/size_6"-->
-<!--                      android:includeFontPadding="false"-->
-<!--                      android:text="Service delivery at:"-->
-<!--                      android:textColor="@color/black"-->
-<!--                      android:textSize="12sp"-->
-<!--                      app:drawableStartCompat="@drawable/ic_delivery_business_location"-->
-<!--                      app:fontFamily="@font/regular" />-->
+            <!--                  <com.framework.views.customViews.CustomTextView-->
+            <!--                      android:layout_width="wrap_content"-->
+            <!--                      android:layout_height="wrap_content"-->
+            <!--                      android:drawablePadding="@dimen/size_6"-->
+            <!--                      android:includeFontPadding="false"-->
+            <!--                      android:text="Service delivery at:"-->
+            <!--                      android:textColor="@color/black"-->
+            <!--                      android:textSize="12sp"-->
+            <!--                      app:drawableStartCompat="@drawable/ic_delivery_business_location"-->
+            <!--                      app:fontFamily="@font/regular" />-->
 
-<!--                  <com.framework.views.customViews.CustomTextView-->
-<!--                      android:layout_width="wrap_content"-->
-<!--                      android:layout_height="wrap_content"-->
-<!--                      android:layout_marginLeft="@dimen/size_5"-->
-<!--                      android:includeFontPadding="false"-->
-<!--                      android:text="My business Location"-->
-<!--                      android:textColor="@color/warm_grey"-->
-<!--                      android:textSize="12sp"-->
-<!--                      app:fontFamily="@font/regular" />-->
+            <!--                  <com.framework.views.customViews.CustomTextView-->
+            <!--                      android:layout_width="wrap_content"-->
+            <!--                      android:layout_height="wrap_content"-->
+            <!--                      android:layout_marginLeft="@dimen/size_5"-->
+            <!--                      android:includeFontPadding="false"-->
+            <!--                      android:text="My business Location"-->
+            <!--                      android:textColor="@color/warm_grey"-->
+            <!--                      android:textSize="12sp"-->
+            <!--                      app:fontFamily="@font/regular" />-->
 
-<!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
+            <!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
 
-<!--                <com.framework.views.customViews.CustomImageView-->
-<!--                    android:id="@+id/iv_dropDown"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintRight_toRightOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:srcCompat="@drawable/ic_grey_drop_down" />-->
+            <!--                <com.framework.views.customViews.CustomImageView-->
+            <!--                    android:id="@+id/iv_dropDown"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    app:layout_constraintRight_toRightOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent"-->
+            <!--                    app:srcCompat="@drawable/ic_grey_drop_down" />-->
 
-<!--              </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <!--              </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-<!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+            <!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
             <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -821,22 +823,22 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/size_4"
-                    android:drawableTint="@color/orange"
-                    android:includeFontPadding="false"
-                    android:text="Other Information"
-                    android:textColor="@color/black_4a4a4a"
-                    app:drawableEndCompat="@drawable/ic_question_circular_blue"
-                    app:fontFamily="@font/semi_bold"
-                    app:textType="BODY_3" />
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:drawablePadding="@dimen/size_4"
+                  android:drawableTint="@color/orange"
+                  android:includeFontPadding="false"
+                  android:text="@string/other_information"
+                  android:textColor="@color/black_4a4a4a"
+                  app:drawableEndCompat="@drawable/ic_question_circular_blue"
+                  app:fontFamily="@font/semi_bold"
+                  app:textType="BODY_3" />
 
                 <com.framework.views.customViews.CustomTextView
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:includeFontPadding="false"
-                  android:text="Channels, Service Specifications, Service category, etc."
+                  android:text="@string/channels_service_specifications_service_category_etc"
                   android:textColor="@color/warm_grey"
                   android:textSize="12sp"
                   app:fontFamily="@font/regular" />
@@ -857,45 +859,46 @@
 
             <View
               android:layout_width="match_parent"
-              android:layout_height="@dimen/size_80" />
+              android:layout_height="@dimen/size_50" />
 
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vw_savePublish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20"
+            android:layout_marginEnd="@dimen/size_20"
+            android:layout_marginBottom="@dimen/size_12"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.framework.views.customViews.CustomButton
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:background="@drawable/bg_button_proceed"
+              android:clickable="false"
+              android:drawablePadding="@dimen/size_4"
+              android:fontFamily="@font/semi_bold"
+              android:gravity="center"
+              android:stateListAnimator="@null"
+              android:text="@string/save_amp_publish"
+              android:textAllCaps="true"
+              android:textColor="@color/white"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:textType="HEADING_6" />
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
       </androidx.core.widget.NestedScrollView>
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/vw_savePublish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_20"
-        android:layout_marginEnd="@dimen/size_20"
-        android:layout_marginBottom="@dimen/size_12"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.framework.views.customViews.CustomButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bg_button_proceed"
-            android:clickable="false"
-          android:drawablePadding="@dimen/size_6"
-          android:fontFamily="@font/semi_bold"
-          android:gravity="center"
-          android:text="@string/save_amp_publish"
-          android:textAllCaps="true"
-          android:textColor="@color/white"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:textType="HEADING_6" />
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -25,6 +25,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.CouponsModel
@@ -36,6 +37,7 @@ import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.autorenew.AutoRenewSubsFragment
 import com.boost.upgrades.ui.checkoutkyc.CheckoutKycFragment
+import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
@@ -50,10 +52,12 @@ import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.RENEW_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.DateUtils.parseDate
+import com.dashboard.model.live.coupon.CouponServiceModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.cart_fragment.*
+import kotlinx.android.synthetic.main.coupon_popup.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -80,6 +84,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     var total = 0.0
 
+    var coupontotal = 0.0
+
     var grandTotal = 0.0
 
     var GSTINNumber: String? = null
@@ -90,6 +96,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     var taxValue = 0.0
 
     var validCouponCode: CouponsModel? = null
+
+    var couponServiceModel: CouponServiceModel? = null
 
     var couponDiscountAmount = 0.0
 
@@ -118,6 +126,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     val checkoutKycFragment = CheckoutKycFragment()
 
     var proceedCheckoutPopup: Boolean? = false
+
+    var couponCode: String = ""
 
     companion object {
         fun newInstance() = CartFragment()
@@ -183,7 +193,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             discount_coupon_remove.visibility = View.GONE
             cart_apply_coupon.visibility = View.VISIBLE
             discount_coupon_title.text = "Discount coupon"
-
+            discount_coupon_message.visibility = View.GONE
             //clear coupon
             validCouponCode = null
 
@@ -191,7 +201,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             prefs.storeCartOrderInfo(null)
             prefs.storeApplyedCouponDetails(null)
 
-            totalCalculation()
+//            totalCalculation()
+            couponCode = ""
+            couponServiceModel = null
+            totalCalculationAfterCoupon()
         }
 
         cart_continue_submit.setOnClickListener {
@@ -296,6 +309,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }else if(couponDiwaliRedundant.contains("DICTATE") ){
                 Toasty.error(requireContext(), "In order to apply coupon remove the item "+ couponDiwaliRedundant.get("DICTATE"), Toast.LENGTH_SHORT, true).show()
             }else{
+                /*couponPopUpFragment.show(
+                        (activity as UpgradeActivity).supportFragmentManager,
+                        COUPON_POPUP_FRAGEMENT
+                )*/
+                val args = Bundle()
+//                args.putDouble("cartValue", grandTotal)
+                args.putDouble("cartValue", total)
+                couponPopUpFragment.arguments = args
                 couponPopUpFragment.show(
                         (activity as UpgradeActivity).supportFragmentManager,
                         COUPON_POPUP_FRAGEMENT
@@ -347,8 +368,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
                 prefs.storeCartOrderInfo(null)
-                totalCalculation()
-
+//                totalCalculation()
+                totalCalculationAfterCoupon()
+                Log.v("cart_amount_value1"," "+ total)
+                if(couponCode.isNotEmpty())
+                  viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+                else
+                  totalCalculationAfterCoupon()
                 Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
 //            }
             }
@@ -361,8 +387,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
-                    totalCalculation()
-
+//                    totalCalculation()
+                    totalCalculationAfterCoupon()
+                    if(couponCode.isNotEmpty())
+                      viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
                     Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1)
@@ -427,7 +455,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     addons_layout.visibility = View.GONE
                     package_layout.visibility = View.GONE
                     updateRenewal(cartList)
-                    totalCalculation()
+//                    totalCalculation()
+                    totalCalculationAfterCoupon()
                 } else {
                     Toasty.warning(requireContext(), "Renewal order not found").show()
                     ac.isBackCart = true
@@ -1037,7 +1066,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     months_validity_edit_dsc.visibility = View.VISIBLE
                     package_layout.visibility = View.GONE
                 }
-                totalCalculation()
+//                totalCalculation()
+                totalCalculationAfterCoupon()
 
 //                var event_attributes: HashMap<String, Double> = HashMap()
                 var event_attributes: HashMap<String, Any> = HashMap()
@@ -1220,7 +1250,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 discount_coupon_title.text = validCouponCode!!.coupon_key
                 cart_apply_coupon.visibility = View.GONE
                 discount_coupon_remove.visibility = View.VISIBLE
-                totalCalculation()
+//                totalCalculation()
+                totalCalculationAfterCoupon()
             } else {
                 validCouponCode = null
             }
@@ -1228,6 +1259,37 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         viewModel.getCheckoutKycClose().observe(this, Observer {
             proceedCheckoutPopup = it
+        })
+
+        viewModel.redeemCouponResult().observe(this, androidx.lifecycle.Observer {
+            if(it != null){
+                Log.v("redeemCouponResult" ," "+ it.coupon_key + " "+ it.couponDiscountAmt)
+                if (it != null) {
+                    //clear stored cartOrderInfo
+//                    prefs.storeCartOrderInfo(null)
+
+                    //save coupon Details
+//                    prefs.storeApplyedCouponDetails(it)
+
+//                    validCouponCode = it
+                    couponServiceModel = it
+                    couponCode = it!!.coupon_key!!
+                    discount_coupon_title.text = it!!.coupon_key
+                    cart_apply_coupon.visibility = View.GONE
+                    discount_coupon_remove.visibility = View.VISIBLE
+                    if(it.success!!){
+                        discount_coupon_message.visibility = View.VISIBLE
+                        discount_coupon_message.text = it.message
+                    }else{
+                        discount_coupon_message.visibility = View.VISIBLE
+                        discount_coupon_message.text = it.message
+                    }
+                    totalCalculationAfterCoupon()
+                } else {
+                    validCouponCode = null
+                }
+            }
+
         })
         //get customerId
 //        viewModel.getCustomerId().observe(this, Observer {
@@ -1312,7 +1374,46 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }
         }
     }
+    fun totalCalculationAfterCoupon() {
+        if (::cartList.isInitialized) {
+            total = 0.0
+            couponDiscountAmount = 0.0
+            var couponDisount = 0
+            if (validCouponCode != null) {
+                couponDisount = validCouponCode!!.discount_percent
+                coupon_discount_title.text = "Coupon discount(" + couponDisount.toString() + "%)"
+            } else {
+                coupon_discount_title.text = "Coupon discount"
+            }
+            if (cartList != null && cartList.size > 0) {
+                for (item in cartList) {
+                    if (!bundles_in_cart && item.item_type.equals("features"))
+                        total += (item.price * default_validity_months)
+                    else
+                        total += item.price
+                }
+                cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
+                coupontotal = total
 
+                if(couponServiceModel != null)
+                   couponDiscountAmount = couponServiceModel?.couponDiscountAmt!!
+                else
+                   couponServiceModel = null
+//                couponDiscountAmount = total * couponDisount / 100
+//                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
+                coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
+                total -= couponDiscountAmount
+                Log.v("cart_amount_value"," "+ total)
+                val temp = (total * 18) / 100
+                taxValue = Math.round(temp * 100) / 100.0
+                grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
+                igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
+                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+                cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+                footer_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+            }
+        }
+    }
 
     override fun deleteCartAddonsItem(itemID: String) {
         viewModel.deleteCartItems(itemID)
@@ -1359,7 +1460,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     cartList.removeAt(position)
                     cartRenewalAdaptor.renewalNotify(cartList)
                     cartRenewalAdaptor.notifyDataSetChanged()
-                    totalCalculation()
+//                    totalCalculation()
+                    totalCalculationAfterCoupon()
                     prefs.storeCartOrderInfo(null)
                     if (cartList.isEmpty()) {
                         empty_cart.visibility = View.VISIBLE

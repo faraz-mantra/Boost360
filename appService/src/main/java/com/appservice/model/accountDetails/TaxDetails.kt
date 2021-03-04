@@ -2,6 +2,7 @@ package com.appservice.model.accountDetails
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class TaxDetails(
     @SerializedName("GSTDetails")
@@ -10,4 +11,4 @@ data class TaxDetails(
     var pANDetails: PANDetails? = null,
     @SerializedName("TANDetails")
     var tANDetails: TANDetails? = null
-)
+): Serializable

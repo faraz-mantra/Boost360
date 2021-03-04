@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/size_12"
+    android:layout_marginStart="@dimen/size_10"
+    android:layout_marginEnd="@dimen/size_10"
+    android:layout_marginTop="@dimen/size_10"
+    app:cardUseCompatPadding="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <com.framework.views.roundedimageview.RoundedImageView
+          android:id="@+id/image_icon"
+          android:layout_width="@dimen/size_60"
+          android:layout_height="@dimen/size_60"
+          android:scaleType="centerCrop"
+          app:riv_corner_radius="@dimen/size_4"
+          app:srcCompat="@drawable/placeholder_image_n" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_10"
+          android:text="Abhishek Arora"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="HEADING_4" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <com.framework.views.DashedDividerView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        app:dividerDashColor="@color/gray_bbb"
+        app:dividerDashGap="@dimen/size_5"
+        app:dividerDashWidth="@dimen/size_5" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_16"
+        android:layout_marginEnd="@dimen/size_10"
+        android:text="Abhishek Arora"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="HEADING_5" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_10"
+        tools:text="Very happy with the treatment of Dr Lohia. Getting treatment under him from last one month there is tremendous relief .. Thank you doctor and thanks hospital for the good services"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="BODY_2" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </com.framework.views.customViews.CustomCardView>
+</layout>

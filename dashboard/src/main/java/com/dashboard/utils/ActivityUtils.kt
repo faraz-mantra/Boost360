@@ -14,8 +14,8 @@ import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
+import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.pref.*
-import com.framework.utils.convertStringToList
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
@@ -23,7 +23,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
-import java.util.ArrayList
+import java.util.*
 
 
 const val VISITS_TYPE_STRING = "visits_type_string"
@@ -32,6 +32,7 @@ const val RIA_NODE_DATA = "riaNodeDatas"
 
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
+    session.fpTag
     WebEngageController.trackEvent("Digital Channel Page", "startview", session.fpTag);
     val bundle = Bundle()
     session.setHeader(WA_KEY)
@@ -315,7 +316,7 @@ fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
 
 fun AppCompatActivity.startReferralView(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Refer a friend ", "startview", session?.fpTag);
+    WebEngageController.trackEvent("Refer and Earn ", "startview", session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
     startActivity(webIntent)
     overridePendingTransition(0, 0)
@@ -522,9 +523,9 @@ fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startBusinessDescriptionEdit(session: UserSessionManager?) {
+fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Description Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent("Business Profile Page", "startview", session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -590,6 +591,15 @@ fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: St
   }
 }
 
+
+fun AppCompatActivity.startReadinessScoreView(session: UserSessionManager?,position:Int=0) {
+  try {
+    WebEngageController.trackEvent("Digital readiness score Page", "startview", session?.fpTag)
+    startFragmentDashboardActivity(com.dashboard.constant.FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(com.dashboard.constant.IntentConstant.POSITION.name, position) })
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
 
 fun AppCompatActivity.startSelfBrandedGateway(session: UserSessionManager?) {
   try {

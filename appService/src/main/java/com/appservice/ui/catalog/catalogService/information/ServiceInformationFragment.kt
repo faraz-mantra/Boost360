@@ -13,10 +13,10 @@ import com.appservice.databinding.FragmentServiceInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
 import com.appservice.model.auth_3
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.addProductImage.response.DataImage
-import com.appservice.model.serviceProduct.gstProduct.response.DataG
+import com.appservice.model.serviceProduct.gstProduct.response.GstData
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
@@ -34,7 +34,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
-  private var product: Product? = null
+  private var product: CatalogProduct? = null
   private var isEdit: Boolean? = null
   private var tagList = ArrayList<String>()
   private var specList: ArrayList<KeySpecification> = arrayListOf(KeySpecification())
@@ -44,7 +44,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private var ordersQuantity: Int = 0
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
-  private var gstProductData: DataG? = null
+  private var gstProductData: GstData? = null
 
   companion object {
     fun newInstance(): ServiceInformationFragment {
@@ -66,10 +66,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
             binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification,
-            binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst)
-    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
+            binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst,binding?.weeklyAppointmentSchedule)
+    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
-    gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
+    gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
     secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
             ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
@@ -154,10 +154,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
 
       }
-//      binding?.weeklyAppointmentSchedule -> {
-//        startFragmentActivity(FragmentType.TIMING_STAFF, isResult = true)
-//
-//      }
+      binding?.weeklyAppointmentSchedule -> {
+        startFragmentActivity(FragmentType.WEEKLY_APPOINTMENT_FRAGMENT, isResult = true)
+
+      }
     }
   }
 
@@ -222,11 +222,12 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           "YES" -> product?.prepaidOnlineAvailable = true
           "NO" -> product?.prepaidOnlineAvailable = false
         }
+        if (product?.keySpecification == null) product?.keySpecification = KeySpecification()
         product?.keySpecification?.key = keySpecification
         product?.keySpecification?.value = valSpecification
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
-        if (gstProductData == null) gstProductData = DataG()
+        if (gstProductData == null) gstProductData = GstData()
         gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
@@ -262,7 +263,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun secondaryImage(mPaths: ArrayList<String>) {
     if (secondaryImage.size < 8) {
-      if (mPaths.size + secondaryImage.size > 8) showLongToast("Only 8 files are allowed. Discarding the rest.")
+      if (mPaths.size + secondaryImage.size > 8) showLongToast(resources.getString(R.string.only_eight_files_are_allowed_discarding))
       var index: Int = secondaryImage.size
       while (index < 8 && mPaths.isNotEmpty()) {
         secondaryImage.add(FileModel(path = mPaths[0]))
@@ -270,7 +271,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         index++
       }
       setAdapter()
-    } else showLongToast("Only 8 files are allowed.")
+    } else showLongToast(resources.getString(R.string.only_eight_files_allowed))
   }
 
   private fun setAdapter() {
@@ -289,7 +290,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         if (isEdit == true && data?.pathUrl.isNullOrEmpty().not()) {
           val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl }
                   ?: return
-          showProgress("Removing image...")
+          showProgress(resources.getString(R.string.removing_image))
           val request = ProductImageDeleteRequest()
           request.setQueryData(dataImage.id)
           viewModel?.deleteProductImage(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
@@ -297,7 +298,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
               setAdapter()
-            } else showLongToast("Removing image failed, please try again.")
+            } else showLongToast(resources.getString(R.string.removing_image_failed))
             hideProgress()
           })
         } else {

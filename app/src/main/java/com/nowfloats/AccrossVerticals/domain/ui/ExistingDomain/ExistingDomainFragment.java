@@ -1,20 +1,12 @@
 package com.nowfloats.AccrossVerticals.domain.ui.ExistingDomain;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -22,15 +14,17 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.model.ExistingDomain.ExistingDomainRequest;
-import com.nowfloats.AccrossVerticals.API.model.ExistingDomain.ExistingDomainResponse;
-import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Restaurants.BookATable.BookATableActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -184,6 +178,7 @@ public class ExistingDomainFragment extends Fragment {
                         if (response.getStatus() == 200) {
                             Methods.showSnackBarPositive(requireActivity(), "Request Successfully.");
                             requireActivity().onBackPressed();
+                            onDomainAddedOrUpdated(true);
                         } else {
                             Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
                         }
@@ -199,6 +194,13 @@ public class ExistingDomainFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void onDomainAddedOrUpdated(Boolean isAdded) {
+        FirestoreManager instance = FirestoreManager.INSTANCE;
+        if(instance.getDrScoreData().getMetricdetail()==null) return;
+        instance.getDrScoreData().getMetricdetail().setBoolean_add_custom_domain_name_and_ssl(isAdded);
+        instance.updateDocument();
     }
 
     private boolean validate() {
