@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primaryColor">#EC008C</color>
+    <color name="primaryColor">@color/colorPrimary</color>
     <color name="greenDark">#458b00</color>
     <color name="product_delete_btn">#ff3f3f</color>
 
 <!--    <color name="primaryColorDark">#d99d00</color>-->
-    <color name="primaryColorDark">#EC008C</color>
-    <color name="accentColor">#615b5b</color>
+    <color name="primaryColorDark">@color/colorPrimaryDark</color>
+    <color name="accentColor">@color/colorAccent</color>
 
     <color name="percentage_text_color">#c5c5c5</color>
     <color name="side_panel_progress_bar_blue">#289dd9</color>
