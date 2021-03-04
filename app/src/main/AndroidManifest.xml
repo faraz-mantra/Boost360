@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:sharedUserId="com.nowfloats.kb.boostapp.sharedkey"
+    android:sharedUserId="@string/shared_user_key"
     android:sharedUserLabel="@string/shared_user_label">
 
     <permission

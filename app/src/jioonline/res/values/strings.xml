@@ -377,5 +377,5 @@
 
     <string name="link_marketplace">boost.nowfloats.com/home/marketplace</string>
     <string name="wordpress_plugin_script">wordpress-plugin script</string>
-
+    <string name="shared_user_key">com.jioonline.kb.boostapp.sharedkey</string>
 </resources>
