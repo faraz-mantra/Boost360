@@ -63,6 +63,7 @@ const val deeplink_gplaces = "gplaces"
 const val deeplink_nfstorebiztiming = "nfstorebiztiming"
 const val deeplink_ProductGallery = "productGallery"
 const val deeplink_sitemeter = "sitemeter"
+const val deeplink_DR_SCORE = "dr_score"
 const val deeplink_assuredPurchase = "assuredPurchase"
 const val deeplink_accSettings = "accSettings"
 const val deeplink_uniqueVisitor = "uniqueVisitor"
@@ -88,6 +89,7 @@ const val deeplink_book_table = "book_table"
 const val deeplink_my_add_ons = "my_add_ons"
 const val deeplink_recommended_add_ons = "recommended_add_ons"
 const val deeplink_item_on_market_place = "ITEM_ONS_MARKETPLACE"
+const val deeplink_REFER_EARN = "refer_and_earn"
 const val deeplink_compare_package = "compare_package_selection"
 
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
@@ -186,8 +188,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startBusinessLogo(session)
         } else if (url.contains(deeplink_nfstoreDomainTTBCombo)) {
           baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
-        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health)) {
-          baseActivity.startReadinessScoreView(session,0)
+        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(deeplink_DR_SCORE)) {
+          baseActivity.startReadinessScoreView(session, 0)
         } else if (url.contains(deeplink_imageGallery)) {
           baseActivity.startAddImageGallery(session, isCreate = false)
         } else if (url.contains(deeplink_ProductGallery)) {
@@ -243,8 +245,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (buyItemKey.isNotEmpty() && url.contains(deeplink_item_on_market_place)) {
           baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "", buyItemKey)
-        }else if (url.contains(deeplink_compare_package)) {
+        } else if (url.contains(deeplink_compare_package)) {
           baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
+        } else if (url.contains(deeplink_REFER_EARN)) {
+          baseActivity.startReferralView(session)
         }
       }
     } catch (e: Exception) {

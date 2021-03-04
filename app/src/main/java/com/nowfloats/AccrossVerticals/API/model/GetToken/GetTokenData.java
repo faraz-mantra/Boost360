@@ -1,21 +1,30 @@
 package com.nowfloats.AccrossVerticals.API.model.GetToken;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class GetTokenData {
 
-    public String getToken() {
-        return Token;
-    }
+	@SerializedName("WebActions")
+	private List<WebActionsItem> webActions;
 
-    public void setToken(String token) {
-        Token = token;
-    }
+	@SerializedName("Token")
+	private String token;
 
-    @SerializedName("Token")
-    @Expose
-    private String Token;
+	public List<WebActionsItem> getWebActions(){
+		return webActions;
+	}
 
+	public void setWebActions(List<WebActionsItem> webActions){
+		this.webActions = webActions;
+	}
 
+	public String getToken(){
+		return token;
+	}
+
+	public void setToken(String token){
+		this.token = token;
+	}
 }

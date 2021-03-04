@@ -86,7 +86,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
         val userProfile = ProfileProperties(userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
         val cardData = CardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
-            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,getIconCard())
+            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl, getIconCard())
 
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
@@ -206,6 +206,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
   private fun onBusinessCardAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_share_business_card = isAdded
     instance.updateDocument()
   }
@@ -254,10 +255,11 @@ fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
 }
 
 fun addPlus91(userMobile: String?): String? {
-  if ((userMobile?.contains("+91") == true || userMobile?.contains("+91-") == true).not()) {
-    return "+91-$userMobile"
+  return when {
+    userMobile?.contains("+91-") == true -> userMobile.replace("+91-", "+91")
+    userMobile?.contains("+91") == false -> "+91$userMobile"
+    else -> userMobile
   }
-  return userMobile
 }
 
 data class LocalSessionModel(

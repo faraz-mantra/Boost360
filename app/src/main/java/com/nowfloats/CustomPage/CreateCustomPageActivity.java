@@ -506,6 +506,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
 
     private void onCustomPageAddedOrUpdated() {
         FirestoreManager instance = FirestoreManager.INSTANCE;
+        if(instance.getDrScoreData().getMetricdetail()==null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_create_custom_page(true);
         instance.updateDocument();
     }

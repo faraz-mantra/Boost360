@@ -353,7 +353,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         if (message.isNotEmpty()) {
           updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
         } else {
-          orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_cancel)) }
+          orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_delivery)) }
         }
       } else {
         showLongToast(it.message())
