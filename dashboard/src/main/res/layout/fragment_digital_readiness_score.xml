@@ -84,7 +84,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:textColor="@color/accent_dark"
-            app:fontFamily="@font/regular"
+            app:fontFamily="@font/barlow_regular"
             app:textType="HEADING_TEXT_3"
             tools:text="26%" />
 

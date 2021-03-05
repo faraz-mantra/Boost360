@@ -328,6 +328,7 @@ class SignUpActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, SignUpConfirmation::class.java)
             intent.putExtra("profileUrl", profileUrl)
             intent.putExtra("person_name", personName)
+            intent.putExtra("person_email", email )
             intent.putExtra("profile_id", responseResult?.Result?.LoginId)
             startActivity(intent)
           } else {
