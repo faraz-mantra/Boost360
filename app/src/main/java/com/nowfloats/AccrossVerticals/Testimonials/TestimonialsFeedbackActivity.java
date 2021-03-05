@@ -82,6 +82,8 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     UserSessionManager session;
     TestimonialData existingItemData = null;
     EditText userNameText, reviewTitleText, reviewDescriptionText, profileDescEdt;
+  LinearLayout profileDescView, reviewTitleView;
+  TextView titleProfileDesc, isFillProfileDesc;
     CardView imageLayout;
     ImageView profileImage;
     ImageButton removeProfileImage;
