@@ -102,74 +102,60 @@ public class Get_FP_Details_Service {
               @Override
               public void failure(RetrofitError error) {
 
-                                Log.d("getStoreList_fail", error.getMessage());
-                            }
-                        });
-                        bus.post(new Get_FP_Details_Event(get_fp_details_model));
-                    } else {
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (activity == null || activity.isFinishing()) {
-                                    return;
-                                }
-                                Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
-                                WebEngageController.trackEvent(ANDROID_GET_FP_DETAILS_FP_DATA_NULL, EVENT_LABEL_ANDROID_GET_FP_DETAILS_FP_DATA_NULL, fpID);
+                Log.d("getStoreList_fail", error.getMessage());
+              }
+            });
+            bus.post(new Get_FP_Details_Event(get_fp_details_model));
+          } else {
+            activity.runOnUiThread(() -> {
+              if (activity.isFinishing()) return;
+              Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
+              WebEngageController.trackEvent(ANDROID_GET_FP_DETAILS_FP_DATA_NULL, EVENT_LABEL_ANDROID_GET_FP_DETAILS_FP_DATA_NULL, fpID);
 
-                if (WebSiteAddressActivity.pd != null) {
-                  WebSiteAddressActivity.pd.dismiss();
-                }
-                if (SplashScreen_Activity.pd != null) {
-                  SplashScreen_Activity.pd.dismiss();
-                }
-
-                if (Login_MainActivity.progressDialog != null && Login_MainActivity.progressDialog.isShowing()) {
-                  Login_MainActivity.progressDialog.dismiss();
-                }
-
-                            }
-                        });
-                        bus.post(response);
-                    }
-                } catch (Exception e) {
-                    WebEngageController.trackEvent(ANDROID_GET_FP_DETAILS_SERVICE_EXCEPTION, EVENT_LABEL_ANDROID_GET_FP_DETAILS_SERVICE_EXCEPTION, e.getMessage());
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("", "" + error.getMessage());
-                WebEngageController.trackEvent(ANDROID_FAILED_TO_LOAD_DATA_IN_GET_FP_DETAILS, EVENT_LABEL_ANDROID_FAILED_TO_LOAD_DATA_IN_GET_FP_DETAILS, fpID);
-
-        try {
-          activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-              //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
               if (WebSiteAddressActivity.pd != null) {
                 WebSiteAddressActivity.pd.dismiss();
               }
               if (SplashScreen_Activity.pd != null) {
-                try {
-                  SplashScreen_Activity.pd.dismiss();
-                } catch (Exception e) {
-                  e.printStackTrace();
-                }
+                SplashScreen_Activity.pd.dismiss();
+              }
+
+              if (Login_MainActivity.progressDialog != null && Login_MainActivity.progressDialog.isShowing()) {
+                Login_MainActivity.progressDialog.dismiss();
+              }
+            });
+            bus.post(response);
+          }
+        } catch (Exception e) {
+          WebEngageController.trackEvent(ANDROID_GET_FP_DETAILS_SERVICE_EXCEPTION, EVENT_LABEL_ANDROID_GET_FP_DETAILS_SERVICE_EXCEPTION, e.getMessage());
+          bus.post(e.getLocalizedMessage());
+        }
+      }
+
+      @Override
+      public void failure(RetrofitError error) {
+        Log.d("", "" + error.getMessage());
+        WebEngageController.trackEvent(ANDROID_FAILED_TO_LOAD_DATA_IN_GET_FP_DETAILS, EVENT_LABEL_ANDROID_FAILED_TO_LOAD_DATA_IN_GET_FP_DETAILS, fpID);
+        try {
+          activity.runOnUiThread(() -> {
+            //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
+            if (WebSiteAddressActivity.pd != null) {
+              WebSiteAddressActivity.pd.dismiss();
+            }
+            if (SplashScreen_Activity.pd != null) {
+              try {
+                SplashScreen_Activity.pd.dismiss();
+              } catch (Exception e) {
+                e.printStackTrace();
               }
             }
           });
-
           MixPanelController.track(EventKeysWL.GET_FP_FAILURE_EVENT, null);
-
           bus.post(error);
         } catch (Exception e) {
-
+          bus.post(e.getLocalizedMessage());
         }
-
       }
     });
-
-
   }
 
   public static void autoPull(Activity activity, String fpID) {
@@ -232,23 +218,20 @@ public class Get_FP_Details_Service {
         Log.d("", "" + error.getMessage());
         try {
           bus.post(new NfxGetTokensResponse());
-          activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-              //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
-              if (WebSiteAddressActivity.pd != null) {
-                WebSiteAddressActivity.pd.dismiss();
-              }
-              if (SplashScreen_Activity.pd != null) {
-                bus.post(new NfxGetTokensResponse());
-                try {
-                  SplashScreen_Activity.pd.dismiss();
-                } catch (Exception e) {
-                  e.printStackTrace();
-                }
-              }
-
+          activity.runOnUiThread(() -> {
+            //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
+            if (WebSiteAddressActivity.pd != null) {
+              WebSiteAddressActivity.pd.dismiss();
             }
+            if (SplashScreen_Activity.pd != null) {
+              bus.post(new NfxGetTokensResponse());
+              try {
+                SplashScreen_Activity.pd.dismiss();
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            }
+
           });
         } catch (Exception e) {
 

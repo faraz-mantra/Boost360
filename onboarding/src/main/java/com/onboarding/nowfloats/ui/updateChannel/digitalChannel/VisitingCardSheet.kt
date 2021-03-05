@@ -255,10 +255,11 @@ fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
 }
 
 fun addPlus91(userMobile: String?): String? {
-  if ((userMobile?.contains("+91") == true || userMobile?.contains("+91-") == true).not()) {
-    return "+91-$userMobile"
+  return when {
+    userMobile?.contains("+91-") == true -> userMobile.replace("+91-", "+91")
+    userMobile?.contains("+91") == false -> "+91$userMobile"
+    else -> userMobile
   }
-  return userMobile
 }
 
 data class LocalSessionModel(

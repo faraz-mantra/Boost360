@@ -1,6 +1,7 @@
 package com.boost.upgrades.ui.details
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
@@ -53,7 +54,9 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
                             updatesError.postValue(it.message)
                             updatesLoader.postValue(false)
                         }
-                        .subscribe()
+//                        .subscribe(),
+                .subscribe({}, {e -> Log.e("TAG", "Empty DB")}
+        )
         )
     }
 

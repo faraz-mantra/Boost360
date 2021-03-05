@@ -23,7 +23,7 @@ public class WebEngageController {
         trackEvent.put("event_label", event_label);
         trackEvent.put("event_value", event_value);
         weAnalytics.track(event_name, trackEvent);
-
+        weAnalytics.screenNavigated(event_name);
         //Firebase Analytics Event...
         FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
 

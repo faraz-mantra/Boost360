@@ -18,6 +18,8 @@ import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.webengageconstant.APPOINTMENTS
 import com.framework.webengageconstant.CLICKED_ON_APPOINTMENTS
+import com.framework.webengageconstant.APPOINTMENTS
+import com.framework.webengageconstant.CLICKED_ON_APPOINTMENTS
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -54,7 +56,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private var orderList = ArrayList<OrderItem>()
   private var orderListFilter = ArrayList<OrderItem>()
   private var layoutManager: LinearLayoutManager? = null
-  private var experienceCode: String? = null
   private var filterItem: FilterModel? = null
   private var filterList: ArrayList<FilterModel> = FilterModel().getDataAppointments()
   private var searchView: SearchView? = null
@@ -77,10 +78,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent( CLICKED_ON_APPOINTMENTS , APPOINTMENTS, it) }
-    experienceCode = arguments?.getString(IntentConstant.EXPERIENCE_CODE.name)?.trim()
+    fpTag?.let { WebEngageController.trackEvent( CLICKED_ON_APPOINTMENTS , APPOINTMENTS, it)}
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
+    binding?.btnAdd?.visibility=if (data?.experienceCode.equals("DOC",true) && data?.experienceCode.equals("HOS",true)) View.VISIBLE else View.GONE
     layoutManager = LinearLayoutManager(baseActivity)
     setOnClickListener(binding?.btnAdd)
     layoutManager?.let { scrollPagingListener(it) }
@@ -92,7 +93,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     super.onClick(v)
     when (v) {
       binding?.btnAdd -> {
-//        showLongToast("Coming soon...")
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)

@@ -1,11 +1,18 @@
 package com.appservice.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import com.appservice.R
 import com.framework.base.BaseFragment
+import com.framework.base.BaseResponse
+import com.framework.exceptions.NoNetworkException
+import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 
 abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
@@ -37,4 +44,40 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     cancelable?.let { progressView?.isCancelable = it }
     activity?.let { progressView?.showProgress(it.supportFragmentManager) }
   }
+
+  protected fun isResponseSuccessful(it: BaseResponse, errorMessage: String?): Boolean {
+    if ((it.error is NoNetworkException).not()) {
+      if ((it.isSuccess())) {
+        return true
+      } else {
+        Log.d("BaseResponseData", it.message())
+        showErrorMessage(errorMessage)
+      }
+    } else showErrorMessage(resources.getString(R.string.internet_connection_not_available))
+
+    return false;
+  }
+
+  protected fun hitApi(liveData: LiveData<BaseResponse>?, errorStringId: Int) {
+    liveData?.observeOnce(viewLifecycleOwner, {
+      if (isResponseSuccessful(it, resources.getString(errorStringId))) {
+        onSuccess(it)
+      } else {
+        onFailure(it)
+      }
+    })
+  }
+
+  open fun onSuccess(it: BaseResponse) {
+    Log.d("TAG", "onSuccess")
+  }
+
+  open fun onFailure(it: BaseResponse) {
+  }
+
+  private fun showErrorMessage(string: String?) {
+    hideProgress()
+    showLongToast(string)
+  }
+
 }

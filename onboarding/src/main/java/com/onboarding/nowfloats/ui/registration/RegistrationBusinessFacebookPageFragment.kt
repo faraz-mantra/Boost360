@@ -2,7 +2,9 @@ package com.onboarding.nowfloats.ui.registration
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
@@ -70,17 +72,18 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     setSavedData()
   }
 
-  private fun checkIsUpdate() {
-    if (requestFloatsModel?.isUpdate == true) {
-      requestFloatsModel?.channelAccessTokens?.forEach {
-        if (it.type == ChannelAccessToken.AccessTokenType.facebookpage.name) {
-          channelAccessToken = it
-          channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(it.userAccountId ?: "")
-          isShowProfile = true
+    private fun checkIsUpdate() {
+        if (requestFloatsModel?.isUpdate == true) {
+            requestFloatsModel?.channelAccessTokens?.forEach {
+                if (it.type == ChannelAccessToken.AccessTokenType.facebookpage.name) {
+                    channelAccessToken = it
+                    channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(it.userAccountId
+                            ?: "")
+                    isShowProfile = true
+                }
+            }
         }
-      }
     }
-  }
 
   override fun setSavedData() {
     val channelAccessToken = requestFloatsModel?.channelAccessTokens
@@ -100,17 +103,13 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
         super.onClick(v)
         when (v) {
             binding?.skip -> {
-
                 //linking facebook profile Skip Event Tracker.
                 WebEngageController.trackEvent(LINKING_FACEBOOK_PROFILE, BUTTON, SKIP)
-
                 gotoNextScreen()
             }
             binding?.linkFacebook -> {
-
                 //linking facebook profile Yes Event Tracker.
                 WebEngageController.trackEvent(LINKING_FACEBOOK_PROFILE, BUTTON, YES)
-
                 if (channelAccessToken.isLinked()) {
                     gotoNextScreen()
                 } else if (!NetworkUtils.isNetworkConnected()) {
@@ -121,11 +120,8 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
                         FacebookPermissions.read_insights,
                         FacebookPermissions.business_management,
                         FacebookPermissions.pages_show_list,
-                        FacebookPermissions.pages_manage_cta,
-                        FacebookPermissions.pages_manage_metadata
-//            FacebookPermissions.manage_pages,
-//            FacebookPermissions.publish_pages,
-//            FacebookPermissions.ads_management
+                        FacebookPermissions.pages_manage_metadata,
+                        FacebookPermissions.ads_management, FacebookPermissions.pages_manage_posts,
                 ))
             }
         }
@@ -184,20 +180,21 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
 
   }
 
-  private fun onFacebookPagesFetched(response: FacebookGraphUserPagesResponse?) {
-    val pages = response?.data ?: return
-    //if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
-    val page = pages.firstOrNull() ?: return
-    channelAccessToken.userAccessTokenKey = page.access_token;
-    channelAccessToken.userAccountId = page.id
-    channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
-    channelAccessToken.userAccountName = page.name
-    setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
-  }
+    private fun onFacebookPagesFetched(response: FacebookGraphUserPagesResponse?) {
+        val pages = response?.data ?: return
+//        if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
+        val page = pages.firstOrNull() ?: return
+        Log.d("UserToken", ""+AccessToken.getCurrentAccessToken().token);
+        Log.d("PageToken", ""+page.access_token);
+        channelAccessToken.userAccessTokenKey = page.access_token
+        channelAccessToken.userAccountId = page.id
+        channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
+        channelAccessToken.userAccountName = page.name
+        setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
+    }
 
     override fun setProfileDetails(name: String?, profilePicture: String?) {
         requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(FACEBOOK_PAGE_CONNECTED, DIGITAL_CHANNELS, it) }
-
         val binding = binding?.facebookPageSuccess ?: return
         this.binding?.skip?.gone()
         binding.maimView.visible()
