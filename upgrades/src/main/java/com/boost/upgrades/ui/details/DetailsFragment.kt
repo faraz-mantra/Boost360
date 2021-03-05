@@ -444,7 +444,10 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         })
 
         viewModel.addonsError().observe(this, Observer {
-            longToast(requireContext(), "onFailure: " + it)
+//            longToast(requireContext(), "onFailure: " + it)
+            println("addonsError ${it}")
+            if(it.contains("Query returned empty"))
+              (activity as UpgradeActivity).popFragmentFromBackStack()
         })
 
         viewModel.addonsLoader().observe(this, Observer {
@@ -511,6 +514,11 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
 
     private fun getDiscountedPrice(price: Int, discountPercent: Int): Int {
         return price - ((discountPercent/100) * price)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().viewModelStore.clear()
     }
 
 }

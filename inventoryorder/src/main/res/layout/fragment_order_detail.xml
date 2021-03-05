@@ -548,7 +548,8 @@
       android:layout_height="match_parent"
       android:gravity="center"
       android:textColor="@color/scarlet_40"
-      android:visibility="gone"
+      android:visibility="visible"
+      tools:visibility="gone"
       app:fontFamily="@font/bold"
       app:textType="BODY_1"
       tools:text="Error" />

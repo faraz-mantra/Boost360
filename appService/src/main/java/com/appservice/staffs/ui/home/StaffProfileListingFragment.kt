@@ -24,6 +24,9 @@ import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.ui.model.ItemsItem
+import com.appservice.ui.model.ServiceSearchListingResponse
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -37,6 +40,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   private val finalList: ArrayList<DataItem> = arrayListOf()
   private var adapterStaff: AppBaseRecyclerViewAdapter<DataItem>? = null
   private var layoutManagerN: LinearLayoutManager? = null
+  private var isNonPhysicalExperience: Boolean? = null
+  private var currencyType: String? = "INR"
+  private var externalSourceId: String? = null
+  private var applicationId: String? = null
+  private var userProfileId: String? = null
 
   /* Paging */
   private var isLoadingD = false
@@ -44,6 +52,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   private var offSet: Int = PAGE_START
   private var limit: Int = PAGE_SIZE
   private var isLastPageD = false
+  private var isServiceAdd = false
 
   override fun getLayout(): Int {
     return R.layout.fragment_staff_listing
@@ -61,11 +70,32 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onCreateView() {
     super.onCreateView()
+    getBundleData()
     layoutManagerN = LinearLayoutManager(baseActivity)
-    fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+    getListServiceFilterApi()
     layoutManagerN?.let { scrollPagingListener(it) }
     swipeRefreshListener()
-    setOnClickListener(binding?.btnAddStaff)
+    setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService)
+  }
+
+  private fun getBundleData() {
+    isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
+    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
+    externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
+    applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
+    userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
+  }
+
+  private fun getListServiceFilterApi() {
+    showProgress()
+    viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)?.observeOnce(viewLifecycleOwner, {
+      if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
+        fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+      } else {
+        hideProgress()
+        setEmptyView(isStaffEmpty = false, isServiceEmpty = true)
+      }
+    })
   }
 
   private fun swipeRefreshListener() {
@@ -139,9 +169,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     } else adapterStaff?.notifyDataSetChanged()
   }
 
-  private fun setEmptyView(isEmpty: Boolean) {
-    binding?.emptyView?.visibility = if (isEmpty) View.VISIBLE else View.GONE
-    binding?.rvStaffList?.visibility = if (isEmpty) View.GONE else View.VISIBLE
+  private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
+    binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
+    binding?.staffEmpty?.root?.visibility = if (isStaffEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
+    binding?.rvStaffList?.visibility = if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
   }
 
   private fun removeLoader() {
@@ -165,7 +196,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
     searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
     searchAutoComplete?.setTextColor(getColor(R.color.white))
-    searchView?.queryHint = "Search Staff"
+    searchView?.queryHint = getString(R.string.search_staff)
     searchView?.setOnQueryTextListener(this)
   }
 
@@ -184,8 +215,25 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.btnAddStaff -> startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+      binding?.serviceEmpty?.cbAddService -> {
+        isServiceAdd = true
+        startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)
+      }
     }
+  }
+
+  private fun sendBundleData(): Bundle {
+    val bundle = Bundle()
+    bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience ?: false)
+    bundle.putString(IntentConstant.CURRENCY_TYPE.name, currencyType)
+    bundle.putString(IntentConstant.FP_ID.name, UserSession.fpId)
+    bundle.putString(IntentConstant.FP_TAG.name, UserSession.fpTag)
+    bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
+    bundle.putString(IntentConstant.CLIENT_ID.name, UserSession.clientId)
+    bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
+    bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
+    return bundle
   }
 
   override fun onQueryTextSubmit(query: String?): Boolean {
@@ -207,7 +255,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       if (isRefresh) {
         this.offSet = PAGE_START
         this.limit = PAGE_SIZE
-        fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+        if (isServiceAdd) getListServiceFilterApi()
+        else fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
       }
     }
   }

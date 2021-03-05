@@ -10,11 +10,13 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
-import com.inventoryorder.ui.appointmentspa.ReviewAndConfirmFragment
-import com.inventoryorder.ui.appointmentspa.SpaAppointmentFragment
+import com.inventoryorder.ui.appointmentSpa.create.ReviewAndConfirmFragment
+import com.inventoryorder.ui.appointmentSpa.create.SpaAppointmentFragment
+import com.inventoryorder.ui.appointmentSpa.list.AppointmentSpaDetailsFragment
+import com.inventoryorder.ui.appointmentSpa.list.AppointmentSpaFragment
 import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
 import com.inventoryorder.ui.consultation.VideoConsultFragment
-import com.inventoryorder.ui.createAptConsult.CreateAppointmentFragment
+import com.inventoryorder.ui.appointment.createAptConsult.CreateAppointmentFragment
 import com.inventoryorder.ui.createAptOld.BookingSuccessfulFragment
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentOne
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentTwo
@@ -34,6 +36,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
     get() {
       return preferenceData?.clientId
     }
+
   protected val auth: String
     get() {
       return preferenceData?.authorization ?: ""
@@ -47,6 +50,8 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is OrderDetailFragment -> R.layout.fragment_order_detail
       is AppointmentsFragment -> R.layout.fragment_appointments
       is AppointmentDetailsFragment -> R.layout.fragment_appointment_details
+      is AppointmentSpaFragment -> R.layout.fragment_appointments_spa
+      is AppointmentSpaDetailsFragment -> R.layout.fragment_appointment_spa_details
       is VideoConsultFragment -> R.layout.fragment_video_consult
       is VideoConsultDetailsFragment -> R.layout.fragment_video_consult_details
       is NewBookingFragmentOne -> R.layout.fragment_new_booking_one
@@ -80,7 +85,9 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is OrdersFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
       is OrderDetailFragment -> inflater.inflate(R.menu.menu_invoice, menu)
       is AppointmentsFragment -> inflater.inflate(R.menu.menu_search_filter_icon, menu)
-      is AppointmentDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
+      is AppointmentSpaFragment -> inflater.inflate(R.menu.menu_search_filter_icon, menu)
+      is AppointmentSpaDetailsFragment -> inflater.inflate(R.menu.menu_invoice, menu)
+      is AppointmentDetailsFragment -> inflater.inflate(R.menu.menu_invoice, menu)
       is VideoConsultFragment -> inflater.inflate(R.menu.menu_search_filter_icon, menu)
       is VideoConsultDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is NewBookingFragmentOne -> inflater.inflate(R.menu.menu_toolbar, menu)

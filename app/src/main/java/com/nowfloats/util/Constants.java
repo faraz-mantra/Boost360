@@ -118,6 +118,7 @@ public class Constants {
     public static final String[] FACEBOOK_READ_PERMISSIONS = Specific.FACEBOOK_READ_PERMISSIONS;
     public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = Specific.FACEBOOK_PUBLISH_PERMISSIONS;
     //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
+    //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
     public final static String WEB_ACTION_BOOST_KIT_API_URL = "https://webaction.api.boostkit.dev";
     public final static String NOW_FLOATS_API_URL = "https://api2.withfloats.com";
     public final static String NOW_FLOATS_API_URL_SALESMAN = "http://52.66.59.196";
@@ -136,6 +137,7 @@ public class Constants {
     public final static String WA_BASE_URL = "https://kit-webaction-api.withfloats.com/api/v1/";
     public final static String AP_BASE_URL = "https://assuredpurchase.withfloats.com/api/AssuredPurchase/";
     public final static String AP_BOOST_BASE_URL = "https://boost.nowfloats.com/AssuredPurchase";
+    public final static String BOOST_NOWFLOATS_BASE_URL = "https://boost.nowfloats.com/Home";
     public final static String ANA_CHAT_API_URL = /*"http://chat-dev.nowfloatsdev.com";//*/"https://gateway.api.ana.chat";
     public final static String ANA_BUSINESS_ID = /*"Boost-Web";//*/"boost-agent-chat";
     public final static String ANALYTICS_BASE_URL = "https://api2.kitsune.tools/api/WebAnalytics/v1";
@@ -179,6 +181,7 @@ public class Constants {
     public static final RestAdapter apAdapter = new RestAdapter.Builder().setEndpoint(AP_BASE_URL).setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Order Response"))*/.build();
     //public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter restAdapterAnalytics = new RestAdapter.Builder().setEndpoint(Constants.ANALYTICS_BASE_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterAnalyticsWebApi = new RestAdapter.Builder().setEndpoint(Constants.BOOST_NOWFLOATS_BASE_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
 
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 

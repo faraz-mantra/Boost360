@@ -69,7 +69,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
       UserSession.apply {
         fpTag = intent.getStringExtra(IntentConstant.FP_TAG.name)
         fpId = intent.getStringExtra(IntentConstant.FP_ID.name)
-        customerID = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
+        clientId = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
       }
     }
   }
@@ -99,9 +99,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     return resources.getDimension(R.dimen.heading_7)
   }
 
-  override fun getNavIconScale(): Float {
-    return 1.0f
-  }
 
   override fun customTheme(): Int? {
     return when (fragmentType) {

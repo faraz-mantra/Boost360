@@ -39,6 +39,4 @@ android {
 
 dependencies {
     api project(path: ':resources')
-    // MY added libraries
-    api 'com.otaliastudios:cameraview:2.6.4'
 }

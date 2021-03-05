@@ -67,7 +67,7 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:layerType="software"
-                android:background="@drawable/dashed_rectangle"
+                android:background="@drawable/dashed_rectangle_offers"
                 android:text="Visit from a desktop to explore and install related add-ons to see inorganic traffic/leads"/>
 
         </FrameLayout>

@@ -14,16 +14,29 @@ object EndPoints {
   const val FETCH_STAFF_SERVICES = "product/v13/GetServiceListings"
   const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
   const val STAFF_PROFILE_UPDATE ="staff/v1/Update"
-  const val STAFF_PROFILE_DELETE ="staff/v1/Delete"
-  const val STAFF_ADD_TIMING ="staff/v1/AddStaffTiming"
-  const val STAFF_UPDATE_TIMING ="staff/v1/UpdateStaffTiming"
-  const val STAFF_UPDATE_IMAGE ="staff/v1/UpdateStaffImage"
-  const val STAFF_DELETE_IMAGE ="staff/v1/DeleteStaffImage"
-  const val GET_STAFF_DETAILS ="Staff/v1/GetStaffDetails"
+  const val STAFF_PROFILE_DELETE = "staff/v1/Delete"
+  const val STAFF_ADD_TIMING = "staff/v1/AddStaffTiming"
+  const val STAFF_UPDATE_TIMING = "staff/v1/UpdateStaffTiming"
+  const val STAFF_UPDATE_IMAGE = "staff/v1/UpdateStaffImage"
+  const val STAFF_DELETE_IMAGE = "staff/v1/DeleteStaffImage"
+  const val GET_STAFF_DETAILS = "Staff/v1/GetStaffDetails"
+
   //TODO WEEKLY APPOINTMENT APIS
   const val POST_UPDATE_SERVICE_TIMING = "service/v1/UpdateServiceTiming"
   const val POST_ADD_SERVICE_TIMING = "service/v1/AddServiceTiming"
   const val GET_SERVICE_TIMING = "service/v1/GetServiceTiming"
+
+  //TODO OFFERS NOW FLOATS APIS
+  const val POST_GET_OFFER_LISTING = "offers/v1/GetListing"
+  const val POST_CREATE_OFFER = "offers/v1/Create"
+  const val POST_UPDATE_OFFER = "offers/v1/Update"
+  const val POST_OFFER_DETAILS = "offers/v1/GetDetails"
+  const val POST_OFFER_DELETE = "offers/v1/Delete"
+  const val POST_OFFER_ADD_IMAGE = "offers/v1/AddImage"
+  const val POST_OFFER_DELETE_IMAGE = "offers/v1/DeleteImage"
+  const val POST_GET_TOP_OFFERS_FOR_FP = "offers/v1/GetTopOffersForFloatingPoint"
+  const val POST_GET_TOP_OFFERS_BY_CATEGORIES = "offers/v1/GetTopOffersByCategories"
+  const val POST_GET_TOP_OFFERS = "offers/v1/GetTopOffers"
 
   //TODO API.NOWFLOATS.COM FLOAT
   const val API_NOWFLOATS_COM_BASE = "https://api.nowfloats.com/"
@@ -33,7 +46,7 @@ object EndPoints {
   const val ADD_IMAGE_V1 = "service/v1/AddImage"
   const val GET_TAGS_V1 = "service/v1/tags"
   const val GET_SERVICE_DETAILS = "Service/v1/GetServiceDetails"
-  const val  DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
+  const val DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
 
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
@@ -83,5 +96,13 @@ object EndPoints {
   const val DELETE_PRODUCT_IMAGE = "api/v1/product_images/delete-data"
   const val FP_ONBOARDING_UPDATE_DATA = "api/v1/fp_onboarding/update-data"
 
+
+  //TODO BOOST KIT DEV API
+  const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
+  const val WEB_ACTION_TESTIMONIAL = "kitsune/v1/ListWebActionDetails/{themeID}"
+  const val GET_TESTIMONIAL = "api/v1/{testimonials}/get-data"
+  const val ADD_TESTIMONIAL = "api/v1/{testimonials}/add-data"
+  const val UPDATE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
+  const val DELETE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
 }
 
