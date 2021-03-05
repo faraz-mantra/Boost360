@@ -1,11 +1,11 @@
 package com.inventoryorder.ui.order.createorder
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.inventoryorder.R
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentAddCustomerBinding
@@ -17,13 +17,16 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
-import java.lang.StringBuilder
+import com.onboarding.nowfloats.model.CityDataModel
+import com.onboarding.nowfloats.ui.CitySearchDialog
+import java.util.regex.Pattern
 
 class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() {
 
   private var createOrderRequest = OrderInitiateRequest()
-  private var totalPrice = 0.0
   private var shouldReInitiate: Boolean = false
+  private var shouldFinish: Boolean = false
+  private var addMore: Boolean = false
 
   companion object {
     @JvmStatic
@@ -37,47 +40,41 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
   override fun onCreateView() {
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Add Customer", "ORDERS", it) }
-
-    setOnClickListener(binding?.vwNext, binding?.textAddCustomerGstin, binding?.tvRemove, binding?.textGoBack)
-
+    setOnClickListener(binding?.vwNext, binding?.textAddCustomerGstin, binding?.tvRemove, binding?.textGoBack,binding?.layoutBillingAddr?.editCity)
     createOrderRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
     setUpData()
-    totalPrice = arguments?.getSerializable(IntentConstant.TOTAL_PRICE.name) as Double
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.vwNext -> {
-       onNextTapped()
-      }
-
+      binding?.vwNext -> onNextTapped()
       binding?.textAddCustomerGstin -> {
-
         if (binding?.lytCustomerGstn?.visibility == View.GONE) {
           binding?.textAddCustomerGstin?.visibility = View.GONE
           binding?.lytCustomerGstn?.visibility = View.VISIBLE
         }
       }
-
       binding?.tvRemove -> {
         binding?.textAddCustomerGstin?.visibility = View.VISIBLE
         binding?.lytCustomerGstn?.visibility = View.GONE
       }
-
-      binding?.textGoBack -> {
-        (context as FragmentContainerOrderActivity).onBackPressed()
+      binding?.textGoBack -> (context as? FragmentContainerOrderActivity)?.onBackPressed()
+      binding?.layoutBillingAddr?.editCity->{
+        val dialog = CitySearchDialog()
+        dialog.onClicked = { setCityState(it) }
+        dialog.show(parentFragmentManager, dialog.javaClass.name)
       }
     }
   }
 
-  fun getBundleData(): Bundle? {
-    val bundle = Bundle()
-    shouldReInitiate?.let {
-      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+  fun getBundleData(): Bundle {
+    return Bundle().apply {
+      putBoolean(IntentConstant.SHOULD_RE_INITIATE.name, shouldReInitiate)
+      putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
+      putBoolean(IntentConstant.ADD_MORE_ITEM.name, addMore)
+      putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
     }
-    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
-    return bundle
   }
 
   private fun onNextTapped() {
@@ -112,6 +109,10 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
       return
     }
 
+    if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
+      showShortToast(getString(R.string.enter_valid_gstin_number))
+      return
+    }
 
     if (address.isEmpty()) {
       showShortToast(getString(R.string.customer_address_cannot_be_empty))
@@ -138,56 +139,46 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
       return
     }
 
-    var contactDetails = ContactDetails(fullName = name.toString(),
-            emailId = email.toString(), primaryContactNumber = phone.toString())
+    val contactDetails = ContactDetails(fullName = name.toString(),
+        emailId = email.toString(), primaryContactNumber = phone.toString())
 
-    /*var addrStr = StringBuilder()
-    addrStr.append(address)
-    if (city.isNullOrEmpty().not()) addrStr.append(", $city")
-    if (state.isNullOrEmpty().not()) addrStr.append(", $state")
-    if (pinCode.isNullOrEmpty().not()) addrStr.append(", $pinCode")*/
-
-    var billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
-    var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress)
-
+    val billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
+    val buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress, GSTIN = gstNo.toString())
     createOrderRequest.buyerDetails = buyerDetails
-
-    var bundle = Bundle()
+    val bundle = Bundle()
     bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
-    bundle.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
     startFragmentOrderActivity(FragmentType.BILLING_DETAIL, bundle, isResult = true)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-
     if (requestCode == 101 && resultCode == RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
-      val req = bundle?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+      val req = bundle?.getSerializable(IntentConstant.ORDER_REQUEST.name) as? OrderInitiateRequest
       if (req != null) {
         createOrderRequest = req
         setUpData()
       }
-      val shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name)
-      if (shouldFinish != null && shouldFinish) {
-        (context as FragmentContainerOrderActivity).onBackPressed()
-      }
-
-      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)
-      if (shouldReInitiate != null && shouldReInitiate) {
-        (context as FragmentContainerOrderActivity).onBackPressed()
-      }
+      addMore = bundle?.getBoolean(IntentConstant.ADD_MORE_ITEM.name) ?: false
+      shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_RE_INITIATE.name) ?: false
+      if (shouldFinish || shouldReInitiate || addMore) (context as? FragmentContainerOrderActivity)?.onBackPressed()
     }
   }
 
   private fun setUpData() {
-    binding?.editCustomerName?.setText(createOrderRequest?.buyerDetails?.contactDetails?.fullName ?: "")
-    binding?.editCustomerEmail?.setText(createOrderRequest?.buyerDetails?.contactDetails?.emailId ?: "")
-    binding?.editCustomerPhone?.setText(createOrderRequest?.buyerDetails?.contactDetails?.primaryContactNumber ?: "")
-    binding?.layoutBillingAddr?.editAddress?.setText(createOrderRequest?.buyerDetails?.address?.addressLine ?: "")
-    binding?.layoutBillingAddr?.editCity?.setText(createOrderRequest?.buyerDetails?.address?.city ?: "")
-    binding?.layoutBillingAddr?.editState?.setText(createOrderRequest?.buyerDetails?.address?.region ?: "")
-    binding?.layoutBillingAddr?.editPin?.setText(createOrderRequest?.buyerDetails?.address?.zipcode ?: "")
+    binding?.editCustomerName?.setText(createOrderRequest.buyerDetails?.contactDetails?.fullName ?: "")
+    binding?.editCustomerEmail?.setText(createOrderRequest.buyerDetails?.contactDetails?.emailId ?: "")
+    binding?.editCustomerPhone?.setText(createOrderRequest.buyerDetails?.contactDetails?.primaryContactNumber ?: "")
+    binding?.layoutBillingAddr?.editAddress?.setText(createOrderRequest.buyerDetails?.address?.addressLine ?: "")
+    binding?.layoutBillingAddr?.editCity?.setText(createOrderRequest.buyerDetails?.address?.city ?: "")
+    binding?.layoutBillingAddr?.editState?.setText(createOrderRequest.buyerDetails?.address?.region ?: "")
+    binding?.layoutBillingAddr?.editPin?.setText(createOrderRequest.buyerDetails?.address?.zipcode ?: "")
+  }
+
+  private fun setCityState(cityDataModel: CityDataModel) {
+    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName())
+    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName())
   }
 }

@@ -30,6 +30,8 @@ object EndPoints {
 
   const val POST_INITIATE_ORDER = "api/assuredPurchase/v2/InitiateOrder"
   const val POST_INITIATE_APPOINTMENT = "api/assuredPurchase/v2.5/InitiateOrder"
+  const val GET_CONFIRM_ORDER_2_5 = "api/assuredPurchase/v2.5/ConfirmOrder"
+  const val GET_ORDER_DETAIL_2_5 = "api/assuredPurchase/v2.5/GetOrderDetails"
   const val POST_UPDATE_ORDER = "api/assuredPurchase/v2/UpdateOrder"
 
   const val GET_SELLER_SUMMARY_URL = "api/assuredPurchase/v2/SellerSummary"
@@ -48,8 +50,10 @@ object EndPoints {
   const val MARK_AS_SHIPPED = "api/assuredPurchase/v2/MarkOrderAsShipped"
   const val SEND_PAYMENT_REMINDER = "api/assuredPurchase/v2/SendPaymentReminder"
   const val MARK_COD_PAYMENT_DONE = "api/assuredPurchase/v2/MarkPaymentReceivedForCODOrder"
+  const val MARK_PAYMENT_RECEIVED_MERCHANT = "api/assuredPurchase/v2/MarkPaymentReceivedForPlacedOrderByMerchant"
+  const val ORDER_FEEDBACK_REQUEST= "api/assuredPurchase/v2/RequestOrderFeedback"
+  const val ORDER_RE_BOOKING_REQUEST= "api/assuredPurchase/v2/SendRebookingReminder"
   //new API order
-
 
 
   // Boost Kit APIs

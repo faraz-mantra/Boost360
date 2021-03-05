@@ -8,7 +8,10 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.appservice.constant.IntentConstant
+import com.appservice.offers.startOfferFragmentActivity
+import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.catalog.startFragmentActivity
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
@@ -101,13 +104,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
-        binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
+            binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
     WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
+    //todo remove this
+    binding?.cbLaunchOfferFlow?.setOnClickListener {
+      session?.let { startOfferFragmentActivity(baseActivity,com.appservice.constant.FragmentType.OFFER_LISTING_FRAGMENT, bundle = getBundleData(it)) }
+    }
   }
 
   override fun onResume() {
@@ -475,7 +482,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onClick(v: View) {
     super.onClick(v)
-    //TODO: Track the share_business_card_initiated even in Firebase & Webengage
+    // Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
       binding?.filterBusinessReport -> bottomSheetFilter(BUSINESS_REPORT, FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT))
       binding?.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT))
@@ -530,13 +537,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
-      QuickActionItem.QuickActionType.LIST_STAFF -> {
-        val bundle = Bundle()
-        bundle.putString(IntentConstant.FP_TAG.name, session?.fpTag)
-        bundle.putString(IntentConstant.FP_ID.name, session?.fPID)
-        bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
-        startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = bundle)
-      }
+      QuickActionItem.QuickActionType.LIST_STAFF -> baseActivity.startListStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,
       QuickActionItem.QuickActionType.LIST_PRODUCT,
       QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,
@@ -737,7 +738,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       if (it.isSuccess()) {
         val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
         if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
-          urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.active_whatsapp_number}*"
+          urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.getNumberPlus91()}*"
         }
       }
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
