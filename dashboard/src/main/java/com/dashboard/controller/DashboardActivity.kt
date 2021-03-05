@@ -48,6 +48,7 @@ import com.framework.webengageconstant.SCREEN_NAME
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
+import com.nowfloats.facebook.managers.FBEventManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
@@ -105,6 +106,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     getWelcomeData()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+
   }
 
   private fun initialize() {
