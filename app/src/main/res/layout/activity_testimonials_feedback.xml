@@ -11,15 +11,14 @@
     android:id="@+id/app_bar"
     layout="@layout/new_custome_app_bar" />
 
-  <ScrollView
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:overScrollMode="never"
-    android:scrollbars="none">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       android:orientation="vertical">
 
       <TextView
@@ -36,7 +35,6 @@
         android:layout_height="130dp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:clickable="true"
         android:padding="2dp"
         app:cardCornerRadius="4dp">
 
@@ -89,7 +87,7 @@
 
       </LinearLayout>
 
-      <EditText
+      <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/user_name"
         style="@style/EditTextCustomeStyle"
         android:layout_width="match_parent"
@@ -97,6 +95,7 @@
         android:background="@drawable/edittext_bg_elevated"
         android:elevation="@dimen/_2sdp"
         android:maxLines="1"
+        android:inputType="textCapWords"
         android:imeOptions="actionNext"
         android:hint="Enter Name" />
 
@@ -133,7 +132,7 @@
 
         </LinearLayout>
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/img_desc"
           style="@style/EditTextCustomeStyle"
           android:layout_width="match_parent"
@@ -141,6 +140,7 @@
           android:background="@drawable/edittext_bg_elevated"
           android:elevation="@dimen/_2sdp"
           android:maxLines="1"
+          android:inputType="textCapWords"
           android:imeOptions="actionNext"
           android:hint="Description" />
       </LinearLayout>
@@ -175,7 +175,7 @@
 
         </LinearLayout>
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/review_title"
           style="@style/EditTextCustomeStyle"
           android:layout_width="match_parent"
@@ -183,6 +183,7 @@
           android:background="@drawable/edittext_bg_elevated"
           android:elevation="@dimen/_2sdp"
           android:maxLines="1"
+          android:inputType="textCapWords"
           android:imeOptions="actionNext"
           android:hint="Review Title" />
       </LinearLayout>
@@ -229,7 +230,7 @@
           android:textSize="@dimen/_10sdp" />
       </LinearLayout>
 
-      <EditText
+      <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/review_description"
         style="@style/EditTextCustomeStyle"
         android:layout_width="match_parent"
@@ -237,6 +238,7 @@
         android:background="@drawable/edittext_bg_elevated"
         android:elevation="@dimen/_2sdp"
         android:gravity="top"
+        android:inputType="textCapWords"
         android:imeOptions="actionDone"
         android:hint="Enter Description"
         android:maxLength="200" />
@@ -260,7 +262,7 @@
         android:textAllCaps="true"
         android:textColor="@color/white" />
 
-    </LinearLayout>
-  </ScrollView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
