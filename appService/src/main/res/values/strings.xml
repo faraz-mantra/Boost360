@@ -516,6 +516,11 @@
   <string name="payment_collection_setup">Payment collection setup</string>
   <string name="policies_for_customer">Policies for customers</string>
   <string name="customer_invoice_setup">Customer invoice setup</string>
+    <string name="testimonial_title">Testimonials</string>
+    <string name="testimonial_add">Add Testimonial</string>
+    <string name="testimonial_edit">Edit Testimonial</string>
+    <string name="error_getting_web_action">Error getting web action list!</string>
+    <string name="add_a_testimonial">ADD A TESTIMONIAL</string>
     <string name="preferred_payment_gateway_connected_bank_account">Preferred payment gateway,\nConnected bank account</string>
   <string name="gst_declearation_bank_upi_appointments">GST declaration, Bank UPI for offline appointments,\nSignature</string>
   <string name="refund_cancllation_privacy_policies">Refund, cancellation, privacy policies for your \ncustomers</string>
@@ -690,5 +695,16 @@
     <item>11:00PM</item>
     <item>11:30PM</item>
   </string-array>
+  <string name="offer_adding_error">Offer adding error, please try again.</string>
+  <string name="offer_updating_error">Offer updating error, please try again.</string>
+  <string name="removing_offer_failed">Removing offer failed, please try again.</string>
+  <string name="error_offer_image">Offer image uploading error, please try again.</string>
+  <string name="error_getting_offer_details">Error while getting the offer details.</string>
+
+
+
+
+
+
 
 </resources>
