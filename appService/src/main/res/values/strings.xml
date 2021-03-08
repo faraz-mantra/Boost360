@@ -704,6 +704,10 @@
     <string name="error_getting_delivery_details">error getting devlivery details</string>
     <string name="error_adding_bank_account">error adding bank account.</string>
     <string name="error_getting_bank_details">error getting bank details</string>
+    <string name="my_bank_account_details">My bank account details</string>
+  <string name="my_upi_id">My UPI ID</string>
+    <string name="only_one_file_is_allowed">only one file is allowed</string>
+    <string name="error_getting_payment_details">error getting payment details</string>
 
 
 </resources>
