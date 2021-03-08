@@ -122,6 +122,8 @@
 
     <color name="customeNavyBlue">#9ABFFF</color>
     <color name="grey_e4e4e4">#e4e4e4</color>
+    <color name="login_title">#ffb900</color>
+    <color name="login_input_underline">#ffb900</color>
 
 
 </resources>

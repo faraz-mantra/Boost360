@@ -4,4 +4,12 @@
     <color name="colorAccent">#0400A6</color>
     <color name="colorPrimaryDark">#03007F</color>
     <color name="login_button_start_color">@color/colorPrimary</color>
+    <color name="login_text_color">@color/colorPrimary</color>
+    <color name="create_account_button_start_color">@color/colorPrimary</color>
+    <color name="create_account_button_end_color">@color/colorPrimary</color>
+    <color name="red_color">@color/colorPrimary</color>
+    <color name="pre_sign_up_title">@color/colorPrimary</color>
+    <color name="login_title">@color/colorPrimary</color>
+    <color name="login_input_underline">@color/colorPrimary</color>
+
 </resources>

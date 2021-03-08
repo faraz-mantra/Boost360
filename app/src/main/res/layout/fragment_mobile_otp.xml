@@ -32,7 +32,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/open_sans_bold"
             android:text="Log in using mobile number"
-            android:textColor="@color/yellow"
+            android:textColor="@color/login_title"
             android:textSize="30sp" />
 
 
@@ -76,7 +76,7 @@
             android:id="@+id/mobile_otp_bottom_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/yellow"
+            android:background="@color/login_input_underline"
             android:layout_marginHorizontal="14dp"
             />
 
