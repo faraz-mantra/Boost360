@@ -75,6 +75,8 @@
           app:indicatorEnabled="true"
           app:indicatorGravity="top"
           tools:background="@color/white"
+          app:indicatorColor="@color/colorPrimary"
+          app:textColorActive="@color/colorPrimary"
           app:indicatorInterpolator="anticipateOvershoot"
           app:itemFontActive="@font/regular"
           app:itemFontInActive="@font/regular"

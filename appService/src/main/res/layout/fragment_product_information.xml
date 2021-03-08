@@ -876,9 +876,9 @@
                         android:gravity="center"
                         android:padding="@dimen/size_12"
                         android:stateListAnimator="@null"
-                        android:text="DONE"
+                        android:text="@string/done_"
                         android:textAllCaps="true"
-                        android:textColor="#FFB900"
+                        android:textColor="@color/colorAccent"
                         app:textType="HEADING_6" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
