@@ -360,7 +360,7 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
     }
 
     private void stopService() {
-        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).commit();
+        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
         stopService(new Intent(this, CustomerAssistantService.class));
         finish();
     }

@@ -35,7 +35,7 @@
             android:id="@+id/imageLayout"
             android:layout_width="70dp"
             android:layout_height="67dp"
-            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

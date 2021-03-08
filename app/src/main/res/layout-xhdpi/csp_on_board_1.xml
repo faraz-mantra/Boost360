@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/margin_50"
-        android:layout_marginLeft="@dimen/margin_30"
-        android:layout_marginRight="@dimen/margin_30"
+        android:layout_marginStart="@dimen/margin_30"
+        android:layout_marginEnd="@dimen/margin_30"
         android:background="@color/white"
         android:elevation="@dimen/margin_5"
         android:orientation="vertical"
@@ -38,7 +38,7 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="Manage your potential customers on a tap"
+                    android:text="@string/manage_your_potential_customers_on_a_tap"
                     android:textColor="@color/dark_grey"
                     android:textSize="@dimen/llarge_text_size" />
 
@@ -57,7 +57,7 @@
                     android:layout_marginTop="@dimen/margin_30"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="We analyse your SMS and calls so you can focus on converting your potential customers."
+                    android:text="@string/we_analyse_your_sms_and_calls_so_you_can_focus_on_converting_your_potential_customers"
                     android:textColor="#80000000"
                     android:textSize="13sp" />
 
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="GET STARTED"
+                    android:text="@string/get_started"
                     android:textColor="@color/white"
                     android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />

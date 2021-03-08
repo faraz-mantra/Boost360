@@ -14,7 +14,7 @@
         android:drawablePadding="@dimen/margin_10"
         android:gravity="center"
         android:paddingBottom="@dimen/margin_5"
-        android:paddingLeft="@dimen/margin_10"
+        android:paddingStart="@dimen/margin_10"
         android:paddingRight="@dimen/margin_10"
         android:paddingTop="@dimen/margin_5"
         android:text="@string/select_boost_from"

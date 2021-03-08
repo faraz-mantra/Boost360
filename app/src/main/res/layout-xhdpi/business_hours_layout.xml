@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Days"
+            android:text="@string/days"
             android:textStyle="italic|bold"
             android:gravity="center_vertical"
             android:textSize="13sp"
@@ -26,24 +26,24 @@
             android:gravity="center"
             android:textSize="13sp"
             android:textStyle="italic|bold"
-            android:layout_marginRight="15dp"
-            android:text="Open" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/open_" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight=".3"
             android:layout_height="wrap_content"
-            android:text="Close"
+            android:text="@string/close"
             android:textSize="13sp"
             android:textStyle="italic|bold"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:gravity="center" />
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="close"
+            android:textOff="@string/close"
             android:visibility="invisible"
-            android:textOn="open"/>
+            android:textOn="@string/open_"/>
 
     </LinearLayout>
 
@@ -72,8 +72,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="13sp"
-            android:layout_marginRight="15dp"
-            android:text="00:00"/>
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00"/>
 
         <EditText
             android:id="@+id/et_mon_close"
@@ -83,17 +83,17 @@
             android:inputType="none"
             android:focusable="false"
             android:layout_height="wrap_content"
-            android:text="00:00"
+            android:text="@string/_00_00"
             android:textSize="13sp"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:gravity="center" />
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_mon"
-            android:textOff="close"
+            android:textOff="@string/close"
             android:checked="true"
-            android:textOn="open"/>
+            android:textOn="@string/open_"/>
 
     </LinearLayout>
     <LinearLayout
@@ -121,8 +121,8 @@
             android:inputType="none"
             android:textSize="13sp"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:text="00:00" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00" />
 
         <EditText
             android:id="@+id/et_tue_close"
@@ -133,15 +133,15 @@
             android:inputType="none"
             android:textSize="13sp"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:text="00:00" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00" />
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_tue"
-            android:textOff="close"
+            android:textOff="@string/close"
             android:checked="true"
-            android:textOn="open"/>
+            android:textOn="@string/open_"/>
 
     </LinearLayout>
     <LinearLayout
@@ -169,8 +169,8 @@
             android:textSize="13sp"
             android:inputType="none"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:text="00:00" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00" />
 
         <EditText
             android:id="@+id/et_wed_close"
@@ -181,15 +181,15 @@
             android:inputType="none"
             android:focusable="false"
             android:textSize="13sp"
-            android:layout_marginRight="15dp"
-            android:text="00:00"/>
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00"/>
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_wed"
-            android:textOff="close"
+            android:textOff="@string/close"
             android:checked="true"
-            android:textOn="open"/>
+            android:textOn="@string/open_"/>
 
     </LinearLayout>
     <LinearLayout
@@ -217,8 +217,8 @@
             android:inputType="none"
             android:textSize="13sp"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:text="00:00" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00" />
 
         <EditText
             android:id="@+id/et_thu_close"
@@ -229,15 +229,15 @@
             android:inputType="none"
             android:focusable="false"
             android:textSize="13sp"
-            android:layout_marginRight="15dp"
-            android:text="00:00" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00" />
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_thu"
             android:checked="true"
-            android:textOff="close"
-            android:textOn="open"/>
+            android:textOff="@string/close"
+            android:textOn="@string/open_"/>
 
     </LinearLayout>
     <LinearLayout
@@ -265,8 +265,8 @@
             android:inputType="none"
             android:textSize="13sp"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:text="00:00" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00" />
 
         <EditText
             android:id="@+id/et_fri_close"
@@ -277,15 +277,15 @@
             android:inputType="none"
             android:textSize="13sp"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:text="00:00" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00" />
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_fri"
             android:checked="true"
-            android:textOff="close"
-            android:textOn="open"/>
+            android:textOff="@string/close"
+            android:textOn="@string/open_"/>
 
     </LinearLayout>
     <LinearLayout
@@ -313,8 +313,8 @@
             android:inputType="none"
             android:textSize="13sp"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:text="00:00" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00" />
 
         <EditText
             android:id="@+id/et_sat_close"
@@ -325,15 +325,15 @@
             android:textSize="13sp"
             android:inputType="none"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:text="00:00"/>
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00"/>
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_sat"
-            android:textOff="close"
+            android:textOff="@string/close"
             android:checked="true"
-            android:textOn="open"/>
+            android:textOn="@string/open_"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -359,27 +359,27 @@
             android:inputType="none"
             android:textSize="13sp"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:text="00:00" />
+            android:layout_marginEnd="15dp"
+            android:text="@string/_00_00" />
 
         <EditText
             android:id="@+id/et_sun_close"
             android:layout_width="0dp"
             android:layout_weight=".3"
             android:layout_height="wrap_content"
-            android:text="00:00"
+            android:text="@string/_00_00"
             android:focusable="false"
             android:textSize="13sp"
             android:inputType="none"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:gravity="center" />
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_sun"
-            android:textOff="close"
+            android:textOff="@string/close"
             android:checked="true"
-            android:textOn="open"/>
+            android:textOn="@string/open_"/>
 
     </LinearLayout>
     <LinearLayout
@@ -393,7 +393,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTint="@color/primary"
-            android:text="Use same time for whole week"/>
+            android:text="@string/use_same_time_for_whole_week"/>
 
         <LinearLayout
             android:id="@+id/ll_same_time"
@@ -409,13 +409,13 @@
                 android:gravity="center"
                 android:inputType="none"
                 android:focusable="false"
-                android:layout_marginRight="30dp"
-                android:text="00:00" />
+                android:layout_marginEnd="30dp"
+                android:text="@string/_00_00" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="to"/>
+                android:text="@string/to"/>
 
             <EditText
                 android:id="@+id/et_all_close"
@@ -423,9 +423,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:inputType="none"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:focusable="false"
-                android:text="00:00"/>
+                android:text="@string/_00_00"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

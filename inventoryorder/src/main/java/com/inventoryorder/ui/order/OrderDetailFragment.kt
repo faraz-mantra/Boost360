@@ -436,7 +436,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun showBottomSheetDialog() {
-    showLongToast("Coming soon..")
+    showLongToast(getString(R.string.coming_soon))
 //    deliverySheetDialog = DeliveryBottomSheetDialog()
 //    deliverySheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
 //    deliverySheetDialog?.setList(deliveryList)

@@ -42,9 +42,13 @@ import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
+import com.framework.webengageconstant.HOME_PAGE
+import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.SCREEN_NAME
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
+import com.nowfloats.facebook.managers.FBEventManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
@@ -102,6 +106,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     getWelcomeData()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+
   }
 
   private fun initialize() {
@@ -110,8 +115,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     WebEngageController.initiateUserLogin(session?.userProfileId)
     WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
     WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent("Home Page", "pageview", session?.fpTag ?: "")
-    WebEngageController.trackEvent("Home Page", "screen_name", session?.fpTag ?: "")
+    WebEngageController.trackEvent(event_name = HOME_PAGE, PAGE_VIEW, session?.fpTag ?: "")
+    WebEngageController.trackEvent(HOME_PAGE, SCREEN_NAME, session?.fpTag ?: "")
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
       WebEngage.get().setRegistrationID(token)

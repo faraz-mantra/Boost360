@@ -188,9 +188,9 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         share.putExtra(Intent.EXTRA_TEXT, productUrl);
         if (!defaultShare) {
             if (type == 1) {
-                share.setPackage("com.whatsapp");
+                share.setPackage(context.getString(R.string.whatsapp_package));
             } else if (type == 0) {
-                share.setPackage("com.facebook.katana");
+                share.setPackage(context.getString(R.string.facebook_package));
             }
         }
         context.startActivity(Intent.createChooser(share, context.getString(R.string.share_updates)));
@@ -200,7 +200,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
     public void share(boolean defaultShare, int type, Product product) {
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            Methods.showDialog(context, "Storage Permission", "To share your image we need storage permission.",
+            Methods.showDialog(context, context.getString(R.string.storage_permission), "To share your image we need storage permission.",
                     (dialog, which) -> ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
             return;
         }
@@ -232,18 +232,18 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
                         if (share.resolveActivity(context.getPackageManager()) != null) {
                             if (!defaultShare) {
                                 if (type == 0) {
-                                    share.setPackage("com.facebook.katana");
+                                    share.setPackage(context.getString(R.string.facebook_package));
                                 } else if (type == 1) {
-                                    share.setPackage("com.whatsapp");
+                                    share.setPackage(context.getString(R.string.whatsapp_package));
                                 }
                             }
                             ProductCatalogActivity activity = (ProductCatalogActivity) context;
                             activity.startActivityForResult(Intent.createChooser(share, context.getString(R.string.share_updates)), 1);
                         }
                     } catch (OutOfMemoryError e) {
-                        Toast.makeText(context, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.image_size_is_large), Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, "Image not able to share", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.image_not_able_to_share), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -277,9 +277,9 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 //        if(!defaultShare)
 //        {
 //            if(type==1)
-//            { share.setPackage("com.whatsapp");}
+//            { share.setPackage(getString(R.string.whatsapp_package));}
 //            else if(type==0)
-//            { share.setPackage("com.facebook.katana"); }
+//            { share.setPackage(getString(R.string.facebook_package)); }
 //        }
 //        context.startActivity(Intent.createChooser(share,  context.getString(R.string.share_updates)));
     }

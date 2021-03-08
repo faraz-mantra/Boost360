@@ -53,6 +53,18 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.BUSINESS_DESCRIPTION;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_CONTACT_ADDED;
+import static com.framework.webengageconstant.EventNameKt.DISPLAY_CONTACT_1;
+import static com.framework.webengageconstant.EventNameKt.DISPLAY_CONTACT_2;
+import static com.framework.webengageconstant.EventNameKt.DISPLAY_CONTACT_3;
+import static com.framework.webengageconstant.EventNameKt.EMAIL_ADDRESS;
+import static com.framework.webengageconstant.EventNameKt.FACEBOOK_PAGE_URL;
+import static com.framework.webengageconstant.EventNameKt.OTHER_WEBSITE;
+import static com.framework.webengageconstant.EventNameKt.REGISTERED_CONTACT_NUMBER;
+import static com.framework.webengageconstant.EventNameKt.WHATSAPP_FOR_BUSINESS_NUMBER;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.helper.ValidationUtilsKt.isEmailValid;
 import static com.nowfloats.helper.ValidationUtilsKt.isMobileNumberValid;
 
@@ -86,28 +98,28 @@ public class ContactInformationActivity extends BaseActivity {
 
     this.phoneCountryCode = "+".concat(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
     binding.editPrimaryContactNumber.setOnClickListener(v -> {
-      WebEngageController.trackEvent("REGISTERED CONTACT NUMBER", "null", null);
+      WebEngageController.trackEvent(REGISTERED_CONTACT_NUMBER, EVENT_LABEL_NULL, NULL);
     });
     binding.editDisplayContactNumber1.setOnClickListener(v -> {
-      WebEngageController.trackEvent("DISPLAY CONTACT 1", "null", null);
+      WebEngageController.trackEvent(DISPLAY_CONTACT_1, EVENT_LABEL_NULL, NULL);
     });
     binding.editDisplayContactNumber1.setOnClickListener(v -> {
-      WebEngageController.trackEvent("DISPLAY CONTACT 2", "null", null);
+      WebEngageController.trackEvent(DISPLAY_CONTACT_2, EVENT_LABEL_NULL, NULL);
     });
     binding.editDisplayContactNumber1.setOnClickListener(v -> {
-      WebEngageController.trackEvent("DISPLAY CONTACT 3", "null", null);
+      WebEngageController.trackEvent(DISPLAY_CONTACT_3, EVENT_LABEL_NULL, NULL);
     });
     binding.editWhatsappNumber.setOnClickListener(v -> {
-      WebEngageController.trackEvent("WHATSAPP FOR BUSINESS NUMBER", "null", null);
+      WebEngageController.trackEvent(WHATSAPP_FOR_BUSINESS_NUMBER, EVENT_LABEL_NULL, NULL);
     });
     binding.editBusinessEmailAddress.setOnClickListener(v -> {
-      WebEngageController.trackEvent("EMAIL ADDRESS", "null", null);
+      WebEngageController.trackEvent(EMAIL_ADDRESS, EVENT_LABEL_NULL, NULL);
     });
     binding.editWebsiteAddress.setOnClickListener(v -> {
-      WebEngageController.trackEvent("OTHER WEBSITE", "null", null);
+      WebEngageController.trackEvent(OTHER_WEBSITE, EVENT_LABEL_NULL, NULL);
     });
     binding.editFbPageWidget.setOnClickListener(v -> {
-      WebEngageController.trackEvent("FACEBOOK PAGE URL", "null", null);
+      WebEngageController.trackEvent(FACEBOOK_PAGE_URL, EVENT_LABEL_NULL, NULL);
     });
 
     binding.editPrimaryContactNumber.setOnTouchListener((v, event) -> {
@@ -422,7 +434,7 @@ public class ContactInformationActivity extends BaseActivity {
         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3, binding.editDisplayContactNumber3.getText().toString());
 
         Methods.showSnackBarPositive(ContactInformationActivity.this, "Information Updated Successfully");
-        WebEngageController.trackEvent("Business contact added", "BUSINESS DESCRIPTION", session.getFpTag());
+        WebEngageController.trackEvent(BUSINESS_CONTACT_ADDED, BUSINESS_DESCRIPTION, session.getFpTag());
         onContactInfoAddedOrUpdated(true);
       }
 
@@ -539,7 +551,7 @@ public class ContactInformationActivity extends BaseActivity {
 
 
   private void sendSms(String number) {
-    showProgressbar("Please Wait...");
+    showProgressbar(getString(R.string.please_wait_));
 
     Methods.SmsInterface smsApi = Constants.restAdapterDev1.create(Methods.SmsInterface.class);
 

@@ -19,7 +19,7 @@
 
                 <TextView
                     style="@style/ProductLabelTextStyle"
-                    android:text="Inventory Availability" />
+                    android:text="@string/inventory_availability" />
 
                 <ImageButton
                     style="@style/ProductHelpButtonStyle" />
@@ -30,7 +30,7 @@
                 style="@style/ProductLabelTextStyle"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:text="Available Qty." />
+                android:text="@string/available_qty" />
 
         </LinearLayout>
 
@@ -68,7 +68,7 @@
                     android:digits="0123456789."
                     android:gravity="center"
                     android:inputType="numberDecimal"
-                    android:hint="XXXX" />
+                    android:hint="@string/xxxx" />
 
             </LinearLayout>
 
@@ -91,7 +91,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Allow COD Orders" />
+                            android:text="@string/allow_cod_orders" />
 
                         <ImageButton
                             style="@style/ProductHelpButtonStyle" />
@@ -102,7 +102,7 @@
                         style="@style/ProductLabelTextStyle"
                         android:layout_width="match_parent"
                         android:layout_weight="1.4"
-                        android:text="Max Qty." />
+                        android:text="@string/max_qty" />
 
                 </LinearLayout>
 
@@ -135,7 +135,7 @@
                         android:digits="0123456789."
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:hint="XXXX" />
+                        android:hint="@string/xxxx" />
 
                 </LinearLayout>
 
@@ -151,7 +151,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Allow prepaid online orders" />
+                            android:text="@string/allow_prepaid_online_orders" />
 
                         <ImageButton
                             style="@style/ProductHelpButtonStyle" />
@@ -162,7 +162,7 @@
                         style="@style/ProductLabelTextStyle"
                         android:layout_width="match_parent"
                         android:layout_weight="1.4"
-                        android:text="Max Qty." />
+                        android:text="@string/max_qty" />
 
                 </LinearLayout>
 
@@ -195,7 +195,7 @@
                         android:digits="0123456789."
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:hint="XXXX" />
+                        android:hint="@string/xxxx" />
 
                 </LinearLayout>
 

@@ -43,7 +43,7 @@
             android:layout_marginTop="50dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
             android:paddingTop="70dp"
             android:paddingRight="@dimen/_10sdp"
             android:paddingBottom="@dimen/_20sdp">
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Digital Brochures"
+                android:text="@string/digital_brochures"
                 android:textColor="@color/common_text_color"
                 android:textSize="@dimen/_16sdp" />
 
@@ -63,7 +63,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
-                android:text="Looks like this add-on is not added to your current plan. Add it now to start using it. Digital brochures can turn out to be the real deal makers for you."
+                android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_digital_brochures_can_turn_out_to_be_the_real_deal_makers_for_you"
                 android:textSize="@dimen/_11sdp" />
 
             <TextView
@@ -78,7 +78,7 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:text="VIEW IN ADD-ON STORE"
+                android:text="@string/view_in_add_on_store"
                 android:textColor="@color/white" />
 
 

@@ -12,6 +12,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
 import com.razorpay.Razorpay
 import com.razorpay.ValidateVpaCallback
 import es.dmoral.toasty.Toasty
@@ -65,14 +66,14 @@ class UPIPopUpFragement : DialogFragment() {
                 validateVPA()
             }
         }
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE ADD_UPI Loaded", "ADD_UPI", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_ADD_UPI_LOADED, ADD_UPI, NO_EVENT_VALUE)
     }
 
     fun validateVPA(){
         razorpay.isValidVpa(upi_popup_value.text.toString(),object: ValidateVpaCallback{
             override fun onFailure() {
                 validatingStatus = false
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE UPI Validation Failed", upi_popup_value.text.toString(), "")
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_UPI_VALIDATION_FAILED, upi_popup_value.text.toString(), NO_EVENT_VALUE)
                 upi_popup_submit.setText("VERIFY AND PAY")
                 invalid_UPI.visibility = View.GONE
                 Toasty.error(requireContext(),"Failed to validate your UPI Id. Please try again.",Toast.LENGTH_LONG).show()
@@ -82,11 +83,11 @@ class UPIPopUpFragement : DialogFragment() {
                 validatingStatus = false
                 upi_popup_submit.setText("VERIFY AND PAY")
                 if(status) {
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE UPI Validation Success", upi_popup_value.text.toString(), "")
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_UPI_VALIDATION_SUCCESS, upi_popup_value.text.toString(), NO_EVENT_VALUE)
                     upiPaymentRazorpay()
                     invalid_UPI.visibility = View.GONE
                 } else {
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE UPI Validation Failed_2", upi_popup_value.text.toString(), "")
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_UPI_VALIDATION_FAILED_2, upi_popup_value.text.toString(), NO_EVENT_VALUE)
                     Toasty.warning(requireContext(),"Invalid UPI Id. Please try again.",Toast.LENGTH_LONG).show()
                     invalid_UPI.visibility = View.VISIBLE
                 }

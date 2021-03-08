@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackListener;
 import com.nowfloats.hotel.Interfaces.PlaceNearByDetailsListener;
 import com.nowfloats.util.Methods;
+import com.thinksity.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -96,7 +97,7 @@ public class UploadProfileImage extends AsyncTask<Void, String, String> {
             if (response != null && response.code() == 200) {
                 return Objects.requireNonNull(response.body()).string();
             } else {
-                Methods.showSnackBarNegative(appContext, "Uploading Image Failed");
+                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.uploading_image_failed));
             }
 
             in.close();

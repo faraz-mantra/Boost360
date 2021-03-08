@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
             android:fontFamily="@font/open_sans"
-            android:text="Every project has an expert team, and your team can be highlighted individually in this section"
+            android:text="@string/every_project_has_an_expert_team_and_your_team_can_be_highlighted_individually_in_this_section"
             android:textColor="#747474"
             android:textSize="@dimen/_13sdp" />
 
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/_10sdp"
-                android:text="Projects Listing (0)"
+                android:text="@string/projects_listing_0"
                 android:textColor="#787878"
                 android:textSize="@dimen/_14sdp" />
 
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/_10sdp"
-                android:text="Team Listing (0)"
+                android:text="@string/team_listing_0"
                 android:textColor="#787878"
                 android:textSize="@dimen/_14sdp" />
 
@@ -120,7 +120,7 @@
                 android:layout_marginTop="50dp"
                 android:gravity="center"
                 android:paddingTop="70dp"
-                android:paddingLeft="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
                 android:orientation="vertical">
@@ -128,14 +128,14 @@
                     android:id="@+id/feature_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Projects &amp; Teams"
+                    android:text="@string/projects_amp_teams"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textColor="@color/common_text_color"
                     android:textSize="@dimen/_16sdp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Looks like this add-on is not added to your current plan. Add it now to start using it. Every project has an expert team, and your team can be highlighted individually in this section"
+                    android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_every_project_has_an_expert_team_and_your_team_can_be_highlighted_individually_in_this_section"
                     android:gravity="center"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="@dimen/_11sdp"
@@ -152,7 +152,7 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:gravity="center"
-                    android:text="VIEW IN ADD-ON STORE"
+                    android:text="@string/view_in_add_on_store"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/_20sdp"/>
 

@@ -44,6 +44,7 @@ import com.framework.models.firestore.FirestoreManager.getDrScoreData
 import com.framework.models.firestore.FirestoreManager.readDrScoreDocument
 import com.framework.utils.*
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.framework.webengageconstant.*
 import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -104,7 +105,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
-    WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   override fun onResume() {
@@ -171,7 +172,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
               override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                mCurrentPage= position
+                mCurrentPage = position
               }
 
               override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -234,7 +235,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
       })
       btnShowAll.setOnClickListener {
-        WebEngageController.trackEvent("Business Add-ons Page", "Add-ons", session?.fpTag)
+        WebEngageController.trackEvent(BUSINESS_ADD_ONS_PAGE, ADD_ONS, session?.fpTag)
         startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS)
       }
     }
@@ -424,7 +425,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
-        WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
+        WebEngageController.trackEvent(SITE_HEALTH_PAGE, SITE_HEALTH, session?.fpTag);
 //        session?.let { baseActivity.startOldSiteMeter(it) }
         baseActivity.startReadinessScoreView(session, 0)
       }
@@ -502,7 +503,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
           visitingCard(txt)
         }
-      } else visitingCard("My Business Card")
+      } else visitingCard(getString(R.string.my_business_card))
     })
   }
 
@@ -586,14 +587,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RoiSummaryData.RoiType.TRACK_CALL -> baseActivity.startVmnCallCard(session)
       RoiSummaryData.RoiType.APT_ORDER -> baseActivity.startAptOrderSummary(session)
       RoiSummaryData.RoiType.CONSULTATION -> {
-        showShortToast("Video Consultation analytics coming soon...")
+        showShortToast(getString(R.string.video_consultation_analytics_coming_soon))
       }
       RoiSummaryData.RoiType.APT_ORDER_WORTH -> {
 //        baseActivity.startRevenueSummary(session)
-        showShortToast("Collection analytics coming soon...")
+        showShortToast(getString(R.string.collection_analytics_coming_soon))
       }
       RoiSummaryData.RoiType.COLLECTION_WORTH -> {
-        showShortToast("Collection analytics coming soon...")
+        showShortToast(getString(R.string.collection_analytics_coming_soon))
       }
     }
   }
@@ -730,6 +731,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.getNumberPlus91()}*"
         }
       }
+      if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDECall: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
       if (isShowLoader) visitingCardDetailText(urlStringN)
     })

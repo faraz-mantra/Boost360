@@ -44,7 +44,7 @@
             android:gravity="center"
             android:layout_below="@+id/layout_image"
             android:layout_marginTop="30dp"
-            android:text="You have not configured any warehouse as package pickup addresses."/>
+            android:text="@string/you_have_not_configured_any_warehouse_as_package_pickup_addresses"/>
 
         <Button
             android:id="@+id/btn_add_address"
@@ -55,9 +55,9 @@
             android:layout_below="@+id/tv_message"
             style="?android:attr/borderlessButtonStyle"
             android:layout_marginTop="@dimen/margin_30"
-            android:layout_marginRight="@dimen/margin_30"
-            android:layout_marginLeft="@dimen/margin_30"
-            android:text="ADD ADDRESS" />
+            android:layout_marginEnd="@dimen/margin_30"
+            android:layout_marginStart="@dimen/margin_30"
+            android:text="@string/add_address" />
 
     </RelativeLayout>
 

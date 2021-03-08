@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -31,7 +29,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,6 +101,15 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventLabelKt.PRODUCT_CATALOGUE_ADD_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.ADD_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.ADD_UPDATE_PRODUCT_CATALOGUE_LOADED;
+import static com.framework.webengageconstant.EventNameKt.DELETE_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.ERROR_UPDATE_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.PRODUCT_ADDED_TO_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.UPDATE_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 import static com.nowfloats.util.Constants.DEV_ASSURED_PURCHASE_URL;
 
 
@@ -200,7 +206,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product, container, false);
         sheetBehavior = BottomSheetBehavior.from(binding.layoutBottomSheet.getRoot());
         sheetBehaviorAddress = BottomSheetBehavior.from(binding.layoutBottomSheetAddress.getRoot());
-        WebEngageController.trackEvent("Add/Update product catalogue Loaded", "PRODUCT CATALOGUE ADD/UPDATE", "");
+        WebEngageController.trackEvent(ADD_UPDATE_PRODUCT_CATALOGUE_LOADED, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
         return binding.getRoot();
     }
 
@@ -284,7 +290,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 //            isService = productType.equalsIgnoreCase("products") ? false : true;
             isService = session.isNonPhysicalProductExperienceCode();
 
-            title.append(isService ? "Service Details" : "Product Details");
+            title.append(isService ? getString(R.string.service_details) : getString(R.string.product_details));
             ((ManageProductActivity) getActivity()).setTitle(title.toString());
 
             if (paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())) {
@@ -1373,9 +1379,9 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         }
 
         if (adapterImage.getItemCount() > 0) {
-            binding.btnSecondaryImage.setText("ADD MORE");
+            binding.btnSecondaryImage.setText(R.string.add_more);
         } else {
-            binding.btnSecondaryImage.setText("BROWSE SECONDARY IMAGES");
+            binding.btnSecondaryImage.setText(R.string.browse_secondary_image);
         }
     }
 
@@ -1393,7 +1399,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                         ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
 
-                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", getActivity());
+                    Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_this_permission_to_capture), getActivity());
                 } else {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
                 }
@@ -1570,13 +1576,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                     adapterImage.setData(imageList);
                 }
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Failed to Set Image", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.failed_to_set_image), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             } finally {
                 displayImageAddButton();
             }
         } else {
-            Toast.makeText(getContext(), "File Not Found", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.file_not_found), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -1591,23 +1597,23 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         }
 
         if (product.productId == null && primaryUri == null) {
-            Toast.makeText(getContext(), "Add product image", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.file_not_found), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (product.TileImageUri == null && primaryUri == null) {
-            Toast.makeText(getContext(), "Add product image", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.file_not_found), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.editProductName.getText().toString().trim().length() == 0) {
-            Toast.makeText(getContext(), "Enter product name", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.enter_product_name), Toast.LENGTH_LONG).show();
             binding.editProductName.requestFocus();
             return false;
         }
 
         if (binding.editProductDescription.getText().toString().trim().length() == 0) {
-            Toast.makeText(getContext(), "Enter product description", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.enter_product_desc), Toast.LENGTH_LONG).show();
             binding.editProductDescription.requestFocus();
             return false;
         }
@@ -1617,7 +1623,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             try {
                 Double.valueOf(binding.editBasePrice.getText().toString().trim());
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Enter valid price", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.enter_valid_price), Toast.LENGTH_LONG).show();
                 binding.editBasePrice.requestFocus();
                 return false;
             }
@@ -1627,7 +1633,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             try {
                 Double.valueOf(binding.editDiscount.getText().toString().trim());
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Enter valid discount", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.enter_valid_discount), Toast.LENGTH_LONG).show();
                 binding.editDiscount.requestFocus();
                 return false;
             }
@@ -1638,12 +1644,12 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             double discount = binding.editDiscount.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editDiscount.getText().toString().trim()) : 0;
 
             if (discount > price) {
-                Toast.makeText(getContext(), "Discount amount can't be greater than price", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.discount_amount_cant_be_grater_than_price), Toast.LENGTH_LONG).show();
                 binding.editDiscount.requestFocus();
                 return false;
             }
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Invalid Input", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.invalid_input), Toast.LENGTH_LONG).show();
             binding.editDiscount.requestFocus();
             return false;
         }
@@ -1663,7 +1669,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         if (paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                 && !isService) {
             if (product.pickupAddressReferenceId == null || product.pickupAddressReferenceId.isEmpty()) {
-                Toast.makeText(getContext(), "Pickup Address Required", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),getString( R.string.pickup_address_required), Toast.LENGTH_LONG).show();
                 return false;
             }
 
@@ -1671,13 +1677,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         }
 
         if (paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()) && bankInformation == null) {
-            Toast.makeText(getContext(), "Please update payment information", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.please_update_payment_information), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue())
                 && binding.layoutPaymentMethod.editPurchaseUrlLink.getText().toString().trim().length() == 0) {
-            Toast.makeText(getContext(), "Purchase URL Required", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.purchase_url_required), Toast.LENGTH_LONG).show();
             binding.layoutPaymentMethod.editPurchaseUrlLink.requestFocus();
             return false;
         }
@@ -1693,25 +1699,25 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     private boolean isValidAssuredPurchase() {
         if (binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim().length() == 0) {
             binding.layoutShippingMatrixDetails.editWeight.requestFocus();
-            Toast.makeText(getContext(), "Enter product weight", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.enter_product_weight), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutShippingMatrixDetails.editLength.getText().toString().trim().length() == 0) {
             binding.layoutShippingMatrixDetails.editLength.requestFocus();
-            Toast.makeText(getContext(), "Enter product length", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.enter_product_length), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim().length() == 0) {
             binding.layoutShippingMatrixDetails.editHeight.requestFocus();
-            Toast.makeText(getContext(), "Enter product height", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),getString( R.string.enter_product_height), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim().length() == 0) {
             binding.layoutShippingMatrixDetails.editThickness.requestFocus();
-            Toast.makeText(getContext(), "Enter product thickness", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),getString( R.string.enter_product_thickness), Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -1721,7 +1727,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             Double.valueOf(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim());
             Double.valueOf(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim());
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Enter valid package dimensions", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),getString( R.string.enter_valid_package_dimensions), Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -1736,19 +1742,19 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     private boolean isValidBankInformation() {
         if (binding.layoutBottomSheet.editBankAccount.getText().toString().trim().length() == 0) {
             binding.layoutBottomSheet.editBankAccount.requestFocus();
-            Toast.makeText(getContext(), "Enter bank account number", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.enter_bank_account_number), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutBottomSheet.editIfscCode.getText().toString().trim().length() == 0) {
             binding.layoutBottomSheet.editIfscCode.requestFocus();
-            Toast.makeText(getContext(), "Enter IFSC", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.enter_ifsc), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutBottomSheet.editGst.toString().trim().length() == 0) {
             binding.layoutBottomSheet.editGst.requestFocus();
-            Toast.makeText(getContext(), "Enter GST/Tax ID", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.enter_gst_tax_id), Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -1762,7 +1768,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
      */
     private boolean isValidAddress() {
         if (file == null) {
-            Toast.makeText(getContext(), "Address proof required", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.address_proof_required), Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -1791,7 +1797,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                             if (TextUtils.isEmpty(addressInformation.id)) {
                                 //If new address added then add it locally to address list
                                 adapterAddress.addData(addressResponse);
-                                Toast.makeText(getContext(), "Address Added Successfully", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), getString(R.string.address_added_successfully), Toast.LENGTH_LONG).show();
                             } else {
                                 //If address updated the update it locally to address list
                                 for (int i = 0; i < addressInformationList.size(); i++) {
@@ -1802,7 +1808,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                                     }
                                 }
 
-                                Toast.makeText(getContext(), "Address Updated Successfully", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), getString(R.string.address_updated_successfully), Toast.LENGTH_LONG).show();
                             }
 
                             product.pickupAddressReferenceId = webResponseModel.getData().id;
@@ -1810,13 +1816,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                             addressInformation.id = webResponseModel.getData().id;
                         }
 
-                        Log.d("PRODUCT_JSON", "Address Successfully Added/Updated");
+                        Log.d("PRODUCT_JSON", getString(R.string.address_successfully_added_updated));
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to save address", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.failed_to_save_address), Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage() + " CODE " + error.getSuccessType());
                     }
                 });
@@ -2111,7 +2117,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                         Log.d("PRODUCT_JSON", "Bank Information Saved");
 
-                        Toast.makeText(getContext(), "Seller Profile Updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),getString( R.string.seller_profile_updated), Toast.LENGTH_SHORT).show();
                         hideDialog();
 
                         binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setVisibility(View.VISIBLE);
@@ -2126,9 +2132,9 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Toast.makeText(getContext(), "Failed to Update Seller Profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.failed_to_update_seller_profile), Toast.LENGTH_SHORT).show();
                         hideDialog();
-                        Log.d("PRODUCT_JSON", "Failed to Save Bank Information");
+                        Log.d("PRODUCT_JSON", getString(R.string.failed_to_save_bank_information));
                     }
                 });
     }
@@ -2217,8 +2223,8 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                 Log.d("PRODUCT_JSON", "" + new Gson().toJson(model));
 
-                showDialog("Please Wait...");
-                WebEngageController.trackEvent("Update product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
+                showDialog(getString(R.string.please_wait_));
+                WebEngageController.trackEvent(UPDATE_PRODUCT_CATALOGUE, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
                 productInterface.put_UpdateGalleryUpdate(model, new Callback<ArrayList<String>>() {
 
                     @Override
@@ -2243,7 +2249,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         if (primaryUri != null) {
                             uploadProductImage(product.productId);
                         } else {
-                            Toast.makeText(getContext(), "Product updated successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.product_updated_successfully), Toast.LENGTH_SHORT).show();
                             hideDialog();
 
                             if (getActivity() != null) {
@@ -2261,7 +2267,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         Log.d("PRODUCT_JSON", "Failed to Save Product");
 
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to update product.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.failed_to_update_product), Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                     }
                 });
@@ -2270,7 +2276,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             }
         } catch (Exception e) {
             Log.d("JSON_PRODUCT_UPDATE", "ERROR " + e.getMessage());
-            WebEngageController.trackEvent("Error update product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
+            WebEngageController.trackEvent(ERROR_UPDATE_PRODUCT_CATALOGUE, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
         }
     }
 
@@ -2296,14 +2302,14 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                 Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(product));
 
-                showDialog("Please Wait...");
-                WebEngageController.trackEvent("Add product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
+                showDialog(getString(R.string.please_wait_));
+                WebEngageController.trackEvent(ADD_PRODUCT_CATALOGUE, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
                 productInterface.addProduct(product, new Callback<String>() {
 
                     @Override
                     public void success(String productId, Response response) {
 
-                        Log.d("PRODUCT_JSON", "Product Saved Successfully : " + productId);
+                        Log.d("PRODUCT_JSON", getString(R.string.product_saved_successfully) + productId);
 
                         product.productId = productId;
 
@@ -2318,8 +2324,8 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         if (primaryUri != null) {
                             uploadProductImage(productId);
                         } else {
-                            Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
-                            WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "");
+                            Toast.makeText(getContext(), getString(R.string.product_saved_successfully), Toast.LENGTH_SHORT).show();
+                            WebEngageController.trackEvent(PRODUCT_ADDED_TO_CATALOGUE, MANAGE_CONTENT, NO_EVENT_VALUE);
                             hideDialog();
 
                             if (getActivity() != null) {
@@ -2337,7 +2343,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         Log.d("PRODUCT_JSON", "Failed to Save Product");
 
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.failed_to_save_product), Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                     }
                 });
@@ -2365,8 +2371,8 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             map.put("productType", product.productType);
             map.put("identifierType", "SINGLE");
 
-            showDialog("Please Wait...");
-            WebEngageController.trackEvent("Delete product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
+            showDialog(getString(R.string.please_wait_));
+            WebEngageController.trackEvent(DELETE_PRODUCT_CATALOGUE, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
             productInterface.removeProduct(map, new Callback<String>() {
 
                 @Override
@@ -2374,7 +2380,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                     Log.d("PRODUCT_JSON", "SUCCESS : Product Deleted Successfully");
 
-                    Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.deleted_successfully, Toast.LENGTH_SHORT).show();
                     hideDialog();
 
                     if (getActivity() != null) {
@@ -2389,7 +2395,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 public void failure(RetrofitError error) {
 
                     hideDialog();
-                    Toast.makeText(getContext(), "Failed to delete", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.failed_to_delete, Toast.LENGTH_LONG).show();
                 }
             });
         } catch (Exception e) {
@@ -2511,9 +2517,9 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         hideDialog();
 
         if (responseCode == 200 || responseCode == 202) {
-            Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.product_saved_successfully), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.failed_to_save_product), Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -2534,7 +2540,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         new MaterialDialog.Builder(getActivity())
                 .title(getString(R.string.are_you_sure_want_to_delete))
                 .content(R.string.delete_record_not_undone)
-                .positiveText(getString(R.string.delete))
+                .positiveText(getString(R.string.delete_))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeText(getString(R.string.cancel))
                 .negativeColorRes(R.color.light_gray)
@@ -2621,13 +2627,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             @Override
             public void onSuccess(Boolean result) {
 
-                Toast.makeText(getContext(), "Image Removed Successfully", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.image_removed_successfully, Toast.LENGTH_LONG).show();
                 Log.d(TAG, "" + true);
             }
 
             @Override
             public void onFailure(WebActionError error) {
-                Toast.makeText(getContext(), "Failed to Remove Image", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.failed_to_remove_image, Toast.LENGTH_LONG).show();
                 Log.d(TAG, "Fail");
             }
         });
@@ -2694,35 +2700,35 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
      * Add tooltip button listener
      */
     private void addInfoButtonListener() {
-        binding.ibInfoProductImageIcon.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The primary image appears on your homepage, item list page, the cart page, and the checkout page.", binding.ibInfoProductImageIcon));
-        binding.ibInfoGst.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the tax rate (%) for the product. This can be used to provide clear pricing breakdown during checkout and for generating invoices.", binding.ibInfoGst));
-        binding.ibInfoBrand.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the brand of your product if any. Customers find products with a familiar brand name more identifiable and favorable.", binding.ibInfoBrand));
-        binding.ibInfoProductName.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The name for your base product. Your customers will see it along with the product category and brand (if mentioned).", binding.ibInfoProductName));
-        binding.ibInfoProductDescription.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Describe your product in detail. This helps in the online discovery of your product. Your customers will make their buying decision based on the information you provide about the product.", binding.ibInfoProductDescription));
-        binding.ibInfoProductCurrency.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Select the currency you want to accept and show on your site.", binding.ibInfoProductCurrency));
-        binding.ibInfoProductBasePriceHelp.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The maximum price for this item, including any applicable taxes.", binding.ibInfoProductBasePriceHelp));
+        binding.ibInfoProductImageIcon.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.the_primary_image_appears_on_your_webpage), binding.ibInfoProductImageIcon));
+        binding.ibInfoGst.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.enter_the_text_rate_), binding.ibInfoGst));
+        binding.ibInfoBrand.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.enter_the_product_if_any_), binding.ibInfoBrand));
+        binding.ibInfoProductName.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.the_name_of_your_base_product), binding.ibInfoProductName));
+        binding.ibInfoProductDescription.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.describe_your_product_in_details), binding.ibInfoProductDescription));
+        binding.ibInfoProductCurrency.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.select_the_currency_you_want_to_accept), binding.ibInfoProductCurrency));
+        binding.ibInfoProductBasePriceHelp.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.the_maximum_price_for_this_item_Including), binding.ibInfoProductBasePriceHelp));
 
-        binding.layoutProductSpecification.ibInfoProductProperty.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the key specification which helps in differentiating the product from other similar products. This will be visible along with product details and helps customers make better purchase decisions.\n" +
+        binding.layoutProductSpecification.ibInfoProductProperty.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.enter_the_key_specification_which_helps) +
                 "E.g Size - Small or Color - Blue", binding.layoutProductSpecification.ibInfoProductProperty));
-        binding.layoutProductSpecification.ibInfoProductSpecification.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Mention other specifications of the product you are offering. To add more, click on add specifications.", binding.layoutProductSpecification.ibInfoProductSpecification));
+        binding.layoutProductSpecification.ibInfoProductSpecification.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.mention_other_specifications_of_the_product_you_are_of), binding.layoutProductSpecification.ibInfoProductSpecification));
 
-        binding.layoutInventory.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "You can use this to manage your product’s availability on your website.", binding.layoutInventory.ibInfoProductInventory));
-        binding.layoutInventory.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The total number of units you are willing to sell through your Boost website. Quantity decreases with orders that include this product.", binding.layoutInventory.ibInfoProductQuantity));
+        binding.layoutInventory.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.you_can_use_this_to_manage), binding.layoutInventory.ibInfoProductInventory));
+        binding.layoutInventory.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.the_total_number_of_units), binding.layoutInventory.ibInfoProductQuantity));
 
-        binding.layoutInventoryCod.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Allows customers to pay by cash at the time of delivery of the product, without the need of an advance payment online.", binding.layoutInventoryCod.ibInfoProductInventory));
-        binding.layoutInventoryCod.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The maximum number of units that a buyer can purchase in a single order.", binding.layoutInventoryCod.ibInfoProductQuantity));
+        binding.layoutInventoryCod.ibInfoProductInventory.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.allows_customer_to_pay_by_cash_at_the_time), binding.layoutInventoryCod.ibInfoProductInventory));
+        binding.layoutInventoryCod.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.the_maximum_number_of_units_that_a_buyer_can_purchase), binding.layoutInventoryCod.ibInfoProductQuantity));
 
         binding.layoutInventoryOnline.ibInfoProductInventory.setVisibility(View.INVISIBLE);
-        binding.layoutInventoryOnline.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "The maximum number of units that a buyer can purchase in a single order.", binding.layoutInventoryOnline.ibInfoProductQuantity));
+        binding.layoutInventoryOnline.ibInfoProductQuantity.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.the_maximum_number_of_units_that_a_buyer_can_purchase), binding.layoutInventoryOnline.ibInfoProductQuantity));
 
-        binding.layoutShippingMatrixDetails.ibInfoProductDimension.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Package dimensions need to be accurate because they are used to calculate shipping rates.", binding.layoutShippingMatrixDetails.ibInfoProductDimension));
-        binding.layoutShippingMatrixDetails.ibInfoProductWeight.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the weight of your package.", binding.layoutShippingMatrixDetails.ibInfoProductWeight));
-        binding.layoutShippingMatrixDetails.ibInfoProductLength.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the length of your package.", binding.layoutShippingMatrixDetails.ibInfoProductLength));
-        binding.layoutShippingMatrixDetails.ibInfoProductHeight.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the height of your package.", binding.layoutShippingMatrixDetails.ibInfoProductHeight));
-        binding.layoutShippingMatrixDetails.ibInfoProductThickness.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Enter the thickness of your package.", binding.layoutShippingMatrixDetails.ibInfoProductThickness));
+        binding.layoutShippingMatrixDetails.ibInfoProductDimension.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.package_dimension_need_to_be_accurate_because_they_are), binding.layoutShippingMatrixDetails.ibInfoProductDimension));
+        binding.layoutShippingMatrixDetails.ibInfoProductWeight.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.enter_the_weight_of_your_package), binding.layoutShippingMatrixDetails.ibInfoProductWeight));
+        binding.layoutShippingMatrixDetails.ibInfoProductLength.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.enter_the_length_of_your_package), binding.layoutShippingMatrixDetails.ibInfoProductLength));
+        binding.layoutShippingMatrixDetails.ibInfoProductHeight.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.enter_the_height_of_your_package), binding.layoutShippingMatrixDetails.ibInfoProductHeight));
+        binding.layoutShippingMatrixDetails.ibInfoProductThickness.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.enter_the_thickness_of_your_package), binding.layoutShippingMatrixDetails.ibInfoProductThickness));
 
-        binding.layoutPaymentMethod.ibInfoPaymentConfiguration.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Choose the best way for customers to pay you.", binding.layoutPaymentMethod.ibInfoPaymentConfiguration));
-        binding.ibInfoProductTags.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Tags help site visitors find a desired item on your Boost website. You can add related tags here and reuse them across other related products. Selecting a tag filters all relevant inventory in your product catalog.", binding.ibInfoProductTags));
+        binding.layoutPaymentMethod.ibInfoPaymentConfiguration.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.choose_the_best_way_for_customers_to_pay_you), binding.layoutPaymentMethod.ibInfoPaymentConfiguration));
+        binding.ibInfoProductTags.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.tags_help_site_visitors_to_find_a_desire_item), binding.ibInfoProductTags));
     }
 
     /**
@@ -2754,7 +2760,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     public void onFailure() {
 
         Log.d("PRODUCT_JSON", "FAILURE");
-        Toast.makeText(getContext(), "Failed to upload address proof", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), R.string.failed_to_upload_address_proof, Toast.LENGTH_LONG).show();
         hideDialog();
     }
 
@@ -2762,7 +2768,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     public void onPreUpload() {
 
         Log.d("PRODUCT_JSON", "PREUPLOAD");
-        showDialog("Please Wait...");
+        showDialog(getString(R.string.please_wait_));
     }
 
     /**
@@ -2935,7 +2941,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         public void setData(List<ProductImageResponseModel> images) {
             imageList.addAll(images);
             notifyDataSetChanged();
-            binding.btnSecondaryImage.setText("ADD MORE");
+            binding.btnSecondaryImage.setText(R.string.add_more);
         }
 
         class ProductImageViewHolder extends RecyclerView.ViewHolder {

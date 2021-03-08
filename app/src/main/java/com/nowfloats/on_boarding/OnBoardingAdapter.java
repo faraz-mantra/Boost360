@@ -251,7 +251,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         ((ItemClickListener)mContext).onItemClick(getAdapterPosition(), mOnBoardingModel.getScreenDataArrayList().get(getAdapterPosition()));
 
                     }else if(mRecyclerView != null){
-                        Toast.makeText(mContext, "You need to finish the previous step before you proceed further", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, mContext.getString(R.string.you_need_to_finish_the_previous_setup_before_), Toast.LENGTH_SHORT).show();
                         mRecyclerView.scrollToPosition(mOnBoardingModel.getToBeCompletePos());
                     }
                 }

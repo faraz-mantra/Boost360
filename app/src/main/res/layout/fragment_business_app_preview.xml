@@ -24,8 +24,8 @@
         card:cardElevation="5dp"
         android:visibility="gone"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_weight="1"
         android:layout_height="0dp">
     </androidx.cardview.widget.CardView>

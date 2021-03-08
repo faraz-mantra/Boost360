@@ -186,7 +186,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     if(!termAndPolicyCheckbox.isChecked()) {
-                        Toast.makeText(WebSiteAddressActivity.this, "You must agree with the terms and conditions to proceed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(WebSiteAddressActivity.this, getString(R.string.you_must_agree_with_the_terms_and_conditions), Toast.LENGTH_LONG).show();
                     }else if(addressTagValid){
                         MixPanelController.track("CreateMyWebsite", null);
                          createStore_retrofit(WebSiteAddressActivity.this,getJSONData(),bus);

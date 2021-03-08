@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.thinksity.R;
 
 import org.json.JSONObject;
 
@@ -66,7 +67,7 @@ public class Create_Facebook_AutoPost extends AsyncTask<Void, String, String> {
             fromPage.setText("From "+ Constants.fbFromWhichPage);
         }
         else{
-            Util.toast("Uh oh. Something went wrong. Please try again", appContext);
+            Util.toast(appContext.getString(R.string.uh_oh_somthing_went_wrong_please_try_again), appContext);
             checkBox.setChecked(false);
         }
     }

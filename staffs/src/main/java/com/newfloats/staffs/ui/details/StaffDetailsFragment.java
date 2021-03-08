@@ -41,7 +41,7 @@ public class StaffDetailsFragment extends BaseFragmentStaff {
         staffBreaks.setOnClickListener(v -> launchFragment(ScheduledBreaksFragmnt.newInstance()));
         FrameLayout addStaffImage = view.findViewById(R.id.fl_add_staff_img);
         addStaffImage.setOnClickListener(v -> {
-//            startActivityForResult(new Intent(requireActivity(),ImageActivity.class),REQUEST_IMAGE);
+//            startActivityForResult(new Intent(getActivity(),ImageActivity.class),REQUEST_IMAGE);
         });
         ((StaffDetailsActivity) requireActivity()).setToolBarTitle("Staff Details", false);
         return view;

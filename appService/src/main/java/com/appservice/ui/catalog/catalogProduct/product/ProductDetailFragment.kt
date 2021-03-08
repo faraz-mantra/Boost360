@@ -53,6 +53,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -111,7 +112,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("Service product catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent(SERVICE_PRODUCT_CATALOGUE_LOAD, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
     getBundleData()
     getPickUpAddress()
     binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
@@ -299,7 +300,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 //      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
       binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
       binding?.btnOtherInfo -> {
-        WebEngageController.trackEvent("Service click other information", "SERVICE CATALOGUE ADD/UPDATE", "")
+        WebEngageController.trackEvent(SERVICE_CLICK_OTHER_INFORMATION, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, product)
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
@@ -314,7 +315,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun createUpdateApi() {
     showProgress()
     if (isEdit == false) {
-      WebEngageController.trackEvent("Add service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
+      WebEngageController.trackEvent(ADD_SERVICE_PRODUCT_CATALOGUE, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
       if (productIdAdd.isNullOrEmpty().not() && errorType == "addGstService") {
         addGstService(productIdAdd)
       } else if (productIdAdd.isNullOrEmpty().not() && errorType == "uploadImageSingle") {
@@ -326,12 +327,12 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
               productIdAdd = productId
               addGstService(productId)
-            } else showError("Product adding error, please try again.")
+            } else showError(getString(R.string.product_adding_error_try_again))
           } else showError(resources.getString(R.string.internet_connection_not_available))
         })
       }
     } else {
-      WebEngageController.trackEvent("Update service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
+      WebEngageController.trackEvent(UPDATE_SERVICE_PRODUCT_CATALOGUE, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
       val updates = ArrayList<UpdateValue>()
       val json = JSONObject(Gson().toJson(product))
       val keys = json.keys()
@@ -344,7 +345,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         if ((it.error is NoNetworkException).not()) {
           if ((it.status == 200 || it.status == 201 || it.status == 202)) {
             updateGstService(product?.productId)
-          } else showError("Product updating error, please try again.")
+          } else showError(getString(R.string.product_updating_error_try_again))
         } else showError(resources.getString(R.string.internet_connection_not_available))
       })
     }
@@ -361,7 +362,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
-        } else showError("Product updating error, please try again.")
+        } else showError(getString(R.string.product_updating_error_try_again))
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
   }
@@ -377,7 +378,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           uploadImageSingle(productId)
         } else {
           if (isEdit == false) errorType = "addGstService"
-          showError("Product adding error, please try again.")
+          showError(getString(R.string.product_adding_error_try_again))
         }
       } else {
         if (isEdit == false) errorType = "addGstService"
@@ -387,7 +388,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun uploadImageSingle(productId: String?) {
-    showProgress("Uploading product image, please wait...")
+    showProgress(getString(R.string.uploading_product_image))
     if (isEdit == true && productImage == null) {
       uploadSecondaryImage(productId)
       return
@@ -396,11 +397,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             1, 1, productId, getRequestServiceImage(productImage))?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
-          WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "null")
+          WebEngageController.trackEvent(event_name = PRODUCT_ADDED_TO_CATALOGUE, event_label = MANAGE_CONTENT, event_value = NULL)
           uploadSecondaryImage(productId)
         } else {
           if (isEdit == false) errorType = "uploadImageSingle"
-          showError("Product image uploading error, please try again.")
+          showError(getString(R.string.product_image_uploading_error))
         }
       } else {
         if (isEdit == false) errorType = "uploadImageSingle"
@@ -432,7 +433,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
-            } else showError("Secondary Product image uploading error, please try again.")
+            } else showError(getString(R.string.secondary_product_image_uploading_error_please))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
@@ -452,10 +453,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               Log.d(ProductDetailFragment::class.java.name, "$it")
-            } else showLongToast("Add secondary image data error, please try again.")
+            } else showLongToast(getString(R.string.add_secondary_image_data_error_please_try_again))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
+            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(R.string.product_saved_successfully))
             goBack()
           }
         })
@@ -666,7 +667,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun goAddBankView() {
-    WebEngageController.trackEvent("Add/Update bank account", "SERVICE CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent(ADD_UPDATE_BANK_ACCOUNT, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
     val bundle = Bundle()
     bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
@@ -694,10 +695,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       R.id.id_delete -> {
         MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme).setTitle(resources.getString(R.string.are_you_sure))
             .setMessage(resources.getString(R.string.delete_record_not_undone))
-            .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
+            .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete_)) { d, _ ->
               d.dismiss()
               showProgress()
-              WebEngageController.trackEvent("Delete Service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
+              WebEngageController.trackEvent(DELETE_SERVICE_PRODUCT_CATALOGUE, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
               val request = DeleteProductRequest(clientId, "SINGLE", product?.productId, product?.productType)
               viewModel?.deleteService(request)?.observeOnce(viewLifecycleOwner, Observer {
                 hideProgress()

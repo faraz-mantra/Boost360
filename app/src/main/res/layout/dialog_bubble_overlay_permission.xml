@@ -15,16 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
-        android:layout_marginStart="24dp"
         android:textSize="15sp"
         android:layout_marginEnd="24dp"
         android:text="@string/required_overlay_permission"
-        android:layout_marginLeft="24dp" />
+        android:layout_marginStart="24dp" />
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:id="@+id/gif_image"
-        android:layout_marginLeft="24dp" />
+        android:layout_marginStart="24dp" />
 </LinearLayout>

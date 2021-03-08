@@ -87,7 +87,7 @@
           android:layout_marginBottom="@dimen/size_32"
           android:alpha="0"
           android:gravity="center"
-          android:text="OKAY"
+          android:text="@string/okay"
           app:textType="HEADING_6"
           tools:alpha="1" />
 

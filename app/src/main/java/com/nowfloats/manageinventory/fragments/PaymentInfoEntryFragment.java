@@ -70,7 +70,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
         if(activity instanceof  ProfileUpdateCallBack){
             mProfileCallBack = (ProfileUpdateCallBack) activity;
         }else {
-            throw new RuntimeException("Must Implement ProfileUpdateCallBack");
+            throw new RuntimeException(getString(R.string.must_implement_profile_update_callback));
         }
     }
 
@@ -134,23 +134,23 @@ public class PaymentInfoEntryFragment extends DialogFragment {
 
     private void saveOrUpdateProfileData() {
         if(TextUtils.isEmpty(etName.getText().toString().trim())){
-            etName.setError("Name is mandatory");
+            etName.setError(getString(R.string.name_is_mandatory));
             return;
         }
         if(TextUtils.isEmpty(etAccNum.getText().toString().trim())){
-            etName.setError("Account Number is mandatory");
+            etName.setError(getString(R.string.account_number_is_mandatory));
             return;
         }
         if(TextUtils.isEmpty(etBankName.getText().toString().trim())){
-            etName.setError("Bank name is mandatory");
+            etName.setError(getString(R.string.bank_name_is_mandatory));
             return;
         }
         if(TextUtils.isEmpty(etIfsc.getText().toString().trim())){
-            etName.setError("IFSC Code is mandatory");
+            etName.setError(getString(R.string.ifcs_code_is_mandatory));
             return;
         }
         if(TextUtils.isEmpty(etPanCard.getText().toString().trim())){
-            etName.setError("Pan Card is mandatory");
+            etName.setError(getString(R.string.pan_card_is_mandatory));
             return;
         }
         if(mProfile == null){
@@ -176,16 +176,16 @@ public class PaymentInfoEntryFragment extends DialogFragment {
         profile.setIfscCode(etIfsc.getText().toString().trim());
 
         if(rgAccType.getCheckedRadioButtonId() == R.id.rb_savings){
-            profile.setBankAccountType("Savings");
+            profile.setBankAccountType(getString(R.string.savings));
         }else {
-            profile.setBankAccountType("Current");
+            profile.setBankAccountType(getString(R.string.current));
         }
 
         WAAddDataModel<MerchantProfileModel> dataModel = new WAAddDataModel<>();
         dataModel.setActionData(profile);
         dataModel.setWebsiteId(mSession.getFPID());
 
-        progressDialog.setMessage("Please Wait...");
+        progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
 
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -208,7 +208,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
                     public void run() {
                         progressDialog.dismiss();
                         PaymentInfoEntryFragment.this.dismiss();
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.something_wen_wrong, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -221,7 +221,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
                         progressDialog.dismiss();
                         PaymentInfoEntryFragment.this.dismiss();
                         mProfileCallBack.onProfileUpdated(profile);
-                        Toast.makeText(getActivity(), "Successfully Saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.successfully_saved), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -230,7 +230,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
     }
 
     private void updateAssuredPurchase(){
-        progressDialog.setMessage("Please Wait...");
+        progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
 
         String accType = "Savings";
@@ -278,7 +278,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
                     @Override
                     public void run() {
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -291,7 +291,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
                     @Override
                     public void run() {
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.successfully_updated, Toast.LENGTH_SHORT).show();
                         mProfileCallBack.onProfileUpdated(merchantProfile);
                         PaymentInfoEntryFragment.this.dismiss();
                     }
