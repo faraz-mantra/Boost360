@@ -1,8 +1,8 @@
 package com.appservice.appointment.ui
-
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import com.appservice.R
 import com.appservice.appointment.model.AddBankAccountRequest
@@ -12,17 +12,17 @@ import com.appservice.appointment.widgets.BottomSheetVerificationUnderProcess
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
-import com.appservice.databinding.FragmentAddBankDetailsBinding
+import com.appservice.databinding.FragmentEditBankDetailsBinding
 import com.appservice.rest.TaskCode
 import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 
-class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding, AppointmentSettingsViewModel>() {
+class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, AppointmentSettingsViewModel>() {
     var addBankAccountRequest: AddBankAccountRequest? = null
     override fun getLayout(): Int {
-        return R.layout.fragment_add_bank_details
+        return R.layout.fragment_edit_bank_details
     }
 
     override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
@@ -30,9 +30,8 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     }
 
     companion object {
-        fun newInstance(): FragmentAddAccountDetails {
-
-            return FragmentAddAccountDetails()
+        fun newInstance(): FragmentEditBankDetails {
+            return FragmentEditBankDetails()
         }
     }
 
@@ -40,43 +39,12 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
         super.onCreateView()
         setOnClickListener(binding?.submitBtn)
         getAccountDetails()
-
     }
 
     private fun getAccountDetails() {
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_bank_details))
     }
 
-
-//    private fun setEditable() {
-//        binding?.edtBankName?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtAccountName?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtAlias?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtAccountNumber?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtIfsc?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtConfirmNumber?.visible()
-//        binding?.edtAccountName?.isEnabled = true
-//        binding?.edtAlias?.isEnabled = true
-//        binding?.edtAccountNumber?.isEnabled = true
-//        binding?.edtIfsc?.isEnabled = true
-//        binding?.edtBankName?.isEnabled = true
-//        binding?.titleConfirmAccount?.visible()
-//    }
-//
-//    private fun setNonEditable() {
-//        binding?.edtBankName?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtAccountName?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtAlias?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtAccountNumber?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtIfsc?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtConfirmNumber?.gone()
-//        binding?.edtAccountName?.isEnabled = false
-//        binding?.edtAlias?.isEnabled = false
-//        binding?.edtAccountNumber?.isEnabled = false
-//        binding?.edtIfsc?.isEnabled = false
-//        binding?.edtBankName?.isEnabled = false
-//        binding?.titleConfirmAccount?.gone()
-//    }
 
     private fun showAccountVerificationStatus() {
         val bottomSheetVerificationUnderProcess = BottomSheetVerificationUnderProcess()
@@ -103,9 +71,22 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_edit -> {
+                val bundle = Bundle()
+                bundle.putBoolean(IntentConstant.EDIT_ACCOUNT.name, true)
+                startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
+            }
+            else -> {
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun addBankAccount() {
-        hitApi(viewModel?.addBankAccount(UserSession.fpId,UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
+        hitApi(viewModel?.addBankAccount(UserSession.clientId,UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
+
     }
 
     override fun onSuccess(it: BaseResponse) {
@@ -124,12 +105,12 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
         binding?.edtAccountNumber?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountNumber)
         binding?.edtConfirmNumber?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountNumber)
         binding?.edtIfsc?.setText(paymentProfileResponse.result?.bankAccountDetails?.iFSC)
-//        val verifyText = it.result?.bankAccountDetails?.getVerifyText()
-//        if (verifyText == "unverified") {
-//            showAccountVerificationStatus()
-//        } else {
-//            showSuccessVerificationStatus()
-//        }
+        val verifyText = it.result?.bankAccountDetails?.getVerifyText()
+        if (verifyText == "unverified") {
+            showAccountVerificationStatus()
+        } else {
+            showSuccessVerificationStatus()
+        }
 
     }
 
@@ -137,7 +118,7 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
         if (it.isSuccess()) {
             val bundle = Bundle()
             bundle.putBoolean(IntentConstant.IS_EDIT.name, false)
-            startFragmentActivity(FragmentType.APPOINTMENT_PAYMENT_SETTINGS, bundle, true, isResult = false)
+            startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
         }
     }
 

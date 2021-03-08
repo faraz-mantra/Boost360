@@ -37,7 +37,7 @@ class AppointmentSettingsViewModel : BaseViewModel() {
     fun addMerchantUPI(request: UpdateUPIRequest): LiveData<BaseResponse> {
         return WithFloatTwoRepository.addMerchantUPI(request).toLiveData()
     }
-    fun addBankAccount(request: AddBankAccountRequest): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.addBankAccount(request).toLiveData()
+    fun addBankAccount(floatingPointId: String?,clientId: String?,request: AddBankAccountRequest): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.addBankAccount(floatingPointId,clientId,request).toLiveData()
     }
 }

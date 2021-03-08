@@ -95,8 +95,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.upiIdUpdate(request), TaskCode.ADD_MERCHANT_UPI)
   }
 
-  fun addBankAccount(request: AddBankAccountRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.addBankAccounts(request), TaskCode.ADD_BANK_ACCOUNT)
+  fun addBankAccount(fpId: String?,clientId:String?,request: AddBankAccountRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.addBankAccounts(fpId = fpId,clientId,request), TaskCode.ADD_BANK_ACCOUNT)
   }
 
 }
