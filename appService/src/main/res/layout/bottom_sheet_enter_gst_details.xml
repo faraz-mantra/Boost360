@@ -9,6 +9,8 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            app:layout_constraintHorizontal_bias="0.0"
             style="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_20"
@@ -37,15 +39,18 @@
 
             <RadioGroup
                 style="@style/match_wrap"
+                android:id="@+id/radio_group"
                 android:layout_marginHorizontal="@dimen/size_20"
                 android:layout_marginTop="@dimen/size_20">
 
                 <RadioButton
+                    android:id="@+id/radio_business_gst"
                     style="@style/RadioAppointment"
                     android:text="@string/my_business_is_registered_with_gst" />
 
                 <RadioButton
                     style="@style/RadioAppointment"
+                    android:id="@+id/radio_not_registered"
                     android:text="@string/not_registered_with_gst"
                     tools:buttonTint="@color/gray_bbb" />
             </RadioGroup>
@@ -67,10 +72,9 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@id/tvTitle"
+                    android:id="@+id/ctv_gst_title"
                     style="@style/AppointmentSetting_Text_Heading"
                     android:layout_marginStart="@dimen/size_20"
-                    android:layout_marginBottom="@dimen/size_8"
                     android:text="@string/enter_your_business_gstin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +83,7 @@
 
                 <com.framework.views.customViews.CustomEditText
                     style="@style/Appointment_Text_Field"
+                    android:id="@+id/cet_gst"
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:hint="@string/enter_business_gstin">
 
@@ -87,6 +92,7 @@
                 <com.framework.views.customViews.CustomTextView
                     style="@style/AppointmentSetting_Text_Heading"
                     android:layout_marginStart="@dimen/size_20"
+                    android:id="@+id/ctv_business_name"
                     android:layout_marginTop="@dimen/size_16"
                     android:layout_marginEnd="@dimen/size_20"
                     android:drawablePadding="@dimen/size_10"
@@ -94,19 +100,32 @@
 
                 <com.framework.views.customViews.CustomEditText
                     style="@style/Appointment_Text_Field"
+                    android:id="@+id/cet_business_name"
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:hint="@string/enter_business_name" />
 
                 <com.framework.views.customViews.CustomTextView
-                    style="@style/wrap_match"
+                    style="@style/wrap_wrap"
                     android:layout_gravity="start"
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:layout_marginTop="@dimen/size_10"
                     android:drawableStart="@drawable/ic_info"
                     android:drawablePadding="@dimen/size_8"
                     android:drawableTint="@color/gray_bbb"
+                    android:textColor="@color/gray_828282"
                     android:text="@string/note_your_gstin_and_business_name_will_be_verified" />
 
+                <com.framework.views.customViews.CustomCheckBox
+                    android:id="@+id/ccb_declearation"
+                    style="@style/MyCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:layout_marginTop="@dimen/size_15"
+                    android:paddingTop="@dimen/size_10"
+                    android:text="@string/i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst"
+                    android:textColor="@color/gray_828282"
+                    android:visibility="gone"/>
                 <View
                     android:id="@+id/line"
                     android:layout_width="match_parent"

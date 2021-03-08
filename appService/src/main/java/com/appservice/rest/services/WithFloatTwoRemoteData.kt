@@ -77,8 +77,8 @@ interface WithFloatTwoRemoteData {
   @POST(EndPoints.ADD_MERCHANT_UPI)
   fun updateCODDetails(@Body request: RequestCODPreference): Observable<Response<ResponseBody>>
 
-  @PUT(EndPoints.ADD_BANK_ACCOUNT)
-  fun addBankAccounts(@Body request: AddBankAccountRequest): Observable<Response<ResponseBody>>
+  @PUT(EndPoints.ADD_BANK_ACCOUNT+"/{fpId}/")
+  fun addBankAccounts(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?, @Body request: AddBankAccountRequest): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.DELIVERY_SETUP)
   fun deliverySetupPost(@Body request: DeliverySetup): Observable<Response<ResponseBody>>
@@ -87,8 +87,8 @@ interface WithFloatTwoRemoteData {
   @POST(EndPoints.INVOICE_SETUP)
   fun invoiceSetupPost(@Body request: InvoiceSetupRequest?): Observable<Response<ResponseBody>>
 
-  @GET(EndPoints.GET_DELIVERY_CONFIG)
-  fun deliverySetupGet(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<ResponseBody>>
+  @GET(EndPoints.GET_DELIVERY_CONFIG+"/{fpId}/")
+  fun deliverySetupGet(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<DeliveryDetailsResponse>>
 
   @GET(EndPoints.GET_PAYMENT_PROFILE_DETAILS+"/{fpId}/")
   fun paymentProfileDetailsGet(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<PaymentProfileResponse>>

@@ -2,7 +2,9 @@ package com.appservice.appointment.ui
 
 import android.view.View
 import com.appservice.R
+import com.appservice.appointment.model.DeliveryDetailsResponse
 import com.appservice.appointment.model.DeliverySetup
+import com.appservice.appointment.model.PaymentProfileResponse
 import com.appservice.appointment.widgets.BottomSheetBoostPaymentConfig
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -12,8 +14,12 @@ import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 
 class FragmentPaymentCollectionsSettings : AppBaseFragment<FragmentPaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
+    var isEdit: Boolean = false
+
     override fun getLayout(): Int {
         return R.layout.fragment_payment_collection_setup
     }
@@ -32,9 +38,15 @@ class FragmentPaymentCollectionsSettings : AppBaseFragment<FragmentPaymentCollec
         super.onCreateView()
         setOnClickListener(binding?.boostPaymentGateway, binding?.btnAddAccount)
         getDeliveryStatus()
+        getAccountDetails()
+
         binding?.toggleCod?.setOnToggledListener { toggleableView, isOn ->
             updateDeliveryStatus(isOn)
         }
+    }
+
+    private fun getAccountDetails() {
+        hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_bank_details))
     }
 
     private fun getDeliveryStatus() {
@@ -52,7 +64,9 @@ class FragmentPaymentCollectionsSettings : AppBaseFragment<FragmentPaymentCollec
                 showBootPaymentBottomSheet()
             }
             binding?.btnAddAccount -> {
-                startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME)
+                if (!isEdit)
+                    startFragmentActivity(FragmentType.BANK_ACCOUNT_DETAILS)
+
             }
         }
     }
@@ -63,17 +77,42 @@ class FragmentPaymentCollectionsSettings : AppBaseFragment<FragmentPaymentCollec
 
     }
 
+    private fun onReceivedBankDetails(it: BaseResponse) {
+        val paymentProfileResponse = it as PaymentProfileResponse
+        isEdit = paymentProfileResponse.result?.bankAccountDetails != null
+        if (isEdit) {
+            binding?.btnAddAccount?.gone()
+            binding?.llBankStatus?.visible()
+            binding?.ctvAccountText?.gone()
+            binding?.arrowRight?.visible()
+            binding?.edtBankAccount?.setOnClickListener {
+                startFragmentActivity(FragmentType.EDIT_ACCOUNT_DETAILS)
+            }
+            binding?.llDisclaimer?.visible()
+            binding?.bankAddedStatus?.text = "Bank Account Added (${(paymentProfileResponse.result?.bankAccountDetails?.getVerifyText())})"
+            binding?.bankNameAccountNumber?.text = "${paymentProfileResponse.result?.bankAccountDetails?.bankName} - ${paymentProfileResponse.result?.bankAccountDetails?.accountNumber}"
+        } else {
+            binding?.btnAddAccount?.visible()
+            binding?.llDisclaimer?.gone()
+            binding?.llBankStatus?.gone()
+            binding?.ctvAccountText?.visible()
+            binding?.arrowRight?.gone()
+
+        }
+
+    }
+
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
         when (it.taskcode) {
-            TaskCode.GET_SERVICE_LISTING.ordinal -> onDeliveryDetailsReceived(it)
-
+            TaskCode.GET_DELIVERY_DETAILS.ordinal -> onDeliveryDetailsReceived(it)
+            TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
 
         }
     }
 
     private fun onDeliveryDetailsReceived(it: BaseResponse) {
-        val data = it as DeliverySetup
-        binding?.toggleCod?.isOn = data.isBusinessLocationPickupAllowed ?: false
+        val data = it as DeliveryDetailsResponse
+        binding?.toggleCod?.isOn = data.result?.isBusinessLocationPickupAllowed ?: false
     }
 }
