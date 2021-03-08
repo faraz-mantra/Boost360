@@ -31,6 +31,10 @@ import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.observeOnce
 import com.framework.imagepicker.ImagePicker
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.OTHER_INFORMATION_CONFIRM
+import com.framework.webengageconstant.SERVICE_CATALOGUE_ADD_UPDATE
+import com.framework.webengageconstant.SERVICE_OTHER_INFORMATION_CATALOGUE_LOAD
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -66,7 +70,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("Service other information catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent(SERVICE_OTHER_INFORMATION_CATALOGUE_LOAD, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
 
     setOnClickListener(
             binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock,
@@ -326,7 +330,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 //        return
 //      }
       else -> {
-        WebEngageController.trackEvent("Other information confirm", "SERVICE CATALOGUE ADD/UPDATE", "")
+        WebEngageController.trackEvent(OTHER_INFORMATION_CONFIRM, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
 //        product?.category = serviceCategory
         product?.brandName = brand
 //        product?.tags = tagList

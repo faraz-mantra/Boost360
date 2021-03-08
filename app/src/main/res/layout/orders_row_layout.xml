@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     android:layout_marginTop="2dp"
     android:background="@color/white"
     android:orientation="horizontal"
@@ -25,11 +25,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:background="@drawable/items_num_bg"
-            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
             android:paddingRight="8dp"
-            android:text="3 Items"
+            android:text="@string/_3_items"
             android:textSize="12sp" />
     </RelativeLayout>
 
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:orientation="vertical">
 
         <TextView
@@ -47,7 +47,7 @@
             android:background="@drawable/initiated_order_text_bg"
             android:gravity="center"
             android:padding="2dp"
-            android:text="Fresh"
+            android:text="@string/fresh"
             android:textColor="#339112"
             android:textSize="12sp" />
 
@@ -58,7 +58,7 @@
             android:layout_marginTop="3dp"
             android:gravity="center"
             android:padding="2dp"
-            android:text="AD310817FG6T"
+            android:text="@string/ad310817fg6t"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="2dp"
-            android:text="INR 7,000"
+            android:text="@string/inr_7_000"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="2dp"
-                android:text="Date:" />
+                android:text="@string/date_" />
 
             <TextView
                 android:id="@+id/tv_order_date"
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="2dp"
-                android:text="31/08/2017"
+                android:text="@string/_31_08_2017"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -103,7 +103,7 @@
                 android:gravity="center"
                 android:padding="2dp"
                 android:id="@+id/tvHeadExp"
-                android:text="Exp. Deliv. Date:" />
+                android:text="@string/exp_deliv_date" />
 
             <TextView
                 android:id="@+id/tv_exp_deliv_date"
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="3dp"
-                android:text="31/08/2017"
+                android:text="@string/_31_08_2017"
                 android:textStyle="bold" />
         </LinearLayout>
 

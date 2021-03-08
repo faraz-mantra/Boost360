@@ -14,7 +14,7 @@
         android:layout_gravity="left"
         android:text="@string/select_action_dialog_title"
         android:layout_marginTop="26dp"
-        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         android:textColor="#878787"
         />
 
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="33dp"
         android:id="@+id/replace_image">
 
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
             android:text="@string/text_replace_image"
             android:textColor="#878787"
 
@@ -64,7 +64,7 @@
         android:id="@+id/img_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="33dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
             android:text="@string/text_delete_image"
             android:textColor="#878787"
 
@@ -107,7 +107,7 @@
         android:id="@+id/deletebackgroundImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="13dp"
         android:layout_marginBottom="20dp"
         android:visibility="gone"
@@ -134,8 +134,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="18dp"
-            android:text="Delete"
+            android:layout_marginStart="18dp"
+            android:text="@string/delete_"
             android:textColor="#878787"
             android:layout_weight=".6"/>
 

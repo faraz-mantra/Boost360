@@ -144,7 +144,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
 
     private void getPaymentSettings(){
-        progressDialog.setMessage("Please Wait...");
+        progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -161,7 +161,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(PaymentSettingsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PaymentSettingsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                 });
@@ -185,7 +185,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                                 processProfileData(mProfile);
                                 mApplicableTxnCharge = mProfile.getApplicableTxnCharge()+"%";
                             }else {
-                                throw new NullPointerException("Orders Count is Null");
+                                throw new NullPointerException(getString(R.string.order_count_is_null));
                             }
                         }catch (Exception e)
                         {
@@ -205,12 +205,12 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
             case R.id.tv_ap_learn_more:
                 arrayId = R.array.assured_purchase_points;
-                title ="Assured Purchase";
-                content = "Assured Purchase is a service guarantee by NowFloats that is the new benchmark for online selling businesses in India. By earning this badge:";
+                title =getString(R.string.assured_purchase);
+                content = getString(R.string.assured_purchase_is_service_guarantee_by_nowfloats);
                 break;
             case R.id.tv_deliv_learn_more:
                 arrayId = R.array.delivery_points;
-                title = "Use own payment link";
+                title = getString(R.string.use_own_payment_link);
                 //msg = getString(R.string.deliv_learn_more);
                 break;
             default:
@@ -233,8 +233,8 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
         if(showAssureDialog){
 
-            builder.negativeText("Cancel");
-            builder.positiveText("I, Agree");
+            builder.negativeText(getString(R.string.cancel));
+            builder.positiveText(R.string.i_agree);
             builder.onNegative(new MaterialDialog.SingleButtonCallback() {
                 @Override
                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -359,16 +359,16 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
     private void showDialog(){
         new AlertDialog.Builder(this)
-                .setMessage("By enabling your own payment link, you will no longer be able to get Assured Purchase benefits.")
+                .setMessage(R.string.by_enabling_your_own_payment_link)
                 .setCancelable(false)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         updateAssuredPurchase(false, false);
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         rgPaymentMethod.setOnCheckedChangeListener(null);
@@ -422,7 +422,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
     }
 
     private void updateAssuredPurchase(final boolean isNfPayment, boolean isNfDeliv){
-        progressDialog.setMessage("Please Wait...");
+        progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
         int paymentType = 1, delivType = 1;
         if(isNfPayment){
@@ -456,7 +456,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                     @Override
                     public void run() {
                         progressDialog.dismiss();
-                        Methods.showSnackBarPositive(PaymentSettingsActivity.this, "Something went wrong");
+                        Methods.showSnackBarPositive(PaymentSettingsActivity.this, getString(R.string.something_wen_wrong));
 
                     }
                 });
@@ -471,9 +471,9 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                         progressDialog.dismiss();
                         if(res.contains("1")){
                             if(isNfPayment) {
-                                Methods.showSnackBarPositive(PaymentSettingsActivity.this, "Congrats! Assured Purchase Enabled");
+                                Methods.showSnackBarPositive(PaymentSettingsActivity.this, getString(R.string.congrats_assured_purchase_enabled));
                             }else {
-                                Methods.showSnackBarPositive(PaymentSettingsActivity.this, "Own payment link Enabled");
+                                Methods.showSnackBarPositive(PaymentSettingsActivity.this, getString(R.string.own_payment_link_enabled));
                                 ((RadioButton)rgDeliveryType.getChildAt(1)).setChecked(true);
                             }
                         }
@@ -506,7 +506,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if((v.getId() == R.id.rb_seld_deliv || v.getId() == R.id.rb_nowfloats_deliv) && event.getAction() == MotionEvent.ACTION_DOWN){
-            Toast.makeText(this, "You can't change delivery while Assured Purchase is enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString( R.string.you_cant_change_delivery_while_assured), Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;

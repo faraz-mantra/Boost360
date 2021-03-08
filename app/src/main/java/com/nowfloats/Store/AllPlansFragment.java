@@ -121,7 +121,7 @@ public class AllPlansFragment extends Fragment {
         if (materialProgress == null) {
             materialProgress = new MaterialDialog.Builder(getActivity())
                     .widgetColorRes(R.color.accentColor)
-                    .content("Please Wait...")
+                    .content(getString(R.string.please_wait_))
                     .progress(true, 0)
                     .cancelable(false)
                     .build();
@@ -191,13 +191,13 @@ public class AllPlansFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    if (response.getString("Result").equals("SUCCESS")) {
+                    if (response.getString(getString(R.string.result)).equals("SUCCESS")) {
                         if (materialProgress != null) {
                             materialProgress.dismiss();
                         }
                         if (!showTobeActivatedOn) {
-                            String msg = "Thank you! \n" +
-                                    "The Transaction ID for your transaction is " + transactionId + ". Your package will be activated within 24 hours.";
+                            String msg = getString(R.string.thank_you) +
+                                    getString(R.string.the_transaction_id_for_your_transaction_is) + transactionId + getString(R.string.your_package_will_be_activated);
                             Methods.showDialog(getActivity(), status, msg);
                         }
 
@@ -205,8 +205,8 @@ public class AllPlansFragment extends Fragment {
                         if (pollCount < 5) {
                             pollServerForStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn, pollCount + 1);
                         } else {
-                            String msg = "Alert! \n" +
-                                    "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours.";
+                            String msg = getString(R.string.alert_) +
+                                    getString(R.string.your_payment_is_pending);
                             Methods.showDialog(getActivity(), status, msg);
                         }
 
@@ -221,7 +221,7 @@ public class AllPlansFragment extends Fragment {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String msg = "Your PaymentId is: " + paymentid + ". Please Contact Customer Support.";
+                String msg = getString(R.string.your_payment_id_is) + paymentid + getString(R.string.please_contact_customer_support);
                 materialProgress.dismiss();
                 Methods.showDialog(getActivity(), status, msg);
             }

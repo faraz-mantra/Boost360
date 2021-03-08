@@ -68,7 +68,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info" />
 
@@ -100,7 +100,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info" />
 
@@ -127,7 +127,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableRight="@drawable/dropselect"
+                    android:drawableEnd="@drawable/dropselect"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="@string/product_detail_currency"
@@ -145,7 +145,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info" />
 
@@ -177,7 +177,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info" />
 
@@ -208,7 +208,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info" />
 
@@ -241,7 +241,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info" />
 
@@ -267,13 +267,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right">
+                    android:gravity="end">
 
                     <Switch
                         android:id="@+id/switchView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
+                        android:layout_gravity="end"
                         android:checked="true"
                         android:textColorHighlight="@color/product_price" />
 
@@ -303,13 +303,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right">
+                    android:gravity="end">
 
                     <Switch
                         android:id="@+id/switch_hide_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
+                        android:layout_gravity="end"
                         android:checked="false"
                         android:textColorHighlight="@color/product_price" />
 
@@ -324,7 +324,7 @@
                 android:layout_marginBottom="@dimen/margin_10"
                 android:layout_marginTop="@dimen/margin_10"
                 android:background="@drawable/btn_bg"
-                android:text="Shipping Details"
+                android:text="@string/shipping_details"
                 android:textColor="@color/white" />
 
             <Button

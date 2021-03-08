@@ -127,7 +127,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             if ((message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG))
                     || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
                 message.put("url", "thirdPartyQueries");
-                message.put("mp_message", "You have new enquires from Third Party, check now.");
+                message.put("mp_message", getString(R.string.you_have_new_enquires_from_third_party_check_now));
             }
 
             deepLinkUrl = message.get("url");

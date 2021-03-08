@@ -51,6 +51,12 @@ import com.thinksity.databinding.ActivityBusinessLogoBinding;
 import java.io.File;
 import java.io.InputStream;
 
+import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE;
+import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_LOGO_ADDED;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_PROFILE;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_LOGO;
+
 public class Business_Logo_Activity extends AppCompatActivity {
     Button uploadButton ;
     private Toolbar toolbar;
@@ -102,7 +108,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.business_logo));*/
         session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
-        WebEngageController.trackEvent("BUSINESS PROFILE","BUSINESS PROFILE",session.getFpTag());
+        WebEngageController.trackEvent(EVENT_NAME_BUSINESS_PROFILE,BUSINESS_PROFILE,session.getFpTag());
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
 
@@ -195,7 +201,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
             private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
                 if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
                     MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
-                    WebEngageController.trackEvent("UPLOAD LOGO","Updated Buinsess Logo",session.getFpTag());
+                    WebEngageController.trackEvent(UPLOAD_LOGO,UPDATED_BUINSESS_LOGO,session.getFpTag());
                     cameraIntent();
                 }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
                     MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
@@ -437,7 +443,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 String path = data.getStringExtra("edit_image");
                 if (!TextUtils.isEmpty(path)) {
                     this.path = path;
-                    WebEngageController.trackEvent("Business logo added", "BUSINESS PROFILE", session.getFpTag());
+                    WebEngageController.trackEvent(BUSINESS_LOGO_ADDED, BUSINESS_PROFILE, session.getFpTag());
                     uploadPrimaryPicture(path);
                 }
             }

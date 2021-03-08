@@ -67,7 +67,7 @@
                 android:gravity="center"
                 android:paddingStart="@dimen/size_12"
                 android:paddingEnd="@dimen/size_14"
-                android:text="New Order"
+                android:text="@string/new_order"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 app:textType="BODY_2" />
@@ -230,7 +230,7 @@
               android:layout_height="wrap_content"
               android:drawableStart="@drawable/ic_customer_details"
               android:drawablePadding="@dimen/size_6"
-              android:text="Patient details"
+              android:text="@string/patient_details"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_1" />

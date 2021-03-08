@@ -90,34 +90,24 @@ public class WildFireFilterFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btn_apply:
-                switch (mRadioGroup.getCheckedRadioButtonId()){
-                    case R.id.rb_seven_days:
-                        ((WildFireDialogFragment.OnMenuDialogOptionSelection)mContext).onMonthOptionSelect(7);
-                        break;
-                    case R.id.rb_ten_days:
-                        ((WildFireDialogFragment.OnMenuDialogOptionSelection)mContext).onMonthOptionSelect(10);
-                        break;
-                    case R.id.rb_fifteen_days:
-                        ((WildFireDialogFragment.OnMenuDialogOptionSelection)mContext).onMonthOptionSelect(15);
-                        break;
-                    case R.id.rb_thirty_days:
-                        ((WildFireDialogFragment.OnMenuDialogOptionSelection)mContext).onMonthOptionSelect(30);
-                        break;
-                    case R.id.rb_select_time:
-                        ((WildFireDialogFragment.OnMenuDialogOptionSelection)mContext).onFilterOptionSelect();
-                        break;
-                    case R.id.rb_select_all:
-                        ((WildFireDialogFragment.OnMenuDialogOptionSelection)mContext).onAllSelected();
-                        break;
-                }
-                break;
-            case R.id.rb_select_time:
+        int id = view.getId();
+        if (id == R.id.btn_apply) {
+            int checkedRadioButtonId = mRadioGroup.getCheckedRadioButtonId();
+            if (checkedRadioButtonId == R.id.rb_seven_days) {
+                ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onMonthOptionSelect(7);
+            } else if (checkedRadioButtonId == R.id.rb_ten_days) {
+                ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onMonthOptionSelect(10);
+            } else if (checkedRadioButtonId == R.id.rb_fifteen_days) {
+                ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onMonthOptionSelect(15);
+            } else if (checkedRadioButtonId == R.id.rb_thirty_days) {
+                ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onMonthOptionSelect(30);
+            } else if (checkedRadioButtonId == R.id.rb_select_time) {
                 ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onFilterOptionSelect();
-                break;
-            default:
-                break;
+            } else if (checkedRadioButtonId == R.id.rb_select_all) {
+                ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onAllSelected();
+            }
+        } else if (id == R.id.rb_select_time) {
+            ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onFilterOptionSelect();
         }
     }
 }

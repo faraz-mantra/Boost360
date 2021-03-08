@@ -37,7 +37,7 @@ class OrderInvoiceFragment : BaseInventoryFragment<FragmentOrderInoiceBinding>()
     super.onCreateView()
     domainUrl = arguments?.getString(INVOICE_URL) ?: ""
     if (domainUrl.isEmpty()) {
-      showShortToast("Invalid invoice url.")
+      showShortToast(getString(R.string.invalid_invoice_url))
       baseActivity.finish()
     }
     loadData(domainUrl)
@@ -48,11 +48,11 @@ class OrderInvoiceFragment : BaseInventoryFragment<FragmentOrderInoiceBinding>()
     try {
       val waIntent = Intent(Intent.ACTION_SEND)
       waIntent.type = "text/plain"
-      waIntent.putExtra(Intent.EXTRA_SUBJECT, "Order invoice")
+      waIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.order_invoice))
       waIntent.putExtra(Intent.EXTRA_TEXT, domainUrl)
-      baseActivity.startActivity(Intent.createChooser(waIntent, "Share invoice..."))
+      baseActivity.startActivity(Intent.createChooser(waIntent, getString(R.string.share_invoice)))
     } catch (e: Exception) {
-      showLongToast("Error sharing invoice, please try again.")
+      showLongToast(getString(R.string.error_sharing_invoice))
     }
   }
 
@@ -101,7 +101,7 @@ class OrderInvoiceFragment : BaseInventoryFragment<FragmentOrderInoiceBinding>()
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           if (domainUrl.isNotEmpty()) baseActivity.startDownloadUri(domainUrl.trim())
-        } else showShortToast("Permission denied to read your External storage")
+        } else showShortToast(getString(R.string.permission_denied_to_read_your_external_storage))
         return
       }
     }

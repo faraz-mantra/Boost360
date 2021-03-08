@@ -313,13 +313,13 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     super.onCreateOptionsMenu(menu, inflater)
     val item: MenuItem = menu.findItem(R.id.menu_item_share)
     item.actionView.findViewById<CustomButton>(R.id.button_share).setOnClickListener {
-      showLongToast("Coming soon..")
+      showLongToast(getString(R.string.coming_soon))
     }
   }
 
 
   private fun showBottomSheetDialog() {
-    showLongToast("Coming soon..")
+    showLongToast(getString(R.string.coming_soon))
 //    locationsBottomSheetDialog = LocationBottomSheetDialog()
 //    locationsBottomSheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
 //    locationsBottomSheetDialog?.setList(serviceLocationsList)

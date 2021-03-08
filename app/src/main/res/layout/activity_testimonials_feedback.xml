@@ -11,15 +11,14 @@
     android:id="@+id/app_bar"
     layout="@layout/new_custome_app_bar" />
 
-  <ScrollView
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:overScrollMode="never"
-    android:scrollbars="none">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       android:orientation="vertical">
 
       <TextView
@@ -27,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:text="Add image"
+        android:text="@string/add_image"
         android:textSize="@dimen/_11sdp" />
 
       <androidx.cardview.widget.CardView
@@ -36,7 +35,6 @@
         android:layout_height="130dp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:clickable="true"
         android:padding="2dp"
         app:cardCornerRadius="4dp">
 
@@ -76,20 +74,20 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Name"
+          android:text="@string/tv_name"
           android:textSize="@dimen/_11sdp" />
 
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/_5sdp"
-          android:text="*"
+          android:text="@string/astreak"
           android:textColor="@color/primary"
           android:textSize="@dimen/_11sdp" />
 
       </LinearLayout>
 
-      <EditText
+      <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/user_name"
         style="@style/EditTextCustomeStyle"
         android:layout_width="match_parent"
@@ -97,8 +95,9 @@
         android:background="@drawable/edittext_bg_elevated"
         android:elevation="@dimen/_2sdp"
         android:maxLines="1"
+        android:inputType="textCapWords"
         android:imeOptions="actionNext"
-        android:hint="Enter Name" />
+        android:hint="@string/enter_name" />
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -117,7 +116,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="@string/tv_description"
             android:id="@+id/title_img_desc"
             android:textSize="@dimen/_11sdp" />
 
@@ -125,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
-            android:text="*"
+            android:text="@string/astreak"
             android:visibility="gone"
             android:id="@+id/is_fill_img_desc"
             android:textColor="@color/primary"
@@ -133,7 +132,7 @@
 
         </LinearLayout>
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/img_desc"
           style="@style/EditTextCustomeStyle"
           android:layout_width="match_parent"
@@ -141,8 +140,9 @@
           android:background="@drawable/edittext_bg_elevated"
           android:elevation="@dimen/_2sdp"
           android:maxLines="1"
+          android:inputType="textCapWords"
           android:imeOptions="actionNext"
-          android:hint="Description" />
+          android:hint="@string/tv_description" />
       </LinearLayout>
 
       <LinearLayout
@@ -162,20 +162,20 @@
             android:id="@+id/reviewTitleLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Review Title"
+            android:text="@string/review_title"
             android:textSize="@dimen/_11sdp" />
 
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
-            android:text="*"
+            android:text="@string/astreak"
             android:textColor="@color/primary"
             android:textSize="@dimen/_11sdp" />
 
         </LinearLayout>
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/review_title"
           style="@style/EditTextCustomeStyle"
           android:layout_width="match_parent"
@@ -183,8 +183,9 @@
           android:background="@drawable/edittext_bg_elevated"
           android:elevation="@dimen/_2sdp"
           android:maxLines="1"
+          android:inputType="textCapWords"
           android:imeOptions="actionNext"
-          android:hint="Review Title" />
+          android:hint="@string/review_title" />
       </LinearLayout>
 
 
@@ -205,14 +206,14 @@
             android:id="@+id/reviewDescriptionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Review Description"
+            android:text="@string/review_description"
             android:textSize="@dimen/_11sdp" />
 
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
-            android:text="*"
+            android:text="@string/astreak"
             android:textColor="@color/primary"
             android:textSize="@dimen/_11sdp" />
 
@@ -224,12 +225,12 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_15sdp"
           android:layout_marginEnd="@dimen/_15sdp"
-          android:text="(200 Characters)"
+          android:text="@string/_200_characters"
           android:textColor="#D8D8D8"
           android:textSize="@dimen/_10sdp" />
       </LinearLayout>
 
-      <EditText
+      <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/review_description"
         style="@style/EditTextCustomeStyle"
         android:layout_width="match_parent"
@@ -237,8 +238,9 @@
         android:background="@drawable/edittext_bg_elevated"
         android:elevation="@dimen/_2sdp"
         android:gravity="top"
+        android:inputType="textCapWords"
         android:imeOptions="actionDone"
-        android:hint="Enter Description"
+        android:hint="@string/enter_description"
         android:maxLength="200" />
 
 
@@ -256,11 +258,11 @@
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
-        android:text="save"
+        android:text="@string/save"
         android:textAllCaps="true"
         android:textColor="@color/white" />
 
-    </LinearLayout>
-  </ScrollView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

@@ -15,6 +15,8 @@ import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.webengageconstant.ADDONS_MARKETPLACE
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_ADD_ON_CROSSED_DELETED_FROM_CART
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -62,7 +64,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
         }
         holder.remove_addons.setOnClickListener {
             list.get(position).item_name?.let { it1 ->
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE AddOn crossed/ deleted from cart", "ADDONS_MARKETPLACE", it1) }
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_ADD_ON_CROSSED_DELETED_FROM_CART, ADDONS_MARKETPLACE, it1) }
             listener.deleteCartAddonsItem(list.get(position).item_id)
         }
         holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)

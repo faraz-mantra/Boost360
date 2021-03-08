@@ -32,7 +32,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Add image"
+                android:text="@string/add_image"
                 android:textColor="#747474" />
 
             <androidx.cardview.widget.CardView
@@ -75,7 +75,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Name of the Offer"
+                android:text="@string/name_of_the_offer"
                 android:textColor="#747474" />
 
             <EditText
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 style="@style/EditTextCustomeStyle"
                 android:elevation="@dimen/_2sdp"
-                android:hint="Enter Offer Title"
+                android:hint="@string/enter_offer_title"
                 android:singleLine="true" />
 
             <TextView
@@ -93,7 +93,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Current Price"
+                android:text="@string/current_price"
                 android:textColor="#747474" />
 
             <EditText
@@ -103,7 +103,7 @@
                 android:inputType="number"
                 style="@style/EditTextCustomeStyle"
                 android:elevation="@dimen/_2sdp"
-                android:hint="Enter Current Price"
+                android:hint="@string/enter_current_price"
                 android:singleLine="true" />
 
             <TextView
@@ -112,7 +112,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Discount"
+                android:text="@string/discount"
                 android:textColor="#747474" />
 
             <LinearLayout
@@ -128,7 +128,7 @@
                     android:inputType="number"
                     style="@style/EditTextCustomeStyle"
                 android:elevation="@dimen/_2sdp"
-                    android:hint="Enter Discount (%)"
+                    android:hint="@string/enter_discount"
                     android:singleLine="true" />
 
                 <TextView
@@ -146,14 +146,14 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:text="CHECK" />
+                    android:text="@string/check" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/offer_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rs.0"
+                android:text="@string/rs_0"
                 android:fontFamily="@font/open_sans"
                 android:textStyle="bold"
                 android:textColor="#9B9B9B"
@@ -171,7 +171,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Offer Description"
+                android:text="@string/offer_description"
                 android:textColor="#747474" />
 
 
@@ -182,7 +182,7 @@
                 style="@style/EditTextCustomeStyle"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"
-                android:hint="Describe your offer..."
+                android:hint="@string/describe_your_offer"
                 android:overScrollMode="always"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical" />
@@ -202,7 +202,7 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:text="save"
+                android:text="@string/save"
                 android:textAllCaps="true"
                 android:textColor="@color/white" />
 

@@ -36,7 +36,7 @@
             android:id="@+id/tvInventoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Physical product"
+            android:text="@string/physical_product"
             android:textColor="@color/primary_grey"
             app:fontFamily="@font/semi_bold"
             app:textType="HEADING_7" />
@@ -45,7 +45,7 @@
             android:id="@+id/tvInventoryDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Can be packaged and delivered to buyer, eg. book,watch,toy,garment,etc."
+            android:text="@string/can_be_packaged_and_delivered_to_buyer_eg_book_watch_toy_garment_etc"
             android:textColor="@color/primary_grey"
             app:fontFamily="@font/regular"
             app:textType="BODY_1" />

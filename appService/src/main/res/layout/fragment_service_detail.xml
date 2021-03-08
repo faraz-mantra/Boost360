@@ -622,7 +622,7 @@
                           android:background="@android:color/transparent"
                           android:hint="@string/website_name"
                           android:maxLines="1"
-                          android:paddingLeft="@dimen/size_8"
+                          android:paddingStart="@dimen/size_8"
                           android:singleLine="true"
                           android:textColor="@color/greyish_brown"
                           android:textColorHint="@color/primary_grey"
@@ -780,7 +780,7 @@
             <!--                  <com.framework.views.customViews.CustomTextView-->
             <!--                      android:layout_width="wrap_content"-->
             <!--                      android:layout_height="wrap_content"-->
-            <!--                      android:layout_marginLeft="@dimen/size_5"-->
+            <!--                      android:layout_marginStart="@dimen/size_5"-->
             <!--                      android:includeFontPadding="false"-->
             <!--                      android:text="My business Location"-->
             <!--                      android:textColor="@color/warm_grey"-->

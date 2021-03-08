@@ -1,6 +1,7 @@
 package com.nowfloats.Volley;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -21,6 +22,8 @@ import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
+import com.invitereferrals.invitereferrals.IRInterfaces.IRTrackReferrerCode;
+import com.invitereferrals.invitereferrals.InviteReferralsApi;
 import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.framework.utils.AppsFlyerUtils;
@@ -104,6 +107,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public void onCreate() {
         super.onCreate();
         BaseOrderApplication.instance = this;
+        SharedPreferences pref =  BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
 //        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
         BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
@@ -113,10 +118,16 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppDashboardApplication.instance = this;
         AppDashboardApplication.initModule(this);
         initWebEngage();
-
+        //Invite Referral
         InviteReferralsApplication.register(this);
-//        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
-
+        if (!pref.getBoolean(Constants.IS_INSTALL_APP,false)) {
+            InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
+            InviteReferralsApi.getInstance(this).getReferrerCode(code -> {
+                editor.putBoolean(Constants.IS_INSTALL_APP, true);
+                editor.putString(Constants.REFER_CODE_APP, code);
+                editor.apply();
+            });
+        }
         //Koin
         KoinBaseApplication.initModule(this);
 //        ContextApplication.initSdk(this, this);

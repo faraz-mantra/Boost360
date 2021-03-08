@@ -24,7 +24,7 @@
             android:paddingTop="@dimen/size_10"
             android:paddingEnd="@dimen/size_22"
             android:paddingBottom="@dimen/size_10"
-            android:text="Today"
+            android:text="@string/today"
             android:textAllCaps="true"
             android:textColor="@color/primary_grey"
             android:visibility="visible"

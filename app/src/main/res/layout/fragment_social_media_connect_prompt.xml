@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:textSize="18sp"
             android:id="@+id/facebook_analytics_connect_text1"
@@ -31,10 +31,10 @@
             android:textAllCaps="false"
             android:textColor="#fff"
             android:textSize="18sp"
-            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
             android:paddingRight="20dp"
             android:background="@drawable/rounded_corner_pre_signup"
-            android:text="Get Started"
+            android:text="@string/get_started_"
             android:layout_marginTop="5dp"
             android:id="@+id/connect_btn"/>
     </LinearLayout>

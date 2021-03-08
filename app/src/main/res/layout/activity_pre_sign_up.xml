@@ -24,7 +24,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginStart="@dimen/margin_10"
                 android:src="@drawable/ria"
                 android:visibility="visible" />
 
@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:gravity="center"
                     android:text="Let's get started!"
                     android:textColor="@color/white"
@@ -63,8 +63,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10"
-            android:layout_marginRight="@dimen/margin_20"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_20"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -144,7 +144,7 @@
                     android:inputType="none"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:text="India"
+                    android:text="@string/india"
                     android:editable="false"
                     android:textSize="15sp"/>
 
@@ -205,8 +205,8 @@
                         android:id="@+id/countrycode_signupscreen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="28dp"
-                        android:text="+91"
+                        android:layout_marginStart="28dp"
+                        android:text="@string/_91"
                         android:textColor="#B6B6B6"
                         android:textSize="15sp"
                         android:visibility="gone"
@@ -232,7 +232,7 @@
                     android:layout_height="25dp"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="@dimen/margin_10"
-                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_marginStart="@dimen/margin_5"
                     android:padding="4dp"
                     android:src="@drawable/icon_info" />
             </LinearLayout>
@@ -241,11 +241,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_100"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
                 android:layout_marginBottom="@dimen/margin_20"
                 android:autoLink="all"
-                android:text="NOTE: Boost will automatically create a commerce-enabled website (e.g. cairo.nowfloats.com) for your business. As you start adding content on Boost, the website gets updated instantly helping your business get visibility across all search engines."
+                android:text="@string/note_boost_will_automatically_create_a_commerce_enabled_website_e_g_cairo_nowfloats_com_for_your_business_as_you_start_adding_content_on_boost_the_website_gets_updated_instantly_helping_your_business_get_visibility_across_all_search_engines"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/primary"
                 android:textSize="@dimen/small_text_size"
@@ -259,8 +259,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="@dimen/margin_10"
-        android:layout_marginLeft="@dimen/margin_20"
-        android:layout_marginRight="@dimen/margin_20"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginEnd="@dimen/margin_20"
         android:background="@drawable/rounded_corner_pre_signup"
         android:gravity="bottom"
         android:isScrollContainer="false">
@@ -272,7 +272,7 @@
             android:layout_height="fill_parent"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="CONFIRM"
+            android:text="@string/confirm"
             android:textColor="@color/white"
             android:textSize="@dimen/medium_text_size"
             tools:ignore="MissingPrefix" />

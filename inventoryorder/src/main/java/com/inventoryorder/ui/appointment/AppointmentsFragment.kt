@@ -16,6 +16,10 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.webengageconstant.APPOINTMENTS
+import com.framework.webengageconstant.CLICKED_ON_APPOINTMENTS
+import com.framework.webengageconstant.APPOINTMENTS
+import com.framework.webengageconstant.CLICKED_ON_APPOINTMENTS
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -74,7 +78,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on appointments", "APPOINTMENTS", it) }
+    fpTag?.let { WebEngageController.trackEvent( CLICKED_ON_APPOINTMENTS , APPOINTMENTS, it)}
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     binding?.btnAdd?.visibility=if (data?.experienceCode.equals("DOC",true) && data?.experienceCode.equals("HOS",true)) View.VISIBLE else View.GONE

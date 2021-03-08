@@ -160,7 +160,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
 
     private boolean validateData() {
         if(widgetSnippet.getText().toString().isEmpty()){
-            Toast.makeText(getApplicationContext(), "Field is empty!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -229,14 +229,14 @@ public class TripAdvisorActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    Methods.showSnackBarPositive(TripAdvisorActivity.this, "Successfully Added Trip Advisor Details");
+                    Methods.showSnackBarPositive(TripAdvisorActivity.this, getString(R.string.successfully_added_trip_advisor));
                     finish();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(TripAdvisorActivity.this, "Successfully Added Trip Advisor Details");
+                        Methods.showSnackBarPositive(TripAdvisorActivity.this, getString(R.string.successfully_added_trip_advisor));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(TripAdvisorActivity.this, getString(R.string.something_went_wrong));
@@ -273,14 +273,14 @@ public class TripAdvisorActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    Methods.showSnackBarPositive(TripAdvisorActivity.this, "Successfully Updated Trip Advisor Details");
+                    Methods.showSnackBarPositive(TripAdvisorActivity.this, getString(R.string.successfully_updated_trip_advisor_details));
                     finish();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(TripAdvisorActivity.this, "Successfully Updated Trip Advisor Details");
+                        Methods.showSnackBarPositive(TripAdvisorActivity.this,  getString(R.string.successfully_updated_trip_advisor_details));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(TripAdvisorActivity.this, getString(R.string.something_went_wrong));

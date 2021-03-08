@@ -26,7 +26,7 @@
         android:gravity="bottom"
         android:orientation="vertical"
         android:paddingBottom="@dimen/margin_40"
-        android:paddingLeft="@dimen/margin_50"
+        android:paddingStart="@dimen/margin_50"
         android:paddingRight="@dimen/margin_50">
 
 
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:gravity="center"
                 android:text="@string/create_website"
                 android:textAllCaps="true"
@@ -83,10 +83,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:gravity="center"
                 android:fontFamily="sans-serif-medium"
-                android:text="LOGIN    "
+                android:text="@string/login__"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/medium_text_size"

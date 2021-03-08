@@ -137,7 +137,7 @@ public class Methods {
         Intent facebookIntent;
         //if(review.trim().length() == 0) {
         try {
-            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            context.getPackageManager().getPackageInfo(context.getString(R.string.facebook_package), 0);
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
         } catch (Exception e) {
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
@@ -150,7 +150,7 @@ public class Methods {
         try {
             context.startActivity(facebookIntent);
         } catch (Exception e) {
-            Toast.makeText(context, "unable to open facebook", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -232,7 +232,7 @@ public class Methods {
 
     public static void showDialog(Context mContext, String title, String msg) {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(mContext);
-        builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setTitle(title).setMessage(msg).setPositiveButton(mContext.getString(R.string.ok_), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -639,8 +639,8 @@ public class Methods {
                 .title(title)
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.light_gray)
-                .negativeText("Cancel")
-                .positiveText("Take Me There")
+                .negativeText(appContext.getString(R.string.cancel))
+                .positiveText(appContext.getString(R.string.take_me_there))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
