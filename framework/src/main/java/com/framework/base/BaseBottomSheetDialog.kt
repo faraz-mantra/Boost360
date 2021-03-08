@@ -15,7 +15,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
-import com.framework.utils.ScreenUtils
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -128,6 +127,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
       parent?.layoutParams = layoutParams
     }
   }
+
 
   override fun onClick(v: View) {}
 
