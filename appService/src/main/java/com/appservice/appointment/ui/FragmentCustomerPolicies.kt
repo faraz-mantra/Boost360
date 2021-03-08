@@ -1,9 +1,8 @@
-package com.appservice.appointment
+package com.appservice.appointment.ui
 
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentPoliciesForCustomerBinding
-import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
 class FragmentCustomerPolicies: AppBaseFragment<FragmentPoliciesForCustomerBinding, BaseViewModel>() {

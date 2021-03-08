@@ -63,6 +63,18 @@ object EndPoints {
   const val UPDATE_PRODUCT = "Product/v1/Update"
   const val DELETE_PRODUCT = "Product/v1/Delete"
 
+  //TODO Appointment Settings API 2 WITH FLOAT
+  const val ACCEPT_COD = "discover/v9/business/paymentProfile/acceptCod/update"
+  const val ADD_BANK_ACCOUNT = "discover/v9/business/paymentProfile/bankDetails/update"
+  const val DELIVERY_SETUP = "discover/v9/business/deliveryDetails/update"
+  const val GET_DELIVERY_CONFIG = "discover/v9/business/deliveryDetails"
+  const val ADD_WARE_HOUSE = "discover/v9/business/warehouse/add"
+  const val GET_WARE_HOUSE = "discover/v9/business/warehouse/{{floatingPointId}?clientId=<string>&offset=<int>&limit=<int>"
+  const val INVOICE_SETUP = "discover/v9/business/paymentProfile/taxDetails/update"
+  const val UPLOAD_MERCHANT_SIGNATURE = "discover/v9/business/paymentProfile/uploadSignature"
+  const val ADD_MERCHANT_UPI = "discover/v9/business/paymentProfile/upiid/update"
+  const val GET_PAYMENT_PROFILE_DETAILS = "discover/v9/business/paymentProfile"
+
   //TODO SERVICE API WITH NOWFLOATS API
   const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
   const val GET_SEARCH_LISTING = "/Service/v1/GetSearchListings"

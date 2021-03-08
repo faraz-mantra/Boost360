@@ -1,7 +1,8 @@
-package com.appservice.appointment
+package com.appservice.appointment.ui
 
 import android.view.View
 import com.appservice.R
+import com.appservice.appointment.widgets.BottomSheetWhyVerifyAccount
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.AppointmentBankAddHomeBinding

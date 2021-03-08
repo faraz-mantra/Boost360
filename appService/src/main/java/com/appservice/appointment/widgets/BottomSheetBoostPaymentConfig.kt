@@ -1,9 +1,8 @@
-package com.appservice.appointment
+package com.appservice.appointment.widgets
 
 import android.view.View
 import com.appservice.R
 import com.appservice.databinding.BottomSheetBoostPaymentConfigurationBinding
-import com.appservice.databinding.BottomSheetCatalogDisplayBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 

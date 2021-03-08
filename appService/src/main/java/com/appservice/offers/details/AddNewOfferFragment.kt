@@ -101,7 +101,6 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         hitApi(viewModel?.createOffer(offerModel), R.string.offer_adding_error)
     }
 
-    // function will be called once service is created
     private fun onOfferCreated(it: BaseResponse) {
         hideProgress()
         val res = it as? OfferBaseResponse

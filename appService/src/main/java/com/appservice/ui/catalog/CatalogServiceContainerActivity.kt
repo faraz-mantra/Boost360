@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.appservice.R
-import com.appservice.appointment.*
+import com.appservice.appointment.ui.*
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
 import com.appservice.ui.catalog.catalogProduct.addProduct.ProductDetailFragment
@@ -173,10 +173,10 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
     private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
         return when (type) {
-            FragmentType.CREATE_CATEGORY -> {
-                createCategoryFragment = CreateCategoryFragment.newInstance()
-                createCategoryFragment
-            }
+//            FragmentType.CREATE_CATEGORY -> {
+//                createCategoryFragment = CreateCategoryFragment.newInstance(fpTag)
+//                createCategoryFragment
+//            }
             FragmentType.SERVICE_TIMING_FRAGMENT -> {
                 serviceTimingFragment = ServiceTimingFragment.newInstance()
                 serviceTimingFragment

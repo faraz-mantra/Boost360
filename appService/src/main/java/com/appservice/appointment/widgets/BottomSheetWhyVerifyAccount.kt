@@ -1,14 +1,14 @@
-package com.appservice.appointment
+package com.appservice.appointment.widgets
 
 import android.view.View
 import com.appservice.R
-import com.appservice.databinding.BottomSheetCreateCategoryBinding
+import com.appservice.databinding.BottomSheetWhyDoWeNeedBankAccountBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class BottomSheetCreateCategory : BaseBottomSheetDialog<BottomSheetCreateCategoryBinding, BaseViewModel>() {
+class BottomSheetWhyVerifyAccount : BaseBottomSheetDialog<BottomSheetWhyDoWeNeedBankAccountBinding, BaseViewModel>() {
     override fun getLayout(): Int {
-        return R.layout.bottom_sheet_create_category
+        return R.layout.bottom_sheet_why_do_we_need_bank_account
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
@@ -16,16 +16,13 @@ class BottomSheetCreateCategory : BaseBottomSheetDialog<BottomSheetCreateCategor
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding?.btnSave, binding?.btnCancel)
+        setOnClickListener(binding?.understoodBtn)
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding?.btnCancel -> {
-                dismiss()
-            }
-            binding?.btnSave -> {
+            binding?.understoodBtn -> {
                 dismiss()
             }
         }

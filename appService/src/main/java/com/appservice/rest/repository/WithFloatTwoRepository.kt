@@ -1,5 +1,9 @@
 package com.appservice.rest.repository
 
+import com.appservice.appointment.model.AddBankAccountRequest
+import com.appservice.appointment.model.DeliverySetup
+import com.appservice.appointment.model.InvoiceSetupRequest
+import com.appservice.appointment.model.UpdateUPIRequest
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
 import com.appservice.model.serviceProduct.CatalogProduct
@@ -64,11 +68,35 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
   fun addUpdateImageProduct(
-      clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-      productId: String?, requestBody: RequestBody?,
+          clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
+          productId: String?, requestBody: RequestBody?,
   ): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.addUpdateImageProduct(clientId, requestType, requestId, totalChunks,
-        currentChunkNumber, productId, requestBody), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE)
+            currentChunkNumber, productId, requestBody), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE)
+  }
+
+  fun getDeliveryDetails(floatingPointId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.deliverySetupGet(floatingPointId, clientId), TaskCode.GET_DELIVERY_DETAILS)
+  }
+
+  fun invoiceSetup(request: InvoiceSetupRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.invoiceSetupPost(request), TaskCode.SETUP_INVOICE)
+  }
+
+  fun getPaymentProfileDetails(floatingPointId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.paymentProfileDetailsGet(floatingPointId, clientId), TaskCode.GET_PAYMENT_PROFILE_DETAILS)
+  }
+
+  fun setupDelivery(request: DeliverySetup): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.deliverySetupPost(request), TaskCode.SETUP_DELIVERY)
+  }
+
+  fun addMerchantUPI(request: UpdateUPIRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.upiIdUpdate(request), TaskCode.ADD_MERCHANT_UPI)
+  }
+
+  fun addBankAccount(request: AddBankAccountRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.addBankAccounts(request), TaskCode.ADD_BANK_ACCOUNT)
   }
 
 }

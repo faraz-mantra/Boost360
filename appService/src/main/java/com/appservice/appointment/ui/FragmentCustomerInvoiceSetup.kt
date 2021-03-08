@@ -1,7 +1,9 @@
-package com.appservice.appointment
+package com.appservice.appointment.ui
 
 import android.view.View
 import com.appservice.R
+import com.appservice.appointment.widgets.BottomSheetEnterGSTDetails
+import com.appservice.appointment.widgets.BottomSheetTaxInvoicesForPurchases
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentCustomerInvoiceSetupBinding
 import com.framework.models.BaseViewModel

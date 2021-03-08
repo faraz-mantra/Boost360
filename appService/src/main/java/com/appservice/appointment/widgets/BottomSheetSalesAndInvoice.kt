@@ -1,4 +1,4 @@
-package com.appservice.appointment
+package com.appservice.appointment.widgets
 
 import com.appservice.R
 import com.appservice.databinding.BottomSheetEnterGstDetailsBinding

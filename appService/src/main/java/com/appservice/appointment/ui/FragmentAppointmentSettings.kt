@@ -1,4 +1,4 @@
-package com.appservice.appointment
+package com.appservice.appointment.ui
 
 import android.view.View
 import com.appservice.R

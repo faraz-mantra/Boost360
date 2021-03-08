@@ -1,11 +1,11 @@
-package com.appservice.appointment
+package com.appservice.appointment.ui
 
 import android.view.View
 import com.appservice.R
+import com.appservice.appointment.widgets.BottomSheetCatalogDisplayName
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentCatalogSettingBinding
 import com.framework.models.BaseViewModel
-import kotlinx.android.synthetic.main.bottom_sheet_catalog_display.*
 
 class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, BaseViewModel>() {
     override fun getLayout(): Int {

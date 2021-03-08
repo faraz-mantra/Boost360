@@ -136,9 +136,7 @@
                     style="@style/Appointment_Text_Title.SubHeading"
                     android:layout_marginTop="@dimen/size_10"
                     android:text="@string/signature_bank_details_upi_id_for_non_prepaid_sales" />
-
                 <view style="@style/AppointmentHorizontalDivider" />
-
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/upi_id_heading"
                     style="@style/AppointmentSetting_Text_Heading"
