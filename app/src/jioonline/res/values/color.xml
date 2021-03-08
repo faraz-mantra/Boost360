@@ -3,6 +3,7 @@
     <color name="colorPrimary">#0400A6</color>
     <color name="colorAccent">#0400A6</color>
     <color name="colorPrimaryDark">#03007F</color>
+    <color name="accent_dark">@color/colorPrimaryDark</color>
     <color name="login_button_start_color">@color/colorPrimary</color>
     <color name="login_text_color">@color/colorPrimary</color>
     <color name="create_account_button_start_color">@color/colorPrimary</color>
