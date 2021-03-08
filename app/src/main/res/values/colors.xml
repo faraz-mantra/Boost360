@@ -124,6 +124,8 @@
     <color name="grey_e4e4e4">#e4e4e4</color>
     <color name="gray_80000000">#80000000</color>
     <color name="gray_9e9e9e">#9E9E9E</color>
+    <color name="login_title">#ffb900</color>
+    <color name="login_input_underline">#ffb900</color>
 
 
 </resources>
