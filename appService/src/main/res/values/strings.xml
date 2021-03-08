@@ -700,11 +700,10 @@
   <string name="removing_offer_failed">Removing offer failed, please try again.</string>
   <string name="error_offer_image">Offer image uploading error, please try again.</string>
   <string name="error_getting_offer_details">Error while getting the offer details.</string>
-
-
-
-
-
+  <string name="error_getting_category">error getting service category</string>
+    <string name="error_getting_delivery_details">error getting devlivery details</string>
+    <string name="error_adding_bank_account">error adding bank account.</string>
+    <string name="error_getting_bank_details">error getting bank details</string>
 
 
 </resources>

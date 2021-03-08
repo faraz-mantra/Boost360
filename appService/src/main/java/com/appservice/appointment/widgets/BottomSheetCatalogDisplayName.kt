@@ -1,4 +1,4 @@
-package com.appservice.appointment
+package com.appservice.appointment.widgets
 
 import android.view.View
 import com.appservice.R
@@ -64,7 +64,7 @@ class BottomSheetCatalogDisplayName: BaseBottomSheetDialog<BottomSheetCatalogDis
     }
 
     private fun showConfirmingChange() {
-        val bottomSheetCatalogDisplayName =BottomSheetConfirmingChange()
+        val bottomSheetCatalogDisplayName = BottomSheetConfirmingChange()
         bottomSheetCatalogDisplayName.show(this.parentFragmentManager, BottomSheetConfirmingChange::class.java.name)
     }
 }

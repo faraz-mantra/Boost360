@@ -1,5 +1,6 @@
 package com.appservice.rest.services
 
+import com.appservice.appointment.model.*
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
@@ -66,4 +67,30 @@ interface WithFloatTwoRemoteData {
           @Query("productId") productId: String?,
           @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
+
+//  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
+
+  //TODO APPOINTMENT
+  @POST(EndPoints.ACCEPT_COD)
+  fun upiIdUpdate(@Body request: UpdateUPIRequest): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.ADD_MERCHANT_UPI)
+  fun updateCODDetails(@Body request: RequestCODPreference): Observable<Response<ResponseBody>>
+
+  @PUT(EndPoints.ADD_BANK_ACCOUNT)
+  fun addBankAccounts(@Body request: AddBankAccountRequest): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.DELIVERY_SETUP)
+  fun deliverySetupPost(@Body request: DeliverySetup): Observable<Response<ResponseBody>>
+
+
+  @POST(EndPoints.INVOICE_SETUP)
+  fun invoiceSetupPost(@Body request: InvoiceSetupRequest?): Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.GET_DELIVERY_CONFIG)
+  fun deliverySetupGet(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.GET_PAYMENT_PROFILE_DETAILS+"/{fpId}/")
+  fun paymentProfileDetailsGet(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<PaymentProfileResponse>>
+
 }
