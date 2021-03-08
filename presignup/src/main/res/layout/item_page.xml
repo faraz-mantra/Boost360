@@ -53,7 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="#F5A640"
+        android:textColor="@color/pre_sign_up_title"
         android:textSize="@dimen/_18ssp"
         android:fontFamily="@font/open_sans"
         app:layout_constraintEnd_toStartOf="@id/endGuideline"
