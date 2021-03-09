@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/match_match"
+        android:background="@color/white_snow"
+        android:fillViewport="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/content"
+            style="@style/match_match"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_top"
+                style="@style/match_wrap"
+                android:orientation="vertical">
+
+                <FrameLayout style="@style/match_wrap">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/offer_image_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_180"
+                        android:layout_marginTop="@dimen/size_1"
+                        android:layout_marginBottom="@dimen/size_1"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        app:srcCompat="@color/placeholder_bg" />
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/clear_image"
+                        style="@style/wrap_wrap"
+                        android:layout_gravity="end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="@dimen/size_14"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_close_round" />
+
+                    <LinearLayout
+                        android:id="@+id/image_add_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_180"
+                        android:background="@color/white_smoke_1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomImageView
+                            style="@style/wrap_wrap"
+                            app:srcCompat="@drawable/ic_add_image" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/DashBoard_Text_Header"
+                            android:layout_marginTop="@dimen/size_5"
+                            android:text="@string/jpeg_png" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/DashBoard_Text_Header"
+                            android:text="JPEG/PNG (800x800px)" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/ctv_add_featured_image"
+                            style="@style/DashBoard_Text_Header"
+                            android:layout_marginTop="@dimen/size_20"
+                            android:text="Add DOCTOR image*"
+                            android:textAllCaps="true"
+                            android:textColor="@color/yellow_ffb900" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_change_picture"
+                    style="@style/Dashboard.ButtonStyle.Rounded.Solid.Stroke"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="bottom"
+                    android:text="@string/change_picture"
+                    android:visibility="visible" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginEnd="@dimen/size_20"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/DashBoard_Text_Title"
+                    android:layout_marginTop="@dimen/size_36"
+                    android:text="@string/name" />
+
+                <com.framework.views.customViews.CustomTextField
+                    style="@style/DashBoard_Text_Field"
+                    android:hint="@string/type_the_doctor_s_name" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/DashBoard_Text_Title"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:text="@string/description" />
+
+                <com.framework.views.customViews.CustomTextField
+                    style="@style/DashBoard_Text_Field"
+                    android:hint="@string/type_doctor_s_description_in_around_2000_characters_at_max"
+                    android:inputType="textMultiLine"
+                    android:minLines="2" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/DashBoard_Text_Title"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/speciality" />
+
+                <com.framework.views.customViews.CustomTextField
+                    style="@style/DashBoard_Text_Field"
+                    android:hint="@string/type_doctor_s_speciality_e_g_physician" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/DashBoard_Text_Title"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/business_license" />
+
+                <com.framework.views.customViews.CustomTextField
+                    style="@style/DashBoard_Text_Field"
+                    android:hint="@string/type_doctor_s_business_license" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_click_photo"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:background="@drawable/shape_blue_stroke_rect_title_bkg"
+                    android:padding="@dimen/size_12">
+
+                    <com.framework.views.customViews.CustomTextView
+                        style="@style/wrap_wrap"
+                        android:layout_gravity="center"
+                        android:drawablePadding="@dimen/size_8"
+                        android:gravity="center"
+                        android:text="@string/upload_signature"
+                        android:textColor="@color/blue_4A90E2"
+                        app:drawableLeftCompat="@drawable/ic_upload_image"
+                        app:fontFamily="@font/semi_bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:textAllCaps="true"
+                        app:textType="BODY_1" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/DashBoard_Text_Title"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/avg_duration_of_consultaton" />
+
+                <com.framework.views.customViews.CustomTextField
+                    style="@style/DashBoard_Text_Field"
+                    android:hint="@string/_15_min" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/DashBoard_Text_Title"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/appointment_booking_window_for_patients" />
+
+                <com.framework.views.customViews.CustomTextField
+                    style="@style/DashBoard_Text_Field"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/ic_arrow_down_d"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:hint="@string/select_duration" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_other_info"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:background="@drawable/shape_grey_stroke_rect_bkg"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/size_10">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/iv_otherInfo"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/DashBoard_Text_Title"
+                            android:text="@string/select_services" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/DashBoard_Text_Subheading"
+                            android:text="@string/select_services_that_the_doctor_provide" />
+
+                    </LinearLayout>
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_otherInfo"
+                        style="@style/wrap_wrap"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_right_grey" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_additional_info"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:background="@drawable/shape_grey_stroke_rect_bkg"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/size_10">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/iv_additional_info"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/DashBoard_Text_Title"
+                            android:text="@string/additional_info" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/DashBoard_Text_Subheading"
+                            android:text="@string/education_years_of_experience_mobile_number_etc" />
+
+                    </LinearLayout>
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_additional_info"
+                        style="@style/wrap_wrap"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_right_grey" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_30" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.framework.views.customViews.CustomButton
+                android:id="@+id/btn_save_details"
+                style="@style/DashBoard.ButtonStyle"
+                android:layout_height="@dimen/size_44"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginEnd="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_14"
+                android:text="@string/save_details"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
