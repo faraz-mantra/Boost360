@@ -1,82 +1,26 @@
 package com.nowfloats.util;
 
-import android.text.TextUtils;
-
 import com.appsflyer.AppsFlyerLib;
 import com.framework.analytics.FirebaseAnalyticsUtilsHelper;
+import com.framework.analytics.NFWebEngageController;
 import com.nowfloats.Login.UserSessionManager;
-import com.webengage.sdk.android.Analytics;
 import com.webengage.sdk.android.User;
-import com.webengage.sdk.android.WebEngage;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class WebEngageController {
 
     public static User weUser;
-    static Analytics weAnalytics = WebEngage.get().analytics();
 
     public static void trackEvent(String event_name, String event_label, String event_value) {
-        Map<String, Object> trackEvent = new HashMap<>();
-        trackEvent.put("event_name", event_name);
-        trackEvent.put("event_label", event_label);
-        trackEvent.put("event_value", event_value);
-        weAnalytics.track(event_name, trackEvent);
-        weAnalytics.screenNavigated(event_name);
-        //Firebase Analytics Event...
-        FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
-
-        //AppsFlyerEvent...
-        try {
-            AppsFlyerLib.getInstance().logEvent(weAnalytics.getActivity().get().getApplicationContext(), event_name, trackEvent);
-        } catch (Exception e) {
+        if (event_value == null) {
+            event_value = "";
         }
-
+        NFWebEngageController.INSTANCE.trackEvent(event_name, event_label, event_value);
     }
 
     public static void initiateUserLogin(String profileId) {
-        weUser = WebEngage.get().user();
-        weUser.login(profileId);
-
-        //Firebase Analytics User Session Event.
-        FirebaseAnalyticsUtilsHelper.identifyUser(profileId);
-
-        //AppsFlyer Analytics User Session Event.
-        AppsFlyerLib.getInstance().logSession(weAnalytics.getActivity().get().getApplicationContext());
-        AppsFlyerLib.getInstance().setCustomerUserId(profileId);
-
-    }
-
-    public static void setUserContactInfoProperties(String profileId, String email, String mobile, String name) {
-        try {
-            if (weUser == null && profileId != null) {
-                initiateUserLogin(profileId);
-            }
-            if (weUser != null) {
-                if (email != null && email.length() > 0) {
-                    weUser.setEmail(email);
-
-                    //Firebase Analytics User Property.
-                    FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", email);
-                }
-
-                if (name != null && name.length() > 0) {
-                    weUser.setFirstName(name);
-
-                    //Firebase Analytics User Property.
-                    FirebaseAnalyticsUtilsHelper.setUserProperty("name", name);
-                }
-
-                if (mobile != null && mobile.length() > 0) {
-                    weUser.setPhoneNumber(mobile);
-
-                    //Firebase Analytics User Property.
-                    FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile);
-                }
-            }
-        } catch (Exception e) {
-        }
+        NFWebEngageController.INSTANCE.initiateUserLogin(profileId);
     }
 
     public static void setUserContactInfoProperties(UserSessionManager session) {
@@ -111,31 +55,10 @@ public class WebEngageController {
     }
 
     public static void setFPTag(String fpTag) {
-        try {
-            if (weUser != null) {
-                weUser.setAttribute("fpTag", fpTag);
-            }
-
-            //Firebase Analytics User Property.
-            FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag);
-
-            //AppsFlyer User Property
-            HashMap<String, Object> params = new HashMap<>();
-            params.put("fpTag", fpTag);
-            AppsFlyerLib.getInstance().setAdditionalData(params);
-
-        } catch (Exception e) {
-        }
+        NFWebEngageController.INSTANCE.setFPTag(fpTag);
     }
 
     public static void logout() {
-        if (weUser != null)
-            weUser.logout();
-
-        //Reset Firebase Analytics User Session Event.
-        FirebaseAnalyticsUtilsHelper.resetIdentifyUser();
-
-        //End AppsFlyer Analytics User Session Event.
-        AppsFlyerLib.getInstance().setCustomerUserId(null);
+        NFWebEngageController.INSTANCE.logout();
     }
 }
