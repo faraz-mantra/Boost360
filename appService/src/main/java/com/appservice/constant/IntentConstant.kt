@@ -2,7 +2,7 @@ package com.appservice.constant
 
 enum class IntentConstant {
   IS_UPDATED,
-  CLIENT_ID,
+  CLIENT_ID,BUSINESSNAME , GSTIN,
   USER_PROFILE_ID,
   FP_ID,
   FP_TAG,
