@@ -10,12 +10,17 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 
 class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDetailsBinding, AppointmentSettingsViewModel>() {
+    enum class ClickType {
+        SAVECHANGES, CANCEL
+    }
+
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_enter_gst_details
     }
 
     var gstIn: (gst: String?) -> Unit = { }
     var businessName: (name: String?) -> Unit = { }
+    var clickType: (name: ClickType?) -> Unit = { }
 
     override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
         return AppointmentSettingsViewModel::class.java
@@ -56,6 +61,7 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
                 dismiss()
             }
             binding?.btnSaveChanges -> {
+                clickType(ClickType.SAVECHANGES)
                 dismiss()
                 gstIn(binding?.cetGst?.text.toString())
                 businessName(binding?.cetBusinessName?.text.toString())

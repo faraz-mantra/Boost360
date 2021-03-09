@@ -42,12 +42,12 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/txt_delivery_mode"
+                    android:id="@+id/ctv_confirm_gst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_20"
                     android:drawablePadding="@dimen/size_10"
-                    android:text="@string/your_gstin_no_arz6887865868_is_registered_with_the_company_name_nowfloats_technologies_pvt_ltd"
+                    tools:text="@string/your_gstin_no_arz6887865868_is_registered_with_the_company_name_nowfloats_technologies_pvt_ltd"
                     android:textColor="@color/black_4a4a4a"
                     app:textType="HEADING_6" />
 
@@ -56,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_20"
-                    android:layout_marginTop="@dimen/size_6"
+                    android:layout_marginVertical="@dimen/size_6"
                     android:drawablePadding="@dimen/size_10"
                     android:text="@string/is_this_correct"
                     android:textColor="@color/black_4a4a4a"
@@ -85,6 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_10"
                         android:orientation="vertical"
+                        android:textColor="@color/gray_bbb"
                         android:text="@string/note_gst_is_a_legal_identity_that_will_be_printed_in_your_invoice_boost_does_not_take_responsiblity_if_you_enter_invalid_gstin" />
 
                 </LinearLayout>

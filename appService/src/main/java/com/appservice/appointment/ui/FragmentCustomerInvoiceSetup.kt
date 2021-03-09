@@ -1,13 +1,16 @@
 package com.appservice.appointment.ui
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.appointment.model.PaymentProfileResponse
+import com.appservice.appointment.widgets.BottomSheetConfirmGST
 import com.appservice.appointment.widgets.BottomSheetEnterGSTDetails
 import com.appservice.appointment.widgets.BottomSheetTaxInvoicesForPurchases
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentCustomerInvoiceSetupBinding
 import com.appservice.model.FileModel
 import com.appservice.rest.TaskCode
@@ -56,9 +59,11 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
                 val data = it as PaymentProfileResponse
                 val gSTIN = data.result?.taxDetails?.gSTDetails?.gSTIN
                 val businessName = data.result?.taxDetails?.gSTDetails?.businessName
-                setGstData(gSTIN!!)
-                setBusinessName(businessName!!)
-                data.result.taxDetails.gSTDetails.documentContent
+                if (gSTIN.isNullOrEmpty().not()||businessName.isNullOrEmpty().not()){
+                    setGstData(gSTIN!!)
+                    setBusinessName(businessName!!)
+                }
+                data.result?.taxDetails?.gSTDetails?.documentContent
 
             }
         }
@@ -96,7 +101,21 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
             binding?.ctvCompanyNameHeading?.gone()
             binding?.hintEnterGst?.visible()
         }
+        bottomSheetEnterGSTDetails.clickType = {
+            if (it == BottomSheetEnterGSTDetails.ClickType.SAVECHANGES) {
+                openConfirmGstBottomSheet()
+            }
+        }
         bottomSheetEnterGSTDetails.show(childFragmentManager, BottomSheetEnterGSTDetails::class.java.name)
+    }
+
+    private fun openConfirmGstBottomSheet() {
+        val bottomSheetConfirmGST = BottomSheetConfirmGST()
+        val bundle = Bundle()
+        bundle.putString(IntentConstant.BUSINESSNAME.name,binding?.ctvCompanyName?.text.toString())
+        bundle.putString(IntentConstant.GSTIN.name, binding?.ctvGstNum?.text.toString())
+        bottomSheetConfirmGST.arguments = bundle
+        bottomSheetConfirmGST.show(childFragmentManager, BottomSheetConfirmGST::class.java.name)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
