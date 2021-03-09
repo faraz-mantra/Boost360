@@ -12,5 +12,8 @@
     <color name="pre_sign_up_title">@color/colorPrimary</color>
     <color name="login_title">@color/colorPrimary</color>
     <color name="login_input_underline">@color/colorPrimary</color>
+    <color name="addons_toolbar">@color/colorPrimary</color>
+    <color name="addons_text_color">@color/colorPrimary</color>
+    <color name="app_yellow_1">@color/colorPrimary</color>
 
 </resources>

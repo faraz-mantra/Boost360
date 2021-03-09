@@ -100,4 +100,7 @@
         <item name="android:textCursorDrawable">@drawable/color_cursor_orange</item>
     </style>
 
+    <style name="AppTheme.Pre.Upgrade" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
 </resources>

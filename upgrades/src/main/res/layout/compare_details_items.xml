@@ -67,7 +67,7 @@
                 android:textAllCaps="true"
                 android:textFontWeight="600"
                 android:fontFamily="@font/open_sans"
-                android:textColor="#FFB900"
+                android:textColor="@color/addons_text_color"
                 android:textSize="@dimen/txt_9sp" />
 
             <TextView
