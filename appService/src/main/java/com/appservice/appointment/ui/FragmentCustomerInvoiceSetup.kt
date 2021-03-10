@@ -2,10 +2,14 @@ package com.appservice.appointment.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
+import com.appservice.appointment.model.InvoiceSetupRequest
 import com.appservice.appointment.model.PaymentProfileResponse
+import com.appservice.appointment.model.UpdateUPIRequest
+import com.appservice.appointment.model.UploadMerchantSignature
 import com.appservice.appointment.widgets.BottomSheetConfirmGST
 import com.appservice.appointment.widgets.BottomSheetEnterGSTDetails
 import com.appservice.appointment.widgets.BottomSheetTaxInvoicesForPurchases
@@ -28,12 +32,13 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         return R.layout.fragment_customer_invoice_setup
     }
 
+    private var data: PaymentProfileResponse? = null
     var setGstData: (gstin: String) -> Unit = {}
     var setBusinessName: (businessName: String) -> Unit = {}
-    var secondaryImages: (secondaryImage: ArrayList<FileModel>) -> Unit = { }
+    var onImageClick: (Image: ArrayList<FileModel>) -> Unit = { }
 
     private lateinit var bottomSheetTaxInvoicesForPurchases: BottomSheetTaxInvoicesForPurchases
-    var secondaryImage: ArrayList<FileModel> = ArrayList()
+    var imageList: ArrayList<FileModel> = ArrayList()
 
 
     override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
@@ -49,24 +54,55 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     override fun onCreateView() {
         super.onCreateView()
         setOnClickListener(binding?.gstinContainer, binding?.editPurchases)
+        getprofileDetails()
+    }
+
+    private fun getprofileDetails() {
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_payment_details))
+
     }
 
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
         when (it.taskcode) {
             TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> {
-                val data = it as PaymentProfileResponse
-                val gSTIN = data.result?.taxDetails?.gSTDetails?.gSTIN
-                val businessName = data.result?.taxDetails?.gSTDetails?.businessName
-                if (gSTIN.isNullOrEmpty().not()||businessName.isNullOrEmpty().not()){
+                if (data == null) data = PaymentProfileResponse()
+                this.data = it as PaymentProfileResponse
+                val gSTIN = data?.result?.taxDetails?.gSTDetails?.gSTIN
+                val businessName = data?.result?.taxDetails?.gSTDetails?.businessName
+                if (gSTIN.isNullOrEmpty().not() || businessName.isNullOrEmpty().not()) {
                     setGstData(gSTIN!!)
                     setBusinessName(businessName!!)
                 }
-                data.result?.taxDetails?.gSTDetails?.documentContent
-
+                updatePreviousData()
+            }
+            TaskCode.SETUP_INVOICE.ordinal -> {
+                showShortToast(getString(R.string.gst_details_updated))
+            }
+            TaskCode.PUT_MERCHANT_SIGNATURE.ordinal -> {
+                showShortToast(getString(R.string.signature_uploaded))
+            }
+            TaskCode.ADD_MERCHANT_UPI.ordinal -> {
+                showShortToast(getString(R.string.merchant_upi_added))
             }
         }
+    }
+
+    private fun updatePreviousData() {
+        binding?.ctvGstNum?.text = data?.result?.taxDetails?.gSTDetails?.gSTIN
+        binding?.ctvCompanyName?.text = data?.result?.taxDetails?.gSTDetails?.businessName
+        binding?.ctvCompanyName?.visible()
+        binding?.ctvCompanyNameHeading?.visible()
+        binding?.hintEnterGst?.gone()
+        if (data?.result?.merchantSignature != null) {
+            binding?.icDoneImg?.visible()
+            binding?.signatureHeading?.visible()
+            binding?.signature?.visible()
+        }
+        if (data?.result?.taxDetails?.gSTDetails?.gSTIN != null) {
+            binding?.icDone?.visible()
+        }
+
     }
 
     override fun onClick(v: View) {
@@ -84,6 +120,21 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     private fun showTaxInvoicesForPurchases() {
         this.bottomSheetTaxInvoicesForPurchases = BottomSheetTaxInvoicesForPurchases()
         bottomSheetTaxInvoicesForPurchases.upiId = { binding?.upiId?.text = it.toString() }
+        bottomSheetTaxInvoicesForPurchases.clickType = {
+            if (it == BottomSheetTaxInvoicesForPurchases.ClickType.SAVECHANGES) {
+//                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
+                hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(UserSession.clientId, uPIId = data?.result?.uPIId, UserSession.fpId)), (R.string.error_updating_upi_id))
+                hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT), UserSession.clientId, floatingPointId = UserSession.fpId, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
+
+            }
+            if (it == BottomSheetTaxInvoicesForPurchases.ClickType.CANCEL) {
+
+            }
+        }
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name, data?.result)
+        bundle.putSerializable(IntentConstant.IMAGE_SIGNATURE.name, imageList)
+        bottomSheetTaxInvoicesForPurchases.arguments = bundle
         bottomSheetTaxInvoicesForPurchases.show(childFragmentManager, BottomSheetTaxInvoicesForPurchases::class.java.name)
     }
 
@@ -106,15 +157,27 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
                 openConfirmGstBottomSheet()
             }
         }
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name, data?.result)
+        bottomSheetEnterGSTDetails.arguments = bundle
         bottomSheetEnterGSTDetails.show(childFragmentManager, BottomSheetEnterGSTDetails::class.java.name)
     }
 
     private fun openConfirmGstBottomSheet() {
         val bottomSheetConfirmGST = BottomSheetConfirmGST()
         val bundle = Bundle()
-        bundle.putString(IntentConstant.BUSINESSNAME.name,binding?.ctvCompanyName?.text.toString())
-        bundle.putString(IntentConstant.GSTIN.name, binding?.ctvGstNum?.text.toString())
+        bundle.putString(IntentConstant.GSTIN.name, data?.result?.taxDetails?.gSTDetails?.gSTIN)
+        bundle.putString(IntentConstant.BUSINESSNAME.name, data?.result?.taxDetails?.gSTDetails?.businessName)
         bottomSheetConfirmGST.arguments = bundle
+        bottomSheetConfirmGST.clickType = {
+            if (it == BottomSheetConfirmGST.ClickType.SAVECHANGES) {
+                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
+            }
+            if (it == BottomSheetConfirmGST.ClickType.CANCEL) {
+//                data?.result?.taxDetails?.gSTDetails?.gSTIN = ""
+//                data?.result?.taxDetails?.gSTDetails?.businessName = ""
+            }
+        }
         bottomSheetConfirmGST.show(childFragmentManager, BottomSheetConfirmGST::class.java.name)
     }
 
@@ -122,6 +185,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
             val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
+            clearImage()
             secondaryImage(mPaths)
         }
     }
@@ -145,21 +209,21 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
 
 
     private fun secondaryImage(mPaths: ArrayList<String>) {
-        if (secondaryImage.size < 1) {
-            if (mPaths.size + secondaryImage.size > 1) showLongToast(resources.getString(R.string.only_eight_files_are_allowed_discarding))
-            var index: Int = secondaryImage.size
+        if (imageList.size < 1) {
+            if (mPaths.size + imageList.size > 1) showLongToast(resources.getString(R.string.only_one_file_is_allowed))
+            var index: Int = imageList.size
             while (index < 1 && mPaths.isNotEmpty()) {
-                secondaryImage.add(FileModel(path = mPaths[0]))
+                imageList.add(FileModel(path = mPaths[0]))
                 mPaths.removeAt(0)
                 index++
             }
-            secondaryImages(secondaryImage)
+            onImageClick(imageList)
         } else showLongToast(getString(R.string.only_one_file_is_allowed))
     }
 
 
     fun clearImage() {
-        secondaryImage.clear()
+        imageList.clear()
 
     }
 

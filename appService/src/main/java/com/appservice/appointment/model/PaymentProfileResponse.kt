@@ -3,156 +3,157 @@ package com.appservice.appointment.model
 import com.appservice.model.accountDetails.BankAccountDetails
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class PaymentProfileResponse(
 
 
 		@field:SerializedName("StatusCode")
-		val statusCode: Int? = null,
+		var statusCode: Int? = null,
 
 		@field:SerializedName("Result")
-		val result: Result? = null,
-) : BaseResponse()
+		var result: PaymentResult? = null,
+) : BaseResponse(), Serializable
 
 data class TANDetails(
 
 		@field:SerializedName("VerificationStatus")
-		val verificationStatus: String? = null,
+		var verificationStatus: String? = null,
 
 		@field:SerializedName("DocumentFile")
-		val documentFile: Any? = null,
+		var documentFile: Any? = null,
 
 		@field:SerializedName("Number")
-		val number: String? = null,
+		var number: String? = null,
 
 		@field:SerializedName("DocumentName")
-		val documentName: String? = null,
-) : BaseResponse()
+		var documentName: String? = null,
+) : Serializable
 
 data class RegisteredBusinessAddress(
 
 		@field:SerializedName("State")
-		val state: String? = null,
+		var state: String? = null,
 
 		@field:SerializedName("Country")
-		val country: String? = null,
+		var country: String? = null,
 
 		@field:SerializedName("City")
-		val city: String? = null,
+		var city: String? = null,
 
 		@field:SerializedName("Line1")
-		val line1: String? = null,
+		var line1: String? = null,
 
 		@field:SerializedName("Line2")
-		val line2: String? = null,
-)
+		var line2: String? = null,
+) : Serializable
 
 data class PANDetails(
 
 		@field:SerializedName("VerificationStatus")
-		val verificationStatus: String? = null,
+		var verificationStatus: String? = null,
 
 		@field:SerializedName("DocumentFile")
-		val documentFile: Any? = null,
+		var documentFile: Any? = null,
 
 		@field:SerializedName("Number")
-		val number: String? = null,
+		var number: String? = null,
 
 		@field:SerializedName("Name")
-		val name: String? = null,
+		var name: String? = null,
 
 		@field:SerializedName("DocumentName")
-		val documentName: String? = null,
-)
+		var documentName: String? = null,
+) : Serializable
 
 data class Error(
 
 		@field:SerializedName("ErrorList")
-		val errorList: ErrorList? = null,
+		var errorList: ErrorList? = null,
 
 		@field:SerializedName("ErrorCode")
-		val errorCode: Any? = null,
-)
+		var errorCode: Any? = null,
+) : Serializable
 
-data class Result(
+data class PaymentResult(
 
 		@field:SerializedName("PaymentGatewayDetails")
-		val paymentGatewayDetails: List<Any?>? = null,
+		var paymentGatewayDetails: List<Any?>? = null,
 
 		@field:SerializedName("TaxDetails")
-		val taxDetails: TaxDetails? = null,
+		var taxDetails: TaxDetails? = null,
 
 		@field:SerializedName("MerchantSignature")
-		val merchantSignature: Any? = null,
+		var merchantSignature: String? = null,
 
 		@field:SerializedName("RegisteredBusinessContactDetails")
-		val registeredBusinessContactDetails: RegisteredBusinessContactDetails? = null,
+		var registeredBusinessContactDetails: RegisteredBusinessContactDetails? = null,
 
 		@field:SerializedName("BankAccountDetails")
-		val bankAccountDetails: BankAccountDetails? = null,
+		var bankAccountDetails: BankAccountDetails? = null,
 
 		@field:SerializedName("UPIId")
-		val uPIId: String? = null,
+		var uPIId: String? = null,
 
 		@field:SerializedName("RegisteredBusinessAddress")
-		val registeredBusinessAddress: RegisteredBusinessAddress? = null,
+		var registeredBusinessAddress: RegisteredBusinessAddress? = null,
 
 		@field:SerializedName("AdditionalKYCDocuments")
-		val additionalKYCDocuments: List<AdditionalKYCDocumentsItem?>? = null,
+		var additionalKYCDocuments: List<AdditionalKYCDocumentsItem?>? = null,
 
 		@field:SerializedName("PaymentConfiguration")
-		val paymentConfiguration: PaymentConfiguration? = null,
-)
+		var paymentConfiguration: PaymentConfiguration? = null,
+) : Serializable
 
 data class AdditionalKYCDocumentsItem(
 
 		@field:SerializedName("VerificationStatus")
-		val verificationStatus: String? = null,
+		var verificationStatus: String? = null,
 
 		@field:SerializedName("DocumentFile")
-		val documentFile: Any? = null,
+		var documentFile: Any? = null,
 
 		@field:SerializedName("DocumentName")
-		val documentName: String? = null,
-)
+		var documentName: String? = null,
+) : Serializable
 
 
 data class PaymentConfiguration(
 
 		@field:SerializedName("AcceptCodForHomeDelivery")
-		val acceptCodForHomeDelivery: Boolean? = null,
+		var acceptCodForHomeDelivery: Boolean? = null,
 
 		@field:SerializedName("AcceptCodForStorePickup")
-		val acceptCodForStorePickup: Boolean? = null,
-)
+		var acceptCodForStorePickup: Boolean? = null,
+) : Serializable
 
 data class TaxDetails(
 
 		@field:SerializedName("PANDetails")
-		val pANDetails: PANDetails? = null,
+		var pANDetails: PANDetails? = null,
 
 		@field:SerializedName("TANDetails")
-		val tANDetails: TANDetails? = null,
+		var tANDetails: TANDetails? = null,
 
 		@field:SerializedName("GSTDetails")
-		val gSTDetails: GSTDetails? = null,
-)
+		var gSTDetails: GSTDetails? = null,
+) : Serializable
 
 data class RegisteredBusinessContactDetails(
 
 		@field:SerializedName("RegisteredBusinessMobile")
-		val registeredBusinessMobile: String? = null,
+		var registeredBusinessMobile: String? = null,
 
 		@field:SerializedName("RegisteredBusinessCountryCode")
-		val registeredBusinessCountryCode: String? = null,
+		var registeredBusinessCountryCode: String? = null,
 
 		@field:SerializedName("RegisteredBusinessEmail")
-		val registeredBusinessEmail: String? = null,
+		var registeredBusinessEmail: String? = null,
 
 		@field:SerializedName("MerchantName")
-		val merchantName: String? = null,
-)
+		var merchantName: String? = null,
+) : Serializable
 
 data class ErrorList(
-		val any: Any? = null,
+		var any: Any? = null,
 )

@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+       style="@style/match_wrap"
         android:background="@android:color/transparent">
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginBottom="@dimen/size_8"
             android:text="@string/confirm_gst_details"
@@ -25,8 +23,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/coordinatorLayoutBottomSheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+           style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_10"
             android:background="@drawable/bg_rounded_top_white_2"
             android:orientation="vertical"
@@ -36,15 +33,13 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTitle">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+               style="@style/match_wrap"
                 android:layout_marginTop="@dimen/size_20"
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/ctv_confirm_gst"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:layout_marginStart="@dimen/size_20"
                     android:drawablePadding="@dimen/size_10"
                     tools:text="@string/your_gstin_no_arz6887865868_is_registered_with_the_company_name_nowfloats_technologies_pvt_ltd"
@@ -53,8 +48,7 @@
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/txt_payment_mode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                  style="@style/match_wrap"
                     android:layout_marginStart="@dimen/size_20"
                     android:layout_marginVertical="@dimen/size_6"
                     android:drawablePadding="@dimen/size_10"
@@ -64,16 +58,14 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                   style="@style/match_wrap"
                     android:background="#20FFB900"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/size_20"
                     android:paddingVertical="@dimen/size_15">
 
                     <com.framework.views.customViews.CustomImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                       style="@style/wrap_wrap"
                         android:layout_marginTop="@dimen/size_12"
                         android:layout_marginEnd="@dimen/size_8"
                         android:src="@drawable/ic_info"
@@ -81,8 +73,7 @@
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrap_wrap"
                         android:layout_marginTop="@dimen/size_10"
                         android:orientation="vertical"
                         android:textColor="@color/gray_bbb"
@@ -94,8 +85,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+              style="@style/match_wrap"
                 android:layout_marginTop="@dimen/size_20"
                 android:layout_marginBottom="@dimen/size_20"
                 android:paddingEnd="@dimen/size_10">
@@ -109,12 +99,15 @@
                     android:textColor="@color/white"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.50" />
+                    />
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_cancel"
                     android:background="@color/white"
                     android:text="@string/go_back"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="@dimen/size_5"
+                    android:paddingHorizontal="@dimen/size_10"
                     style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                     app:layout_constraintRight_toLeftOf="@id/yes_its_correct"
                     app:layout_constraintTop_toTopOf="parent" />
