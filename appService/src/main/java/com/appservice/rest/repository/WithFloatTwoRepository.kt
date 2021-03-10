@@ -1,9 +1,6 @@
 package com.appservice.rest.repository
 
-import com.appservice.appointment.model.AddBankAccountRequest
-import com.appservice.appointment.model.DeliverySetup
-import com.appservice.appointment.model.InvoiceSetupRequest
-import com.appservice.appointment.model.UpdateUPIRequest
+import com.appservice.appointment.model.*
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
 import com.appservice.model.serviceProduct.CatalogProduct
@@ -95,8 +92,12 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.upiIdUpdate(request), TaskCode.ADD_MERCHANT_UPI)
   }
 
-  fun addBankAccount(fpId: String?,clientId:String?,request: AddBankAccountRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.addBankAccounts(fpId = fpId,clientId,request), TaskCode.ADD_BANK_ACCOUNT)
+  fun addMerchantSignature(request: UploadMerchantSignature): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.uploadMerchantSignature(request), TaskCode.PUT_MERCHANT_SIGNATURE)
+  }
+
+  fun addBankAccount(fpId: String?, clientId: String?, request: AddBankAccountRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.addBankAccounts(fpId = fpId, clientId, request), TaskCode.ADD_BANK_ACCOUNT)
   }
 
 }

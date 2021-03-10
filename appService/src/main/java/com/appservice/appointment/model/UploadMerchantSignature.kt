@@ -1,21 +1,23 @@
 package com.appservice.appointment.model
 
+import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class UploadMerchantSignature(
 
 	@field:SerializedName("FileType")
-	val fileType: String? = null,
+	var fileType: String? = null,
 
 	@field:SerializedName("DocumentContent")
-	val documentContent: String? = null,
+	var documentContent: String? = null,
 
 	@field:SerializedName("ClientId")
-	val clientId: String? = null,
+	var clientId: String? = null,
 
 	@field:SerializedName("FloatingPointId")
-	val floatingPointId: String? = null,
+	var floatingPointId: String? = null,
 
 	@field:SerializedName("DocumentName")
-	val documentName: String? = null
-)
+	var documentName: String? = null
+):BaseResponse(),Serializable

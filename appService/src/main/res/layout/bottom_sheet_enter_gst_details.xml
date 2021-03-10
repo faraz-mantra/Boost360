@@ -85,9 +85,19 @@
                     style="@style/Appointment_Text_Field"
                     android:id="@+id/cet_gst"
                     android:layout_marginHorizontal="@dimen/size_20"
-                    android:hint="@string/enter_business_gstin">
+                    android:hint="@string/enter_business_gstin"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="15" />
 
-                </com.framework.views.customViews.CustomEditText>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:id="@+id/ctv_invalid_gstin"
+                    style="@style/Appointment_Text_Subheading"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:text="@string/invalid_gstin_number"
+                    android:textColor="#E39595"
+                    android:visibility="gone" />
 
                 <com.framework.views.customViews.CustomTextView
                     style="@style/AppointmentSetting_Text_Heading"
@@ -117,11 +127,10 @@
 
                 <com.framework.views.customViews.CustomCheckBox
                     android:id="@+id/ccb_declearation"
-                    style="@style/MyCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/size_20"
-                    android:backgroundTint="@color/yellow_ffb900"
+                    android:buttonTint="@color/yellow_ffb900"
                     android:layout_marginTop="@dimen/size_15"
                     android:paddingTop="@dimen/size_10"
                     android:text="@string/i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst"

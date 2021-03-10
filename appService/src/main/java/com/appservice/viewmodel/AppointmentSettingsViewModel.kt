@@ -1,10 +1,7 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
-import com.appservice.appointment.model.AddBankAccountRequest
-import com.appservice.appointment.model.DeliverySetup
-import com.appservice.appointment.model.InvoiceSetupRequest
-import com.appservice.appointment.model.UpdateUPIRequest
+import com.appservice.appointment.model.*
 import com.appservice.rest.repository.NowfloatsApiRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
 import com.appservice.ui.model.ServiceListingRequest
@@ -29,15 +26,22 @@ class AppointmentSettingsViewModel : BaseViewModel() {
         return WithFloatTwoRepository.invoiceSetup(request).toLiveData()
     }
     fun getPaymentProfileDetails(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.getPaymentProfileDetails(floatingPointId,clientId).toLiveData()
+        return WithFloatTwoRepository.getPaymentProfileDetails(floatingPointId, clientId).toLiveData()
     }
+
     fun setupDelivery(request: DeliverySetup): LiveData<BaseResponse> {
         return WithFloatTwoRepository.setupDelivery(request).toLiveData()
     }
+
     fun addMerchantUPI(request: UpdateUPIRequest): LiveData<BaseResponse> {
         return WithFloatTwoRepository.addMerchantUPI(request).toLiveData()
     }
-    fun addBankAccount(floatingPointId: String?,clientId: String?,request: AddBankAccountRequest): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.addBankAccount(floatingPointId,clientId,request).toLiveData()
+
+    fun addBankAccount(floatingPointId: String?, clientId: String?, request: AddBankAccountRequest): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.addBankAccount(floatingPointId, clientId, request).toLiveData()
+    }
+
+    fun uploadSignature(request: UploadMerchantSignature): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.addMerchantSignature(request = request).toLiveData()
     }
 }

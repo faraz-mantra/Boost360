@@ -25,9 +25,9 @@ class BottomSheetConfirmGST : BaseBottomSheetDialog<BottomSheetConfirmGstBinding
 
     override fun onCreateView() {
         setOnClickListener(binding?.btnCancel, binding?.yesItsCorrect)
-        val gstint = arguments?.getString(IntentConstant.GSTIN.name)
+        val gstIn = arguments?.getString(IntentConstant.GSTIN.name)
         val businessName = arguments?.getString(IntentConstant.BUSINESSNAME.name)
-        val gstConfirm = "Your GSTIN no. <b>$gstint</b> is registered with the company name <b>$businessName.</b>"
+        val gstConfirm = "Your GSTIN no. <b>$gstIn</b> is registered with the company name <b>$businessName.</b>"
         binding?.ctvConfirmGst?.text = Html.fromHtml(gstConfirm)
 
     }
