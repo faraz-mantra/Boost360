@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/match_match">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_text_header"
+           style="@style/wrap_wrap"
+            android:background="@color/white"
+            android:paddingStart="@dimen/size_20"
+            android:paddingTop="@dimen/size_20"
+            android:paddingEnd="@dimen/size_20"
+            android:paddingBottom="@dimen/size_20"
+            android:text="@string/business_hours_timing"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/rv_consultation_hour"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_20"
+            android:layout_marginEnd="@dimen/size_20"
+            android:layout_marginBottom="@dimen/size_16"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/btn_save"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_text_header"
+            tools:itemCount="7"
+            tools:listitem="@layout/recycler_item_consultation" />
+
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_save"
+           style="@style/DashBoard.ButtonStyle"
+            android:layout_marginHorizontal="@dimen/size_16"
+            android:text="@string/save_details"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.977" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -19,7 +19,7 @@ enum class RecyclerViewItemType {
   BUSINESS_CONTENT_SETUP_ITEM_VIEW,
   ITEMS_CONTENT_SETUP_ITEM_VIEW,
   ALL_BOOST_ADD_ONS_VIEW,
-  HOME_DRAWER_VIEW,
+  HOME_DRAWER_VIEW, CONSULTATION_VIEW,
   FILTER_DATE_VIEW;
 
   @LayoutRes
@@ -42,6 +42,7 @@ enum class RecyclerViewItemType {
       ALL_BOOST_ADD_ONS_VIEW -> R.layout.item_boost_add_ons
       HOME_DRAWER_VIEW -> R.layout.item_drawer_view
       FILTER_DATE_VIEW -> R.layout.item_filter_date
+      CONSULTATION_VIEW -> R.layout.recycler_item_consultation
     }
   }
 }
