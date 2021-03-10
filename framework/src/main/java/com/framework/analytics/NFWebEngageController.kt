@@ -29,11 +29,8 @@ object NFWebEngageController {
     }
 
     fun trackEvent(event_name: String, event_label: String, event_value: HashMap<String, Any>) {
-        val trackEvent: HashMap<String, HashMap<String, Any>> = HashMap()
-        trackEvent[event_label] = event_value
-
-        if (trackEvent.size > 0) {
-            weAnalytics.track(event_name, trackEvent)
+        if (event_value.size > 0) {
+            weAnalytics.track(event_name, event_value)
             weAnalytics.screenNavigated(event_name)
 
             //Firebase Analytics Event...
@@ -41,15 +38,14 @@ object NFWebEngageController {
 
             //AppsFlyerEvent...
             try {
-                AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
+                AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext,
+                        event_name, event_value.toMap())
             } catch (e: Exception) {
             }
-
         } else {
             weAnalytics.track(event_name)
             weAnalytics.screenNavigated(event_name)
         }
-
     }
 
     fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
@@ -59,25 +55,37 @@ object NFWebEngageController {
 
                 //Firebase Analytics User Property.
                 FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", email)
+
+                //AppsFlyer Analytics User Property.
+                AppsFlyerLib.getInstance().setUserEmails(email)
             }
+
+            //AppsFlyer Analytics User Property.
+            val params = HashMap<String, Any>()
+
             if (!mobile.isNullOrEmpty()) {
                 weUser.setPhoneNumber(mobile)
 
                 //Firebase Analytics User Property.
                 FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile)
+                params["mobile"] = mobile
             }
             if (!name.isNullOrEmpty()) {
                 weUser.setFirstName(name)
 
                 //Firebase Analytics User Property.
                 FirebaseAnalyticsUtilsHelper.setUserProperty("name", name)
+                params["name"] = name
             }
             if (!clientId.isNullOrEmpty()) {
                 weUser.setAttribute("clientId", clientId)
 
                 //Firebase Analytics User Property.
                 FirebaseAnalyticsUtilsHelper.setUserProperty("clientId", clientId)
+                params["clientId"] = clientId
             }
+            if (params.isNotEmpty())
+                AppsFlyerLib.getInstance().setAdditionalData(params)
         }
     }
 
@@ -108,9 +116,7 @@ object NFWebEngageController {
                 val params = HashMap<String, Any>()
                 params["Category"] = userCategory
                 AppsFlyerLib.getInstance().setAdditionalData(params)
-
             }
-
         } catch (e: Exception) {
         }
     }
