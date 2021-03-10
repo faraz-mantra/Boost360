@@ -71,10 +71,10 @@ interface WithFloatTwoRemoteData {
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 
   //TODO APPOINTMENT
-  @POST(EndPoints.ACCEPT_COD)
+  @POST(EndPoints.ADD_MERCHANT_UPI)
   fun upiIdUpdate(@Body request: UpdateUPIRequest): Observable<Response<ResponseBody>>
 
-  @POST(EndPoints.ADD_MERCHANT_UPI)
+  @POST(EndPoints.ACCEPT_COD)
   fun updateCODDetails(@Body request: RequestCODPreference): Observable<Response<ResponseBody>>
 
   @PUT(EndPoints.ADD_BANK_ACCOUNT + "/{fpId}/")
