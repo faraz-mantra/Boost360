@@ -185,7 +185,7 @@
           android:elevation="5dp"
           android:orientation="vertical"
           app:cardBackgroundColor="@color/primaryColor"
-          app:cardCornerRadius="24dp">
+          app:cardCornerRadius="@dimen/_4sdp">
 
           <TextView
             android:layout_width="wrap_content"
