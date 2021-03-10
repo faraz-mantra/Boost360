@@ -143,16 +143,15 @@
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/upi_id_heading"
+                    android:layout_marginTop="@dimen/size_10"
                     style="@style/AppointmentSetting_Text_Heading"
-                    android:text="@string/upi_id"
-                    android:textSize="12sp" />
+                    android:text="@string/upi_id" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/upi_id"
                     style="@style/Appointment_Text_Subheading"
-                    android:layout_marginTop="@dimen/size_5"
                     tools:text="@string/brajmadhav1234_oksbi"
-                    android:textSize="12sp" />
+                    />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

@@ -90,6 +90,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
 
     private fun updatePreviousData() {
         binding?.ctvGstNum?.text = data?.result?.taxDetails?.gSTDetails?.gSTIN
+        binding?.upiId?.text = data?.result?.uPIId
         binding?.ctvCompanyName?.text = data?.result?.taxDetails?.gSTDetails?.businessName
         binding?.ctvCompanyName?.visible()
         binding?.ctvCompanyNameHeading?.visible()
@@ -123,8 +124,10 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         bottomSheetTaxInvoicesForPurchases.clickType = {
             if (it == BottomSheetTaxInvoicesForPurchases.ClickType.SAVECHANGES) {
 //                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
-                hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(UserSession.clientId, uPIId = data?.result?.uPIId, UserSession.fpId)), (R.string.error_updating_upi_id))
-                hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT), UserSession.clientId, floatingPointId = UserSession.fpId, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
+                hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(UserSession.clientId, uPIId = binding?.upiId?.text.toString(), UserSession.fpId)), (R.string.error_updating_upi_id))
+                if (imageList.isNotEmpty())
+                hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT), UserSession.clientId,
+                        floatingPointId = UserSession.fpId, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
 
             }
             if (it == BottomSheetTaxInvoicesForPurchases.ClickType.CANCEL) {
