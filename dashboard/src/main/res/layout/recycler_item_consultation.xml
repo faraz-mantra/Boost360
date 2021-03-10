@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+      style="@style/match_wrap"
+        android:layout_marginBottom="@dimen/size_8"
+        android:background="@drawable/rounded_stroke_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomCardView
+            android:id="@+id/ccv_day"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:backgroundTint="#1A4889F8"
+            app:cardElevation="0dp"
+            app:corner_radius="RADIUS_6">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_title_day"
+                style="@style/wrap_wrap"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/size_8"
+                android:fontFamily="@font/open_sans"
+                android:text="monday"
+                android:textFontWeight="600"
+                android:textSize="10sp" />
+
+            <com.appservice.views.toggle.widget.LabeledSwitch
+                android:id="@+id/toggle_on_off"
+                android:layout_width="@dimen/size_54"
+                android:layout_height="@dimen/size_24"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/size_8"
+                app:colorBorder="@android:color/transparent"
+                app:colorOff="@color/light_lemon"
+                app:colorOn="@color/light_green_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:on="false"
+                app:textOff="NO"
+                app:textOn="YES"
+                app:txtColorOff="@color/white"
+                app:txtColorOn="@color/white" />
+        </com.framework.views.customViews.CustomCardView>
+
+        <RelativeLayout
+            android:id="@+id/layout_session_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ccv_day"
+            android:layout_marginTop="-2dp">
+
+            <LinearLayout
+                android:id="@+id/ll_time_slot"
+                style="@style/ll_match_wrap_vertical">
+
+            </LinearLayout>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_add_session"
+               style="@style/wrap_wrap"
+                android:layout_below="@id/ll_time_slot"
+                android:layout_marginStart="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_8"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/u_add_session_u"
+                android:textColor="#4889F8" />
+
+            <com.framework.views.customViews.CustomCheckBox
+             android:id="@+id/ccb_all_day"
+                style="@style/wrap_wrap"
+                android:layout_below="@id/ctv_add_session"
+                android:layout_alignStart="@id/ctv_add_session"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
+                android:alpha="0.8"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/apply_same_on_all_days"
+                android:textAlignment="center"
+                android:textColor="@color/black_4a4a4a"
+                android:textFontWeight="600"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:theme="@style/ActiveTheme" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>
