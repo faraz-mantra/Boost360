@@ -263,7 +263,7 @@
                     android:layout_alignParentTop="true"
                     android:padding="16dp"
                     android:layout_alignParentEnd="true"
-                    app:srcCompat="@drawable/ic_camera_lens"/>
+                    app:srcCompat="@drawable/ic_outline_edit"/>
 
             </RelativeLayout>
 

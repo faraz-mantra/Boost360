@@ -378,4 +378,20 @@
     <string name="link_marketplace">boost.nowfloats.com/home/marketplace</string>
     <string name="wordpress_plugin_script">wordpress-plugin script</string>
     <string name="shared_user_key">com.jioonline.kb.boostapp.sharedkey</string>
+    <string name="ria_academy">JioOnline Academy</string>
+    <string name="boost_keyboard">Business Keyboard</string>
+
+    <string-array name="account_setting_tab_items">
+        <!--<item>Seller Profile</item>-->
+        <item>My Business Profile</item>
+        <item>My Bank Account</item>
+        <item>My Business KYC</item>
+        <item>Self Branded Payment Gateway</item>
+        <item>JioOnline Extensions</item>
+        <item>Subscription History</item>
+        <item>Domain and Email</item>
+        <item>Change Password</item>
+        <item>Log out</item>
+    </string-array>
+    <string name="boost_extension">JioOnline Extensions</string>
 </resources>

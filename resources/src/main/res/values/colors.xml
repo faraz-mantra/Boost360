@@ -2,6 +2,7 @@
 <resources>
   <color name="accent_dark">#F2994A</color>
   <color name="greyish_brown">#4A4A4A</color>
+  <color name="dashboard_business_url">#4A4A4A</color>
   <color name="greyish_brown_1">#25252F</color>
   <color name="greyish_brown_light">#898A8D</color>
   <color name="greyish_brown_40">#664A4A4A</color>

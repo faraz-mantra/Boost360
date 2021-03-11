@@ -298,7 +298,7 @@
             android:layout_alignParentTop="true"
             android:padding="12dp"
             android:layout_alignParentEnd="true"
-            app:srcCompat="@drawable/ic_camera" />
+            app:srcCompat="@drawable/ic_outline_edit" />
     </RelativeLayout>
 
 </FrameLayout>

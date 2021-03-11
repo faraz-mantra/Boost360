@@ -71,4 +71,6 @@
     <color name="orange">@color/colorPrimary</color>
     <color name="orange_light">#1A0400A6</color>
     <color name="login_button_color">@color/orange_light</color>
+    <color name="dashboard_business_url">@color/white</color>
+    <color name="website_url">@color/white</color>
 </resources>
