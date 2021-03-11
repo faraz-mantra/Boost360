@@ -3045,5 +3045,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="package_pickup_address">Package pickup address</string>
     <string name="unable_to_open_facebook">unable to open facebook</string>
     <string name="enter_valid_open_close_timing"><![CDATA[Please enter valid open & close time!]]></string>
+    <string name="enable_boost_keyboard">Enable Boost Keyboard</string>
 
 </resources>
