@@ -72,7 +72,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
           getDraggable()?.let { it1 -> isDraggable = it1 }
         }
         bottomSheet.parent.requestLayout()
-        ScreenUtils.instance.setWhiteNavigationBar(dialog)
+//        ScreenUtils.instance.setWhiteNavigationBar(dialog)
       } catch (e: Exception) {
         e.printStackTrace()
       }
