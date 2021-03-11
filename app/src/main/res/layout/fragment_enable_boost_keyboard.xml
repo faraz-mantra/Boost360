@@ -62,7 +62,7 @@
                         android:layout_marginStart="@dimen/margin_20"
                         android:gravity="center_vertical"
                         android:src="@drawable/right_arrow"
-                        android:text="Enable Boost Keyboard "
+                        android:text="@string/enable_boost_keyboard"
                         android:textColor="@color/gray"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_chainStyle="spread"
