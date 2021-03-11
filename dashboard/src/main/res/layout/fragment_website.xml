@@ -94,7 +94,6 @@
                   android:lineSpacingExtra="-3dp"
                   android:maxLines="2"
                   android:textColor="@color/white"
-                  app:fontFamily="@font/regular"
                   app:textType="HEADING_5"
                   tools:text="PLASTO INDIA AND POLYMERS" />
 
