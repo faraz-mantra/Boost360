@@ -152,49 +152,54 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? DrScoreUiDataResponse
       val drScoreData = getDrScoreData()
-      val isHighDrScore = drScoreData != null && (drScoreData.getDrsTotal() >= 80)
-      val drScoreSetupList = response?.data?.let { it1 -> drScoreData?.getDrScoreData(it1) }
-      if (response?.isSuccess() == true && drScoreSetupList.isNullOrEmpty().not()) {
-        if (isHighDrScore.not()) {
-          binding?.highReadinessScoreView?.gone()
-          binding?.lowReadinessScoreView?.visible()
-          binding?.txtReadinessScore?.text = "${drScoreData!!.getDrsTotal()}"
-          binding?.progressScore?.progress = drScoreData.getDrsTotal()
-          drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
-          binding?.pagerBusinessSetupLow?.apply {
-            binding?.motionOne?.transitionToStart()
-            adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DashboardFragment)
-            offscreenPageLimit = 3
-            adapter = adapterBusinessContent
-            binding?.dotIndicator?.setViewPager2(this)
-            setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-            postInvalidateOnAnimation()
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-              override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                mCurrentPage = position
-              }
-
-              override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                if (position == mCurrentPage) {
-                  if (positionOffset > 0.5) setPage(position + 1) else setPage(position)
-                } else {
-                  if (positionOffset < 0.5) setPage(position) else setPage(position + 1)
+      if(drScoreData == null){
+        binding?.highReadinessScoreView?.visible()
+        binding?.lowReadinessScoreView?.gone()
+      }else{
+        val isHighDrScore = drScoreData.getDrsTotal() >= 80
+        val drScoreSetupList = response?.data?.let { it1 -> drScoreData.getDrScoreData(it1) }
+        if (response?.isSuccess() == true && drScoreSetupList.isNullOrEmpty().not()) {
+          if (isHighDrScore.not()) {
+            binding?.highReadinessScoreView?.gone()
+            binding?.lowReadinessScoreView?.visible()
+            binding?.txtReadinessScore?.text = "${drScoreData.getDrsTotal()}"
+            binding?.progressScore?.progress = drScoreData.getDrsTotal()
+            drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
+            binding?.pagerBusinessSetupLow?.apply {
+              binding?.motionOne?.transitionToStart()
+              adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DashboardFragment)
+              offscreenPageLimit = 3
+              adapter = adapterBusinessContent
+              binding?.dotIndicator?.setViewPager2(this)
+              setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+              postInvalidateOnAnimation()
+              registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                  super.onPageSelected(position)
+                  mCurrentPage = position
                 }
-              }
-            })
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                  super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                  if (position == mCurrentPage) {
+                    if (positionOffset > 0.5) setPage(position + 1) else setPage(position)
+                  } else {
+                    if (positionOffset < 0.5) setPage(position) else setPage(position + 1)
+                  }
+                }
+              })
+            }
+            binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
+            binding?.motionOne?.transitionToStart()
+            baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
+            baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+          } else {
+            binding?.highReadinessScoreView?.visible()
+            binding?.lowReadinessScoreView?.gone()
           }
-          binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
-          binding?.motionOne?.transitionToStart()
-          baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
-          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
-        } else {
-          binding?.highReadinessScoreView?.visible()
-          binding?.lowReadinessScoreView?.gone()
-        }
-        showSimmerDrScore(false)
-      } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
+          showSimmerDrScore(false)
+        } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
+      }
     })
   }
 
