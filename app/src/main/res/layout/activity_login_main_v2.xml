@@ -182,7 +182,7 @@
           android:layout_marginLeft="4dp"
           android:layout_marginTop="50dp"
           android:layout_marginRight="4dp"
-          android:elevation="5dp"
+          app:cardElevation="@dimen/_1sdp"
           android:orientation="vertical"
           app:cardBackgroundColor="@color/primaryColor"
           app:cardCornerRadius="@dimen/_4sdp">
@@ -290,8 +290,8 @@
           android:layout_marginTop="30dp"
           android:layout_marginBottom="20dp"
           android:backgroundTint="#fff"
-          app:cardCornerRadius="25dp"
-          app:cardElevation="2dp"
+          app:cardCornerRadius="@dimen/_4sdp"
+          app:cardElevation="@dimen/_1sdp"
           app:cardUseCompatPadding="true">
 
           <LinearLayout
@@ -299,9 +299,9 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:paddingStart="@dimen/_20sdp"
-            android:paddingTop="@dimen/_10sdp"
+            android:paddingTop="@dimen/_8sdp"
             android:paddingEnd="@dimen/_20sdp"
-            android:paddingBottom="@dimen/_10sdp">
+            android:paddingBottom="@dimen/_8sdp">
 
             <ImageView
               android:layout_width="20dp"

@@ -152,11 +152,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? DrScoreUiDataResponse
       val drScoreData = getDrScoreData()
-      if(drScoreData == null){
+      if(baseActivity.packageName.equals("com.jio.online", ignoreCase = true) && drScoreData?.drs_segment.isNullOrEmpty()){
         binding?.highReadinessScoreView?.visible()
         binding?.lowReadinessScoreView?.gone()
+        showSimmerDrScore(false)
       }else{
-        val isHighDrScore = drScoreData.getDrsTotal() >= 80
+        val isHighDrScore = drScoreData!!.getDrsTotal() >= 80
         val drScoreSetupList = response?.data?.let { it1 -> drScoreData.getDrScoreData(it1) }
         if (response?.isSuccess() == true && drScoreSetupList.isNullOrEmpty().not()) {
           if (isHighDrScore.not()) {
