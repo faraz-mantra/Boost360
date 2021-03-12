@@ -61,6 +61,7 @@
     <item name="android:padding">@dimen/size_12</item>
     <item name="android:inputType">textCapWords</item>
     <item name="singleLine">true</item>
+    <item name="android:editable">true</item>
     <item name="android:background">@drawable/bg_rect_edit_txt</item>
     <item name="android:textColor">@color/warm_grey_10</item>
     <item name="android:textColorHint">@color/primary_grey</item>

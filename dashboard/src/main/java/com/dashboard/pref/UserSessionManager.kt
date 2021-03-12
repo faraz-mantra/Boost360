@@ -12,9 +12,10 @@ import com.dashboard.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
 import com.dashboard.pref.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM
 import com.dashboard.pref.Key_Preferences.WEBSITE_SHARE
 import com.framework.utils.convertStringToList
+import java.io.Serializable
 import java.util.*
 
-class UserSessionManager(var activity: Activity) {
+class UserSessionManager(var activity: Activity):Serializable {
 
   // Shared Preferences reference
   private var pref = activity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)

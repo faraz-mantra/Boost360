@@ -86,7 +86,6 @@
   <string name="business_address">Business address</string>
   <string name="retry">Retry</string>
   <string name="reset">Reset</string>
-  <string name="select_duration">Select duration</string>
   <string name="digital_readiness_score_failed_to_load">Failed to load your Digital Readiness Score.</string>
     <string name="please_wait">Please wait...</string>
   <string name="business_nsummary">Business Summary</string>
@@ -102,7 +101,6 @@
   <string name="collection_analytics_coming_soon">Collection analytics coming soon...</string>
   <string name="business_card">Business Card</string>
     <string name="search_boost_add_ons">Search boost add-ons</string>
-    <string name="owner_s_description">Owner’s description</string>
     <string name="save_details">Save details</string>
     <string name="owner_s_description">Owner’s description</string>
     <string name="type_owner_s_description_in_around_2000_characters_at_max">Type owner’s description in around 2000 characters at max…</string>
@@ -140,4 +138,18 @@
   <string name="enter_doctor_s_registration">Enter doctor’s registration</string>
   <string name="allowed_appointment_type">Allowed appointment type</string>
   <string name="select_appointment_type">Select appointment type</string>
+  <string name="add_owners_info">Add owner’s info</string>
+    <string name="please_enter_name">please enter name.</string>
+  <string name="please_enter_designation">please enter designation</string>
+    <string name="error_adding_owners_data">error adding owners data.</string>
+  <string name="owners_data_added_successfully">owners data added successfully.</string>
+  <string name="loading">Loading...</string>
+  <string name="updated_owners_data">updated owners data</string>
+  <string name="error_getting_owners_data">error getting owners data</string>
+  <string name="error_getting_owners_info">error getting owners info</string>
+    <string name="image_uploaded">image uploaded.</string>
+  <string name="error_uploading_image">error uploading image</string>
+    <string name="uploading_image">uploading image</string>
+    <string name="updating">updating..</string>
+    <string name="update_details">UPDATE DETAILS</string>
 </resources>
