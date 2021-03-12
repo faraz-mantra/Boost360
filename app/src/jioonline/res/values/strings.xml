@@ -465,4 +465,24 @@
     <string name="failed_local_storage_message">Failed to download all premium add-ons to your local storage. We recommend you to un-install &amp; re-install the JioOnline App.\n\nIf the issue persists, please do write to ria@nowflaots.com</string>
     <string name="marketoffer_howtoOne">Open the JioOnline app/website/mobile-web, search for packs and choose your preferred <b>packs/addon</b>.<br/></string>
     <string name="marketoffer_termTwo">This offer is valid only for your first ever transaction of the month on JioOnline.<br/></string>
+    <string name="on_boost360">on JioOnline</string>
+    <string-array name="about_tab_items">
+        <item>JioOnline Training &amp; Certification Program</item>
+        <item>FAQs</item>
+        <item>Like us on Facebook</item>
+        <item>Follow us on Twitter</item>
+        <item>Rate us on Play Store</item>
+        <item>Terms of use</item>
+        <item>Data privacy policy</item>
+    </string-array>
+
+    <string name="payment_gateway_terms_point_one">JioOnline currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n</string>
+    <string name="payment_gateway_terms_point_two">Please note that JioOnline just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
+    <string name="payment_gateway_terms_point_three">JioOnline in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n</string>
+    <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by JioOnline). With this add-on activated on your JioOnline website your customers see that they are paying to your business and not to JioOnline.</string>
+
+    <string name="enter_the_domain_you_own_and_select_an_option_to_let_us_know_how_you_want_you_your_domain_to_be_mapped_to_this_boost_website">Enter the domain you own and select an option to let us know how you want you your domain to be mapped to this JioOnline website.</string>
+    <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my JioOnline website’s web address/URL.</string>
+    <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make JioOnline website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
+
 </resources>
