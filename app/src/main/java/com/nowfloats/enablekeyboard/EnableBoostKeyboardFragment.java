@@ -207,12 +207,12 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
         String content = "", title = "";
         switch (code) {
             case MICROPHONE_CODE:
-                title = "Microphone Permission";
-                content = "We need permission to enable voice input feature in " + getString(R.string.boost_keyboard);
+                title = getString(R.string.microphone_permission);
+                content = getString(R.string.we_need_permission_to_enable_voice_input_feature_in) + getString(R.string.boost_keyboard);
                 break;
             case STORAGE_CODE:
-                title = "Storage Permission";
-                content = "We need permission to enable sharing feature in " + getString(R.string.boost_keyboard);
+                title = getString(R.string.storage_permission);
+                content = getString(R.string.we_need_permission_to_enable_sharing_feature) + getString(R.string.boost_keyboard);
                 break;
         }
         Methods.showApplicationPermissions(title, content, mContext);

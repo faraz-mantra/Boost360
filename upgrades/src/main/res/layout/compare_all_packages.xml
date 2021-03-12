@@ -145,7 +145,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:visibility="visible"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
                     tools:visibility="visible">
 

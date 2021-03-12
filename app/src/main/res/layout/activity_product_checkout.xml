@@ -44,7 +44,7 @@
                         android:id="@+id/tv_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="" />
                 </TableRow>
 
@@ -65,7 +65,7 @@
                         android:id="@+id/tv_user_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="" />
                 </TableRow>
 
@@ -74,19 +74,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone Number"
+                        android:text="@string/phone_number_"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":" />
+                        android:text="@string/colon" />
 
                     <TextView
                         android:id="@+id/tv_user_phone_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="" />
                 </TableRow>
 
@@ -98,19 +98,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Identification Number"
+                        android:text="@string/identification_number"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":" />
+                        android:text="@string/colon" />
 
                     <TextView
                         android:id="@+id/tv_user_tan_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="" />
                 </TableRow>
             </TableLayout>
@@ -132,8 +132,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:text="Items"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/items"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -159,7 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Sales Assisted Purchase?"
+                    android:text="@string/sales_assisted_purchase"
                     android:textSize="@dimen/medium_text_size"
                     android:textStyle="bold" />
 
@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/gray"
-                        android:text="Yes"
+                        android:text="@string/yes"
                         android:textColor="@color/light_gray" />
 
                     <RadioButton
@@ -185,7 +185,7 @@
                         android:layout_weight="1"
                         android:buttonTint="@color/gray"
                         android:checked="true"
-                        android:text="No"
+                        android:text="@string/no"
                         android:textColor="@color/light_gray" />
                 </RadioGroup>
 
@@ -196,7 +196,7 @@
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dip"
+                    android:layout_marginStart="0dip"
                     android:layout_marginTop="@dimen/margin_10"
                     android:backgroundTint="#383838"
                     android:drawableRight="@drawable/dropselect"
@@ -216,11 +216,11 @@
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
                         android:background="@drawable/et_opc_bg"
                         android:gravity="center"
-                        android:hint="Have a discount code?"
+                        android:hint="@string/have_a_discount_code"
                         android:textSize="13sp" />
 
                     <TextView
@@ -230,10 +230,10 @@
                         android:background="@drawable/btn_bg"
                         android:gravity="center"
                         android:paddingBottom="10dp"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:paddingRight="20dp"
                         android:paddingTop="10dp"
-                        android:text="Apply"
+                        android:text="@string/apply"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -243,7 +243,7 @@
                         android:background="@drawable/ic_cancel_black_24dp"
                         android:gravity="center"
                         android:paddingBottom="10dp"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:paddingRight="20dp"
                         android:paddingTop="10dp"
                         android:textColor="@color/white"
@@ -259,7 +259,7 @@
                         android:id="@+id/tv_tds_perc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TDS:"
+                        android:text="@string/tds"
                         android:textSize="@dimen/medium_text_size"
                         android:textStyle="bold" />
 
@@ -267,17 +267,17 @@
                         android:id="@+id/cvTwo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_5"
+                        android:layout_marginStart="@dimen/margin_5"
                         android:buttonTint="@color/gray"
-                        android:text="2%" />
+                        android:text="@string/_2" />
 
                     <CheckBox
                         android:id="@+id/cvTen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_5"
+                        android:layout_marginStart="@dimen/margin_5"
                         android:buttonTint="@color/gray"
-                        android:text="10%" />
+                        android:text="@string/_10" />
 
                 </LinearLayout>
 
@@ -288,7 +288,7 @@
                 android:id="@+id/tl_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/llOpcInputLayout"
                 android:layout_marginTop="40dp"
                 android:layout_weight="1">
@@ -298,13 +298,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Net Total"
+                        android:text="@string/net_total"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":" />
+                        android:text="@string/colon" />
 
                     <TextView
                         android:id="@+id/tv_net_total"
@@ -326,7 +326,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":" />
+                        android:text="@string/colon" />
 
                     <TextView
                         android:id="@+id/tv_discount_amount"
@@ -370,13 +370,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Taxes"
+                        android:text="@string/taxes"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":" />
+                        android:text="@string/colon" />
 
                     <TextView
                         android:id="@+id/tv_taxes"
@@ -392,13 +392,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Deductions"
+                        android:text="@string/deductions"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":" />
+                        android:text="@string/colon" />
 
                     <TextView
                         android:id="@+id/tv_tds_amount"
@@ -412,14 +412,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Amount to be paid"
+                        android:text="@string/amount_to_be_paid"
                         android:textColor="@color/green"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":"
+                        android:text="@string/colon"
                         android:textColor="@color/green" />
 
                     <TextView
@@ -449,8 +449,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:background="@drawable/btn_bg"

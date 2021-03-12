@@ -45,7 +45,7 @@ class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, Ba
   override fun onCreateView() {
     setOnClickListener(binding?.btnDone, binding?.btnReset)
     listFilter = FilterDateModel().getFilterDate()
-    if (filterDateModel != null) listFilter?.map { it.isSelect=it.title.equals(filterDateModel!!.title) }
+    if (filterDateModel != null) listFilter?.map { it.isSelect = it.title.equals(filterDateModel!!.title) }
     else listFilter?.last()?.isSelect = true
     binding?.recyclerView?.apply {
       adapterFilter = AppBaseRecyclerViewAdapter(baseActivity, listFilter!!, this@FilterBottomSheet)
@@ -72,8 +72,10 @@ class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, Ba
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     this.filterDateModel = item as? FilterDateModel ?: return
-    listFilter?.map { it.isSelect = (it.title.equals(this.filterDateModel?.title)) }
-    if (adapterFilter != null) adapterFilter?.notifyDataSetChanged()
+    onClicked(filterDateModel!!)
+    dismiss()
+//    listFilter?.map { it.isSelect = (it.title.equals(this.filterDateModel?.title)) }
+//    if (adapterFilter != null) adapterFilter?.notifyDataSetChanged()
   }
 
 }

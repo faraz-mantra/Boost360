@@ -53,10 +53,10 @@ class BatchesFragment : BaseFragment(), ItemClickEventListener {
         }
 
         if (Utils.isConnectedToInternet(requireContext())) {
-            showLoader("Loading batches")
+            showLoader(getString(R.string.loading_batches))
             viewModel.getUpcomingBatches()
         } else {
-            showToast("No Internet!")
+            showToast(getString(R.string.no_internet))
         }
     }
 
@@ -78,8 +78,8 @@ class BatchesFragment : BaseFragment(), ItemClickEventListener {
                 if (!it.isNullOrBlank()) {
                     if (it == SUCCESS) {
                         hideLoader()
-                        Toast.makeText(requireContext(), "Batch deleted successfully", Toast.LENGTH_SHORT).show()
-                        showLoader("Loading batches")
+                        Toast.makeText(requireContext(), getString(R.string.batch_deleted_successfully), Toast.LENGTH_SHORT).show()
+                        showLoader(getString(R.string.loading_batches))
                         setDeleteBatchesLiveDataValue("")
                         getUpcomingBatches()
                     }

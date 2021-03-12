@@ -4,7 +4,7 @@
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginRight="10dp"
+    android:layout_marginEnd="10dp"
     android:orientation="vertical">
 
     <View
@@ -31,7 +31,6 @@
             android:id="@+id/llayout_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -41,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="From: 9695787711"
+                android:text="@string/from_9695787711"
                 android:textColor="@color/biz_msg_txt_color"
                 android:textSize="@dimen/medium_text_size" />
 
@@ -50,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="I need info on this kid's wallpaper"
+                android:text="@string/i_need_info_on_this_kid_s_wallpaper"
                 android:textColor="@color/biz_msg_txt_color"
                 android:textSize="@dimen/medium_text_size" />
 
@@ -58,7 +57,7 @@
                 android:id="@+id/tv_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="24 jan, 01:17 am"
+                android:text="@string/_24_jan_01_17_am"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -96,7 +95,6 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -105,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="From: 9177513207"
+                android:text="@string/from_9177513207"
                 android:textColor="@color/biz_msg_txt_color"
                 android:textSize="@dimen/medium_text_size" />
 
@@ -114,14 +112,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="2"
-                android:text="Hi , I would like to know the cost per square feet and material used"
+                android:text="@string/hi_i_would_like_to_know_the_cost_per_square_feet_and_material_used"
                 android:textColor="@color/biz_msg_txt_color"
                 android:textSize="@dimen/medium_text_size" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="24 jan, 01:17 am"
+                android:text="@string/_24_jan_01_17_am"
                 android:textSize="12sp" />
         </LinearLayout>
 

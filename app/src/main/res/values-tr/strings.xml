@@ -544,7 +544,7 @@
     <string name="edit_product">Düzenleme Ürün</string>
     <string name="updating">Güncelleniyor&#8230;</string>
     <string name="product_successfully_updated">Ürün başarıyla güncellendi</string>
-    <string name="delete">silmek</string>
+    <string name="delete_">silmek</string>
     <string name="upload_product_image">Ürün resmi yükleyin</string>
     <string name="select_action">senin eylemi seçmek</string>
     <string name="wait_while_deleting_image">Görüntü silme bekleyin&#8230;</string>

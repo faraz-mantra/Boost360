@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toStartOf="@+id/share_general"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/share_general"
@@ -34,7 +34,7 @@
             app:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/share_facebook"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/share_whatsapp"
@@ -45,7 +45,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/share_general"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

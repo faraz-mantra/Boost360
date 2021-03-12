@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_2"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="@dimen/margin_5"
         android:background="@drawable/chat_layout_bg"
         android:elevation="@dimen/margin_3"
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginStart="@dimen/margin_20"
         android:orientation="vertical">
 
         <TextView
@@ -43,7 +43,7 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:maxLines="3"
             android:scrollHorizontally="true"
-            android:text="Think Ink House"
+            android:text="@string/think_ink_house"
             android:textColor="#496AB5"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -52,7 +52,7 @@
             android:id="@+id/tv_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3.4K Likes"
+            android:text="@string/_3_4k_likes"
             android:textColor="@color/gray"
             android:textSize="@dimen/small_text_size" />
     </LinearLayout>

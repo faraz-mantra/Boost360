@@ -254,8 +254,8 @@ public class ManageCustomerFragmentV2 extends Fragment {
 
                     case FB_CHATS:
 
-                        manageCustomerHolder.tvTitle.setText("Social\nInteractions");
-                        manageCustomerHolder.tvOne.setText("My Facebook Chats");
+                        manageCustomerHolder.tvTitle.setText(R.string.social_and_interaction);
+                        manageCustomerHolder.tvOne.setText(R.string.my_facebook_chats);
                         manageCustomerHolder.tvTwo.setVisibility(View.GONE);
                         manageCustomerHolder.tvInfo.setText(getString(R.string.manage_social_customers));
 
@@ -277,8 +277,8 @@ public class ManageCustomerFragmentV2 extends Fragment {
                     case MULTI_CHANNEL_CUSTOMERS:
 
 
-                        manageCustomerHolder.tvTitle.setText("Cross\nPlatform");
-                        manageCustomerHolder.tvOne.setText("Enable Customer Assistant");
+                        manageCustomerHolder.tvTitle.setText(R.string.cross_and_platform);
+                        manageCustomerHolder.tvOne.setText(R.string.enable_customer_assistant);
                         manageCustomerHolder.tvOne.setGravity(Gravity.LEFT);
                         manageCustomerHolder.tvTwo.setVisibility(View.GONE);
                         manageCustomerHolder.tvInfo.setText(getString(R.string.manage_multichannel_customers));

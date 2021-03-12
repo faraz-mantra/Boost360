@@ -4,18 +4,19 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Store.Adapters.ActivePlansRvAdapter;
 import com.nowfloats.Store.Adapters.TopUpDialogRvAdapter;
@@ -92,7 +93,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
 
         pbActivePlans.setVisibility(View.VISIBLE);
 
-        mPlansRvAdapter = new ActivePlansRvAdapter(getActivity());
+        mPlansRvAdapter = new ActivePlansRvAdapter(requireActivity());
         rvActivePlans.setAdapter(mPlansRvAdapter);
         rvActivePlans.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
@@ -103,7 +104,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
         view.findViewById(R.id.rl_upgrade).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mActivePlansCallback!=null){
+                if (mActivePlansCallback != null) {
                     mActivePlansCallback.onRenewOrUpdate();
                 }
             }
@@ -124,24 +125,24 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
         }
         pbActivePlans.setVisibility(View.INVISIBLE);
         if(mActivePlans!=null && mActivePlans.size() > 0){
-            if(mActivePlans.size() == 1 && mActivePlans.get(0).getName().toLowerCase().contains("demo")){
+            if(mActivePlans.size() == 1 && mActivePlans.get(0).getName().toLowerCase().contains("demo")) {
                 cvActivePlans.setVisibility(View.GONE);
                 DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 String date = df.format(getExpiryDate(mActivePlans.get(0).getToBeActivatedOn(),
                         mActivePlans.get(0).getTotalMonthsValidity()));
-                tvUpgradePlanText.setText("Your " + mActivePlans.get(0).getTotalMonthsValidity()
-                        + " month BOOST demo package will expire on " + date
-                        + ".To continue with the service, please upgrade your plan.");
+                tvUpgradePlanText.setText(getString(R.string.your) + mActivePlans.get(0).getTotalMonthsValidity()
+                        + getString(R.string.month_boost_demo_package_will_expire_on) + date
+                        + getString(R.string.to_continue_with_the_service));
                 cvUpgradePlan.setVisibility(View.VISIBLE);
             } else {
                 cvUpgradePlan.setVisibility(View.GONE);
                 cvActivePlans.setVisibility(View.VISIBLE);
-                plansHeaderText.setText("PLANS IN USE");
+                plansHeaderText.setText(R.string.plan_in_use);
                 mPlansRvAdapter.setActivePackages(mActivePlans);
             }
         } else {
             cvActivePlans.setVisibility(View.GONE);
-            tvUpgradePlanText.setText("Currently you don't have any active packages. To continue with the service, please upgrade your plan.");
+            tvUpgradePlanText.setText(R.string.currently_you_dont_have_any_active_packages);
             cvUpgradePlan.setVisibility(View.VISIBLE);
         }
     }
@@ -172,7 +173,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
             mPlansRvAdapter.setExpiredPlans(mExpiredPlans);
         } else {
             cvActivePlans.setVisibility(View.GONE);
-            tvUpgradePlanText.setText("Currently you don't have any archived packages. To continue with the service, please upgrade your plan.");
+            tvUpgradePlanText.setText(R.string.currently_you_dont_have_any_archived_packages);
             cvUpgradePlan.setVisibility(View.VISIBLE);
         }
     }
@@ -190,12 +191,12 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
     }
 
     private void showTopUpPlans() {
-        if(mTopUps == null || mTopUps.size() == 0) {
-            Methods.showSnackBarNegative(getActivity(), "Top Up Plan is not available");
+        if (mTopUps == null || mTopUps.size() == 0) {
+            Methods.showSnackBarNegative(getActivity(), getString(R.string.top_up_plan_is_not_available));
             return;
         }
-        final View topUpDialogView  = LayoutInflater.from(getActivity()).inflate(R.layout.top_up_dialog_layout, null);
-        final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+        final View topUpDialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.top_up_dialog_layout, null);
+        final AlertDialog dialog = new AlertDialog.Builder(requireActivity())
                 .setView(topUpDialogView)
                 .show();
         RecyclerView rvTopUpPlans = (RecyclerView) topUpDialogView.findViewById(R.id.rv_top_plans);
@@ -219,7 +220,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
                 }
                 dialog.dismiss();
                 MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
-                Intent i = new Intent(getActivity(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?ProductCheckout_v2Activity.class:ProductCheckoutActivity.class);
+                Intent i = new Intent(getActivity(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") ? ProductCheckout_v2Activity.class : ProductCheckoutActivity.class);
                 i.putExtra("package_ids", mPackageIds.toArray(new String[mPackageIds.size()]));
                 startActivityForResult(i, DIRECT_REQUEST_CODE);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

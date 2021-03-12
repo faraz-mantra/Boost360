@@ -54,7 +54,7 @@ public class FacebookLeadsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        session = new UserSessionManager(requireActivity().getApplicationContext(), requireActivity());
+        session = new UserSessionManager(getActivity().getApplicationContext(), requireActivity());
 
         //show or hide if feature is available to user
         secondaryLayout = view.findViewById(R.id.secondary_layout);
@@ -86,7 +86,7 @@ public class FacebookLeadsFragment extends Fragment {
         progressDialog.setMessage(status);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Intent intent = new Intent(requireActivity(), UpgradeActivity.class);
+        Intent intent = new Intent(getActivity(), UpgradeActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());

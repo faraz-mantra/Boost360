@@ -77,7 +77,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     this.arguments = arguments
     requestFloatsModel = NavigatorManager.getRequest()
     requestFloatsModel?.categoryDataModel?.getChannelList()?.let { channelList.addAll(it) }
-    binding?.categorySelectedDesc?.text = "for " + categoryDataModel?.category_descriptor
+    binding?.categorySelectedDesc?.text = resources.getString(R.string.string_for) + categoryDataModel?.category_descriptor
   }
 
   override fun onCreateView() {

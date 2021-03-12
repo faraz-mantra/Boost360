@@ -20,5 +20,14 @@
     <string name="imagepicker_msg_no_camera_permission">To continue, please give access to take pictures</string>
     <string name="imagepicker_msg_no_write_external_storage_camera_permission">To continue, please give access to take pictures</string>
     <string name="imagepicker_msg_limit_images">Limit selection to %d images</string>
+    <string name="camera_permission_is_not_granted_requesting_permission" translatable="false">Camera permission is not granted. Requesting permission</string>
+    <string name="write_external_permission_is_not_granted_requesting_permission" translatable="false">Write External permission is not granted. Requesting permission</string>
+    <string name="permission_not_granted_results_len" translatable="false">\"Permission not granted: results len = \"</string>
+    <string name="result_code" translatable="false">\" Result code = \"</string>
+    <string name="got_unexpacted_permission_result" translatable="false">\"Got unexpected permission result: \"</string>
+    <string name="on_ready_listner_must_not_be_null" translatable="false">OnImageReadyListener must not be null</string>
+    <string name="write_external_permission_granted" translatable="false">Write External permission granted</string>
+    <string name="camera_permission_granted" translatable="false">Camera permission granted</string>
+    <string name="must_call_setup_adapter_first" translatable="false">Must call setupAdapters first!</string>
 
 </resources>

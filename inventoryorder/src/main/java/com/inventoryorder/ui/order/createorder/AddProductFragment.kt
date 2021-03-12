@@ -9,6 +9,8 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.inventoryorder.R
+import com.framework.webengageconstant.CLICKED_ON_ADD_PRODUCT
+import com.framework.webengageconstant.ORDERS
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
@@ -50,7 +52,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on Add Product", "ORDERS", it) }
+    fpTag?.let { WebEngageController.trackEvent(CLICKED_ON_ADD_PRODUCT, ORDERS, it) }
     setOnClickListener(binding?.tvProceed)
     getItemList(fpTag, CLIENT_ID_1)
     binding?.edtSearch?.afterTextChanged { filterProduct(it) }

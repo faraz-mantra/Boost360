@@ -85,7 +85,7 @@ public class WildFireAdsActivity extends AppCompatActivity{
             }
         }, spanTxt.length() - Methods.fromHtml("<b>" + getString(R.string.link_marketplace)+"</b>").length(), spanTxt.length(), 0);*/
 
-        spanTxt.append(" from a desktop to explore and install related add-ons to see inorganic traffic/leads");
+        spanTxt.append(getString(R.string.from_a_desktop_to_explore_and_install_related_add_ons));
 
         //spanTxt.append(" from a desktop to explore and install related add-ons to see inorganic traffic/leads");
         //spanTxt.append(Methods.fromHtml(" or contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\"><b>" + getString(R.string.settings_feedback_link) + "</b></a> "));
@@ -247,18 +247,18 @@ public class WildFireAdsActivity extends AppCompatActivity{
                 String mainText = "";
                 switch (unActives.get(position-actives.size())){
                     case "google":
-                        mainText = "To enable Google WildFire with us";
-                        holder.nameTv.setText("Google Adwords");
+                        mainText = getString(R.string.to_enable_google_wildfire_with_us);
+                        holder.nameTv.setText(R.string.google_adwords);
                         holder.channelImage.setImageResource(R.drawable.ic_google_gray);
                         break;
                     case "facebook":
-                        mainText = "To enable Facebook WildFire with us";
-                        holder.nameTv.setText("Facebook Ads");
+                        mainText = getString(R.string.to_enable_facebook_wildfire_with_us);
+                        holder.nameTv.setText(R.string.facebook_ads);
                         holder.channelImage.setImageResource(R.drawable.ic_facebook_logo);
                         break;
                 }
 
-                holder.descriptionTv.setText("Inactive");
+                holder.descriptionTv.setText(R.string.inactive);
                 holder.arrowImage.setVisibility(View.GONE);
                 holder.parentView.setAlpha(.8f);
                 final String finalMainText = mainText;

@@ -244,7 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_16"
                 android:includeFontPadding="false"
-                android:text="@string/delete"
+                android:text="@string/delete_"
                 android:textColor="@color/primary_text"
                 app:fontFamily="@font/bold"
                 app:textType="HEADING_6" />

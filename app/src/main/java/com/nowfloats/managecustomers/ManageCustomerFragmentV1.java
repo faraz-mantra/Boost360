@@ -367,9 +367,9 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
         private void dialogThirdPartyMessage(){
             new MaterialDialog.Builder(getContext())
-                    .content("We are currently reworking this feature to enhance your experience of sharing. For now, you can share your products from Product Gallery.")
-                    .title("WhatsApp Bubble")
-                    .positiveText("Ok")
+                    .content(R.string.we_are_currently_reworking_this_feature_to_enhance)
+                    .title(R.string.whats_app_bubble)
+                    .positiveText(getString(R.string.ok_))
                     .show();
         }
 

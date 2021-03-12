@@ -8,7 +8,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +43,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventNameKt.ROI_SUMMARY_ENQUIRY;
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
@@ -99,7 +102,7 @@ public class ManageInboxFragment extends Fragment {
                     @Override
                     public void run() {
                         if(getActivity() != null)
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -123,7 +126,7 @@ public class ManageInboxFragment extends Fragment {
                                 }
                                 mTransactionCharge = profile.getData().get(0).getApplicableTxnCharge()+"%";
                             }else {
-                                throw new NullPointerException("Orders Count is Null");
+                                throw new NullPointerException(getString(R.string.order_count_is_null));
                             }
                         }catch (Exception e)
                         {
@@ -169,7 +172,7 @@ public class ManageInboxFragment extends Fragment {
                 Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                WebEngageController.trackEvent("ROI SUMMARY - ENQUIRY","null",session.getFpTag());
+                WebEngageController.trackEvent(ROI_SUMMARY_ENQUIRY, EVENT_LABEL_NULL, session.getFpTag());
             });
 
             tvBusinessCalls.setOnClickListener(v -> {
@@ -183,7 +186,7 @@ public class ManageInboxFragment extends Fragment {
                     bundle.putString("itemName", "Customer Call Tracking");
                     bundle.putString("buyItemKey","CALLTRACKER");
                     purchaseFeaturesPopup.setArguments(bundle);
-                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
+                    purchaseFeaturesPopup.show(getActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
                 }
             });
 

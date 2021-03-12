@@ -48,7 +48,7 @@ class PopUpWebViewFragment : DialogFragment() {
         if (link != null) {
             webview.loadUrl(link)
         } else {
-            Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), getString(R.string.link_is_empty), Toast.LENGTH_LONG).show()
             dismiss()
         }
 

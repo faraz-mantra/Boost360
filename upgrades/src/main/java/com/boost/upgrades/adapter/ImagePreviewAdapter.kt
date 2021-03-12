@@ -23,7 +23,7 @@ class ImagePreviewAdapter(imageList: List<String>) : RecyclerView.Adapter<ImageP
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val item = View.inflate(parent.getContext(), R.layout.image_preview_item, null)
+        val item = View.inflate(parent.context, R.layout.image_preview_item, null)
         val lp = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT

@@ -21,6 +21,7 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.pref.*
+import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
@@ -37,8 +38,7 @@ const val RIA_NODE_DATA = "riaNodeDatas"
 
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
-    session.fpTag
-    WebEngageController.trackEvent("Digital Channel Page", "startview", session.fpTag);
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, session.fpTag);
     val bundle = Bundle()
     session.setHeader(WA_KEY)
     bundle.putString(UserSessionManager.KEY_FP_ID, session.fPID)
@@ -68,7 +68,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
 
 fun AppCompatActivity.startVmnCallCard(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Track Call Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(TRACK_CALL_PAGE, START_VIEW, session?.fpTag);
     val i = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.VmnCallCardsActivity"))
     startActivity(i)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -79,7 +79,7 @@ fun AppCompatActivity.startVmnCallCard(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessEnquiry(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Enquiry Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(BUSINESS_ENQUIRY_PAGE, START_VIEW, session?.fpTag);
     val queries = Intent(this, Class.forName("com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -90,7 +90,7 @@ fun AppCompatActivity.startBusinessEnquiry(session: UserSessionManager?) {
 
 fun AppCompatActivity.startSearchQuery(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Search Queries Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(SEARCH_QUERIES_PAGE, START_VIEW, session?.fpTag);
     val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SearchQueriesActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -102,7 +102,7 @@ fun AppCompatActivity.startSearchQuery(session: UserSessionManager?) {
 
 fun AppCompatActivity.startRevenueSummary(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Revenue Summary Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(REVENUE_SUMMARY_PAGE, START_VIEW, session?.fpTag);
     val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.RevenueSummaryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -113,7 +113,7 @@ fun AppCompatActivity.startRevenueSummary(session: UserSessionManager?) {
 
 fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Order Summary Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(ORDER_SUMMARY_PAGE, START_VIEW, session?.fpTag);
     val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.OrderSummaryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -124,7 +124,7 @@ fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Background Image Gallery Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE, START_VIEW, session?.fpTag);
     val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -135,7 +135,7 @@ fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) 
 
 fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Fevicon Image Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(FEVICON_IMAGE_PAGE, START_VIEW, session?.fpTag);
     val queries = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -146,7 +146,7 @@ fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
 
 fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Domain Email Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(DOMAIN_EMAIL_PAGE, START_VIEW, session?.fpTag);
     val queries = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -157,7 +157,7 @@ fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
 
 fun AppCompatActivity.startSiteViewAnalytic(session: UserSessionManager?, type: String) {
   try {
-    WebEngageController.trackEvent("WEBSITE visits - CHART DURATION CHANGED", "null", session?.fpTag)
+    WebEngageController.trackEvent(WEBSITE_VISITS_CHART_DURATION_CHANGED, EVENT_LABEL_NULL, session?.fpTag)
     val intent = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics"))
     intent.putExtra(VISITS_TYPE_STRING, type);
     startActivity(intent)
@@ -169,7 +169,7 @@ fun AppCompatActivity.startSiteViewAnalytic(session: UserSessionManager?, type: 
 
 fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Subscribers Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(SUBSCRIBERS_PAGE, START_VIEW, session?.fpTag);
     val subscribers = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SubscribersActivity"))
     startActivity(subscribers)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -180,7 +180,7 @@ fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
 
 fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: Int?) {
   try {
-    WebEngageController.trackEvent("Analytics Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(ANALYTICS_PAGE, START_VIEW, session?.fpTag);
     val intent = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"))
     if (table_name != null) intent.putExtra("table_name", table_name)
     startActivity(intent)
@@ -193,7 +193,7 @@ fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: I
 fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?, isLoadingShow: Boolean = true) {
   try {
     if (isLoadingShow) delayProgressShow()
-    WebEngageController.trackEvent("Addon Marketplace Page", "startview", session.fpTag);
+    WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE, START_VIEW, session.fpTag);
     val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
@@ -227,47 +227,47 @@ fun AppCompatActivity.delayProgressShow() {
 }
 
 fun AppCompatActivity.startSettingActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent("Account Setting Page", "startview", session.fpTag);
+  WebEngageController.trackEvent(ACCOUNT_SETTING_PAGE, START_VIEW, session.fpTag);
   startAppActivity(fragmentType = "ACCOUNT_SETTING")
 }
 
 fun AppCompatActivity.startKeyboardActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent("BIZ_KEYBOARD", "BIZ_KEYBOARD", session.fpTag)
+  WebEngageController.trackEvent(EVENT_NAME_BIZ_KEYBOARD, EVENT_LABEL_BIZ_KEYBOARD, session.fpTag)
   startAppActivity(fragmentType = "ACCOUNT_KEYBOARD")
 }
 
 fun AppCompatActivity.startManageContentActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent("Manage Content Page", "startview", session.fpTag);
+  WebEngageController.trackEvent(MANAGE_CONTENT_PAGE, START_VIEW, session.fpTag);
   startAppActivity(fragmentType = "MANAGE_CONTENT")
 }
 
 fun AppCompatActivity.startManageInventoryActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent("Manage Inventory Page", "startview", session.fpTag);
+  WebEngageController.trackEvent(MANAGE_INVENTORY_PAGE, START_VIEW, session.fpTag);
   startAppActivity(fragmentType = "MANAGE_INVENTORY")
 }
 
 fun AppCompatActivity.startHelpAndSupportActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent("Help & Support Page", "startview", session.fpTag);
+  WebEngageController.trackEvent(HELP_AND_SUPPORT_PAGE, START_VIEW, session.fpTag);
   startAppActivity(fragmentType = "HELP_AND_SUPPORT")
 }
 
 fun AppCompatActivity.startAboutBoostActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent("About boost Page", "startview", session.fpTag);
+  WebEngageController.trackEvent(ABOUT_BOOST_PAGE, START_VIEW, session.fpTag);
   startAppActivity(fragmentType = "ABOUT_BOOST")
 }
 
 fun AppCompatActivity.startManageCustomer(session: UserSessionManager) {
-  WebEngageController.trackEvent("Manage customer Page", "startview", session.fpTag);
+  WebEngageController.trackEvent(MANAGE_CUSTOMER_PAGE, START_VIEW, session.fpTag);
   startAppActivity(fragmentType = "MANAGE_CUSTOMER_VIEW")
 }
 
 fun AppCompatActivity.startNotification(session: UserSessionManager) {
-  WebEngageController.trackEvent("Notification Page", "startview", session.fpTag);
+  WebEngageController.trackEvent(NOTIFICATION_PAGE, START_VIEW, session.fpTag);
   startAppActivity(fragmentType = "NOTIFICATION_VIEW")
 }
 
 fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
-  WebEngageController.trackEvent("Update Latest Story Page", "startview", session.fpTag);
+  WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE, START_VIEW, session.fpTag);
   startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
 }
 
@@ -288,7 +288,7 @@ fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: 
 
 fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Post Update Message Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(POST_UPDATE_MESSAGE_PAGE, START_VIEW, session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Create_Message_Activity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -299,7 +299,7 @@ fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
 
 fun AppCompatActivity.startThirdPartyQueries(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Third Party Queries Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(THIRD_PARTY_QUERIES_PAGE, START_VIEW, session?.fpTag);
     val webIntent = Intent(this, Class.forName("om.nowfloats.customerassistant.ThirdPartyQueriesActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -310,7 +310,7 @@ fun AppCompatActivity.startThirdPartyQueries(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Boost360 Extensions Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(BOOST_360_EXTENSIONS_PAGE, START_VIEW, session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Boost360ExtensionsActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -321,7 +321,7 @@ fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
 
 fun AppCompatActivity.startReferralView(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Refer and Earn ", "startview", session?.fpTag);
+    WebEngageController.trackEvent(REFER_A_FRIEND, START_VIEW, session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
     startActivity(webIntent)
     overridePendingTransition(0, 0)
@@ -332,7 +332,7 @@ fun AppCompatActivity.startReferralView(session: UserSessionManager?) {
 
 fun AppCompatActivity.startMobileSite(session: UserSessionManager?, website: String) {
   try {
-    WebEngageController.trackEvent("Mobile Site Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(MOBILE_SITE_PAGE, START_VIEW, session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
     webIntent.putExtra("WEBSITE_NAME", website)
     startActivity(webIntent)
@@ -344,7 +344,7 @@ fun AppCompatActivity.startMobileSite(session: UserSessionManager?, website: Str
 
 fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?, isCreate: Boolean = true) {
   try {
-    WebEngageController.trackEvent("Image Gallery", "startview", session?.fpTag)
+    WebEngageController.trackEvent(IMAGE_GALLERY, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.Image_Gallery.ImageGalleryActivity"))
     webIntent.putExtra("create_image", isCreate)
     startActivity(webIntent)
@@ -356,7 +356,7 @@ fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?, isCreat
 
 fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Product Gallery Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(PRODUCT_GALLERY_PAGE, START_VIEW, session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductGalleryActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -367,8 +367,8 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
 
 fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
-    val text = if (isAdd) "Add Testimonial Page" else "Testimonial Page"
-    WebEngageController.trackEvent(text, "startview", session?.fpTag);
+    val text = if (isAdd) ADD_TESTIMONIAL_PAGE else TESTIMONIAL_PAGE
+    WebEngageController.trackEvent(text, START_VIEW, session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
     webIntent.putExtra("IS_ADD", isAdd)
     startActivity(webIntent)
@@ -380,8 +380,8 @@ fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Bool
 
 fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
-    val text = if (isAdd) "Add Custom Page" else "Custom Page"
-    WebEngageController.trackEvent(text, "startview", session?.fpTag)
+    val text = if (isAdd) ADD_CUSTOM_PAGE else CUSTOM_PAGE
+    WebEngageController.trackEvent(text, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.CustomPage.CustomPageActivity"))
     webIntent.putExtra("IS_ADD", isAdd)
     startActivity(webIntent)
@@ -394,10 +394,12 @@ fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boole
 fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   try {
     if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
-      WebEngageController.trackEvent("Service Inventory", "startview", session?.fpTag);
+      WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, START_VIEW, session?.fpTag);
+//      WebEngageController.trackEvent("Service Inventory", "startview", session?.fpTag);
       session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_LISTING, bundle = getBundleData(it)) }
     } else {
-      WebEngageController.trackEvent("Product Inventory", "startview", session?.fpTag);
+      WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, START_VIEW, session?.fpTag);
+//      WebEngageController.trackEvent("Product Inventory", "startview", session?.fpTag);
       val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
       startActivity(webIntent)
       overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -439,7 +441,7 @@ fun Fragment.startFragmentActivity(type: com.appservice.constant.FragmentType, b
 
 fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Book Table Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(BOOK_TABLE_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.Restaurants.BookATable.BookATableActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -450,7 +452,7 @@ fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
 
 fun AppCompatActivity.startPreSignUp(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Pre SignUp Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.boost.presignup.PreSignUpActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -462,10 +464,13 @@ fun AppCompatActivity.startPreSignUp(session: UserSessionManager?) {
 fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
   try {
     if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
-      WebEngageController.trackEvent("Add Service Page", "startview", session?.fpTag);
+      WebEngageController.trackEvent(ADD_SERVICE_PRODUCT_PAGE, START_VIEW, session?.fpTag)
+//      WebEngageController.trackEvent("Add Service Page", "startview", session?.fpTag);
       session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_DETAIL_VIEW, bundle = getBundleData(it)) }
     } else {
-      WebEngageController.trackEvent("Add Product Page", "startview", session?.fpTag)
+      WebEngageController.trackEvent(ADD_SERVICE_PRODUCT_PAGE, START_VIEW, session?.fpTag)
+
+//      WebEngageController.trackEvent("Add Product Page", "startview", session?.fpTag)
       val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
       webIntent.putExtra("IS_ADD", true)
       startActivity(webIntent)
@@ -478,8 +483,8 @@ fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, isConsult: Boolean = true) {
   try {
-    val txt = if (isConsult) "Consultation Create Page" else "Appointment Create Page"
-    WebEngageController.trackEvent(txt, "startview", session?.fpTag)
+    val txt = if (isConsult) CONSULTATION_CREATE_PAGE else APPOINTMENT_CREATE_PAGE
+    WebEngageController.trackEvent(txt, START_VIEW, session?.fpTag)
     val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
         session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
         session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
@@ -500,8 +505,8 @@ fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, 
 
 fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isOrder: Boolean = false, isConsult: Boolean = false) {
   try {
-    val txt = if (isOrder) "Order page" else if (isConsult) "Consultation Page" else "Appointment Page"
-    WebEngageController.trackEvent(txt, "startview", session?.fpTag)
+    val txt = if (isOrder) ORDER_PAGE else if (isConsult) CONSULTATION_PAGE else APPOINTMENT_PAGE
+    WebEngageController.trackEvent(txt, START_VIEW, session?.fpTag)
     val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
         session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
         session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
@@ -521,7 +526,7 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
 
 fun AppCompatActivity.startBusinessLogo(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Logo Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(BUSINESS_LOGO_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -532,7 +537,7 @@ fun AppCompatActivity.startBusinessLogo(session: UserSessionManager?) {
 
 fun AppCompatActivity.startFeatureLogo(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Feature Image Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(FEATURE_IMAGE_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -543,7 +548,7 @@ fun AppCompatActivity.startFeatureLogo(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessAddress(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Address Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -554,7 +559,7 @@ fun AppCompatActivity.startBusinessAddress(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessInfoEmail(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Info Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(BUSINESS_INFO_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -565,7 +570,7 @@ fun AppCompatActivity.startBusinessInfoEmail(session: UserSessionManager?) {
 
 fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Image Menu Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(IMAGE_MENU_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.ImageMenuActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -576,7 +581,7 @@ fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Profile Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(BUSINESS_PROFILE_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -588,7 +593,7 @@ fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager
 
 fun AppCompatActivity.startBusinessContactInfo(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Contact Information Hours Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(CONTACT_INFORMATION_HOURS_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -599,7 +604,7 @@ fun AppCompatActivity.startBusinessContactInfo(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessHours(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Hours Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(BUSINESS_HOURS_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -610,7 +615,7 @@ fun AppCompatActivity.startBusinessHours(session: UserSessionManager?) {
 
 fun AppCompatActivity.startFragmentsFactory(session: UserSessionManager?, fragmentType: String) {
   try {
-    WebEngageController.trackEvent("$fragmentType Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent("$fragmentType Page", START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity"))
     webIntent.putExtra("fragmentName", fragmentType)
     startActivity(webIntent)
@@ -622,7 +627,7 @@ fun AppCompatActivity.startFragmentsFactory(session: UserSessionManager?, fragme
 
 fun AppCompatActivity.startPricingPlan(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Pricing Plan Page", "startview", session?.fpTag);
+    WebEngageController.trackEvent(PRICING_PLAN_PAGE, START_VIEW, session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.Store.NewPricingPlansActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -633,7 +638,7 @@ fun AppCompatActivity.startPricingPlan(session: UserSessionManager?) {
 
 fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: String?) {
   try {
-    WebEngageController.trackEvent("WebView Page", "startview", url)
+    WebEngageController.trackEvent(WEB_VIEW_PAGE, START_VIEW, url)
     val intent = Intent(this, WebViewActivity::class.java)
     intent.putExtra(com.onboarding.nowfloats.constant.IntentConstant.DOMAIN_URL.name, url)
     startActivity(intent)
@@ -645,7 +650,7 @@ fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: St
 
 fun AppCompatActivity.startReadinessScoreView(session: UserSessionManager?, position: Int = 0) {
   try {
-    WebEngageController.trackEvent("Digital readiness score Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(DIGITAL_READINESS_SCORE_PAGE, START_VIEW, session?.fpTag)
     startFragmentDashboardActivity(com.dashboard.constant.FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(com.dashboard.constant.IntentConstant.POSITION.name, position) })
   } catch (e: Exception) {
     e.printStackTrace()
@@ -654,7 +659,7 @@ fun AppCompatActivity.startReadinessScoreView(session: UserSessionManager?, posi
 
 fun AppCompatActivity.startSelfBrandedGateway(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Self Branded Gateway Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(SELF_BRANDED_GATEWAY_PAGE, START_VIEW, session?.fpTag)
     session?.getBundleDataKyc()?.let { startFragmentPaymentActivityNew(this, com.appservice.constant.FragmentType.PAYMENT_GATEWAY, it, false) }
   } catch (e: Exception) {
     e.printStackTrace()
@@ -663,7 +668,7 @@ fun AppCompatActivity.startSelfBrandedGateway(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessKycBoost(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Kyc Boost Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(BUSINESS_KYC_BOOST_PAGE, START_VIEW, session?.fpTag)
     session?.getBundleDataKyc()?.let {
       if (session.isSelfBrandedKycAdd == true) {
         startFragmentPaymentActivityNew(this, com.appservice.constant.FragmentType.KYC_STATUS, it, false)
@@ -676,7 +681,7 @@ fun AppCompatActivity.startBusinessKycBoost(session: UserSessionManager?) {
 
 fun AppCompatActivity.startMyBankAccount(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("My Bank Account Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(MY_BANK_ACCOUNT_PAGE, START_VIEW, session?.fpTag)
     val bundle = Bundle()
     bundle.putString(com.appservice.constant.IntentConstant.CLIENT_ID.name, clientId)
     bundle.putString(com.appservice.constant.IntentConstant.USER_PROFILE_ID.name, session?.userProfileId)
@@ -710,7 +715,7 @@ fun UserSessionManager.getBundleDataKyc(): Bundle? {
 
 fun AppCompatActivity.startListDigitalBrochure(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Digital Brochure Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(DIGITAL_BROCHURE_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -722,7 +727,7 @@ fun AppCompatActivity.startListDigitalBrochure(session: UserSessionManager?) {
 //check is premium
 fun AppCompatActivity.startAddDigitalBrochure(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Add Digital Brochure Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(ADD_DIGITAL_BROCHURE_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresDetailsActivity"))
     webIntent.putExtra("ScreenState", "new")
     startActivity(webIntent)
@@ -734,7 +739,7 @@ fun AppCompatActivity.startAddDigitalBrochure(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListProjectAndTeams(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Project And Teams Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(PROJECT_AND_TEAMS_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -745,7 +750,7 @@ fun AppCompatActivity.startListProjectAndTeams(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListTripAdvisor(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Trip Advisor Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(TRIP_ADVISOR_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("ccom.nowfloats.hotel.tripadvisor.TripAdvisorActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -756,7 +761,7 @@ fun AppCompatActivity.startListTripAdvisor(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListProject(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Project Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(PROJECT_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -767,7 +772,7 @@ fun AppCompatActivity.startListProject(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListTeams(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Teams Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(TEAMS_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -778,7 +783,7 @@ fun AppCompatActivity.startListTeams(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListSeasonalOffer(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Seasonal Offer Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(SEASONAL_OFFER_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -789,7 +794,7 @@ fun AppCompatActivity.startListSeasonalOffer(session: UserSessionManager?) {
 
 fun AppCompatActivity.startAddSeasonalOffer(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Add Seasonal Offer Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(ADD_SEASONAL_OFFER_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.seasonalOffers.SeasonalOffersDetailsActivity"))
     webIntent.putExtra("ScreenState", "new")
     startActivity(webIntent)
@@ -801,7 +806,7 @@ fun AppCompatActivity.startAddSeasonalOffer(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListToppers(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Toppers Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(TOPPERS_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.education.toppers.ToppersActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -812,7 +817,7 @@ fun AppCompatActivity.startListToppers(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListBatches(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Batches Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(BATCHES_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.education.batches.BatchesActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -823,7 +828,7 @@ fun AppCompatActivity.startListBatches(session: UserSessionManager?) {
 
 fun AppCompatActivity.startNearByView(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("NearBy Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(NEAR_BY_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.placesnearby.PlacesNearByActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -834,7 +839,7 @@ fun AppCompatActivity.startNearByView(session: UserSessionManager?) {
 
 fun AppCompatActivity.startFacultyMember(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Faculty Member Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(FACULTY_MEMBER_PAGE, START_VIEW, session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.education.faculty.FacultyActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

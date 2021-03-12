@@ -9,4 +9,4 @@
     android:textSize="15sp"
     android:textAllCaps="false"
     android:background="@color/primary_color"
-    android:text="I read"/>
+    android:text="@string/i_read"/>

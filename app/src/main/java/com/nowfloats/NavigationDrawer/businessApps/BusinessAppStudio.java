@@ -83,7 +83,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
             return;
         }
         pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        session=new UserSessionManager(context,getActivity());
+        session=new UserSessionManager(context,requireActivity());
 
         Button previewButton = (Button) view.findViewById(R.id.preview_button);
         Button getAppButton = (Button) view.findViewById(R.id.get_app_button);

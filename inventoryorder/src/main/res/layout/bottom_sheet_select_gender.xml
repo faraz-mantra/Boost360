@@ -37,7 +37,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="Select Gender"
+              android:text="@string/select_gender"
               android:textColor="@color/grey_text_color"
               app:fontFamily="@font/bold"
               app:textType="HEADING_4" />
@@ -48,7 +48,7 @@
               android:layout_marginStart="@dimen/size_2"
               android:layout_marginTop="@dimen/size_2"
               android:includeFontPadding="false"
-              android:text="Please select a gender from below"
+              android:text="@string/please_select_a_gender_from_below"
               android:textColor="@color/primary_grey"
               app:textType="BODY_1" />
 
