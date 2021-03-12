@@ -4,10 +4,12 @@ import android.view.View
 import androidx.core.content.ContextCompat.getColor
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
+import com.dashboard.constant.FragmentType
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
+import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.dashboard.databinding.FragmentWebsiteBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
 import com.dashboard.model.live.websiteItem.WebsiteDataResponse
@@ -63,7 +65,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     binding?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName()}</u>")
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
-    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri!!.contains("http").not()) {
+    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
     binding?.imgProfileLogo?.apply {
@@ -123,6 +125,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
+      WebsiteActionItem.IconType.owners_information -> startOwnersInfoNewActivity(session!!, FragmentType.OWNER_INFO)
+      WebsiteActionItem.IconType.doctor_e_profile -> startOwnersInfoNewActivity(session!!, FragmentType.CREATE_DOCTOR_PROFILE)
     }
   }
 

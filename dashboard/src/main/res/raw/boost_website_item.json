@@ -425,6 +425,12 @@
           "type": "service_product_catalogue",
           "isLock": false,
           "premiumCode": ""
+        },  {
+          "title": "Owner’s info",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "owners_information",
+          "isLock": false,
+          "premiumCode": ""
         },
         {
           "title": "Latest Updates & Offers",

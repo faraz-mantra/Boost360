@@ -41,6 +41,7 @@
                     <com.framework.views.customViews.CustomImageView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_180"
+                        android:id="@+id/civ_owner_image"
                         android:layout_marginTop="@dimen/size_1"
                         android:layout_marginBottom="@dimen/size_1"
                         android:scaleType="centerCrop"
@@ -55,7 +56,6 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="@dimen/size_14"
-                        android:tint="@color/dodger_blue_two"
                         android:visibility="gone"
                         app:srcCompat="@drawable/ic_close_round" />
 
@@ -102,6 +102,8 @@
                 </FrameLayout>
 
                 <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_change_image"
+                    android:visibility="gone"
                     style="@style/Dashboard.ButtonStyle.Rounded.Solid.Stroke"
                     android:layout_marginHorizontal="@dimen/size_2"
                     android:text="@string/change_image" />
@@ -144,7 +146,6 @@
                         style="@style/DashBoard_Text_Field"
                         android:hint="@string/type_owner_s_description_in_around_2000_characters_at_max"
                         android:inputType="textMultiLine"
-                        android:minLines="2"
                         android:singleLine="false" />
                 </LinearLayout>
 

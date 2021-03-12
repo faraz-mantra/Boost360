@@ -1,6 +1,7 @@
 package com.dashboard.controller.ui.ownerinfo
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.dashboard.R
@@ -19,10 +20,15 @@ class FragmentConsultationHours : AppBaseFragment<FragmentConsultationHoursBindi
     private lateinit var defaultTimings: ArrayList<ConsultationHoursModel>
     private lateinit var adapter: AppBaseRecyclerViewAdapter<ConsultationHoursModel>
 
-    companion object {
-        fun newInstance(): FragmentConsultationHours = FragmentConsultationHours()
-    }
 
+    companion object {
+        @JvmStatic
+        fun newInstance(bundle: Bundle? = null): FragmentConsultationHours {
+            val fragment = FragmentConsultationHours()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
     override fun getLayout(): Int {
         return R.layout.fragment_consultation_hours
     }
