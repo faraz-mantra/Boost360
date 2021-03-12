@@ -4,7 +4,7 @@
     android:id="@+id/layout_child"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
+    android:paddingStart="10dp"
     android:orientation="vertical">
 
     <TextView
@@ -15,8 +15,8 @@
         android:textColor="@color/light_black"
         fontPath = "Roboto-Light.ttf"
         android:singleLine="true"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="10dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         tools:ignore="MissingPrefix"

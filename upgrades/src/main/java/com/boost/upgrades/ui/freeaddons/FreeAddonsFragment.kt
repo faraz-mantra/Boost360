@@ -4,12 +4,9 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,25 +15,15 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CompareFreeAddonsAdapter
-import com.boost.upgrades.adapter.FreeAddonsAdapter
-import com.boost.upgrades.adapter.PaidAddonsAdapter
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.MyAddonsListener
-import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
-import com.boost.upgrades.ui.history.HistoryFragment
-import com.boost.upgrades.utils.Constants
-import com.boost.upgrades.utils.Constants.Companion.HISTORY_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.WebEngageController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import es.dmoral.toasty.Toasty
-import jp.wasabeef.glide.transformations.BlurTransformation
-import kotlinx.android.synthetic.main.free_addons_fragment.*
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_MY_ADDONS_LOADED
+import com.framework.webengageconstant.MY_ADDONS
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import kotlinx.android.synthetic.main.free_addons_fragment.addons_back
 import kotlinx.android.synthetic.main.free_addons_fragment.paid_title
 import kotlinx.android.synthetic.main.free_addons_fragment.recycler_paidaddons
-import kotlinx.android.synthetic.main.my_addons_fragment.*
 
 
 class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
@@ -117,7 +104,7 @@ class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
 
 
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE My_Addons Loaded", "My_Addons", "")
+        WebEngageController.trackEvent( ADDONS_MARKETPLACE_MY_ADDONS_LOADED , MY_ADDONS, NO_EVENT_VALUE)
     }
 
     private fun loadData() {

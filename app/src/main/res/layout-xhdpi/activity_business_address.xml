@@ -10,7 +10,7 @@
         android:id="@+id/app_bar"
         layout="@layout/tool_bar_business_profile" />
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true">
@@ -18,7 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:paddingLeft="25dp"
+                    android:paddingStart="25dp"
                     android:paddingRight="25dp">
 
                     <LinearLayout
@@ -46,7 +46,7 @@
                             android:id="@+id/business_address_textline"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
+                            android:paddingStart="5dp"
                             android:text="@string/address_line"
                             android:textColor="#BDBDBD"
                             android:textSize="10sp"
@@ -82,7 +82,7 @@
                                 android:id="@+id/business_address_citytext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="5dp"
+                                android:paddingStart="5dp"
                                 android:text="@string/town_city"
                                 android:textColor="#BDBDBD"
                                 android:textSize="10sp"
@@ -117,7 +117,7 @@
                                 android:id="@+id/business_address_pincodetext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="5dp"
+                                android:paddingStart="5dp"
                                 android:text="@string/pin_area_code"
                                 android:textColor="#BDBDBD"
                                 android:textSize="10sp"
@@ -149,7 +149,7 @@
                             android:id="@+id/business_address_statetext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
+                            android:paddingStart="5dp"
                             android:text="@string/state_province"
                             android:textColor="#BDBDBD"
                             android:textSize="10sp"
@@ -176,7 +176,7 @@
                             android:id="@+id/business_address_countrytext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
+                            android:paddingStart="5dp"
                             android:text="@string/country"
                             android:textColor="#BDBDBD"
                             android:textSize="10sp" />

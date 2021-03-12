@@ -37,7 +37,7 @@
         android:id="@+id/rvActionItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/llProductView"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:background="@color/gray"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_10"
+            android:paddingStart="@dimen/margin_10"
             android:paddingRight="@dimen/margin_10">
 
             <Button
@@ -94,7 +94,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:layout_weight="1"
                 android:background="@color/primaryColor"
-                android:text="Call"
+                android:text="@string/call_"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="15sp"
@@ -108,7 +108,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:layout_weight="1"
                 android:background="@color/primaryColor"
-                android:text="Share"
+                android:text="@string/share"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="15sp"

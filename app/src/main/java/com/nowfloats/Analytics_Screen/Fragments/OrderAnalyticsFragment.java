@@ -68,7 +68,7 @@ public class OrderAnalyticsFragment extends Fragment {
         tvTitle = root.findViewById(R.id.tvTitle);
         rvLegend = root.findViewById(R.id.rvLegend);
         mFormat = new DecimalFormat("#########");
-        mSession = new UserSessionManager(requireContext(), requireActivity());
+        mSession = new UserSessionManager(getContext(), requireActivity());
 
         return root;
     }

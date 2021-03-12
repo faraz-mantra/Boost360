@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.thinksity.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -178,7 +179,7 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 
 			//Business_Address_Activity.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 16));
 
-			Toast.makeText(appContext,"Your business address has been updated successfully",Toast.LENGTH_LONG);
+			Toast.makeText(appContext, R.string.your_business_has_been_updated_successfully,Toast.LENGTH_LONG);
 		}
 		else{
 			NewMapViewDialogBusinessAddress.updatingPostionFromMap = false;
@@ -194,7 +195,7 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		pd= ProgressDialog.show(appContext, null, "Updating Your Address");
+		pd= ProgressDialog.show(appContext, null, appContext.getString(R.string.updating_your_address));
 		pd.show();
 	}
 

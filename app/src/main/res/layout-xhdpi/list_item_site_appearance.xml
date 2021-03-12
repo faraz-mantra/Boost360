@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Preview Image" />
+            android:text="@string/preview_image" />
 
         <EditText
             android:id="@+id/businessAddress_countryEditText"
@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:backgroundTint="#383838"
             android:textColor="#383838"
-            android:drawableRight="@drawable/dropselect"
+            android:drawableEnd="@drawable/dropselect"
             android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:background="#fafafa">
 
     <ProgressBar
         android:id="@+id/loadmore_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
     <LinearLayout
         android:id="@+id/loadmore_errorlayout"
@@ -19,8 +19,8 @@
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
         android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:visibility="gone"
         tools:visibility="visible">
 
@@ -29,22 +29,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:background="@color/white"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_refresh_black_24dp"
             android:tint="#808080"
             android:tintMode="src_in"
-            tools:targetApi="lollipop"/>
+            app:srcCompat="@drawable/ic_refresh_black_24dp"
+            tools:targetApi="lollipop" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -53,13 +50,13 @@
                 style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="What went wrong"/>
+                tools:text="What went wrong" />
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Caption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tap_to_reload"/>
+                android:text="@string/tap_to_reload" />
 
         </LinearLayout>
 

@@ -48,6 +48,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.CLICKED_POST_A_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventNameKt.CREATE_ACUSTOMPAGE;
+
 /**
  * Created by guru on 25/08/2015.
  */
@@ -421,7 +424,7 @@ public class CustomPageFragment extends Fragment {
 
   private void openAddCustomPageActivity() {
     MixPanelController.track("AddCustomPage", null);
-    WebEngageController.trackEvent("CREATE A CUSTOMPAGE", "Clicked: Post a Custompage", session.getFpTag());
+    WebEngageController.trackEvent(CREATE_ACUSTOMPAGE, CLICKED_POST_A_CUSTOMPAGE, session.getFpTag());
     Intent intent = new Intent(activity, CreateCustomPageActivity.class);
     if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd) activity.startActivityForResult(intent, 202);
     else activity.startActivity(intent);

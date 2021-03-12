@@ -17,6 +17,10 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.NetworkUtils
 import com.framework.views.DotProgressBar
+
+import com.framework.webengageconstant.DIGITAL_CHANNELS
+import com.framework.webengageconstant.WHATS_APP_CONNECTED
+import com.invitereferrals.invitereferrals.InviteReferralsApi
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -44,6 +48,7 @@ import com.onboarding.nowfloats.utils.WebEngageController
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
 
@@ -126,18 +131,31 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     if (checkFpCreate(dotProgressBar)) return
     val request = getBusinessRequest()
     isSyncCreateFpApi = true
-    viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, {
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         if (it.stringResponse.isNullOrEmpty().not()) {
           connectedChannels.forEach { it1 ->
             it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
           }
           floatingPointId = it.stringResponse ?: ""
+          setReferralCode(floatingPointId)
           saveFpCreateData()
           apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
         } else updateError("Floating point return null", it.status, "CREATE")
       } else updateError(it.error?.localizedMessage, it.status, "CREATE")
     })
+  }
+
+  private fun setReferralCode(floatingPointId: String) {
+    if (prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, "").isNullOrEmpty().not()) {
+      var email = pref?.getString(PreferenceConstant.PERSON_EMAIL, "")
+      if (email.isNullOrEmpty().not()) email = requestFloatsModel?.contactInfo?.email
+      InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, ""), floatingPointId)
+      prefReferral?.edit()?.apply{
+        putString(PreferenceConstant.REFER_CODE_APP, "")
+        apply()
+      }
+    }
   }
 
   private fun saveFpCreateData() {
@@ -164,7 +182,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       viewModel?.postUpdateWhatsappRequest(dataRequest, authorization)
           ?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
-              requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("WhatsApp connected", "DIGITAL CHANNELS", it) }
+              requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(WHATS_APP_CONNECTED, DIGITAL_CHANNELS, it) }
               connectedChannels.forEach { it1 ->
                 it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
               }
@@ -306,7 +324,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
             baseActivity.startActivity(intent)
           } else requestPermissions(arrayOf(CALL_PHONE), 1)
         } catch (e: ActivityNotFoundException) {
-          showLongToast("Error in your phone call!")
+          showLongToast(getString(R.string.error_in_your_phone_call))
         }
       }
       binding?.retry -> apiHitBusiness()

@@ -45,6 +45,9 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_BUSINESS_CALLS;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_CALLS;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 /**
@@ -90,7 +93,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             getSupportActionBar().setDisplayShowHomeEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        WebEngageController.trackEvent("BUSINESS CALLS", "BUSINESS CALLS", null);
+        WebEngageController.trackEvent(BUSINESS_CALLS, EVENT_LABEL_BUSINESS_CALLS, NULL);
         vmnProgressBar = new ProgressDialog(this);
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));

@@ -54,7 +54,7 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void,String
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		pd= ProgressDialog.show(appcontext, null, "Updating Your Address");
+		pd= ProgressDialog.show(appcontext, null, appcontext.getString(R.string.updating_your_address));
 		pd.show();
 	}
 

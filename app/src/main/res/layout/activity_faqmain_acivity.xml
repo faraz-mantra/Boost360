@@ -8,10 +8,11 @@
     <include
         android:id="@+id/app_bar_faq_main"
         layout="@layout/new_app_bar" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lv_faq_main"></ListView>
+        android:id="@+id/lv_faq_main" />
 
 
 </LinearLayout>

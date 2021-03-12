@@ -5,8 +5,7 @@
     android:background="@color/cell_background_color"
     android:fillViewport="true">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/cell_background_color"
@@ -34,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="154dp"
                     android:background="@drawable/cover_gradient"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
             </FrameLayout>
 
@@ -43,9 +42,9 @@
                 android:id="@+id/side_panel_fragment_change_backgroud_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="right"
-                android:layout_marginRight="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/transparent_background_circle"
                 android:padding="8dp"
@@ -76,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/iconImage"
                 android:layout_centerInParent="true"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:singleLine="true"
                 android:text="@string/float_point_name"
@@ -90,10 +89,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/fpNameTextView"
                 android:gravity="center_horizontal"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:singleLine="true"
-                android:text="fpwebsitename.com"
+                android:text="@string/fpwebsitename_com"
 
                 android:textColor="#FFFFFF"
 
@@ -120,13 +119,13 @@
                         android:id="@+id/fragment_side_panel_progress_meter_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text=""></com.nowfloats.CustomWidget.roboto_md_46_616161>
+                        android:layout_marginStart="20dp"
+                        android:text="" />
 
                     <com.nowfloats.CustomWidget.roboto_md_36_bcbcbc
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginStart="3dp"
                         android:text="@string/percent_site_completed">
 
                     </com.nowfloats.CustomWidget.roboto_md_36_bcbcbc>
@@ -136,8 +135,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|bottom"
-                        android:layout_marginRight="20dp"
-                        android:gravity="right"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="end"
 
                         android:text="@string/your_site_health" />
                 </LinearLayout>
@@ -148,8 +147,8 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="20dp"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="40dp"
                     android:indeterminate="false"
                     android:maxHeight="10dip"
@@ -209,14 +208,11 @@
                 android:id="@+id/poweredBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/versionCodeName"
                 android:text="@string/powered_by" />
 
             <com.nowfloats.CustomWidget.roboto_md_36__565656
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/versionCodeName"
-                android:layout_toRightOf="@id/poweredBy"
                 android:text="@string/powered_by_company" />
         </LinearLayout>
 

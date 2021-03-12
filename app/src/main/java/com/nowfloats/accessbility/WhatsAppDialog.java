@@ -40,7 +40,7 @@ public class WhatsAppDialog extends AppCompatActivity {
                     startActivity(launchIntent);
                 }catch(Exception e){
                     e.printStackTrace();
-                    Toast.makeText(WhatsAppDialog.this, "Problem to open whatsApp", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WhatsAppDialog.this, getString(R.string.problem_to_open_whats_app), Toast.LENGTH_SHORT).show();
                 }
                 finish();
             }

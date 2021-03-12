@@ -814,7 +814,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     @Override
     public boolean onClick(AllSuggestionModel model, boolean selected) {
-        if (presenterListener.packageName().equalsIgnoreCase("com.whatsapp")) {
+        if (presenterListener.packageName().equalsIgnoreCase(mThemeContext.getString(R.string.whatsapp_package))) {
             if (selectedImages.size() < 5) {
                 if (selected) {
                     selectedImages.add(model);
@@ -833,7 +833,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                         }
                     }
                 } else {
-                    Toast.makeText(mThemeContext, "Cannot select more than 5 images for WhatsApp", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mThemeContext, mThemeContext.getString(R.string.can_not_select_more_than_5_images), Toast.LENGTH_SHORT).show();
                     return false;
                 }
             }
@@ -916,7 +916,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     @Override
     public void onError() {
-        Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mThemeContext, mThemeContext.getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
     }
 
     public void setPresenterListener(CandidateToPresenterInterface mImePresenter) {
@@ -965,16 +965,16 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 if (updatesList.size() > 0 && updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     updatesList.remove(updatesList.size() - 1);
                 }
-                Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mThemeContext, mThemeContext.getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                 break;
             case PRODUCTS:
                 if (productList.size() > 0 && productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     productList.remove(productList.size() - 1);
                 }
-                Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mThemeContext, mThemeContext.getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mThemeContext, mThemeContext.getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
         }
         if (type == mTabType) {
             shareAdapter.setSuggestionModels(type == ImePresenterImpl.TabType.UPDATES ? updatesList : productList);
@@ -1003,7 +1003,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                     int totalItemCount = linearLayoutManager.getItemCount();
                     int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
                     if (apiCallPresenter == null) {
-                        Toast.makeText(mThemeContext, "Please reopen this keyboard", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mThemeContext, mThemeContext.getString(R.string.please_reopen_the_keyboard), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (totalItemCount > 0 && lastVisibleItem >= totalItemCount - 2) {
@@ -1036,7 +1036,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 }
                 updatesList.addAll(modelList);
                 if (updatesList.size() == 0) {
-                    updatesList.add(createSuggestionModel("No updates available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
+                    updatesList.add(createSuggestionModel(mThemeContext.getString(R.string.no_updates_available), BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
                 shareAdapter.setSuggestionModels(updatesList);
                 break;
@@ -1047,7 +1047,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 }
                 productList.addAll(modelList);
                 if (productList.size() == 0) {
-                    productList.add(createSuggestionModel("No products available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
+                    productList.add(createSuggestionModel(mThemeContext.getString(R.string.no_product_available), BaseAdapterManager.SectionTypeEnum.EmptyList));
                 }
                 shareAdapter.setSuggestionModels(productList);
                 mEventHandler.unregister();
@@ -1077,7 +1077,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         detailsList.addAll(details);
 
         if (detailsList.size() == 0) {
-            detailsList.add(createSuggestionModel("No details available.", BaseAdapterManager.SectionTypeEnum.EmptyList));
+            detailsList.add(createSuggestionModel(mThemeContext.getString(R.string.no_details_available), BaseAdapterManager.SectionTypeEnum.EmptyList));
         }
         shareAdapter.setSuggestionModels(detailsList);
     }

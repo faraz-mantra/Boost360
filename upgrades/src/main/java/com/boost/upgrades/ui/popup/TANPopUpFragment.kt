@@ -11,6 +11,9 @@ import com.boost.upgrades.R
 import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_TAN_NUMBER_LOADED
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.TAN_NUMBER
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.tan_popup.*
 
@@ -60,7 +63,7 @@ class TANPopUpFragment : DialogFragment(){
             }
         }
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE TAN_Number Loaded", "TAN_Number", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_TAN_NUMBER_LOADED, TAN_NUMBER, NO_EVENT_VALUE)
 
     }
 

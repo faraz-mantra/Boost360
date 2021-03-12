@@ -28,7 +28,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
-        title.setText("Browser");
+        title.setText(R.string.browser);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

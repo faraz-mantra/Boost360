@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/tv_value"
         android:layout_width="80dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:gravity="center"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content" />
@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/tv_old_page_rank"
         android:layout_width="50dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:gravity="center"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content" />

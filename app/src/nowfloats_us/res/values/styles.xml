@@ -47,7 +47,7 @@
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">#383838</item>
         <item name="android:textColorHint">#B6B6B6</item>
-        <item name="android:layout_marginLeft">24dp</item>
+        <item name="android:layout_marginStart">24dp</item>
     </style>
 
     <style name="SignUp_EditText_Style_Ria" parent="Theme.AppCompat.Light.NoActionBar">
@@ -58,7 +58,7 @@
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">#383838</item>
         <item name="android:textColorHint">#B6B6B6</item>
-        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginStart">10dp</item>
     </style>
 
     <style name="SignUp_LinearLayout_Style" parent="Theme.AppCompat.Light.NoActionBar">

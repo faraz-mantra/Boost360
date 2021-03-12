@@ -27,6 +27,8 @@ import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.webengageconstant.ADDONS_MARKETPLACE
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.package_fragment.*
@@ -131,7 +133,7 @@ class PackageFragment : BaseFragment() {
                     event_attributes.put("Discounted Price", offeredBundlePrice)
                     event_attributes.put("Discount %", bundleData!!.overall_discount_percent)
                     bundleData!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
                     packageInCartStatus = true
                     package_submit.background = ContextCompat.getDrawable(
                             requireContext(),

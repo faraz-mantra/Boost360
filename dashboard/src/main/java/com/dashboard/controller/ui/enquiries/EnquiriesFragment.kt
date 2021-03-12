@@ -17,6 +17,8 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
+import com.framework.webengageconstant.ENQUIRIES_PAGE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.TOTAL_SELLER_ENQUIRIES
 import com.inventoryorder.model.summary.SummaryEntity
@@ -46,7 +48,7 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
     setDataSellerSummary(OrderSummaryModel().getTotalOrder(TOTAL_SELLER_ENQUIRIES), SummaryEntity().getUserSummary(USER_MY_ENQUIRIES),
         CallSummaryResponse().getCallSummary(CALL_MY_ENQUIRIES))
     binding?.filterBtn?.setOnClickListener { showFilterBottomSheet() }
-    WebEngageController.trackEvent("Enquiries Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent(ENQUIRIES_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   private fun showFilterBottomSheet() {

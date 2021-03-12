@@ -185,7 +185,7 @@
       android:fontFamily="@font/open_sans_semibold"
       android:paddingStart="@dimen/_20sdp"
       android:paddingEnd="@dimen/_20sdp"
-      android:text="Signup using Mobile"
+      android:text="@string/signup_using_mobile"
       app:layout_constraintBottom_toTopOf="@+id/already_have_account"
       app:layout_constraintEnd_toStartOf="@+id/endGuideline"
       app:layout_constraintStart_toStartOf="@+id/startGuideline" />

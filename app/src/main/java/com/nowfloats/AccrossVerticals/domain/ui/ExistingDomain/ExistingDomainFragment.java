@@ -61,7 +61,7 @@ public class ExistingDomainFragment extends Fragment {
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));
         vmnProgressBar.setCancelable(false);
-        session = new UserSessionManager(requireContext(), requireActivity());
+        session = new UserSessionManager(getContext(), requireActivity());
         confirmButton = view.findViewById(R.id.confirm_btn);
         cancleButton = view.findViewById(R.id.cancel_button);
         radioButton1 = view.findViewById(R.id.radio_button1);
@@ -70,16 +70,16 @@ public class ExistingDomainFragment extends Fragment {
         subdomainDescription = view.findViewById(R.id.subdomain_description);
 
         radioButton1.setChecked(true);
-        subdomainDescription.setText("I would like to map my existing domain to my\n NowFloats site http://" + session.getFpTag() + ".nowfloats.com\nPlease reach out to me to discuss this in detail.");
+        subdomainDescription.setText(getString(R.string.i_would_like_to_map_my_existing_domain) + session.getFpTag() + getString(R.string.please_reach_out_to_me));
 
         radioButton1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     radioButton2.setChecked(false);
-                    subject = "Make given domain as my Boost website’s web address/URL.[" + session.getFpTag() + "]";
+                    subject = getString(R.string.make_my_domain_as_my_boost) + session.getFpTag() + "]";
                     if (!domainName.getText().toString().isEmpty()) {
-                        message = "I would like to map my existing domain to my\n NowFloats site http://"+ domainName.getText().toString() + " \nPlease reach out to me to discuss this in detail.";
+                        message = getString(R.string.i_would_like_to_map_my_existing_domain_to_)+ domainName.getText().toString() + getString(R.string.please_reach_out_to_me_discuss_in_details);
                     }else{
                         message = "";
                     }
@@ -94,8 +94,8 @@ public class ExistingDomainFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     radioButton1.setChecked(false);
-                    subject = "Point your existing domain to NowFloats website. [" + session.getFpTag() + "]";
-                    message = "I would like to map my existing domain to my\n NowFloats site http://" + session.getFpTag() + ".nowfloats.com\nPlease reach out to me to discuss this in detail.";
+                    subject = getString(R.string.point_your_existing_domain_to_nowfloats) + session.getFpTag() + "]";
+                    message = getString(R.string.i_would_like_to_map_my_existing_domain_to_my) + session.getFpTag() + getString(R.string.please_reach_out_and_discuss_more_about_it);
                     subdomainDescription.setText(message);
                 } else {
                     radioButton1.setChecked(true);
@@ -130,7 +130,7 @@ public class ExistingDomainFragment extends Fragment {
         cancleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
 
@@ -149,7 +149,7 @@ public class ExistingDomainFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
     }
@@ -176,18 +176,18 @@ public class ExistingDomainFragment extends Fragment {
                     public void success(Boolean status, Response response) {
                         hideProgress();
                         if (response.getStatus() == 200) {
-                            Methods.showSnackBarPositive(requireActivity(), "Request Successfully.");
-                            requireActivity().onBackPressed();
+                            Methods.showSnackBarPositive(getActivity(), getString(R.string.request_successfully));
+                            getActivity().onBackPressed();
                             onDomainAddedOrUpdated(true);
                         } else {
-                            Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         hideProgress();
-                        Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                     }
                 });
             }
@@ -206,13 +206,13 @@ public class ExistingDomainFragment extends Fragment {
     private boolean validate() {
         if(radioButton1.isChecked()){
             if(domainName.getText().toString().isEmpty()){
-                Toast.makeText(requireContext(), "Domain Details Field is Empty...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.domain_details_field_is_empty), Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
         if(radioButton2.isChecked()){
             if(subdomainDescription.getText().toString().isEmpty()){
-                Toast.makeText(requireContext(), "Message Field is Empty...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),getString(R.string.message_field_is_empty), Toast.LENGTH_SHORT).show();
                 return false;
             }
         }

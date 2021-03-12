@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To Proceed select the plans that suits your requirement : "/>
+        android:text="@string/to_proceed_select_the_plans_that_suits_your_requirement"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_top_plans"
@@ -23,8 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="11dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:gravity="center"
         android:layout_gravity="bottom|center"
         android:layout_alignParentBottom="true">
@@ -32,21 +32,21 @@
             android:id="@+id/tv_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="INR"/>
+            android:text="@string/inr"/>
         <TextView
             android:id="@+id/tv_price"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"/>
+            android:text="@string/zero"/>
         <TextView
             android:id="@+id/tv_taxes"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+ taxes"/>
+            android:text="@string/taxes_plus"/>
     </LinearLayout>
 
 </LinearLayout>

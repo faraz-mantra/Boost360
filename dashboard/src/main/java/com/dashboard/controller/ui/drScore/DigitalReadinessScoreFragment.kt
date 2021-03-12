@@ -14,7 +14,6 @@ import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.dashboard.getLocalSession
 import com.dashboard.databinding.FragmentDigitalReadinessScoreBinding
 import com.dashboard.model.live.drScore.*
-import com.dashboard.model.live.drScore.siteMeter.SiteMeterModel
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
 import com.dashboard.pref.Key_Preferences
 import com.dashboard.pref.UserSessionManager
@@ -32,8 +31,9 @@ import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
 import com.framework.utils.saveData
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.framework.webengageconstant.DIGITAL_READINESS_PAGE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.material.snackbar.Snackbar
-import com.inventoryorder.model.floatMessage.MessageModel
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
@@ -68,7 +68,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     session = UserSessionManager(baseActivity)
     position = arguments?.getInt(IntentConstant.POSITION.name) ?: 0
     binding?.btnBack?.setOnClickListener { baseActivity.onNavPressed() }
-    WebEngageController.trackEvent("Digital Readiness Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent(DIGITAL_READINESS_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   override fun onResume() {
@@ -82,7 +82,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       val response = it as? DrScoreUiDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val drScoreData = FirestoreManager.getDrScoreData()
-        isHigh = (drScoreData!=null && drScoreData.getDrsTotal() >= 80)
+        isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 80)
         val drScoreSetupList = drScoreData?.getDrScoreData(response.data)
         if (drScoreSetupList.isNullOrEmpty().not()) {
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
@@ -102,7 +102,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
         binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
         binding?.txtPercentage?.text = "${drScoreData?.getDrsTotal()}%"
-        binding?.progressBar?.progress = drScoreData?.getDrsTotal()?:0
+        binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
         binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
 
       } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
@@ -201,7 +201,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
           val txt = String.format(messageDetail!!, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
           visitingCard(txt)
         }
-      } else visitingCard("Business Card")
+      } else visitingCard(getString(R.string.business_card))
     })
   }
 
@@ -243,6 +243,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
           urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.active_whatsapp_number}*"
         }
       }
+      if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDECall: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(PreferenceConstant.CHANNEL_SHARE_URL, urlStringN)
       if (isShowLoader) visitingCardDetailText(urlStringN)
     })

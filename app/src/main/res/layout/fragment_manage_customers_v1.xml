@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@color/screen_bg"
         android:orientation="vertical"
-        android:paddingLeft="6dp"
+        android:paddingStart="6dp"
         android:paddingRight="6dp"
         android:tag="cards main container">
 

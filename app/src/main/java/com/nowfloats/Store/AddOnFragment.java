@@ -99,13 +99,13 @@ public class AddOnFragment extends Fragment {
         public void onBindViewHolder(TopUpPlansAdapter.TopUpCardHolder holder, int position) {
             switch (position) {
                 case 0:
-                    holder.setCardHolderData(R.drawable.wild_fire_expire, "Wildfire", getString(R.string.wildfire_definition));
+                    holder.setCardHolderData(R.drawable.wild_fire_expire, getString(R.string.wildfire), getString(R.string.wildfire_definition));
                     break;
                 case 1:
-                    holder.setCardHolderData(R.drawable.ic_dictate_plan, "Dictate", getString(R.string.dictate_definition));
+                    holder.setCardHolderData(R.drawable.ic_dictate_plan, getString(R.string.dictate), getString(R.string.dictate_definition));
                     break;
                 case 2:
-                    holder.setCardHolderData(R.drawable.ic_business_apps, "My Business App", getString(R.string.business_app_definition));
+                    holder.setCardHolderData(R.drawable.ic_business_apps, getString(R.string.my_business_app), getString(R.string.business_app_definition));
                     break;
             }
         }
@@ -178,7 +178,7 @@ public class AddOnFragment extends Fragment {
 
             private void sendEmailRequestForBizApp() {
                 final SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-                UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+                UserSessionManager session = new UserSessionManager(getContext(), requireActivity());
                 if (!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, false)) {
                     MaterialProgressBar.startProgressBar(getActivity(), getString(R.string.submiting_request), false);
 
@@ -229,26 +229,24 @@ public class AddOnFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.tv_top_up_detail:
-                        startDetails(getAdapterPosition());
-                        break;
-                    case R.id.tv_top_up_pricing:
-                        if (topUpDialog == null)
-                            topUpDialog = new TopUpDialog(getActivity());
+                int id = view.getId();
+                if (id == R.id.tv_top_up_detail) {
+                    startDetails(getAdapterPosition());
+                } else if (id == R.id.tv_top_up_pricing) {
+                    if (topUpDialog == null)
+                        topUpDialog = new TopUpDialog(requireActivity());
 
-                        switch (getAdapterPosition()) {
-                            case 0:
-                                topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.WildFire.name());
-                                break;
-                            case 1:
-                                topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.Dictate.name());
-                                break;
-                            case 2:
-                                sendEmailRequestForBizApp();
-                                break;
-                        }
-                        break;
+                    switch (getAdapterPosition()) {
+                        case 0:
+                            topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.WildFire.name());
+                            break;
+                        case 1:
+                            topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.Dictate.name());
+                            break;
+                        case 2:
+                            sendEmailRequestForBizApp();
+                            break;
+                    }
                 }
             }
         }

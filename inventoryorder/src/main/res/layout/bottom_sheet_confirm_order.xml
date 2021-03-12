@@ -199,7 +199,7 @@
           android:paddingEnd="@dimen/size_28"
           android:shadowRadius="0"
           android:stateListAnimator="@null"
-          android:text="CONFIRM AND SEND PAYMENT LINK"
+          android:text="@string/confirm_and_send_payment_link"
           android:textAllCaps="true"
           android:textColor="@color/white"
           app:fontFamily="@font/bold"

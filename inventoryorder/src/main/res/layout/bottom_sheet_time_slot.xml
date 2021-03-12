@@ -35,7 +35,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_20"
           android:includeFontPadding="false"
-          android:text="Time Slot"
+          android:text="@string/time_slot"
           android:textColor="@color/orange"
           app:fontFamily="@font/bold"
           app:textType="HEADING_4" />

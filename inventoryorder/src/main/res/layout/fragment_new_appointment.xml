@@ -214,7 +214,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_14"
-          android:text="Time Slot"
+          android:text="@string/time_slot"
           android:textColor="@color/warm_light"
           app:layout_constraintStart_toStartOf="@id/radio_group"
           app:layout_constraintTop_toBottomOf="@id/edt_consulting_service" />

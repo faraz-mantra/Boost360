@@ -316,8 +316,8 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       binding?.edtStartTime -> {
         //setTime(binding?.edtStartTime!!)
         when {
-          scheduledDateTime.isEmpty() -> showLongToast("First select consultation date")
-          timeSlotList.isEmpty() -> showLongToast("Time slot not available.")
+          scheduledDateTime.isEmpty() -> showLongToast(getString(R.string.first_select_consultation_date))
+          timeSlotList.isEmpty() -> showLongToast(getString(R.string.time_slot_not_available))
           else -> timeSlotBottomSheet()
         }
       }
@@ -365,49 +365,49 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
     when {
       scheduledDateTime.isEmpty() -> {
-        showLongToast("Please select consultation date")
+        showLongToast(getString(R.string.please_select_consultation_date))
         return false
       }
       timeSlotList.isEmpty() -> {
-        showLongToast("Time slot not available.")
+        showLongToast(getString(R.string.time_slot_not_available))
         return false
       }
       timeSlotData == null -> {
-        showLongToast("Please select time slot.")
+        showLongToast(resources.getString(R.string.please_select_time_slot))
         return false
       }
       consultingService.isNullOrEmpty() -> {
-        showLongToast("Please select consulting on.")
+        showLongToast(getString(R.string.please_select_consulting_on))
         return false
       }
       patientName.isNullOrEmpty() -> {
-        showLongToast("Patient name field must not be empty.")
+        showLongToast(getString(R.string.patient_name_field_must_be_empty))
         return false
       }
       gender.isNullOrEmpty() -> {
-        showLongToast("Please select gender.")
+        showLongToast(resources.getString(R.string.please_select_gender))
         return false
       }
       age.isNullOrEmpty() -> {
-        showLongToast("Age field must not be empty.")
+        showLongToast(getString(R.string.age_field_must_not_be_empty))
         return false
       }
       patientMobile.isNullOrEmpty() -> {
-        showLongToast("Patient phone number field must not be empty.")
+        showLongToast(getString(R.string.patient_phone_number_field_must_not_be_empty))
         return false
       }
       checkStringContainsDigits(patientName!!) -> {
-        showLongToast("Please enter a valid patient name.")
+        showLongToast(getString(R.string.please_enter_valid_patient_name))
         return false
       }
 
       patientMobile!!.length != 10 -> {
-        showLongToast("Please enter a valid Phone Number.")
+        showLongToast(getString(R.string.please_enter_valid_phone_number))
         return false
       }
 
       patientEmail!!.isNotEmpty() && !checkValidEmail(patientEmail!!) -> {
-        showLongToast("Please enter a valid email.")
+        showLongToast(resources.getString(R.string.please_enter_valid_email))
         return false
       }
       else -> {
@@ -469,7 +469,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         hitApiUpdateAptConsult(updateExtraPropertyRequest?.extraProperties)
       } else {
         hideProgress()
-        showLongToast(if (it.message().isNotEmpty()) it.message() else "Cannot rescheduled your booking at this time. Please try later.")
+        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.can_not_reshedule_your_booking_at_this_time))
       }
     })
   }
@@ -504,7 +504,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         hitApiAddAptConsult((it as? OrderInitiateResponse)?.data)
       } else {
         hideProgress()
-        showLongToast(if (it.message().isNotEmpty()) it.message() else "Cannot create a booking at this time. Please try later.")
+        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.can_not_reshedule_your_booking_at_this_time))
       }
     })
   }
@@ -644,7 +644,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private fun setTime(timePickerText: CustomEditText) {
     val calender = Calendar.getInstance()
     if (scheduledDateTime.isNullOrEmpty()) {
-      showShortToast("Please select a date first")
+      showShortToast(getString(R.string.please_select_date_first))
     } else {
       val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
         // Get current date and time
@@ -704,7 +704,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         if (resp?.data.isNullOrEmpty().not()) {
           doctorWeeklySchedule = resp?.data
           if (isUpdate) getAptConsultDoctor() else hideProgress()
-        } else errorUi("Doctor weekly schedule not available.")
+        } else errorUi(getString(R.string.doctor_weekly_schedule_not_available))
       } else errorUi(it.message())
     })
   }

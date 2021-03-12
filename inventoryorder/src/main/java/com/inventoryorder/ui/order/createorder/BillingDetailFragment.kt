@@ -3,6 +3,8 @@ package com.inventoryorder.ui.order.createorder
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.framework.webengageconstant.CLICKED_ON_ADD_CUSTOMER
+import com.framework.webengageconstant.ORDERS
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -65,7 +67,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on Add Customer", "ORDERS", it) }
+    fpTag?.let { WebEngageController.trackEvent(CLICKED_ON_ADD_CUSTOMER, ORDERS, it) }
     layoutManagerN = LinearLayoutManager(baseActivity)
     setOnClickListener(binding?.ivOptions, binding?.tvDeliveryType, binding?.tvPaymentMode, binding?.tvPaymentStatus, binding?.buttonConfirmOrder,
         binding?.buttonGoBack, binding?.textAddDeliveryFee, binding?.textAddDeliveryFeeEdit, binding?.tvAddMore)

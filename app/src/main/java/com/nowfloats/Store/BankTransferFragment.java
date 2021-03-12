@@ -44,13 +44,13 @@ public class BankTransferFragment extends ImagesPaymentFragment {
 
     public boolean validateAllFields() {
         if (accountNumberEt.getText().toString().trim().length() == 0) {
-            showMessage("Enter account number");
+            showMessage(getString(R.string.enter_account_number));
         } else if (transactionAmountEt.getText().toString().trim().length() == 0) {
-            showMessage("Enter transaction amount");
+            showMessage(getString(R.string.enter_transaction_amount));
         } else if (transactionIdEt.getText().toString().trim().length() == 0) {
-            showMessage("Enter transaction id");
+            showMessage(getString(R.string.enter_transaction_id));
         } else if (TextUtils.isEmpty(mainImage)) {
-            showMessage("Attach receipt image");
+            showMessage(getString(R.string.attach_receipt_image));
         } else {
 
             SimpleDateFormat formatter = new SimpleDateFormat(Methods.YYYY_MM_DD, Locale.ENGLISH);
@@ -68,20 +68,18 @@ public class BankTransferFragment extends ImagesPaymentFragment {
     public void onResume() {
         super.onResume();
         if (getActivity() != null)
-            getActivity().setTitle("Bank Transfer Payment");
+            getActivity().setTitle(getString(R.string.bank_transfer_payment));
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.textView_add_main:
-                ((OnPaymentOptionClick) mContext).onPickImage(PaymentOptionsActivity.PaymentType.BANK_TRANSFER, 10);
-                break;
-            case R.id.textView_add_alt:
-                ((OnPaymentOptionClick) mContext).onPickImage(PaymentOptionsActivity.PaymentType.BANK_TRANSFER, 11);
-                break;
-            default:
-                super.onClick(v);
+        int id = v.getId();
+        if (id == R.id.textView_add_main) {
+            ((OnPaymentOptionClick) mContext).onPickImage(PaymentOptionsActivity.PaymentType.BANK_TRANSFER, 10);
+        } else if (id == R.id.textView_add_alt) {
+            ((OnPaymentOptionClick) mContext).onPickImage(PaymentOptionsActivity.PaymentType.BANK_TRANSFER, 11);
+        } else {
+            super.onClick(v);
         }
     }
 }

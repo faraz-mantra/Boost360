@@ -17,6 +17,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_GALLERY_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.DELETE_GALLERY_IMAGE;
+
 public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
 
 
@@ -73,7 +76,7 @@ public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
         String temp = null;
         if (status) {
             MixPanelController.track("ImageDeleted", null);
-            WebEngageController.trackEvent("DELETE GALLERY IMAGE","Delete Gallery Image",session.getFpTag());
+            WebEngageController.trackEvent(DELETE_GALLERY_IMAGE,EVENT_LABEL_DELETE_GALLERY_IMAGE,session.getFpTag());
             temp = "Deleted";
         } else {
             temp = "error";

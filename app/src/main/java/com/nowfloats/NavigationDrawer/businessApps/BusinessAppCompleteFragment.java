@@ -91,7 +91,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if(!isAdded()) return;
 
-        session = new UserSessionManager(context, getActivity());
+        session = new UserSessionManager(context, requireActivity());
         if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO) == BIZ_APP_DEMO){
             pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_PAID).apply();
         }

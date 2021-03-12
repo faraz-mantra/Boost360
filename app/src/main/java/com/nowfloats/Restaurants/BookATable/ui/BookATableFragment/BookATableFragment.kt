@@ -186,7 +186,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
                 override fun success(data: String?, response: Response) {
                     if (response != null && response.status == 200) {
                         Log.d("deletePlacesAround ->", response.body.toString())
-                        Methods.showSnackBarPositive(requireActivity(), "Successfully Deleted.")
+                        Methods.showSnackBarPositive(requireActivity(), getString(R.string.successfully_deleted_))
                         loadData()
                     } else {
                         Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong))
@@ -195,7 +195,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
 
                 override fun failure(error: RetrofitError) {
                     if (error.response.status == 200) {
-                        Methods.showSnackBarPositive(requireActivity(), "Successfully Deleted.")
+                        Methods.showSnackBarPositive(requireActivity(), getString(R.string.successfully_deleted_))
                         loadData()
                     } else {
                         Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong))
