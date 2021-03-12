@@ -33,7 +33,6 @@
   <string name="status_n">Status:</string>
   <string name="status_payment_n">Payment Status:</string>
   <string name="status_payment">Payment Status</string>
-  <string name="service_location">Service Location</string>
   <string name="business">Business</string>
   <string name="booking_details">Booking details</string>
   <string name="apt_details">Appointment details</string>
@@ -41,10 +40,8 @@
 
   <string name="option_comes_here">Option comes here</string>
   <string name="confirm_order_n">CONFIRM ORDER</string>
-  <string name="time_elapsed">Time elapsed</string>
   <string name="pickup">PICKUP</string>
   <string name="delivery_partner">Delivery Partner</string>
-  <string name="customer_details">Customer details</string>
   <string name="order_details">Order details</string>
   <string name="new_booking">New Booking</string>
   <string name="video_consultation">Consultations</string>
@@ -65,7 +62,6 @@
   <string name="fees_incl_gst">Fees (Incl. GST)</string>
   <string name="final_price">Final price</string>
   <string name="patient_name_camel_case">Patient Name</string>
-  <string name="gender">Gender</string>
   <string name="age_years">Age (years)</string>
   <string name="patient_mobile_number">Patient Mobile Number</string>
   <string name="patient_email_id_optional">Patient Email ID (optional)</string>
@@ -76,7 +72,6 @@
   <string name="tuesday_has_been_marked_as_off">Tuesday has been marked as off</string>
   <string name="mon_9_am_to_5_pm_br_1_pm_to_2pm">Mon - 9 AM to 5 PM : BR - 1 PM to 2PM</string>
   <string name="cosulting_service_not_available">Consulting Service is not available</string>
-  <string name="cancel">Cancel</string>
   <string name="consult_service">Consulting Service</string>
   <string name="ok">Ok</string>
   <string name="dentist">Dentist</string>
@@ -113,14 +108,11 @@
   <string name="payment_confirmed">Payment confirmed successfully!</string>
   <string name="payment_request_send">Payment reminder sent successfully!</string>
   <string name="time_remaining">Time remaining</string>
-  <string name="_00_00_00">00:00:00</string>
   <string name="the_video_consultation_has_been_cancelled">The video consultation has been cancelled</string>
   <string name="the_appointment_has_been_cancelled">The appointment has been cancelled.</string>
   <string name="select_doctor">Select doctor</string>
 
   <string name="at">at</string>
-  <string name="send_payment_link">Send payment link</string>
-  <string name="email">Email</string>
   <string name="call_buyer">Call buyer</string>
   <string name="confirm_order_normal">Confirm Order</string>
   <string name="mark_as_Ready_for_Pickup">Mark as ‘Ready for Pickup’</string>
@@ -178,7 +170,6 @@
   <string name="your_store">Your Store</string>
   <string name="customer">Customer</string>
   <string name="cancellation_requested_by">Cancelling requested by</string>
-  <string name="done">Done</string>
   <string name="reason_for_cancellation_optional">Reason for Cancellation (optional)</string>
   <string name="type_if_there_are_any_known_reason">Type, if there are any known reason...</string>
   <string name="type_if_there_are_any_feedback">Type, if there are any feedback...</string>
@@ -212,7 +203,6 @@
   <string name="delivery_partner_vendor">Delivery Partner/vendor</string>
   <string name="delivery_person_name">Delivery person name</string>
   <string name="write_the_delivery_person_name">Write the delivery person name</string>
-  <string name="_91_xxxxx_xxxxx">+91 XXXXX XXXXX</string>
   <string name="delivery_person_contact_number">Delivery person contact number</string>
   <string name="please_make_sure_above_details_are_correct_delivery_person_details">Please make sure above details are correct. Boost will send an email and an SMS to the customer on your behalf, informing them of the order being ‘out for delivery’ along with delivery person details.</string>
   <string name="please_make_sure_above_details_are_correct_delivery_person_details_partner">Please make sure above details are correct. Boost will send an email and an SMS to the customer on your behalf, informing them of the order being ‘Shipped’ along with consignment tracking details.</string>
@@ -278,7 +268,6 @@
   <string name="edit">Edit</string>
   <string name="customer_name_cannot_be_empty">Customer Name cannot be empty</string>
   <string name="customer_email_cannot_be_empty">Customer Email cannot be empty</string>
-  <string name="please_enter_valid_email">Please enter a valid email</string>
   <string name="customer_phone_cannot_be_empty">Customer phone number cannot be empty</string>
   <string name="customer_address_cannot_be_empty">Customer address cannot be empty</string>
   <string name="customer_city_cannot_be_empty">Customer city cannot be empty</string>
@@ -380,8 +369,6 @@
   <string name="str_order_invoice">Order invoice</string>
   <string name="str_share_invoice">Share invoice...</string>
   <string name="error_sharing_invoice_please_try_again">Error sharing invoice, please try again.</string>
-  <string name="invalid_invoice_url">Invalid invoice url.</string>
-  <string name="permission_denied_to_read_your_external_storage">Permission denied to read your External storage</string>
   <string name="no_appointment_so_far">No appointments so far!</string>
   <string name="tap_below_button_to_log_a_sample_offline_appointment">Tap below button to log a sample offline appointment.</string>
   <string name="tap_below_button_to_log_a_sample_offline_order">Tap below button to log a sample offline order.</string>
@@ -397,7 +384,6 @@
   <string name="done">Done</string>
   <string name="pick_a_delivery_mode_from_the_list_below">Pick a delivery mode from the list below</string>
   <string name="delivery_option">Delivery Option</string>
-  <string name="send_payment_link_via_select_atleast_one_option">Send payment link via(select atleast one option)</string>
   <string name="select_gender">Select Gender</string>
   <string name="please_select_a_gender_from_below">Please select a gender from below</string>
   <string name="pick_a_service_location_from_the_options_below">Pick a service location from the options below</string>

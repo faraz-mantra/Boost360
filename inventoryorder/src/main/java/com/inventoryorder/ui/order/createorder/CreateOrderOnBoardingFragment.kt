@@ -2,6 +2,8 @@ package com.inventoryorder.ui.order.createorder
 
 import android.os.Bundle
 import android.view.View
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.saveData
 import com.framework.webengageconstant.CLICKED_ON_ORDERS_CREATION
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
