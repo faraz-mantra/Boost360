@@ -629,7 +629,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val loader = ProgressDashboardDialog.newInstance()
     when {
       data.ctaFileLink.isNullOrEmpty().not() -> {
-        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, "File link")
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, FILE_LINK)
         this.ctaFileLink = data.ctaFileLink
         if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
             ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -642,7 +642,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
       }
       data.ctaWebLink.isNullOrEmpty().not() -> {
-        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, "Web link")
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, WEB_LINK)
         loader.setData(R.raw.activity_browser_gif, resources.getString(R.string.opening_browser_banner))
         loader.showProgress(baseActivity.supportFragmentManager)
         Handler().postDelayed({
@@ -652,7 +652,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }, 1000)
       }
       data.ctaYoutubeLink.isNullOrEmpty().not() -> {
-        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, "Youtube link")
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, YOUTUBE_LINK)
         loader.setData(R.raw.video_gif, resources.getString(R.string.taking_video_banner))
         loader.showProgress(baseActivity.supportFragmentManager)
         Handler().postDelayed({
