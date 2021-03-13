@@ -24,6 +24,7 @@ import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.DateUtils.toCalendar
 import com.framework.utils.ValidationUtils.isMobileNumberValid
 import com.framework.views.customViews.CustomEditText
+import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
@@ -57,6 +58,7 @@ import com.inventoryorder.model.weeklySchedule.isTimeBetweenTwoHours
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.TimeSlotBottomSheetDialog
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.utils.WebEngageController
 import com.michalsvec.singlerowcalendar.calendar.CalendarChangesObserver
 import com.michalsvec.singlerowcalendar.calendar.CalendarViewManager
 import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendarAdapter
@@ -465,7 +467,8 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         showLongToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      if (it.isSuccess()) {
+        WebEngageController.trackEvent(if (isVideoConsult) CONSULATION_UPDATED else APPOINTMENT_UPDATED , ADDED, TO_BE_ADDED)
         hitApiUpdateAptConsult(updateExtraPropertyRequest?.extraProperties)
       } else {
         hideProgress()
@@ -500,6 +503,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         return@Observer
       }
       if (it.isSuccess()) {
+        WebEngageController.trackEvent(if (isVideoConsult) CONSULATION_CREATE else APPOINTMENT_CREATE, ADDED, TO_BE_ADDED)
         onInClinicAptConsultAddedOrUpdated(true);
         hitApiAddAptConsult((it as? OrderInitiateResponse)?.data)
       } else {
