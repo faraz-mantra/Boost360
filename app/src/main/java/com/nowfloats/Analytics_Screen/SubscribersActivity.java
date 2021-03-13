@@ -45,6 +45,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.ADDED;
 import static com.framework.webengageconstant.EventLabelKt.ERROR_SUBSCRIBER;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_ADD_SUBSCRIBER;
 import static com.framework.webengageconstant.EventLabelKt.NEWSLETTER_SUBSCRIPTIONS;
@@ -52,6 +53,7 @@ import static com.framework.webengageconstant.EventNameKt.ADD_SUBSCRIBER;
 import static com.framework.webengageconstant.EventNameKt.ADD_SUBSCRIBER_FAILED;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_NEWSLETTER_SUBSCRIPTIONS;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
+import static com.framework.webengageconstant.EventValueKt.TO_BE_ADDED;
 
 public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener, SubscribersAdapter.SubscriberInterfaceMethods {
 
@@ -233,9 +235,9 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         mSubscriberApis.addSubscriber(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                WebEngageController.trackEvent(ADD_SUBSCRIBER,EVENT_LABEL_ADD_SUBSCRIBER,mSessionManager.getFpTag());
                 mProgressBar.setVisibility(View.GONE);
-                if (response.getStatus() == 200) {
+                if (response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) {
+                    WebEngageController.trackEvent(ADD_SUBSCRIBER,ADDED,TO_BE_ADDED);
                     mSubscriberList.clear();
                     mSubscriberAdapter.notifyDataSetChanged();
                     getSubscribersList();
