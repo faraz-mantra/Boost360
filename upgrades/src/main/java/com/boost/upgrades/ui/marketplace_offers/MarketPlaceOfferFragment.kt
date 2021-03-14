@@ -17,10 +17,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.adapter.UpgradeAdapter
+import com.boost.upgrades.adapter.VideosListAdapter
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.MarketPlaceOfferDetail
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.MarketPlaceOffers
+import com.boost.upgrades.data.api_model.GetPurchaseOrder.Result
+import com.boost.upgrades.data.model.CouponsModel
+import com.boost.upgrades.data.model.FeaturesModel
+import com.boost.upgrades.interfaces.HistoryFragmentListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.utils.Constants
@@ -29,18 +38,22 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.compare_all_packages_new.*
+import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.marketplaceoffer_fragment.*
+import kotlinx.android.synthetic.main.marketplaceoffer_fragment.back_image
 import kotlinx.android.synthetic.main.marketplaceoffer_fragment.package_back
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MarketPlaceOfferFragment : BaseFragment() {
+class MarketPlaceOfferFragment : BaseFragment(), HistoryFragmentListener {
 
     lateinit var root: View
 
     var marketOffersData: MarketPlaceOffers? = null
+    lateinit var marketOfferDetailAdapter: MarketOfferDetailAdapter
+    lateinit var marketOfferTermsAdapter: MarketOfferTermsAdapter
 
     lateinit var prefs: SharedPrefs
 
@@ -58,6 +71,8 @@ class MarketPlaceOfferFragment : BaseFragment() {
 
         val jsonString = arguments!!.getString("marketOffersData")
         marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
+        marketOfferDetailAdapter = MarketOfferDetailAdapter(ArrayList(), this)
+        marketOfferTermsAdapter = MarketOfferTermsAdapter(ArrayList(), this)
         Log.v("bundleData", " " + marketOffersData?.expiry_date  + " "+ marketOffersData?.createdon)
         prefs = SharedPrefs(activity as UpgradeActivity)
         return root
@@ -67,14 +82,61 @@ class MarketPlaceOfferFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MarketPlaceOfferViewModel::class.java)
 
+        initializeRecycler()
+        initializeTermsRecycler()
         loadData()
         initMvvm()
 
         offer_title.setText(marketOffersData!!.title)
         avail_coupon_txt.setText(marketOffersData!!.coupon_code)
-        howto_pointTwo.setText(resources.getString(R.string.marketoffer_howtoTwo, marketOffersData!!.coupon_code))
-        howto_pointThree_layout.visibility = View.GONE
-        term_one.setText(resources.getString(R.string.marketoffer_termOne, marketOffersData!!.coupon_code))
+        if(marketOffersData?.extra_information != null){
+            var list: ArrayList<String> = arrayListOf()
+            var listTerms: ArrayList<String> = arrayListOf()
+
+//            val extraInfoList = marketOffersData?.extra_information?.split("s1")?.toTypedArray()
+//            val extraInfoList = marketOffersData?.extra_information?.split("s1")?.toTypedArray()
+            var extra = marketOffersData?.extra_information?.trim()
+            extra = extra?.replace("S2coupon_code",marketOffersData!!.coupon_code)
+            extra = extra?.replace("S1coupon_code",marketOffersData!!.coupon_code)
+            extra = extra?.replace("S2discount_amt","null")
+            extra = extra!!.replace("S1discount_amt","null")
+            extra = extra?.replace("S2from_date",getConvertedDateFormat(marketOffersData!!.createdon))
+            extra = extra?.replace("S2to_date",getConvertedExpiryDateFormat(marketOffersData!!.expiry_date))
+            Log.v("marketOffersDataValue", " " + extra)
+//            var extraInfoTermsNCond = marketOffersData?.extra_information?.trim()?.split("Terms and Conditions")?.toTypedArray()
+            var extraInfoTermsNCond = extra.trim()?.split("Terms and Conditions")?.toTypedArray()
+
+            Log.v("extraInfoTermsNCond", " " + extraInfoTermsNCond?.get(1))
+            var termsContent = extraInfoTermsNCond?.get(1)?.split("s2")?.toTypedArray()
+            var offerContent = extraInfoTermsNCond?.get(0)?.split("s1")?.toTypedArray()
+            for(terms in termsContent!!){
+                if(terms.isNotEmpty()) {
+                    Log.v("listTermsBoolean", " " + terms.contains("S2coupon_code")  + terms.contains("S2from_date") + marketOffersData!!.coupon_code)
+
+                    listTerms.add(terms)
+                    Log.v("listTerms", " " + terms)
+                }
+
+
+            }
+            updateTermsRecycler(listTerms)
+
+            for(extraInfo in offerContent!!){
+                if(extraInfo.isNotEmpty() && !extraInfo.equals("") && extraInfo.length > 1){
+                    extraInfo.replace("@coupon_code",marketOffersData!!.coupon_code)
+                    extraInfo.replace("@discount_amt","null")
+                    list.add(extraInfo)
+                    Log.v("extraInfoList", " " + extraInfo)
+                }
+
+
+            }
+            updateRecycler(list)
+//            marketOfferDetailAdapter = MarketOfferDetailAdapter(list, this)
+        }
+//        howto_pointTwo.setText(resources.getString(R.string.marketoffer_howtoTwo, marketOffersData!!.coupon_code))
+//        howto_pointThree_layout.visibility = View.GONE
+//        term_one.setText(resources.getString(R.string.marketoffer_termOne, marketOffersData!!.coupon_code))
 
         val ss = SpannableString(resources.getString(R.string.marketoffer_termSix, getConvertedDateFormat(marketOffersData!!.createdon),getConvertedExpiryDateFormat(marketOffersData!!.expiry_date)  ))
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
@@ -88,9 +150,9 @@ class MarketPlaceOfferFragment : BaseFragment() {
                 ds.isUnderlineText = true
             }
         }
-        ss.setSpan(clickableSpan, 86, 96, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        term_six.setText(ss)
-        term_six.setMovementMethod(LinkMovementMethod.getInstance())
+//        ss.setSpan(clickableSpan, 86, 96, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        term_six.setText(ss)
+//        term_six.setMovementMethod(LinkMovementMethod.getInstance())
 
 
 
@@ -168,5 +230,37 @@ class MarketPlaceOfferFragment : BaseFragment() {
             e.printStackTrace()
         }
         return output.format(d)
+    }
+
+    override fun viewHistoryItem(item: Result) {
+        TODO("Not yet implemented")
+    }
+
+    fun updateRecycler(list: List<String>) {
+        Log.v("updateRecycler", " "+ list)
+        marketOfferDetailAdapter.addupdates(list)
+        recyclerOfferDetails.adapter = marketOfferDetailAdapter
+//        marketOfferDetailAdapter.notifyDataSetChanged()
+    }
+
+    private fun initializeRecycler() {
+        val gridLayoutManager = LinearLayoutManager(requireContext())
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerOfferDetails.apply {
+            layoutManager = gridLayoutManager
+        }
+    }
+    private fun initializeTermsRecycler() {
+        val gridLayoutManager = LinearLayoutManager(requireContext())
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerTerms.apply {
+            layoutManager = gridLayoutManager
+        }
+    }
+    fun updateTermsRecycler(list: List<String>) {
+        Log.v("updateRecycler", " "+ list)
+        marketOfferTermsAdapter.addupdates(list)
+        recyclerTerms.adapter = marketOfferTermsAdapter
+//        marketOfferDetailAdapter.notifyDataSetChanged()
     }
 }
