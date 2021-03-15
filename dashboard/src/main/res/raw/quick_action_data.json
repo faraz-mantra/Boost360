@@ -104,10 +104,10 @@
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
         },
-        {
-          "quickActionType": "LIST_STAFF",
-          "title": "List a\nstaff"
-        }
+//        {
+//          "quickActionType": "LIST_STAFF",
+//          "title": "List a\nstaff"
+//        }
       ]
     },
     {
@@ -142,10 +142,10 @@
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
         },
-        {
-          "quickActionType": "LIST_STAFF",
-          "title": "List a\nstaff"
-        }
+//        {
+//          "quickActionType": "LIST_STAFF",
+//          "title": "List a\nstaff"
+//        }
       ]
     },
     {
