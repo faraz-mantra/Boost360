@@ -498,12 +498,14 @@
   <string name="bank_name_required">Bank name*</string>
   <string name="account_alias">Account Alias</string>
   <string name="bank_branch_required">Bank Branch*</string>
+  <string name="service_duration">Please provide a valid duration of service</string>
   <string name="why_do_we_need_your_bank_account_required">Why do we need your bank account?</string>
   <string name="storage_permission" translatable="false">Storage Permission</string>
   <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
   <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
 
-  <array name="stock_availbility">
+
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>
