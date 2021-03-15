@@ -474,7 +474,6 @@ class PreSignUpActivity : AppCompatActivity() {
       it?.let {
         Log.e(it, ">>>>@@@@@@@@@@@@@@@@@@@")
         if (it.equals(ENABLE_BOTTOM_VIEW)) {
-          binding.createAccountButton.visibility = View.VISIBLE
           binding.loginButton.visibility = View.VISIBLE
           binding.languageView.visibility = View.VISIBLE
           binding.languageDropdown.visibility = View.GONE
@@ -483,7 +482,6 @@ class PreSignUpActivity : AppCompatActivity() {
           binding.languageDropdown.visibility = View.VISIBLE
           binding.languageLayout.visibility = View.GONE
           binding.languageView.visibility = View.VISIBLE
-          binding.createAccountButton.visibility = View.VISIBLE
           binding.loginButton.visibility = View.VISIBLE
         }
       }

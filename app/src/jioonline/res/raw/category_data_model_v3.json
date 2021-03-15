@@ -163,14 +163,14 @@
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. JOA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly performance reporting",
@@ -178,7 +178,7 @@
             },
             {
               "title": "Content tips",
-              "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
+              "desc": "Besides helping you with your overall digital strategy, Joa will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
             }
           ]
         }
