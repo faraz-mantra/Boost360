@@ -3,12 +3,14 @@ package com.inventoryorder.ui.appointmentSpa.create
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
+import com.framework.extensions.onTextChanged
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
@@ -27,6 +29,8 @@ import com.inventoryorder.recyclerView.CustomArrayAdapter
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.onboarding.nowfloats.model.CityDataModel
+import com.onboarding.nowfloats.ui.CitySearchDialog
 import kotlinx.android.synthetic.main.item_date_view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -65,19 +69,19 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     getSearchListing()
     serviceList = ArrayList()
     startDate = getDateTime()
-    setOnClickListener(binding?.buttonReviewDetails, binding?.textAddApptDateTime,
-        binding?.buttonReviewDetails, binding?.imageEdit,
-        binding?.layoutCustomer?.textAddCustomerGstin,
-        binding?.layoutCustomer?.tvRemove)
+    setOnClickListener(binding?.buttonReviewDetails, binding?.textAddApptDateTime, binding?.buttonReviewDetails, binding?.imageEdit,
+        binding?.layoutCustomer?.textAddCustomerGstin, binding?.layoutCustomer?.tvRemove, binding?.layoutBillingAddr?.editCity)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.buttonReviewDetails -> {
-        validateForm()
+      binding?.buttonReviewDetails -> validateForm()
+      binding?.layoutBillingAddr?.editCity -> {
+        val dialog = CitySearchDialog()
+        dialog.onClicked = { setCityState(it) }
+        dialog.show(parentFragmentManager, dialog.javaClass.name)
       }
-
       binding?.textAddApptDateTime -> {
         selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, dateCounter, this)
         selectedDateTimeBottomSheetDialog?.onClicked = this::onDialogDoneClicked
@@ -85,7 +89,6 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       }
 
       binding?.layoutCustomer?.textAddCustomerGstin -> {
-
         if (binding?.layoutCustomer?.lytCustomerGstn?.visibility == View.GONE) {
           binding?.layoutCustomer?.textAddCustomerGstin?.visibility = View.GONE
           binding?.layoutCustomer?.lytCustomerGstn?.visibility = View.VISIBLE
@@ -98,7 +101,6 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       }
 
       binding?.imageEdit -> {
-
         appointmentRequestModel.staffId?.let {
           for ((_, value) in bookingSlotResponse?.Result?.get(0)?.Staff?.withIndex()!!) {
             value.isSelected = value._id == it
@@ -112,10 +114,15 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     }
   }
 
+  private fun setCityState(cityDataModel: CityDataModel) {
+    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName())
+    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName())
+  }
+
   fun getBundleData(): Bundle? {
     return Bundle().apply {
       putBoolean(IntentConstant.SHOULD_RE_INITIATE.name, shouldReInitiate)
-      putBoolean(IntentConstant.IS_REFRESH.name,  shouldRefresh)
+      putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
     }
   }
 
@@ -254,19 +261,22 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
 
   private fun setArrayAdapter() {
-    serviceAdapter = CustomArrayAdapter(this.requireActivity(), R.layout.layout_service_item, serviceList!!)
-    binding?.editServiceName?.threshold = 1
-    (serviceAdapter as CustomArrayAdapter).initList();
-    binding?.editServiceName?.setAdapter(serviceAdapter)
-    binding?.editServiceName?.onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->
-      selectedService = serviceList?.get(pos)
-      totalPrice = selectedService?.Price ?: 0.0
-      discountedPrice = selectedService?.DiscountedPrice ?: 0.0
-      currency = selectedService?.Currency ?: ""
-      val bookingSlotsRequest = BookingSlotsRequest(BatchType = "DAILY",
-          ServiceId = serviceList?.get(pos)?._id!!,
-          DateRange = DateRange(StartDate = startDate, EndDate = startDate))
-      getBookingSlots(bookingSlotsRequest)
+    binding?.editServiceName?.apply {
+      serviceAdapter = CustomArrayAdapter(baseActivity, R.layout.layout_service_item, serviceList!!)
+      threshold = 1
+      (serviceAdapter as? CustomArrayAdapter)?.initList()
+      setAdapter(serviceAdapter)
+
+      onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->
+        selectedService = serviceList?.get(pos)
+        totalPrice = selectedService?.Price ?: 0.0
+        discountedPrice = selectedService?.DiscountedPrice ?: 0.0
+        currency = selectedService?.Currency ?: ""
+        val bookingSlotsRequest = BookingSlotsRequest(BatchType = "DAILY",
+            ServiceId = serviceList?.get(pos)?._id!!,
+            DateRange = DateRange(StartDate = startDate, EndDate = startDate))
+        getBookingSlots(bookingSlotsRequest)
+      }
     }
   }
 
@@ -320,7 +330,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
       shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_RE_INITIATE.name) ?: false
       shouldRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name) ?: false
-      if (shouldReInitiate || shouldRefresh ) (context as? FragmentContainerOrderActivity)?.onBackPressed()
+      if (shouldReInitiate || shouldRefresh) (context as? FragmentContainerOrderActivity)?.onBackPressed()
     }
   }
 }

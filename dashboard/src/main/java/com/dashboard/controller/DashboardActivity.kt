@@ -370,11 +370,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onClick(v)
     when (v) {
       binding?.drawerView?.btnSiteMeter -> {
-//        session?.let { this.startOldSiteMeter(it) }
         startReadinessScoreView(session, 0)
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.imgBusinessLogo -> this.startBusinessProfileDetailEdit(session)
-      binding?.drawerView?.txtDomainName -> this.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.drawerView?.imgBusinessLogo ->{
+        this.startBusinessProfileDetailEdit(session)
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+      }
+      binding?.drawerView?.txtDomainName ->{
+        this.startWebViewPageLoad(session, session!!.getDomainName(false))
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+      }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
     }
   }
