@@ -5,7 +5,7 @@ const val SERVICE_CATALOGUE_ADD_UPDATE = "SERVICE CATALOGUE ADD/UPDATE"
 const val MANAGE_CONTENT = "MANAGE CONTENT"
 const val KYC_VERIFICATION = "KYC VERIFICATION"
 const val KYC_VERIFIED = "KYC verified"
-const val PAGE_VIEW = "pageview"
+const val PAGE_VIEW = "Load"
 const val SCREEN_NAME = "screen_name"
 const val ADD_ONS = "Add-ons"
 const val SITE_HEALTH = "SITE_HEALTH"
@@ -178,6 +178,8 @@ const val VISITING_CARD = "visiting_card"
 const val APPOINTMENTS = "APPOINTMENTS"
 const val CONSULTATIONS = "CONSULTATIONS"
 const val DOMAIN_AND_EMAIL2 = "Domain and Email"
+const val CLICK = "Click"
+const val ADDED = "Added"
 
 
 

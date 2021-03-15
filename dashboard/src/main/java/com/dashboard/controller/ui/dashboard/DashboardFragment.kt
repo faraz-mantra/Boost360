@@ -579,7 +579,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun clickBusinessUpdate(type: BusinessSetupHighData.BusinessClickEvent) {
     when (type) {
-      BusinessSetupHighData.BusinessClickEvent.WEBSITE_VISITOR -> baseActivity.startSiteViewAnalytic(session, "UNIQUE")
+      BusinessSetupHighData.BusinessClickEvent.WEBSITE_VISITOR -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS)
       BusinessSetupHighData.BusinessClickEvent.ENQUIRIES -> baseActivity.startBusinessEnquiry(session)
       BusinessSetupHighData.BusinessClickEvent.ODER_APT -> baseActivity.startAptOrderSummary(session)
     }
@@ -605,9 +605,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun clickGrowthStats(type: GrowthStatsData.GrowthType) {
     when (type) {
-      GrowthStatsData.GrowthType.ALL_VISITS -> baseActivity.startSiteViewAnalytic(session, "TOTAL")
-      GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(session, "UNIQUE")
-      GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(session, "MAP_VISITS")
+      GrowthStatsData.GrowthType.ALL_VISITS -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS)
+      GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS)
+      GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(session, "MAP_VISITS", WEBSITE_REPORT_ADDRESS_VISITS)
       GrowthStatsData.GrowthType.NEWSLETTER_SUBSCRIPTION -> baseActivity.startSubscriber(session)
       GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
     }
@@ -633,6 +633,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val loader = ProgressDashboardDialog.newInstance()
     when {
       data.ctaFileLink.isNullOrEmpty().not() -> {
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, FILE_LINK)
         this.ctaFileLink = data.ctaFileLink
         if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
             ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -645,6 +646,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
       }
       data.ctaWebLink.isNullOrEmpty().not() -> {
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, WEB_LINK)
         loader.setData(R.raw.activity_browser_gif, resources.getString(R.string.opening_browser_banner))
         loader.showProgress(baseActivity.supportFragmentManager)
         Handler().postDelayed({
@@ -654,6 +656,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }, 1000)
       }
       data.ctaYoutubeLink.isNullOrEmpty().not() -> {
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, YOUTUBE_LINK)
         loader.setData(R.raw.video_gif, resources.getString(R.string.taking_video_banner))
         loader.showProgress(baseActivity.supportFragmentManager)
         Handler().postDelayed({
@@ -761,6 +764,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         binding?.filterWebsiteReport?.text = filterDate.title
       }
     }
+    WebEngageController.trackEvent(CLICK_DATE_RANGE, CLICK, TO_BE_ADDED)
   }
 
   override fun onStop() {

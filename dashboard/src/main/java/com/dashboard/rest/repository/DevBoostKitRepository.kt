@@ -9,7 +9,7 @@ import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-const val DEVELOPER_ID = "591c0972ee786cbf48bd86cf"
+const val DEVELOPER_ID = "5fd88e1fb456eb000133ad31"
 
 object DevBoostKitRepository : AppBaseRepository<DevBoostKitRemoteData, AppBaseLocalService>() {
 
