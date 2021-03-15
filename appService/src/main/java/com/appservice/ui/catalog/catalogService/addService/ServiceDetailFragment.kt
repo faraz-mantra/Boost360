@@ -304,7 +304,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val amount = binding?.amountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val discount = binding?.discountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val toggle = binding?.toggleService?.isOn ?: false
-
+    product?.Duration = shipmentDuration.toString().toIntOrNull()
     if (serviceImage == null && product?.image?.ImageId.isNullOrEmpty()) {
       showLongToast(resources.getString(R.string.add_service_image))
       return false
@@ -325,6 +325,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       return false
     } else if (toggle && (discount > amount)) {
       showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
+      return false
+    }else if (product?.Duration == null || product?.Duration!! <= 0) {
+      showLongToast(resources.getString(R.string.service_duration))
       return false
     }
     product?.ClientId = clientId
