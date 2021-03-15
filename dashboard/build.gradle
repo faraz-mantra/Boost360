@@ -51,4 +51,10 @@ dependencies {
   api 'com.google.firebase:firebase-messaging:20.0.1'
   api 'com.google.firebase:firebase-database:19.2.0'
   api 'com.google.firebase:firebase-auth:19.2.0'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
 }

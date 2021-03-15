@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="size_400">400dp</dimen>
+    <dimen name="size_academy_banners">180dp</dimen>
 </resources>

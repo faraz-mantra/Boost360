@@ -18,12 +18,12 @@
     app:cardCornerRadius="@dimen/size_10"
     app:cardElevation="0dp"
     app:cardUseCompatPadding="true"
-    tools:layout_height="140dp">
+    tools:layout_height="@dimen/size_academy_banners">
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/image"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:scaleType="fitXY" />
+      android:scaleType="centerCrop" />
   </com.framework.views.customViews.CustomCardView>
 </layout>

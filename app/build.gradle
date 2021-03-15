@@ -23,6 +23,8 @@ googleServices { disableVersionCheck = false }
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
 }
 allprojects {
     apply plugin: 'maven'
@@ -282,6 +284,8 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
     //AppsFlyer SDK
