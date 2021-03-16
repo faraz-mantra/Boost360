@@ -530,11 +530,8 @@
   <string name="my_custom_payment_gateway">My custom payment gateway</string>
   <string name="payment_configuration">Payment Configuration</string>
     <string name="bank_ifsc_code">Bank IFSC Code*</string>
-  <string name="account_alias">Account Alias</string>
   <string name="bank_name">Bank name*</string>
-  <string name="confirm_account_number">Confirm Account Number*</string>
   <string name="account_number_">Account Number*</string>
-  <string name="name_of_the_account_holder">Name of the account holder*</string>
   <string name="bank_branch_">Bank Branch*</string>
     <string name="why_verify_bank_account">Why verify bank account?</string>
     <string name="why_do_we_need_to_add_and_verify_your_bank_account">Why do we need to add and verify your bank account?</string>
@@ -665,7 +662,6 @@
   <string name="bank_branch_required">Bank Branch*</string>
   <string name="service_duration">Please provide a valid duration of service</string>
   <string name="why_do_we_need_your_bank_account_required">Why do we need your bank account?</string>
-  <string name="storage_permission" translatable="false">Storage Permission</string>
   <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
   <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
 

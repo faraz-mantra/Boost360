@@ -121,6 +121,7 @@
                     <com.framework.views.customViews.CustomTextField
                         android:id="@+id/ctf_owner_name"
                         style="@style/DashBoard_Text_Field"
+                        android:textCursorDrawable="@null"
                         android:hint="@string/type_the_owner_s_name" />
 
 
@@ -132,6 +133,7 @@
 
                     <com.framework.views.customViews.CustomTextField
                         android:id="@+id/ctf_designation"
+                        android:textCursorDrawable="@null"
                         style="@style/DashBoard_Text_Field"
                         android:hint="@string/type_owner_s_designation_e_g_founder" />
 
@@ -144,9 +146,9 @@
                     <com.framework.views.customViews.CustomTextField
                         android:id="@+id/ctf_description"
                         style="@style/DashBoard_Text_Field"
-                        android:hint="@string/type_owner_s_description_in_around_2000_characters_at_max"
                         android:inputType="textMultiLine"
-                        android:singleLine="false" />
+                        android:hint="@string/type_owner_s_description_in_around_2000_characters_at_max"
+                        android:textCursorDrawable="@null" />
                 </LinearLayout>
 
 
