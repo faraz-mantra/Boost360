@@ -503,9 +503,11 @@
   <string name="storage_permission" translatable="false">Storage Permission</string>
   <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
   <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
+  <string name="no">No</string>
+  <string name="yes">Yes</string>
 
 
-    <array name="stock_availbility">
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>

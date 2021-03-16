@@ -27,9 +27,11 @@ import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.model.ItemsItem
 import com.appservice.ui.model.ServiceSearchListingResponse
+import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
@@ -72,6 +74,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     super.onCreateView()
     getBundleData()
     layoutManagerN = LinearLayoutManager(baseActivity)
+    WebEngageController.trackEvent(STAFF_PROFILE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
     getListServiceFilterApi()
     layoutManagerN?.let { scrollPagingListener(it) }
     swipeRefreshListener()
@@ -203,6 +206,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.menu_add_staff -> {
+        WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
         startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
         true
       }
