@@ -20,6 +20,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
@@ -79,15 +80,30 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private var isLastPageD = false
 
   companion object {
-    fun newInstance(): ServiceListingFragment {
-      return ServiceListingFragment()
+    fun newInstance(isNonPhysicalExperience: Boolean?, currencyType: String?, fpId: String?, fpTag: String?, clientId: String?, externalSourceId: String?, applicationId: String?, userProfileId: String?): ServiceListingFragment {
+      val bundle = Bundle()
+      bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience!!)
+      bundle.putString(IntentConstant.CURRENCY_TYPE.name, "INR")
+      bundle.putString(IntentConstant.FP_ID.name, fpId)
+      bundle.putString(IntentConstant.FP_TAG.name, fpTag)
+      bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
+      bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
+      bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
+      bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
+      val serviceListingFragment = ServiceListingFragment()
+      serviceListingFragment.arguments = bundle
+      return serviceListingFragment
     }
 
     private const val STORAGE_CODE = 120
     var defaultShareGlobal = true
     var shareType = 2
     var shareProduct: ItemsItem? = null
+    fun newInstance(): ServiceListingFragment {
+      return ServiceListingFragment()
+    }
   }
+
 
   override fun getLayout(): Int {
     return R.layout.fragment_service_listing
@@ -162,7 +178,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
         setAdapterNotify()
-        setToolbarTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})")
+//        setToolbarTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})")
       } else if (isFirstLoad) setEmptyView(View.VISIBLE)
     } else {
       if (listService.isNullOrEmpty().not()) {
@@ -211,6 +227,16 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         return false
       }
     })
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.action_service_configuration -> {
+        startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
+        return true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
   }
 
   private fun startFilter(query: String?) {
@@ -417,6 +443,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun hideProgress() {
     binding?.progress?.gone()
   }
+
 }
 
 

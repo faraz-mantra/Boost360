@@ -6,6 +6,11 @@ import android.os.Handler
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.appservice.constant.IntentConstant
+import com.appservice.offers.startOfferFragmentActivity
+import com.appservice.staffs.ui.UserSession
+import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.catalog.startFragmentActivity
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
@@ -99,13 +104,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
-        binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
+            binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
     WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, session?.fpTag)
+    //todo remove this
+    binding?.cbLaunchOfferFlow?.setOnClickListener {
+      session?.let { startOfferFragmentActivity(baseActivity,com.appservice.constant.FragmentType.OFFER_LISTING_FRAGMENT, bundle = getBundleData(it)) }
+    }
   }
 
   override fun onResume() {

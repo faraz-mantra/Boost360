@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <LinearLayout
+        android:theme="@style/OffersThemeBase"
+        style="@style/match_match"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/match_wrap"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+                android:layout_marginStart="@dimen/size_10"
+                android:layout_marginBottom="@dimen/size_6"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:includeFontPadding="false"
+                    android:text="@string/select_service_"
+                    android:textColor="@color/white"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="HEADING_4"
+                    tools:textColor="@color/black_4a4a4a" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tvCustomerAddress"
+                    style="@style/match_wrap"
+                    android:includeFontPadding="false"
+                    android:text="@string/select_or_search_the_service_in_which_you_want_to_add_offers_to"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    tools:textColor="@color/warm_grey" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/match_match"
+            android:background="@drawable/bottoms_sheet_top20dp_white"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_services"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:background="@drawable/rounded_stroke_grey_4"
+                android:layout_height="@dimen/size_44"
+                android:theme="@style/OfferThemeOverlay.SearchView"
+                android:layout_marginTop="@dimen/size_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:queryHint="@string/search_for_services" />
+
+
+            <com.framework.views.viewgroups.BaseRecyclerView
+                android:id="@+id/rv_services"
+                style="@style/match_wrap"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:paddingVertical="@dimen/size_30"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_services"
+                tools:listitem="@layout/recycler_item_service_select_offer" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                style="@style/match_wrap"
+                android:padding="@dimen/size_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_apply"
+                    style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
+                    android:layout_width="wrap_content"
+                    android:paddingStart="@dimen/size_10"
+                    android:paddingEnd="@dimen/size_10"
+                    android:text="@string/done"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_cancel"
+                    style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="@dimen/size_30"
+                    android:background="@null"
+                    android:paddingStart="@dimen/size_10"
+                    android:paddingEnd="@dimen/size_10"
+                    android:text="@string/cancel"
+                    android:textColor="@color/yellow_ffb900"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/btn_apply"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+</layout>

@@ -14,8 +14,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-           >
+            android:orientation="horizontal">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ll_header"
