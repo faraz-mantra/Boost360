@@ -28,6 +28,7 @@ class CancelBottomSheetDialog : BaseBottomSheetDialog<BottomSheetCancelOrderBind
   override fun onCreateView() {
     setOnClickListener(binding?.buttonDone, binding?.tvCancel)
     binding?.tvSubTitle?.text = "Order ID #${orderItem?.ReferenceNumber ?: ""}"
+    cancellingEntity = OrderItem.CancellingEntity.SELLER.name
     binding?.radioGroup?.setOnCheckedChangeListener { group, checkedId ->
       val radioButton: View = group.findViewById(checkedId)
       cancellingEntity= when (radioButton){

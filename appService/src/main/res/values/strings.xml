@@ -3,6 +3,7 @@
   <string name="jpeg_png">JPEG/PNG</string>
   <string name="_800x800px">(800x800px)</string>
   <string name="add_service_image">Add Service Image</string>
+  <string name="error_add_product_image">Please add image of the product</string>
   <string name="save_amp_publish">Save &amp; Publish</string>
   <string name="change">Change</string>
   <string name="a_premium_service_by_boost_for_secure_payment_collection_learn_more_here">A premium service by Boost for secure payment collection (Learn more here)</string>
@@ -12,11 +13,9 @@
   <string name="choose_an_action">Choose an action</string>
   <string name="please_set_up_your_bank_account_to_proceed">Please set up your bank account to proceed</string>
   <string name="benificiary_name">Beneficiary Name</string>
-
   <string name="sanjay_sharma">e.g. Sanjay Sharma</string>
   <string name="bank_ifsc_number">Bank IFSC Number</string>
   <string name="xxxxx_xxxxx">XXXXX XXXXX</string>
-
   <string name="bank_account_number">Bank Account Number</string>
   <string name="_111111111111111">111111111111111</string>
   <string name="save_n">save</string>
@@ -43,7 +42,6 @@
   <string name="enabled_payments_reveived_bank">Once enabled, all payments from your customers will be received in this bank account</string>
   <string name="directly_designated_bank_account">Get payments in 48 hours, directly in your designated bank account</string>
   <string name="account_verification_pending">Your account verification is pending</string>
-
   <string name="self_branded_payment_gateway">Self Branded Payment Gateway</string>
   <string name="about_this_add_on"> About this add-on</string>
   <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your Boost website your customers see that they are paying to your business and not to Boost.</string>
@@ -54,11 +52,13 @@
   <string name="view_in_add_on_store">View in Add-on Store</string>
   <string name="self_branded_payment_gateway_camel_case">Self Branded Payment Gateway</string>
   <string name="add_on_terms_and_condition">Add-on Terms and Condition</string>
+
   <string name="payment_gateway_terms_content">
     <li>First item</li>\n
     <li>Second item</li>\n
     <li>Third item</li>
   </string>
+
   <string name="payment_gateway_terms_point_one">Boost currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n</string>
   <string name="payment_gateway_terms_point_two">Please note that Boost just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
   <string name="payment_gateway_terms_point_three">Boost in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n</string>
@@ -237,11 +237,13 @@
   <string name="upcoming_leaves">Upcoming Leaves</string>
   <string name="upcoming_leave_s">Upcoming Leave(s)</string>
   <string name="confirm_services">CONFIRM 0 SERVICES</string>
+
   <array name="gender">
     <item>Please select</item>
     <item>Male</item>
     <item>Female</item>
   </array>
+
   <array name="Years">
     <item>0 Years</item>
     <item>1 Years</item>
@@ -255,11 +257,13 @@
     <item>9 Years</item>
     <item>10 Years</item>
   </array>
+
   <array name="Time">
     <item>7:30 PM</item>
     <item>8:30 PM</item>
     <item>9:30 PM</item>
   </array>
+
   <!--  end of staff modules strings-->
   <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
   <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
@@ -286,7 +290,7 @@
   <string name="add_change_warehouse"><u>ADD/CHANGE WAREHOUSE</u></string>
   <string name="service_delivery_configuration">Service Delivery Configuration*</string>
   <string name="u_add_session_u"><u>Add Session</u></string>
-  <string name="business_hours_timing"><b>Note:</b> Since the business hours are from 9:30am to 7:30 pm, the appointments can be booked within this duration</string>
+  <string name="business_hours_timing"><b>Note:</b> Since the clinic business hours are from 9:30am to 7:30 pm, all your sessions will be between same. </string>
   <string name="from">From</string>
   <string name="to">to</string>
   <string name="apply_same_on_all_days">Apply same on all days</string>
@@ -299,10 +303,13 @@
   <string name="product_removed_success">Product removed successfully.</string>
   <string name="information_not_saved">\"Information not saved!\"</string>
   <string name="you_have_unsaved_info">\"You have unsaved information. Do you still want to close?\"</string>
+  <string name="error_upload_secondary_images">Error while uploading secondary product images, please try again.</string>
+  <string name="error_upload_product_image">Product image uploading error, please try again.</string>
+  <string name="error_unknown">Oops some unknown error occurred, please try again.</string>
   <string name="clients_can_book_this_service_for_free">Clients can book this service for FREE.</string>
   <string name="select_service_delivery_config">Select service delivery config</string>
-  <string name="channels_service_specifications_service_category_etc">Channels, Service Specifications, Service category, etc.</string>
-  <string name="paste_your_url_here">Paste your URL here</string>
+  <string name="channels_service_specifications_service_category_etc">Channels, Service specifications, Weekly schedule, etc.</string>
+  <string name="paste_your_url_here">Paste your URL here...</string>
   <string name="website_name">Website name</string>
   <string name="add_external_url">Add External URL</string>
   <string name="kotak_mahindra_bnak_345547684878">Kotak Mahindra Bnak - 345547684878</string>
@@ -314,7 +321,7 @@
   <string name="xx_xxx">XX,XXX</string>
   <string name="price_with_tax_inr">Price with tax (INR)</string>
   <string name="price_includes_taxes">Price includes taxes</string>
-  <string name="appointment_for_this_service_is_paid">Appointment for this service is paid?</string>
+  <string name="appointment_for_this_service_is_paid">Is this a paid service?</string>
   <string name="select_how_do_you_want_to_give_this_service_to_your_clients">Select, how do you want to give this service to your clients.</string>
   <string name="pricing_info">Pricing info</string>
   <string name="add_buffer_time_before_and_after">Add buffer time before and after</string>
@@ -328,6 +335,7 @@
   <string name="write_the_name_of_your_service">Write the name of your service</string>
   <string name="service_name">Service Name*</string>
   <string name="service_adding_error">Service adding error, please try again.</string>
+  <string name="service_timing_adding_error">Service timing adding error, please try again.</string>
   <string name="service_updating_error">Service updating error, please try again.</string>
   <string name="uploading_service_image">Uploading service image, please wait...</string>
   <string name="secondary_service_image_upload_error">Secondary Service image uploading error, please try again.</string>
@@ -335,7 +343,7 @@
   <string name="services_updated_success">Service updated successfully.</string>
   <string name="services_saved">Service saved successfully.</string>
   <string name="enter_service_category">Enter service category</string>
-  <string name="enter_service_duration">Enter service duration.</string>
+  <string name="enter_service_duration">Enter valid service duration.</string>
   <string name="service_removed_successfully">Service removed successfully.</string>
   <string name="removing_service_failed">Removing service failed, please try again.</string>
   <string name="only_eight_files_are_allowed_discarding">Only 8 files are allowed. Discarding the rest.</string>
@@ -358,6 +366,9 @@
   <string name="yellow_and_orange">Yellow and Orange</string>
   <string name="other_specifications">Other specifications</string>
   <string name="this_list_appears_inside_the_product_details_page_on_your_website">This list appears inside the product details page on your website.</string>
+  <string name="error_service_image">Service image uploading error, please try again.</string>
+  <string name="error_getting_service_details">Error while getting the service details.</string>
+  <string name="error_getting_service_timing">Error while getting the service timing.</string>
   <string name="update">UPDATE</string>
   <string name="profile_updated">profile updated</string>
   <string name="something_went_wrong">something went wrong</string>
@@ -367,11 +378,11 @@
   <string name="select_year_of_experience">select year of experience</string>
   <string name="please_enter_your_age">please enter your age</string>
   <string name="please_choose_image">please choose image</string>
-  <string name="profile_created">profile created</string>
+  <string name="profile_created">Profile created</string>
   <string name="removing_staff">Removing Staff</string>
   <string name="unable_to_delete">Unable to delete</string>
   <string name="loading">Loading</string>
-  <string name="toolbar_staff_listing">STAFF LISTING</string>
+  <string name="toolbar_staff_listing">Staff Listing</string>
   <string name="toolbar_select_services">Select Services</string>
   <string name="toolbar_staff_timing">Staff Timing</string>
   <string name="toolbar_schedule_break">Scheduled Breaks</string>
@@ -388,8 +399,82 @@
   <string name="updated">Updated Successfully</string>
   <string name="staff_timings_updated">Staff Timings Updated</string>
   <string name="staff_timings_unable_to_update">Staff Timings Unable to Update</string>
-    <string name="staff_timings_updating">Updating Staff Timings...</string>
-    <string name="bank_account_cannot_empty">Bank account name can\'t empty.</string>
+  <string name="staff_timings_updating">Updating Staff Timings...</string>
+  <string name="weekly_appointment">Weekly appointment schedule</string>
+  <string name="categories">Categories</string>
+  <string name="services">Services</string>
+  <string name="you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video">You don’t have any service added to your digital catalog as of yet. Watch video</string>
+  <string name="add_services_to_your_catalog">Add services to your catalog</string>
+  <string name="add_a_service">Add a service</string>
+  <string name="setup_appointment">SETUP APPOINTMENT</string>
+  <string name="share">Share</string>
+  <string name="add_service">ADD SERVICE</string>
+  <string name="sort_and_filter">Sort and filter</string>
+  <string name="allow_cash_on_delivery">Allow cash-on-delivery</string>
+  <string name="weekly_appointment_schedule">Weekly appointment schedule</string>
+  <string name="customise_the_weekly_timings_when_all_appointment_for_this_servive_can_be_booked">Customise the weekly timings when all, appointment for this servive can be booked.</string>
+  <string name="mon_tue_wed_thu_fri">Mon , Tue , Wed , Thu , Fri</string>
+  <string name="if_this_item_is_also_listed_on_some_other_website_enter_the_url_below">If this item is also listed on some other website, enter the URL below</string>
+  <string name="payment_collection_and_max_quantity">Payment collection and max quantity</string>
+  <string name="search_services">Search services...</string>
+  <string name="apply_same_on_all_working_days">Apply same on all working days</string>
+  <string name="note_service_business_is_open">Note: Service can only be given on the days and duration the business is open.</string>
+  <string name="sort_the_service_list">Sort the service list</string>
+  <string name="most_popular_on_top">Most popular on top</string>
+  <string name="latest_on_top">Latest on top</string>
+  <string name="oldest_on_top">Oldest on top</string>
+  <string name="biggest_value_service_on_top">Biggest value service on top</string>
+  <string name="lowest_value_service_on_top">Lowest value service on top</string>
+  <string name="apply">Apply</string>
+  <string name="select_how_you_would_want_to_list_the_services">Select how you would want to list the services</string>
+  <string name="reset">RESET</string>
+  <string name="share_updates">Share your update</string>
+  <string name="noInternet">No Internet Connection</string>
+  <string name="failed_to_download_image">failed to download image</string>
+  <string name="image_not_able_to_share">Image not able to share</string>
+  <string name="image_size_is_large">Image size is large, not able to share</string>
+  <string name="whats_app_package">com.whatsapp</string>
+  <string name="facebook_package">com.facebook.katana</string>
+  <string name="can_not_share_image_offline">can not share image offline mode</string>
+  <string name="associated_brand_name_if_any">Associated brand name (if any)</string>
+  <string name="in_case_this_service_is_associated_with_certified_by_any_brand">In case this service is associated with/certified by any brand.</string>
+  <string name="dry_balanese_massage">Dry Balanese Massage</string>
+  <string name="service_tags">Service Tags</string>
+  <string name="key_specifications">Key specifications</string>
+  <string name="it_appears_at_the_end_of_the_service_name_as_it_s_variant">It appears at the end of the service name as it’s variant</string>
+  <string name="service_specifications">Service specifications</string>
+  <string name="accept_online_payment">Accept online payment</string>
+  <string name="max_quantity_per_order">Max quantity per order</string>
+  <string name="accept_cod_payment">Accept COD payment</string>
+  <string name="start_end_can_not_be_same">Start Time and End Time can not be same</string>
+  <string name="time_slots_gap">Two time slots must have gap of 30 Min</string>
+  <string name="service_selected">service selected</string>
+  <string name="services_selected">services selected</string>
+  <string name="service">SERVICE</string>
+  <string name="activate_staff_profile">ACTIVATE Staff PROFILE</string>
+  <string name="this_staff_is_marked_inactive">This staff is marked inactive.</string>
+  <string name="mark_as_inactive">Mark as Inactive</string>
+  <string name="marking_as_inactive_will_hide">Marking as inactive will hide this profile on the website and will unassign him/her from all present booking which were booked against his availability calendar. Please check with customer inform and realign the appointments accordingly if required.</string>
+  <string name="do_you_want_to_permanently_delete_this_staff_member">Do you want to permanently delete this staff member?</string>
+  <string name="removing_the_staff_will_remove">Removing the staff will remove all the present booking assigned to the staff. All his bookings needs to be handled separately.</string>
+  <string name="delete_staff">DELETE STAFF</string>
+  <string name="do_you_want_to_temporarily_mark_this_st">Do you want to temporarily mark this staff as inactive?</string>
+  <string name="select_what_services_that_the_staff_will_provide">Select what services that the staff will provide.</string>
+  <string name="while_booking_a_staff_for_a_service_speciality_customer_will_know_which_all_staff_provide_service_they_are_looking_for">While booking a staff for a service/speciality, customer will know which all staff provide service they are looking for.</string>
+  <string name="please_enter_valid_age">please enter valid age.</string>
+  <string name="endtime_cannot_be_before_starttime">Shift end time cannot be before shift start time</string>
+  <string name="starttime_on_one_slot_cannot_be_before_endtime_of_other_slot">Start time on one slot cannot be less than end time of previous slot</string>
+  <string name="no_staff_member_listed_yet">No staff member listed yet</string>
+  <string name="share_">Share:</string>
+  <string name="view_on_website">VIEW ON WEBSITE</string>
+  <string name="successfully_saved">Successfully Saved</string>
+  <string name="successfully_update">Successfully Updated</string>
+  <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>
+  <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
+  <string name="image_uploading">Uploading Image, please wait...</string>
+  <string name="error_select_service">Please select at least one service provided by this staff</string>
+  <string name="business_closed">Business closed</string>
+  <string name="bank_account_cannot_empty">Bank account name can\'t empty.</string>
   <string name="bank_number_can_not_empty">Bank account number can\'t empty.</string>
   <string name="confirm_bank_account_cannot_empty">Confirm bank account number can\'t empty.</string>
   <string name="enter_a_valid_account_number">Enter valid confirm account number.</string>
@@ -406,22 +491,27 @@
   <string name="product_saved_successfully">Product saved successfully.</string>
   <string name="you_have_unsaved_information_do_you_still_want_to_close">You have unsaved information. Do you still want to close?</string>
   <string name="service_image_uploading_error">Service image uploading error, please try again.</string>
-    <string name="name_of_the_account_holder">Name of the account holder*</string>
+  <string name="name_of_the_account_holder">Name of the account holder*</string>
   <string name="account_number_required">Account Number*</string>
   <string name="confirm_account_number">Confirm Account Number*</string>
   <string name="bank_ifsc_code_required">Bank IFSC Code*</string>
   <string name="bank_name_required">Bank name*</string>
   <string name="account_alias">Account Alias</string>
   <string name="bank_branch_required">Bank Branch*</string>
+  <string name="service_duration">Please provide a valid duration of service</string>
   <string name="why_do_we_need_your_bank_account_required">Why do we need your bank account?</string>
   <string name="storage_permission" translatable="false">Storage Permission</string>
   <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
   <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
+  <string name="no">No</string>
+  <string name="yes">Yes</string>
+
+
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
-
   </array>
+
   <string-array name="business_hours_arrays">
     <item>12:00AM</item>
     <item>12:30AM</item>

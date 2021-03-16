@@ -1,7 +1,5 @@
 package com.appservice.ui.testimonial
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.databinding.ViewDataBinding
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -11,10 +9,6 @@ import com.framework.exceptions.IllegalFragmentTypeException
 
 open class BaseTestimonialFragment<binding : ViewDataBinding> : AppBaseFragment<binding, TestimonialViewModel>() {
 
-  val pref: SharedPreferences?
-    get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
-    }
 
   val fpId: String?
     get() {

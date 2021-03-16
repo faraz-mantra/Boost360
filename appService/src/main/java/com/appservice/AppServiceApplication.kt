@@ -17,6 +17,7 @@ open class AppServiceApplication : BaseApplication() {
     fun initModule(application: MultiDexApplication) {
       PreferencesUtils.initSharedPreferences(application)
       WithFloatsApiTwoClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
+      NowfloatsApiClient.shared.init(EndPoints.API_NOWFLOATS_COM_BASE)
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE)
       RazorApiClient.shared.init(EndPoints.RAZOR_API_BASE)
       BoostKitDevApiClient.shared.init(EndPoints.BOOST_KIT_DEV_BASE)

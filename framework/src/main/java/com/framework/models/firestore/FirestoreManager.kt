@@ -61,7 +61,12 @@ object FirestoreManager {
     }
 
     fun getDocumentReference(): DocumentReference? {
-        return db?.collection(COLLECTION_NAME)?.document(this.fpTag);
+        try {
+            return db?.collection(COLLECTION_NAME)?.document(this.fpTag);
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        return null
     }
 
     fun updateDrScoreIfNull() {
