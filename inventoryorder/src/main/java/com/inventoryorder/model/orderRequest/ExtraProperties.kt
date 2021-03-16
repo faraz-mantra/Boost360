@@ -2,6 +2,7 @@ package com.inventoryorder.model.orderRequest
 
 import com.framework.utils.DateUtils
 import com.google.gson.annotations.SerializedName
+import com.inventoryorder.model.spaAppointment.bookingslot.request.AppointmentRequestModel
 import java.io.Serializable
 
 data class ExtraProperties(
@@ -40,15 +41,17 @@ data class ExtraProperties(
     @SerializedName("endTime")
     val endTime: String = "",
     @SerializedName("age")
-    val age: String = ""
+    val age: String = "",
+    @SerializedName("Appointment")
+    var appointment : ArrayList<AppointmentRequestModel> ?= null
 ) : Serializable {
 
   fun startTime(): String {
-    return startTime ?: ""
+    return startTime
   }
 
   fun endTime(): String {
-    return endTime ?: ""
+    return endTime
   }
 
   fun getScheduledDateN(): String? {

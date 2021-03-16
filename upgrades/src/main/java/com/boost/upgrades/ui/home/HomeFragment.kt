@@ -126,10 +126,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         return root
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //emptyCouponTable everytime for new coupon code
@@ -144,7 +140,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         shimmer_view_recommended.startShimmer()
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
-        WebEngageController.trackEvent(ADDONS_MARKETPLACE_LOADED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
 //        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
         imageView21.setOnClickListener {
@@ -533,7 +529,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         viewModel.categoryResult().observe(this, androidx.lifecycle.Observer {
             if (it != null) {
-                recommended_features_account_type.setText(Html.fromHtml(it!!.toLowerCase()))
+                recommended_features_account_type.text = Html.fromHtml(it.toLowerCase())
             }
 
         })
@@ -657,8 +653,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             if (it.is_online) {
                 callnow_layout.visibility = View.VISIBLE
                 callnow_image.visibility = View.VISIBLE
-                callnow_title.setText(it.line1)
-                callnow_desc.setText(it.line2)
+                callnow_title.text = it.line1
+                callnow_desc.text = it.line2
                 call_shedule_layout.visibility = View.GONE
                 callnow_button.setOnClickListener {
                     val callIntent = Intent(Intent.ACTION_DIAL)
@@ -669,12 +665,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 callnow_layout.visibility = View.GONE
                 callnow_image.visibility = View.GONE
                 call_shedule_layout.visibility = View.VISIBLE
-                call_shedule_title.setText(it.line1)
-                call_shedule_desc.setText(it.line2)
+                call_shedule_title.text = it.line1
+                call_shedule_desc.text = it.line2
                 if (it.offline_message != null) {
                     val spannableString = SpannableString(it.offline_message)
                     spannableString.setSpan(ForegroundColorSpan(resources.getColor(R.color.navy_blue)), 0, 18, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    call_schedule_timinig.setText(spannableString)
+                    call_schedule_timinig.text = spannableString
                 }
             }
         })
@@ -769,9 +765,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     fun updateVideosViewPager(list: List<YoutubeVideoModel>) {
         val link: List<String> = list.get(0).youtube_link!!.split('/')
-        videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
+        videoPlayerWebView.settings.javaScriptEnabled = true
 //    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
-        videoPlayerWebView.setWebViewClient(WebViewClient())
+        videoPlayerWebView.webViewClient = WebViewClient()
         videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
         videosListAdapter.addUpdates(list)
         videosListAdapter.notifyDataSetChanged()
@@ -951,21 +947,21 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 //        (activity as UpgradeActivity).fpTag?.let { event_attributes.put("customer", it) }
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Promo Banner Clicked", "ADDONS_MARKETPLACE", event_attributes)
         if (!item!!.cta_feature_key.isNullOrBlank()) {
-            if (item!!.cta_feature_key != null) {
+            if (item.cta_feature_key != null) {
                 val details = DetailsFragment.newInstance()
                 val args = Bundle()
-                args.putString("itemId", item!!.cta_feature_key)
+                args.putString("itemId", item.cta_feature_key)
                 details.arguments = args
                 (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
 
             }
         } else {
-            if (!item!!.cta_bundle_identifier.isNullOrBlank()) {
-                if (item!!.cta_bundle_identifier != null) {
+            if (!item.cta_bundle_identifier.isNullOrBlank()) {
+                if (item.cta_bundle_identifier != null) {
                     CompositeDisposable().add(
                             AppDatabase.getInstance(requireActivity().application)!!
                                     .bundlesDao()
-                                    .checkBundleKeyExist(item!!.cta_bundle_identifier)
+                                    .checkBundleKeyExist(item.cta_bundle_identifier)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({
@@ -973,7 +969,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                             CompositeDisposable().add(
                                                     AppDatabase.getInstance(requireActivity().application)!!
                                                             .bundlesDao()
-                                                            .getBundleItemById(item!!.cta_bundle_identifier)
+                                                            .getBundleItemById(item.cta_bundle_identifier)
                                                             .subscribeOn(Schedulers.io())
                                                             .observeOn(AndroidSchedulers.mainThread())
                                                             .subscribe({
@@ -1011,12 +1007,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     )
                 }
             } else {
-                if (!item!!.cta_web_link.isNullOrBlank()) {
-                    if (item!!.cta_web_link != null) {
+                if (!item.cta_web_link.isNullOrBlank()) {
+                    if (item.cta_web_link != null) {
                         val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
                         val args = Bundle()
                         args.putString("title", "Browser")
-                        args.putString("link", item!!.cta_web_link)
+                        args.putString("link", item.cta_web_link)
                         webViewFragment.arguments = args
                         (activity as UpgradeActivity).addFragment(
                                 webViewFragment,
@@ -1097,7 +1093,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
             val details = DetailsFragment.newInstance()
             val args = Bundle()
-            args.putString("itemId", item!!.cta_feature_key)
+            args.putString("itemId", item.cta_feature_key)
             details.arguments = args
             (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
 
@@ -1105,7 +1101,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             CompositeDisposable().add(
                     AppDatabase.getInstance(requireActivity().application)!!
                             .bundlesDao()
-                            .checkBundleKeyExist(item!!.cta_bundle_identifier)
+                            .checkBundleKeyExist(item.cta_bundle_identifier)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
@@ -1113,7 +1109,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                     CompositeDisposable().add(
                                             AppDatabase.getInstance(requireActivity().application)!!
                                                     .bundlesDao()
-                                                    .getBundleItemById(item!!.cta_bundle_identifier)
+                                                    .getBundleItemById(item.cta_bundle_identifier)
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .subscribe({
@@ -1140,7 +1136,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
             args.putString("title", "Browser")
-            args.putString("link", item!!.cta_web_link)
+            args.putString("link", item.cta_web_link)
             webViewFragment.arguments = args
             (activity as UpgradeActivity).addFragment(
                     webViewFragment,
@@ -1182,9 +1178,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 ?: NO_EVENT_VALUE)
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
         val link: List<String> = videoItem.youtube_link!!.split('/')
-        videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
+        videoPlayerWebView.settings.javaScriptEnabled = true
 //    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
-        videoPlayerWebView.setWebViewClient(WebViewClient())
+        videoPlayerWebView.webViewClient = WebViewClient()
         videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
 //    videoPlayerWebView.setWebChromeClient(WebChromeClient())
         video_sub_title.text = videoItem.title
@@ -1213,10 +1209,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                         {
                                             featuresList = it
                                             var bundleMonthlyMRP = 0
-                                            val minMonth: Int = if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
+                                            val minMonth: Int = if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1
 
                                             for (singleItem in it) {
-                                                for (item in item!!.included_features) {
+                                                for (item in item.included_features) {
                                                     if (singleItem.feature_code == item.feature_code) {
                                                         bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
                                                     }
@@ -1226,35 +1222,35 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                             offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
                                             originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
 
-                                            if (item!!.overall_discount_percent > 0)
-                                                offeredBundlePrice = originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100)
+                                            if (item.overall_discount_percent > 0)
+                                                offeredBundlePrice = originalBundlePrice - (originalBundlePrice * item.overall_discount_percent / 100)
                                             else
                                                 offeredBundlePrice = originalBundlePrice
 
                                             //clear cartOrderInfo from SharedPref to requestAPI again
                                             prefs.storeCartOrderInfo(null)
                                             viewModel.addItemToCartPackage(CartModel(
-                                                    item!!._kid,
+                                                    item._kid,
                                                     null,
                                                     null,
-                                                    item!!.name,
+                                                    item.name,
                                                     "",
-                                                    item!!.primary_image!!.url,
+                                                    item.primary_image!!.url,
                                                     offeredBundlePrice.toDouble(),
                                                     originalBundlePrice.toDouble(),
-                                                    item!!.overall_discount_percent,
+                                                    item.overall_discount_percent,
                                                     1,
-                                                    if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                                                    if (item.min_purchase_months != null) item.min_purchase_months!! else 1,
                                                     "bundles",
                                                     null
                                             ))
                                             val event_attributes: HashMap<String, Any> = HashMap()
-                                            item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
-                                            item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
+                                            item.name?.let { it1 -> event_attributes.put("Package Name", it1) }
+                                            item.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
                                             event_attributes.put("Package Price", originalBundlePrice)
                                             event_attributes.put("Discounted Price", offeredBundlePrice)
-                                            event_attributes.put("Discount %", item!!.overall_discount_percent)
-                                            item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
+                                            event_attributes.put("Discount %", item.overall_discount_percent)
+                                            item.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
                                             WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
 //                packageInCartStatus = true
 //                package_submit.background = ContextCompat.getDrawable(

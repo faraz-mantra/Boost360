@@ -42,18 +42,15 @@ import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
-import com.framework.webengageconstant.HOME_PAGE
-import com.framework.webengageconstant.PAGE_VIEW
-import com.framework.webengageconstant.SCREEN_NAME
+import com.framework.webengageconstant.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
-import com.nowfloats.facebook.managers.FBEventManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
@@ -63,8 +60,8 @@ import java.util.*
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
   private var exitToast: Toast? = null
-  private var mDeepLinkUrl: String? = null;
-  private var mPayload: String? = null
+  private var mDeepLinkUrl: String? = null
+    private var mPayload: String? = null
   private var deepLinkUtil: DeepLinkUtil? = null
   private lateinit var mNavController: NavController
   private var session: UserSessionManager? = null
@@ -115,8 +112,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     WebEngageController.initiateUserLogin(session?.userProfileId)
     WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
     WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent(event_name = HOME_PAGE, PAGE_VIEW, session?.fpTag ?: "")
-    WebEngageController.trackEvent(HOME_PAGE, SCREEN_NAME, session?.fpTag ?: "")
+    WebEngageController.trackEvent(HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
       WebEngage.get().setRegistrationID(token)
@@ -146,7 +142,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
             val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
 
-            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
           }
         } else {
           //Default Deep Link..
@@ -328,7 +324,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onItemClick(pos)
     when (pos) {
       3 -> checkWelcomeShowScreen(pos)
-      4 -> binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
+      4 -> {
+        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
+        WebEngageController.trackEvent(MORE, CLICK, TO_BE_ADDED)
+      }
     }
   }
 
@@ -370,11 +369,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onClick(v)
     when (v) {
       binding?.drawerView?.btnSiteMeter -> {
-//        session?.let { this.startOldSiteMeter(it) }
         startReadinessScoreView(session, 0)
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.imgBusinessLogo -> this.startBusinessProfileDetailEdit(session)
-      binding?.drawerView?.txtDomainName -> this.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.drawerView?.imgBusinessLogo ->{
+        this.startBusinessProfileDetailEdit(session)
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+      }
+      binding?.drawerView?.txtDomainName ->{
+        this.startWebViewPageLoad(session, session!!.getDomainName(false))
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+      }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
     }
   }
@@ -443,7 +448,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
-    val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
+    val responseBody = businessImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
         ?: "bg_${UUID.randomUUID()}.png"
     return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)

@@ -15,7 +15,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
-import com.framework.utils.ScreenUtils
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -71,8 +70,8 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
           getSkipCollapse()?.let { it1 -> skipCollapsed = it1 }
           getDraggable()?.let { it1 -> isDraggable = it1 }
         }
-        bottomSheet.parent.requestLayout()
 //        ScreenUtils.instance.setWhiteNavigationBar(dialog)
+        bottomSheet.parent.requestLayout()
       } catch (e: Exception) {
         e.printStackTrace()
       }

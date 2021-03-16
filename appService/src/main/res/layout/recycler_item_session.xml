@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,49 +10,46 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/size_8"
+        android:layout_marginTop="@dimen/size_10"
         android:background="@drawable/rounded_stroke_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.framework.views.customViews.CustomCardView
-            android:id="@+id/ccv_day"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_40"
-            android:backgroundTint="#1A4889F8"
-            app:cardElevation="0dp"
-            app:corner_radius="RADIUS_6">
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/ccv_day"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_40"
+          android:background="@drawable/rounded_light_blue"
+          android:orientation="horizontal">
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_title_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/size_8"
-                android:fontFamily="@font/open_sans"
-                android:text="monday"
-                android:textFontWeight="600"
-                android:textSize="10sp" />
+              android:id="@+id/ctv_title_day"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_marginStart="@dimen/size_8"
+              android:layout_weight="1"
+              android:fontFamily="@font/open_sans"
+              android:textColor="@color/black_4f4f4f"
+              app:textType="CAPTION"
+              tools:text="Monday" />
 
             <com.appservice.views.toggle.widget.LabeledSwitch
-                android:id="@+id/toggle_on_off"
-                android:layout_width="@dimen/size_54"
-                app:on="false"
-                android:layout_height="@dimen/size_24"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginEnd="@dimen/size_8"
-                app:colorBorder="@android:color/transparent"
-                app:colorOff="@color/light_lemon"
-                app:colorOn="@color/light_green_1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:textOff="NO"
-                app:textOn="YES"
-                app:txtColorOff="@color/white"
-                app:txtColorOn="@color/white" />
-        </com.framework.views.customViews.CustomCardView>
+              android:id="@+id/toggle_on_off"
+              android:layout_width="@dimen/size_54"
+              android:layout_height="@dimen/size_24"
+              android:layout_gravity="end|center_vertical"
+              android:layout_marginEnd="@dimen/size_8"
+              app:colorBorder="@android:color/transparent"
+              app:colorOff="@color/light_lemon"
+              app:colorOn="@color/light_green_1"
+              app:on="false"
+              app:textOff="NO"
+              app:textOn="YES"
+              app:txtColorOff="@color/white"
+              app:txtColorOn="@color/white" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -74,6 +72,7 @@
                 android:layout_below="@id/ll_time_slot"
                 android:layout_marginStart="@dimen/size_18"
                 android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
                 android:text="@string/u_add_session_u"
                 android:textColor="#4889F8"
                 android:focusable="true" />
@@ -84,7 +83,6 @@
                 android:id="@+id/ccb_all_day"
                 android:layout_below="@id/ctv_add_session"
                 android:layout_alignStart="@id/ctv_add_session"
-                android:layout_marginTop="@dimen/size_8"
                 android:layout_marginBottom="@dimen/size_8"
                 android:theme="@style/ActiveTheme"
                 android:fontFamily="@font/open_sans"

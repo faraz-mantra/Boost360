@@ -114,6 +114,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       popup.setOnMenuItemClickListener { menu ->
         if (menu.itemId == R.id.menu_edit_contact) {
           try {
+            WebEngageController.trackEvent(MY_BUSINESS_CARD_MENU_CONTACT, CLICK, TO_BE_ADDED)
             val contactInfo = Intent(baseActivity, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
             startActivity(contactInfo)
             baseActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -121,6 +122,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
             e.printStackTrace()
           }
         } else if (menu.itemId == R.id.menu_digital_channel) {
+          WebEngageController.trackEvent(MY_BUSINESS_CARD_MENU_DIGITAL_CHANNEL, CLICK, TO_BE_ADDED)
           baseActivity.startDigitalChannel(getBundle())
         }
         dismiss()
@@ -247,8 +249,8 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
 fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
   try {
-    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE);
-    startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE)
+      startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
   }

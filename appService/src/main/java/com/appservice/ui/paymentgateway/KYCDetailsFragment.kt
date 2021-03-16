@@ -1,9 +1,7 @@
 package com.appservice.ui.paymentgateway
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -61,11 +59,6 @@ import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKitViewModel>(), RecyclerItemClickListener {
-
-  private val pref: SharedPreferences?
-    get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
-    }
 
   private val FILE_SELECT_CODE = 2000
   private var imagePickerMultiple: Boolean? = null
