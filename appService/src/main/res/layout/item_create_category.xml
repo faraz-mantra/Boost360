@@ -5,15 +5,13 @@
     </data>
 
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:paddingHorizontal="@dimen/size_30"
         android:layout_marginTop="@dimen/size_8">
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_selection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginBottom="@dimen/size_5"
             android:text="@string/current_selection" />
 
@@ -29,8 +27,7 @@
             android:paddingTop="@dimen/size_3">
 
             <com.framework.views.customViews.CustomImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+               style="@style/wrap_match"
                 android:drawableTint="@color/gray_d1d1d1"
                 android:paddingHorizontal="@dimen/size_8"
                 android:src="@drawable/ic_stack" />
@@ -42,11 +39,10 @@
                 android:id="@+id/ctv_product_count"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/size_8"
-                android:text="4 products under this category" />
+                android:text="@string/_4_products_under_this_category" />
 
             <com.framework.views.customViews.CustomImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+               style="@style/wrap_match"
                 android:layout_marginHorizontal="@dimen/size_16"
                 android:foreground="?selectableItemBackground"
                 android:src="@drawable/ic_arrow_down_blue"
@@ -66,7 +62,7 @@
             <com.framework.views.customViews.CustomRadioButton
                 android:id="@+id/crb_category"
                 android:layout_width="0dp"
-
+                android:singleLine="true"
                 android:layout_height="@dimen/size_30"
                 android:layout_weight="1"
                 android:drawableTint="@color/gray_d1d1d1"
@@ -80,8 +76,7 @@
                 android:background="?android:attr/listDivider" />
 
             <com.framework.views.customViews.CustomImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                style="@style/wrap_match"
                 android:id="@+id/civ_category_menu"
                 android:layout_marginHorizontal="@dimen/size_8"
                 android:background="?selectableItemBackgroundBorderless"

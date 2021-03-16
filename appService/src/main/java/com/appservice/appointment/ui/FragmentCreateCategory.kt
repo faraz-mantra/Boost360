@@ -7,6 +7,7 @@ import com.appservice.appointment.widgets.BottomSheetCreateCategory
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
+import com.appservice.constant.RecyclerViewActionType
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.databinding.FragmentCreateCategoryBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
@@ -28,7 +29,7 @@ import kotlin.collections.ArrayList
 class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, AppointmentSettingsViewModel>(), RecyclerItemClickListener {
     private var fpTag: String? = null
     private var categoryList: ArrayList<Category> = arrayListOf()
-
+    private var adapterN: AppBaseRecyclerViewAdapter<Category>? = null
     override fun getLayout(): Int {
         return R.layout.fragment_create_category
     }
@@ -41,8 +42,6 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ap
         super.onCreateView()
         getBundleData()
         getServiceListing()
-//        setToolbarTitle("Categories (${list.size})")
-
         setOnClickListener(binding?.btnAddNewCategory)
     }
 
@@ -53,12 +52,6 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ap
     override fun onSuccess(it: BaseResponse) {
         when (it.taskcode) {
             TaskCode.GET_SERVICE_LISTING.ordinal -> onServiceListingReceived(it)
-//            TaskCode.UPDATE_OFFER.ordinal -> onOfferUpdated(it)
-//            TaskCode.ADD_OFFER_IMAGE.ordinal -> onPrimaryImageUploaded(it)
-//            TaskCode.OFFER_DETAILS.ordinal -> onOfferDetailsResponseReceived(it)
-//            TaskCode.DELETE_OFFER.ordinal -> onDeleteOffer(it)
-//            TaskCode.GET_SERVICE_DETAILS.ordinal -> onServiceDetailResponseReceived(it)
-
         }
     }
 
@@ -69,7 +62,7 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ap
         serviceList?.forEach { service->categories.add(service?.category!!) }
         categories.forEach { cat->categoryList.add(Category(cat,Collections.frequency(categories,cat))) }
         binding?.rvCategory?.apply {
-            val adapterN = AppBaseRecyclerViewAdapter(baseActivity, categoryList, this@CreateCategoryFragment)
+            adapterN = AppBaseRecyclerViewAdapter(baseActivity, categoryList, this@CreateCategoryFragment)
             adapter = adapterN
         }
     }
@@ -88,13 +81,20 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ap
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-
+        when(actionType){
+            RecyclerViewActionType.ON_SELECT_CATEGORY.ordinal->{
+                categoryList.forEach { if (it != item) it.isSelected = false }
+                adapterN?.notifyDataSetChanged()
+            }
+        }
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_service_listing, menu)
+        menu.removeItem(R.id.action_search)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
