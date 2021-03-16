@@ -1,4 +1,4 @@
-include ':app', ':imagepicker', ':keyboard', ':presignup', ':framework', ':facebook', ':twitter', ':resources', ':onboarding',':inventoryorder', ':upgrades',':dashboard', ':appService', ':google'
+include ':app', ':imagepicker', ':keyboard', ':presignup', ':framework', ':facebook', ':twitter', ':resources', ':onboarding',':inventoryorder', ':upgrades',':dashboard', ':appService', ':google',':florisboard'
 include ':messagelibrary'
 include ':app:libs:libraries:volley'
 include ':library'

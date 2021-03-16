@@ -36,6 +36,8 @@ import com.webengage.sdk.android.WebEngageConfig;
 import java.io.File;
 import java.lang.reflect.Method;
 
+import dev.patrickgold.florisboard.ime.core.FlorisApplication;
+
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
 
     public static final String TAG = AppController.class.getSimpleName();
@@ -117,6 +119,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppServiceApplication.initModule(this);
         AppDashboardApplication.instance = this;
         AppDashboardApplication.initModule(this);
+        FlorisApplication.instance = this;
+        FlorisApplication.initModule(this);
         initWebEngage();
         //Invite Referral
         InviteReferralsApplication.register(this);

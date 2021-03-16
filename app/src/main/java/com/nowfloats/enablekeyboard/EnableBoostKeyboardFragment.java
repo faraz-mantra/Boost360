@@ -35,7 +35,7 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.separ.neural.inputmethod.indic.LatinIME;
+import dev.patrickgold.florisboard.ime.core.FlorisBoard;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -246,7 +246,8 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
 
     private boolean isInputMethodActivated() {
         List<InputMethodInfo> list = imeManager.getEnabledInputMethodList();
-        ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+        // change name here
+        ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
         for (InputMethodInfo info : list) {
             if (myInputMethod.equals(info.getComponent())) {
                 return true;
@@ -260,7 +261,7 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
 
         ComponentName defaultInputMethod = ComponentName.unflattenFromString(id);
 
-        ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+        ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
 
         return myInputMethod.equals(defaultInputMethod);
     }
