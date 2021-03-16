@@ -128,6 +128,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     }
   }
 
+
   override fun onClick(v: View) {}
 
 
