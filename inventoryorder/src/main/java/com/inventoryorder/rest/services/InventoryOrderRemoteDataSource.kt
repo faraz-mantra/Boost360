@@ -3,6 +3,8 @@ package com.inventoryorder.rest.services
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.SendMailRequest
 import com.inventoryorder.model.doctorsData.DoctorDataResponse
+import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
+import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedRequest
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.summary.request.SellerSummaryRequest
@@ -28,7 +30,7 @@ interface InventoryOrderRemoteDataSource {
   fun getSellerSummaryV2_5(
       @Query("clientId") clientId: String?,
       @Query("sellerId") sellerId: String?,
-      @Body request: SellerSummaryRequest?
+      @Body request: SellerSummaryRequest?,
   ): Observable<Response<OrderSummaryResponse>>
 
 
@@ -102,25 +104,43 @@ interface InventoryOrderRemoteDataSource {
   @GET(EndPoints.MARK_AS_DELIVERED)
   fun markAsDelivered(
       @Query("clientId") clientId: String?,
-      @Query("orderId") orderId: String?
+      @Query("orderId") orderId: String?,
   ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.MARK_COD_PAYMENT_DONE)
   fun markCodPaymentDone(
       @Query("clientId") clientId: String?,
-      @Query("orderId") orderId: String?
+      @Query("orderId") orderId: String?,
+  ): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.MARK_PAYMENT_RECEIVED_MERCHANT)
+  fun markPaymentReceivedMerchant(
+      @Query("clientId") clientId: String?,
+      @Body request: PaymentReceivedRequest?,
   ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.SEND_PAYMENT_REMINDER)
   fun sendPaymentReminder(
       @Query("clientId") clientId: String?,
-      @Query("orderId") orderId: String?
+      @Query("orderId") orderId: String?,
+  ): Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.ORDER_RE_BOOKING_REQUEST)
+  fun sendReBookingReminder(
+      @Query("clientId") clientId: String?,
+      @Query("orderId") orderId: String?,
+  ): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.ORDER_FEEDBACK_REQUEST)
+  fun sendOrderFeedbackRequest(
+      @Query("clientId") clientId: String?,
+      @Body request: FeedbackRequest?,
   ): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.MARK_AS_SHIPPED)
   fun markAsShipped(
       @Query("clientId") clientId: String?,
-      @Body request: MarkAsShippedRequest?
+      @Body request: MarkAsShippedRequest?,
   ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.GET_DOCTORS_API)

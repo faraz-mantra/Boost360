@@ -1,6 +1,7 @@
 package com.inventoryorder.rest.services
 
 import com.inventoryorder.model.floatMessage.MessageModel
+import com.inventoryorder.model.order.ProductItem
 import com.inventoryorder.model.services.InventoryServicesResponseItem
 import com.inventoryorder.rest.EndPoints
 import io.reactivex.Observable
@@ -18,6 +19,13 @@ interface WithFloatTwoDataSource {
       @Query("fpTag") fpTag: String?,
       @Query("identifierType") identifierType: String?,
   ): Observable<Response<Array<InventoryServicesResponseItem>>>
+
+  @GET(EndPoints.GET_PRODUCT_LIST)
+  fun getAllProductList(
+          @Query("fpTag") fpTag: String?,
+          @Query("clientId") clientId: String?,
+          @Query("skipBy") skipBy: Int?,
+  ): Observable<Response<Array<ProductItem>>>
 
   @GET(EndPoints.SEND_SMS)
   fun sendSMS(

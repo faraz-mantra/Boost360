@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/text_service"
+        style="@style/EditTextLabelStyle"
+        android:layout_width="match_parent"
+        android:padding="@dimen/size_10"
+        android:text="@string/service_name" />
+</androidx.appcompat.widget.LinearLayoutCompat>

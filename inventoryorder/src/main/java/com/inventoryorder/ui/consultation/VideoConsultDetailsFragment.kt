@@ -47,7 +47,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private var orderItem: OrderItem? = null
   private var serviceLocationsList = LocationsModel().getData()
-  private var isRefresh: Boolean? = null
+  private var isRefresh: Boolean = false
   private var countDownTimer: CountDownTimer? = null
 
   companion object {
@@ -91,7 +91,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun startCountDown(order: OrderItem) {
     countDownTimer?.cancel()
-    val startTime = order.firstItemForConsultation()?.scheduledEndDate()?.parseDate(DateUtils.FORMAT_SERVER_DATE)
+    val startTime = order.firstItemForAptConsult()?.scheduledEndDate()?.parseDate(DateUtils.FORMAT_SERVER_DATE)
     val currentTime = Calendar.getInstance().time
     val difference = startTime?.time?.minus(currentTime.time)
     countDownTimer = object : CountDownTimer(difference!!, 1000) {
@@ -169,13 +169,8 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     }
   }
 
-  fun getBundleData(): Bundle? {
-    isRefresh?.let {
-      val bundle = Bundle()
-      bundle.putBoolean(IntentConstant.IS_REFRESH.name, it)
-      return bundle
-    }
-    return null
+  fun getBundleData(): Bundle {
+    return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, isRefresh) }
   }
 
   private fun checkStatusConsultation(order: OrderItem) {
@@ -188,7 +183,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(order)
-    binding?.tvStatus?.text = order.PaymentDetails?.status()
+    binding?.tvStatus?.text = order.PaymentDetails?.statusValue()
     val b = (PaymentDetailsN.STATUS.from(order.PaymentDetails?.Status ?: "") == PaymentDetailsN.STATUS.PENDING)
     if (b) binding?.tvStatus?.setTextColor(getColor(R.color.watermelon_light_10))
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
@@ -196,7 +191,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
+    val scheduleDate = order.firstItemForAptConsult()?.scheduledStartDate()
     val dateApt = DateUtils.parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
     binding?.bookingDate?.text = if (dateApt.isNullOrEmpty().not()) {
       dateApt
