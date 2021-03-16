@@ -36,13 +36,10 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
+import com.framework.webengageconstant.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.OTHER_INFORMATION_CONFIRM
-import com.framework.webengageconstant.SERVICE_CATALOGUE_ADD_UPDATE
-import com.framework.webengageconstant.SERVICE_OTHER_INFORMATION_CATALOGUE_LOAD
 import kotlin.collections.ArrayList
 
 class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModelV1>(), RecyclerItemClickListener {
@@ -74,7 +71,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent(SERVICE_OTHER_INFORMATION_CATALOGUE_LOAD, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(SERVICE_INFORMATION_CATALOGUE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
         binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification,
         binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.weeklyAppointmentSchedule)
@@ -256,7 +253,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         ?: ArrayList()
     when {
       else -> {
-        WebEngageController.trackEvent(event_name = OTHER_INFORMATION_CONFIRM, event_label = SERVICE_CATALOGUE_ADD_UPDATE, event_value = NO_EVENT_VALUE)
+        WebEngageController.trackEvent(SERVICE_INFORMATION_CONFIRM, CLICK, NO_EVENT_VALUE)
         product?.brandName = brand
         product?.tags = tagList
         when (spinnerCod.state.first) {
@@ -410,8 +407,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle("Information not saved!").setMessage(getString(R.string.you_have_unsaved_information_do_you_still_want_to_close))
-        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+        .setTitle(resources.getString(R.string.information_not_saved)).setMessage(getString(R.string.you_have_unsaved_information_do_you_still_want_to_close))
+        .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
           baseActivity.finish()
           d.dismiss()
         }.show()
