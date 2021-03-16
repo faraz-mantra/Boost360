@@ -1,8 +1,6 @@
 package com.appservice.ui.bankaccount
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
@@ -37,11 +35,6 @@ import com.framework.webengageconstant.BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION
 import com.framework.webengageconstant.FLOATING_POINT_ID
 
 class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, AccountViewModel>() {
-
-  private val pref: SharedPreferences?
-    get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
-    }
 
   private var isUpdated = true
   private var fpId: String = ""

@@ -2,7 +2,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.dashboard">
 
-  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.INTERNET" />
 
   <application
     android:requestLegacyExternalStorage="true"
@@ -12,24 +12,32 @@
       android:name=".controller.DashboardActivity"
       android:label="@string/dashboard"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="adjustPan"
-      android:theme="@style/DashboardTheme">
-      <intent-filter android:label="@string/app_name" android:autoVerify="true">
+      android:theme="@style/DashboardTheme"
+      android:windowSoftInputMode="adjustPan">
+      <intent-filter
+        android:autoVerify="true"
+        android:label="@string/app_name">
         <action android:name="android.intent.action.VIEW" />
 
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-            android:host="nowfloat.onelink.me"
-            android:pathPrefix="/FX0L"
-            android:scheme="https" />
-
-        <data
           android:host="${applicationId}.keyboard.home"
           android:pathPrefix="/"
           android:scheme="http" />
+      </intent-filter>
 
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="nowfloat.onelink.me"
+          android:pathPrefix="/FX0L"
+          android:scheme="https" />
       </intent-filter>
     </activity>
 
@@ -43,6 +51,5 @@
         android:screenOrientation="portrait"
         android:theme="@style/DashboardTheme"
         android:windowSoftInputMode="adjustPan" />
-
   </application>
 </manifest>

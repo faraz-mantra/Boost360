@@ -130,6 +130,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     }
   }
 
+
   private fun updateTimings() {
     var isOpen = false
     when (Calendar.getInstance()[Calendar.DAY_OF_WEEK]) {

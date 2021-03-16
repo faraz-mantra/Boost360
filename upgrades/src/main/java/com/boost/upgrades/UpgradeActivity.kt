@@ -38,11 +38,8 @@ import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PAYMENT_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
-import com.boost.upgrades.utils.SharedPrefs
-import com.boost.upgrades.utils.Utils
-import com.boost.upgrades.utils.WebEngageController
-import com.framework.webengageconstant.*
 import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
+import com.framework.webengageconstant.*
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -119,7 +116,7 @@ class UpgradeActivity : AppCompatActivity() {
     progressDialog = ProgressDialog(this)
 
     prefs = SharedPrefs(this)
-    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, ADDONS_MARKETPLACE_HOME)
+    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
     initView()
     initRazorPay()
   }
@@ -260,7 +257,7 @@ class UpgradeActivity : AppCompatActivity() {
   }
 
   fun addFragmentHome(fragment: Fragment, fragmentTag: String?, args: Bundle?) {
-    fragment.setArguments(args)
+      fragment.arguments = args
     currentFragment = fragment
     fragmentManager = supportFragmentManager
     fragmentTransaction = fragmentManager!!.beginTransaction()

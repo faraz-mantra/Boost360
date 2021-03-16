@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/empty_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/iv_staff_image"
+      android:layout_width="@dimen/size_140"
+      android:layout_height="@dimen/size_140"
+      android:src="@drawable/ic_staff_image" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_10"
+      android:text="@string/no_staff_member_listed_yet"
+      android:textColor="@color/black_4a4a4a"
+      app:textType="HEADING_6" />
+
+    <com.framework.views.customViews.CustomTextView
+      style="@style/TextDescription"
+      android:layout_marginTop="@dimen/size_6"
+      android:gravity="center"
+      android:text="@string/staff_listing_paragraph"
+      app:textType="BODY_1" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_50"
+      android:layout_marginTop="@dimen/size_10"
+      android:layout_marginEnd="@dimen/size_50">
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/btn_add_staff"
+        style="@style/ButtonStyle.Rounded.Solid"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44"
+        android:gravity="center"
+        android:stateListAnimator="@null"
+        android:text="@string/add_a_staff"
+        android:textAllCaps="true" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

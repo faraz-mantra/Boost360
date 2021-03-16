@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class KeySpecification(
-    @SerializedName("key")
+    @SerializedName("key", alternate = ["Key"])
     var key: String? = null,
-    @SerializedName("value")
+    @SerializedName("value", alternate = ["Value"])
     var value: String? = null
 ) : AppBaseRecyclerViewItem, Serializable {
 
