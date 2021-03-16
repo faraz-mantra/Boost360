@@ -300,7 +300,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun isValid(): Boolean {
     val serviceName = binding?.tvServiceName?.text.toString()
-    val shipmentDuration = binding?.edtServiceTime?.text
+    val shipmentDuration = binding?.edtServiceTime?.text.toString()
     val serviceCategory = binding?.edtServiceCategory?.text.toString()
     val serviceDesc = binding?.tvDesc?.text.toString()
     val amount = binding?.amountEdt?.text.toString().toDoubleOrNull() ?: 0.0
@@ -310,7 +310,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     if (serviceImage == null && product?.image?.ImageId.isNullOrEmpty()) {
       showLongToast(resources.getString(R.string.add_service_image))
       return false
-    } else if (shipmentDuration.isNullOrEmpty()) {
+    } else if (shipmentDuration.isEmpty() || shipmentDuration.toIntOrNull()?:0==0) {
       showLongToast(resources.getString(R.string.enter_service_duration))
       return false
     } else if (serviceName.isEmpty()) {

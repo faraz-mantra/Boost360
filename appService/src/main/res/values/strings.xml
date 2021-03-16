@@ -343,7 +343,7 @@
   <string name="services_updated_success">Service updated successfully.</string>
   <string name="services_saved">Service saved successfully.</string>
   <string name="enter_service_category">Enter service category</string>
-  <string name="enter_service_duration">Enter service duration.</string>
+  <string name="enter_service_duration">Enter valid service duration.</string>
   <string name="service_removed_successfully">Service removed successfully.</string>
   <string name="removing_service_failed">Removing service failed, please try again.</string>
   <string name="only_eight_files_are_allowed_discarding">Only 8 files are allowed. Discarding the rest.</string>
