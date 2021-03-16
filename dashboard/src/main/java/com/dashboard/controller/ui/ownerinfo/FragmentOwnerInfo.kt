@@ -168,6 +168,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
         binding?.ctfOwnerName?.setText(ownersDataResponse.data?.get(0)?.name)
         binding?.ctfDescription?.setText(ownersDataResponse.data?.get(0)?.ourStory)
         if (ownersDataResponse.data?.get(0)?.profileimage?.url != null) {
+            this.imageUrl = ownersDataResponse.data?.get(0)?.profileimage?.url
             binding?.imageAddBtn?.gone()
             binding?.clearImage?.visible()
             binding?.civOwnerImage?.visible()
