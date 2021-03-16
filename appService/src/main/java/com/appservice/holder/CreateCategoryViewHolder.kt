@@ -8,6 +8,7 @@ import android.widget.PopupWindow
 import com.appservice.AppServiceApplication
 import com.appservice.R
 import com.appservice.appointment.ui.Category
+import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.ItemCreateCategoryBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -20,12 +21,17 @@ class CreateCategoryViewHolder(binding: ItemCreateCategoryBinding) : AppBaseRecy
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         super.bind(position, item)
         val category = item as Category
+        binding.crbCategory.isChecked = category.isSelected ?: false
         binding.crbCategory.text = category.name
         binding.ctvProductCount.text = "${category.countItems} products under this category"
         binding.civCategoryMenu.setOnClickListener {
-            if (this.popupWindow?.isShowing == true) this.popupWindow?.dismiss()
-            else showPopupWindow(it,item)
-        } }
+            if (this.popupWindow?.isShowing == true) this.popupWindow?.dismiss() else showPopupWindow(it, item)
+        }
+        binding.crbCategory.setOnClickListener {
+            category.isSelected = true
+            listener?.onItemClick(position, category, RecyclerViewActionType.ON_SELECT_CATEGORY.ordinal)
+        }
+    }
 
     private fun showPopupWindow(anchor: View, item: Category) {
         val view = LayoutInflater.from(AppServiceApplication.instance).inflate(R.layout.popup_window_category_menu, null)

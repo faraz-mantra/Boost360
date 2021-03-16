@@ -741,6 +741,8 @@
     <string name="error_updating_upi_id">error updating upi id</string>
   <string name="signature_uploaded">signature uploaded</string>
   <string name="merchant_upi_added">merchant upi added.</string>
+    <string name="_4_products_under_this_category">4 products under this category</string>
+    <string name="search">Search</string>
 
 
 </resources>
