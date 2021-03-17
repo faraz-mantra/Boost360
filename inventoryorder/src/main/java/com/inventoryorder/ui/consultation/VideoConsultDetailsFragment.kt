@@ -69,11 +69,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     showProgress()
     viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
-      if (it.error is NoNetworkException) {
-        errorUi(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      if (it.isSuccess()) {
         binding?.mainView?.visible()
         binding?.error?.gone()
         orderItem = (it as? OrderDetailResponse)?.Data
