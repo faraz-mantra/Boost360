@@ -62,7 +62,7 @@
   <string name="site_completed">site completed</string>
   <string name="your_site_health">Your site health</string>
   <string name="site_meter">Site Meter</string>
-  <string name="dr_score">Digital Readiness Score</string>
+  <string name="dr_score">Website readiness score</string>
   <string name="navigation_data_error">Navigation data getting error!</string>
   <string name="quick_action_data_error">Quick action data getting error!</string>
   <string name="manage_business_not_found">Manage business data not found!</string>
