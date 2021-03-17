@@ -21,9 +21,11 @@ import com.appservice.staffs.ui.bottomsheets.InActiveStaffConfirmationBottomShee
 import com.appservice.staffs.ui.bottomsheets.RemoveStaffConfirmationBottomSheet
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.common.AppointmentModel
+import com.appservice.utils.WebEngageController
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.views.customViews.CustomTextView
+import com.framework.webengageconstant.*
 
 class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>() {
   private var popupWindow: PopupWindow? = null
@@ -48,6 +50,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(STAFF_PROFILE_DETAIL, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.civMenu, binding?.ctvEdit, binding?.ctvEditLeaves, binding?.ctvEditServices, binding?.ctvEditTiming)
     getStaffDetail()
   }
@@ -139,7 +142,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   private fun setTimings() {
     binding?.llTimingContainer?.removeAllViews()
     staffDetails?.timings?.forEach {
-      if (it!=null && it.timeSlots.isNullOrEmpty().not()) binding?.llTimingContainer?.addView(getTimeView(it))
+      if (it != null && it.timeSlots.isNullOrEmpty().not()) binding?.llTimingContainer?.addView(getTimeView(it))
     }
   }
 

@@ -43,11 +43,13 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.model.*
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.NetworkUtils.isNetworkConnected
+import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
@@ -119,6 +121,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     getBundleData()
     layoutManagerN = LinearLayoutManager(baseActivity)
     getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
+    WebEngageController.trackEvent(SERVICE_CATALOGUE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
     layoutManagerN?.let { scrollPagingListener(it) }
     setOnClickListener(binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService)
   }
