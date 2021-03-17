@@ -76,14 +76,15 @@ class RazorPayWebView : DialogFragment() {
 
             try {
                 // Make webview visible before submitting payment details
-                razorpay.setWebView(razorpay_webview);
+                razorpay.setWebView(razorpay_webview)
                 razorpay.submit(data, object : PaymentResultListener {
 
                     override fun onPaymentSuccess(razorpayPaymentId: String) {
                         // Razorpay payment ID is passed here after a successful payment
                         Log.i("onPaymentSuccess", razorpayPaymentId)
                         val revenue = data["amount"] as Int
-                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success", "rev", revenue / 100)
+                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success",
+                                "rev", (revenue / 100).toString())
 
                         var firebaseAnalytics = Firebase.analytics
                         val bundle = Bundle()

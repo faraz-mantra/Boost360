@@ -335,7 +335,7 @@
   <string name="services_updated_success">Service updated successfully.</string>
   <string name="services_saved">Service saved successfully.</string>
   <string name="enter_service_category">Enter service category</string>
-  <string name="enter_service_duration">Enter service duration.</string>
+  <string name="enter_service_duration">Enter valid service duration.</string>
   <string name="service_removed_successfully">Service removed successfully.</string>
   <string name="removing_service_failed">Removing service failed, please try again.</string>
   <string name="only_eight_files_are_allowed_discarding">Only 8 files are allowed. Discarding the rest.</string>
@@ -664,9 +664,11 @@
   <string name="why_do_we_need_your_bank_account_required">Why do we need your bank account?</string>
   <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
   <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
+  <string name="no">No</string>
+  <string name="yes">Yes</string>
 
 
-    <array name="stock_availbility">
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>
