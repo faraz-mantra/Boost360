@@ -129,7 +129,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.imageAddBtn?.gone()
       binding?.clearImage?.visible()
       binding?.serviceImageView?.visible()
-      binding?.serviceImageView?.let { activity?.glideLoad(it, product?.image?.ActualImage, R.drawable.placeholder_image) }
+      binding?.serviceImageView?.let { baseActivity.glideLoad(it, product?.image?.ActualImage, R.drawable.placeholder_image) }
     }
   }
 
@@ -163,17 +163,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     hitApi(viewModel?.getServiceTiming(serviceId), R.string.error_getting_service_timing)
   }
 
-  override fun onSuccess(it: BaseResponse) {
-    when (it.taskcode) {
-      TaskCode.POST_CREATE_SERVICE.ordinal -> onServiceCreated(it)
-      TaskCode.POST_UPDATE_SERVICE.ordinal -> onServiceUpdated(it)
-      TaskCode.ADD_SERVICE_PRIMARY_IMAGE_V1.ordinal -> onPrimaryImageUploaded(it)
-      TaskCode.GET_SERVICE_DETAILS.ordinal -> onServiceDetailResponseReceived(it)
-      TaskCode.DELETE_SERVICE.ordinal -> onServiceDelete(it)
-      TaskCode.GET_SERVICE_TIMING.ordinal -> onServiceTiming(it)
-    }
-  }
-
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
@@ -192,9 +181,15 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     }
   }
 
-  private fun createServiceApi() {
-    WebEngageController.trackEvent("Add service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
-    hitApi(viewModel?.createService(product), R.string.service_adding_error);
+  override fun onSuccess(it: BaseResponse) {
+    when (it.taskcode) {
+      TaskCode.POST_CREATE_SERVICE.ordinal -> onServiceCreated(it)
+      TaskCode.POST_UPDATE_SERVICE.ordinal -> onServiceUpdated(it)
+      TaskCode.ADD_SERVICE_PRIMARY_IMAGE_V1.ordinal -> onPrimaryImageUploaded(it)
+      TaskCode.GET_SERVICE_DETAILS.ordinal -> onServiceDetailResponseReceived(it)
+      TaskCode.DELETE_SERVICE.ordinal -> onServiceDelete(it)
+      TaskCode.GET_SERVICE_TIMING.ordinal -> onServiceTiming(it)
+    }
   }
 
   private fun onServiceDelete(it: BaseResponse) {
@@ -229,6 +224,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val res = it as? ServiceV1BaseResponse
     val productId = res?.Result
     if (productId.isNullOrEmpty().not()) {
+      WebEngageController.trackEvent(SERVICE_CATALOGUE_CREATED, ADDED, NO_EVENT_VALUE)
       product?.productId = res?.Result
       productIdAdd = productId
       uploadPrimaryImage()
@@ -236,6 +232,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun onServiceUpdated(it: BaseResponse) {
+    WebEngageController.trackEvent(SERVICE_CATALOGUE_UPDATED, ADDED, NO_EVENT_VALUE)
     hideProgress()
     uploadPrimaryImage()
   }
@@ -243,10 +240,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun createUpdateApi() {
     showProgress()
     if (product?.productId == null) {
-      WebEngageController.trackEvent(SERVICE_CATALOGUE_CREATED, ADDED, NO_EVENT_VALUE)
-      createServiceApi()
+      hitApi(viewModel?.createService(product), R.string.service_adding_error);
     } else {
-      WebEngageController.trackEvent(SERVICE_CATALOGUE_UPDATED, ADDED, NO_EVENT_VALUE)
       hitApi(viewModel?.updateService(product), R.string.service_updating_error);
     }
   }
@@ -292,7 +287,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun getTiming(serviceTimingList: ArrayList<ServiceTiming>?): ArrayList<ServiceTiming>? {
     val list = ArrayList<ServiceTiming>()
     return if (serviceTimingList.isNullOrEmpty().not()) {
-      serviceTimingList?.forEach { if (it.isToggle) list.add(it) else list.add(ServiceTiming(it.day, ServiceTime("", ""))) }
+      serviceTimingList?.forEach { if (it.isToggle) list.add(it) else list.add(ServiceTiming(it.day, ServiceTime("00", "00"))) }
       list
     } else ServiceTiming().getRequestEmptyTiming()
   }
@@ -336,7 +331,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     product?.FPTag = fpTag
     product?.CurrencyCode = currencyType
     product?.Name = serviceName
-    product?.Duration = shipmentDuration.toString().toIntOrNull()
+    product?.Duration = shipmentDuration.toIntOrNull()
     product?.category = serviceCategory
     product?.Description = serviceDesc
     product?.Price = if (toggle) amount else 0.0
