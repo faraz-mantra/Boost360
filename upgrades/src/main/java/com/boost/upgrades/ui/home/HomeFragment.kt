@@ -929,7 +929,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPackageClicked(item: Bundles?) {
-        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, item?.name
+        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, CLICK, item?.name
                 ?: NO_EVENT_VALUE)
         val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
@@ -949,7 +949,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         item?.let { event_attributes.put("title", it.title) }
 //        (activity as UpgradeActivity).experienceCode?.let { event_attributes.put("category", it) }
 //        (activity as UpgradeActivity).fpTag?.let { event_attributes.put("customer", it) }
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Promo Banner Clicked", "ADDONS_MARKETPLACE", event_attributes)
+      if (event_attributes.isEmpty()) WebEngageController.trackEvent(ADDONS_MARKETPLACE_PROMO_BANNER, CLICK, NO_EVENT_VALUE)
+      else WebEngageController.trackEvent(ADDONS_MARKETPLACE_PROMO_BANNER, CLICK, event_attributes)
         if (!item!!.cta_feature_key.isNullOrBlank()) {
             if (item!!.cta_feature_key != null) {
                 val details = DetailsFragment.newInstance()
@@ -1090,8 +1091,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPartnerZoneClicked(item: PartnerZone?) {
-        WebEngageController.trackEvent(PARTNER_S_PROMO_BANNERS_CLICKED, ADDONS_MARKETPLACE, item?.title
-                ?: NO_EVENT_VALUE)
+        WebEngageController.trackEvent(PARTNER_S_PROMO_BANNERS_CLICKED, CLICK, item?.title ?: NO_EVENT_VALUE)
         Log.i("onPartnerZoneClicked >>", item.toString())
         if (item!!.cta_feature_key.isNullOrEmpty().not()) {
 
@@ -1178,8 +1178,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        WebEngageController.trackEvent(VIDEO_GALLERY_CLICKED, ADDONS_MARKETPLACE, videoItem.title
-                ?: NO_EVENT_VALUE)
+        WebEngageController.trackEvent(VIDEO_GALLERY_CLICKED, CLICK, videoItem.title ?: NO_EVENT_VALUE)
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
         val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
@@ -1255,7 +1254,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                             event_attributes.put("Discounted Price", offeredBundlePrice)
                                             event_attributes.put("Discount %", item!!.overall_discount_percent)
                                             item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                                            WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
+                                            WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART, ADDED, event_attributes)
 //                packageInCartStatus = true
 //                package_submit.background = ContextCompat.getDrawable(
 //                        requireContext(),

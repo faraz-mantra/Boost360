@@ -283,21 +283,17 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
   private fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) {
     viewModel?.getBookingSlots(bookingSlotsRequest)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
-
       if (it.error is NoNetworkException) {
         showLongToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-
       if (it.isSuccess()) {
         bookingSlotResponse = (it as? BookingSlotResponse)
-
         bookingSlotResponse?.Result?.get(0)?.Staff?.get(0)?.isSelected = true
-
         selectedDateTimeBottomSheetDialog?.setData(bookingSlotResponse!!, selectedService!!)
         binding?.groupTiming?.visibility = View.VISIBLE
       } else {
-        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.not_able_to_get_booking_slots))
+        showLongToast(getString(R.string.not_able_to_get_booking_slots))
         binding?.groupTiming?.visibility = View.GONE
       }
     })

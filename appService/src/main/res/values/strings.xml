@@ -343,7 +343,7 @@
   <string name="services_updated_success">Service updated successfully.</string>
   <string name="services_saved">Service saved successfully.</string>
   <string name="enter_service_category">Enter service category</string>
-  <string name="enter_service_duration">Enter service duration.</string>
+  <string name="enter_service_duration">Enter valid service duration.</string>
   <string name="service_removed_successfully">Service removed successfully.</string>
   <string name="removing_service_failed">Removing service failed, please try again.</string>
   <string name="only_eight_files_are_allowed_discarding">Only 8 files are allowed. Discarding the rest.</string>
@@ -503,15 +503,17 @@
   <string name="storage_permission" translatable="false">Storage Permission</string>
   <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
   <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
+  <string name="no">No</string>
+  <string name="yes">Yes</string>
 
 
-    <array name="stock_availbility">
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>
 
   <string-array name="business_hours_arrays">
-    <item>12:00AM</item>
+    <item>12:00 AM</item>
     <item>12:30AM</item>
     <item>01:00AM</item>
     <item>01:30AM</item>
@@ -560,5 +562,4 @@
     <item>11:00PM</item>
     <item>11:30PM</item>
   </string-array>
-
 </resources>

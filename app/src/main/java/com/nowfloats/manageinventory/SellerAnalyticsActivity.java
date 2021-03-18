@@ -214,7 +214,7 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
 
         if (revenueSummary != null && revenueSummary.getData() != null) {
 
-            String revenue = revenueSummary.getData().getTotalRevenue();
+            String revenue = revenueSummary.getData().getTotalRevenue().toString();
             boolean atleastOneAlpha = revenue.matches(".*[a-zA-Z]+.*");
             String[] amount = revenue.split("(?<=\\D)(?=\\d)");
 
