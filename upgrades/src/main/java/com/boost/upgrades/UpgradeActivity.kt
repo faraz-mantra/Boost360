@@ -105,7 +105,7 @@ class UpgradeActivity : AppCompatActivity() {
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
-    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
+    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")?:ArrayList()
 
     progressDialog = ProgressDialog(this)
 
