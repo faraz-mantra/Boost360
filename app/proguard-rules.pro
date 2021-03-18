@@ -75,6 +75,7 @@
 -dontwarn com.webengage.sdk.android.**
 -dontwarn rx.*
 -keep class com.nowfloats.Store.Model.** { *; }
+-keep class com.nowfloats.manageinventory.models.** { *; }
 -keep class com.nowfloats.NavigationDrawer.model.** { *; }
 -keep class com.nowfloats.NavigationDrawer.model.** { *; }
 -keep class com.nowfloats.Login.Model.** { *; }
