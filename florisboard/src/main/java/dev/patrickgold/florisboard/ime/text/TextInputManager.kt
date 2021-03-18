@@ -22,6 +22,7 @@ import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
+import androidx.annotation.IdRes
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.*
@@ -312,6 +313,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
         smartbarView?.isQuickActionsVisible = false
+        smartbarView?.isBusinessFeatureVisible = false
         smartbarView?.updateSmartbarState()
     }
 
@@ -445,7 +447,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
         }
         smartbarView?.isQuickActionsVisible = false
+        smartbarView?.isBusinessFeatureVisible = false
         smartbarView?.updateSmartbarState()
+    }
+
+    override fun onSmartBarBusinessActionPressed(@IdRes actionId: Int) {
+        Timber.i("action id - %s", actionId)
     }
 
     /**

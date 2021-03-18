@@ -16,17 +16,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
-            android:id="@+id/quick_action_toggle"
-            style="@style/SmartbarQuickAction.Toggle"
-            android:contentDescription="@string/smartbar__quick_action_toggle__alt"
-            android:src="@drawable/ic_keyboard_arrow_right"/>
+        <LinearLayout
+            android:id="@+id/action_toggle_container"
+            style="@style/SmartbarContainer">
 
-        <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
-            android:id="@+id/back_button"
-            style="@style/SmartbarQuickAction"
-            android:contentDescription="@string/smartbar__quick_action__exit_editing"
-            android:src="@drawable/ic_arrow_back"/>
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/business_feature_toggle_action"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_margin="@dimen/smartbar_button_margin"
+                android:padding="@dimen/smartbar_button_padding"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/business_feature_quick_actions" />
+
+            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+                android:id="@+id/quick_action_toggle"
+                style="@style/SmartbarQuickAction.Toggle"
+                android:contentDescription="@string/smartbar__quick_action_toggle__alt"
+                android:src="@drawable/ic_keyboard_arrow_right" />
+
+            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+                android:id="@+id/back_button"
+                style="@style/SmartbarQuickAction"
+                android:contentDescription="@string/smartbar__quick_action__exit_editing"
+                android:src="@drawable/ic_arrow_back"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
     </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
 
@@ -38,6 +55,120 @@
         app:layout_constraintStart_toEndOf="@id/action_start_area"
         app:layout_constraintEnd_toStartOf="@id/action_end_area"
         app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/business_feature_action_tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:tabTextColor="@color/white"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabMode="scrollable">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Updates" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inventory" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Products" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Details" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <!--<LinearLayout
+            android:id="@+id/business_quick_actions"
+            style="@style/SmartbarContainer">
+
+            <HorizontalScrollView
+                android:id="@+id/horizontal_scroll_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbarSize="2dp"
+                android:scrollbarThumbHorizontal="@color/light_grey_2"
+                android:scrollbars="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_updates"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="28dp"
+                        android:paddingEnd="28dp"
+                        android:paddingTop="5dp"
+                        android:text="UPDATES"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_products"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="28dp"
+                        android:paddingEnd="28dp"
+                        android:paddingTop="5dp"
+                        android:text="INVENTORY"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_photos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="28dp"
+                        android:paddingEnd="28dp"
+                        android:paddingTop="5dp"
+                        android:text="PHOTOS"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="28dp"
+                        android:paddingEnd="28dp"
+                        android:paddingTop="5dp"
+                        android:text="DETAILS"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <View
+                android:id="@+id/tab_horizontal"
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                android:visibility="invisible" />
+
+        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/candidates"

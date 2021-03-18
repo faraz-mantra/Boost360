@@ -56,7 +56,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     private var lastSuggestionInitDate: Long = 0
 
     private var cachedActionStartAreaVisible: Boolean = false
-    @IdRes private var cachedActionStartAreaId: Int? = null
+    @IdRes private var cachedActionStartAreaId: IntArray? = null
     @IdRes private var cachedMainAreaId: Int? = null
     private var cachedActionEndAreaVisible: Boolean = false
     @IdRes private var cachedActionEndAreaId: Int? = null
@@ -64,6 +64,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     var isQuickActionsVisible: Boolean = false
         set(v) {
             binding.quickActionToggle.rotation = if (v) 180.0f else 0.0f
+            field = v
+        }
+    var isBusinessFeatureVisible: Boolean = false
+        set(v) {
+            binding.businessFeatureToggleAction.rotation = if (v) 180.0f else 0.0f
             field = v
         }
     private var shouldSuggestClipboardContents: Boolean = false
@@ -175,6 +180,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             updateSmartbarState()
         }
 
+        binding.businessFeatureToggleAction.setOnClickListener {
+            isBusinessFeatureVisible = !isBusinessFeatureVisible
+            updateSmartbarState()
+        }
+
         configureFeatureVisibility(
             actionStartAreaVisible = false,
             actionStartAreaId = null,
@@ -209,7 +219,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
      */
     private fun configureFeatureVisibility(
         actionStartAreaVisible: Boolean = cachedActionStartAreaVisible,
-        @IdRes actionStartAreaId: Int? = cachedActionStartAreaId,
+        @IdRes actionStartAreaId: IntArray? = cachedActionStartAreaId,
         @IdRes mainAreaId: Int? = cachedMainAreaId,
         actionEndAreaVisible: Boolean = cachedActionEndAreaVisible,
         @IdRes actionEndAreaId: Int? = cachedActionEndAreaId
@@ -220,6 +230,18 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             else -> View.GONE
         }
         if (actionStartAreaId != null) {
+            when (florisboard?.textInputManager?.getActiveKeyboardMode()) {
+                KeyboardMode.EDITING -> {
+                    binding.quickActionToggle.visibility = View.GONE
+                    binding.businessFeatureToggleAction.visibility = View.GONE
+                    binding.backButton.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.backButton.visibility = View.GONE
+                    binding.quickActionToggle.visibility = View.VISIBLE
+                    binding.businessFeatureToggleAction.visibility = View.VISIBLE
+                }
+            }
             binding.actionStartArea.displayedChild =
                 indexedActionStartArea.indexOf(actionStartAreaId).coerceAtLeast(0)
         }
@@ -262,34 +284,43 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                     else -> true
                 },
                 actionStartAreaId = when (florisboard.textInputManager.getActiveKeyboardMode()) {
-                    KeyboardMode.EDITING -> R.id.back_button
-                    else -> R.id.quick_action_toggle
+                    KeyboardMode.EDITING -> intArrayOf(R.id.back_button)
+                    else -> intArrayOf(R.id.quick_action_toggle,R.id.business_feature_toggle_action)
                 },
                 mainAreaId = when (florisboard.textInputManager.keyVariation) {
                     KeyVariation.PASSWORD -> R.id.number_row
-                    else -> when (isQuickActionsVisible) {
-                        true -> R.id.quick_actions
-                        else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
-                            KeyboardMode.EDITING,
-                            KeyboardMode.NUMERIC,
-                            KeyboardMode.PHONE,
-                            KeyboardMode.PHONE2 -> null
-                            else -> when {
-                                florisboard.activeEditorInstance.isComposingEnabled &&
-                                    shouldSuggestClipboardContents &&
-                                    florisboard.activeEditorInstance.selection.isCursorMode
-                                -> R.id.clipboard_suggestion_row
-                                florisboard.activeEditorInstance.isComposingEnabled &&
-                                        florisboard.activeEditorInstance.selection.isCursorMode
-                                    -> R.id.candidates
-                                else -> R.id.clipboard_cursor_row
+                    else -> {
+                        when {
+                            isQuickActionsVisible -> {
+                                R.id.quick_actions
+                            }
+                            isBusinessFeatureVisible -> {
+                                R.id.business_feature_action_tabs
+                            }
+                            else -> {
+                                when (florisboard.textInputManager.getActiveKeyboardMode()) {
+                                    KeyboardMode.EDITING,
+                                    KeyboardMode.NUMERIC,
+                                    KeyboardMode.PHONE,
+                                    KeyboardMode.PHONE2 -> null
+                                    else -> when {
+                                        florisboard.activeEditorInstance.isComposingEnabled &&
+                                                shouldSuggestClipboardContents &&
+                                                florisboard.activeEditorInstance.selection.isCursorMode
+                                        -> R.id.clipboard_suggestion_row
+                                        florisboard.activeEditorInstance.isComposingEnabled &&
+                                                florisboard.activeEditorInstance.selection.isCursorMode
+                                        -> R.id.candidates
+                                        else -> R.id.clipboard_cursor_row
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 actionEndAreaVisible = when (florisboard.textInputManager.keyVariation) {
                     KeyVariation.PASSWORD -> false
-                    else -> true
+                    else -> false // to be changed when need to add actions at the end.
                 },
                 actionEndAreaId = when {
                     florisboard.activeEditorInstance.isPrivateMode -> R.id.private_mode_button
@@ -392,5 +423,6 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         //fun onSmartbarCandidateLongPressed() {}
         fun onSmartbarPrivateModeButtonClicked() {}
         fun onSmartbarQuickActionPressed(@IdRes quickActionId: Int) {}
+        fun onSmartBarBusinessActionPressed(@IdRes actionId: Int) {}
     }
 }
