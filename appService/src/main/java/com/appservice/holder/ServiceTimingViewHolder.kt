@@ -13,7 +13,9 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.framework.BaseApplication
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_HH_MMA
+import com.framework.utils.DateUtils.FORMAT_HH_MM_A
 import com.framework.utils.DateUtils.isBetweenValidTime
 import com.framework.utils.DateUtils.parseDate
 
@@ -21,7 +23,13 @@ class ServiceTimingViewHolder(binding: ItemServiceTimingBinding) : AppBaseRecycl
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val data = item as? ServiceTiming ?: return
-    var businessHours: Array<String> = BaseApplication.instance.applicationContext.resources.getStringArray(R.array.business_hours_arrays)
+    var businessHours = arrayOf(
+        "12:00 AM", "12:30 AM", "01:00 AM", "01:30 AM", "02:00 AM", "02:30 AM", "03:00 AM", "03:30 AM", "04:00 AM", "04:30 AM",
+        "05:00 AM", "05:30 AM", "06:00 AM", "06:30 AM", "07:00 AM", "07:30 AM", "08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM",
+        "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM",
+        "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM",
+        "08:00 PM", "08:30 PM", "09:00 PM", "09:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM",
+    )
     binding.ctvTitleDay.text = "${data.day}"
     if (data.isOpenDay()) {
       binding.toggleOnOff.visible()
@@ -45,11 +53,14 @@ class ServiceTimingViewHolder(binding: ItemServiceTimingBinding) : AppBaseRecycl
     binding.ccbAllDay.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal) }
 
     if (data.isOpenDay()) {
-      val startDate = data.businessTiming?.startTime?.parseDate(FORMAT_HH_MMA)
-      val endDate = data.businessTiming?.endTime?.parseDate(FORMAT_HH_MMA)
+      var startDate = data.businessTiming?.startTime?.parseDate(FORMAT_HH_MMA)
+      if (startDate == null) startDate = data.businessTiming?.startTime?.parseDate(FORMAT_HH_MM_A)
+      var endDate = data.businessTiming?.endTime?.parseDate(FORMAT_HH_MMA)
+      if (endDate == null) endDate = data.businessTiming?.endTime?.parseDate(FORMAT_HH_MM_A)
+
       if (startDate != null && endDate != null) {
         businessHours = businessHours.filter {
-          val dateN = it.parseDate(FORMAT_HH_MMA)
+          val dateN = it.parseDate(FORMAT_HH_MM_A)
           (dateN != null && isBetweenValidTime(startDate, endDate, dateN))
         }.toTypedArray()
       }
