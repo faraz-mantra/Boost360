@@ -19,7 +19,6 @@ import com.appservice.model.FileModel
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
-import com.appservice.model.serviceTiming.ServiceTimingResponse
 import com.appservice.model.servicev1.*
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.catalogService.listing.CreateServiceSuccessBottomSheet
@@ -204,7 +203,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     this.product = (it as? ServiceDetailResponse)?.Result ?: return
     this.product?.GstSlab = 18
     this.serviceTimingList = this.product?.timings
-    this.serviceTimingList?.map { it.isToggle = (it.day.isNullOrEmpty().not() && it.time?.from.isNullOrEmpty().not()) }
+    this.serviceTimingList?.map { it.isToggle = (it.isValidTime()) }
     updateUiPreviousData()
   }
 
@@ -273,8 +272,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun addUpdateServiceTiming() {
-    val request = AddServiceTimingRequest(product?.productId, product?.Duration, getTiming(this.serviceTimingList))
-    val requestApi = if (this.serviceTimingList.isNullOrEmpty()) viewModel?.addServiceTiming(request) else viewModel?.addServiceTiming(request)
+    val request = AddServiceTimingRequest(product?.productId, product?.Duration, getTimingRequest(this.serviceTimingList))
+    val requestApi = if (isEdit.not()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(request)
     requestApi?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         isRefresh = true
@@ -284,10 +283,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     })
   }
 
-  private fun getTiming(serviceTimingList: ArrayList<ServiceTiming>?): ArrayList<ServiceTiming>? {
+  private fun getTimingRequest(serviceTimingList: ArrayList<ServiceTiming>?): ArrayList<ServiceTiming>? {
     val list = ArrayList<ServiceTiming>()
     return if (serviceTimingList.isNullOrEmpty().not()) {
-      serviceTimingList?.forEach { if (it.isToggle) list.add(it) else list.add(ServiceTiming(it.day, ServiceTime("00", "00"))) }
+      serviceTimingList?.forEach {
+        if (it.isToggle) {
+          list.add(it)
+        } else list.add(ServiceTiming(it.day, ServiceTime("00:00", "00:00")))
+      }
       list
     } else ServiceTiming().getRequestEmptyTiming()
   }
@@ -305,7 +308,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     if (serviceImage == null && product?.image?.ImageId.isNullOrEmpty()) {
       showLongToast(resources.getString(R.string.add_service_image))
       return false
-    } else if (shipmentDuration.isEmpty() || shipmentDuration.toIntOrNull()?:0==0) {
+    } else if (shipmentDuration.isEmpty() || shipmentDuration.toIntOrNull() ?: 0 == 0) {
       showLongToast(resources.getString(R.string.enter_service_duration))
       return false
     } else if (serviceName.isEmpty()) {
@@ -323,7 +326,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     } else if (toggle && (discount > amount)) {
       showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
       return false
-    }else if (product?.Duration == null || product?.Duration!! <= 0) {
+    } else if (product?.Duration == null || product?.Duration!! <= 0) {
       showLongToast(resources.getString(R.string.service_duration))
       return false
     }
