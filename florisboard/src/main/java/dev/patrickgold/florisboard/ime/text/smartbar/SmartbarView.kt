@@ -182,7 +182,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
         binding.businessFeatureToggleAction.setOnClickListener {
             isBusinessFeatureVisible = !isBusinessFeatureVisible
-            updateSmartbarState()
+            eventListener?.get()?.onSmartbarQuickActionPressed(binding.businessFeatureToggleAction.id)
         }
 
         configureFeatureVisibility(
@@ -295,7 +295,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                                 R.id.quick_actions
                             }
                             isBusinessFeatureVisible -> {
-                                R.id.business_feature_action_tabs
+                                R.id.business_feature_tab_layout
                             }
                             else -> {
                                 when (florisboard.textInputManager.getActiveKeyboardMode()) {
@@ -420,9 +420,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     interface EventListener {
         fun onSmartbarBackButtonPressed() {}
         fun onSmartbarCandidatePressed(word: String) {}
-        //fun onSmartbarCandidateLongPressed() {}
         fun onSmartbarPrivateModeButtonClicked() {}
         fun onSmartbarQuickActionPressed(@IdRes quickActionId: Int) {}
-        fun onSmartBarBusinessActionPressed(@IdRes actionId: Int) {}
     }
 }

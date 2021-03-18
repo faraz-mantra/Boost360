@@ -22,9 +22,11 @@ import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
-import androidx.annotation.IdRes
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.customization.BusinessFeaturePagerAdapter
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -56,7 +58,7 @@ import kotlin.math.roundToLong
  * instance and the Smartbar.
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
-    FlorisBoard.EventListener, SmartbarView.EventListener {
+    FlorisBoard.EventListener, SmartbarView.EventListener, BusinessFeaturePagerAdapter.BusinessFeatureListener {
 
     private val florisboard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
@@ -66,21 +68,22 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var animator: ObjectAnimator? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
     private var editingKeyboardView: EditingKeyboardView? = null
+    private lateinit var businessFeatureViewPager: ViewPager
     private var loadingPlaceholderKeyboard: KeyboardView? = null
     private var textViewFlipper: ViewFlipper? = null
     private var textViewGroup: LinearLayout? = null
     private val dictionaryManager: DictionaryManager = DictionaryManager.default()
     private var activeDictionary: Dictionary<String, Int>? = null
     val inputEventDispatcher: InputEventDispatcher = InputEventDispatcher.new(
-        parentScope = this,
-        repeatableKeyCodes = intArrayOf(
-            KeyCode.ARROW_DOWN,
-            KeyCode.ARROW_LEFT,
-            KeyCode.ARROW_RIGHT,
-            KeyCode.ARROW_UP,
-            KeyCode.DELETE,
-            KeyCode.FORWARD_DELETE
-        )
+            parentScope = this,
+            repeatableKeyCodes = intArrayOf(
+                    KeyCode.ARROW_DOWN,
+                    KeyCode.ARROW_LEFT,
+                    KeyCode.ARROW_RIGHT,
+                    KeyCode.ARROW_UP,
+                    KeyCode.DELETE,
+                    KeyCode.FORWARD_DELETE
+            )
     )
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
@@ -155,6 +158,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
         editingKeyboardView = inputView.findViewById(R.id.editing)
         loadingPlaceholderKeyboard = inputView.findViewById(R.id.keyboard_preview)
+        businessFeatureViewPager = inputView.findViewById(R.id.business_feature_viewpager)
+
+        val businessFeaturePagerAdapter = BusinessFeaturePagerAdapter()
+        businessFeatureViewPager.adapter = businessFeaturePagerAdapter
+        val tabLayout: TabLayout = inputView.findViewById(R.id.business_feature_tab_layout)
+        tabLayout.setupWithViewPager(businessFeatureViewPager)
 
         launch(Dispatchers.Main) {
             textViewGroup?.let {
@@ -303,6 +312,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
         textViewFlipper?.displayedChild = textViewFlipper?.indexOfChild(when (mode) {
             KeyboardMode.EDITING -> editingKeyboardView
+            KeyboardMode.BUSINESS_FEATURES -> businessFeatureViewPager
             else -> keyboardViews[mode]
         })?.coerceAtLeast(0) ?: 0
         keyboardViews[mode]?.updateVisibility()
@@ -313,7 +323,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
         smartbarView?.isQuickActionsVisible = false
-        smartbarView?.isBusinessFeatureVisible = false
         smartbarView?.updateSmartbarState()
     }
 
@@ -321,7 +330,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         launch {
             if (activeEditorInstance.isComposingEnabled) {
                 withContext(Dispatchers.IO) {
-                    dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets,"ime/dict/en.flict")).let {
+                    dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets, "ime/dict/en.flict")).let {
                         activeDictionary = it.getOrDefault(null)
                     }
                 }
@@ -351,10 +360,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     launch(Dispatchers.Default) {
                         val startTime = System.nanoTime()
                         val suggestions = it.getTokenPredictions(
-                            precedingTokens = listOf(),
-                            currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
-                            maxSuggestionCount = 3,
-                            allowPossiblyOffensive = !florisboard.prefs.suggestion.blockPossiblyOffensive
+                                precedingTokens = listOf(),
+                                currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
+                                maxSuggestionCount = 3,
+                                allowPossiblyOffensive = !florisboard.prefs.suggestion.blockPossiblyOffensive
                         ).toStringList()
                         if (BuildConfig.DEBUG) {
                             val elapsed = (System.nanoTime() - startTime) / 1000.0
@@ -445,14 +454,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 activeEditorInstance.performRedo()
                 return
             }
+            R.id.business_feature_toggle_action -> {
+                if (activeKeyboardMode == KeyboardMode.BUSINESS_FEATURES) {
+                    setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+                } else {
+                    setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES)
+                }
+            }
         }
         smartbarView?.isQuickActionsVisible = false
-        smartbarView?.isBusinessFeatureVisible = false
         smartbarView?.updateSmartbarState()
-    }
-
-    override fun onSmartBarBusinessActionPressed(@IdRes actionId: Int) {
-        Timber.i("action id - %s", actionId)
     }
 
     /**
@@ -795,5 +806,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         when (data.code) {
             KeyCode.SHIFT -> handleShiftCancel()
         }
+    }
+
+    override fun onServiceClicked(serviceId: String) {
+
     }
 }

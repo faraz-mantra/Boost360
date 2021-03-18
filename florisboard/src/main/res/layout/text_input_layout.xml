@@ -23,6 +23,11 @@
             android:layout_height="wrap_content"
             app:isLoadingPlaceholderKeyboard="true"/>
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/business_feature_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <include layout="@layout/editing_layout"/>
 
     </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
