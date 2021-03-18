@@ -83,19 +83,19 @@
           "quickActionType": "ADD_PHOTO_GALLERY",
           "title": "Post new\nphotos"
         },
-//        {
-//          "quickActionType": "PLACE_APPOINTMENT",
-//          "title": "Add an\nappointment",
-//          "isNew": true
-//        },
+        {
+          "quickActionType": "PLACE_APPOINTMENT",
+          "title": "Add an\nappointment",
+          "isNew": true
+        },
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
         },
-//        {
-//          "quickActionType": "ADD_FACULTY_MEMBER",
-//          "title": "Add a\nstaff member"
-//        },
+        //        {
+        //          "quickActionType": "ADD_FACULTY_MEMBER",
+        //          "title": "Add a\nstaff member"
+        //        },
         {
           "quickActionType": "LIST_SERVICES",
           "title": "List a\nservice"
@@ -104,10 +104,10 @@
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
         }
-//        {
-//          "quickActionType": "LIST_STAFF",
-//          "title": "List a\nstaff"
-//        }
+        //        {
+        //          "quickActionType": "LIST_STAFF",
+        //          "title": "List a\nstaff"
+        //        }
       ]
     },
     {
@@ -121,19 +121,19 @@
           "quickActionType": "ADD_PHOTO_GALLERY",
           "title": "Post new\nphotos"
         },
-//        {
-//          "quickActionType": "PLACE_APPOINTMENT",
-//          "title": "Add an\nappointment",
-//          "isNew": true
-//        },
+        {
+          "quickActionType": "PLACE_APPOINTMENT",
+          "title": "Add an\nappointment",
+          "isNew": true
+        },
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
         },
-//        {
-//          "quickActionType": "ADD_FACULTY_MEMBER",
-//          "title": "Add a\nstaff member"
-//        },
+        //        {
+        //          "quickActionType": "ADD_FACULTY_MEMBER",
+        //          "title": "Add a\nstaff member"
+        //        },
         {
           "quickActionType": "LIST_SERVICES",
           "title": "List a\nservice"
@@ -142,10 +142,10 @@
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
         }
-//        {
-//          "quickActionType": "LIST_STAFF",
-//          "title": "List a\nstaff"
-//        }
+        //        {
+        //          "quickActionType": "LIST_STAFF",
+        //          "title": "List a\nstaff"
+        //        }
       ]
     },
     {
@@ -264,11 +264,11 @@
     {
       "type": "HOT",
       "action_item": [
-//        {
-//          "quickActionType": "POST_STATUS_STORY",
-//          "title": "Today's\nstatus/story",
-//          "isNew": true
-//        },
+        //        {
+        //          "quickActionType": "POST_STATUS_STORY",
+        //          "title": "Today's\nstatus/story",
+        //          "isNew": true
+        //        },
         {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
@@ -311,19 +311,19 @@
           "quickActionType": "ADD_PHOTO_GALLERY",
           "title": "Post new\nphotos"
         },
-//        {
-//          "quickActionType": "PLACE_ORDER_BOOKING",
-//          "title": "Add an\norder",
-//          "isNew": true
-//        },
+        //        {
+        //          "quickActionType": "PLACE_ORDER_BOOKING",
+        //          "title": "Add an\norder",
+        //          "isNew": true
+        //        },
         {
           "quickActionType": "ADD_PRODUCT",
           "title": "Add a\nproduct"
         },
-//        {
-//          "quickActionType": "ADD_TESTIMONIAL",
-//          "title": "Add customer\ntestimonial"
-//        },
+        //        {
+        //          "quickActionType": "ADD_TESTIMONIAL",
+        //          "title": "Add customer\ntestimonial"
+        //        },
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
@@ -341,16 +341,16 @@
           "quickActionType": "ADD_PHOTO_GALLERY",
           "title": "Post new\nphotos"
         },
-//        {
-//          "quickActionType": "PLACE_APPOINTMENT",
-//          "title": "Book an\nappointment",
-//          "isNew": true
-//        },
-//        {
-//          "quickActionType": "ADD_TESTIMONIAL",
-//          "title": "Add customer\ntestimonial",
-//          "isNew": true
-//        },
+        //        {
+        //          "quickActionType": "PLACE_APPOINTMENT",
+        //          "title": "Book an\nappointment",
+        //          "isNew": true
+        //        },
+        //        {
+        //          "quickActionType": "ADD_TESTIMONIAL",
+        //          "title": "Add customer\ntestimonial",
+        //          "isNew": true
+        //        },
         {
           "quickActionType": "ADD_SERVICE",
           "title": "Add a\nservice"
