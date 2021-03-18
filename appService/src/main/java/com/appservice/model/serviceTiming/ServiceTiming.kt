@@ -42,7 +42,7 @@ data class ServiceTiming(
   fun getRequestEmptyTiming(): ArrayList<ServiceTiming> {
     val list = ArrayList<ServiceTiming>()
     val days = arrayListOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-    days.forEach { list.add(ServiceTiming(it, time = ServiceTime("", ""))) }
+    days.forEach { list.add(ServiceTiming(it, time = ServiceTime("00", "00"))) }
     return list
   }
 
