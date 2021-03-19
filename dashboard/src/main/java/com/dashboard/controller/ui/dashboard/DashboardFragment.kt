@@ -2,13 +2,10 @@ package com.dashboard.controller.ui.dashboard
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
-import com.appservice.constant.IntentConstant
-import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
@@ -331,6 +328,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiWebsiteReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
+    if (isFirstLoad()) Handler().postDelayed({ baseActivity.runOnUiThread { showSimmer(false) } }, 2000)
     val scope = if (session?.iSEnterprise == "true") "1" else "0"
     viewModel?.getUserSummary(clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
       val response1 = it1 as? UserSummaryResponse

@@ -89,7 +89,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onCreateView() {
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
-    setOnClickListener(binding?.btnAdd)
+    setOnClickListener(binding?.btnAdd,binding?.buttonAddApt)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
@@ -102,7 +102,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd -> {
+      binding?.btnAdd ,binding?.buttonAddApt-> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         if (!PreferencesUtils.instance.getData(PreferenceConstant.SHOW_CREATE_ORDER_WELCOME, false)) {
