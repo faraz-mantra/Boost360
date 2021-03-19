@@ -448,7 +448,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
-//    val responseBody = businessImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
     val responseBody = businessImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
         ?: "bg_${UUID.randomUUID()}.png"
