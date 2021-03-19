@@ -178,7 +178,7 @@ class UpgradeActivity : AppCompatActivity() {
       Utils.hideSoftKeyboard(this)
       if (supportFragmentManager.backStackEntryCount > 0) {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-        val tag = currentFragment.tag
+        val tag = currentFragment?.tag
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
           if (tag == CART_FRAGMENT) {
