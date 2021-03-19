@@ -27,7 +27,7 @@
         <item name="android:paddingEnd">@dimen/size_4</item>
         <item name="android:layout_marginStart">@dimen/size_20</item>
         <item name="closeIconTint">@color/yellow_ffb900</item>
-        <item name="textColor">@color/gray_828282</item>
+        <item name="editTextColor">@color/gray_828282</item>
         <item name="android:layout_marginEnd">@dimen/size_20</item>
         <item name="android:layout_gravity">center</item>
     </style>
@@ -231,7 +231,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:includeFontPadding">true</item>
-        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:fontFamily">@font/open_sans_semibold</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -530,6 +530,7 @@
     </style>
     <style name="AppointmentCatalogSettingText2">
         <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/gray_828282</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">16dp</item>

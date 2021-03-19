@@ -15,6 +15,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.rest.TaskCode
+import com.appservice.ui.catalog.catalogService.ServiceCatalogHomeFragment
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.model.ServiceListingRequest
 import com.appservice.ui.model.ServiceListingResponse
@@ -65,6 +66,8 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ap
             adapterN = AppBaseRecyclerViewAdapter(baseActivity, categoryList, this@CreateCategoryFragment)
             adapter = adapterN
         }
+        ( parentFragment as ServiceCatalogHomeFragment).setTabTitle("${resources.getString(R.string.categories)} (${categoryList.size})",1)
+
     }
 
     companion object {
@@ -123,7 +126,7 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ap
     }
 }
 
-data class Category(var name: String, var countItems: Int? = 0, var isSelected: Boolean? = false, var recyclerViewItem: Int = RecyclerViewItemType.CREATE_CATEGORY_ITEM_VIEW.getLayout()) : AppBaseRecyclerViewItem, Serializable {
+data class Category(var name: String, var countItems: Int? = 0, var isSelected: Boolean? = false, var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_CATEGORY_ITEM_VIEW.getLayout()) : AppBaseRecyclerViewItem, Serializable {
     override fun getViewType(): Int {
         return recyclerViewItem
     }

@@ -34,17 +34,24 @@ class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerB
         fun newInstance(): ServiceCatalogHomeFragment {
             return ServiceCatalogHomeFragment()
         }
+
     }
 
     override fun onCreateView() {
         super.onCreateView()
         // The pager adapter, which provides the pages to the view pager widget.
         getBundleData()
-        val pagerAdapter = ScreenSlidePagerAdapter(requireActivity().supportFragmentManager)
+        val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
         binding?.pager?.adapter = pagerAdapter
         binding?.tabLayout?.setupWithViewPager(binding?.pager)
 
+
     }
+
+    public fun setTabTitle(title: String, tabIndex: Int) {
+        binding?.tabLayout?.getTabAt(tabIndex)?.text = title
+    }
+
     private fun getBundleData() {
         isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
         currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
@@ -63,6 +70,7 @@ class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerB
         override fun getCount(): Int = NUM_PAGES
 
         override fun getItem(position: Int): Fragment {
+
             return when (position) {
                 0 -> ServiceListingFragment.newInstance(isNonPhysicalExperience,currencyType,fpId,fpTag,clientId,externalSourceId,applicationId,userProfileId)
                 1 -> CreateCategoryFragment.newInstance(fpTag)

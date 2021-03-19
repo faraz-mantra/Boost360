@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="dashboard">Dashboard</string>
   <string name="website">Website</string>
   <string name="my_website">My Website</string>
@@ -57,7 +57,7 @@
   <string name="Logo_percentage">5</string>
   <string name="business_hours">5</string>
   <!-- SITE-Meter Percentage  -->
-
+  <string name="add_owners_image" tools:ignore="ExtraTranslation">add owner image</string>
   <string name="add_missing_info_better_online_traction">Add missing information and improve your digital readiness\nscore above %s for better online traction.</string>
   <string name="site_completed">site completed</string>
   <string name="your_site_health">Your site health</string>

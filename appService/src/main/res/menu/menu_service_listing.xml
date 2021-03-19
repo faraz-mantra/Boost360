@@ -9,7 +9,7 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
     <item
-        android:icon="@drawable/ic_service_configuration"
+        android:icon="@drawable/ic_appointment_settings"
         android:title="@string/appointment_settings"
         android:id="@+id/action_service_configuration"
         app:showAsAction="always" />

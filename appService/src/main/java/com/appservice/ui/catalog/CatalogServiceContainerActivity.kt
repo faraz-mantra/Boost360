@@ -141,6 +141,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.APPOINTMENT_CATALOG_SETTINGS -> getString(R.string.catalog_setup)
             FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS -> getString(R.string.my_bank_account)
             FragmentType.EDIT_ACCOUNT_DETAILS -> getString(R.string.my_bank_account)
+            FragmentType.SERVICE_CATALOG_HOME_FRAGMENT -> getString(R.string.catalog)
             else -> super.getToolbarTitle()
         }
     }
