@@ -57,7 +57,7 @@ public interface StoreInterface {
     void getInvoiceDetailsByFPTag(@QueryMap Map<String, String> map, Callback<InvoiceDetailsModel> callback);
 
     //https://api.withfloats.com/Discover/v1/floatingPoint/5406bd254ec0a40d409f2b2b/requestplan?
-    // clientId=2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21&plantype=mach3
+    // clientId=2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5&plantype=mach3
     @GET("/Discover/v1/floatingPoint/{fpid}/requestplan")
     void requestWidget(@Path("fpid") String fpid, @QueryMap Map<String, String> map, Callback<String> callback);
 
