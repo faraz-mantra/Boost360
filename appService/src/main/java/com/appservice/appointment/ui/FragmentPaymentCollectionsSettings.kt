@@ -65,7 +65,7 @@ class FragmentPaymentCollectionsSettings : AppBaseFragment<FragmentPaymentCollec
             }
             binding?.btnAddAccount -> {
                 if (!isEdit)
-                    startFragmentActivity(FragmentType.BANK_ACCOUNT_DETAILS)
+                    startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME)
 
             }
         }
