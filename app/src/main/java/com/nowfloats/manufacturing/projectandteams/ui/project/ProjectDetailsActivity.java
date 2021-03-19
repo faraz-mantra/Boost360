@@ -334,11 +334,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader(getString(R.string.updating_record_please_wait));
             updateExistingTeamsAPI();
             Methods.hideKeyboard(ProjectDetailsActivity.this);
         } else {
-            showLoader(getString(R.string.creating_record_please_wait));
             createNewTeamsAPI();
             Methods.hideKeyboard(ProjectDetailsActivity.this);
         }
@@ -347,6 +345,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     void createNewTeamsAPI() {
         try {
             if (validateInput()) {
+                showLoader(getString(R.string.creating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setProjectTitle(companyTitle.getText().toString());
                 actionData.setProjectDescription(aboutCompany.getText().toString());
@@ -456,6 +455,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     void updateExistingTeamsAPI() {
         try {
             if (validateInput()) {
+                showLoader(getString(R.string.updating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setProjectTitle(companyTitle.getText().toString());
                 actionData.setProjectDescription(aboutCompany.getText().toString());

@@ -38,7 +38,7 @@ const val RIA_NODE_DATA = "riaNodeDatas"
 
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
-    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, CLICK,  TO_BE_ADDED)
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, CLICK, TO_BE_ADDED)
     val bundle = Bundle()
     session.setHeader(WA_KEY)
     bundle.putString(UserSessionManager.KEY_FP_ID, session.fPID)
@@ -227,7 +227,7 @@ fun AppCompatActivity.delayProgressShow() {
 }
 
 fun AppCompatActivity.startSettingActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(ACCOUNT_SETTING_PAGE, CLICK,  TO_BE_ADDED)
+  WebEngageController.trackEvent(ACCOUNT_SETTING_PAGE, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "ACCOUNT_SETTING")
 }
 
@@ -237,32 +237,32 @@ fun AppCompatActivity.startKeyboardActivity(session: UserSessionManager) {
 }
 
 fun AppCompatActivity.startManageContentActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(MANAGE_CONTENT_PAGE, CLICK,  TO_BE_ADDED)
+  WebEngageController.trackEvent(MANAGE_CONTENT_PAGE, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "MANAGE_CONTENT")
 }
 
 fun AppCompatActivity.startManageInventoryActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(MANAGE_INVENTORY_PAGE, CLICK,  TO_BE_ADDED)
+  WebEngageController.trackEvent(MANAGE_INVENTORY_PAGE, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "MANAGE_INVENTORY")
 }
 
 fun AppCompatActivity.startHelpAndSupportActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(HELP_AND_SUPPORT_PAGE, CLICK,  TO_BE_ADDED)
+  WebEngageController.trackEvent(HELP_AND_SUPPORT_PAGE, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "HELP_AND_SUPPORT")
 }
 
 fun AppCompatActivity.startAboutBoostActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(ABOUT_BOOST_PAGE, CLICK,  TO_BE_ADDED)
+  WebEngageController.trackEvent(ABOUT_BOOST_PAGE, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "ABOUT_BOOST")
 }
 
 fun AppCompatActivity.startManageCustomer(session: UserSessionManager) {
-  WebEngageController.trackEvent(MANAGE_CUSTOMER_PAGE, CLICK,  TO_BE_ADDED)
+  WebEngageController.trackEvent(MANAGE_CUSTOMER_PAGE, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "MANAGE_CUSTOMER_VIEW")
 }
 
 fun AppCompatActivity.startNotification(session: UserSessionManager) {
-  WebEngageController.trackEvent(NOTIFICATION_PAGE, CLICK,  TO_BE_ADDED)
+  WebEngageController.trackEvent(NOTIFICATION_PAGE, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "NOTIFICATION_VIEW")
 }
 
@@ -487,7 +487,8 @@ fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, 
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
     val fragmentType = when {
-      session?.fP_AppExperienceCode.equals("SPA", true) -> com.inventoryorder.constant.FragmentType.CREATE_SPA_APPOINTMENT
+      (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC") ->
+        com.inventoryorder.constant.FragmentType.CREATE_SPA_APPOINTMENT
       else -> {
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, isConsult)
         com.inventoryorder.constant.FragmentType.CREATE_APPOINTMENT_VIEW
@@ -511,7 +512,7 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
     val fragmentType = when {
       isOrder -> com.inventoryorder.constant.FragmentType.ALL_ORDER_VIEW
       isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
-      session?.fP_AppExperienceCode.equals("SPA", true) -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
+      (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC")  -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
       else -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_VIEW
     }
     this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)
