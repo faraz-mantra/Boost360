@@ -20,6 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -195,7 +196,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         }
 
-        share_fb_1.setOnClickListener {
+        refer_and_earn.setOnClickListener {
+            startReferralView()
+        }
+        /*share_fb_1.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, FACEBOOK_MESSENGER, NO_EVENT_VALUE)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
@@ -239,8 +243,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 )
             }
 
-        }
-        share_referal.setOnClickListener {
+        }*/
+        /*share_referal.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, CARD, NO_EVENT_VALUE)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
@@ -250,7 +254,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             )
             sendIntent.type = "text/plain"
             startActivity(sendIntent)
-        }
+        }*/
 
 //        if(::localStorage.isInitialized) {
 //            cart_list = localStorage.getCartItems()
@@ -405,7 +409,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         val referralText = SpannableString(getString(R.string.upgrade_boost_tnc_link))
         referralText.setSpan(UnderlineSpan(), 0, referralText.length, 0)
         boost360_tnc.text = referralText
-        boost360_tnc.setOnClickListener {
+        /*boost360_tnc.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_TN_C_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
@@ -415,7 +419,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     webViewFragment,
                     Constants.WEB_VIEW_FRAGMENT
             )
-        }
+        }*/
 
         val refText = SpannableString(getString(R.string.referral_card_explainer_text))
         refText.setSpan(StyleSpan(Typeface.BOLD), 18, 26, 0)
@@ -427,6 +431,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 0
         )
         ref_txt.text = refText
+        ref_txt.text = "Get special discounts for you and your friends after successful signup."
     }
 
     fun loadData() {
@@ -1713,6 +1718,17 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
 
             viewModel.loadPackageUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
+        }
+    }
+
+    fun startReferralView() {
+        try {
+            WebEngageController.trackEvent(REFER_A_FRIEND, CLICK, TO_BE_ADDED)
+            val webIntent = Intent(activity, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
+            startActivity(webIntent)
+//            overridePendingTransition(0, 0)
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
         }
     }
 }
