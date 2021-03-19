@@ -42,7 +42,7 @@ public class ScheduledBreaksFragmnt extends Fragment {
         FrameLayout addBreaks = v.findViewById(R.id.fl_add_breaks);
         addBreaks.setOnClickListener(v1 -> {
             BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-            bottomSheetFragment.show(requireActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+            bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
         });
         ((StaffDetailsActivity) requireActivity()).setToolBarTitle("Scheduled Breaks", false);
         return v;

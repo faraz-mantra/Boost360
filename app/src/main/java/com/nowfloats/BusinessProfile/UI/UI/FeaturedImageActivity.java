@@ -50,6 +50,11 @@ import com.thinksity.databinding.ActivityFeaturedImageBinding;
 import java.io.File;
 import java.io.InputStream;
 
+import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventLabelKt.UPDATED_FEATURED_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.FEATURED_IMAGE_ADDED;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_FEATURED_IMAGE;
+
 public class FeaturedImageActivity extends AppCompatActivity {
   Button uploadButton;
   private Toolbar toolbar;
@@ -75,6 +80,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
 
   private void onFeatureLogoAddedOrUpdated(Boolean isAdded) {
     FirestoreManager instance = FirestoreManager.INSTANCE;
+    if(instance.getDrScoreData().getMetricdetail()==null) return;
     instance.getDrScoreData().getMetricdetail().setBoolean_add_featured_image_video(isAdded);
     instance.updateDocument();
   }
@@ -407,7 +413,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
           imageUrl = Methods.getRealPathFromURI(this, imageUri);
           path = imageUrl;
           path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
-          WebEngageController.trackEvent("UPLOAD FEATURED IMAGE", "Updated Featured Image", session.getFpTag());
+          WebEngageController.trackEvent(UPLOAD_FEATURED_IMAGE, UPDATED_FEATURED_IMAGE, session.getFpTag());
         } catch (Exception e) {
           e.printStackTrace();
           //  Util.toast("Uh oh. Something went wrong. Please try again", this);
@@ -432,7 +438,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
           if (picUri != null) {
             path = Methods.getPath(this, picUri);
             path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
-            WebEngageController.trackEvent("UPLOAD FEATURED IMAGE", "Updated Featured Image", session.getFpTag());
+            WebEngageController.trackEvent(UPLOAD_FEATURED_IMAGE, UPDATED_FEATURED_IMAGE, session.getFpTag());
                         /*if (!Util.isNullOrEmpty(path)) {
                             editImage();
                         } else
@@ -447,7 +453,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
         String path = data.getStringExtra("edit_image");
         if (!TextUtils.isEmpty(path)) {
           this.path = path;
-          WebEngageController.trackEvent("Featured Image added", "MANAGE CONTENT", session.getFpTag());
+          WebEngageController.trackEvent(FEATURED_IMAGE_ADDED, MANAGE_CONTENT, session.getFpTag());
           uploadPrimaryPicture(path);
         }
       }

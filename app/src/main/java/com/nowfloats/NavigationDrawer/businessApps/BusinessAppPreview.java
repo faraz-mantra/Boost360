@@ -57,7 +57,7 @@ public class BusinessAppPreview extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        session=new UserSessionManager(context,getActivity());
+        session=new UserSessionManager(context,requireActivity());
         //setHasOptionsMenu(true);
     }
 

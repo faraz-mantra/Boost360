@@ -64,7 +64,7 @@ public class MobileOtpVerificationFragment extends Fragment {
         String mobile = onOTPProvidedListener.getMobileEntered();
 
         if(!TextUtils.isEmpty(mobile) && mobile.length() == 10) {
-            String maskedMobile = mobile.substring(0, 2) + "XXXXXX" + mobile.substring(8, 10);
+            String maskedMobile = mobile.substring(0, 2) + getString(R.string.xxxxxxx) + mobile.substring(8, 10);
             tvHint.setText(tvHint.getText() + " "+maskedMobile);
         }
 
@@ -79,7 +79,7 @@ public class MobileOtpVerificationFragment extends Fragment {
         tvResendUnderline.setVisibility(View.GONE);
 
         new Handler().postDelayed(() -> {
-            String resendValue = "Didn’t get the code? Resend";
+            String resendValue = getString(R.string.didnt_get_the_code);
             SpannableString resendString = new SpannableString(resendValue);
             resendString.setSpan(new UnderlineSpan(),resendValue.length() - 6, resendValue.length(),0);
             tvResend.setText(resendString);

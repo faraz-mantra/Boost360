@@ -36,7 +36,7 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     }
 
     override fun getNavIconScale(): Float {
-        return 0.75f
+        return 1.0f
     }
 
     override fun getToolbarBackgroundColor(): Int? {

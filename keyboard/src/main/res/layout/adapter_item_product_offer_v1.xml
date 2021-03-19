@@ -17,13 +17,13 @@
         android:textSize="11sp"
         android:maxLines="2"
         android:ellipsize="end"
-        android:paddingLeft="12dp"
+        android:paddingStart="12dp"
         android:paddingRight="12dp"
         android:paddingTop="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tv_product_name"
-        android:text="Creating new offer for"/>
+        android:text="@string/creating_new_offer_for"/>
 
     <TextView
         android:id="@+id/tv_product_name"
@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@+id/layout_product_price"
         android:maxLines="1"
         android:ellipsize="end"
-        android:paddingLeft="12dp"
+        android:paddingStart="12dp"
         android:paddingRight="12dp"
         android:textColor="@color/primaryColor"
         android:textSize="14sp"
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingTop="2dp"
-        android:paddingLeft="12dp"
+        android:paddingStart="12dp"
         android:paddingRight="12dp"
         app:layout_constraintBottom_toTopOf="@+id/dotted_line" >
 
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/secondaryTextColor"
             android:textSize="13sp"
-            android:text="Price: "
+            android:text="@string/price_colon"
             android:layout_gravity="center_vertical"/>
 
         <TextView
@@ -79,7 +79,7 @@
             android:layout_height="match_parent"
             android:textColor="@color/secondaryTextColor"
             android:textSize="13sp"
-            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
             android:paddingRight="10dp"
             android:ellipsize="end"
             android:maxLines="1"
@@ -93,8 +93,8 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layerType="software"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
@@ -121,7 +121,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingLeft="12dp"
+        android:paddingStart="12dp"
         android:paddingRight="12dp"
         app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer" >
 
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/secondaryTextColor"
-                android:text="OFFER PRICE" />
+                android:text="@string/offer_price_heading" />
 
             <LinearLayout
                 android:id="@+id/ll_price"
@@ -162,7 +162,7 @@
                     android:layout_width="match_parent"
                     android:focusable="false"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp"
                     android:paddingRight="5dp"
                     android:maxLines="1"
                     android:textSize="13sp"
@@ -177,7 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/secondaryTextColor"
-                android:text="VALIDITY" />
+                android:text="@string/validity_heading" />
 
             <LinearLayout
                 android:id="@+id/ll_validity"
@@ -207,7 +207,7 @@
                     android:gravity="bottom"
                     android:textSize="13sp"
                     android:textColor="@color/primaryTextColor"
-                    android:text="24 Hrs"/>
+                    android:text="@string/_24_hrs"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="18dp"
@@ -223,7 +223,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.1"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:orientation="vertical">
 
             <TextView
@@ -232,7 +232,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/secondaryTextColor"
-                android:text="QTY." />
+                android:text="@string/qty" />
 
             <LinearLayout
                 android:id="@+id/ll_quantity"
@@ -251,7 +251,7 @@
                     android:textSize="13sp"
                     android:gravity="bottom"
                     android:textColor="@color/primaryTextColor"
-                    android:text="1"/>
+                    android:text="@string/_1"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="18dp"

@@ -18,23 +18,23 @@
         android:id="@+id/main_text1"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="main text"/>
+        android:text="@string/main_text"/>
 
     <TextView
         android:id="@+id/message_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:textSize="18sp"
-        android:text="message text"/>
+        android:text="@string/message_text"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="38dp"
-        android:text="Take action"
+        android:text="@string/take_action"
         android:minWidth="200dp"
         android:gravity="center"
         android:textSize="18sp"

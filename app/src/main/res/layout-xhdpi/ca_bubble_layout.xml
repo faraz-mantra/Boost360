@@ -15,7 +15,7 @@
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="-15dp"
+        android:layout_marginStart="-15dp"
         android:alpha="0.5"
         android:src="@drawable/ic_ca_icon" />
 

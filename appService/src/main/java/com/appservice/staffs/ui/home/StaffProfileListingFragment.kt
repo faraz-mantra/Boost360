@@ -1,12 +1,14 @@
 package com.appservice.staffs.ui.home
 
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import android.view.inputmethod.InputMethodManager
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -14,169 +16,266 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffListingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
+import com.appservice.recyclerView.PaginationScrollListener
+import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
+import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.staffs.model.DataItem
-import com.appservice.staffs.model.FilterBy
-import com.appservice.staffs.model.GetStaffListingRequest
-import com.appservice.staffs.model.GetStaffListingResponse
-import com.appservice.staffs.ui.IOnBackPressed
+import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.ui.model.ItemsItem
+import com.appservice.ui.model.ServiceSearchListingResponse
+import com.appservice.utils.WebEngageController
+import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
+import com.framework.webengageconstant.*
+import kotlinx.android.synthetic.main.fragment_staff_listing.*
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
-import kotlin.collections.ArrayList
 
-class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener, IOnBackPressed {
-    private lateinit var searchView: SearchView
-    private val list: ArrayList<DataItem> = ArrayList()
-    private val copyList: ArrayList<DataItem> = ArrayList()
-    private lateinit var adapter: AppBaseRecyclerViewAdapter<DataItem>
-    override fun getLayout(): Int {
-        return R.layout.fragment_staff_listing
+class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener {
+
+  private val list: ArrayList<DataItem> = arrayListOf()
+  private val finalList: ArrayList<DataItem> = arrayListOf()
+  private var adapterStaff: AppBaseRecyclerViewAdapter<DataItem>? = null
+  private var layoutManagerN: LinearLayoutManager? = null
+  private var isNonPhysicalExperience: Boolean? = null
+  private var currencyType: String? = "INR"
+  private var externalSourceId: String? = null
+  private var applicationId: String? = null
+  private var userProfileId: String? = null
+
+  /* Paging */
+  private var isLoadingD = false
+  private var TOTAL_ELEMENTS = 0
+  private var offSet: Int = PAGE_START
+  private var limit: Int = PAGE_SIZE
+  private var isLastPageD = false
+  private var isServiceAdd = false
+
+  override fun getLayout(): Int {
+    return R.layout.fragment_staff_listing
+  }
+
+  override fun getViewModelClass(): Class<StaffViewModel> {
+    return StaffViewModel::class.java
+  }
+
+  companion object {
+    fun newInstance(): StaffProfileListingFragment {
+      return StaffProfileListingFragment()
     }
+  }
 
-    override fun getViewModelClass(): Class<StaffViewModel> {
-        return StaffViewModel::class.java
+  override fun onCreateView() {
+    super.onCreateView()
+    getBundleData()
+    layoutManagerN = LinearLayoutManager(baseActivity)
+    WebEngageController.trackEvent(STAFF_PROFILE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
+    getListServiceFilterApi()
+    layoutManagerN?.let { scrollPagingListener(it) }
+    swipeRefreshListener()
+    setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService)
+  }
+
+  private fun getBundleData() {
+    isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
+    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
+    externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
+    applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
+    userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
+  }
+
+  private fun getListServiceFilterApi() {
+    showProgress()
+    viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)?.observeOnce(viewLifecycleOwner, {
+      if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
+        fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+      } else {
+        hideProgress()
+        setEmptyView(isStaffEmpty = false, isServiceEmpty = true)
+      }
+    })
+  }
+
+  private fun swipeRefreshListener() {
+    binding?.staffListSwipeRefresh?.setOnRefreshListener {
+      binding?.staffListSwipeRefresh?.isRefreshing = true
+      this.offSet = PAGE_START
+      this.limit = PAGE_SIZE
+      fetchStaffListing(isProgress = false, isFirst = true, offSet = offSet, limit = limit)
     }
+  }
 
-    private fun showMenuItem() {
-        appBaseActivity?.getToolbar()?.menu?.findItem(R.id.app_bar_search)?.isVisible = true
-    }
-
-    private fun hideMenuItem() {
-        appBaseActivity?.getToolbar()?.menu?.findItem(R.id.app_bar_search)?.isVisible = false
-    }
-
-    companion object {
-        fun newInstance(): StaffProfileListingFragment {
-            return StaffProfileListingFragment()
+  private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
+    binding?.rvStaffList?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+      override fun loadMoreItems() {
+        if (!isLastPageD) {
+          isLoadingD = true
+          adapterStaff?.addLoadingFooter(DataItem().getLoaderItem())
+          offSet += limit
+          fetchStaffListing(offSet = offSet, limit = limit)
         }
-    }
+      }
 
-    override fun onCreateView() {
-        super.onCreateView()
-        setHasOptionsMenu(true)
-        hideMenuItem()
-        setOnClickListener(binding?.fragmentStaffAdd?.flAddStaff)
-        fetchStaffListing()
-    }
+      override val totalPageCount: Int
+        get() = TOTAL_ELEMENTS
+      override val isLastPage: Boolean
+        get() = isLastPageD
+      override val isLoading: Boolean
+        get() = isLoadingD
+    })
+  }
 
-    private fun fetchStaffListing() {
-        showProgress("Loading")
-        viewModel?.getStaffList(GetStaffListingRequest(FilterBy("", 0, 0), UserSession.fpId, ""))?.observe(viewLifecycleOwner, Observer{
-            when (it.status) {
-                200 -> {
-                    val getStaffListingResponse = it as GetStaffListingResponse
-                    val data = getStaffListingResponse.result?.data
-                    when {
-                        data?.isNotEmpty()!! -> {
-                            binding?.layoutStaffListing!!.root.visibility = View.VISIBLE
-                            binding?.fragmentStaffAdd!!.root.visibility = View.GONE
-                            data as ArrayList<DataItem>
-                            this.list.addAll(data)
-                            showMenuItem()
-                            this.copyList.clear()
-                            this.copyList.addAll(data)
-                            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data, itemClickListener = this@StaffProfileListingFragment)
-                            binding?.layoutStaffListing?.rvStaffList?.adapter = adapter
-                            hideProgress()
-                        }
-                        else -> {
-                            binding?.layoutStaffListing?.root?.visibility = View.GONE
-                            binding?.fragmentStaffAdd!!.root.visibility = View.VISIBLE
-                            hideProgress()
-                        }
-                    }
-                }
-                else -> {
-                    binding?.layoutStaffListing!!.root.visibility = View.GONE
-                    binding?.fragmentStaffAdd!!.root.visibility = View.VISIBLE
-                    hideProgress()
+  private fun fetchStaffListing(isProgress: Boolean = true, isFirst: Boolean = false, searchString: String = "", offSet: Int, limit: Int) {
+    if ((isFirst || searchString.isNotEmpty()) && isProgress) showProgress()
+    viewModel?.getStaffList(getFilterRequest(offSet, limit))?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        setStaffDataItems((it as? GetStaffListingResponse)?.result, searchString.isNotEmpty(), isFirst)
+      } else if (isFirst) showShortToast(it.errorMessage())
+      if (isFirst || searchString.isNotEmpty()) hideProgress()
+    })
+  }
 
-                }
-            }
-
-        })
-    }
-
-    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        val staff = item as DataItem
-        val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.STAFF_DATA.name, staff)
-        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false)
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_stafflisting, menu)
-        val searchItem = menu.findItem(R.id.app_bar_search)
-        searchItem.isVisible = list.isNullOrEmpty().not()
-         this.searchView = searchItem.actionView as SearchView
-        searchView.queryHint = "Search Staff"
-        searchView.setOnQueryTextListener(this)
-        searchView.clearFocus()
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
-        return when (item.itemId) {
-            R.id.menu_add_staff -> {
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = false)
-                true
-            }
-            R.id.app_bar_search -> {
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onClick(v: View) {
-        when (v) {
-            binding!!.fragmentStaffAdd.flAddStaff -> {
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = false)
-            }
-        }
-    }
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return true
-    }
-
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText != null) {
-            filter(newText)
-        }
-        return true
-    }
-
-    fun filter(queryText: String) {
+  private fun setStaffDataItems(resultStaff: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
+    val listStaff = resultStaff?.data
+    if (isSearchString.not()) {
+      if (isFirstLoad) finalList.clear()
+      if (listStaff.isNullOrEmpty().not()) {
+        removeLoader()
+        setEmptyView(false)
+        TOTAL_ELEMENTS = resultStaff?.paging?.count ?: 0
+        finalList.addAll(listStaff!!)
         list.clear()
-        if (queryText.isEmpty() && queryText.isBlank()) {
-            list.addAll(copyList)
-        } else {
-            for (dataItem in copyList) {
-                if (dataItem.name?.toLowerCase(Locale.ROOT)?.contains(queryText.toLowerCase(Locale.ROOT))!!) {
-                    list.add(dataItem)
-                }
-            }
-        }
-        adapter.updateList(list)
+        list.addAll(finalList)
+        isLastPageD = (finalList.size == TOTAL_ELEMENTS)
+        setAdapterNotify()
+      } else if (isFirstLoad) setEmptyView(true)
+    } else {
+      if (listStaff.isNullOrEmpty().not()) {
+        list.clear()
+        list.addAll(listStaff!!)
+        setAdapterNotify()
+      }
     }
+  }
 
-    override fun onBackPressed(): Boolean {
-        return when {
-            !searchView.isIconified -> {
-                searchView.isIconified = true;
-                false
-            }
-            else -> {
-                true
-            }
-        }
+  private fun setAdapterNotify() {
+    if (adapterStaff == null) {
+      adapterStaff = AppBaseRecyclerViewAdapter(baseActivity, list, this@StaffProfileListingFragment)
+      binding?.rvStaffList?.layoutManager = layoutManagerN
+      binding?.rvStaffList?.adapter = adapterStaff
+      adapterStaff?.runLayoutAnimation(binding?.rvStaffList)
+    } else adapterStaff?.notifyDataSetChanged()
+  }
+
+  private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
+    binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
+    binding?.staffEmpty?.root?.visibility = if (isStaffEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
+    binding?.rvStaffList?.visibility = if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
+  }
+
+  private fun removeLoader() {
+    if (isLoadingD) {
+      isLoadingD = false
+      adapterStaff?.removeLoadingFooter()
     }
+  }
 
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    val staff = item as DataItem
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.STAFF_DATA.name, staff)
+    startStaffFragmentActivity(FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = true)
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.menu_stafflisting, menu)
+    val searchView = menu.findItem(R.id.app_bar_search).actionView as? SearchView
+    val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
+    searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
+    searchAutoComplete?.setTextColor(getColor(R.color.white))
+    searchView?.queryHint = getString(R.string.search_staff)
+    searchView?.setOnQueryTextListener(this)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.menu_add_staff -> {
+        WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
+        startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+        true
+      }
+      R.id.app_bar_search -> {
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
+
+  override fun onClick(v: View) {
+    when (v) {
+      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+      binding?.serviceEmpty?.cbAddService -> {
+        isServiceAdd = true
+        startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)
+      }
+    }
+  }
+
+  private fun sendBundleData(): Bundle {
+    val bundle = Bundle()
+    bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience ?: false)
+    bundle.putString(IntentConstant.CURRENCY_TYPE.name, currencyType)
+    bundle.putString(IntentConstant.FP_ID.name, UserSession.fpId)
+    bundle.putString(IntentConstant.FP_TAG.name, UserSession.fpTag)
+    bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
+    bundle.putString(IntentConstant.CLIENT_ID.name, UserSession.clientId)
+    bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
+    bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
+    return bundle
+  }
+
+  override fun onQueryTextSubmit(query: String?): Boolean {
+    return false
+  }
+
+  override fun onQueryTextChange(query: String?): Boolean {
+    if (query.isNullOrEmpty().not()) filterStaff(query!!)
+    return false
+  }
+
+  private fun filterStaff(query: String) {
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+      val isRefresh = data?.getBooleanExtra(IntentConstant.IS_UPDATED.name, false) ?: false
+      if (isRefresh) {
+        this.offSet = PAGE_START
+        this.limit = PAGE_SIZE
+        if (isServiceAdd) getListServiceFilterApi()
+        else fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+      }
+    }
+  }
+
+  override fun showProgress(title: String?, cancelable: Boolean?) {
+    binding?.progress?.visible()
+  }
+
+  override fun hideProgress() {
+    binding?.staffListSwipeRefresh?.isRefreshing = false
+    binding?.progress?.gone()
+  }
+
+}
+
+fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
+  return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), UserSession.fpTag, "")
 }

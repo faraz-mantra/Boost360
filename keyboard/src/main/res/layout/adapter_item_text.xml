@@ -15,7 +15,6 @@
         android:layout_gravity="center"
         android:maxLines="10"
         android:gravity="center"
-        android:ellipsize="end"
-        android:text="text" />
+        android:ellipsize="end" />
 
 </androidx.cardview.widget.CardView>

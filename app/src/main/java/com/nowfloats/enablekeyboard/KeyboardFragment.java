@@ -100,7 +100,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    session = new UserSessionManager(requireActivity().getApplicationContext(), requireActivity());
+    session = new UserSessionManager(getActivity().getApplicationContext(), requireActivity());
 
     //show or hide if feature is available to user
     mainLayout = view.findViewById(R.id.main_layout);
@@ -222,7 +222,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
       } else if (code == STORAGE_CODE) {
         storageSwitchTv.setChecked(true);
       }
-      Toast.makeText(activity, "To change permission go to setting", Toast.LENGTH_SHORT).show();
+      Toast.makeText(activity, getString(R.string.to_change_permission_go_to_settings), Toast.LENGTH_SHORT).show();
     }
   }
 
@@ -230,12 +230,12 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     String content = "", title = "";
     switch (code) {
       case MICROPHONE_CODE:
-        title = "Microphone Permission";
-        content = "We need permission to enable voice input feature in " + getString(R.string.boost_keyboard);
+        title = getString(R.string.microphone_permission);
+        content = getString(R.string.we_need_permission_to_enable_voice_input_feature_in) + getString(R.string.boost_keyboard);
         break;
       case STORAGE_CODE:
-        title = "Storage Permission";
-        content = "We need permission to enable sharing feature in " + getString(R.string.boost_keyboard);
+        title = getString(R.string.storage_permission);
+        content = getString(R.string.we_need_permission_to_sharing) + getString(R.string.boost_keyboard);
         break;
     }
     Methods.showApplicationPermissions(title, content, mContext);
@@ -404,7 +404,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     progressDialog.setMessage(status);
     progressDialog.setCancelable(false);
     progressDialog.show();
-    Intent intent = new Intent(requireActivity(), UpgradeActivity.class);
+    Intent intent = new Intent(getActivity(), UpgradeActivity.class);
     intent.putExtra("expCode", session.getFP_AppExperienceCode());
     intent.putExtra("fpName", session.getFPName());
     intent.putExtra("fpid", session.getFPID());

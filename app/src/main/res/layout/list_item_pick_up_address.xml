@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="Address Line 1"
             android:textColor="#383838"
             android:textSize="14sp" />
@@ -50,8 +50,8 @@
             fontPath="Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Address Line 2"
+            android:layout_marginStart="10dp"
+            android:text="@string/address_line_2"
             android:textColor="#383838"
             android:textSize="14sp" />
 
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="Address Line 2"
+            android:hint="@string/address_line_2"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -75,15 +75,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_5"
-        android:hint="IFSC Code"
+        android:hint="@string/ifsc_code"
         android:orientation="vertical">
 
         <TextView
             fontPath="Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="City"
+            android:layout_marginStart="10dp"
+            android:text="@string/city_"
             android:textColor="#383838"
             android:textSize="14sp" />
 
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="City"
+            android:hint="@string/city_"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -114,7 +114,7 @@
             fontPath="Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="@string/country"
             android:textColor="#383838"
             android:textSize="14sp" />

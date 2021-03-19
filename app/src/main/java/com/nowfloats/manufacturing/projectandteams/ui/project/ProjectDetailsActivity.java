@@ -159,7 +159,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                 if (imageURLs.size() < 3) {
                     showDialogToGetImage();
                 } else {
-                    Toast.makeText(ProjectDetailsActivity.this, "Max Upload Image is 3(Three).", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProjectDetailsActivity.this, getString(R.string.max_image_upload_is_three), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -168,7 +168,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             @Override
             public void onClick(View v) {
                 if (path.size()>0) {
-                    showLoader("Uploading Image.Please Wait...");
+                    showLoader(getString(R.string.uploading_image_please_wait));
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -334,11 +334,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader("Updating Record.Please Wait...");
             updateExistingTeamsAPI();
             Methods.hideKeyboard(ProjectDetailsActivity.this);
         } else {
-            showLoader("Creating Record.Please Wait...");
             createNewTeamsAPI();
             Methods.hideKeyboard(ProjectDetailsActivity.this);
         }
@@ -347,6 +345,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     void createNewTeamsAPI() {
         try {
             if (validateInput()) {
+                showLoader(getString(R.string.creating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setProjectTitle(companyTitle.getText().toString());
                 actionData.setProjectDescription(aboutCompany.getText().toString());
@@ -416,7 +415,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, "Successfully Added Project Details");
+                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_added_project_details));
                         onBackPressed();
                     }
 
@@ -440,12 +439,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         if (companyTitle.getText().toString().isEmpty() || aboutCompany.getText().toString().isEmpty() || clientName.getText().toString().isEmpty()
                 || clientCategory.getText().toString().isEmpty() || projectClientRequirement.getText().toString().isEmpty() || ourApproach.getText().toString().isEmpty()
                 || budget.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Fields are empty!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (dateOfCompletion.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Select Valid Date Of Completion.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.select_a_valid_date_of_completion), Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -456,6 +455,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     void updateExistingTeamsAPI() {
         try {
             if (validateInput()) {
+                showLoader(getString(R.string.updating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setProjectTitle(companyTitle.getText().toString());
                 actionData.setProjectDescription(aboutCompany.getText().toString());
@@ -526,7 +526,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, "Successfully Updated Project Details");
+                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_added_project_details));
                         finish();
                     }
 
@@ -534,7 +534,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     public void failure(RetrofitError error) {
                         hideLoader();
                         if (error.getResponse().getStatus() == 200) {
-                            Methods.showSnackBarPositive(ProjectDetailsActivity.this, "Successfully Updated Project Details");
+                            Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_added_project_details));
                             finish();
                         } else {
                             Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -571,7 +571,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTeams ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(ProjectDetailsActivity.this,  getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -582,7 +582,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(ProjectDetailsActivity.this,  getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -611,7 +611,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             @Override
             public void onClick(View v) {
                 if (ScreenType != null && ScreenType.equals("edit")) {
-                    showLoader("Deleting Record.Please Wait...");
+                    showLoader(getString(R.string.deleting_record_please_wait));
                     deleteRecord(itemId);
                     return;
                 }

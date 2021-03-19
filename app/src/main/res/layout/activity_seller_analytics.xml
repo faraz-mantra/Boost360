@@ -49,7 +49,7 @@
                 android:id="@+id/tv_total_revenue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="12.99"
                 android:textColor="@color/white"
                 android:textSize="50sp"
@@ -76,8 +76,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_total_orders"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="1dp"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onOrderTypeClicked"
@@ -125,8 +125,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_successful_orders"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="1dp"
             android:layout_marginTop="1dp"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onOrderTypeClicked"
@@ -172,8 +172,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_received_orders"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onOrderTypeClicked"
@@ -221,8 +221,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_cancelled_orders"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="1dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onOrderTypeClicked"
@@ -269,8 +269,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_returned_orders"
             android:layout_marginBottom="1dp"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onOrderTypeClicked"
@@ -318,8 +318,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_disputed_orders"
             android:layout_marginBottom="1dp"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onOrderTypeClicked"
@@ -367,8 +367,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_abandoned_orders"
             android:layout_marginBottom="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="1dp"
             android:layout_marginTop="16dp"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onOrderTypeClicked"

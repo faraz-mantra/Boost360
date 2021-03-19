@@ -125,7 +125,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="commencement date"
+                    android:text="@string/commencement_date"
                     android:textAllCaps="true"
                     android:textColor="#C4C4C4"
                     android:textSize="@dimen/_8sdp" />
@@ -177,7 +177,7 @@
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:padding="@dimen/_10sdp"
-                android:text="Delete"
+                android:text="@string/delete_"
                 android:textAllCaps="true"
                 android:textColor="@color/red"
                 android:textSize="@dimen/_12sdp" />

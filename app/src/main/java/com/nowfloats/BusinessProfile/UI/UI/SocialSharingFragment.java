@@ -6,19 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import androidx.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +21,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -102,6 +103,23 @@ import retrofit.client.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.framework.webengageconstant.EventLabelKt.CONNECT_FACEBOOKPAGE;
+import static com.framework.webengageconstant.EventLabelKt.CONNECT_FACEBOOK_SHOP;
+import static com.framework.webengageconstant.EventLabelKt.CONNECT_GMB;
+import static com.framework.webengageconstant.EventLabelKt.CONNECT_TWITTER;
+import static com.framework.webengageconstant.EventLabelKt.CONNECT_WHATSAPP_FOR_BUSINESS;
+import static com.framework.webengageconstant.EventLabelKt.DISCONNECT_FACEBOOKPAGE;
+import static com.framework.webengageconstant.EventLabelKt.DISCONNECT_FACEBOOK_SHOP;
+import static com.framework.webengageconstant.EventLabelKt.DISCONNECT_GMB;
+import static com.framework.webengageconstant.EventLabelKt.DISCONNECT_WHATSAPP_FOR_BUSINESS;
+import static com.framework.webengageconstant.EventLabelKt.DISONNECT_TWITTER;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_CONTENT_SHARING;
+import static com.framework.webengageconstant.EventNameKt.CONTENT_SHARING;
+import static com.framework.webengageconstant.EventNameKt.FACEBOOKPAGE;
+import static com.framework.webengageconstant.EventNameKt.FACEBOOKSHOP;
+import static com.framework.webengageconstant.EventNameKt.GMB;
+import static com.framework.webengageconstant.EventNameKt.TWITTER;
+import static com.framework.webengageconstant.EventNameKt.WHATSAPPFORBUSINESS;
 
 public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int PAGE_NO_FOUND = 404;
@@ -201,7 +219,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
         callbackManager = CallbackManager.Factory.create();
         session = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
-        WebEngageController.trackEvent("CONTENT SHARING","CONTENT SHARING",session.getFpTag());
+        WebEngageController.trackEvent(CONTENT_SHARING, EVENT_LABEL_CONTENT_SHARING, session.getFpTag());
         this.phoneCountryCode = "+".concat(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
 
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_getActivity().this,session.getFPID());
@@ -286,9 +304,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             public void onClick(View v) {
                 if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookPageCheckBox.setChecked(false);
-                    Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.facebook_is_not_working), Toast.LENGTH_SHORT).show();
                 } else if (facebookPageCheckBox.isChecked()) {
-                    WebEngageController.trackEvent("FACEBOOKPAGE","Connect FACEBOOKPAGE",session.getFpTag());
+                    WebEngageController.trackEvent(FACEBOOKPAGE, CONNECT_FACEBOOKPAGE, session.getFpTag());
                     facebookPageCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -299,7 +317,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }, 200);
 
                 } else {
-                    WebEngageController.trackEvent("FACEBOOKPAGE","Disconnect FACEBOOKPAGE",session.getFpTag());
+                    WebEngageController.trackEvent(FACEBOOKPAGE, DISCONNECT_FACEBOOKPAGE, session.getFpTag());
                     NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("facebookpage")
@@ -330,12 +348,12 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 //                    getGoogleAccounts();
                     Intent signInIntent = googleSignInClient.getSignInIntent();
                     startActivityForResult(signInIntent, GMBHandler.REQUEST_CODE);
-                    WebEngageController.trackEvent("GMB","Connect GMB",session.getFpTag());
+                    WebEngageController.trackEvent(GMB, CONNECT_GMB, session.getFpTag());
                 } else {
 
                     gmbHandler.removeUser(SocialSharingFragment.this);
                     gmbSignOutUserfromGoogle(true);
-                    WebEngageController.trackEvent("GMB","Disconnect GMB",session.getFpTag());
+                    WebEngageController.trackEvent(GMB, DISCONNECT_GMB , session.getFpTag());
 
                 }
             }
@@ -347,10 +365,10 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             public void onClick(View v) {
                 if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookHomeCheckBox.setChecked(false);
-                    Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.facebook_is_not_working), Toast.LENGTH_SHORT).show();
                 } else if (facebookHomeCheckBox.isChecked()) {
                     facebookHomeCheckBox.setChecked(false);
-                    WebEngageController.trackEvent("FACEBOOKSHOP","Connect FacebookShop",session.getFpTag());
+                    WebEngageController.trackEvent(FACEBOOKSHOP, CONNECT_FACEBOOK_SHOP, session.getFpTag());
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -359,7 +377,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         }
                     }, 200);
                 } else {
-                    WebEngageController.trackEvent("FACEBOOKSHOP","Disconnect FacebookShop",session.getFpTag());
+                    WebEngageController.trackEvent(FACEBOOKSHOP, DISCONNECT_FACEBOOK_SHOP, session.getFpTag());
                     NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("facebookusertimeline")
@@ -397,7 +415,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
                 if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookautopost.setChecked(false);
-                    Toast.makeText(getContext(), "Facebook is not working", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.facebook_is_not_working), Toast.LENGTH_SHORT).show();
                 } else if (paymentState.equals("-1")) {
                     try {
 
@@ -434,7 +452,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             public void onClick(View v) {
 
                 if (twitterCheckBox.isChecked()) {
-                    WebEngageController.trackEvent("TWITTER","Connect Twitter",session.getFpTag());
+                    WebEngageController.trackEvent(TWITTER, CONNECT_TWITTER, session.getFpTag());
                     twitterCheckBox.setChecked(false);
                     if (!Methods.isOnline(getActivity())) {
                         showAlertBox();
@@ -446,7 +464,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }
                     //Rahul twitter
                 } else {
-                    WebEngageController.trackEvent("TWITTER","Disonnect Twitter",session.getFpTag());
+                    WebEngageController.trackEvent(TWITTER, DISONNECT_TWITTER, session.getFpTag());
                     NfxRequestClient requestClient1 = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("twitter")
@@ -466,8 +484,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         view.findViewById(R.id.iv_help_tool).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = "Updates will reflect on your website one hour after getting posted on the Facebook Page. Please <u>do not</u> select this option if you are using social share from your website.";
-                showDialog("Tip!", message, "Done");
+                String message = getString(R.string.updates_will_reflect);
+                showDialog(getString(R.string.tip), message, getString(R.string.done_));
             }
         });
 
@@ -477,7 +495,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             {
                 binding.whatsappCheckbox.setChecked(false);
                 showWhatsAppNumberDialog();
-                WebEngageController.trackEvent("WHATSAPPFORBUSINESS","Connect Whatsapp for Business",session.getFpTag());
+                WebEngageController.trackEvent(WHATSAPPFORBUSINESS, CONNECT_WHATSAPP_FOR_BUSINESS, session.getFpTag());
             }
 
             else
@@ -491,7 +509,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                 update.setMulti(true);
                 updateWhatsAppNumber(update, binding.tvWhatsappNumber.getText().toString());
-                WebEngageController.trackEvent("WHATSAPPFORBUSINESS","Disconnect Whatsapp for Business",session.getFpTag());
+                WebEngageController.trackEvent(WHATSAPPFORBUSINESS, DISCONNECT_WHATSAPP_FOR_BUSINESS, session.getFpTag());
             }
         });
 
@@ -536,7 +554,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (print)
-                        Toast.makeText(getContext(), "Signed out", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.signed_out), Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -754,7 +772,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                             numberOfUpdatesSelected = true;
                         } else {
                             // == 0 ? 5 : dialog.getSelectedIndex() ==1 ? 10 : 5;
-                            Toast.makeText(getActivity(), "Please select any Facebook page", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.please_select_any_facebook_pgae), Toast.LENGTH_SHORT).show();
                             numberOfUpdatesSelected = false;
                         }
                         autoPostSelectListener(name);
@@ -970,7 +988,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                                 public void onPositive(MaterialDialog dialog) {
                                                     mNewPosition = dialog.getSelectedIndex();
                                                     if (mNewPosition == -1) {
-                                                        Toast.makeText(getActivity(), "Please select any Facebook page", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getActivity(), R.string.please_select_any_facebook_pgae, Toast.LENGTH_SHORT).show();
                                                         /*if (from == FROM_FB_PAGE) {
                                                             facebookPageCheckBox.setChecked(false);
                                                         } else if (from == FROM_AUTOPOST) {
@@ -995,7 +1013,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                                                 pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                                             } else {
                                                                 //facebookPageCheckBox.setChecked(false);
-                                                                showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.", "Done");
+                                                                showDialog("Alert", getString(R.string.you_cannot_share_the_same_fb), getString(R.string.done_));
                                                             }
                                                             //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                                         } else if (from == FROM_AUTOPOST) {
@@ -1006,7 +1024,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                                             } else {
                                                                 //Toast.makeText(getApplicationContext(), "You can't post and pull from the same Facebook page", Toast.LENGTH_SHORT).show();
                                                                 //facebookautopost.setChecked(false);
-                                                                showDialog("Alert", "You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.", "Done");
+                                                                showDialog(getString(R.string.alert), getString(R.string.this_will_lead_indefinite_loop_of), getString(R.string.done_));
                                                             }
                                                         }
                                                         dialog.dismiss();
@@ -1276,7 +1294,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         //Log.v("ggg","resime" +facebookHomeCheckBox.isChecked());
         Methods.isOnline(getActivity());
         if (pref.getInt("fbStatus", 0) == 2) {
-            Methods.showSnackBarNegative(getActivity(), "Your Facebook session has expired. Please login.");
+            Methods.showSnackBarNegative(getActivity(), getString(R.string.your_facebook_session_has_expired_please_login));
         }
 
         if (!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0) == 1 || pref.getInt("fbStatus", 0) == 3)) {
@@ -1479,7 +1497,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         if (getActivity() instanceof HomeActivity)
             ((HomeActivity) getActivity()).onClick(getString(R.string.title_activity_social__sharing_));
         else {
-            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1492,7 +1510,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     public void nfxCallBack(String response, int callType, String name) {
         hideLoader();
         if (response.equals("error")) {
-            Toast.makeText(getContext(), "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
             return;
         }
         BoostLog.d("ggg: ", response + callType + ":");
@@ -1569,7 +1587,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                                     } else {
-                                        Methods.materialDialog(getActivity(), "Alert", "This feature is available to paid customers only.");
+                                        Methods.materialDialog(getActivity(), "Alert", getString(R.string.this_feature_is_available_to_paid_customers));
                                     }
                                 }
                             });
@@ -1590,7 +1608,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         break;
                     case "profile_incomplete":
                         MixPanelController.track(MixPanelController.FACEBOOK_PAGE_PROFILE_INCOMPLETE, null);
-                        showDialog("Site Health Should Be 80%", getString(R.string.business_profile_incomplete), "Take Me There");
+                        showDialog(getString(R.string.site_health_should_be_eighty_percent), getString(R.string.business_profile_incomplete), getString(R.string.take_me_there_));
                         break;
                     case "error_creating_page":
                         MixPanelController.track(MixPanelController.FACEBOOK_PAGE_ERROR_IN_CREATE, null);
@@ -1601,7 +1619,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         pageSuggestionDialog();
                         break;
                     default:
-                        Toast.makeText(getActivity(), "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
                         break;
                 }
         }
@@ -1659,7 +1677,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     dialog.dismiss();
                     createFBPage(page);
                 } else {
-                    Toast.makeText(getActivity(), "Page name can't be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.page_name_cant_be_empty_), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -1734,17 +1752,17 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        BoostLog.i(Constants.LogTag, "Google Api Connected");
+        BoostLog.i(Constants.LogTag, getString(R.string.google_api_conneted));
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        BoostLog.i(Constants.LogTag, "on connection suspended");
+        BoostLog.i(Constants.LogTag, getString(R.string.on_connection_suspended));
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        BoostLog.i(Constants.LogTag, "Connection Failed : " + connectionResult.getErrorMessage());
+        BoostLog.i(Constants.LogTag, getString(R.string.connection_failed) + connectionResult.getErrorMessage());
     }
 
     public void handleGMBCheckbox(boolean value) {
@@ -1797,7 +1815,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     private void addWhatsAppNumber(WAAddDataModel<WhatsAppBusinessNumberModel> addDataModel) {
 
-        showProgressbar("Please Wait...");
+        showProgressbar(getString(R.string.please_wait_));
 
         Constants.webActionAdapter.create(WebActionCallInterface.class)
                 .addWhatsAppNumber(addDataModel, new Callback<String>() {
@@ -1818,13 +1836,13 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         }
 
                         hideProgressbar();
-                        Methods.showSnackBarPositive(getActivity(), "WhatsApp Number Added Successfully");
+                        Methods.showSnackBarPositive(getActivity(), getString(R.string.whats_app_number_added_successfully));
                     }
 
                     @Override
                     public void failure(RetrofitError error)
                     {
-                        Methods.showSnackBarNegative(getActivity(), "Failed to Add WhatsApp Number");
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_add_whatsapp));
                     }
                 });
     }
@@ -1832,7 +1850,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     private void updateWhatsAppNumber(WaUpdateDataModel updateDataModel, String number) {
 
-        showProgressbar("Please Wait...");
+        showProgressbar(getString(R.string.please_wait_));
 
         Constants.webActionAdapter.create(WebActionCallInterface.class)
                 .updateWhatsAppNumber(updateDataModel, new Callback<String>() {
@@ -1849,7 +1867,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         binding.whatsappCheckbox.setChecked(false);
 
                         hideProgressbar();
-                        Methods.showSnackBarPositive(getActivity(), "WhatsApp Number Deactivated Successfully");
+                        Methods.showSnackBarPositive(getActivity(), getString(R.string.whats_app_deactivated));
                     }
 
                     @Override
@@ -1865,12 +1883,12 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                             binding.tvWhatsappNumber.setText(R.string.inactive);
                             binding.whatsappCheckbox.setChecked(false);
 
-                            Methods.showSnackBarPositive(getActivity(), "WhatsApp Number Deactivated Successfully");
+                            Methods.showSnackBarPositive(getActivity(),  getString(R.string.whats_app_deactivated));
                         }
 
                         else
                         {
-                            Methods.showSnackBarNegative(getActivity(), "Failed to Deactivate WhatsApp Number");
+                            Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_deactivate_whats_app));
                         }
 
                         hideProgressbar();

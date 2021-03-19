@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.textfield.TextInputEditText;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +15,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -84,7 +85,7 @@ public class ShipOrderFragment extends DialogFragment {
 
 
         if (!isAllFieldsValid) {
-            Toast.makeText(getActivity(), "Please enter mandatory fields.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getResources().getString(R.string.please_enter_mandatory_fields), Toast.LENGTH_SHORT).show();
         }
 
         return isAllFieldsValid;

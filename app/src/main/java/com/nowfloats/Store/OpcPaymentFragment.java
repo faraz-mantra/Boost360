@@ -56,6 +56,10 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.BUTTON;
+import static com.framework.webengageconstant.EventNameKt.APPLY_COUPON;
+import static com.framework.webengageconstant.EventValueKt.CLICKED;
+
 /**
  * Created by Admin on 13-04-2018.
  */
@@ -191,14 +195,14 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
             if (cursor.moveToFirst()) {
                 fpUserProfileId = cursor.getString(cursor.getColumnIndex(DataBase.colloginId));
             } else {
-                Methods.showDialog(mContext, "Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
+                Methods.showDialog(mContext, "Alert!", getString(R.string.this_is_an_added_security_feature));
                 return;
             }
             UpdateDraftInvoiceModel updateDraftInvoiceModel;
             if (mInvoiceId != null && fpUserProfileId != null) {
                 updateDraftInvoiceModel = new UpdateDraftInvoiceModel(fpUserProfileId, OPCCode, mInvoiceId);
             } else {
-                showMessage("Unable to create Draft Invoice");
+                showMessage(getString(R.string.unable_to_create_draft_invoice));
                 return;
             }
 
@@ -206,7 +210,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
             params.put("clientId", Constants.clientId);
 
             if (updateDraftInvoiceModel == null) {
-                showMessage("Unable to apply Coupon");
+                showMessage(getString(R.string.unable_to_apply_coupon));
                 return;
             }
             ((OnPaymentOptionClick) mContext).showProcess(getString(R.string.please_wait));
@@ -224,9 +228,9 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                                 mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
                                 mOpcDetails = receiveDraftInvoice.getResult().getOpcDetails();
                                 initializeVal(receiveDraftInvoice.getResult(), true);
-                                showMessage("Online voucher Applied Successfully");
+                                showMessage(getString(R.string.online_voucher_applied_successfully));
                             } else {
-                                showMessage("The entered Online voucher is not valid for this product.");
+                                showMessage(getString(R.string.the_entered_online_voucher_is_not_valid));
                             }
                         } else {
                             showMessage(receiveDraftInvoice.getError().getErrorList().get(0).Key);
@@ -247,7 +251,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         } catch (Exception e) {
             e.printStackTrace();
             ((OnPaymentOptionClick) mContext).hideProcess();
-            Toast.makeText(mContext, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, getString(R.string.error_while_generating_invoice), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -307,14 +311,14 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         ReceiveDraftInvoiceModel.KeyValuePair keyVal = mOpcDetails.get(0);
         if (keyVal.getValue() != null) {
             new AlertDialog.Builder(mContext)
-                    .setMessage("Please note that your package will be activated on " + keyVal.getValue() + ". Are you sure you want to proceed?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setMessage(getString(R.string.please_note_that_your_package_will_be_activated_on) + keyVal.getValue() + getString(R.string.are_you_sure_want_to_proceed))
+                    .setPositiveButton(getString( R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             initiatePaymentProcess(i, mInvoiceId);
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString( R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -326,13 +330,13 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         } else {
             new AlertDialog.Builder(mContext)
                     .setMessage(getString(R.string.dialog_to_be_activated_null_text))
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             initiatePaymentProcess(i, mInvoiceId);
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -405,11 +409,11 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                                 startActivityForResult(paddleIntent, PADDLE_REQUEST_CODE);
                                 break;
                             default:
-                                showMessage("Error while processing payment");
+                                showMessage(getString(R.string.error_while_processing_payment));
                         }
 
                     } else {
-                        showMessage("Error while processing payment");
+                        showMessage(getString(R.string.error_while_processing_payment));
                     }
                 }
 
@@ -417,7 +421,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                 public void failure(RetrofitError error) {
 
                     ((OnPaymentOptionClick) mContext).hideProcess();
-                    showMessage("Error while processing payment");
+                    showMessage(getString(R.string.error_while_processing_payment));
                 }
             });
         }
@@ -457,7 +461,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                 } else if (!Util.isNullOrEmpty(mSessionManager.getSourceClientId())) {
                     clientId = mSessionManager.getSourceClientId();
                 } else {
-                    showMessage("Can't Proceed for Payment");
+                    showMessage(getString(R.string.cant_proceed_for_payment));
                     return;
                 }
 
@@ -486,7 +490,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                 sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
                 sendDraftInvoiceModel.setOpc(null);
             } else {
-                Methods.showDialog(mContext, "Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
+                Methods.showDialog(mContext, "Alert!", getString(R.string.this_is_an_added_security_feature_to_protect_your_package_details));
                 return;
             }
 
@@ -520,7 +524,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
             e.printStackTrace();
 
             ((OnPaymentOptionClick) mContext).hideProcess();
-            Toast.makeText(mContext, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.error_while_generating_invoice, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -534,17 +538,14 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.textView_apply:
-                //Apply Coupon Event Trigger
-                WebEngageController.trackEvent("Apply_Coupon", "Button", "Clicked");
+        int id = v.getId();
+        if (id == R.id.textView_apply) {//Apply Coupon Event Trigger
+            WebEngageController.trackEvent(APPLY_COUPON, BUTTON, CLICKED);
 
-                updateDraftInvoice(opcEditText.getText().toString());
-                // check for opc
-                break;
-            case R.id.textView_pay:
-                payWithInstaMojo();
-                break;
+            updateDraftInvoice(opcEditText.getText().toString());
+            // check for opc
+        } else if (id == R.id.textView_pay) {
+            payWithInstaMojo();
         }
     }
 }

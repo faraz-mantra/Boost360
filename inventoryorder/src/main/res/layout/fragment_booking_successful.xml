@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size_16"
-            android:text="Booking Successful"
+            android:text="@string/booking_successful"
             android:textColor="@color/white"
             app:fontFamily="@font/bold"
             app:textType="HEADING_6" />
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size_16"
-            android:text="#889201"
+            android:text="@string/_889201"
             android:textColor="@color/white"
             app:fontFamily="@font/bold"
             app:textType="HEADING_6" />
@@ -114,7 +114,7 @@
             android:layout_marginTop="@dimen/size_24"
             android:drawableStart="@drawable/ic_appointment_date_nd_time"
             android:drawablePadding="@dimen/size_28"
-            android:text="27 May 2020, 01:00 PM"
+            android:text="@string/_27_may_2020_01_00_pm"
             android:textColor="@color/warm_grey_10"
             app:fontFamily="@font/bold"
             app:textType="CAPTION" />
@@ -127,7 +127,7 @@
             android:layout_marginTop="@dimen/size_24"
             android:drawableStart="@drawable/ic_person_details"
             android:drawablePadding="@dimen/size_28"
-            android:text="Rahul Chaudhary"
+            android:text="@string/rahul_chaudhary"
             android:textColor="@color/warm_grey_10"
             app:fontFamily="@font/bold"
             app:textType="CAPTION" />
@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_44"
             android:layout_marginTop="@dimen/size_12"
-            android:text="+91 9013268178"
+            android:text="@string/_91_9013268178"
             android:textColor="@color/warm_grey_10"
             app:fontFamily="@font/bold"
             app:textType="CAPTION" />
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_44"
             android:layout_marginTop="@dimen/size_10"
-            android:text="rahulchaudhary86@gmail.com"
+            android:text="@string/rahulchaudhary86_gmail_com"
             android:textColor="@color/warm_grey_10"
             app:fontFamily="@font/bold"
             app:textType="CAPTION" />
@@ -169,7 +169,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/size_50"
       android:gravity="center"
-      android:text="Home"
+      android:text="@string/home"
       android:textColor="@color/colorPrimary"
       app:fontFamily="@font/bold"
       app:layout_constraintBottom_toBottomOf="parent"

@@ -263,7 +263,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_36"
         android:layout_gravity="center"
-        android:background="@drawable/button_rounded_8"
+        android:background="@drawable/button_rounded_6"
         android:gravity="center"
         android:paddingStart="@dimen/size_28"
         android:paddingEnd="@dimen/size_28"

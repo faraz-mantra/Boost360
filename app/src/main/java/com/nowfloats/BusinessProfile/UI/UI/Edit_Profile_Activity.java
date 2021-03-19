@@ -62,6 +62,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import static com.framework.webengageconstant.EventLabelKt.BUSINESS_DESCRIPTION;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_CATEGORY;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_NAME;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_DESCRIPTION;
+import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATEGORY;
 import static com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE;
 
 public class Edit_Profile_Activity extends BaseActivity {
@@ -403,23 +409,23 @@ public class Edit_Profile_Activity extends BaseActivity {
 
         buzzname.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent("BUSINESS NAME", "null", session.getFpTag());
+            WebEngageController.trackEvent(BUSINESS_NAME, EVENT_LABEL_NULL, session.getFpTag());
 
         });
 
         buzzdescription.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent("BUSINESS DESCRIPTION", "null", session.getFpTag());
+            WebEngageController.trackEvent(EVENT_NAME_BUSINESS_DESCRIPTION, EVENT_LABEL_NULL, session.getFpTag());
 
         });
 
         category.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent("BUSINESS CATEGORY", "null", session.getFpTag());
+            WebEngageController.trackEvent(BUSINESS_CATEGORY, EVENT_LABEL_NULL, session.getFpTag());
 
         });
         productCategory.setOnCheckedChangeListener((group, checkedId) -> {
-            WebEngageController.trackEvent("PRODUCT CATEGORY", "null", session.getFpTag());
+            WebEngageController.trackEvent(PRODUCT_CATEGORY, EVENT_LABEL_NULL, session.getFpTag());
 
         });
 
@@ -501,12 +507,14 @@ public class Edit_Profile_Activity extends BaseActivity {
 
     private void onBusinessDescAddedOrUpdated(Boolean isAdded){
         FirestoreManager instance = FirestoreManager.INSTANCE;
+        if(instance.getDrScoreData().getMetricdetail()==null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_business_description(isAdded);
         instance.updateDocument();
     }
 
     private void onBusinessNameAddedOrUpdated(Boolean isAdded){
         FirestoreManager instance = FirestoreManager.INSTANCE;
+        if(instance.getDrScoreData().getMetricdetail()==null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_business_name(isAdded);
         instance.updateDocument();
     }
@@ -1019,7 +1027,7 @@ public class Edit_Profile_Activity extends BaseActivity {
     public void displayEditConfirmation(final Activity mContext, String type) {
         new MaterialDialog.Builder(mContext)
                 .title("Are you sure ?")
-                .content(Html.fromHtml(String.format("It is <b>not advised to change</b> your %s category, as this can cause search related problems and a drop in search rank leading to less traffic.", type)))
+                .content(Html.fromHtml(String.format(getString(R.string.it_is_not_advised_to_change_your_category), type)))
                 .positiveText("Change Category")
                 .negativeText("Cancel")
                 .positiveColorRes(R.color.primaryColor)
@@ -1049,7 +1057,7 @@ public class Edit_Profile_Activity extends BaseActivity {
 
     public void displayAlert(final Activity mContext) {
         new MaterialDialog.Builder(mContext)
-                .title("Wrong business category?")
+                .title(R.string.wrong_business_category)
                 .content(R.string.business_category_change_level)
                 .positiveText("Ok")
                 .positiveColorRes(R.color.primaryColor)

@@ -145,7 +145,7 @@ public class LinkedinWebView extends AppCompatActivity {
         if(loadUri.getBooleanQueryParameter("code",false)){
             callAccessTokenApi(loadUri.getQueryParameter("code"));
             text.setVisibility(View.VISIBLE);
-            text.setText("calling accessTokenApi");
+            text.setText(R.string.calling_access_token_api);
             //show html page
         }else{
             setResult(null);
@@ -168,7 +168,7 @@ public class LinkedinWebView extends AppCompatActivity {
         adapter.create(AccessTokenApi.class).getAccessToken(map, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                text.setText("successfully api response");
+                text.setText(R.string.successfully_api_response);
                 if(dialog !=null && !isFinishing() && dialog.isShowing()){
                     dialog.dismiss();
                 }

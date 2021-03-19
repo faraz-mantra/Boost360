@@ -36,15 +36,17 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.firestore.FirestoreManager.getDrScoreData
+import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
+import com.framework.webengageconstant.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
+import com.nowfloats.facebook.managers.FBEventManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
@@ -101,7 +103,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink()
     getWelcomeData()
     initialize()
-    session?.let { initData(it.fpTag?:"", it.fPID?:"", clientId) }
+    session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+
   }
 
   private fun initialize() {
@@ -110,8 +113,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     WebEngageController.initiateUserLogin(session?.userProfileId)
     WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
     WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent("Home Page", "pageview", session?.fpTag ?: "")
-    WebEngageController.trackEvent("Home Page", "screen_name", session?.fpTag ?: "")
+    WebEngageController.trackEvent(HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
       WebEngage.get().setRegistrationID(token)
@@ -181,7 +183,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun setUserData() {
     binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
-    setPercentageData(getDrScoreData()?.getDrsTotal()?:0)
+    setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
@@ -323,7 +325,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onItemClick(pos)
     when (pos) {
       3 -> checkWelcomeShowScreen(pos)
-      4 -> binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
+      4 -> {
+        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
+        WebEngageController.trackEvent(MORE, CLICK, TO_BE_ADDED)
+      }
     }
   }
 
@@ -365,11 +370,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onClick(v)
     when (v) {
       binding?.drawerView?.btnSiteMeter -> {
-//        session?.let { this.startOldSiteMeter(it) }
         startReadinessScoreView(session, 0)
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.imgBusinessLogo -> this.startBusinessProfileDetailEdit(session)
-      binding?.drawerView?.txtDomainName -> this.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.drawerView?.imgBusinessLogo ->{
+        this.startBusinessProfileDetailEdit(session)
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+      }
+      binding?.drawerView?.txtDomainName ->{
+        this.startWebViewPageLoad(session, session!!.getDomainName(false))
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+      }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
     }
   }
@@ -426,7 +437,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val imageFile = File(path)
     isSecondaryImage = false
     showProgress()
-    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, androidx.lifecycle.Observer{
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, androidx.lifecycle.Observer {
       if (it.isSuccess()) {
         if (it.stringResponse.isNullOrEmpty().not()) {
           session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)

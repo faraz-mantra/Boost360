@@ -19,7 +19,7 @@
             <com.nowfloats.ProductGallery.widgets.TagView
                 android:id="@+id/tv_product_keyword"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"></com.nowfloats.ProductGallery.widgets.TagView>
+                android:layout_height="250dp" />
 
 
         </ScrollView>
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Add Keywords\nto your Product"
+        android:text="@string/add_keywords_nto_your_product"
         android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/svKeywords"
@@ -57,12 +57,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/et_bg"
-        android:hint="Enter Product Keyword"
+        android:hint="@string/enter_product_keyword"
         android:inputType="text"
-        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_add_keyword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/svKeywords" />
@@ -84,12 +84,11 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/btn_bg"
-        android:text="Add"
+        android:text="@string/add"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/svKeywords" />

@@ -117,7 +117,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
         if(activity instanceof EligibilityCheckCallBack){
             mEligibilityCheckCallBack = (EligibilityCheckCallBack) activity;
         }else {
-            throw new RuntimeException("Implement EligibilityCheckCallBack");
+            throw new RuntimeException(getString(R.string.implement_eligibility_check));
         }
     }
 
@@ -328,7 +328,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                                     APEligibilityCheckerFragment.this.dismiss();
                                 }
                             }else {
-                                throw new NullPointerException("Orders Count is Null");
+                                throw new NullPointerException(getString(R.string.order_count_is_null));
                             }
                         }catch (Exception e)
                         {
@@ -381,7 +381,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 }
                 break;
             case R.id.ll_site_appearance:
-                showDialog("SiteAppearance", "Your website look must be changed to 'Fresh Milk Lite'", "Take Me There");
+                showDialog(getString(R.string.site_apperance), getString(R.string.your_website_must_be_changed_to_fresh_milk), getString(R.string.take_me_there_));
                 break;
             case R.id.ll_shipping_metrics:
                 Intent productGallery = new Intent(getActivity(), ProductGalleryActivity.class);

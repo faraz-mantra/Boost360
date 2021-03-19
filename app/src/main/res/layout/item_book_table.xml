@@ -47,18 +47,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:text="George Kim"
-                        android:textStyle="bold"
+                        android:text="@string/george_kim"
                         android:textColor="#4A4A4A"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/table_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:text="+3"
+                        android:fontFamily="@font/open_sans"
+                        android:text="@string/_3"
                         android:textColor="#4A4A4A"
                         android:textSize="@dimen/_15sdp" />
                 </LinearLayout>
@@ -67,13 +67,13 @@
                     android:id="@+id/contact_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+91-9999999999"
-                    android:drawableStart="@drawable/ic_call_book_table"
                     android:drawablePadding="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/_91_9999999999"
                     android:textColor="#9ABFFF"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_10sdp"
+                    app:drawableStartCompat="@drawable/ic_call_book_table" />
             </LinearLayout>
 
             <ImageView
@@ -110,64 +110,64 @@
                 android:id="@+id/date_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="DATE"
                 android:fontFamily="@font/open_sans"
-                android:textColor="#C4C4C4" />
+                android:text="@string/date"
+                android:textAllCaps="true"
+                android:textColor="#C4C4C4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/date_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/date_title"
-                android:text="12-08-2020"
                 android:fontFamily="@font/open_sans"
-                android:textColor="#747474" />
+                android:text="@string/_12_08_2020"
+                android:textColor="#747474"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_title" />
 
             <TextView
                 android:id="@+id/time_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="TIME"
                 android:fontFamily="@font/open_sans"
-                android:textColor="#C4C4C4" />
+                android:text="@string/time"
+                android:textColor="#C4C4C4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/time_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/date_title"
-                android:text="12:00 PM"
                 android:fontFamily="@font/open_sans"
-                android:textColor="#747474" />
+                android:text="@string/_12_00_pm"
+                android:textColor="#747474"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_title" />
 
             <TextView
                 android:id="@+id/message_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/date_value"
-                android:text="MESSAGE"
                 android:fontFamily="@font/open_sans"
-                android:textColor="#C4C4C4" />
+                android:text="@string/message"
+                android:textColor="#C4C4C4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_value" />
 
             <TextView
                 android:id="@+id/message_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/message_title"
-                android:text="Looking for Lunch with Pine &amp; Dine"
                 android:fontFamily="@font/open_sans"
-                android:textColor="#747474" />
-
+                android:text="@string/looking_for_lunch_with_pine_amp_dine"
+                android:textColor="#747474"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/message_title" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -193,7 +193,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:text="Edit"
+            android:text="@string/edit"
             android:textSize="@dimen/_12sdp" />
 
         <TextView
@@ -201,7 +201,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:text="Delete"
+            android:text="@string/delete_"
             android:textAllCaps="true"
             android:textColor="@color/red"
             android:textSize="@dimen/_12sdp" />

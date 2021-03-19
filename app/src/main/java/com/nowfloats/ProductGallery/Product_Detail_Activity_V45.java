@@ -558,7 +558,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                                 MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_DELETE, null);
                                 new MaterialDialog.Builder(activity)
                                         .title(getString(R.string.are_you_sure_want_to_delete))
-                                        .positiveText(getString(R.string.delete))
+                                        .positiveText(getString(R.string.delete_))
                                         .positiveColorRes(R.color.primaryColor)
                                         .negativeText(getString(R.string.cancel))
                                         .negativeColorRes(R.color.light_gray)
@@ -1033,7 +1033,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
 
     private void getShippingMetrix(String productId) {
 
-        final ProgressDialog pd = ProgressDialog.show(this, "", "Please Wait...");
+        final ProgressDialog pd = ProgressDialog.show(this, "", getString(R.string.please_wait_));
         Constants.webActionAdapter.create(ProductGalleryInterface.class)
                 .getShippingMetric(String.format("{product_id:'%s'}", productId), new Callback<WebActionModel<ShippingMetricsModel>>() {
                     @Override
@@ -1233,14 +1233,14 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
 
         if(mShippingMetrix == null)
         {
-            Methods.showSnackBarNegative(activity, "Shipping Details Required");
+            Methods.showSnackBarNegative(activity, getString(R.string.shipping_details_required));
             return false;
         }
 
         if(mShippingMetrix.getWeight() == null || mShippingMetrix.getHeight() == null || mShippingMetrix.getLength() == null ||
                 mShippingMetrix.getWidth() == null || mShippingMetrix.getShippingCharge() == null)
         {
-            Methods.showSnackBarNegative(activity, "Invalid Shipping Details");
+            Methods.showSnackBarNegative(activity, getString(R.string.invalid_shipping_details));
             return false;
         }
 
@@ -1598,13 +1598,13 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
-                Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", Product_Detail_Activity_V45.this);
+                Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_this_permission_to_enable_capture_and_upload_images), Product_Detail_Activity_V45.this);
             }
 
         } else if (requestCode == gallery_req_id) {
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED) {
-                Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", Product_Detail_Activity_V45.this);
+                Methods.showApplicationPermissions(getString(R.string.storage_permission), getString(R.string.we_need_this_to_enable_image_upload), Product_Detail_Activity_V45.this);
             }
         }
     }
@@ -1615,7 +1615,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                     PackageManager.PERMISSION_GRANTED) {
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", Product_Detail_Activity_V45.this);
+                    Methods.showApplicationPermissions(getString(R.string.storage_permission), getString(R.string.we_need_this_to_enable_image_upload), Product_Detail_Activity_V45.this);
                 } else {
                     ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
                 }
@@ -1642,7 +1642,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                     PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)) {
-                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", Product_Detail_Activity_V45.this);
+                    Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_this_permission_to_enable_capture_and_upload_images), Product_Detail_Activity_V45.this);
                 } else {
                     ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, media_req_id);
                 }

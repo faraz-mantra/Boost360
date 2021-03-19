@@ -29,8 +29,8 @@
             android:layout_height="160dp"
             android:layout_below="@id/toolbar"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
             card_view:cardElevation="3dp">
 
             <LinearLayout
@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:text="Assured Purchase"
+                    android:text="@string/assured_purchase"
                     android:textColor="@color/primaryColor"
                     android:textSize="23sp" />
 

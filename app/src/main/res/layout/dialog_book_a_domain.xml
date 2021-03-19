@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:paddingRight="10dp"
         android:fillViewport="true">
 
@@ -83,7 +83,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginEnd="3dp"
                     android:layout_weight=".4"
                     android:background="@drawable/spinner_background"
                     android:orientation="horizontal">
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:spinnerMode="dropdown" />
@@ -102,7 +102,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:src="@drawable/ic__drop_down" />
@@ -132,7 +132,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginEnd="3dp"
                     android:layout_weight=".4"
                     android:visibility="gone"
                     android:background="@drawable/spinner_background"
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:spinnerMode="dropdown" />
@@ -152,7 +152,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:src="@drawable/ic__drop_down" />

@@ -35,7 +35,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_16"
           android:includeFontPadding="false"
-          android:text="Filter"
+          android:text="@string/filter"
           android:textColor="@color/orange"
           app:fontFamily="@font/bold"
           app:textType="HEADING_4" />

@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="Items"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -46,7 +46,7 @@
                 android:id="@+id/tl_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/rv_store_items"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
@@ -174,7 +174,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/btn_bg"
                 android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
                 android:text="Apply"

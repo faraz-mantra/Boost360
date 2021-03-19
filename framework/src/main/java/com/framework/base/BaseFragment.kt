@@ -17,6 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProviders
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
+import com.framework.utils.hideKeyBoard
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -128,5 +129,10 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
 
   protected fun getFont(@FontRes font: Int): Typeface? {
     return ResourcesCompat.getFont(baseActivity, font)
+  }
+
+  override fun onStop() {
+    super.onStop()
+    baseActivity.hideKeyBoard()
   }
 }

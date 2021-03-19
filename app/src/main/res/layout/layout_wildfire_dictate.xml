@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/default_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -54,14 +53,14 @@
                     android:id="@+id/tv_know_more"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_info_outline_white_24dp"
                     android:tint="@color/primary_color" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Know More"
+                    android:text="@string/know_more_"
                     android:textColor="@drawable/yellow_btn_text_color"
                     app:layout_constraintEnd_toStartOf="@+id/llayout_know_more"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -75,7 +74,7 @@
                 android:id="@+id/llayout_wildfire"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ria_positive_btn"
                 android:gravity="center"
@@ -88,14 +87,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     app:srcCompat="@drawable/ic_plus_btn" />
 
                 <TextView
                     android:id="@+id/tv_wildfire"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start WildFire"
+                    android:text="@string/start_wildfire"
                     android:textColor="@drawable/yellow_btn_hover_text_color"
                     app:layout_constraintEnd_toStartOf="@+id/llayout_know_more"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -109,7 +108,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
+                android:layout_marginStart="1dp"
                 android:layout_marginTop="5dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardElevation="3dp"
@@ -127,10 +126,9 @@
                 android:id="@+id/title_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:gravity="center_vertical"
-                android:text="Why upgrade\nto WildFire plan?"
+                android:text="@string/why_upgrade_nto_wildfire_plan"
                 android:textColor="@color/primary_color"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"

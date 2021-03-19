@@ -71,7 +71,7 @@
           android:layout_marginBottom="@dimen/size_8"
           android:alpha="0"
           android:gravity="center"
-          android:text="OKAY"
+          android:text="@string/okay"
           app:textType="HEADING_6"
           tools:alpha="1" />
 
@@ -93,7 +93,7 @@
             android:focusable="true"
             android:gravity="center_horizontal"
             android:padding="@dimen/size_8"
-            android:text="DISABLE BOOST NOTIFICATIONS"
+            android:text="@string/disable_boost_notifications"
             android:textColor="@color/warm_light"
             app:textType="SUBHEADING_1" />
 
@@ -108,7 +108,7 @@
             android:gravity="center_horizontal"
             android:padding="@dimen/size_8"
             app:textAllCaps="true"
-            android:text="Not Opted For Boost Alerts"
+            android:text="@string/not_opted_for_boost_alerts"
             android:textColor="@color/scarlet"
             app:textType="SUBHEADING_1" />
 
@@ -121,7 +121,7 @@
             android:focusable="true"
             android:gravity="center_horizontal"
             android:padding="@dimen/size_8"
-            android:text="DISCONNECT CHANNEL"
+            android:text="@string/disconnect_channel"
             android:textColor="@color/warm_light"
             app:textType="SUBHEADING_1" />
         </LinearLayout>

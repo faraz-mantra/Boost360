@@ -90,7 +90,7 @@
                       android:includeFontPadding="false"
                       android:lineSpacingExtra="0dp"
                       android:textColor="@color/accent_dark"
-                      app:fontFamily="@font/light"
+                      app:fontFamily="@font/barlow_light"
                       app:textType="HEADING_TEXT_2"
                       tools:text="26" />
 
@@ -279,7 +279,7 @@
                 android:id="@+id/high_readiness_score_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_180"
+                android:layout_marginTop="@dimen/size_190"
                 android:background="@drawable/ic_business_snapshot_bac_d"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/size_12"
@@ -471,11 +471,13 @@
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:textColor="@color/greyish_brown"
+                    android:gravity="center_vertical"
+                    android:textAlignment="gravity"
                     app:autoSizeMaxTextSize="16sp"
                     app:autoSizeMinTextSize="8sp"
                     app:autoSizeStepGranularity="1sp"
                     app:autoSizeTextType="uniform"
+                    android:textColor="@color/greyish_brown"
                     tools:text="@string/www_sravansclinic_com" />
                 </FrameLayout>
 

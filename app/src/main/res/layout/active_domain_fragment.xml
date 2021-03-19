@@ -62,7 +62,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_semibold"
                             android:gravity="center"
-                            android:text="thinkwalls.net"
+                            android:text="@string/thinkwalls_net"
                             android:textColor="@color/common_text_color"
                             android:textSize="@dimen/_13sdp" />
 
@@ -89,7 +89,7 @@
                         android:id="@+id/booked_on_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="BOOKED ON"
+                        android:text="@string/booked_on"
                         android:textSize="@dimen/_8sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -98,7 +98,7 @@
                         android:id="@+id/expired_on_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EXPIRES ON"
+                        android:text="@string/expires_on"
                         android:textSize="@dimen/_8sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -107,7 +107,7 @@
                         android:id="@+id/booked_on_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="15-05-2017"
+                        android:text="@string/_15_05_2017"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/_13sdp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +117,7 @@
                         android:id="@+id/expired_on_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20-05-2020"
+                        android:text="@string/_20_05_2020"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/_13sdp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +134,7 @@
                 android:layout_marginEnd="@dimen/_30sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:gravity="center"
-                android:text="Your domain will be automatically renewed based on your active BOOST package"
+                android:text="@string/your_domain_will_be_automatically_renewed_based_on_your_active_boost_package"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp" />
 
@@ -173,7 +173,7 @@
                 android:layout_marginTop="50dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
                 android:paddingTop="70dp"
                 android:paddingRight="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp">
@@ -183,7 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="Business Emails"
+                    android:text="@string/business_emails"
                     android:textColor="@color/common_text_color"
                     android:textSize="@dimen/_16sdp" />
 
@@ -193,7 +193,7 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
-                    android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
+                    android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it"
                     android:textSize="@dimen/_11sdp" />
 
                 <TextView
@@ -208,7 +208,7 @@
                     android:gravity="center"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
-                    android:text="VIEW IN ADD-ON STORE"
+                    android:text="@string/view_in_add_on_store"
                     android:textColor="@color/white" />
 
 
@@ -246,7 +246,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="Your Business Emails"
+                    android:text="@string/your_business_emails"
                     android:textColor="@color/common_text_color"
                     android:textSize="@dimen/_16sdp" />
 
@@ -256,14 +256,14 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="center"
                     android:visibility="gone"
-                    android:text="Get your own business email, to match your custom domain. Custom email address give business authority. You can have upto 3 email addresses associated with your domain." />
+                    android:text="@string/get_your_own_business_email_to_match_your_custom_domain_custom_email_address_give_business_authority_you_can_have_upto_3_email_addresses_associated_with_your_domain" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="Coming Soon..."
+                    android:text="@string/coming_soon"
                     android:textColor="@color/primary"
                     android:textSize="@dimen/_16sdp" />
 
@@ -279,7 +279,7 @@
                     android:gravity="center"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
-                    android:text="ADD MAIL"
+                    android:text="@string/add_mail"
                     android:visibility="gone"
                     android:textColor="@color/white" />
 
@@ -291,7 +291,7 @@
                     android:layout_marginEnd="@dimen/_30sdp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center"
-                    android:text="Business emails can be booked only if your domain is not more than 6 months old."
+                    android:text="@string/business_emails_can_be_booked_only_if_your_domain_is_not_more_than_6_months_old"
                     android:textSize="@dimen/_9sdp"
                     android:visibility="gone"
                     android:textStyle="italic" />
@@ -314,7 +314,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans"
-                        android:text="Business Emails"
+                        android:text="@string/business_emails"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />

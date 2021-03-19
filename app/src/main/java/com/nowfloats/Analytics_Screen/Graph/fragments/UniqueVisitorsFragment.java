@@ -598,7 +598,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                  */
                 //sessionManager.setVisitorsCount(String.valueOf(getTotalVisitors(visitAnalyticsList)));
 
-                Log.d("VisitorsApiInterface", "Total Analytics Data - " + (visitAnalyticsList == null ? "NULL" : "" + visitAnalyticsList.size()));
+                Log.d("VisitorsApiInterface", getString(R.string.total_analytics_data) + (visitAnalyticsList == null ? "NULL" : "" + visitAnalyticsList.size()));
                 //Log.d("VisitorsApiInterface", "Total Visits - " + sessionManager.getVisitsCount());
                 //Log.d("VisitorsApiInterface", "Total Visitors - " + sessionManager.getVisitorsCount());
             }
@@ -606,7 +606,7 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
             @Override
             public void failure(RetrofitError error)
             {
-                Log.d("VisitorsApiInterface", "Fail - " + error.getMessage());
+                Log.d("VisitorsApiInterface", getString(R.string.fail_) + error.getMessage());
             }
         });
 

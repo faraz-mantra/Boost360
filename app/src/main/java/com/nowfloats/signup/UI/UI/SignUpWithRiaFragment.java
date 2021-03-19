@@ -104,7 +104,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     }
 
     private void createAnimation() {
-        animationTool = new AnimationTool(getActivity());
+        animationTool = new AnimationTool(requireActivity());
         animationTool.setVisbilityStatus(isBackPress);
         animationTool.setListener(this);
     }

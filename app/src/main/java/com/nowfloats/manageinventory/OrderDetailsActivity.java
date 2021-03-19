@@ -126,7 +126,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     @Override
                     public void failure(RetrofitError error) {
                         pbOrderDetails.setVisibility(View.GONE);
-                        Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -148,7 +148,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     @Override
                     public void failure(RetrofitError error) {
                         pbOrderDetails.setVisibility(View.GONE);
-                        Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -185,7 +185,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                             @Override
                             public void failure(RetrofitError error) {
                                 pbOrderDetails.setVisibility(View.GONE);
-                                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -212,13 +212,13 @@ public class OrderDetailsActivity extends AppCompatActivity {
                             @Override
                             public void failure(RetrofitError error) {
                                 pbOrderDetails.setVisibility(View.GONE);
-                                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 });
 
-                tvNegative.setText("Cancel Order");
+                tvNegative.setText(R.string.cancel_order);
 
                 tvNegative.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -236,7 +236,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                             @Override
                             public void failure(RetrofitError error) {
                                 pbOrderDetails.setVisibility(View.GONE);
-                                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -245,7 +245,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
         } else {
 
-            tvPositive.setText("Mark Order As Shipped");
+            tvPositive.setText(R.string.mark_order_as_shipped);
             tvPositive.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -283,7 +283,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                 @Override
                                 public void failure(RetrofitError error) {
                                     pbOrderDetails.setVisibility(View.GONE);
-                                    Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -311,7 +311,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         @Override
                         public void failure(RetrofitError error) {
                             pbOrderDetails.setVisibility(View.GONE);
-                            Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -351,7 +351,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         @Override
                         public void failure(RetrofitError error) {
                             pbOrderDetails.setVisibility(View.GONE);
-                            Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -374,7 +374,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     @Override
                     public void failure(RetrofitError error) {
                         pbOrderDetails.setVisibility(View.GONE);
-                        Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -400,7 +400,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error) {
                 pbOrderDetails.setVisibility(View.GONE);
-                Toast.makeText(OrderDetailsActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderDetailsActivity.this, getString(R.string.something_wen_wrong), Toast.LENGTH_SHORT).show();
             }
         });
     }

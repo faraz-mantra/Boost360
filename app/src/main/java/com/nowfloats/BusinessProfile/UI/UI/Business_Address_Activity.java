@@ -6,12 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -27,6 +21,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -52,11 +51,21 @@ import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.framework.webengageconstant.EventLabelKt.BUSINESS_DESCRIPTION;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_ADDRESS;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_CITY;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_COUNTRY;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_PINCODE;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_ADDRESS_ADDED;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_ADDRESS;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_CITY;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_COUNTRY;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_PINCODE;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 
 
 public class Business_Address_Activity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -115,7 +124,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("Business address added", "BUSINESS DESCRIPTION", session.getFpTag());
+                WebEngageController.trackEvent(BUSINESS_ADDRESS_ADDED, BUSINESS_DESCRIPTION, session.getFpTag());
                 MixPanelController.track(EventKeysWL.SAVE_BUSINESS_ADDRESS, null);
                 saveAddressFlag = true;
                 uploadBussinessAddress();
@@ -146,16 +155,16 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
         initializeData();
         country.setOnClickListener(v -> {
-            WebEngageController.trackEvent("COUNTRY", "COUNTRY", null);
+            WebEngageController.trackEvent(EVENT_NAME_COUNTRY, EVENT_LABEL_COUNTRY, NULL);
         });
         cityText.setOnClickListener(v -> {
-            WebEngageController.trackEvent("CITY", "CITY", null);
+            WebEngageController.trackEvent(EVENT_NAME_CITY, EVENT_LABEL_CITY, NULL);
         });
         pincodeText.setOnClickListener(v -> {
-            WebEngageController.trackEvent("PINCODE", "PINCODE", null);
+            WebEngageController.trackEvent(EVENT_NAME_PINCODE, EVENT_LABEL_PINCODE, NULL);
         });
         addressText.setOnClickListener(v -> {
-            WebEngageController.trackEvent("ADDRESS", "ADDRESS", null);
+            WebEngageController.trackEvent(EVENT_NAME_ADDRESS, EVENT_LABEL_ADDRESS, NULL);
         });
         businessAddress.addTextChangedListener(new TextWatcher() {
 

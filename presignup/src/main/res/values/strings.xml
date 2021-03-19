@@ -40,7 +40,7 @@
     <string name="signup_using_jio_id" translatable="false">Signup using Jio SecureID</string>
     <string name="_00Seconds">00 Seconds</string>
     <string name="seconds">Seconds</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="i_will_help_you_setup_and_manage_your_digital_business_on_boost_let_s_get_start_by_selecting_the_category_of_your_business">She will help you setup a digital-growth plan for your business, in less than 9 minutes.</string>
     <string name="hello_presignup">Hello.</string>
     <string name="let_s_create_your_boost_account">Let’s create your Boost account.</string>
@@ -60,4 +60,18 @@
     <string name="no_jio_id_description" translatable="false">Jio SecureID is the most convenient and secure way to log into any app or portal and sign documents digitally. Jio SecureID is using Aadhaar eSign for digital signatures.\n\nCreate Jio SecureID here</string>
     <string name="failed_create_user" translatable="false">Failed to create user, Please try again.</string>
     <string name="you_email_com_optional" translatable="false">you@email.com (optional)</string>
+    <string name="browser">Browser</string>
+    <string name="login_cancel">Login cancel.</string>
+    <string name="signup_using_mobile">Signup using Mobile</string>
+    <string name="please_enter_all_values" translatable="false">Please enter all values.</string>
+    <string name="enter_valid_email_id" translatable="false">Enter Valid EmailId.</string>
+    <string name="enter_valid_mobile_no" translatable="false">Enter Valid Mobile No.</string>
+    <string name="link_is_empty" translatable="false">Link is Empty!!</string>
+    <string name="ready_to_log_in" translatable="false">Ready to Log in?</string>
+    <string name="login_faster_via_below_options" translatable="false">Login faster via below options</string>
+    <string name="via_facebook" translatable="false">Via Facebook</string>
+    <string name="via_google" translatable="false">Via Google</string>
+    <string name="via_mobile_otp" translatable="false">Via Mobile OTP</string>
+    <string name="scan_qr_code" translatable="false">Scan QR code</string>
+
 </resources>

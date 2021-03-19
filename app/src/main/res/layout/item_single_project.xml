@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
-                    android:text="Robert"
+                    android:text="@string/robert"
                     android:textColor="#747474"
                     android:textSize="@dimen/_15sdp" />
 
@@ -52,7 +52,7 @@
                     android:id="@+id/client_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CFO"
+                    android:text="@string/cfo"
                     android:textColor="#747474"
                     android:textSize="@dimen/_10sdp" />
 
@@ -88,7 +88,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Commercial Kitchen Equipment"
+                android:text="@string/commercial_kitchen_equipment"
                 android:textColor="#4A4A4A"
                 android:textSize="@dimen/_15sdp" />
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:text="We are designing commercial kitchen equipments for council stainless"
+                android:text="@string/we_are_designing_commercial_kitchen_equipments_for_council_stainless"
                 android:textColor="#747474"
                 android:textSize="@dimen/_10sdp" />
 
@@ -135,7 +135,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
-                            android:text="In Progress"
+                            android:text="@string/in_progress"
                             android:textAllCaps="true"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
@@ -173,7 +173,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="BUDGET"
+                        android:text="@string/budget"
                         android:textAllCaps="true"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_15sdp"
@@ -185,14 +185,14 @@
                         android:id="@+id/budget_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="1,00,000"
+                        android:text="@string/_1_00_000"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="COMPLETION DATE"
+                        android:text="@string/completion_date"
                         android:textAllCaps="true"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_15sdp"
@@ -211,7 +211,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Client Requirement"
+                        android:text="@string/client_requirement"
                         android:textAllCaps="true"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_15sdp"
@@ -223,14 +223,14 @@
                         android:id="@+id/project_client_requirement"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="To produce custom itvgems for commercial kitchen equipment fadvnasdkvsd nds dv..."
+                        android:text="@string/to_produce_custom_itvgems_for_commercial_kitchen_equipment_fadvnasdkvsd_nds_dv"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="our approach"
+                        android:text="@string/our_approach"
                         android:textAllCaps="true"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_15sdp"
@@ -242,7 +242,7 @@
                         android:id="@+id/our_approach"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="We designed kitchen equipment using our sheet metal technology gdbsfbs adgsdbvs..."
+                        android:text="@string/we_designed_kitchen_equipment_using_our_sheet_metal_technology_gdbsfbs_adgsdbvs"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"/>
 
@@ -294,7 +294,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:text="Edit"
+            android:text="@string/edit"
             android:textSize="@dimen/_12sdp" />
 
         <TextView
@@ -302,7 +302,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:text="Delete"
+            android:text="@string/delete_"
             android:textAllCaps="true"
             android:textColor="@color/red"
             android:textSize="@dimen/_12sdp" />

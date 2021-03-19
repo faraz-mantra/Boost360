@@ -17,12 +17,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -36,6 +30,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
@@ -81,6 +82,9 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_UPDATE;
 
 /**
  * Created by guru on 09-06-2015.
@@ -178,7 +182,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(ACTION);
 
-        WebEngageController.trackEvent("UPDATE","UPDATE",session.getFpTag());
+        WebEngageController.trackEvent(EVENT_NAME_UPDATE, EVENT_LABEL_UPDATE, session.getFpTag());
         PorterDuffColorFilter color = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         save.setColorFilter(color);
 
@@ -431,7 +435,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                         MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_DELETE, null);
                          new MaterialDialog.Builder(activity)
                         .title(getString(R.string.are_you_sure_want_to_delete))
-                        .positiveText(getString(R.string.delete))
+                        .positiveText(getString(R.string.delete_))
                         .positiveColorRes(R.color.primaryColor)
                         .negativeText(getString(R.string.are_you_sure_want_to_delete))
                         .negativeColorRes(R.color.light_gray)
