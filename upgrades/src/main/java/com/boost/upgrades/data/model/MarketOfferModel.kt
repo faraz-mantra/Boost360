@@ -40,4 +40,7 @@ data class MarketOfferModel(
 
         @ColumnInfo(name = "image")
         var image: String? = null,
+
+        @ColumnInfo(name = "cta_offer_identifier")
+        var cta_offer_identifier: String? = null,
 )

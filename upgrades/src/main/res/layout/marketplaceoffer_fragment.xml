@@ -143,15 +143,15 @@
                     android:id="@+id/offer_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:background="@drawable/marketoffers_title_bg"
                     android:fontFamily="@font/open_sans_bold"
                     android:paddingStart="@dimen/_18sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginEnd="@dimen/_6sdp"
                     android:text="Market Offers"
                     android:textColor="@color/white"
                     android:textFontWeight="700"
@@ -175,7 +175,7 @@
                         android:gravity="center"
                         android:orientation="vertical"
                         android:padding="@dimen/_5sdp"
-                        app:layout_constraintEnd_toStartOf="@id/middle_guideline"
+                        app:layout_constraintEnd_toStartOf="@id/coupon_divider"
                         app:layout_constraintStart_toStartOf="@id/start_guideline"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -214,14 +214,26 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
+                    <View
+                        android:id="@+id/coupon_divider"
+                        android:layout_width="2dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/view_vertical_dot_lines_bg"
+                        app:layout_constraintBottom_toTopOf="@id/end_guideline_vertical"
+                        app:layout_constraintEnd_toStartOf="@+id/date_from_to"
+                        app:layout_constraintStart_toStartOf="@id/middle_guideline"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <LinearLayout
+                        android:id="@+id/date_from_to"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:padding="@dimen/_5sdp"
                         app:layout_constraintEnd_toEndOf="@id/end_guideline"
-                        app:layout_constraintStart_toStartOf="@id/middle_guideline"
+                        app:layout_constraintStart_toEndOf="@id/coupon_divider"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
@@ -251,7 +263,7 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:text=" 06-Nov-20 To 15-Nov-20"
+                            android:text=" 15-Nov-20"
                             android:textColor="@color/common_text_color"
                             android:textFontWeight="700"
                             android:textSize="@dimen/txt_12sp"
@@ -270,7 +282,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.6" />
+                        app:layout_constraintGuide_begin="71dp" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/start_guideline"
@@ -293,22 +305,62 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.95" />
 
+                    <LinearLayout
+                        android:id="@+id/date_from_to_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/copy_coupon_code_bg"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_5sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/bottomToCoupon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/date_from_to">
 
+
+                        <TextView
+                            android:id="@+id/veqrifybtn1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:text="COPY COUPON CODE "
+                            android:textColor="@color/common_text_color"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_14sp" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/bottomToCoupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:text=""
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/how_to_avail_coupon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:background="@drawable/marketoffers_title_bg"
                     android:fontFamily="@font/open_sans_bold"
                     android:paddingStart="@dimen/_18sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginEnd="@dimen/_6sdp"
                     android:text="Offer Details"
                     android:textColor="@color/white"
                     android:textFontWeight="700"
@@ -374,37 +426,37 @@
                             android:background="@color/transparent"
                             android:overScrollMode="never"
                             tools:itemCount="2"
-                            tools:listitem="@layout/marketoffers_info_item"/>
+                            tools:listitem="@layout/marketoffers_info_item" />
 
-                       <!-- <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_marginStart="@dimen/_8sdp"
-                            android:layout_marginEnd="@dimen/_8sdp">
+                        <!-- <LinearLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+                             android:orientation="horizontal"
+                             android:layout_marginStart="@dimen/_8sdp"
+                             android:layout_marginEnd="@dimen/_8sdp">
 
-                            <View
-                                android:layout_width="5dp"
-                                android:layout_height="5dp"
-                                android:layout_marginLeft="@dimen/_7sdp"
-                                android:layout_marginTop="12dp"
-                                android:background="@drawable/ic_bullet_icon"
-                                android:drawableStart="@drawable/ic_bullet_icon" />
+                             <View
+                                 android:layout_width="5dp"
+                                 android:layout_height="5dp"
+                                 android:layout_marginLeft="@dimen/_7sdp"
+                                 android:layout_marginTop="12dp"
+                                 android:background="@drawable/ic_bullet_icon"
+                                 android:drawableStart="@drawable/ic_bullet_icon" />
 
-                            <TextView
-                                android:id="@+id/howto_pointTwo"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingTop="@dimen/_5sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:paddingBottom="@dimen/_5sdp"
-                                android:text="@string/marketoffer_howtoTwo"
-                                android:textColor="@color/common_text_color"
-                                android:textFontWeight="600"
-                                android:textSize="@dimen/txt_12sp" />
-                        </LinearLayout>-->
+                             <TextView
+                                 android:id="@+id/howto_pointTwo"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:fontFamily="@font/open_sans"
+                                 android:paddingStart="@dimen/_10sdp"
+                                 android:paddingTop="@dimen/_5sdp"
+                                 android:paddingEnd="@dimen/_10sdp"
+                                 android:paddingBottom="@dimen/_5sdp"
+                                 android:text="@string/marketoffer_howtoTwo"
+                                 android:textColor="@color/common_text_color"
+                                 android:textFontWeight="600"
+                                 android:textSize="@dimen/txt_12sp" />
+                         </LinearLayout>-->
 
                         <!--<LinearLayout
                             android:id="@+id/howto_pointThree_layout"
@@ -440,21 +492,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="4dp"
                             android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@drawable/view_dot_lines_bg"/>
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/view_dot_lines_bg" />
+
                         <TextView
                             android:id="@+id/term_and_conditions"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_6sdp"
                             android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_6sdp"
                             android:fontFamily="@font/open_sans_bold"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:layout_marginStart="@dimen/_6sdp"
-                            android:layout_marginEnd="@dimen/_6sdp"
                             android:text="Terms  &amp; Conditions "
                             android:textColor="@color/common_text_color"
                             android:textFontWeight="700"
@@ -656,7 +709,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:itemCount="2"
-                                tools:listitem="@layout/marketoffers_info_item"/>
+                                tools:listitem="@layout/marketoffers_info_item" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
@@ -875,19 +928,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
                     android:background="@drawable/orange_button_click_effect"
                     android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
                     android:padding="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginEnd="@dimen/_12sdp"
                     android:text="Avail Now"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_12sp"
-                    app:layout_constraintTop_toBottomOf="@+id/howtoavail_layout"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/howtoavail_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
@@ -904,10 +957,10 @@
         android:gravity="center"
         android:padding="@dimen/_10sdp"
         android:text="Avail Now"
-        android:visibility="gone"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_12sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

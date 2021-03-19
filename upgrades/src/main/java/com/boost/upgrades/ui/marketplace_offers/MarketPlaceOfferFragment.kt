@@ -89,6 +89,7 @@ class MarketPlaceOfferFragment : BaseFragment(), HistoryFragmentListener {
 
         offer_title.setText(marketOffersData!!.title)
         avail_coupon_txt.setText(marketOffersData!!.coupon_code)
+        offer_validity_txt.setText(getConvertedExpiryDateFormat(marketOffersData!!.expiry_date))
         if(marketOffersData?.extra_information != null){
             var list: ArrayList<String> = arrayListOf()
             var listTerms: ArrayList<String> = arrayListOf()
@@ -176,6 +177,12 @@ class MarketPlaceOfferFragment : BaseFragment(), HistoryFragmentListener {
 //                    CartFragment.newInstance(),
 //                    Constants.CART_FRAGMENT
 //            )
+        }
+        date_from_to_layout.setOnClickListener {
+            val clipboard: ClipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText(avail_coupon_txt.text, avail_coupon_txt.text)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(activity, "Coupon " + avail_coupon_txt.text + " copied!!" , Toast.LENGTH_SHORT).show()
         }
         avail_coupon_submit.setOnClickListener {
             val clipboard: ClipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
