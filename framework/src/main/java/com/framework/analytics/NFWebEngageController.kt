@@ -23,7 +23,7 @@ object NFWebEngageController {
 
         //AppsFlyerEvent...
         try {
-            AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get().applicationContext, event_name, trackEvent.toMap())
+            AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
         } catch (e: Exception) {
         }
     }
@@ -38,7 +38,7 @@ object NFWebEngageController {
 
             //AppsFlyerEvent...
             try {
-                AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get().applicationContext,
+                AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext,
                         event_name, event_value.toMap())
             } catch (e: Exception) {
             }
@@ -98,7 +98,7 @@ object NFWebEngageController {
             FirebaseAnalyticsUtilsHelper.identifyUser(userId)
 
             //AppsFlyer Analytics User Session Event
-            AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get().applicationContext)
+            AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
             AppsFlyerLib.getInstance().setCustomerUserId(userId)
             isUserLoggedIn = true
         }
