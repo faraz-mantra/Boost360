@@ -96,7 +96,8 @@ fun getProductType(category_code: String?): String {
 
 fun getAptType(category_code: String?): String {
   return when (category_code) {
-    "SPA", "SAL" -> "SPA_SAL"
+    "SPA", "SAL", "SVC" -> "SPA_SAL_SVC"
+    "DOC", "HOS" -> "DOC_HOS"
     else -> "OTHERS"
   }
 }

@@ -78,7 +78,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private var isLoadingD = false
   private var TOTAL_ELEMENTS = 0
   private var offSet: Int = PAGE_START
-  private var limit: Int = PAGE_SIZE
+  private var limit: Int = PAGE_SIZE + 1
   private var isLastPageD = false
 
   companion object {
@@ -433,7 +433,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
       val isRefresh = data?.getBooleanExtra(IntentConstant.IS_UPDATED.name, false) ?: false
       if (isRefresh) {
         this.offSet = PAGE_START
-        this.limit = PAGE_SIZE
+        this.limit = PAGE_SIZE + 1
         getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
       }
     }

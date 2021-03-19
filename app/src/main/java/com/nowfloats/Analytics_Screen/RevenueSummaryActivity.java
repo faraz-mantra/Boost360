@@ -4,11 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.mikephil.charting.charts.BarChart;
@@ -213,17 +214,26 @@ public class RevenueSummaryActivity extends AppCompatActivity {
 
     }
 
-    public class MyYAxisValueFormatter implements IValueFormatter {
-        private DecimalFormat mFormat;
+    private void syncRevenueSummary() {
+        showDialog();
+        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+        callInterface.getRevenueSummary(mSession.getFpTag(), new retrofit.Callback<SellerSummary>() {
 
-        public MyYAxisValueFormatter() {
-            mFormat = new DecimalFormat("#########");
-        }
+            @Override
+            public void success(SellerSummary sellerSummary, retrofit.client.Response response) {
+                if (sellerSummary != null && sellerSummary.getData() != null) {
+                    tvAmount.setText(sellerSummary.getData().getCurrencyCode() + " " + sellerSummary.getData().getTotalRevenue());
+                } else {
+                    tvAmount.setText(getString(R.string.inr) + " 0.0");
+                }
+                hideDialog();
+            }
 
-        @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return mFormat.format(value);
-        }
+            @Override
+            public void failure(RetrofitError error) {
+                hideDialog();
+            }
+        });
     }
 
     @Override
@@ -240,28 +250,17 @@ public class RevenueSummaryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public class MyYAxisValueFormatter implements IValueFormatter {
+        private final DecimalFormat mFormat;
 
-    private void syncRevenueSummary() {
-        showDialog();
-        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
-        callInterface.getRevenueSummary(mSession.getFpTag(), new retrofit.Callback<SellerSummary>() {
+        public MyYAxisValueFormatter() {
+            mFormat = new DecimalFormat("#########");
+        }
 
-            @Override
-            public void success(SellerSummary sellerSummary, retrofit.client.Response response) {
-                if (sellerSummary != null &&
-                        sellerSummary.getData() != null) {
-                    tvAmount.setText(sellerSummary.getData().getCurrencyCode() + " " + sellerSummary.getData().getTotalRevenue());
-                } else {
-                    tvAmount.setText(getString(R.string.inr) + " 0.0");
-                }
-                hideDialog();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                hideDialog();
-            }
-        });
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return mFormat.format(value);
+        }
     }
 
     public class CustomXAxisRenderer extends XAxisRenderer {
@@ -273,7 +272,7 @@ public class RevenueSummaryActivity extends AppCompatActivity {
         protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
 
             if (formattedLabel.contains("-")) {
-                String line[] = formattedLabel.split("-");
+                String[] line = formattedLabel.split("-");
                 Utils.drawXAxisValue(c, line[0], x, y, mAxisLabelPaint, anchor, angleDegrees);
                 Utils.drawXAxisValue(c, line[1], x + mAxisLabelPaint.getTextSize(), y + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
             } else {

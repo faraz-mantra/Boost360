@@ -86,11 +86,10 @@ class UpgradeActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
- var connectionStatus = checkNetworkType(applicationContext)
-    Log.v("checkNetworkType", " " + connectionStatus)
+
     isDeepLink = intent.getBooleanExtra("isDeepLink", false)
     deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
-    deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
+    deepLinkDay = intent.getStringExtra("deepLinkDay").toIntOrNull() ?: 7
 
     experienceCode = intent.getStringExtra("expCode")
     fpName = intent.getStringExtra("fpName")
@@ -103,15 +102,7 @@ class UpgradeActivity : AppCompatActivity() {
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
-    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
-
-    if (userPurchsedWidgets != null) {
-      for (a in userPurchsedWidgets) {
-//      println("userPurchsedWidgets  ${userPurchsedWidgets}")
-      }
-
-
-    }
+    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")?:ArrayList()
 
     progressDialog = ProgressDialog(this)
 
@@ -187,7 +178,7 @@ class UpgradeActivity : AppCompatActivity() {
       Utils.hideSoftKeyboard(this)
       if (supportFragmentManager.backStackEntryCount > 0) {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-        val tag = currentFragment?.tag
+        val tag = currentFragment.tag
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
           if (tag == CART_FRAGMENT) {
