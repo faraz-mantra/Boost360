@@ -1038,13 +1038,14 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                 Constants.WEB_VIEW_FRAGMENT
                         )
                     }
-                } else if (!item!!.coupon_code.isNullOrBlank()) {
-                    if (item!!.coupon_code != null) {
+                } else if (!item.coupon_code.isNullOrBlank() || !item.cta_offer_identifier.isNullOrBlank()) {
+                    if (item.coupon_code != null || item.cta_offer_identifier != null) {
 //Log.v("coupon_code", " "+ item.coupon_code + " "+ item.title)
                         CompositeDisposable().add(
                                 AppDatabase.getInstance(requireActivity().application)!!
                                         .marketOffersDao()
-                                        .getMarketOffersByCouponCode(item!!.coupon_code)
+//                                        .getMarketOffersByCouponCode(item!!.coupon_code)
+                                        .getMarketOffersByCouponCode(if(item!!.coupon_code != null ) item.coupon_code else item.cta_offer_identifier )
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .doOnError {  }

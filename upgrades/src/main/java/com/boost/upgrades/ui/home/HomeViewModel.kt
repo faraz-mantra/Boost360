@@ -415,6 +415,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                             item.title,
                                                             if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) Gson().toJson(item.exclusive_to_categories) else null,
                                                             if (item.image != null) item.image.url else null,
+                                                            if (item.cta_offer_identifier != null) item.cta_offer_identifier else null,
                                                     ))
                                                 }
                                                 Completable.fromAction {
