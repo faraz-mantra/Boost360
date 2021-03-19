@@ -29,9 +29,13 @@ data class ServiceTiming(
   fun isOpenDay(): Boolean {
     return ((businessTiming?.startTime.isNullOrEmpty() || businessTiming?.startTime.equals("00:00") || businessTiming?.startTime.equals("00")).not() &&
         (businessTiming?.endTime.isNullOrEmpty() || businessTiming?.endTime.equals("00:00") || businessTiming?.endTime.equals("00")).not())
-
   }
 
+  fun isValidTime(): Boolean {
+    return ((time?.from.isNullOrEmpty() || time?.from.equals("00:00") || time?.from.equals("00")).not() &&
+        (time?.to.isNullOrEmpty() || time?.to.equals("00:00") || time?.to.equals("00")).not())
+
+  }
   fun getEmptyDataServiceTiming(isEdit: Boolean): ArrayList<ServiceTiming> {
     val list = ArrayList<ServiceTiming>()
     val days = arrayListOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -42,7 +46,7 @@ data class ServiceTiming(
   fun getRequestEmptyTiming(): ArrayList<ServiceTiming> {
     val list = ArrayList<ServiceTiming>()
     val days = arrayListOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-    days.forEach { list.add(ServiceTiming(it, time = ServiceTime("", ""))) }
+    days.forEach { list.add(ServiceTiming(it, time = ServiceTime("00:00", "00:00"))) }
     return list
   }
 

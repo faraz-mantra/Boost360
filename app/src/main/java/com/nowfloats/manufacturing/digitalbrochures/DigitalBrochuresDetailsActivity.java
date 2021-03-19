@@ -190,7 +190,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.creating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setTitle(nameText.getText().toString());
 
@@ -262,7 +262,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.updating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setTitle(nameText.getText().toString());
 
@@ -414,11 +414,9 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader(getString(R.string.updating_record_please_wait));
             updateExistingTeamsAPI();
             Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
         } else {
-            showLoader(getString(R.string.creating_record_please_wait));
             createNewTeamsAPI();
             Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
         }
