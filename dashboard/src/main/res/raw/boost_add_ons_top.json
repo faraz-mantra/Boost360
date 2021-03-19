@@ -219,6 +219,13 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nEnquiries"
+        },
+        {
+          "businessType": "ic_service_cataloge_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Service\nCatalogue"
         }
       ]
     },
@@ -245,6 +252,13 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nEnquiries"
+        },
+        {
+          "businessType": "ic_service_cataloge_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Service\nCatalogue"
         }
       ]
     },
@@ -271,6 +285,13 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nEnquiries"
+        },
+        {
+          "businessType": "ic_service_cataloge_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Service\nCatalogue"
         }
       ]
     }

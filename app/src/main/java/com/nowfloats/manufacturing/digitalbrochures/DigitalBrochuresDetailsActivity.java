@@ -1,18 +1,11 @@
 package com.nowfloats.manufacturing.digitalbrochures;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,10 +36,7 @@ import com.nowfloats.manufacturing.API.model.UpdateBrochures.UpdateBrochuresData
 import com.nowfloats.manufacturing.digitalbrochures.Interfaces.DigitalBrochuresDetailsListener;
 import com.nowfloats.util.FileUtils;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.Utils;
 import com.thinksity.R;
-
-import org.intellij.lang.annotations.RegExp;
 
 import java.util.concurrent.ExecutionException;
 
@@ -190,7 +184,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.creating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setTitle(nameText.getText().toString());
 
@@ -262,7 +256,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.updating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setTitle(nameText.getText().toString());
 
@@ -414,11 +408,9 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader(getString(R.string.updating_record_please_wait));
             updateExistingTeamsAPI();
             Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
         } else {
-            showLoader(getString(R.string.creating_record_please_wait));
             createNewTeamsAPI();
             Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
         }

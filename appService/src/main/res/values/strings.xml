@@ -674,7 +674,7 @@
   </array>
 
   <string-array name="business_hours_arrays">
-    <item>12:00AM</item>
+    <item>12:00 AM</item>
     <item>12:30AM</item>
     <item>01:00AM</item>
     <item>01:30AM</item>

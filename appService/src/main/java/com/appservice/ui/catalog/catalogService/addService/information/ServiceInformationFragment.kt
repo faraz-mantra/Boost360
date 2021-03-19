@@ -263,7 +263,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.keySpecification?.value = valSpecification
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
-        product?.BuyOnlineLink = BuyOnlineLink(websiteName, websiteValue)
+        product?.BuyOnlineLink = BuyOnlineLink(description = websiteName,url =  websiteValue)
         product?.GstSlab = 18//gst.toIntOrNull() ?: 0;
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)

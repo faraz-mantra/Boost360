@@ -222,7 +222,7 @@ class SignUpActivity : AppCompatActivity() {
           try {
             val error: Throwable = PreSignUpException(response.errorBody()?.string() ?: "")
             val reader = JSONObject(error.localizedMessage)
-            val message: String = reader.getJSONObject("Error")?.getJSONObject("ErrorList")
+            val message: String = reader.getJSONObject("Error").getJSONObject("ErrorList")
                 ?.getString("EXCEPTION") ?: applicationContext.getString(R.string.failed_create_user)
             Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
           } catch (e: Exception) {
@@ -295,9 +295,7 @@ class SignUpActivity : AppCompatActivity() {
   }
 
   private fun isValidMobile(phone: String): Boolean {
-    return Pattern.compile(
-        "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
-        .matcher(phone).matches()
+    return Pattern.compile("[6-9][0-9]{9}").matcher(phone).matches()
   }
 
   fun registerUserProfileAPI() {
@@ -339,7 +337,7 @@ class SignUpActivity : AppCompatActivity() {
           try {
             val error: Throwable = PreSignUpException(response.errorBody()?.string() ?: "")
             val reader = JSONObject(error.localizedMessage)
-            val message: String = reader.getJSONObject("Error")?.getJSONObject("ErrorList")
+            val message: String = reader.getJSONObject("Error").getJSONObject("ErrorList")
                 ?.getString("EXCEPTION") ?: applicationContext.getString(R.string.failed_create_user)
             Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
           } catch (e: Exception) {

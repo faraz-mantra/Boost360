@@ -487,7 +487,7 @@ fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, 
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
     val fragmentType = when {
-      (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL") ->
+      (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC") ->
         com.inventoryorder.constant.FragmentType.CREATE_SPA_APPOINTMENT
       else -> {
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, isConsult)
@@ -512,7 +512,7 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
     val fragmentType = when {
       isOrder -> com.inventoryorder.constant.FragmentType.ALL_ORDER_VIEW
       isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
-      (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL")  -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
+      (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC")  -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
       else -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_VIEW
     }
     this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)
