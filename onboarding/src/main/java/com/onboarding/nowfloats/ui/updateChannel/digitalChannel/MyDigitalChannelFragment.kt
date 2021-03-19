@@ -72,7 +72,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     }
   private val clientId: String?
     get() {
-      return pref?.getString(PreferenceConstant.CLIENT_ID, "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
+      return pref?.getString(PreferenceConstant.CLIENT_ID, "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5")
     }
   private var requestFloatsModel: RequestFloatsModel? = null
   private var adapterConnect: AppBaseRecyclerViewAdapter<ChannelModel>? = null

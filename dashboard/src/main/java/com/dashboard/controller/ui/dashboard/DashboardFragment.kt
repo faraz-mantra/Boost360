@@ -149,7 +149,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setDrScoreData(isLoadingShimmerDr: Boolean) {
     handler.removeCallbacks(runnable)
-    viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer{
       val response = it as? DrScoreUiDataResponse
       val drScoreData = getDrScoreData()
       if(baseActivity.packageName.equals("com.jio.online", ignoreCase = true) && drScoreData?.drs_segment.isNullOrEmpty()){
@@ -210,7 +210,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setBusinessManageTask() {
     binding?.recommendedTask?.apply {
-      viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer{
         val response = it as? QuickActionResponse
         val listAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (response?.isSuccess() == true && listAction?.actionItem.isNullOrEmpty().not()) {
