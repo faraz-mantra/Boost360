@@ -28,10 +28,11 @@
 
                 <com.framework.views.customViews.CustomEditText
                     android:id="@+id/edt_account_name"
+                    android:textSize="14sp"
                     style="@style/Appointment_Text_Field"
                     android:layout_marginTop="@dimen/size_2"
                     android:background="@drawable/bg_edit_text_appointment"
-
+                      android:textColor="@color/black_2A2A2A"
                     android:hint="@string/write_the_name_as_mentioned_in_bank_account"
                     />
 
@@ -45,6 +46,9 @@
                     android:id="@+id/edt_account_number"
                     style="@style/Appointment_Text_Field"
                     android:layout_marginTop="@dimen/size_2"
+                    android:maxLength="18"
+                    android:textSize="14sp"
+                    android:textColor="@color/black_2A2A2A"
                     android:background="@drawable/bg_edit_text_appointment"
                     android:hint="@string/xxxxxxxxxxxxxxxxxx"
                     android:inputType="number" />
@@ -61,6 +65,10 @@
                     android:id="@+id/edt_confirm_number"
                     style="@style/Appointment_Text_Field"
                     android:layout_marginTop="@dimen/size_2"
+                    android:maxLength="18"
+                    android:textSize="14sp"
+                    android:editable="false"
+                    android:textColor="@color/black_2A2A2A"
                     android:background="@drawable/bg_edit_text_appointment"
                     android:hint="@string/xxxxxxxxxxxxxxxxxx"
                     android:inputType="numberPassword" />
@@ -75,6 +83,8 @@
                     android:id="@+id/edt_bank_name"
                     style="@style/Appointment_Text_Field"
                     android:layout_marginTop="@dimen/size_2"
+                    android:textSize="14sp"
+                    android:textColor="@color/black_2A2A2A"
                     android:background="@drawable/bg_edit_text_appointment"
                     android:hint="@string/write_the_name_of_your_bank"
                     android:inputType="text"
@@ -90,6 +100,8 @@
                     android:id="@+id/edt_alias"
                     style="@style/Appointment_Text_Field"
                     android:layout_marginTop="@dimen/size_2"
+                    android:textSize="14sp"
+                    android:textColor="@color/black_2A2A2A"
                     android:background="@drawable/bg_edit_text_appointment"
                     android:hint="@string/write_account_alias"
                     android:inputType="text"
@@ -105,9 +117,11 @@
                     android:id="@+id/edt_ifsc"
                     style="@style/Appointment_Text_Field"
                     android:layout_marginTop="@dimen/size_2"
+                    android:textSize="14sp"
                     android:background="@drawable/bg_edit_text_appointment"
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
                     android:hint="@string/type_ifsc_code"
+                    android:textColor="@color/black_2A2A2A"
                     android:inputType="textCapCharacters"
                     android:maxLength="11" />
 

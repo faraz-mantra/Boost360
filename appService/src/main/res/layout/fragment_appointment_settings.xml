@@ -14,6 +14,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.SearchView
+                android:layout_height="@dimen/size_40"
                 style="@style/SearchView.WhiteBackground"
                 app:queryHint="@string/search_settings" />
         </LinearLayout>
@@ -31,8 +32,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
                 android:id="@+id/catalog_setup"
-                android:clickable="true"
-                android:foreground="?attr/selectableItemBackground">
+                android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/civ_catalog_setup"
@@ -69,7 +69,7 @@
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@+id/ctv_catalog_setup_subheading"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
+                    app:layout_constraintVertical_bias="0.7" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -78,8 +78,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
                 android:id="@+id/payment_collection_setup"
-                android:clickable="true"
-                android:foreground="?attr/selectableItemBackground">
+                android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/civ_payment_collection"
@@ -116,7 +115,7 @@
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@+id/ctv_payment_collection_subheading"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
+                    app:layout_constraintVertical_bias="0.7" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -125,8 +124,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
                 android:id="@+id/customer_invoice_setup"
-                android:clickable="true"
-                android:foreground="?attr/selectableItemBackground">
+                android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/civ_customer_invoice_setup"
@@ -165,7 +163,7 @@
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@+id/customer_invoice_subheading"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
+                    app:layout_constraintVertical_bias="0.7" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -174,7 +172,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/policies_for_customer"
                 style="@style/match_wrap"
-                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+
                 >
 
                 <com.framework.views.customViews.CustomImageView
@@ -212,7 +211,7 @@
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@+id/ctv_policies_subheading"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
+                    app:layout_constraintVertical_bias="0.7" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View style="@style/HorizontalDivider" />

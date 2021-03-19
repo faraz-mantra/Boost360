@@ -190,6 +190,8 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
         binding?.btnChangeImage?.gone()
         binding?.civOwnerImage?.gone()
         ownerImage = null
+        ownersDataResponse?.data?.get(0)?.profileimage?.url = null
+
     }
 
     private fun openImagePicker() {
@@ -214,7 +216,10 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
         val designation = binding?.ctfDesignation?.text.toString()
         val name = binding?.ctfOwnerName?.text.toString()
         val description = binding?.ctfDescription?.text.toString()
-
+        if (ownersDataResponse?.data?.get(0)?.profileimage?.url == null && ownerImage==null) {
+            showLongToast("add owner image.")
+            return false
+        }
         if (name.isEmpty()) {
             showLongToast(getString(R.string.please_enter_name))
             return false

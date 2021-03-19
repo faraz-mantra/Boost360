@@ -471,13 +471,12 @@
     <string name="decide_what_you_want_to_call_the_catalog_tab_on_your_website_and_the_default_tax_for_your_all_services">Decide what you want to call the catalog tab on your website and the default tax % for your all services.</string>
   <string name="current_display_name">Current display name</string>
     <string name="it_is_not_advised_to_change_it_very_often_with_every_such_change_the_url_of_catalog_page_changes_which_may_cause_search_related_issues_and_a_drop_in_search_rank_leading_to_less_traffic">It is NOT ADVISED to change it very often. With every such change, the URL of catalog page changes, which may cause search related issues and a drop in search rank leading to less traffic.</string>
-  <string name="url_https_sravansclinics_com_services">URL: https://sravansclinics.com/services</string>
+  <string name="url_https_sravansclinics_com_services">URL: https://sravansclinics.com/<b>services</b></string>
     <string name="default_tax_rate_for_services">Default tax rate for services</string>
   <string name="what_are_text_rates">What are text rates?</string>
   <string name="tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_">Tax slabs are a rate at which any service is taxable (determined by GST council of India). This is used to back calculate the final paybale amount while placing an order at the checkout page on your website.</string>
   <string name="how_does_default_rate_work">How does default rate work?</string>
   <string name="this_will_be_used_as_defau">This will be used as default tax rate for any service in your catalog in case you’ve not entered any specific tax% for that product.</string>
-  <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to recieve money for all your online appointments.</string>
   <string name="payment_gateway">Payment gateway</string>
   <string name="boost_360_payment_gateway">Boost 360 payment gateway is a premium service which ensures payment protection to you and your customers. With this your customers will be able to pay you upfront digitally by all popular payment methods such as Credit Card, Debit Card, UPI etc.. We charge 3% as convenience fees which includes bank charges for providing the Boost payment gateway services)</string>
     <string name="boost_payment_gateway">Boost payment gateway</string>
@@ -745,6 +744,8 @@
   <string name="merchant_upi_added">merchant upi added.</string>
     <string name="_4_products_under_this_category">4 products under this category</string>
     <string name="search">Search</string>
+    <string name="catalog">Catalog</string>
+  <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to recieve money for all your online appointments.</string>
 
 
 </resources>

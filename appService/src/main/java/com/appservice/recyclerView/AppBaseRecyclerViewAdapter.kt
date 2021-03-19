@@ -37,6 +37,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
           SERVICE_LISTING_VIEW -> ServiceListingViewHolder(binding as RecyclerItemServiceListingBinding)
           OFFER_LISTING_VIEW -> OfferListingViewHolder(binding as RecyclerItemOfferBinding)
           OFFER_SELECT_SERVICES -> SelectOfferListingViewHolder(binding as RecyclerItemServiceSelectOfferBinding)
+            SERVICE_CATEGORY_ITEM_VIEW -> ServiceCategoryViewHolder(binding = binding as RecyclerItemServiceCategoryBinding)
         }
     }
 

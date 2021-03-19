@@ -98,7 +98,7 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_edit, menu)
+//        inflater.inflate(R.menu.menu_edit, menu)
         super.onCreateOptionsMenu(menu, inflater)
 
     }

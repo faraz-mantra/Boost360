@@ -40,6 +40,7 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.ui.catalog.catalogService.ServiceCatalogHomeFragment
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.model.*
@@ -182,6 +183,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
         setAdapterNotify()
 //        setToolbarTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})")
+        (parentFragment as ServiceCatalogHomeFragment).setTabTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})",0)
+
       } else if (isFirstLoad) setEmptyView(View.VISIBLE)
     } else {
       if (listService.isNullOrEmpty().not()) {
@@ -215,7 +218,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     val searchView = searchItem.actionView as? SearchView
     val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
     val searchCloseIcon = searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
-    searchCloseIcon?.setColorFilter(resources.getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
+    searchCloseIcon?.setColorFilter(getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
     searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
     searchAutoComplete?.setTextColor(getColor(R.color.white))
     searchView?.setIconifiedByDefault(true)
