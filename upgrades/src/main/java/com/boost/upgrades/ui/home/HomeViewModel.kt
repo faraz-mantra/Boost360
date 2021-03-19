@@ -392,6 +392,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                             val promoBannerFilter = (it.Data[0].promo_banners
                                                     ?: ArrayList()).promoBannerFilter(expCode, fpTag)
                                             promoBanners.postValue(promoBannerFilter)
+
                                             promoList.addAll(promoBannerFilter)
                                             //marketplace offers
                                             if (it.Data[0].marketplace_offers != null && it.Data[0].marketplace_offers.size > 0) {
@@ -438,6 +439,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                             }else{
                                                 promoBannersList.postValue(promoList)
                                             }
+
                                         }
 
                                         //partnerZone

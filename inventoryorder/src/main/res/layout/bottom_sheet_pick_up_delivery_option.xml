@@ -36,7 +36,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="Delivery Option"
+              android:text="@string/delivery_option"
               android:textColor="@color/little_light_black"
               app:fontFamily="@font/bold"
               app:textType="HEADING_4" />
@@ -47,7 +47,7 @@
               android:layout_marginStart="@dimen/size_2"
               android:layout_marginTop="@dimen/size_2"
               android:includeFontPadding="false"
-              android:text="Pick a delivery mode from the list below"
+              android:text="@string/pick_a_delivery_mode_from_the_list_below"
               android:textColor="@color/primary_grey"
               app:textType="BODY_1" />
 

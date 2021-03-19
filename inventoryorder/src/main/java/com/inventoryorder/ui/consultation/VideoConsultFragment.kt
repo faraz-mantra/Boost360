@@ -17,6 +17,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.utils.ValidationUtils
+import com.framework.webengageconstant.CLICKED_ON_VIDEO_CONSULTATIONS
+import com.framework.webengageconstant.CONSULTATIONS
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -75,7 +77,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on video consultations", "CONSULTATIONS", it) }
+    fpTag?.let { WebEngageController.trackEvent(CLICKED_ON_VIDEO_CONSULTATIONS, CONSULTATIONS, it) }
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
@@ -109,7 +111,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             setAdapterNotify(orderList)
           } else {
             setHasOptionsMenu(false)
-            errorView("No video consultation available.")
+            errorView(getString(R.string.no_video_consultation_available))
           }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
@@ -120,18 +122,19 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
           else {
             setHasOptionsMenu(false)
-            errorView("No video consultation available.")
+            errorView(getString(R.string.no_video_consultation_available))
           }
         }
       } else {
         setHasOptionsMenu(false)
-        errorView(it.message ?: "No video consultation available.")
+        errorView(it.message ?:getString(R.string.no_video_consultation_available))
       }
     })
   }
 
   private fun onVideoConsultAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_create_sample_video_consultation = isAdded
     instance.updateDocument()
   }
@@ -296,9 +299,9 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private fun startFilter(query: String) {
     if (query.isEmpty().not() && query.length > 2) {
       val isNumberWith91=(query.contains("+91"))
-      val isNumber= ValidationUtils.isNumeric(if (isNumberWith91) query.replace("+91","") else query)
+      val isNumber= ValidationUtils.isNumeric(if (isNumberWith91) query.replace("+91", "") else query)
       val type = if (isNumber) QueryObject.QueryKey.BuyerPrimaryContactNumber.name else QueryObject.QueryKey.BuyerFullName.name
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query,type=type), isSearch = true)
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query, type = type), isSearch = true)
     } else setAdapterNotify(orderList)
   }
 

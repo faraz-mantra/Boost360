@@ -166,7 +166,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:padding="@dimen/size_2"
-            android:text="COPY LINK"
+            android:text="@string/copy_link"
             android:textColor="@color/grey_text_color"
             android:visibility="gone"
             app:fontFamily="@font/semi_bold"

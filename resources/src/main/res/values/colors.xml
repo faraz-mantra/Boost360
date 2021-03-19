@@ -35,7 +35,8 @@
   <color name="light_grey_5">#F5F5F5</color>
   <color name="light_grey_6">#C5C5C5</color>
   <color name="light_grey_7">#d0d0d0</color>
-  <color name="light_grey_8">#cccccc</color>
+  <color name="light_grey_8">#CCCCCC</color>
+  <color name="light_grey_9">#C2C2C2</color>
   <color name="cell_text_color">#737373</color>
   <color name="grey_dim_1">#717A80</color>
   <color name="grey_dim_2">#9B9B9B</color>
@@ -54,6 +55,7 @@
   <color name="squash">#f7981c</color>
   <color name="carmine">#9f041b</color>
   <color name="watermelon">#f5515f</color>
+  <color name="lemon_light">#E39595</color>
   <color name="black">#2a2a2a</color>
   <color name="black_two">#2a2a2a</color>
   <color name="black_6">#0f000000</color>
@@ -104,6 +106,7 @@
   <color name="dodger_blue_ED73FE">#EDF3FE</color>
   <color name="black_2A2A2A">#2A2A2A</color>
   <color name="black_4a4a4a">#4a4a4a</color>
+  <color name="black_4a4a4a_50">#804A4A4A</color>
   <color name="black_4f4f4f">#4f4f4f</color>
   <color name="grey_dark_1">#787878</color>
   <color name="bg_grey_light">#E3E3E3</color>
@@ -112,7 +115,7 @@
   <color name="white_3">#e5e5e5</color>
   <color name="gray_cecece">#cecece</color>
   <color name="gray_light_1">#D8D8D8</color>
-  <color name="gray_ligh_3">#e1e1e1</color>
+  <color name="gray_light_3">#e1e1e1</color>
   <color name="gray_light_4">#a7a7a7</color>
   <color name="gray_text_hint">#c4c4c4</color>
   <color name="grey_light_2">#898989</color>
@@ -125,6 +128,7 @@
   <color name="green_27AE60">#27AE60</color>
   <color name="green_78AF00">#78AF00</color>
   <color name="green_light">#00C42D</color>
+  <color name="green_light_1">#6DCA07</color>
   <color name="white_80FFFFFF">#80FFFFFF</color>
   <color name="blue_4A90E2">#4A90E2</color>
   <color name="blue_52AAC6">#52AAC6</color>

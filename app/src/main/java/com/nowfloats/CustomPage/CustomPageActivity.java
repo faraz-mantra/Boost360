@@ -15,6 +15,10 @@ import android.widget.TextView;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventNameKt.CUSTOMPAGE;
+import static com.framework.webengageconstant.EventValueKt.NULL;
+
 /**
  * Created by guru on 08-06-2015.
  */
@@ -30,7 +34,7 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_appearance);
 
-        WebEngageController.trackEvent("CUSTOMPAGE", "CUSTOMPAGE", null);
+        WebEngageController.trackEvent(CUSTOMPAGE, EVENT_LABEL_CUSTOMPAGE, NULL);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
         setSupportActionBar(toolbar);

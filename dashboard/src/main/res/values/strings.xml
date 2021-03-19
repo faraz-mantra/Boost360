@@ -14,8 +14,8 @@
   <string name="improve_your_score_to_90">Improve your score above <b>90%</b> for better online traction.</string>
   <string name="share_on_whatsapp">Share on WhatsApp</string>
   <string name="share_on_more">Share on more...</string>
-  <string name="digital_readiness_score">Digital readiness score</string>
-  <string name="digital_readiness_score_n">Digital Readiness Score</string>
+  <string name="digital_readiness_score">Website readiness score</string>
+  <string name="digital_readiness_score_n">Website Readiness Score</string>
   <string name="quick_actions">Daily actions</string>
   <string name="use_tools_improve_business">Most frequently used actions to manage your online business.</string>
   <string name="one_tap_to_share_your_all_business_contact_points_with_anyone">One tap to share your all business contact points with anyone</string>
@@ -62,7 +62,7 @@
   <string name="site_completed">site completed</string>
   <string name="your_site_health">Your site health</string>
   <string name="site_meter">Site Meter</string>
-  <string name="dr_score">Digital Readiness Score</string>
+  <string name="dr_score">Website readiness score</string>
   <string name="navigation_data_error">Navigation data getting error!</string>
   <string name="quick_action_data_error">Quick action data getting error!</string>
   <string name="manage_business_not_found">Manage business data not found!</string>
@@ -88,4 +88,18 @@
   <string name="reset">Reset</string>
   <string name="select_duration">Select duration</string>
   <string name="digital_readiness_score_failed_to_load">Failed to load your Digital Readiness Score.</string>
+    <string name="please_wait">Please wait...</string>
+  <string name="business_nsummary">Business Summary</string>
+  <string name="your_site_health_heading">Your site health:</string>
+  <string name="_82">82%</string>
+  <string name="new_content" translatable="false">NEW</string>
+  <string name="inr">INR</string>
+  <string name="indian_rupee">₹</string>
+  <string name="_1_579">1,579</string>
+  <string name="coming_soon">Coming soon...</string>
+  <string name="my_business_card">My Business Card</string>
+  <string name="video_consultation_analytics_coming_soon">Video Consultation analytics coming soon...</string>
+  <string name="collection_analytics_coming_soon">Collection analytics coming soon...</string>
+  <string name="business_card">Business Card</string>
+    <string name="search_boost_add_ons">Search boost add-ons</string>
 </resources>

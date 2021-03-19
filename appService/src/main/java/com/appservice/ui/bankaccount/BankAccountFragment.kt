@@ -1,8 +1,6 @@
 package com.appservice.ui.bankaccount
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
@@ -31,13 +29,12 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.webengageconstant.BANK_ACCOUNT
+import com.framework.webengageconstant.BANK_ACCOUNT_DETAILS_UPDATED
+import com.framework.webengageconstant.BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION
+import com.framework.webengageconstant.FLOATING_POINT_ID
 
 class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, AccountViewModel>() {
-
-  private val pref: SharedPreferences?
-    get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
-    }
 
   private var isUpdated = true
   private var fpId: String = ""
@@ -160,6 +157,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun onBankAccountAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_add_bank_account = isAdded
     instance.updateDocument()
   }
@@ -177,7 +175,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     when (v) {
       binding?.submitBtn -> {
         if (isValid()) {
-          if (isUpdated.not()){
+          if (isUpdated.not()) {
             createApiAccount()
           } else {
             updateApiAccount()
@@ -242,7 +240,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         val editor = pref?.edit()
         editor?.putBoolean(PreferenceConstant.IS_ACCOUNT_SAVE, true)
         editor?.apply()
-        WebEngageController.trackEvent("Bank Account submitted for verification", "BANK ACCOUNT", fpId)
+        WebEngageController.trackEvent(BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION, BANK_ACCOUNT, event_value = FLOATING_POINT_ID)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
@@ -261,7 +259,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       val response = it as? AccountCreateResponse
       if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
         getUserDetails(isServiceCreation = isServiceCreation)
-        WebEngageController.trackEvent("Bank Account details updated", "BANK ACCOUNT", fpId)
+        WebEngageController.trackEvent(BANK_ACCOUNT_DETAILS_UPDATED, BANK_ACCOUNT, FLOATING_POINT_ID)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
@@ -281,25 +279,25 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     val alias = binding?.edtAlias?.text?.toString()
     val ifsc = binding?.edtIfsc?.text?.toString()
     if (nameAccount.isNullOrEmpty()) {
-      showShortToast("Bank account name can't empty.")
+      showShortToast(string = getString(R.string.bank_account_cannot_empty))
       return false
     } else if (accountNumber.isNullOrEmpty()) {
-      showShortToast("Bank account number can't empty.")
+      showShortToast(getString(R.string.bank_number_can_not_empty))
       return false
     } else if (confirmNumber.isNullOrEmpty()) {
-      showShortToast("Confirm bank account number can't empty.")
+      showShortToast(getString(R.string.confirm_bank_account_cannot_empty))
       return false
     } else if ((confirmNumber == accountNumber).not()) {
-      showShortToast("Enter valid confirm account number.")
+      showShortToast(getString(R.string.enter_a_valid_account_number))
       return false
     } else if (ifsc.isNullOrEmpty()) {
-      showShortToast("Bank IFSC can't empty.")
+      showShortToast(getString(R.string.bank_ifcs_cannot_empty))
       return false
     } else if (ifsc.length < 11 || !isValidIfsc) {
-      showLongToast("Please enter valid IFSC code")
+      showLongToast(getString(R.string.please_enter_valid_ifcs))
       return false
     } else if (bankName.isNullOrEmpty()) {
-      showShortToast("Bank name can't empty.")
+      showShortToast(getString(R.string.bank_name_cant_empty))
       return false
     }
     requestAccount = BankAccountDetailsN(accountName = nameAccount, accountNumber = accountNumber, iFSC = ifsc, bankName = bankName, accountAlias = alias, kYCDetails = BankAccountDetailsN().kycObj())

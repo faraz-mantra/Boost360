@@ -27,6 +27,9 @@ object ApiTwoWithFloatRepository : AppBaseRepository<WithFloatTwoDataSource, App
     return makeRemoteRequest(remoteDataSource.getBizFloatMessage(map), TaskCode.GET_BIZ_FLOAT_MESSAGE)
   }
 
+  fun getProductList(fpTag : String?, clientId : String?, skipBy: Int?) : Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getAllProductList(fpTag, clientId, skipBy), TaskCode.GET_ALL_PRODUCT_LIST)
+  }
 
   override fun getLocalDataSourceInstance(): AppBaseLocalService {
     return AppBaseLocalService()

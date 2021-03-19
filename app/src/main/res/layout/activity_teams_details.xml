@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add image"
+                android:text="@string/add_image"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
@@ -71,7 +71,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="@string/name"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
@@ -80,13 +80,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Name"
+                android:hint="@string/enter_name"
                 android:elevation="@dimen/_2sdp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Designation"
+                android:text="@string/designation"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
@@ -95,13 +95,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Company Title"
+                android:hint="@string/company_title"
                 android:elevation="@dimen/_2sdp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Facebook Profile"
+                android:text="@string/facebook_profile"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
@@ -111,14 +111,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Facebook URL"
+                android:hint="@string/enter_facebook_url"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Twitter Profile"
+                android:text="@string/twitter_profile"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
@@ -128,14 +128,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Twitter URL"
+                android:hint="@string/enter_twitter_url"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Skype Profile"
+                android:text="@string/skype_profile"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
@@ -145,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Skype URL"
+                android:hint="@string/enter_skype_url"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"/>
 
@@ -161,7 +161,7 @@
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:gravity="center"
-                android:text="save"
+                android:text="@string/save"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:elevation="@dimen/_2sdp"

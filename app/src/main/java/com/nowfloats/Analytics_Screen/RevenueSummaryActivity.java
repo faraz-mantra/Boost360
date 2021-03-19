@@ -248,8 +248,7 @@ public class RevenueSummaryActivity extends AppCompatActivity {
 
             @Override
             public void success(SellerSummary sellerSummary, retrofit.client.Response response) {
-                if (sellerSummary != null &&
-                        sellerSummary.getData() != null) {
+                if (sellerSummary != null && sellerSummary.getData() != null) {
                     tvAmount.setText(sellerSummary.getData().getCurrencyCode() + " " + sellerSummary.getData().getTotalRevenue());
                 } else {
                     tvAmount.setText(getString(R.string.inr) + " 0.0");
@@ -485,7 +484,7 @@ public class RevenueSummaryActivity extends AppCompatActivity {
         if (materialProgress == null) {
             materialProgress = new MaterialDialog.Builder(this)
                     .widgetColorRes(R.color.accentColor)
-                    .content("Please Wait...")
+                    .content(getString(R.string.please_wait_))
                     .progress(true, 0)
                     .cancelable(false)
                     .build();

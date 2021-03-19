@@ -122,6 +122,11 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     return false
   }
 
+  open fun getSubtitleAlpha(): Float? {
+    return 0.7F
+  }
+
+
   fun adjustToolbarTitleMarginEnd(menu: Menu) {
     if (this.getToolbarTitleGravity() == Gravity.CENTER_HORIZONTAL || this.getToolbarTitleGravity() == Gravity.CENTER) {
       val iteration = menu.children.iterator()
@@ -172,7 +177,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     toolbar.getSubTitleTextView()?.let { subTitleView ->
       subTitleView.setToolbarTitleGravity()
       getToolbarSubTitleSize()?.let { subTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, it) }
-      subTitleView.alpha = 0.7F
+      getSubtitleAlpha()?.let { subTitleView.alpha = it }
     }
   }
 

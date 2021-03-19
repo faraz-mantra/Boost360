@@ -42,7 +42,7 @@ class DigitalChannelWhyDialog : BaseDialogFragment<DialogDigitalChannelWhyBindin
     super.onClick(v)
     when (v) {
       binding?.dismiss -> this.dismiss()
-      binding?.clickHelp -> showLongToast("Coming soon...")
+      binding?.clickHelp -> showLongToast(getString(R.string.coming_soon))
       binding?.confirm -> this.dismiss()
     }
   }

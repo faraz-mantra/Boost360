@@ -28,6 +28,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE_CREATION_SUCCESS;
+import static com.framework.webengageconstant.EventLabelKt.START_VIEW;
+import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_SUCCESSFUL;
+
 
 public class Utils {
 
@@ -51,7 +56,7 @@ public class Utils {
 
     public static void logOnBoardingCompleteConversionGoals(Context context, String fpId) {
         try {
-            WebEngageController.trackEvent("Business Profile Creation Success", "Business Profile Creation Success", fpId);
+            WebEngageController.trackEvent(BUSINESS_PROFILE_CREATION_SUCCESSFUL, BUSINESS_PROFILE_CREATION_SUCCESS, fpId);
 
             String loginMethod = "unknown";
             try {
@@ -403,7 +408,7 @@ public class Utils {
     UserSessionManager session, boolean isOpenCardFragment,  String screenType, String buyItemKey ,Boolean isLoadingShow) {
         try {
 //            if (isLoadingShow) delayProgressShow()
-            WebEngageController.trackEvent("Addon Marketplace Page", "startview", session.getFpTag());
+            WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE, START_VIEW, session.getFpTag());
             Intent intent = new Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"));
             intent.putExtra("expCode", session.getFP_AppExperienceCode());
             intent.putExtra("fpName", session.getFPName());

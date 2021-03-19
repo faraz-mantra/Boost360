@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import com.dashboard.AppDashboardApplication
 import com.dashboard.R
 
 import com.dashboard.base.AppBaseFragment
@@ -25,6 +26,9 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.AddOnsViewModel
 import com.framework.extensions.observeOnce
+import com.framework.webengageconstant.BOOST_ADD_ONS_PAGE
+import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.WEBSITE_REPORT_ALL_VISITS
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -57,7 +61,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     getDomainDetail()
-    WebEngageController.trackEvent("Boost Add-ons Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent(BOOST_ADD_ONS_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   override fun onResume() {
@@ -119,7 +123,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
       searchAutoComplete?.setTextColor(getColor(R.color.white))
       searchView?.setIconifiedByDefault(true)
-      searchView?.queryHint = "Search boost add-ons"
+      searchView?.queryHint = getString(R.string.search_boost_add_ons)
       searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
           return false
@@ -202,7 +206,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.team_page_d -> baseActivity.startListProjectAndTeams(session)
     ManageBusinessData.BusinessType.upcoming_batches_d -> baseActivity.startListBatches(session)
     ManageBusinessData.BusinessType.toppers_institute_d -> baseActivity.startListToppers(session)
-    ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(session, "TOTAL")
+    ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS)
     ManageBusinessData.BusinessType.business_name_d,
     ManageBusinessData.BusinessType.clinic_basic_info,
     ManageBusinessData.BusinessType.business_description_d,
@@ -236,7 +240,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.membership_plans,
     ManageBusinessData.BusinessType.restaurant_story_d,
     -> {
-      Toast.makeText(baseActivity, "Coming soon...", Toast.LENGTH_SHORT).show()
+      Toast.makeText(baseActivity, AppDashboardApplication.instance.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
     }
   }
 }

@@ -16,7 +16,7 @@
 
             <TextView
                 style="@style/ProductLabelTextStyle"
-                android:text="Accept payment via"/>
+                android:text="@string/accept_payment_via"/>
 
             <ImageButton
                 android:id="@+id/ib_info_payment_configuration"
@@ -40,13 +40,13 @@
                     android:onClick="onPaymentConfigurationClick"
                     android:clickable="true"
                     android:background="@drawable/grey_rounded_background"
-                    android:text="Assured Purchase" />
+                    android:text="@string/assured_purchase" />
 
                 <TextView
                     android:id="@+id/tv_payment_configuration_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Incomplete payment info"
+                    android:text="@string/incomplete_payment_info"
                     android:drawablePadding="5dp"
                     android:drawableLeft="@drawable/ic_info_red"
                     android:textSize="13sp"
@@ -70,7 +70,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="External Info / Purchase URL"/>
+                            android:text="@string/external_info_purchase_url"/>
 
                         <ImageButton
                             style="@style/ProductHelpButtonStyle"/>
@@ -88,7 +88,7 @@
                         <EditText
                             android:id="@+id/edit_website"
                             style="@style/ProductEditTextStyle"
-                            android:hint="Website name"
+                            android:hint="@string/website_name_"
                             android:background="@null"
                             android:layout_width="120dp" />
 
@@ -102,7 +102,7 @@
                             style="@style/ProductEditTextStyle"
                             android:inputType="textUri"
                             android:background="@null"
-                            android:hint="Paste your URL here"  />
+                            android:hint="@string/paste_your_url_here"  />
 
                     </LinearLayout>
 

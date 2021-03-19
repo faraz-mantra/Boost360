@@ -90,7 +90,7 @@ class ImagePicker(builder: Builder) {
             return ImagePicker(this)
         }
 
-        fun getContext(): Activity? {
+        fun requireContext(): Activity? {
             return context.get()
         }
 

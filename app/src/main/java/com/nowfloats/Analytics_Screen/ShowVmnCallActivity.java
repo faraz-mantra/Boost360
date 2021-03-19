@@ -238,7 +238,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
         } else {
             new MaterialDialog.Builder(this)
                     .title("Recording Download")
-                    .content("we need write to external storage permission to download this file.")
+                    .content(R.string.we_need_external_storage_permission_to_download_this_file)
                     .negativeColorRes(R.color.gray_transparent)
                     .negativeText(getString(R.string.cancel))
                     .positiveColorRes(R.color.primary_color)

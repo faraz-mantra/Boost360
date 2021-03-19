@@ -260,7 +260,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                if (listenNew != null) listenNew.postUpdate(false, "Post image uploading error!");
+                if (listenNew != null) listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
             } finally {
                 try {
                     inputStreamReader.close();
@@ -274,7 +274,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
             }
         } catch (Exception ex) {
             success = false;
-            if (listenNew != null) listenNew.postUpdate(false, "Post image uploading error!");
+            if (listenNew != null) listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
         } finally {
             try {
                 outputStream.flush();
@@ -296,7 +296,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
                             ImageView touch = new ImageView(appContext);
                             touch.setImageBitmap(bitmap);
-                            new MaterialDialog.Builder(appContext).customView(touch, true).title("Title Test Bitmap array").show();
+                            new MaterialDialog.Builder(appContext).customView(touch, true).title(R.string.title_test_bitmap_array).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

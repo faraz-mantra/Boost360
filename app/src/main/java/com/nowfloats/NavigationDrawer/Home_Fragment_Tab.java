@@ -44,6 +44,9 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 
+import static com.framework.webengageconstant.EventLabelKt.HOME_SCREEN;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_REPORTS;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 import static com.nowfloats.bubble.BubblesService.ACTION_KILL_DIALOG;
 
@@ -275,7 +278,7 @@ public class Home_Fragment_Tab extends Fragment {
             public void onPageSelected(int position) {
                 Log.d("Position", String.valueOf(position));
                 if(position == 1){
-                    WebEngageController.trackEvent("Clicked on reports", "HOME SCREEN", null);
+                    WebEngageController.trackEvent( CLICKED_ON_REPORTS, HOME_SCREEN, NULL);
                 }
             }
 

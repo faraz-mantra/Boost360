@@ -19,5 +19,4 @@ interface WithFloatRemoteData {
 
   @PUT(EndPoints.UPDATE_PAYMENT)
   fun updateAccount(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?, @Body request: BankAccountDetailsN?): Observable<Response<AccountCreateResponse>>
-
 }

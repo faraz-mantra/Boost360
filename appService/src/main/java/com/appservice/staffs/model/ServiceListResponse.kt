@@ -8,28 +8,24 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ServiceListResponse(
-
     @field:SerializedName("StatusCode")
     var statusCode: Int? = null,
-
     @field:SerializedName("Result")
     var result: ResultService? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem {
+
   override fun getViewType(): Int {
     return R.layout.recycler_item_service
   }
 }
 
 data class ResultService(
-
     @field:SerializedName("Paging")
     var paging: PagingService? = null,
 
     @field:SerializedName("Data")
     var data: List<DataItemService?>? = null,
-
-
-    ) {
+) {
   fun getSelectedServicesCount(): Int {
     return this.data?.size ?: 0
   }
@@ -56,7 +52,7 @@ data class DataItemService(
     val category: String? = null,
 
     @field:SerializedName("SecondaryTileImages")
-    val secondaryTileImages: List<Any?>? = null,
+    val secondaryTileImages: ArrayList<Any>? = null,
 
     @field:SerializedName("Price")
     val price: Double? = null,
@@ -74,7 +70,7 @@ data class DataItemService(
     val image: String? = null,
 
     @field:SerializedName("SecondaryImages")
-    val secondaryImages: List<Any?>? = null,
+    val secondaryImages: ArrayList<Any>? = null,
 
     @field:SerializedName("DiscountAmount")
     val discountAmount: Double? = null,
@@ -85,11 +81,9 @@ data class DataItemService(
     @field:SerializedName("TileImage")
     val tileImage: String? = null,
     var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_ITEM_VIEW.getLayout(),
-
-    ) : AppBaseRecyclerViewItem, Serializable {
+) : AppBaseRecyclerViewItem, Serializable {
   override fun getViewType(): Int {
     return recyclerViewItem
   }
-
 
 }

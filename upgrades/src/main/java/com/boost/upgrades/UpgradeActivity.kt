@@ -29,7 +29,7 @@ import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.splash.SplashFragment
-import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
@@ -41,6 +41,8 @@ import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
+import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -81,6 +83,7 @@ class UpgradeActivity : AppCompatActivity() {
   lateinit var progressDialog: ProgressDialog
   private var loadingStatus: Boolean = true
   var userPurchsedWidgets = ArrayList<String>()
+  var timerCallbackConst: Long = 1000
 
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,20 +105,12 @@ class UpgradeActivity : AppCompatActivity() {
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
-    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
-
-    if (userPurchsedWidgets != null) {
-      for (a in userPurchsedWidgets) {
-//      println("userPurchsedWidgets  ${userPurchsedWidgets}")
-      }
-
-
-    }
+    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")?:ArrayList()
 
     progressDialog = ProgressDialog(this)
 
     prefs = SharedPrefs(this)
-    WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE HOME")
+    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
     initView()
     initRazorPay()
   }
@@ -135,7 +130,7 @@ class UpgradeActivity : AppCompatActivity() {
 //      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
       addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT, bundle)
       //update userdetails and buyitem
-      showingPopUp()
+      showingPopUp(checkNetworkType(applicationContext))
       supportFragmentManager.addOnBackStackChangedListener {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
         if (currentFragment != null) {
@@ -157,7 +152,7 @@ class UpgradeActivity : AppCompatActivity() {
   private fun initRazorPay() {
     try {
       razorpay = Razorpay(this, RAZORPAY_KEY)
-    }catch (e:Exception){e.printStackTrace()}
+    }catch (e: Exception){e.printStackTrace()}
   }
 
 //  public fun initYoutube(){
@@ -190,7 +185,7 @@ class UpgradeActivity : AppCompatActivity() {
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
           if (tag == CART_FRAGMENT) {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back button_cart screen", "ADDONS_MARKETPLACE", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_CART_SCREEN, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             supportFragmentManager.addOnBackStackChangedListener {
               val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
               if (currentFragment != null) {
@@ -206,7 +201,7 @@ class UpgradeActivity : AppCompatActivity() {
             }
           }
           if (tag == PAYMENT_FRAGMENT)
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", "ADDONS_MARKETPLACE", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_PAYMENTSCREEN, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
           if (tag == ORDER_CONFIRMATION_FRAGMENT) {
             if (isDeepLink) goHomeActivity()
             else goToHomeFragment()
@@ -325,67 +320,68 @@ class UpgradeActivity : AppCompatActivity() {
     window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
   }
 
-  fun showingPopUp() {
+  fun showingPopUp(networkRecallTimer: Long) {
     if (loadingStatus && initialLoadUpgradeActivity == 0) {
       loaderStatus(true)
     }
     CompositeDisposable().add(
-        AppDatabase.getInstance(application)!!
-            .featuresDao()
-            .checkEmptyFeatureTable()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-              if (it == 1) {
-                loaderStatus(false)
-                if (widgetFeatureCode != null) {
-                  CompositeDisposable().add(
-                      AppDatabase.getInstance(application)!!
-                          .featuresDao()
-                          .checkFeatureTableKeyExist(widgetFeatureCode!!)
-                          .subscribeOn(Schedulers.io())
-                          .observeOn(AndroidSchedulers.mainThread())
-                          .subscribe({
-                            if (it == 1) {
-                              val details = DetailsFragment.newInstance()
-                              val args = Bundle()
-                              args.putString("itemId", widgetFeatureCode)
-                              details.arguments = args
-                              addFragment(details, Constants.DETAILS_FRAGMENT)
-                            } else {
-                              Toasty.error(this, "This Add-ons Not Available to Your Account.", Toast.LENGTH_LONG).show()
-                            }
-                          }, {
-                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
-                          })
-                  )
-                }
-                //turn this on when you want to show Welcome Market Screen all the time
-                //prefs.storeInitialLoadMarketPlace(true)
-                else if (prefs.getInitialLoadMarketPlace()) {
+            AppDatabase.getInstance(application)!!
+                    .featuresDao()
+                    .checkEmptyFeatureTable()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                      if (it == 1) {
+                        loaderStatus(false)
+                        if (widgetFeatureCode != null) {
+                          CompositeDisposable().add(
+                                  AppDatabase.getInstance(application)!!
+                                          .featuresDao()
+                                          .checkFeatureTableKeyExist(widgetFeatureCode!!)
+                                          .subscribeOn(Schedulers.io())
+                                          .observeOn(AndroidSchedulers.mainThread())
+                                          .subscribe({
+                                            if (it == 1) {
+                                              val details = DetailsFragment.newInstance()
+                                              val args = Bundle()
+                                              args.putString("itemId", widgetFeatureCode)
+                                              details.arguments = args
+                                              addFragment(details, Constants.DETAILS_FRAGMENT)
+                                            } else {
+                                              Toasty.error(this, "This Add-ons Not Available to Your Account.", Toast.LENGTH_LONG).show()
+                                            }
+                                          }, {
+                                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                                          })
+                          )
+                        }
+                        //turn this on when you want to show Welcome Market Screen all the time
+                        //prefs.storeInitialLoadMarketPlace(true)
+                        else if (prefs.getInitialLoadMarketPlace()) {
+                          Log.v("getInitialLoadM", " getInitialLoadM")
 //                Handler().postDelayed({
-                  /*splashFragment.show(
+                          /*splashFragment.show(
                       supportFragmentManager,
                       SPLASH_FRAGMENT
                   )*/
 //                }, 1000)
-                }
-              } else {
-                //recall after 1 second
-                Handler().postDelayed({
-                  if (initialLoadUpgradeActivity < 3) {
-                    initialLoadUpgradeActivity += 1
-                    showingPopUp()
-                  } else {
-                    loaderStatus(false)
-                    Toasty.error(this, "Not able to Fetch data from database. Try Later..", Toast.LENGTH_LONG).show()
-                  }
-                }, 1000)
-              }
-            }, {
-              loaderStatus(false)
-              Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
-            })
+                        }
+                      } else {
+                        //recall after 1 second
+                        Handler().postDelayed({
+                          if (initialLoadUpgradeActivity < 3) {
+                            initialLoadUpgradeActivity += 1
+                            showingPopUp(checkNetworkType(applicationContext))
+                          } else {
+                            loaderStatus(false)
+                            Toasty.error(this, "Critical error occurred while loading the Addon Marketplace. Please close the app and try again.\n\nIf the issue persists, please get in touch with the Support Team.", Toast.LENGTH_LONG).show()
+                          }
+                        }, networkRecallTimer) // networkRecallTimer works based on the network speed
+                      }
+                    }, {
+                      loaderStatus(false)
+                      Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                    })
     )
 
   }

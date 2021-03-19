@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/screen_bg"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
+    android:paddingStart="10dp"
     android:paddingRight="10dp"
     android:tag="cards main container">
 
@@ -37,7 +37,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingBottom="10dp"
-                    android:paddingLeft="15dp"
+                    android:paddingStart="15dp"
                     android:paddingRight="5dp"
                     android:paddingTop="15dp">
 
@@ -85,11 +85,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_10"
                     android:background="@drawable/white_round_corner"
                     android:gravity="center"
                     android:paddingBottom="@dimen/margin_7"
-                    android:paddingLeft="@dimen/margin_15"
+                    android:paddingStart="@dimen/margin_15"
                     android:paddingRight="@dimen/margin_15"
                     android:paddingTop="@dimen/margin_7"
                     android:text="@string/respond"
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/margin_10"
-                android:paddingLeft="@dimen/margin_10"
+                android:paddingStart="@dimen/margin_10"
                 android:paddingRight="@dimen/margin_10"
                 android:paddingTop="@dimen/margin_10">
 

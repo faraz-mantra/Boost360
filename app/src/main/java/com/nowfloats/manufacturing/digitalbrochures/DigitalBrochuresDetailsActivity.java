@@ -133,7 +133,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
                 Intent intent = new Intent();
                 intent.setType("application/pdf");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select a PDF "), SELECT_PDF);
+                startActivityForResult(Intent.createChooser(intent, getString(R.string.select_a_pdf)), SELECT_PDF);
             }
         });
 
@@ -190,7 +190,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.creating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setTitle(nameText.getText().toString());
 
@@ -219,7 +219,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, "Successfully Added Team Details");
+                        Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, getString(R.string.successfully_added_team_details));
                         onBackPressed();
                     }
 
@@ -240,12 +240,12 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 
     private boolean validateInput() {
         if (nameText.getText().toString().isEmpty() || descriptionText.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Fields are Empty!!..", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (!Patterns.WEB_URL.matcher(documentPdfUrl).matches()) {
-            Toast.makeText(getApplicationContext(), "Invalid PDF Link document", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.invalid_link_pdf_document), Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -262,7 +262,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.updating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setTitle(nameText.getText().toString());
 
@@ -296,7 +296,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, "Successfully Updated Brochure Details");
+                        Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, getString(R.string.successfully_updated_brochure_details));
                         finish();
                     }
 
@@ -304,7 +304,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
                     public void failure(RetrofitError error) {
                         hideLoader();
                         if (error.getResponse().getStatus() == 200) {
-                            Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, "Successfully Updated Brochure Details");
+                            Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, getString(R.string.successfully_updated_brochure_details));
                             finish();
                         } else {
                             Methods.showSnackBarNegative(DigitalBrochuresDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -342,7 +342,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTeams ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(DigitalBrochuresDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -353,7 +353,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(DigitalBrochuresDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -414,11 +414,9 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader("Updating Record.Please Wait...");
             updateExistingTeamsAPI();
             Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
         } else {
-            showLoader("Creating Record.Please Wait...");
             createNewTeamsAPI();
             Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
         }

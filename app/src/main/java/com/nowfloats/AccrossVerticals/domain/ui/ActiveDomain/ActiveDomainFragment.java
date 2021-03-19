@@ -68,7 +68,7 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        session = new UserSessionManager(requireContext(), requireActivity());
+        session = new UserSessionManager(getContext(), requireActivity());
         mViewModel = ViewModelProviders.of(this).get(ActiveDomainViewModel.class);
 
         return inflater.inflate(R.layout.active_domain_fragment, container, false);
@@ -92,7 +92,7 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
         addNewEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addEmailPopUpFragment.show(requireActivity().getSupportFragmentManager(), "ADD_EMAIL_POPUP_FRAGMENT");
+                addEmailPopUpFragment.show(getActivity().getSupportFragmentManager(), "ADD_EMAIL_POPUP_FRAGMENT");
             }
         });
         emailAdapter = new EmailAdapter(new ArrayList(), this);
@@ -113,8 +113,8 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
 
     @Override
     public void onEmailItemClicked(String value) {
-        Toast.makeText(requireContext(), value, Toast.LENGTH_LONG).show();
-        editEmailPopUpFragment.show(requireActivity().getSupportFragmentManager(), "EDIT_EMAIL_POPUP_FRAGMENT");
+        Toast.makeText(getContext(), value, Toast.LENGTH_LONG).show();
+        editEmailPopUpFragment.show(getActivity().getSupportFragmentManager(), "EDIT_EMAIL_POPUP_FRAGMENT");
     }
 
     private void showProgress() {
@@ -140,7 +140,7 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
     }
@@ -160,7 +160,7 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
                 public void success(GetDomainData domainData, Response response) {
                     hideProgress();
                     if (domainData == null || response.getStatus() != 200) {
-                        Toast.makeText(requireContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     data = domainData;
@@ -171,7 +171,7 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
                 @Override
                 public void failure(RetrofitError error) {
                     hideProgress();
-                    Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                 }
             });
         } catch (Exception e) {

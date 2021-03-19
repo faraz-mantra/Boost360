@@ -107,7 +107,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
             getSupportActionBar().setTitle("");
         }
 
-        binding.layoutToolbar.toolbarTitle.setText("Select Pickup Address");
+        binding.layoutToolbar.toolbarTitle.setText(getString(R.string.select_pickup_address));
 
         session = new UserSessionManager(getApplicationContext(), this);
 
@@ -405,7 +405,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
     {
         if(file == null)
         {
-            Toast.makeText(getApplicationContext(), "Address proof required", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.address_proof_required, Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -473,7 +473,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                         ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
-                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", this);
+                    Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_this_permission_to_enable_capture_an), this);
                 }
 
                 else
@@ -536,7 +536,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
 
         catch (Exception e)
         {
-            Toast.makeText(getApplicationContext(), "Failed to Open Camera", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.failed_to_open_camera, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -559,7 +559,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
         {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission))
             {
-                Toast.makeText(this, "Allow external storage reading", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.allow_external_storage_reading), Toast.LENGTH_SHORT).show();
             }
 
             else
@@ -659,7 +659,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
     public void onFailure() {
 
         Log.d("PRODUCT_JSON", "FAILURE");
-        Toast.makeText(getApplicationContext(), "Failed to upload address proof", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), R.string.failed_to_upload_address_proof, Toast.LENGTH_LONG).show();
         hideDialog();
     }
 
@@ -667,7 +667,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
     public void onPreUpload() {
 
         Log.d("PRODUCT_JSON", "PREUPLOAD");
-        showDialog("Please Wait...");
+        showDialog(getString(R.string.please_wait_));
     }
 
 
@@ -697,7 +697,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
                             {
                                 //If new address added then add it locally to address list
                                 adapterAddress.addData(addressResponse);
-                                Toast.makeText(getApplicationContext(), "Address Added Successfully", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), getString(R.string.address_addded_successfully), Toast.LENGTH_LONG).show();
 
                                 Intent intent = new Intent();
                                 intent.putExtra("ADDRESS", addressResponse);
@@ -719,7 +719,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
                                     }
                                 }
 
-                                Toast.makeText(getApplicationContext(), "Address Updated Successfully", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), getString(R.string.address_updated_successfully), Toast.LENGTH_LONG).show();
                             }
 
                             //product.pickupAddressReferenceId = webResponseModel.getData().id;
@@ -727,14 +727,14 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
                             addressInformation.id = webResponseModel.getData().id;
                         }
 
-                        Log.d("PRODUCT_JSON", "Address Successfully Added/Updated");
+                        Log.d("PRODUCT_JSON", getString(R.string.address_successfully_added_updated));
                     }
 
                     @Override
                     public void failure(RetrofitError error)
                     {
                         hideDialog();
-                        Toast.makeText(getApplicationContext(), "Failed to save address", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.failed_to_save_address), Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage() + " CODE " + error.getSuccessType());
                     }
                 });
@@ -795,7 +795,7 @@ public class PickupAddressActivity extends AppCompatActivity implements FileUplo
     {
         if(selected == -1)
         {
-            Toast.makeText(getApplicationContext(), "Please choose pickup address", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.please_choose_pickup_address), Toast.LENGTH_LONG).show();
             return;
         }
 

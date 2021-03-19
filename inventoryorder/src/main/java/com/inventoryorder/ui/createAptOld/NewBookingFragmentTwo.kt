@@ -68,22 +68,22 @@ class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding
         var regExpName = "[a-z, A-Z]*"
 
         if (TextUtils.isEmpty(customerName)) {
-            showShortToast("Name field must not be empty.")
+            showShortToast(getString(R.string.name_field_must_not_be_empty))
             return
         } else if (!eTName.text.toString().matches(regExpName.toRegex())) {
-            showShortToast("Please enter valid name.")
+            showShortToast(getString(R.string.please_enter_valid_name))
             return
         }
         if (customerPhoneNumber.length < 10) {
-            showShortToast("Please enter valid mobile number")
+            showShortToast(getString(R.string.please_enter_valid_mobile_number))
             return
         }
         if (TextUtils.isEmpty(customerEmail) || !Patterns.EMAIL_ADDRESS.matcher(customerEmail).matches()) {
-            showShortToast("Please Enter valid email")
+            showShortToast(getString(R.string.please_enter_valid_email))
             return
         }
         if (TextUtils.isEmpty(selectGender)) {
-            showShortToast("Please select gender")
+            showShortToast(getString(R.string.please_select_gender))
             return
         }
         if (!TextUtils.isEmpty(customerName) && !TextUtils.isEmpty(customerPhoneNumber) && !TextUtils.isEmpty(customerEmail) && !TextUtils.isEmpty(selectGender)) {

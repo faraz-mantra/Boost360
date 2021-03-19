@@ -15,7 +15,7 @@
         android:id="@+id/llClose"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 

@@ -11,11 +11,11 @@ data class OrderInitiateRequest(
     @SerializedName("ShippingDetails")
     var shippingDetails: ShippingDetails? = null,
     @SerializedName("SellerID")
-    var sellerID: String = "",
+    var sellerID: String? = null,
     @SerializedName("PaymentDetails")
     var paymentDetails: PaymentDetails? = null,
     @SerializedName("Items")
-    var items: List<ItemsItem>? = null,
+    var items: ArrayList<ItemsItem>? = null,
     @SerializedName("TransactionCharges")
     var transactionCharges: Double = 0.0,
     @SerializedName("GstCharges")
@@ -24,8 +24,10 @@ data class OrderInitiateRequest(
     var buyerDetails: BuyerDetails? = null,
     //for update
     @SerializedName("OrderId")
-    var orderId: String? = null
+    var orderId: String? = null,
+    @SerializedName("Status")
+    var status: String? = null,
 ) : BaseRequest(), Serializable {
-
   var isVideoConsult: Boolean = false
+
 }

@@ -9,8 +9,8 @@
 <androidx.cardview.widget.CardView
     android:id="@+id/card_view"
     android:layout_width="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     android:layout_height="wrap_content"
     card_view:cardBackgroundColor="#FFFFFF"
     android:visibility="visible"
@@ -29,7 +29,7 @@
                 android:tag="image_tag"
                 android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_margin="10dp"
                 android:src="@drawable/card_cancel"
                 android:layout_width="wrap_content" />
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:gravity="center_horizontal"
-                    android:paddingLeft="30dp"
+                    android:paddingStart="30dp"
                     android:paddingRight="30dp"
                     android:text="@string/onboarding_screen_1_desc"
                     />
@@ -83,8 +83,8 @@
                 android:gravity="center"
                 android:background="@drawable/rounded_corner_button"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginBottom="25dp"
                 android:inputType="textCapWords"
                 android:textSize="16sp"/>

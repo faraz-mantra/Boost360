@@ -1,13 +1,20 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,8 +30,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -71,6 +80,8 @@ import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -82,11 +93,21 @@ import java.util.List;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.framework.webengageconstant.EventLabelKt.FAB;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_CUSTOM_PAGE;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_INVENTORY;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_TESTIMONIAL;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_UPDATE;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.NavigationDrawer.floating_view.FloatingViewBottomSheetDialog.FLOATING_CLICK_TYPE.WRITE_UPDATE;
-
 
 public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetch_Home_Data_Interface {
 
+  private static final int STORAGE_CODE = 120;
+  private String type;
+  private String imageShare;
+  private int position;
   public static LinearLayout retryLayout, emptyMsgLayout;
   public ButteryProgressBar progressBar;
   public static CardView progressCrd;
@@ -151,22 +172,15 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     final SharedPreferences.Editor editor = preferences.edit();
     if (!preferences.getString("currentAppVersion", "default").equals(getVersion())) {
       View v = getActivity().getLayoutInflater().inflate(R.layout.whats_new_layout, null);
-
-
       final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
       builder.setView(v);
       final AlertDialog dialog = builder.show();
       RecyclerView rvWhatsNew = v.findViewById(R.id.rv_whats_new);
       Button done = v.findViewById(R.id.btn_whats_new_done);
-      done.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-          dialog.dismiss();
-
-          editor.putString("currentAppVersion", getVersion());
-          editor.commit();
-        }
+      done.setOnClickListener(v1 -> {
+        dialog.dismiss();
+        editor.putString("currentAppVersion", getVersion());
+        editor.commit();
       });
       int[] images = {R.drawable.lock, R.drawable.share, R.drawable.camera, R.drawable.scope, R.drawable.chat};
       String[] headerText = {"Password Management", "Refer and Earn", "New Camera Experience", "Live Visitor Info", "Talk To NowFloats"};
@@ -209,14 +223,14 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
       uploadPicture(event.path, event.msg, event.mSocialShare, getActivity(), new UserSessionManager(getActivity(), getActivity()));
     } catch (Exception e) {
       e.printStackTrace();
-      Toast.makeText(getActivity(), "Unable to post Message", Toast.LENGTH_SHORT).show();
+      Toast.makeText(getActivity(), getString(R.string.unable_to_post_message), Toast.LENGTH_SHORT).show();
     }
   }
 
   @Subscribe
   public void ImageUploadCheck(PostImageSuccessEvent event) {
     ImageResponseID = event.imageResponseId;
-    BoostLog.i("IMAGE---", "Image UpLoAd sent_check Triggered");
+    BoostLog.i("IMAGE---", getString(R.string.image_upload_sent_check_triggered));
     mIsNewMsg = true;
     getNewAvailableUpdates();
     mPref.edit().putString("msg_post", "").apply();
@@ -229,7 +243,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     if (event.status) {
       event.status = false;
       mIsNewMsg = true;
-      BoostLog.i("TEXT---", "TeXt UpLoAd sent_check Triggered");
+      BoostLog.i("TEXT---", getString(R.string.text_upload_sent_check_triggered));
       getNewAvailableUpdates();
       Create_Message_Activity.path = "";
 
@@ -356,7 +370,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     recyclerView = mainView.findViewById(R.id.my_recycler_view);
     recyclerView.setHasFixedSize(true);
 
-    cAdapter = new CardAdapter_V3(getActivity(), session);
+    cAdapter = new CardAdapter_V3(getActivity(), session, this::shareContent);
 
 
     recyclerView.setAdapter(cAdapter);
@@ -545,8 +559,10 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   private void onBusinessUpdateAddedOrUpdated(Integer count) {
     if (count == null) count = 0;
     FirestoreManager instance = FirestoreManager.INSTANCE;
-    instance.getDrScoreData().getMetricdetail().setNumber_updates_posted(count);
-    instance.updateDocument();
+    if(instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null){
+      instance.getDrScoreData().getMetricdetail().setNumber_updates_posted(count);
+      instance.updateDocument();
+    }
   }
 
   @Override
@@ -633,7 +649,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void addImage() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Image", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_IMAGE, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), ImageGalleryActivity.class);
     webIntent.putExtra("create_image", true);
     startActivity(webIntent);
@@ -692,14 +708,14 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void openAddUpdateActivity() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Update", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_UPDATE, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
     startActivity(webIntent);
     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
   }
 
   private void addCustomPage() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - CustomPage", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_CUSTOM_PAGE, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), CustomPageActivity.class);
     webIntent.putExtra("IS_ADD", true);
     startActivity(webIntent);
@@ -707,7 +723,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void addTestimonial() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Testimonial", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_TESTIMONIAL, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), TestimonialsActivity.class);
     webIntent.putExtra("IS_ADD", true);
     startActivity(webIntent);
@@ -845,7 +861,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void addInventory() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Inventory", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_INVENTORY, FAB, NULL);
     String type = Utils.getProductType(session.getFP_AppExperienceCode());
     Product newProduct = new Product();
     newProduct.setProductType(type);
@@ -903,5 +919,98 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
             card.remove(selectedItemPosition);
             adapter.notifyItemRemoved(selectedItemPosition);
         }*/
+  }
+
+  void shareContent(String type, String imageShare, int position) {
+    MixPanelController.track("SharePost", null);
+    this.type = type;
+    this.imageShare = imageShare;
+    this.position = position;
+    if (ActivityCompat.checkSelfPermission(current_Activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+      Methods.showDialog(current_Activity, "Storage Permission", "To share service image, we need storage permission.",
+          (dialog, which) -> requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
+      return;
+    }
+    ProgressDialog pd = ProgressDialog.show(current_Activity, "", "Sharing . . .");
+    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+    switch (type) {
+      case "whatsapp":
+        shareIntent.setPackage("com.whatsapp");
+        break;
+      case "facebook":
+        shareIntent.setPackage("com.facebook.katana");
+        break;
+    }
+    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
+      if (Methods.isOnline(current_Activity)) {
+        String url;
+        if (imageShare.contains("BizImages")) {
+          url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
+        } else {
+          url = imageShare;
+        }
+        Target target = new Target() {
+          @Override
+          public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+            try {
+              Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+              View view = new View(current_Activity);
+              view.draw(new Canvas(mutableBitmap));
+              String path = MediaStore.Images.Media.insertImage(current_Activity.getContentResolver(), mutableBitmap, "Nur", null);
+              BoostLog.d("Path is:", path);
+              Uri uri = Uri.parse(path);
+              shareIntent.putExtra(Intent.EXTRA_TEXT, Home_Main_Fragment.getMessageList(current_Activity).get(position).message + " View more at: " +
+                  Home_Main_Fragment.getMessageList(current_Activity).get(position).url);
+              shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+              shareIntent.setType("image/*");
+              if (shareIntent.resolveActivity(current_Activity.getPackageManager()) != null) {
+                current_Activity.startActivityForResult(Intent.createChooser(shareIntent, current_Activity.getString(R.string.share_updates)), 1);
+              } else {
+                Methods.showSnackBarNegative(current_Activity, current_Activity.getString(R.string.no_app_available_for_action));
+              }
+            } catch (OutOfMemoryError e) {
+              Toast.makeText(current_Activity, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+              Toast.makeText(current_Activity, "Image not able to share", Toast.LENGTH_SHORT).show();
+            }
+            pd.dismiss();
+          }
+
+          @Override
+          public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+            pd.dismiss();
+            Methods.showSnackBarNegative(current_Activity, current_Activity.getString(R.string.failed_to_download_image));
+          }
+
+          @Override
+          public void onPrepareLoad(Drawable placeHolderDrawable) {
+          }
+        };
+        Picasso.get().load(url).into(target);
+      } else {
+        pd.dismiss();
+        Methods.showSnackBarNegative(current_Activity, current_Activity.getString(R.string.can_not_share_image_offline_mode));
+      }
+    } else {
+      shareIntent.setType("text/plain");
+      shareIntent.putExtra(Intent.EXTRA_TEXT, Home_Main_Fragment.getMessageList(current_Activity).get(position).message + " View more at: " + Home_Main_Fragment.getMessageList(current_Activity).get(position).url);
+      if (shareIntent.resolveActivity(current_Activity.getPackageManager()) != null) {
+        current_Activity.startActivityForResult(Intent.createChooser(shareIntent, current_Activity.getString(R.string.share_updates)), 1);
+      } else {
+        Methods.showSnackBarNegative(current_Activity, current_Activity.getString(R.string.no_app_available_for_action));
+      }
+      pd.dismiss();
+    }
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    if (requestCode == STORAGE_CODE) {
+      if (grantResults != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        shareContent(type, imageShare, position);
+      } else Toast.makeText(current_Activity, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+    }
   }
 }

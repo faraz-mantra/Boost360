@@ -30,7 +30,10 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.*
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
-import com.boost.upgrades.data.model.*
+import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.FeaturesModel
+import com.boost.upgrades.data.model.WidgetModel
+import com.boost.upgrades.data.model.YoutubeVideoModel
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CompareBackListener
@@ -55,6 +58,7 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -117,7 +121,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         //request retrofit instance
         ApiService = getRetrofit().create(ApiInterface::class.java)
         progressDialog = ProgressDialog(requireContext())
-        localStorage = LocalStorage.getInstance(context!!)!!
+        localStorage = LocalStorage.getInstance(requireContext())!!
         cart_list = localStorage.getCartItems()
         prefs = SharedPrefs(activity as UpgradeActivity)
 
@@ -142,7 +146,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         shimmer_view_recommended.startShimmer()
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
 //        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
         imageView21.setOnClickListener {
@@ -176,10 +180,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         }
 
-        viewModel.getCategoriesFromAssetJson(activity!!, (activity as UpgradeActivity).experienceCode)
+        viewModel.getCategoriesFromAssetJson(requireActivity(), (activity as UpgradeActivity).experienceCode)
 
         share_refferal_code_btn.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Generic", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, GENERIC, NO_EVENT_VALUE)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.referral_text_1) + fpRefferalCode)
@@ -192,7 +196,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         }
 
         share_fb_1.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Facebook Messenger", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, FACEBOOK_MESSENGER, NO_EVENT_VALUE)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
             sendIntent
@@ -216,10 +220,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         }
         share_whatsapp_1.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "WHATSAPP", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, WHATSAPP, NO_EVENT_VALUE)
             val whatsappIntent = Intent(Intent.ACTION_SEND)
             whatsappIntent.type = "text/plain"
-            whatsappIntent.setPackage("com.whatsapp")
+            whatsappIntent.setPackage(getString(R.string.whatsapp_package))
             whatsappIntent.putExtra(
                     Intent.EXTRA_TEXT,
                     getString(R.string.referral_text_1) + fpRefferalCode
@@ -237,7 +241,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         }
         share_referal.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "CARD", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, CARD, NO_EVENT_VALUE)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(
@@ -269,7 +273,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
 
         all_recommended_addons.setOnClickListener {
-            WebEngageController.trackEvent("Clicked view all recommended add-ons", "ADDONS_MARKETPLACE", "null")
+            WebEngageController.trackEvent(CLICKED_VIEW_ALL_RECOMMENDED_ADD_ONS, ADDONS_MARKETPLACE, NULL)
             val args = Bundle()
             args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
             (activity as UpgradeActivity).addFragmentHome(
@@ -402,7 +406,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         referralText.setSpan(UnderlineSpan(), 0, referralText.length, 0)
         boost360_tnc.text = referralText
         boost360_tnc.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE TnC Clicked", "ADDONS_MARKETPLACE", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_TN_C_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
             args.putString("link", "https://www.getboost360.com/tnc")
@@ -417,7 +421,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         refText.setSpan(StyleSpan(Typeface.BOLD), 18, 26, 0)
         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
         refText.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
+                ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.common_text_color)),
                 0,
                 refText.length,
                 0
@@ -426,7 +430,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     fun loadData() {
-        val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
         var code: String = (activity as UpgradeActivity).experienceCode!!
         if (!code.equals("null", true)) {
@@ -676,6 +680,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 }
             }
         })
+
         viewModel.promoBannerAndMarketOfferResult().observe(this, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 if (shimmer_view_banner.isShimmerStarted) {
@@ -693,6 +698,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
 
         })
+
 
         viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
@@ -944,8 +950,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPackageClicked(item: Bundles?) {
-        WebEngageController.trackEvent("Feature packs Clicked", "ADDONS_MARKETPLACE", item?.name
-                ?: "")
+        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, CLICK, item?.name
+                ?: NO_EVENT_VALUE)
         val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
@@ -964,7 +970,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         item?.let { event_attributes.put("title", it.title) }
 //        (activity as UpgradeActivity).experienceCode?.let { event_attributes.put("category", it) }
 //        (activity as UpgradeActivity).fpTag?.let { event_attributes.put("customer", it) }
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Promo Banner Clicked", "ADDONS_MARKETPLACE", event_attributes)
+      if (event_attributes.isEmpty()) WebEngageController.trackEvent(ADDONS_MARKETPLACE_PROMO_BANNER, CLICK, NO_EVENT_VALUE)
+      else WebEngageController.trackEvent(ADDONS_MARKETPLACE_PROMO_BANNER, CLICK, event_attributes)
         if (!item!!.cta_feature_key.isNullOrBlank()) {
             if (item!!.cta_feature_key != null) {
                 val details = DetailsFragment.newInstance()
@@ -1143,8 +1150,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPartnerZoneClicked(item: PartnerZone?) {
-        WebEngageController.trackEvent("Partner's Promo banners Clicked", "ADDONS_MARKETPLACE", item?.title
-                ?: "")
+        WebEngageController.trackEvent(PARTNER_S_PROMO_BANNERS_CLICKED, CLICK, item?.title ?: NO_EVENT_VALUE)
         Log.i("onPartnerZoneClicked >>", item.toString())
         if (item!!.cta_feature_key.isNullOrEmpty().not()) {
 
@@ -1212,8 +1218,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
         if (item != null) {
-            WebEngageController.trackEvent("Feature deals add cart Clicked", "ADDONS_MARKETPLACE", item.name
-                    ?: "")
+            WebEngageController.trackEvent(FEATURE_DEALS_ADD_CART_CLICKED, ADDONS_MARKETPLACE, item.name
+                    ?: NO_EVENT_VALUE)
             viewModel.addItemToCart(item, minMonth)
         }
     }
@@ -1231,8 +1237,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        WebEngageController.trackEvent("Video gallery Clicked", "ADDONS_MARKETPLACE", videoItem.title
-                ?: "")
+        WebEngageController.trackEvent(VIDEO_GALLERY_CLICKED, CLICK, videoItem.title ?: NO_EVENT_VALUE)
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
         val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
@@ -1308,7 +1313,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                             event_attributes.put("Discounted Price", offeredBundlePrice)
                                             event_attributes.put("Discount %", item!!.overall_discount_percent)
                                             item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                                            WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                                            WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART, ADDED, event_attributes)
 //                packageInCartStatus = true
 //                package_submit.background = ContextCompat.getDrawable(
 //                        requireContext(),
@@ -1354,7 +1359,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                  event_attributes.put("Discounted Price", offeredBundlePrice)
                  event_attributes.put("Discount %", item!!.overall_discount_percent)
                  item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", ADDONS_MARKETPLACE, event_attributes)
  //                packageInCartStatus = true
  //                package_submit.background = ContextCompat.getDrawable(
  //                        requireContext(),

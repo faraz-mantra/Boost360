@@ -50,7 +50,7 @@ public class MobileOtpFragment extends Fragment {
             Methods.hideKeyboard(getContext());
             String phoneNumber = etPhoneNumber.getText().toString();
             if (!Methods.validPhoneNumber(phoneNumber)) {
-                Methods.showSnackBarNegative(getActivity(), "Enter valid number");
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.enter_a_valid_number));
                 return;
             }
             onMobileProvidedListener.onMobileProvided(phoneNumber);

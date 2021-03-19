@@ -1,8 +1,7 @@
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -22,8 +21,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/white"
                     app:cardCornerRadius="5dp"
@@ -45,7 +44,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingBottom="8dp"
-                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
                                 android:paddingTop="8dp"
                                 android:text="@string/auto_share_to_social_networks"
                                 android:textColor="#ffffff"
@@ -64,7 +63,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:text="@string/website_posts"
                                 android:textSize="13sp" />
 
@@ -72,7 +71,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:background="@drawable/social_share_to_bg"
                                 android:gravity="center"
                                 android:text="@string/to"
@@ -84,7 +83,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:src="@drawable/facebook_icon_inactive" />
 
                             <LinearLayout
@@ -98,7 +97,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:text="@string/facebook"
                                     android:textSize="13sp" />
 
@@ -106,7 +105,7 @@
                                     android:id="@+id/social_sharing_facebook_profile_flag_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:maxLines="2"
                                     android:text="@string/disconnected"
                                     android:textSize="10sp"
@@ -117,15 +116,15 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:gravity="right"
+                                android:layout_marginEnd="5dp"
+                                android:gravity="end"
                                 android:orientation="vertical">
 
                                 <CheckBox
                                     android:id="@+id/social_sharing_facebook_profile_checkbox"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
+                                    android:layout_gravity="end"
                                     android:buttonTint="@color/grey" />
 
                             </LinearLayout>
@@ -142,7 +141,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:text="@string/website_posts"
                                 android:textSize="13sp" />
 
@@ -150,7 +149,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:background="@drawable/social_share_to_bg"
                                 android:gravity="center"
                                 android:text="@string/to"
@@ -162,7 +161,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:src="@drawable/facebookpage_icon_inactive" />
 
                             <LinearLayout
@@ -176,15 +175,15 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:text="Facebook Page"
+                                    android:layout_marginStart="5dp"
+                                    android:text="@string/facebook_page"
                                     android:textSize="13sp" />
 
                                 <TextView
                                     android:id="@+id/social_sharing_facebook_page_flag_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:maxLines="2"
                                     android:text="@string/disconnected"
                                     android:textSize="10sp"
@@ -195,16 +194,16 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
+                                android:layout_marginEnd="5dp"
                                 android:layout_weight="1"
-                                android:gravity="right"
+                                android:gravity="end"
                                 android:orientation="vertical">
 
                                 <CheckBox
                                     android:id="@+id/social_sharing_facebook_page_checkbox"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
+                                    android:layout_gravity="end"
                                     android:buttonTint="@color/grey" />
 
                             </LinearLayout>
@@ -222,7 +221,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:text="@string/website_posts"
                                 android:textSize="13sp" />
 
@@ -230,7 +229,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:background="@drawable/social_share_to_bg"
                                 android:gravity="center"
                                 android:text="@string/to"
@@ -242,7 +241,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:src="@drawable/facebookpage_icon_inactive" />
 
                             <LinearLayout
@@ -256,15 +255,15 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:text="Facebook Shop"
+                                    android:layout_marginStart="5dp"
+                                    android:text="@string/facebook_shop"
                                     android:textSize="13sp" />
 
                                 <TextView
                                     android:id="@+id/social_sharing_facebook_shop_flag_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:maxLines="2"
                                     android:text="@string/disconnected"
                                     android:textSize="10sp"
@@ -273,18 +272,18 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
+                                android:layout_marginEnd="5dp"
                                 android:layout_weight="1"
-                                android:gravity="right"
+                                android:gravity="end"
                                 android:orientation="vertical">
 
                                 <CheckBox
                                     android:id="@+id/social_sharing_facebook_shop_checkbox"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
+                                    android:layout_gravity="end"
                                     android:buttonTint="@color/grey" />
 
                             </LinearLayout>
@@ -302,7 +301,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:text="@string/website_posts"
                                 android:textSize="13sp" />
 
@@ -310,7 +309,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:background="@drawable/social_share_to_bg"
                                 android:gravity="center"
                                 android:text="@string/to"
@@ -322,7 +321,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:src="@drawable/twitter_icon_inactive" />
 
                             <LinearLayout
@@ -336,7 +335,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:text="@string/twitter"
                                     android:textSize="13sp" />
 
@@ -344,7 +343,7 @@
                                     android:id="@+id/social_sharing_twitter_flag_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:ellipsize="end"
                                     android:text="@string/disconnected"
                                     android:textSize="10sp"
@@ -355,15 +354,15 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:gravity="right"
+                                android:layout_marginEnd="5dp"
+                                android:gravity="end"
                                 android:orientation="vertical">
 
                                 <CheckBox
                                     android:id="@+id/social_sharing_twitter_checkbox"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
+                                    android:layout_gravity="end"
                                     android:buttonTint="@color/grey" />
 
                             </LinearLayout>
@@ -379,8 +378,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="20dp"
                     android:background="@color/white"
                     android:elevation="3dp"
@@ -401,9 +400,9 @@
                                 android:id="@+id/connectTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="left"
+                                android:gravity="start"
                                 android:paddingBottom="8dp"
-                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
                                 android:paddingTop="8dp"
                                 android:text="@string/auto_update_from_social_network"
                                 android:textColor="#ffffff"
@@ -413,10 +412,10 @@
                                 android:id="@+id/iv_help_tool"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginRight="8dp"
+                                android:layout_marginEnd="8dp"
                                 android:adjustViewBounds="true"
                                 android:padding="5dp"
                                 android:src="@drawable/ic_info_white_24dp" />
@@ -435,7 +434,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="5dp"
                                 android:src="@drawable/facebookpage_icon_inactive" />
 
                             <LinearLayout
@@ -449,7 +448,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:text="@string/facebook_page"
                                     android:textSize="13sp" />
 
@@ -457,7 +456,7 @@
                                     android:id="@+id/tv_fb_page_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:ellipsize="end"
                                     android:text="@string/disconnected"
                                     android:textSize="10sp"
@@ -469,7 +468,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:background="@drawable/social_share_to_bg"
                                 android:gravity="center"
                                 android:text="@string/to"
@@ -480,22 +479,22 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/website"
                                 android:textSize="13sp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:gravity="right"
+                                android:layout_marginEnd="5dp"
+                                android:gravity="end"
                                 android:orientation="vertical">
 
                                 <CheckBox
                                     android:id="@+id/social_sharing_facebook_page_auto_post"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
+                                    android:layout_gravity="end"
                                     android:buttonTint="@color/grey" />
 
                             </LinearLayout>
@@ -512,8 +511,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:visibility="gone"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="20dp"
                     android:background="@color/white"
                     android:elevation="3dp"
@@ -532,14 +531,14 @@
 
                             <TextView
                                 android:id="@+id/textView"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="left"
+                                android:gravity="start"
                                 android:paddingBottom="8dp"
-                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
                                 android:paddingTop="8dp"
-                                android:text="Posting\nTo Quikr"
+                                android:text="@string/posting_nto_quikr"
                                 android:textColor="#ffffff"
                                 android:textSize="16sp" />
 
@@ -555,15 +554,14 @@
                             android:id="@+id/guidelines_arrow_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:text="Guidelines"
-                            android:layout_marginEnd="5dp"
+                            android:layout_gravity="end"
+                            android:text="@string/guidelines"
                             android:layout_marginBottom="5dp"
                             android:background="#ddd"
-                            android:drawableEnd="@drawable/right_arrow"
                             android:padding="10dp"
-                            android:drawableRight="@drawable/right_arrow"
-                            android:layout_marginRight="5dp" />
+                            android:layout_marginEnd="5dp"
+                            app:drawableEndCompat="@drawable/right_arrow"
+                            app:drawableRightCompat="@drawable/right_arrow" />
 
                     </LinearLayout>
 
@@ -571,8 +569,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:id="@+id/gmbCardView"
                     app:cardCornerRadius="5dp"
                     android:elevation="3dp"
@@ -596,13 +594,13 @@
                                 android:id="@+id/gmbTextHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="left"
+                                android:gravity="start"
                                 android:paddingBottom="8dp"
-                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
                                 android:paddingTop="8dp"
-                                android:text="Auto-Sync\nBusiness Profile"
+                                android:text="@string/auto_sync_nbusiness_profile"
                                 android:textColor="#ffffff"
-                                android:textSize="16dp" />
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
@@ -618,7 +616,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="5dp"
                                 android:text="Business\nProfile"
                                 android:textSize="13sp" />
 
@@ -626,7 +624,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:background="@drawable/social_share_to_bg"
                                 android:gravity="center"
                                 android:text="@string/to"
@@ -638,7 +636,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp" />
+                                android:layout_marginStart="20dp" />
 
                             <LinearLayout
                                 android:layout_width="100dp"
@@ -651,7 +649,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:text="Google My Business"
                                     android:textSize="13sp" />
 
@@ -659,7 +657,7 @@
                                     android:id="@+id/social_sharing_gmb_profile_flag_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:maxLines="2"
                                     android:text="@string/disconnected"
                                     android:textSize="10sp"
@@ -670,12 +668,12 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="0dp"
-                                android:gravity="right"
+                                android:layout_marginEnd="0dp"
+                                android:gravity="end"
                                 android:orientation="vertical">
 
                                 <LinearLayout
-                                    android:layout_marginLeft="15dp"
+                                    android:layout_marginStart="15dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
 
@@ -683,7 +681,7 @@
                                         android:id="@+id/social_gmb_profile_checkbox"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginLeft="12dp"
+                                        android:layout_marginStart="12dp"
                                         android:buttonTint="@color/grey" />
 
                                 </LinearLayout>
@@ -699,8 +697,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:id="@+id/whatsapp_card_view"
                     app:cardCornerRadius="5dp"
                     android:elevation="3dp"
@@ -724,13 +722,13 @@
                                 android:id="@+id/whatsappTextHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="left"
+                                android:gravity="start"
                                 android:paddingBottom="8dp"
-                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
                                 android:paddingTop="8dp"
-                                android:text="Customer Engagement\nvia Chat"
+                                android:text="@string/customer_engagement_nvia_chat"
                                 android:textColor="#ffffff"
-                                android:textSize="16dp" />
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
@@ -747,29 +745,29 @@
                                 android:layout_height="30dp"
                                 app:srcCompat="@drawable/ic_whatsapp_for_business"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp" />
+                                android:layout_marginStart="15dp" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
-                                android:layout_marginLeft="@dimen/margin_12"
+                                android:layout_marginStart="@dimen/margin_12"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:text="WhatsApp for Business"
+                                    android:layout_marginStart="5dp"
+                                    android:text="@string/whatsapp_for_business"
                                     android:textSize="13sp" />
 
                                 <TextView
                                     android:id="@+id/tv_whatsapp_number"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:maxLines="2"
                                     android:text="@string/inactive"
                                     android:textSize="10sp"
@@ -792,8 +790,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:id="@+id/product_catalog_card_view"
                     app:cardCornerRadius="5dp"
                     android:elevation="3dp"
@@ -818,13 +816,13 @@
                                 android:id="@+id/productCatalogTextHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="left"
+                                android:gravity="start"
                                 android:paddingBottom="8dp"
-                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
                                 android:paddingTop="8dp"
-                                android:text="Auto-Sync\nProduct Catalogue"
+                                android:text="@string/auto_sync_nproduct_catalogue"
                                 android:textColor="#ffffff"
-                                android:textSize="16dp" />
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
@@ -840,15 +838,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
-                                android:text="Product\nCatalogue"
+                                android:layout_marginStart="5dp"
+                                android:text="@string/product_ncatalogue"
                                 android:textSize="13sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:background="@drawable/social_share_to_bg"
                                 android:gravity="center"
                                 android:text="@string/to"
@@ -860,10 +858,10 @@
                                 android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
                                 app:srcCompat="@drawable/ic_fb_shop_inactive"
-                                android:layout_marginLeft="20dp" />
+                                android:layout_marginStart="20dp" />
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
@@ -874,14 +872,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="5dp"
-                                    android:text="Facebook Shop"
+                                    android:layout_marginStart="5dp"
+                                    android:text="@string/facebook_shop"
                                     android:textSize="13sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginStart="5dp"
                                     android:maxLines="2"
                                     android:text="@string/disconnected"
                                     android:textSize="10sp"

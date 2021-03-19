@@ -58,6 +58,11 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_BACKGROUND_IMAGE;
+import static com.framework.webengageconstant.EventLabelKt.UPDATE_BACKGROUND_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.DELETE_BACKGROUND_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_BACKGROUND_IMAGE;
+
 
 public class BackgroundImageGalleryActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload
 {
@@ -324,7 +329,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                         ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
-                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", this);
+                    Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_this_permission), this);
                 }
 
                 else
@@ -384,7 +389,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         catch (Exception e)
         {
-            Toast.makeText(getApplicationContext(), "Failed to Open Camera", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.failed_to_open_camera, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -395,7 +400,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE) {
             uploadPrimaryPicture(primaryUri.getPath());
-            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE", "Update Background Image", session.getFpTag());
+            WebEngageController.trackEvent(UPLOAD_BACKGROUND_IMAGE, UPDATE_BACKGROUND_IMAGE, session.getFpTag());
         }
 
         if (resultCode == RESULT_OK && requestCode == GALLERY_IMAGE_REQUEST_CODE && data != null) {
@@ -405,13 +410,13 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 File file = new File(images.get(0).getPath());
                 uploadPrimaryPicture(file.getPath());
             }
-            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE", "Update Background Image", session.getFpTag());
+            WebEngageController.trackEvent(UPLOAD_BACKGROUND_IMAGE, UPDATE_BACKGROUND_IMAGE, session.getFpTag());
         }
 
         if (resultCode == RESULT_OK && requestCode == IMAGE_DELETE_REQUEST_CODE && data != null) {
             int position = data.getIntExtra("POSITION", 0);
             adapter.removeImage(position);
-            WebEngageController.trackEvent("DELETE BACKGROUND IMAGE", "DELETE BACKGROUND IMAGE", session.getFpTag());
+            WebEngageController.trackEvent(DELETE_BACKGROUND_IMAGE, EVENT_LABEL_DELETE_BACKGROUND_IMAGE, session.getFpTag());
         }
     }
 
@@ -446,7 +451,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     @Override
     public void onPreUpload() {
 
-        dialog = ProgressDialog.show(this, "", "Uploading image...");
+        dialog = ProgressDialog.show(this, "", getString(R.string.uploadin_image));
         dialog.setCancelable(false);
     }
 
@@ -455,7 +460,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         if(isSuccess)
         {
-            Methods.showSnackBarPositive(this, "Image updated successfully");
+            Methods.showSnackBarPositive(this, getString(R.string.image_added_successfully));
 
             String url = response.replace("\\", "").replace("\"", "");
             adapter.addImage(url);
@@ -465,7 +470,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         else
         {
-            Methods.showSnackBarNegative(this, "Failed to Upload Image");
+            Methods.showSnackBarNegative(this, getString(R.string.failed_to_upload_image));
         }
 
         if(dialog != null && dialog.isShowing())

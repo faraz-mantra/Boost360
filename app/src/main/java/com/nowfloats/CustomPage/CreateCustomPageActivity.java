@@ -65,6 +65,14 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN;
+import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_UPDATE_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventLabelKt.SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN;
+import static com.framework.webengageconstant.EventLabelKt.SUCCESSFULLY_ADDED_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventLabelKt.UPDATE_A_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventNameKt.POST_ACUSTOMPAGE;
+import static com.framework.webengageconstant.EventNameKt.UPDATE_CUSTOMPAGE;
+
 
 /**
  * Created by guru on 09-06-2015.
@@ -157,7 +165,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                     editCheck = true;
                                     deletePage.setVisibility(View.VISIBLE);
                                 } else {
-                                    Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
+                                    Methods.showSnackBarNegative(CreateCustomPageActivity.this, getString(R.string.page_details_not_found));
                                 }
                             }
 
@@ -165,7 +173,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                             public void failure(RetrofitError error) {
                                 materialProgress.dismiss();
                                 Log.d("page detail error-", "" + error.getMessage());
-                                Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
+                                Methods.showSnackBarNegative(CreateCustomPageActivity.this,  getString(R.string.page_details_not_found));
                             }
                         });
             } catch (Exception e) {
@@ -255,14 +263,14 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                             MixPanelController.track("CreateCustomPage", null);
                                             long time = System.currentTimeMillis();
                                             CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
-                                            WebEngageController.trackEvent("POST A CUSTOMPAGE", "Successfully added custompage", session.getFpTag());
+                                            WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
                                             Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
                                             isNewDataAdded = true;
                                             onCustomPageAddedOrUpdated();
                                             onBackPressed();
                                         } else {
                                             Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
-                                            WebEngageController.trackEvent("POST A CUSTOMPAGE", getString(R.string.enter_different_title_try_again), session.getFpTag());
+                                            WebEngageController.trackEvent(POST_ACUSTOMPAGE, ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN, session.getFpTag());
                                             //Log.d("Create page Fail", "");
                                         }
                                     }
@@ -271,7 +279,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                     public void failure(RetrofitError error) {
                                         materialProgress.dismiss();
                                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                        WebEngageController.trackEvent("POST A CUSTOMPAGE", getString(R.string.something_went_wrong_try_again), session.getFpTag());
+                                        WebEngageController.trackEvent(POST_ACUSTOMPAGE, SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN, session.getFpTag());
                                         //Log.d("Create page Fail", "" + error.getMessage());
                                     }
                                 });
@@ -287,7 +295,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                     public void success(String s, Response response) {
                                         materialProgress.dismiss();
                                         MixPanelController.track("UpdateCustomPage", null);
-                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE", "Update a Custompage", session.getFpTag());
+                                        WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, UPDATE_A_CUSTOMPAGE, session.getFpTag());
                                         //Log.d("Update page success", "");
                                         CustomPageFragment.dataModel.get(curPos).DisplayName = name;
                                         Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
@@ -298,7 +306,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                     public void failure(RetrofitError error) {
                                         materialProgress.dismiss();
                                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE", "Failed to update custompage", session.getFpTag());
+                                        WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, FAILED_TO_UPDATE_CUSTOMPAGE, session.getFpTag());
                                         //Log.d("Update page Fail", "" + error.getMessage());
                                     }
                                 });
@@ -498,6 +506,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
 
     private void onCustomPageAddedOrUpdated() {
         FirestoreManager instance = FirestoreManager.INSTANCE;
+        if(instance.getDrScoreData().getMetricdetail()==null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_create_custom_page(true);
         instance.updateDocument();
     }
@@ -707,7 +716,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                     PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)) {
-                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", CreateCustomPageActivity.this);
+                    Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_these_permissions_to_enable), CreateCustomPageActivity.this);
                 } else {
                     ActivityCompat.requestPermissions(CreateCustomPageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, media_req_id);
                 }
@@ -736,7 +745,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                     PackageManager.PERMISSION_GRANTED) {
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", CreateCustomPageActivity.this);
+                    Methods.showApplicationPermissions(getString(R.string.storage_permission), getString(R.string.we_need_this_permission_to_enable_image_upload), CreateCustomPageActivity.this);
                 } else {
                     ActivityCompat.requestPermissions(CreateCustomPageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
                 }

@@ -21,8 +21,8 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
             android:layout_marginTop="7dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
@@ -38,7 +38,7 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:paddingRight="10dp"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -69,7 +69,7 @@
         android:layout_height="30dp"
         android:visibility="gone"
         app:srcCompat="@drawable/domain_available"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
         android:layout_gravity="end|bottom"/>
 

@@ -12,14 +12,14 @@
         android:layout_gravity="left"
         android:text="@string/upload_featured_image"
         android:layout_marginTop="26dp"
-        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         android:textColor="#878787" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="33dp"
         android:id="@+id/cameraimage">
 
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
             android:text="@string/using_camera"
             android:textColor="#878787"
             android:layout_weight=".6"/>
@@ -58,7 +58,7 @@
         android:id="@+id/galleryimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
             android:text="@string/from_gallery"
             android:textColor="#878787"
             android:layout_weight=".6"/>
@@ -97,7 +97,7 @@
         android:id="@+id/filepicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
@@ -126,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
             android:text="@string/from_file_picker"
             android:textColor="#878787"
             android:layout_weight=".6"/>

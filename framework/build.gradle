@@ -60,14 +60,14 @@ dependencies {
 
     // Material Support
     api 'androidx.appcompat:appcompat:1.2.0'
-    api 'com.google.android.material:material:1.2.1'
+    api 'com.google.android.material:material:1.3.0'
     api "androidx.recyclerview:recyclerview:1.1.0"
-    api 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    api 'androidx.navigation:navigation-ui-ktx:2.3.0'
+    api 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+    api 'androidx.navigation:navigation-ui-ktx:2.3.3'
     api 'androidx.dynamicanimation:dynamicanimation:1.0.0'
 
     // Additional Components
-    api "androidx.constraintlayout:constraintlayout:2.0.2"
+    api "androidx.constraintlayout:constraintlayout:2.0.4"
     api "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // facebook shimmer
@@ -78,13 +78,13 @@ dependencies {
     api "com.android.support:support-annotations:28.0.0"
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    api 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-    implementation('com.github.bumptech.glide:okhttp3-integration:4.9.0') {
+    api('com.github.bumptech.glide:okhttp3-integration:4.9.0') {
         exclude group: 'glide-parent'
     }
-    implementation 'com.android.support:palette-v7:28.0.0'
-    implementation 'jp.wasabeef:glide-transformations:4.0.0'
+    api 'com.android.support:palette-v7:28.0.0'
+    api 'jp.wasabeef:glide-transformations:4.0.0'
 
     //picasso
     api 'com.squareup.picasso:picasso:2.71828'
@@ -122,4 +122,11 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-firestore-ktx:22.0.2'
+
+    // Referral Library: invitereferrals
+    api 'com.android.installreferrer:installreferrer:2.1'
+    api 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.7'
+
+    //webengage analytics
+    implementation 'com.webengage:android-sdk:3.+'
 }

@@ -1,5 +1,6 @@
 package com.framework.models.firestore
 
+import android.text.TextUtils
 import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -49,6 +50,7 @@ object FirestoreManager {
         docRef?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
             if (e == null) {
                 Log.d(TAG, "No Exception")
+                Log.d(TAG, "Document Data is : "+snapshot?.data)
                 model = snapshot?.data?.toDataClass<DrScoreModel>();
                 updateDrScoreIfNull()
                 listener?.invoke()
@@ -59,7 +61,12 @@ object FirestoreManager {
     }
 
     fun getDocumentReference(): DocumentReference? {
-        return db?.collection(COLLECTION_NAME)?.document(this.fpTag);
+        try {
+            return db?.collection(COLLECTION_NAME)?.document(this.fpTag);
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        return null
     }
 
     fun updateDrScoreIfNull() {
@@ -77,7 +84,7 @@ object FirestoreManager {
     }
 
     fun getDrScoreData(): DrScoreModel? {
-        return this.model;
+        return this.model
     }
 
     fun updateDrScoreData(model: DrScoreModel) {
@@ -86,7 +93,9 @@ object FirestoreManager {
     }
 
     fun updateDocument() {
-        updateDocument(getDocumentReference(), this.model.serializeToMap());
+        if(this.model != null && !TextUtils.isEmpty(this.model?.client_id)){
+            updateDocument(getDocumentReference(), this.model.serializeToMap());
+        }
     }
 
 

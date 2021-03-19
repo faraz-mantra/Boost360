@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
-                    android:text="Qutub Minar"
+                    android:text="@string/qutub_minar"
                     android:textColor="#4A4A4A"
                     android:textSize="@dimen/_15sdp" />
 
@@ -66,7 +66,7 @@
                         android:id="@+id/offer_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rs.1199"
+                        android:text="@string/rs_1199"
                         android:textStyle="bold"
                         android:fontFamily="@font/open_sans"
                         android:textColor="#747474"
@@ -76,7 +76,7 @@
                         android:id="@+id/mrp_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rs.1199"
+                        android:text="@string/rs_1199"
                         android:fontFamily="@font/open_sans"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:textColor="#747474"
@@ -122,7 +122,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
                 android:textColor="#747474"
-                android:text="At a height of 234 feet, this minaret is the tallest individual tower in the world and is a perfect display of Mughal architectural brilliance."
+                android:text="@string/at_a_height_of_234_feet_this_minaret_is_the_tallest_individual_tower_in_the_world_and_is_a_perfect_display_of_mughal_architectural_brilliance"
                 android:textSize="@dimen/_9sdp" />
 
         </LinearLayout>
@@ -157,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
-                android:text="25% Flat Discount"
+                android:text="@string/_25_flat_discount"
                 android:fontFamily="@font/open_sans"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>
@@ -184,7 +184,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:text="Edit"
+            android:text="@string/edit"
             android:textSize="@dimen/_12sdp" />
 
         <TextView
@@ -192,7 +192,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:text="Delete"
+            android:text="@string/delete_"
             android:textAllCaps="true"
             android:textColor="@color/red"
             android:textSize="@dimen/_12sdp" />
