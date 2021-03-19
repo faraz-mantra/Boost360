@@ -377,5 +377,6 @@
 
     <string name="link_marketplace">boost.nowfloats.com/home/marketplace</string>
     <string name="wordpress_plugin_script">wordpress-plugin script</string>
-
+    <string name="ir_actionbarBackground">#ffb900</string>
+    <string name="ir_statusBarColor">#ffb900</string>
 </resources>
