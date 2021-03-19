@@ -15,7 +15,7 @@ import java.util.regex.Pattern
 
 class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDetailsBinding, AppointmentSettingsViewModel>() {
     enum class ClickType {
-        SAVECHANGES, CANCEL
+        SAVECHANGES, CANCEL, NO_GST
     }
 
     var isEdit = false
@@ -53,30 +53,40 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
         setOnClickListener(binding?.btnCancel, binding?.btnSaveChanges)
         this.paymentProfileDetails = arguments?.getSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name) as PaymentResult
         if (paymentProfileDetails == null) isEdit = false
-        if (paymentProfileDetails?.taxDetails?.gSTDetails?.gSTIN == "")
+        if (paymentProfileDetails?.taxDetails?.gSTDetails?.gSTIN == "") {
             binding?.radioNotRegistered?.isChecked = true
-        else
+            gstNotRegistered(true)
+        } else {
             binding?.radioBusinessGst?.isChecked = true
-
+            gstRegistered(true)
+        }
         binding?.cetBusinessName?.setText(paymentProfileDetails?.taxDetails?.gSTDetails?.businessName)
         binding?.cetGst?.setText(paymentProfileDetails?.taxDetails?.gSTDetails?.gSTIN)
         binding?.radioBusinessGst?.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                binding?.ccbDeclearation?.gone()
-                binding?.cetBusinessName?.visible()
-                binding?.cetGst?.visible()
-                binding?.ctvBusinessName?.visible()
-                binding?.ctvGstTitle?.visible()
-            }
+            gstRegistered(isChecked)
         }
         binding?.radioNotRegistered?.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                binding?.ccbDeclearation?.visible()
-                binding?.cetBusinessName?.gone()
-                binding?.cetGst?.gone()
-                binding?.ctvBusinessName?.gone()
-                binding?.ctvGstTitle?.gone()
-            }
+            gstNotRegistered(isChecked)
+        }
+    }
+
+    private fun gstNotRegistered(isChecked: Boolean) {
+        if (isChecked) {
+            binding?.ccbDeclearation?.visible()
+            binding?.cetBusinessName?.gone()
+            binding?.cetGst?.gone()
+            binding?.ctvBusinessName?.gone()
+            binding?.ctvGstTitle?.gone()
+        }
+    }
+
+    private fun gstRegistered(isChecked: Boolean) {
+        if (isChecked) {
+            binding?.ccbDeclearation?.gone()
+            binding?.cetBusinessName?.visible()
+            binding?.cetGst?.visible()
+            binding?.ctvBusinessName?.visible()
+            binding?.ctvGstTitle?.visible()
         }
     }
 
@@ -87,19 +97,29 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
                 dismiss()
             }
             binding?.btnSaveChanges -> {
-                if (isValidGSTNo(binding?.cetGst?.text.toString())){
-                    binding?.ctvInvalidGstin?.gone()
-                    binding?.cetGst?.background = ContextCompat.getDrawable(requireContext(),R.drawable.bg_rect_edit_txt)
-                    binding?.cetGst?.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-                    setAndGoBack()
-                }else{
-                    binding?.ctvInvalidGstin?.visible()
-                    binding?.cetGst?.background = ContextCompat.getDrawable(requireContext(),R.drawable.bg_error_gstin)
-                    binding?.cetGst?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_error_appointment_settings, 0)
+                if (binding?.radioNotRegistered?.isChecked == false) {
+                    if (isValidGSTNo(binding?.cetGst?.text.toString())) {
+                        binding?.ctvInvalidGstin?.gone()
+                        binding?.cetGst?.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_rect_edit_txt)
+                        binding?.cetGst?.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                        setAndGoBack()
+                    } else {
+                        binding?.ctvInvalidGstin?.visible()
+                        binding?.cetGst?.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_error_gstin)
+                        binding?.cetGst?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_error_appointment_settings, 0)
+                    }
+                } else {
+                    goback()
                 }
 
             }
         }
+    }
+
+    private fun goback() {
+        paymentProfileDetails?.taxDetails?.gSTDetails?.gSTIN = ""
+        clickType(ClickType.NO_GST)
+        dismiss()
     }
 
     private fun setAndGoBack() {
