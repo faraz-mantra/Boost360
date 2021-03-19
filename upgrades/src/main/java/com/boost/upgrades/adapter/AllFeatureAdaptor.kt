@@ -144,9 +144,10 @@ class AllFeatureAdaptor(
         }
         fun checkSubscriptionPresence( pack: String, availableSub: ArrayList<String> ): Boolean{
             for(sub in availableSub){
-                Log.v("checkSubscription"," "+ pack + " "+ sub)
+                Log.d("checkSubscription"," "+ pack + " "+ sub)
                 if(sub != null){
-                    if(sub == pack){
+//                    if(sub.equals(pack)){
+                    if(sub == pack ){
                         return true
                     }
                 }
