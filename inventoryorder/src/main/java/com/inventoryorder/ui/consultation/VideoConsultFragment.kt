@@ -54,13 +54,17 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
   private var orderList = ArrayList<OrderItem>()
-  private var orderListFilter = ArrayList<OrderItem>()
+  private var orderListFinalList = ArrayList<OrderItem>()
   private var layoutManager: LinearLayoutManager? = null
-  private var filterItem: FilterModel? = null
   private var filterList: ArrayList<FilterModel> = FilterModel().getDataConsultations()
   private var searchView: SearchView? = null
+  private var orderItem: OrderItem? = null
+  private var position: Int? = null
+  private var filterItem: FilterModel? = null
+
   /* Paging */
   private var isLoadingD = false
+  private var isSearchItem = false
   private var TOTAL_ELEMENTS = 0
   private var currentPage = PAGE_START
   private var isLastPageD = false
@@ -79,57 +83,86 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent(CLICKED_ON_VIDEO_CONSULTATIONS, CONSULTATIONS, it) }
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
-    setOnClickListener(binding?.btnAdd)
+    setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     requestFilter = getRequestFilterData(arrayListOf())
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
+    binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
+    binding?.swipeRefresh?.setOnRefreshListener {loadNewData()}
+  }
+
+  private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
+    binding?.bookingRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+        if (dy > 0 && binding?.btnAdd?.visibility == View.VISIBLE) binding?.btnAdd?.hide()
+        else if (dy < 0 && binding?.btnAdd?.visibility != View.VISIBLE) binding?.btnAdd?.show()
+      }
+
+      override fun loadMoreItems() {
+        if (!isLastPageD) {
+          isLoadingD = true
+          currentPage += requestFilter.limit ?: 0
+          orderAdapter?.addLoadingFooter(OrderItem().getLoaderItem())
+          requestFilter.skip = currentPage
+          getSellerOrdersFilterApi(requestFilter)
+        }
+      }
+
+      override val totalPageCount: Int
+        get() = TOTAL_ELEMENTS
+      override val isLastPage: Boolean
+        get() = isLastPageD
+      override val isLoading: Boolean
+        get() = isLoadingD
+    })
   }
 
   private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
-    if (isFirst || isSearch) binding?.progress?.visible()
+    if (isFirst || isSearch) showProgressLoad()
     viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
-      binding?.progress?.gone()
-      if (it.error is NoNetworkException) {
-        errorView(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      hideProgressLoad()
+      if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
-          if (isRefresh) orderList.clear()
+          if (isRefresh) orderListFinalList.clear()
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
-          onVideoConsultAddedOrUpdated(isDataNotEmpty)
+          onVideoConsultAddedOrUpdated(isDataNotEmpty) //Dr score
           if (isDataNotEmpty) {
+            orderList.clear()
             removeLoader()
-            val list = response!!.Items?.map { item ->
-              item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item
-            } as ArrayList<OrderItem>
+            val list = response!!.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
             TOTAL_ELEMENTS = response.total()
-            orderList.addAll(list)
+            orderListFinalList.addAll(list)
+            orderList.addAll(orderListFinalList)
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else {
-            setHasOptionsMenu(false)
-            errorView(getString(R.string.no_video_consultation_available))
-          }
+            setToolbarTitle(resources.getString(R.string.video_consultation) + " ($TOTAL_ELEMENTS)")
+          } else emptyView()
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            val list = response.Items?.map { item ->
-              item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item
-            } as ArrayList<OrderItem>
-            setAdapterNotify(list)
-          } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
-          else {
-            setHasOptionsMenu(false)
-            errorView(getString(R.string.no_video_consultation_available))
-          }
+            val list = response.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
+            orderList.clear()
+            orderList.addAll(list)
+            setAdapterNotify(orderList)
+          } else if (orderList.isNullOrEmpty().not()){
+            orderList.clear()
+            orderList.addAll(orderListFinalList)
+            setAdapterNotify(orderList)
+          } else emptyView()
         }
-      } else {
-        setHasOptionsMenu(false)
-        errorView(it.message ?:getString(R.string.no_video_consultation_available))
-      }
+      } else showLongToast(it.message())
     })
+  }
+
+  private fun showProgressLoad() {
+    if (binding?.swipeRefresh?.isRefreshing == false) binding?.progress?.visible()
+  }
+
+  private fun hideProgressLoad() {
+    binding?.swipeRefresh?.isRefreshing = false
+    binding?.progress?.gone()
   }
 
   private fun onVideoConsultAddedOrUpdated(isAdded: Boolean) {
@@ -154,10 +187,9 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     } else setAdapterAppointmentList(getDateWiseFilter(items))
   }
 
-  private fun errorView(error: String) {
+  private fun emptyView() {
     binding?.bookingRecycler?.gone()
     binding?.errorView?.visible()
-    binding?.errorTxt?.text = error
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
@@ -192,41 +224,13 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd -> {
-//        showLongToast("Coming soon...")
+      binding?.btnAdd, binding?.buttonAddApt-> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, true)
         startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
       }
     }
-  }
-
-  private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
-    binding?.bookingRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
-      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        super.onScrolled(recyclerView, dx, dy)
-        if (dy > 0 && binding?.btnAdd?.visibility === View.VISIBLE) binding?.btnAdd?.hide()
-        else if (dy < 0 && binding?.btnAdd?.visibility !== View.VISIBLE) binding?.btnAdd?.show()
-      }
-
-      override fun loadMoreItems() {
-        if (!isLastPageD) {
-          isLoadingD = true
-          currentPage += requestFilter.limit ?: 0
-          orderAdapter?.addLoadingFooter(OrderItem().getLoaderItem())
-          requestFilter.skip = currentPage
-          getSellerOrdersFilterApi(requestFilter)
-        }
-      }
-
-      override val totalPageCount: Int
-        get() = TOTAL_ELEMENTS
-      override val isLastPage: Boolean
-        get() = isLastPageD
-      override val isLoading: Boolean
-        get() = isLoadingD
-    })
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -237,6 +241,15 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
       }
       else -> super.onOptionsItemSelected(item)
     }
+  }
+
+  private fun loadNewData() {
+    isLoadingD = false
+    isLastPageD = false
+    orderAdapter?.clear()
+    orderListFinalList.clear()
+    orderList.clear()
+    clickFilterItem(filterItem)
   }
 
   private fun filterBottomSheet() {
@@ -340,7 +353,6 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
       if (isRefresh != null && isRefresh) clickFilterItem(filterItem)
     }
   }
-
 
   private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = "", type: String = QueryObject.QueryKey.BuyerFullName.name): OrderFilterRequest {
     val requestFil: OrderFilterRequest?
