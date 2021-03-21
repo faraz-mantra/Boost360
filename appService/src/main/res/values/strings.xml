@@ -746,6 +746,8 @@
     <string name="search">Search</string>
     <string name="catalog">Catalog</string>
   <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to recieve money for all your online appointments.</string>
+    <string name="i_understood">i understood</string>
+    <string name="search_in_the_appointment_settings">Search in appointment settings</string>
 
 
 </resources>

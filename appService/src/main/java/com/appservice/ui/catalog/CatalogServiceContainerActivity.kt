@@ -44,7 +44,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     private var fragmentCatalogSettings: FragmentCatalogSettings? = null
     private var fragmentCustomerInvoiceSetup: FragmentCustomerInvoiceSetup? = null
     private var fragmentCustomerPolicies: FragmentCustomerPolicies? = null
-    private var fragmentPaymentCollectionsSettings: FragmentPaymentCollectionsSettings? = null
+    private var fragmentPaymentCollectionSetup: FragmentPaymentCollectionSetup? = null
     private var fragmentAccountAddHome: FragmentAccountAddHome? = null
     private var fragmentAddAccountDetails: FragmentAddAccountDetails? = null
     private var fragmentEditAccountDetails: FragmentEditBankDetails? = null
@@ -71,12 +71,11 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     override fun customTheme(): Int? {
         return when (type) {
             FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-            FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
+             FragmentType.SERVICE_LISTING,  FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
             FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
-            FragmentType.EDIT_ACCOUNT_DETAILS,
-            -> R.style.CatalogTheme
-            FragmentType.APPOINTMENT_SETTINGS -> R.style.CatalogTheme_FragmentAppointment
+            FragmentType.EDIT_ACCOUNT_DETAILS, -> R.style.CatalogTheme
             FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
+            FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.CREATE_CATEGORY,FragmentType.APPOINTMENT_SETTINGS -> R.style.OffersThemeBase
             else -> super.customTheme()
         }
     }
@@ -215,8 +214,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
                 fragmentCustomerInvoiceSetup
             }
             FragmentType.APPOINTMENT_PAYMENT_SETTINGS -> {
-                fragmentPaymentCollectionsSettings = FragmentPaymentCollectionsSettings.newInstance()
-                fragmentPaymentCollectionsSettings
+                fragmentPaymentCollectionSetup = FragmentPaymentCollectionSetup.newInstance()
+                fragmentPaymentCollectionSetup
             }
             FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES -> {
                 fragmentCustomerPolicies = FragmentCustomerPolicies.newInstance()
@@ -259,7 +258,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         serviceCatalogHomeFragment?.onActivityResult(requestCode, resultCode, data)
         fragmentAppointmentSettings?.onActivityResult(requestCode, resultCode, data)
         fragmentCustomerPolicies?.onActivityResult(requestCode, resultCode, data)
-        fragmentPaymentCollectionsSettings?.onActivityResult(requestCode, resultCode, data)
+        fragmentPaymentCollectionSetup?.onActivityResult(requestCode, resultCode, data)
         fragmentCustomerInvoiceSetup?.onActivityResult(requestCode, resultCode, data)
         serviceCatalogHomeFragment?.onActivityResult(requestCode, resultCode, data)
         fragmentEditAccountDetails?.onActivityResult(requestCode, resultCode, data)

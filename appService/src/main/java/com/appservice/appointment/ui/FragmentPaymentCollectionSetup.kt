@@ -17,7 +17,7 @@ import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class FragmentPaymentCollectionsSettings : AppBaseFragment<FragmentPaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
+class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
     var isEdit: Boolean = false
 
     override fun getLayout(): Int {
@@ -29,8 +29,8 @@ class FragmentPaymentCollectionsSettings : AppBaseFragment<FragmentPaymentCollec
     }
 
     companion object {
-        fun newInstance(): FragmentPaymentCollectionsSettings {
-            return FragmentPaymentCollectionsSettings()
+        fun newInstance(): FragmentPaymentCollectionSetup {
+            return FragmentPaymentCollectionSetup()
         }
     }
 
@@ -39,10 +39,17 @@ class FragmentPaymentCollectionsSettings : AppBaseFragment<FragmentPaymentCollec
         setOnClickListener(binding?.boostPaymentGateway, binding?.btnAddAccount)
         getDeliveryStatus()
         getAccountDetails()
-
+         grayScaleImage()
         binding?.toggleCod?.setOnToggledListener { toggleableView, isOn ->
             updateDeliveryStatus(isOn)
         }
+    }
+
+    private fun grayScaleImage() {
+        binding?.upi?.makeGreyscale()
+        binding?.visa?.makeGreyscale()
+        binding?.ncpi?.makeGreyscale()
+        binding?.mastercard?.makeGreyscale()
     }
 
     private fun getAccountDetails() {

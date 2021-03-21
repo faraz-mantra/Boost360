@@ -52,6 +52,7 @@
                     android:layout_gravity="start"
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:layout_marginTop="@dimen/size_10"
+                    android:textColor="#C0C0C0"
                     android:text="@string/press_enter_on_keyboard_to_add_more_categories" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>

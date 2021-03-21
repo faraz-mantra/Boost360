@@ -15,12 +15,13 @@
 
     <style name="CatalogTheme.FragmentAppointment">
         <item name="android:searchViewStyle">@style/SearchView.WhiteBackground</item>
+        <item name="bottomSheetDialogTheme">@style/OfferBottomSheet</item>
     </style>
 
     <style name="SearchView.WhiteBackground">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:iconifiedByDefault">true</item>
+        <item name="android:iconifiedByDefault">false</item>
         <item name="android:background">@drawable/search_background</item>
         <item name="android:paddingStart">@dimen/size_5</item>
         <item name="searchIcon">@drawable/ic_search_appointment_orange</item>
@@ -224,6 +225,10 @@
         <item name="android:layout_marginStart">@dimen/size_4</item>
         <item name="layout_constraintVertical_bias">0.7</item>
     </style>
+    <style name="BottomSheetDialogThemeNoFloating" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
+    </style>
 
     <style name="AppointmentSetting_Text_Heading">
         <item name="android:textColor">@color/black_4a4a4a</item>
@@ -232,7 +237,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:includeFontPadding">true</item>
         <item name="android:fontFamily">@font/open_sans_semibold</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppointmentSetting_Text_Content" parent="AppointmentSetting_Text_Heading">
@@ -267,7 +271,6 @@
         <item name="android:background">@drawable/blue_stroke</item>
         <item name="android:textColor">@color/blue_4889f8</item>
     </style>
-
     <style name="Appointment_Toggle">
         <item name="android:layout_width">@dimen/size_54</item>
         <item name="android:layout_height">@dimen/size_24</item>
@@ -283,7 +286,6 @@
     <style name="HorizontalDivider">
         <item name="android:layout_height">@dimen/size_1</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginTop">@dimen/size_20</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
     <style name="AppointmentHorizontalDivider">
@@ -543,8 +545,10 @@
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/semi_bold</item>
         <item name="android:textAllCaps">true</item>
+        <item name="paddingStart">@dimen/size_8</item>
+        <item name="paddingEnd">@dimen/size_8</item>
         <item name="android:textColor">@color/pinkish_grey</item>
-        <item name="android:layout_width">@dimen/size_110</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/size_36</item>
     </style>
 
@@ -570,7 +574,7 @@
     <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
     <style name="Offers.ButtonStyle.Rounded.Solid.Stroke" parent="Offers.ButtonStyle">
         <item name="android:background">@drawable/offer_button_stroke_orange</item>

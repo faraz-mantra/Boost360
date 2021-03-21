@@ -18,6 +18,8 @@ import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 
 class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, AppointmentSettingsViewModel>() {
     var addBankAccountRequest: AddBankAccountRequest? = null
@@ -47,23 +49,16 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
 
 
     private fun showAccountVerificationStatus() {
-        val bottomSheetVerificationUnderProcess = BottomSheetVerificationUnderProcess()
-        bottomSheetVerificationUnderProcess.show(parentFragmentManager, BottomSheetVerificationUnderProcess::javaClass.name)
+        binding?.layoutAccountUnderProcess?.root?.visible()
+        binding?.layoutAccountVerified?.root?.gone()
+
     }
 
     private fun showSuccessVerificationStatus() {
-        val bottomSheetVerificationUnderProcess = BottomSheetAccountVerified()
-        bottomSheetVerificationUnderProcess.show(parentFragmentManager, BottomSheetAccountVerified::javaClass.name)
+        binding?.layoutAccountUnderProcess?.root?.gone()
+        binding?.layoutAccountVerified?.root?.visible()
     }
 
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when (v) {
-            binding?.submitBtn -> {
-                if (isValid()) addBankAccount()
-            }
-        }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.ic_menu_appointment_edit, menu)
@@ -92,7 +87,6 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
         when (it.taskcode) {
-            TaskCode.ADD_BANK_ACCOUNT.ordinal -> onAddingBankAccount(it)
             TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
         }
     }
@@ -113,53 +107,6 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
         }
 
     }
+    
 
-    private fun onAddingBankAccount(it: BaseResponse) {
-        if (it.isSuccess()) {
-            val bundle = Bundle()
-            bundle.putBoolean(IntentConstant.IS_EDIT.name, false)
-            startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
-        }
-    }
-
-    private fun isValid(): Boolean {
-        val bankName = binding?.edtBankName?.text.toString()
-        val accountName = binding?.edtAccountName?.text.toString()
-        val alias = binding?.edtAlias?.text.toString()
-        val accountNumberConfirm = binding?.edtConfirmNumber?.text.toString()
-        val accountNumber = binding?.edtAccountNumber?.text.toString()
-        val ifcs = binding?.edtIfsc?.text.toString()
-        if (accountName.isEmpty()) {
-            showLongToast(getString(R.string.enter_account_holder_name))
-            return false
-        }
-        if (accountNumber.isEmpty()) {
-            showLongToast(getString(R.string.enter_account_number))
-            return false
-        }
-        if (accountNumberConfirm.isEmpty()) {
-            showLongToast(getString(R.string.please_confirm_account_number))
-            return false
-        }
-        if (accountNumberConfirm != accountNumber) {
-            showLongToast(getString(R.string.account_number_is_not_same))
-            return false
-        }
-        if (bankName.isEmpty()) {
-            showLongToast(getString(R.string.enter_bank_name))
-            return false
-        }
-        if (ifcs.isEmpty()) {
-            showLongToast(getString(R.string.enter_bank_ifcs))
-            return false
-        }
-        if (addBankAccountRequest == null) addBankAccountRequest = AddBankAccountRequest()
-        addBankAccountRequest?.accountName = accountName
-        addBankAccountRequest?.bankName = bankName
-        addBankAccountRequest?.accountAlias = alias
-        addBankAccountRequest?.iFSC = ifcs
-        addBankAccountRequest?.accountNumber = accountNumber
-//        addBankAccountRequest?.kYCDetails = accountName
-        return true
-    }
 }

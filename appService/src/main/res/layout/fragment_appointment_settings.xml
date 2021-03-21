@@ -14,9 +14,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.SearchView
-                android:layout_height="@dimen/size_40"
                 style="@style/SearchView.WhiteBackground"
-                app:queryHint="@string/search_settings" />
+                android:layout_height="@dimen/size_40"
+                app:iconifiedByDefault="false"
+                android:gravity="center_vertical"
+                app:queryHint="@string/search_in_the_appointment_settings" />
         </LinearLayout>
 
         <LinearLayout
@@ -32,6 +34,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
                 android:id="@+id/catalog_setup"
+                android:foreground="?selectableItemBackground"
+                android:paddingBottom="@dimen/size_20"
                 android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
@@ -78,6 +82,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
                 android:id="@+id/payment_collection_setup"
+                android:paddingBottom="@dimen/size_20"
+                android:foreground="?selectableItemBackground"
                 android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
@@ -124,12 +130,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
                 android:id="@+id/customer_invoice_setup"
+                android:foreground="?selectableItemBackground"
+                android:paddingBottom="@dimen/size_20"
                 android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/civ_customer_invoice_setup"
                     style="@style/AppointmentSettings_Image"
-                    android:src="@drawable/ic_business_services_pro"
+                    android:src="@drawable/ic_customer_invoice"
                     app:layout_constraintVertical_bias="0.7" />
 
                 <com.framework.views.customViews.CustomTextView
@@ -172,14 +180,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/policies_for_customer"
                 style="@style/match_wrap"
-                android:clickable="true"
-
-                >
+                android:foreground="?selectableItemBackground"
+                android:paddingBottom="@dimen/size_20"
+                android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/civ_policies"
                     style="@style/AppointmentSettings_Image"
-                    android:src="@drawable/ic_business_services_pro" />
+                    android:src="@drawable/ic_policies_for_customer" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/ctv_policies_heading"
