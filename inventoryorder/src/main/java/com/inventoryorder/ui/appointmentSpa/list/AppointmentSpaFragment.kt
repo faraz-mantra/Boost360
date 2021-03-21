@@ -68,7 +68,6 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   lateinit var mPopupWindow: PopupWindow
   private var orderItem: OrderItem? = null
   private var position: Int? = null
-  private var orderItemType = OrderSummaryModel.OrderSummaryType.TOTAL.type
 
   /* Paging */
   private var isLoadingD = false
@@ -614,38 +613,38 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     orderAdapter?.clear()
     orderListFinalList.clear()
     orderList.clear()
-    apiOrderListCall()
+    clickFilterItem(filterItem)
   }
 
-  private fun apiOrderListCall() {
-    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
-      OrderSummaryModel.OrderSummaryType.RECEIVED -> {
-        val statusList = arrayListOf(OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)
-        requestFilter = getRequestFilterData(statusList)
-        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-      }
-      OrderSummaryModel.OrderSummaryType.SUCCESSFUL -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
-        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-      }
-      /*  OrderSummaryModel.OrderSummaryType.CANCELLED -> {
-          requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
-                  paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name, operatorType = QueryObject.Operator.NE.name)
-          getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-        }
-        OrderSummaryModel.OrderSummaryType.ABANDONED -> {
-          requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
-                  paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name)
-          getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-        }*/
-      OrderSummaryModel.OrderSummaryType.ESCALATED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ESCALATED.name))
-        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-      }
-      else -> {
-        requestFilter = getRequestFilterData(arrayListOf())
-        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-      }
-    }
-  }
+//  private fun apiOrderListCall() {
+//    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
+//      OrderSummaryModel.OrderSummaryType.RECEIVED -> {
+//        val statusList = arrayListOf(OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)
+//        requestFilter = getRequestFilterData(statusList)
+//        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//      }
+//      OrderSummaryModel.OrderSummaryType.SUCCESSFUL -> {
+//        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+//        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//      }
+//      /*  OrderSummaryModel.OrderSummaryType.CANCELLED -> {
+//          requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+//                  paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name, operatorType = QueryObject.Operator.NE.name)
+//          getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//        }
+//        OrderSummaryModel.OrderSummaryType.ABANDONED -> {
+//          requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+//                  paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name)
+//          getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//        }*/
+//      OrderSummaryModel.OrderSummaryType.ESCALATED -> {
+//        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ESCALATED.name))
+//        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//      }
+//      else -> {
+//        requestFilter = getRequestFilterData(arrayListOf())
+//        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//      }
+//    }
+//  }
 }
