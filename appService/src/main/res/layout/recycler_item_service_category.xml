@@ -13,10 +13,11 @@
         android:paddingHorizontal="@dimen/size_16">
 
 
-        <androidx.cardview.widget.CardView
+        <com.framework.views.customViews.CustomCardView
             style="@style/match_wrap"
             app:cardCornerRadius="@dimen/size_4"
             app:cardElevation="@dimen/size_4"
+            app:cardBackgroundColor="@color/white"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -46,13 +47,14 @@
                     android:src="@drawable/ic_more_vert"
                     android:tint="@color/gray_light_1" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.framework.views.customViews.CustomCardView>
 
         <androidx.cardview.widget.CardView
             style="@style/match_wrap"
             android:layout_marginHorizontal="1dp"
             android:layout_marginTop="-16dp"
             app:cardCornerRadius="@dimen/size_4"
+            app:cardBackgroundColor="@color/white"
             app:cardElevation="@dimen/size_3"
             app:cardUseCompatPadding="true">
 

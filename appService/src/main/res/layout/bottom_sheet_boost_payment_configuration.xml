@@ -68,15 +68,20 @@
 
                     <com.framework.views.customViews.CustomRadioButton
                         android:id="@+id/rb_boostPaymentGateway"
+                        android:layout_gravity="start"
+                        android:buttonTint="@color/yellow_ffb900"
                         style="@style/wrap_wrap"
-                        android:layout_gravity="center"
-                        android:buttonTint="@color/dodger_blue_two"
-                        android:clickable="false" />
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:layout_width="@dimen/size_30"
+                        android:height="@dimen/size_30"
+                        android:gravity="center"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         style="@style/match_wrap"
 
-                        android:layout_marginStart="@dimen/size_6"
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
@@ -132,18 +137,17 @@
                     android:padding="@dimen/size_20">
 
                     <com.framework.views.customViews.CustomImageView
-                        android:layout_width="@dimen/size_24"
-                        android:layout_height="@dimen/size_24"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/size_3"
+                        android:layout_width="@dimen/size_30"
+                        android:layout_height="@dimen/size_30"
+                        android:padding="@dimen/_6dp"
+                        android:layout_gravity="start"
+                        android:cropToPadding="true"
                         android:clickable="false"
                         android:visibility="visible"
-                        app:srcCompat="@drawable/ic_lock_grey" />
+                        app:srcCompat="@drawable/ic_lock_appointment" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         style="@style/match_wrap"
-
-                        android:layout_marginStart="@dimen/size_10"
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
