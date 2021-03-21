@@ -77,7 +77,7 @@
 -keep class com.nowfloats.Store.Model.** { *; }
 -keep class com.nowfloats.manageinventory.models.** { *; }
 -keep class com.nowfloats.NavigationDrawer.model.** { *; }
--keep class com.nowfloats.NavigationDrawer.model.** { *; }
+-keep class com.nowfloats.AccrossVerticals.API.model.** { *; }
 -keep class com.nowfloats.Login.Model.** { *; }
 -keep class com.nowfloats.Business_Enquiries.Model.** { *; }
 -keep class com.nowfloats.BusinessProfile.UI.Model.** { *; }
