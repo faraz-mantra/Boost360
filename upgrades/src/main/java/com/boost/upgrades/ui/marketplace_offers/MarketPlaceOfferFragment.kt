@@ -228,7 +228,8 @@ class MarketPlaceOfferFragment : BaseFragment(), HistoryFragmentListener {
         Log.v("getConvertedExpir", " "+ textDate)
 //        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        val output = SimpleDateFormat("dd'th' MMM yyyy ")
+//        val output = SimpleDateFormat("dd'th' MMM yyyy ")
+        val output = SimpleDateFormat("dd-MMM-yy ")
 
         var d: Date? = null
         try {

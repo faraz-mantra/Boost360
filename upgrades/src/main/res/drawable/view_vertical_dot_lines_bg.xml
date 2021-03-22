@@ -4,7 +4,7 @@
         android:left="-300dp"
         android:right="-300dp">
         <rotate
-            android:drawable="@drawable/view_dot_lines_bg"
+            android:drawable="@drawable/view_lines_black_bg"
             android:fromDegrees="90"
             android:toDegrees="90"/>
     </item>
