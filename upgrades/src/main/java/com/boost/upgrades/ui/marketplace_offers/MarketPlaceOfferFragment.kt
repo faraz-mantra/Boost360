@@ -34,7 +34,11 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_OFFERS_LOADED
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.compare_all_packages_new.*
@@ -73,7 +77,7 @@ class MarketPlaceOfferFragment : BaseFragment(), HistoryFragmentListener {
         marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
         marketOfferDetailAdapter = MarketOfferDetailAdapter(ArrayList(), this)
         marketOfferTermsAdapter = MarketOfferTermsAdapter(ArrayList(), this)
-        Log.v("bundleData", " " + marketOffersData?.expiry_date  + " "+ marketOffersData?.createdon)
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_OFFERS_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
         prefs = SharedPrefs(activity as UpgradeActivity)
         return root
     }
