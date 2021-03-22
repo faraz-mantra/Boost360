@@ -24,6 +24,7 @@
     <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left_30</item>
     <item name="searchViewStyle">@style/SearchView</item>
     <item name="colorSurface">@color/white</item>
+    <item name="android:windowIsFloating">false</item>
     <item name="android:timePickerStyle">@style/MyDatePicker</item>
   </style>
 

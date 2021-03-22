@@ -8,7 +8,7 @@
       android:name=".ui.FragmentContainerOrderActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Order"
-      android:windowSoftInputMode="adjustPan">
+      android:windowSoftInputMode="adjustResize">
       <intent-filter
         android:autoVerify="true"
         tools:ignore="UnusedAttribute">
