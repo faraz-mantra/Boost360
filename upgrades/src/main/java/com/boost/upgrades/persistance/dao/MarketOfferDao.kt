@@ -15,6 +15,9 @@ interface MarketOfferDao {
     @Query("SELECT * FROM MarketOffers WHERE coupon_code=:couponCode")
     fun getMarketOffersByCouponCode(couponCode: String): Single<MarketOfferModel>
 
+    @Query("SELECT * FROM MarketOffers WHERE _kid=:id")
+    fun getMarketOffersById(id: String): Single<MarketOfferModel>
+
     @Insert
     fun insertToMarketOffers(vararg features: MarketOfferModel?)
 
