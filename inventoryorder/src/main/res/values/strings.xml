@@ -306,6 +306,7 @@
   <string name="dummy_date_time">Monday, 7 Jan 2021</string>
   <string name="dummy_time">11:00 AM</string>
   <string name="phone_hint">+91 XXXXX XXXXX</string>
+  <string name="phone_hint_appointment">XXXXX XXXXX</string>
   <string name="please_review_appointment_details_and_confirm">Please review appointment details and confirm.</string>
   <string name="appintment_for">Appintment for</string>
   <string name="simple_dry_massage">Simple Dry Massage</string>
@@ -474,4 +475,6 @@
   <string name="upcoming_consult">Upcoming Consult</string>
   <string name="no_video_consultation_available">No video consultation available.</string>
   <string name="coming_soon">Coming soon..</string>
+    <string name="there_are_no_email_clients_installed">There are no email clients installed.</string>
+  <string name="appointment_details_empty">Appointment detail empty.</string>
 </resources>

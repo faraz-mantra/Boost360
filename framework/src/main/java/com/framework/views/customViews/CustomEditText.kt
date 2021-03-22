@@ -13,7 +13,7 @@ import com.framework.R
 import com.framework.enums.TextType
 import com.framework.enums.setTextStyle
 
-class CustomEditText : AppCompatEditText {
+open class CustomEditText : AppCompatEditText {
 
   constructor(context: Context) : super(context) {
     setCustomAttrs(context, null)

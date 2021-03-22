@@ -1,16 +1,13 @@
 package com.inventoryorder.ui.appointmentSpa.create
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
-import com.framework.extensions.onTextChanged
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
@@ -29,6 +26,7 @@ import com.inventoryorder.recyclerView.CustomArrayAdapter
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.onboarding.nowfloats.extensions.capitalizeWords
 import com.onboarding.nowfloats.model.CityDataModel
 import com.onboarding.nowfloats.ui.CitySearchDialog
 import kotlinx.android.synthetic.main.item_date_view.*
@@ -115,8 +113,8 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
   }
 
   private fun setCityState(cityDataModel: CityDataModel) {
-    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName())
-    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName())
+    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName().capitalizeWords())
+    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName().capitalizeWords())
   }
 
   fun getBundleData(): Bundle? {
