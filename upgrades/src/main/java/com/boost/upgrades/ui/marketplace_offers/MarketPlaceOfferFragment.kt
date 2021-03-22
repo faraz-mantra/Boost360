@@ -199,7 +199,7 @@ class MarketPlaceOfferFragment : BaseFragment(), HistoryFragmentListener {
     }
 
     private fun loadData() {
-        Log.v("marketOffersCoupon", " " + marketOffersData!!.coupon_code)
+        Log.d("marketOffersCoupon", " " + marketOffersData!!.coupon_code)
         viewModel.getOffersByCouponId(marketOffersData!!.coupon_code)
     }
 

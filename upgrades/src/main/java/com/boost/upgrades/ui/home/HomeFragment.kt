@@ -1057,7 +1057,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                 AppDatabase.getInstance(requireActivity().application)!!
                                         .marketOffersDao()
 //                                        .getMarketOffersByCouponCode(item!!.coupon_code)
-                                        .getMarketOffersByCouponCode(if(item!!.coupon_code != null ) item.coupon_code else item.cta_offer_identifier )
+//                                        .getMarketOffersByCouponCode(if(item!!.coupon_code != null ) item.coupon_code else item.cta_offer_identifier )
+                                        .getMarketOffersById(item.cta_offer_identifier )
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .doOnError {  }
