@@ -1187,7 +1187,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:text="Refer Boost with your friends"
+                                android:text="Invite your friends to Boost 360!"
                                 android:textColor="#FF9F00"
                                 android:textSize="@dimen/txt_18sp"
                                 android:textStyle="bold" />
@@ -1203,7 +1203,7 @@
                                 android:gravity="center"
                                 android:minLines="2"
                                 android:padding="8dp"
-                                android:text="and use Website Chatbot to help your customer reach you better for a month absolutely FREE"
+                                android:text="Refer a friend today and both of you will receive special discounts when they signup."
                                 android:textColor="#4a4a4a"
                                 android:textSize="@dimen/_10sdp" />
 
@@ -1312,7 +1312,7 @@
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_20sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="Refer and Earn"
+                        android:text="Refer Now"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"

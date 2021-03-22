@@ -421,7 +421,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             )
         }*/
 
-        val refText = SpannableString(getString(R.string.referral_card_explainer_text))
+       /* val refText = SpannableString(getString(R.string.referral_card_explainer_text))
         refText.setSpan(StyleSpan(Typeface.BOLD), 18, 26, 0)
         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
         refText.setSpan(
@@ -431,7 +431,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 0
         )
         ref_txt.text = refText
-        ref_txt.text = "Get special discounts for you and your friends after successful signup."
+        ref_txt.text = "Get special discounts for you and your friends after successful signup."*/
     }
 
     fun loadData() {
