@@ -22,11 +22,10 @@ import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
+import androidx.annotation.IdRes
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.customization.BusinessFeaturePagerAdapter
+import dev.patrickgold.florisboard.customization.BusinessFeaturesViewPager
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -58,7 +57,7 @@ import kotlin.math.roundToLong
  * instance and the Smartbar.
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
-    FlorisBoard.EventListener, SmartbarView.EventListener, BusinessFeaturePagerAdapter.BusinessFeatureListener {
+    FlorisBoard.EventListener, SmartbarView.EventListener {
 
     private val florisboard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
@@ -68,7 +67,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var animator: ObjectAnimator? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
     private var editingKeyboardView: EditingKeyboardView? = null
-    private lateinit var businessFeatureViewPager: ViewPager
+    private var businessFeatureViewPager: BusinessFeaturesViewPager? = null
     private var loadingPlaceholderKeyboard: KeyboardView? = null
     private var textViewFlipper: ViewFlipper? = null
     private var textViewGroup: LinearLayout? = null
@@ -101,6 +100,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     var isManualSelectionMode: Boolean = false
     private var isManualSelectionModeStart: Boolean = false
     private var isManualSelectionModeEnd: Boolean = false
+
+    private var showFeatureUI = false
+
 
     companion object {
         private var instance: TextInputManager? = null
@@ -160,10 +162,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         loadingPlaceholderKeyboard = inputView.findViewById(R.id.keyboard_preview)
         businessFeatureViewPager = inputView.findViewById(R.id.business_feature_viewpager)
 
-        val businessFeaturePagerAdapter = BusinessFeaturePagerAdapter()
-        businessFeatureViewPager.adapter = businessFeaturePagerAdapter
-        val tabLayout: TabLayout = inputView.findViewById(R.id.business_feature_tab_layout)
-        tabLayout.setupWithViewPager(businessFeatureViewPager)
+        businessFeatureViewPager?.setOnTouchListener { v, event -> true }
 
         launch(Dispatchers.Main) {
             textViewGroup?.let {
@@ -216,11 +215,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     override fun onDestroy() {
         Timber.i("onDestroy()")
-
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
         cancel()
         layoutManager.onDestroy()
+        businessFeatureViewPager?.onDestroy()
         instance = null
     }
 
@@ -295,6 +294,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onWindowShown() {
         keyboardViews[KeyboardMode.CHARACTERS]?.updateVisibility()
         smartbarView?.updateSmartbarState()
+        businessFeatureViewPager?.onWindowShown()
     }
 
     /**
@@ -323,6 +323,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
         smartbarView?.isQuickActionsVisible = false
+        if(mode != KeyboardMode.BUSINESS_FEATURES)
+            smartbarView?.isBusinessFeatureVisible = false
         smartbarView?.updateSmartbarState()
     }
 
@@ -455,16 +457,30 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 return
             }
             R.id.business_feature_toggle_action -> {
-                if (activeKeyboardMode == KeyboardMode.BUSINESS_FEATURES) {
+                showFeatureUI = !showFeatureUI
+                if(!showFeatureUI){
                     setActiveKeyboardMode(KeyboardMode.CHARACTERS)
-                } else {
-                    setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES)
                 }
             }
         }
         smartbarView?.isQuickActionsVisible = false
         smartbarView?.updateSmartbarState()
     }
+
+    override fun onBusinessTabSelectedListener(@IdRes tabId: Int){
+        if(showFeatureUI){
+            setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES)
+        }else{
+            setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+        }
+        when(tabId){
+            R.id.tv_updates -> {businessFeatureViewPager?.setCurrentItem(0,false)}
+            R.id.tv_products -> businessFeatureViewPager?.setCurrentItem(1,false)
+            R.id.tv_photos -> businessFeatureViewPager?.setCurrentItem(2,false)
+            R.id.tv_details -> businessFeatureViewPager?.setCurrentItem(3,false)
+        }
+    }
+
 
     /**
      * Handles a [KeyCode.DELETE] event.
@@ -806,9 +822,5 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         when (data.code) {
             KeyCode.SHIFT -> handleShiftCancel()
         }
-    }
-
-    override fun onServiceClicked(serviceId: String) {
-
     }
 }

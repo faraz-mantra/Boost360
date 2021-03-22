@@ -18,4 +18,13 @@
     <color name="navigationBarColor">#000000</color><!-- Black -->
     <color name="toolbarForegroundColor">#000000</color><!-- Black -->
     <color name="windowBackground">#FAFAFA</color><!-- Gray 50 -->
+
+    <color name="secondaryTextColor">#7f7f7f</color>
+    <color name="secondaryLightTextColor">#bbbbbb</color>
+    <color name="primaryTextColor">#4a4a4a</color>
+
+    <color name="dark_gray">#141414</color>
+    <color name="gray_40">#66212121</color>
+
+
 </resources>

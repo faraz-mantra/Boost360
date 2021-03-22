@@ -20,6 +20,8 @@ import androidx.multidex.MultiDexApplication
 import com.framework.BaseApplication
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.crashutility.CrashUtility
+import dev.patrickgold.florisboard.customization.network.BusinessFeatureApiClient
+import dev.patrickgold.florisboard.customization.network.EndPoints
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -43,6 +45,7 @@ class FlorisApplication : BaseApplication() {
             ThemeManager.init(application, assetManager, prefHelper)
             prefHelper.initDefaultPreferences()
             PackageManagerUtils.hideAppIcon(application)
+            BusinessFeatureApiClient.shared.init(EndPoints.BUSINESS_FEATURE_BASE_URL)
         }
     }
 }

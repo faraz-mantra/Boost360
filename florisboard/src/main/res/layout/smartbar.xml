@@ -49,28 +49,29 @@
 
     <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
         android:id="@+id/main_area"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constrainedWidth="true"
         app:layout_constraintStart_toEndOf="@id/action_start_area"
         app:layout_constraintEnd_toStartOf="@id/action_end_area"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.tabs.TabLayout
+        <!--<com.google.android.material.tabs.TabLayout
             android:id="@+id/business_feature_tab_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:tabTextColor="@color/white"
             app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabMode="scrollable"/>
+            app:tabMode="scrollable"/>-->
 
-        <!--<LinearLayout
-            android:id="@+id/business_quick_actions"
-            style="@style/SmartbarContainer">
+        <LinearLayout
+            android:id="@+id/business_quick_actions_container"
+            style="@style/SmartbarContainer"
+            android:gravity="top">
 
             <HorizontalScrollView
                 android:id="@+id/horizontal_scroll_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="top"
                 android:scrollbarAlwaysDrawHorizontalTrack="true"
@@ -79,6 +80,7 @@
                 android:scrollbars="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/business_quick_actions"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
 
@@ -146,7 +148,7 @@
                 android:background="@color/white"
                 android:visibility="invisible" />
 
-        </LinearLayout>-->
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/candidates"
@@ -244,6 +246,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:layout_constrainedWidth="true"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

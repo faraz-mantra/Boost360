@@ -360,4 +360,43 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tap to view error details</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard seems to stop working repeatedly…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
+    <string name="deselect_all">DESELECT ALL</string>
+    <string name="share">SHARE</string>
+    <string name="tv_photos">PHOTOS</string>
+    <string name="name">Name</string>
+    <string name="business_name">Business Name</string>
+    <string name="website_url">Website URL</string>
+    <string name="product_name">Product Name</string>
+    <string name="_0_0">0.0</string>
+    <string name="this_is_product_description">This is product description</string>
+    <string name="share_now">SHARE NOW</string>
+    <string name="create_offer">Create Offer</string>
+    <string name="creating_new_offer_for">Creating new offer for</string>
+    <string name="price_colon">Price:</string>
+    <string name="offer_price_heading">OFFER PRICE</string>
+    <string name="validity_heading">VALIDITY</string>
+    <string name="_24_hrs">24 Hrs</string>
+    <string name="qty">QTY.</string>
+    <string name="currency">INR</string>
+    <string name="quantity">Quantity:</string>
+    <string name="validity">Validity:</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="_7">7</string>
+    <string name="_8">8</string>
+    <string name="_9">9</string>
+    <string name="_0">0</string>
+    <string name="decimal">.</string>
+    <string name="cancel">Cancel</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="enter_offer_price">Enter Offer Price</string>
+    <string name="tv_done">Done</string>
+
+    <string name="client_id">2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21</string>
+
+
 </resources>
