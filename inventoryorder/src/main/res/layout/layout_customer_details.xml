@@ -72,16 +72,17 @@
             app:fontFamily="@font/regular"
             app:textType="BODY_1" />
 
-        <com.framework.views.customViews.CustomEditText
+        <com.framework.views.customViews.PrefixEditText
             android:id="@+id/edit_customer_phone"
             style="@style/EditTextStyle"
             android:layout_marginTop="@dimen/size_6"
             android:layout_marginBottom="@dimen/size_10"
-            android:gravity="center_vertical"
             android:maxLength="10"
             android:singleLine="true"
+            android:gravity="center_vertical"
+            android:tag="+91"
             android:imeOptions="actionNext"
-            android:hint="@string/phone_hint"
+            android:hint="@string/phone_hint_appointment"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_service_name" />
