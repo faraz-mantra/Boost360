@@ -7,12 +7,10 @@
   </data>
 
   <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    style="@style/wrap_wrap">
 
     <androidx.cardview.widget.CardView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginStart="@dimen/size_10"
       android:layout_marginTop="@dimen/size_10"
       android:layout_marginEnd="@dimen/size_30"
@@ -20,8 +18,7 @@
       app:cardCornerRadius="@dimen/size_6">
 
       <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:gravity="end"
         android:orientation="vertical">
 

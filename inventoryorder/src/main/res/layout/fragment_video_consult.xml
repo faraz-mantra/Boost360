@@ -36,8 +36,7 @@
 
       <ProgressBar
         android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_gravity="center"
         android:indeterminate="true"
         android:theme="@style/progressBar"
@@ -45,8 +44,7 @@
 
       <LinearLayout
         android:id="@+id/error_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/size_30"
         android:layout_marginEnd="@dimen/size_30"
@@ -61,8 +59,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/error_txt"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_10"
           android:gravity="center"
           android:text="@string/error"
@@ -72,8 +69,7 @@
           app:textType="HEADING_7" />
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_4"
           android:gravity="center"
           android:text="@string/once_your_patients_starts_booking_video_consultation_from_your_boost_website_they_will_appear_here_alternatively_you_can_also_create_a_booking_on_behalf_of_any_patients_by_clicking_the_create_button_below"
@@ -84,8 +80,7 @@
 
       <com.framework.views.fabButton.FloatingActionButton
         android:id="@+id/btn_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="16dp"
         android:clickable="true"

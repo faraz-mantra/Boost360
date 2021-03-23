@@ -645,8 +645,7 @@
 
           <androidx.constraintlayout.widget.Group
             android:id="@+id/group_customer_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             app:constraint_referenced_ids="divider2, image_location_pointer, linear_layout_address" />
 
           <View

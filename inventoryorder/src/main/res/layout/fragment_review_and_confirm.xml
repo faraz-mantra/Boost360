@@ -22,13 +22,11 @@
         android:paddingBottom="@dimen/size_10">
 
         <com.framework.views.customViews.CustomImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           app:srcCompat="@drawable/ic_info_black" />
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_gravity="center_vertical"
           android:layout_marginStart="@dimen/size_10"
           android:fontFamily="@font/regular"
@@ -53,8 +51,7 @@
           android:paddingEnd="@dimen/size_20">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:text="@string/appintment_for"
             android:textColor="@color/black_2A2A2A"
             app:fontFamily="@font/semi_bold"
@@ -79,8 +76,7 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/service_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:maxLines="1"
                 android:text="@string/simple_dry_massage"
                 android:textColor="@color/black_2A2A2A"
@@ -116,8 +112,7 @@
               app:layout_constraintTop_toBottomOf="@id/linear_service" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
+              style="@style/wrap_wrap">
 
               <View
                 android:layout_width="0dp"
@@ -299,8 +294,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvPaymentStatus"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_weight="0"
               android:drawableEnd="@drawable/ic_arrow_down_orange"
               android:drawablePadding="@dimen/size_8"
@@ -333,8 +327,7 @@
           android:paddingBottom="@dimen/size_20">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:text="@string/customer_details"
             android:textColor="@color/black_2A2A2A"
             app:fontFamily="@font/semi_bold"
@@ -345,8 +338,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_name"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_5"
               android:maxLines="1"
               android:text="@string/dummy_name"
@@ -359,8 +351,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_5"
             android:text="@string/dummy_email"
             android:textColor="@color/black_4a4a4a"
@@ -369,8 +360,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_6"
             android:text="@string/dummy_phone"
             android:textColor="@color/black_4a4a4a"
@@ -379,8 +369,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_6"
             android:text="@string/dummy_address_long"
             android:textColor="@color/black_4a4a4a"
@@ -389,8 +378,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_gstin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_6"
             android:layout_marginBottom="@dimen/size_20"
             android:textColor="@color/black_4a4a4a"
@@ -415,8 +403,7 @@
           android:padding="@dimen/size_20">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/size_10"
             android:fontFamily="@font/regular"

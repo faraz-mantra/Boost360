@@ -57,8 +57,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_month_date_range"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_8"
               android:includeFontPadding="false"
               android:text="@string/aug_sep_2020"
@@ -69,8 +68,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/btn_goto_current_week"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:text="@string/go_to_current_week"
               android:textAllCaps="true"
               android:textColor="@color/orange"
@@ -101,8 +99,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_doctor"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/select_doctor"
@@ -130,8 +127,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_consultation_type"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginVertical="@dimen/size_10"
           android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
@@ -142,8 +138,7 @@
 
         <RadioGroup
           android:id="@+id/radio_group"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginStart="@dimen/size_10"
           android:layout_marginTop="@dimen/size_6"
           android:orientation="horizontal"
@@ -152,8 +147,7 @@
 
           <RadioButton
             android:id="@+id/radio_in_clinic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:checked="true"
             android:text="@string/in_clinic"
             android:textColor="@drawable/radio_selected"
@@ -162,8 +156,7 @@
 
           <RadioButton
             android:id="@+id/radio_video_consultation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:checked="false"
             android:text="@string/video_consultation_camel_case"
@@ -176,8 +169,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_consulting_service"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/consulting_service"
           android:textColor="@color/warm_light"
@@ -204,8 +196,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_time_text"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/time_slot"
           android:textColor="@color/warm_light"
@@ -250,8 +241,7 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_gravity="start"
               android:text="@string/duration"
               android:textColor="@color/warm_light" />
@@ -281,8 +271,7 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_gravity="start"
               android:text="@string/final_price"
               android:textColor="@color/warm_light" />
@@ -307,8 +296,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/patient_name_camel_case"
           android:textColor="@color/warm_light"
@@ -347,8 +335,7 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_gravity="start"
               android:text="@string/gender"
               android:textColor="@color/warm_light" />
@@ -378,8 +365,7 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_gravity="start"
               android:text="@string/age_years"
               android:textColor="@color/warm_light" />
@@ -403,8 +389,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_phone"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/patient_mobile_number"
           android:textColor="@color/warm_light"
@@ -429,8 +414,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_email"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/patient_email_id_optional"
           android:textColor="@color/warm_light"
@@ -461,8 +445,7 @@
           app:layout_constraintTop_toBottomOf="@id/edt_patient_email">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:text="@string/create_appointment_note"
             android:textColor="@color/warm_grey_two"
             android:textSize="12sp" />

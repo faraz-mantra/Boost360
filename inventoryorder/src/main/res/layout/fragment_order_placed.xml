@@ -36,8 +36,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_20"
           android:layout_marginBottom="@dimen/size_12"
           android:gravity="center"
@@ -252,8 +251,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_invoice"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_gravity="center"
               android:layout_weight="0"
               android:layout_marginStart="@dimen/size_4"

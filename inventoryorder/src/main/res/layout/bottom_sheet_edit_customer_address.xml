@@ -62,8 +62,7 @@
                     android:paddingEnd="@dimen/size_20">
 
                     <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrap_wrap"
                         android:text="@string/billing_address"
                         android:textColor="@color/black_3C3C3C"
                         app:fontFamily="@font/semi_bold"
@@ -75,8 +74,7 @@
 
                     <com.framework.views.customViews.CustomCheckBox
                         android:id="@+id/checkbox_address_same"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrap_wrap"
                         android:layout_marginTop="@dimen/size_16"
                         android:buttonTint="@color/orange"
                         android:visibility="gone"
@@ -94,8 +92,7 @@
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/wrap_wrap"
                             android:layout_marginTop="@dimen/size_16"
                             android:text="@string/shipping_address"
                             android:textColor="@color/black_3C3C3C"
@@ -122,8 +119,7 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/size_20"
                 android:padding="@dimen/size_4"

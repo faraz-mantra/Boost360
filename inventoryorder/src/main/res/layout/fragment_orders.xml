@@ -57,8 +57,7 @@
 
         <ProgressBar
           android:id="@+id/progress"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_gravity="center"
           android:indeterminate="true"
           android:theme="@style/progressBar" />
@@ -72,8 +71,7 @@
           android:visibility="gone">
 
           <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
@@ -88,8 +86,7 @@
               app:srcCompat="@drawable/ic_empty_appointment_icon" />
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_10"
               android:gravity="center"
               android:text="@string/no_orders_so_far"
@@ -99,8 +96,7 @@
               app:textType="HEADING_4" />
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_6"
               android:gravity="center"
               android:text="@string/tap_below_button_to_log_a_sample_offline_order"
@@ -131,8 +127,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_6"
               android:gravity="center"
               android:text="To learn more about how ‘orders’ work,"
@@ -147,15 +142,13 @@
               android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:text="click on the ‘"
                 android:textColor="@color/grey_light_2"
                 app:textType="BODY_1" />
 
               <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:drawableStart="@drawable/ic_about_apt_icon"
                 android:text="’ icon on top right."
                 android:textColor="@color/warm_grey"
@@ -166,8 +159,7 @@
 
         <com.framework.views.fabButton.FloatingActionButton
           android:id="@+id/btn_add"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_gravity="bottom|right"
           android:layout_margin="16dp"
           android:clickable="true"

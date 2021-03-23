@@ -67,8 +67,7 @@
 
           <RadioButton
             android:id="@+id/radio_feedback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_16"
             android:buttonTint="@color/colorAccent"
             android:checked="true"
@@ -78,8 +77,7 @@
 
           <RadioButton
             android:id="@+id/radio_no_feedback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_16"
             android:layout_marginTop="@dimen/size_4"
             android:buttonTint="@color/colorAccent"
@@ -156,8 +154,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tvCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/size_10"
         android:padding="@dimen/size_4"

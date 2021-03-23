@@ -114,4 +114,8 @@
     <item name="android:textColorHint">@color/black_202A2A2A</item>
     <item name="android:background">@drawable/ic_rectangle_light_black_outline</item>
   </style>
+  <style name="BaseTextView">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 </resources>

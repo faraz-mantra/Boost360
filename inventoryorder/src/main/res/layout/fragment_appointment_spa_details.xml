@@ -52,7 +52,7 @@
               android:maxLines="1"
               android:paddingStart="@dimen/size_4"
               android:paddingEnd="@dimen/size_2"
-              android:text="Appointment ID"
+              android:text="@string/appointment_id"
               android:textAlignment="gravity"
               android:textColor="@color/warm_grey"
               android:textSize="@dimen/size_12"
@@ -111,7 +111,7 @@
               android:gravity="end|center_vertical"
               android:maxLines="1"
               android:paddingStart="@dimen/size_15"
-              android:text="Confirmed On"
+              android:text="@string/confirmed_on"
               android:textAlignment="gravity"
               android:textAllCaps="true"
               android:textColor="@color/black_4a4a4a"
@@ -268,25 +268,25 @@
             app:layout_constraintTop_toBottomOf="@id/text_staff">
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_service_location"
-              style="@style/wrap_match"
-              android:layout_marginTop="@dimen/size_4"
-              android:layout_marginEnd="@dimen/size_2"
-              android:layout_weight="1"
-              android:ellipsize="end"
-              android:fontFamily="@font/regular"
-              android:gravity="center_vertical"
-              android:maxLines="1"
-              android:text="Service location"
-              android:textAlignment="gravity"
-              android:textColor="@color/black_4a4a4a"
-              android:textSize="14sp"
-              app:autoSizeMaxTextSize="14sp"
-              app:autoSizeMinTextSize="8sp"
-              app:autoSizeStepGranularity="1sp"
-              app:autoSizeTextType="uniform"
-              app:layout_constraintStart_toEndOf="@id/image_service_provider"
-              app:layout_constraintTop_toBottomOf="@id/text_date" />
+                android:id="@+id/text_service_location"
+                style="@style/wrap_match"
+                android:layout_marginTop="@dimen/size_4"
+                android:layout_marginEnd="@dimen/size_2"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/service_location"
+                android:textAlignment="gravity"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="14sp"
+                app:autoSizeMaxTextSize="14sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_service_location_dropdown"
@@ -644,10 +644,9 @@
             app:layout_constraintTop_toTopOf="@id/image_phone" />
 
           <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_customer_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="divider2, image_location_pointer, linear_layout_address" />
+              android:id="@+id/group_customer_address"
+              style="@style/wrap_wrap"
+              app:constraint_referenced_ids="divider2, image_location_pointer, linear_layout_address" />
 
           <View
             android:id="@+id/divider2"
@@ -722,15 +721,14 @@
     </ScrollView>
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/error"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="center"
-      android:textColor="@color/scarlet_40"
-      android:visibility="visible"
-      app:fontFamily="@font/bold"
-      app:textType="BODY_1"
-      tools:text="Error"
-      tools:visibility="gone" />
+        android:id="@+id/error"
+        style="@style/match_match"
+        android:gravity="center"
+        android:textColor="@color/scarlet_40"
+        android:visibility="visible"
+        app:fontFamily="@font/bold"
+        app:textType="BODY_1"
+        tools:text="Error"
+        tools:visibility="gone" />
   </LinearLayout>
 </layout>

@@ -482,4 +482,6 @@
   <string name="customer_info">Customer info</string>
   <string name="payment_status">Payment status</string>
   <string name="customer_address">Customer address</string>
+  <string name="appointment_id">Appointment ID</string>
+  <string name="confirmed_on">Confirmed On</string>
 </resources>

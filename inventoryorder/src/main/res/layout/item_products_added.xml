@@ -63,21 +63,18 @@
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/iv_options"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:tint="@color/grey_dark_2"
             app:srcCompat="@drawable/ic_dot_menu" />
         </LinearLayout>
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
+          style="@style/wrap_wrap">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_product_Price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:textColor="@color/greyish_brown"
             android:textSize="14sp"
             app:fontFamily="@font/regular"
@@ -85,8 +82,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_product_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:textColor="@color/pinkish_grey"
             android:textSize="14sp"
             app:fontFamily="@font/regular"
@@ -110,8 +106,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_actual_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginEnd="@dimen/size_4"
             android:textColor="@color/light_grey_9"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -121,8 +116,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_total_item_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginEnd="@dimen/size_6"
             android:textColor="@color/black_4a4a4a"
             app:layout_constraintBottom_toBottomOf="parent"

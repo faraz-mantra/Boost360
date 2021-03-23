@@ -62,8 +62,7 @@
                         style="@style/match_wrap">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/wrap_wrap"
                             android:layout_marginStart="@dimen/size_60"
                             android:orientation="vertical"
                             android:padding="@dimen/size_8"
@@ -72,16 +71,14 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:text="@string/store_pickup"
                                 android:textColor="@color/black_2A2A2A"
                                 android:textSize="18sp" />
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:textColor="#747474"
                                 android:text="@string/ask_customer_to_pick_the_order_from_your_store"
@@ -117,8 +114,7 @@
                         style="@style/match_wrap">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/wrap_wrap"
                             android:layout_marginStart="@dimen/size_60"
                             android:orientation="vertical"
                             android:padding="@dimen/size_8"
@@ -127,16 +123,14 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:text="@string/home_delivery"
                                 android:textColor="@color/black_2A2A2A"
                                 android:textSize="18sp" />
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:textColor="#747474"
                                 android:text="@string/deliver_to_customer_via_your_shipping_partner"
@@ -183,8 +177,7 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/size_30"
                 android:padding="@dimen/size_4"
