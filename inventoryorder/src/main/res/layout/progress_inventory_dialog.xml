@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <com.framework.views.customViews.CustomCardView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       app:cardCornerRadius="@dimen/size_2"
       app:cardElevation="@dimen/size_1"
       app:cardUseCompatPadding="true">

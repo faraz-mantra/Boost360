@@ -4,14 +4,12 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/match_wrap"
     android:background="@android:color/transparent">
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
       android:text="@string/payment_info"
@@ -25,8 +23,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvSubTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
       android:textColor="@color/white"
@@ -41,8 +38,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/coordinatorLayoutBottomSheet"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginTop="@dimen/size_10"
       android:background="@drawable/bg_rounded_top_white_2"
       android:orientation="vertical"
@@ -52,8 +48,7 @@
       app:layout_constraintTop_toBottomOf="@+id/tvSubTitle">
 
       <com.framework.views.customViews.CustomTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginStart="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
         android:text="@string/how_did_customer_pay_you"
@@ -63,8 +58,7 @@
 
       <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginTop="@dimen/size_10"
         android:orientation="horizontal">
 
@@ -123,8 +117,7 @@
         android:background="@color/light_grey_2" />
 
       <com.framework.views.customViews.CustomTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginStart="@dimen/size_20"
         android:layout_marginTop="@dimen/size_16"
         android:layout_marginEnd="@dimen/size_20"
@@ -137,8 +130,7 @@
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/btn_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:background="@color/white"
         android:gravity="end"
         android:layout_marginTop="@dimen/size_10"

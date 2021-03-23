@@ -32,8 +32,7 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -65,8 +64,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginStart="@dimen/size_14"
               android:layout_marginTop="@dimen/size_14"
               android:orientation="horizontal">
@@ -121,14 +119,12 @@
               app:textType="BODY_1" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_14"
               android:orientation="horizontal">
 
               <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/match_wrap"
                 android:layout_marginStart="@dimen/size_6"
                 android:layout_marginEnd="@dimen/size_6"
                 android:orientation="vertical">
@@ -139,8 +135,7 @@
                   android:background="@color/colorLightGrey" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  style="@style/match_wrap"
                   android:layout_marginStart="@dimen/size_8"
                   android:layout_marginEnd="@dimen/size_8"
                   android:gravity="center_vertical"
@@ -180,8 +175,7 @@
                   android:background="@color/colorLightGrey" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  style="@style/match_wrap"
                   android:layout_marginStart="@dimen/size_8"
                   android:layout_marginEnd="@dimen/size_8"
                   android:orientation="horizontal"
@@ -218,8 +212,7 @@
                   android:background="@color/colorLightGrey" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  style="@style/match_wrap"
                   android:layout_marginStart="@dimen/size_8"
                   android:layout_marginEnd="@dimen/size_8"
                   android:orientation="horizontal"
@@ -264,8 +257,7 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:orientation="horizontal">
 
             <com.framework.views.customViews.CustomButton
@@ -316,14 +308,12 @@
             android:background="@color/lightest_grey" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:orientation="vertical"
             android:padding="@dimen/size_14">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:gravity="center_vertical"
               android:orientation="horizontal">
 
@@ -364,8 +354,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvCustomerDetail"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_6"
               android:includeFontPadding="false"
               android:lineSpacingExtra="4dp"
@@ -374,8 +363,7 @@
               tools:text="+91 654323 54546\nazgarhn@gmail.com" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_14"
               android:orientation="horizontal"
               tools:ignore="RtlSymmetry">
@@ -417,8 +405,7 @@
             <include
               android:id="@+id/user_address"
               layout="@layout/layout_shipping_billing_address"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_20" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -431,14 +418,12 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_14"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginStart="@dimen/size_14"
               android:layout_marginEnd="@dimen/size_14"
               android:orientation="horizontal">
@@ -468,8 +453,7 @@
 
             <com.framework.views.viewgroups.BaseRecyclerView
               android:id="@+id/recyclerViewOrderDetails"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:overScrollMode="never"
               app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
               tools:itemCount="3"
@@ -486,8 +470,7 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_14"
             android:layout_marginEnd="@dimen/size_14"
             android:gravity="end"
@@ -525,8 +508,7 @@
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/size_10"
         android:background="@drawable/ic_initiated_order_btn_bkg"

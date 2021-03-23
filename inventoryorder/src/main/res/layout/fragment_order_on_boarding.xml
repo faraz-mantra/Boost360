@@ -63,8 +63,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/linear_layout_1"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_50"
           android:layout_marginTop="@dimen/size_20"
           android:gravity="center_vertical"
@@ -102,7 +101,7 @@
           app:layout_constraintStart_toStartOf="@id/linear_layout_1"
           app:layout_constraintTop_toBottomOf="@id/linear_layout_1" />
 
-        <ImageView
+        <com.framework.views.customViews.CustomImageView
           android:id="@+id/image_arrow_yellow_down_1"
           android:layout_width="@dimen/size_10"
           android:layout_height="@dimen/size_10"
@@ -153,7 +152,7 @@
           app:layout_constraintStart_toStartOf="@id/linear_layout_2"
           app:layout_constraintTop_toBottomOf="@id/linear_layout_2" />
 
-        <ImageView
+        <com.framework.views.customViews.CustomImageView
           android:id="@+id/image_arrow_yellow_down_2"
           android:layout_width="@dimen/size_10"
           android:layout_height="@dimen/size_10"
@@ -198,8 +197,7 @@
 
     <androidx.constraintlayout.widget.Guideline
       android:id="@+id/guideline"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:orientation="horizontal"
       app:layout_constraintGuide_percent="0.78" />
 
@@ -216,8 +214,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_get_started"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/size_30"
         android:layout_marginEnd="@dimen/size_30"

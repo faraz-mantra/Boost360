@@ -9,14 +9,12 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:background="@color/white_smoke_1"
       android:orientation="vertical">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:background="@color/white_smoke_1"
         android:paddingStart="@dimen/size_30"
         android:paddingTop="@dimen/size_10"
@@ -41,8 +39,7 @@
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/size_0"
         app:cardElevation="@dimen/size_2">
@@ -64,20 +61,18 @@
             app:textType="BODY_2" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_20"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
               android:id="@+id/image_service"
               android:layout_width="@dimen/size_60"
               android:layout_height="@dimen/size_60"
               android:src="@drawable/placeholder_image" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_gravity="center_vertical"
               android:orientation="vertical"
               android:paddingStart="@dimen/size_10">
@@ -102,11 +97,10 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_10">
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
               android:layout_width="@dimen/size_15"
               android:layout_height="@dimen/size_15"
               android:layout_gravity="center_vertical"
@@ -146,11 +140,10 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_8">
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
               android:layout_width="@dimen/size_15"
               android:layout_height="@dimen/size_15"
               android:layout_gravity="center_vertical"
@@ -177,8 +170,7 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_20">
 
             <com.framework.views.customViews.CustomTextView
@@ -216,8 +208,7 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_12">
 
             <com.framework.views.customViews.CustomTextView
@@ -248,8 +239,7 @@
             android:background="@color/colorLightGrey" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_15">
 
             <com.framework.views.customViews.CustomTextView
@@ -280,16 +270,14 @@
             android:background="@color/colorLightGrey" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginBottom="@dimen/size_10"
             android:orientation="horizontal"
             android:paddingTop="@dimen/size_16"
             android:paddingBottom="@dimen/size_16">
 
             <!--  <com.framework.views.customViews.CustomTextView
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  style="@style/match_wrap"
                   android:layout_weight="1"
                   android:drawablePadding="@dimen/size_4"
                   android:includeFontPadding="false"
@@ -329,8 +317,7 @@
       </androidx.cardview.widget.CardView>
 
       <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginTop="@dimen/size_15"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/size_0"
@@ -354,8 +341,7 @@
             app:textType="BODY_2" />
 
           <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/match_wrap">
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_name"
@@ -417,16 +403,14 @@
       </androidx.cardview.widget.CardView>
 
       <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginTop="@dimen/size_15"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/size_0"
         app:cardElevation="@dimen/size_10">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:orientation="vertical"
           android:padding="@dimen/size_20">
 
@@ -442,8 +426,7 @@
 
           <com.framework.views.customViews.CustomButton
             android:id="@+id/button_review_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/size_8"
             android:layout_marginTop="@dimen/size_15"

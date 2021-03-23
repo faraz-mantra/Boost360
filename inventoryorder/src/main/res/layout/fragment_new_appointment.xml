@@ -36,15 +36,13 @@
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/card_date_range_selector"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           app:cardBackgroundColor="@color/white"
           app:cardElevation="@dimen/size_8"
           app:layout_constraintTop_toTopOf="parent">
 
           <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:paddingHorizontal="@dimen/size_16"
             android:paddingVertical="@dimen/size_12">
 
@@ -84,20 +82,17 @@
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/card_calendar_single_row"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           app:cardBackgroundColor="@color/white"
           app:cardElevation="@dimen/size_4"
           app:layout_constraintTop_toBottomOf="@id/card_date_range_selector">
 
           <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/match_wrap">
 
             <com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
               android:id="@+id/main_single_row_calendar"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               app:deselection="false"
               app:longPress="false"
               app:multiSelection="false" />
@@ -117,8 +112,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_doctor"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -192,8 +186,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_consulting_service"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -222,8 +215,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_start_time"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -243,8 +235,7 @@
 
         <LinearLayout
           android:id="@+id/ll_consultation_timings"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:orientation="horizontal"
@@ -267,8 +258,7 @@
 
             <com.framework.views.customViews.CustomEditText
               android:id="@+id/edt_duration"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
               android:clickable="true"
@@ -299,8 +289,7 @@
 
             <com.framework.views.customViews.CustomEditText
               android:id="@+id/edt_fees"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
               android:clickable="true"
@@ -328,8 +317,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_name"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -344,8 +332,7 @@
 
         <LinearLayout
           android:id="@+id/ll_gender_age"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginTop="@dimen/size_8"
           android:orientation="horizontal"
@@ -368,8 +355,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/edt_gender"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
               android:clickable="true"
@@ -400,8 +386,7 @@
 
             <com.framework.views.customViews.CustomEditText
               android:id="@+id/edt_age"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
               android:inputType="number"
@@ -428,8 +413,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_phone"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -455,8 +439,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_email"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -470,8 +453,7 @@
           app:layout_constraintTop_toBottomOf="@id/tv_patient_email" />
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_30"
           android:background="@color/white"
           android:orientation="vertical"
@@ -487,8 +469,7 @@
 
           <com.framework.views.customViews.CustomButton
             android:id="@+id/btn_create"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_12"
             android:background="@drawable/bg_button_rounded_blue"
             android:gravity="center"

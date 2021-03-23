@@ -5,8 +5,7 @@
   tools:context=".ui.appointmentSpa.create.SpaAppointmentFragment">
 
   <androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    style="@style/match_wrap">
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
@@ -17,15 +16,13 @@
       android:orientation="vertical">
 
       <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/size_0"
         app:cardElevation="@dimen/size_5">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:padding="@dimen/size_20">
 
           <androidx.appcompat.widget.LinearLayoutCompat
@@ -36,7 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
               android:id="@+id/image_service_info"
               android:layout_width="@dimen/size_18"
               android:layout_height="@dimen/size_18"
@@ -58,7 +55,7 @@
             app:layout_constraintStart_toStartOf="@id/linear_service"
             app:layout_constraintTop_toBottomOf="@id/linear_service" />
 
-          <ImageView
+          <com.framework.views.customViews.CustomImageView
             android:layout_width="@dimen/size_15"
             android:layout_height="@dimen/size_15"
             android:layout_marginStart="@dimen/size_10"
@@ -113,8 +110,7 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/layout_show_selected_slot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_6"
             android:background="@drawable/bg_outline_grey_dashed"
             android:orientation="vertical"
@@ -124,8 +120,7 @@
             app:layout_constraintTop_toBottomOf="@id/text_add_appt_date_time">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_6"
               android:orientation="horizontal"
               android:padding="@dimen/size_10"
@@ -139,7 +134,7 @@
                 android:layout_weight="1"
                 android:text="@string/dummy_date_time" />
 
-              <ImageView
+              <com.framework.views.customViews.CustomImageView
                 android:id="@+id/image_edit"
                 android:layout_width="@dimen/size_18"
                 android:layout_height="@dimen/size_18"
@@ -151,8 +146,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginBottom="@dimen/size_6"
               android:orientation="horizontal"
               android:paddingStart="@dimen/size_10"
@@ -182,16 +176,14 @@
       </androidx.cardview.widget.CardView>
 
       <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginTop="@dimen/size_15"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/size_0"
         app:cardElevation="@dimen/size_5">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:orientation="vertical"
           android:padding="@dimen/size_20">
 
@@ -203,7 +195,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
               android:id="@+id/image_customer_details"
               android:layout_width="@dimen/size_18"
               android:layout_height="@dimen/size_18"
@@ -220,23 +212,20 @@
           <include
             android:id="@+id/layout_customer"
             layout="@layout/layout_customer_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_15" />
 
           <include
             android:id="@+id/layout_billing_addr"
             layout="@layout/layout_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_15"
             android:layout_marginBottom="@dimen/size_10" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.cardview.widget.CardView>
 
       <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginTop="@dimen/size_15"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/size_0"
@@ -244,8 +233,7 @@
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/button_review_details"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_gravity="center"
           android:layout_margin="@dimen/size_20"
           android:background="@drawable/bg_rounded_yellow"
