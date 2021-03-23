@@ -4,16 +4,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:paddingTop="@dimen/size_15"
         android:paddingEnd="@dimen/size_15"
         android:paddingBottom="@dimen/size_5">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:visibility="gone"
             app:constraint_referenced_ids="image_staff_circle, image_done" />
 

@@ -25,8 +25,7 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/serviceName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_8"
                 android:text="@string/dentist"
                 android:textColor="@color/warm_light"

@@ -62,8 +62,7 @@
                         style="@style/match_wrap">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/wrap_wrap"
                             android:layout_marginStart="@dimen/size_60"
                             android:orientation="vertical"
                             android:padding="@dimen/size_8"
@@ -72,16 +71,14 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:text="@string/str_send_payment_link"
                                 android:textColor="@color/black_2A2A2A"
                                 android:textSize="18sp" />
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:textColor="#747474"
                                 android:text="@string/if_customer_wants_to_pay_via_upi_card_wallets_etc"
@@ -116,8 +113,7 @@
                         style="@style/match_wrap">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/wrap_wrap"
                             android:layout_marginStart="@dimen/size_60"
                             android:orientation="vertical"
                             android:padding="@dimen/size_8"
@@ -126,16 +122,14 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:text="@string/prepaid_cash_online"
                                 android:textColor="@color/black_2A2A2A"
                                 android:textSize="18sp" />
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:textColor="#747474"
                                 android:text="@string/if_you_ve_recieved_the_payment_already"
@@ -170,8 +164,7 @@
                         style="@style/match_wrap">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/wrap_wrap"
                             android:layout_marginStart="@dimen/size_60"
                             android:orientation="vertical"
                             android:padding="@dimen/size_8"
@@ -180,16 +173,14 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:text="@string/cash_on_delivery_cod"
                                 android:textColor="@color/black_2A2A2A"
                                 android:textSize="18sp" />
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
                                 android:textColor="#747474"
                                 android:text="@string/if_customer_prefers_paying_to_delivery_executive"
@@ -236,8 +227,7 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/size_30"
                 android:padding="@dimen/size_4"

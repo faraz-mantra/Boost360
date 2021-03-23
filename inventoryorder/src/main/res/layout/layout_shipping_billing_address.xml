@@ -13,8 +13,7 @@
 
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:drawableStart="@drawable/ic_shipping_address"
       android:drawablePadding="@dimen/size_16"
       android:gravity="center"
@@ -37,8 +36,7 @@
 
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginTop="@dimen/size_18"
       android:drawableStart="@drawable/ic_billing_address"
       android:drawablePadding="@dimen/size_16"

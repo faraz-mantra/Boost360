@@ -64,8 +64,7 @@
 
         <RadioButton
           android:id="@+id/radio_cash"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginStart="@dimen/size_16"
           android:layout_weight="1"
           android:buttonTint="@color/colorAccent"
@@ -76,8 +75,7 @@
 
         <com.framework.views.customViews.CustomRadioButton
           android:id="@+id/radio_card"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_weight="1"
           android:buttonTint="@color/colorAccent"
           android:text="@string/card_payment"
@@ -86,8 +84,7 @@
 
         <RadioButton
           android:id="@+id/radio_upi"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginStart="@dimen/size_16"
           android:layout_weight="1"
           android:buttonTint="@color/colorAccent"
@@ -97,8 +94,7 @@
 
         <com.framework.views.customViews.CustomRadioButton
           android:id="@+id/radio_others"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_weight="1"
           android:buttonTint="@color/colorAccent"
           android:text="@string/others_payment"
@@ -139,8 +135,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tvCancel"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_gravity="center"
           android:layout_marginEnd="@dimen/size_10"
           android:padding="@dimen/size_4"

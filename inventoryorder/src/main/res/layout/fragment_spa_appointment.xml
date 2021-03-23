@@ -27,8 +27,7 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_service"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -80,8 +79,7 @@
 
           <androidx.constraintlayout.widget.Group
             android:id="@+id/group_timing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:visibility="gone"
             app:constraint_referenced_ids="text_add_appt_date_time, text_appt_date_time" />
 
@@ -95,8 +93,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_add_appt_date_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_14"
             android:drawableStart="@drawable/ic_add_gstn_yellow"
             android:drawablePadding="@dimen/size_5"
@@ -189,8 +186,7 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_customer_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

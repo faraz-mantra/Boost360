@@ -193,8 +193,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tvCancelN"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_10"
           android:padding="@dimen/size_4"
           android:text="@string/go_back"
@@ -216,8 +215,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tvCancel"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_gravity="center"
           android:layout_marginEnd="@dimen/size_10"
           android:padding="@dimen/size_4"

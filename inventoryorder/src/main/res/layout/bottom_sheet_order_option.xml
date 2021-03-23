@@ -7,8 +7,7 @@
 
         <RadioButton
             android:id="@+id/radio_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_16"
             android:layout_marginEnd="@dimen/size_16"
             android:buttonTint="@color/light_blue_1"
@@ -32,8 +31,7 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/option_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:fontFamily="@font/regular"
                 android:text="@string/store_pickup"
                 android:textColor="@color/black_2A2A2A"
@@ -41,8 +39,7 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/option_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:fontFamily="@font/regular"
                 android:text="@string/ask_customer_to_pick_the_order_from_your_store"
                 android:textColor="#747474"

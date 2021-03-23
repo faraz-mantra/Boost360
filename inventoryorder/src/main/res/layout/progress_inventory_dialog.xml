@@ -23,8 +23,7 @@
 
       <com.framework.views.customViews.CustomTextView
           android:id="@+id/title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:text="@string/please_wait"
           android:textColor="@color/greyish_brown"
           app:textType="HEADING_6" />

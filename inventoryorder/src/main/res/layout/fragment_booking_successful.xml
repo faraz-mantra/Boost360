@@ -60,8 +60,7 @@
             app:srcCompat="@drawable/ic_booking_successfull" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size_16"
             android:text="@string/booking_successful"
@@ -71,8 +70,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_order_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size_16"
             android:text="@string/_889201"
@@ -96,8 +94,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/serviceName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:drawableStart="@drawable/ic_general_consultation"
             android:drawablePadding="@dimen/size_28"
             android:text="General Consultation"
@@ -107,8 +104,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_start_time_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_24"
             android:drawableStart="@drawable/ic_appointment_date_nd_time"
             android:drawablePadding="@dimen/size_28"
@@ -120,8 +116,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_24"
             android:drawableStart="@drawable/ic_person_details"
             android:drawablePadding="@dimen/size_28"
@@ -132,8 +127,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_44"
             android:layout_marginTop="@dimen/size_12"
             android:text="@string/_91_9013268178"
@@ -143,8 +137,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_44"
             android:layout_marginTop="@dimen/size_10"
             android:text="@string/rahulchaudhary86_gmail_com"

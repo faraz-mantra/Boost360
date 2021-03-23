@@ -8,8 +8,7 @@
     android:orientation="vertical">
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginTop="@dimen/size_8"
       android:text="@string/address"
       android:textColor="@color/black_4a4a4a"
@@ -32,8 +31,7 @@
 
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginTop="@dimen/size_12"
       android:text="@string/str_city"
       android:textColor="@color/black_4a4a4a"
@@ -59,8 +57,7 @@
       android:orientation="vertical">
 
       <com.framework.views.customViews.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_marginTop="@dimen/size_12"
         android:singleLine="true"
         android:text="@string/state"
@@ -82,8 +79,7 @@
 
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginTop="@dimen/size_12"
       android:text="@string/pincode"
       android:textColor="@color/black_4a4a4a"

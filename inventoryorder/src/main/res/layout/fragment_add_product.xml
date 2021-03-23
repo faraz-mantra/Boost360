@@ -39,8 +39,7 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/iv_clear_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_marginEnd="@dimen/size_10"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,8 +103,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_label_item_total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:fontFamily="@font/regular"
         android:text="@string/item_total"
         android:textColor="@color/white"
@@ -115,8 +113,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_item_total_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:fontFamily="@font/regular"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -127,8 +124,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_proceed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:background="@drawable/bg_rounded_yellow"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"

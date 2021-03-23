@@ -57,8 +57,7 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/orderType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_4"
                 android:textAlignment="center"
                 android:textAllCaps="true"
@@ -125,8 +124,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/txt_rupees"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:gravity="top"
               android:includeFontPadding="false"
               android:textAlignment="gravity"
@@ -169,14 +167,12 @@
             <include
               android:id="@+id/delivery"
               layout="@layout/icon_text_item"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_8" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/item_desc"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_2"
               android:layout_marginTop="@dimen/size_10"
               android:textColor="@color/black"
@@ -185,8 +181,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/item_more"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_17"
               android:layout_marginTop="@dimen/size_2"
               android:textColor="@color/black"
