@@ -162,8 +162,12 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     }
 
     binding?.textCustomerName?.text = order?.BuyerDetails?.ContactDetails?.FullName
-    binding?.textCustomerPhone?.text = order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber
-    binding?.textCustomerEmail?.text = order?.BuyerDetails?.ContactDetails?.EmailId
+    binding?.textCustomerPhone?.text = "Phone: ${order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber}"
+    binding?.textCustomerEmail?.text = "Email: ${order?.BuyerDetails?.ContactDetails?.EmailId}"
+    if (order?.BuyerDetails?.GSTIN ==null) {
+      binding?.ctvGstin?.gone()
+    }else{ binding?.ctvGstin?.gone()}
+    binding?.ctvGstin?.text = "GSTIN: ${order?.BuyerDetails?.GSTIN as String}"
 
     binding?.textPaymentStatusDropdown?.text = "${order?.PaymentDetails?.statusValue()}"
     binding?.textPaymentTypeDropdown?.text = "${order?.PaymentDetails?.methodValue()}"
