@@ -79,13 +79,11 @@
             android:layout_marginBottom="@dimen/size_10"
             android:maxLength="10"
             android:singleLine="true"
-            android:gravity="center_vertical"
+            android:digits="0123456789"
             android:tag="+91"
             android:imeOptions="actionNext"
             android:hint="@string/phone_hint_appointment"
-            android:inputType="number"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_service_name" />
+            android:inputType="number" />
 
         <com.framework.views.customViews.CustomTextView
             android:layout_width="wrap_content"
