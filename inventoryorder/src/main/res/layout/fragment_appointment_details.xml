@@ -14,27 +14,23 @@
     android:orientation="vertical">
 
     <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      style="@style/match_wrap">
 
       <LinearLayout
         android:id="@+id/main_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:background="@color/white"
             android:padding="@dimen/size_10">
 
           <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_amount"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_weight="1"
               android:ellipsize="end"
               android:fontFamily="@font/semi_bold"
@@ -53,8 +49,7 @@
 
           <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_from_booking"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_weight="1"
               android:ellipsize="end"
               android:fontFamily="@font/regular"
@@ -71,8 +66,7 @@
 
           <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_appointment_id"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginEnd="@dimen/size_2"
               android:layout_weight="1"
@@ -90,8 +84,7 @@
 
           <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_date_time"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_weight="1"
               android:ellipsize="end"
               android:fontFamily="@font/regular"
@@ -113,8 +106,7 @@
 
           <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_booking_details"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginTop="@dimen/size_10"
               android:layout_marginEnd="8dp"
               android:ellipsize="end"
@@ -137,16 +129,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_8"
           android:background="@color/white"
           android:padding="@dimen/size_10">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_appointment_details_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_4"
             android:layout_marginTop="@dimen/size_5"
             android:layout_marginEnd="@dimen/size_2"
@@ -207,8 +197,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_appointment_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_5"
             android:layout_weight="1"
@@ -229,8 +218,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_date"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
             android:layout_marginEnd="@dimen/size_2"
@@ -252,8 +240,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_staff"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
             android:layout_marginEnd="@dimen/size_2"
@@ -276,8 +263,7 @@
 
           <LinearLayout
             android:id="@+id/linear_layout_select_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_4"
             android:layout_marginTop="@dimen/size_20"
             android:orientation="horizontal"
@@ -287,8 +273,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_service_location"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginTop="@dimen/size_4"
               android:layout_marginEnd="@dimen/size_2"
               android:layout_weight="1"
@@ -309,8 +294,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_service_location_dropdown"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_4"
               android:layout_marginEnd="@dimen/size_5"
@@ -334,8 +318,7 @@
 
           <LinearLayout
             android:id="@+id/linear_layout_payment_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_4"
             android:layout_marginTop="@dimen/size_12"
             android:orientation="horizontal"
@@ -345,8 +328,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_payment_type"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginTop="@dimen/size_4"
               android:layout_marginEnd="@dimen/size_2"
               android:layout_weight="1"
@@ -367,8 +349,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_payment_type_dropdown"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_4"
               android:layout_marginEnd="@dimen/size_5"
@@ -392,8 +373,7 @@
 
           <LinearLayout
             android:id="@+id/linear_layout_payment_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_4"
             android:layout_marginTop="@dimen/size_12"
             android:orientation="horizontal"
@@ -403,8 +383,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_payment_status"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginTop="@dimen/size_4"
               android:layout_marginEnd="@dimen/size_2"
               android:layout_weight="1"
@@ -425,8 +404,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_payment_status_dropdown"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_4"
               android:layout_marginEnd="@dimen/size_5"
@@ -486,8 +464,7 @@
 
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/iv_dropdown"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:paddingStart="@dimen/size_14"
               android:paddingEnd="@dimen/size_14"
               app:srcCompat="@drawable/ic_arrow_down_white" />
@@ -498,13 +475,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_10"
           android:background="@color/white"
           android:padding="@dimen/size_15">
 
-          <ImageView
+          <com.framework.views.customViews.CustomImageView
             android:id="@+id/image_person"
             android:layout_width="@dimen/size_18"
             android:layout_height="@dimen/size_18"
@@ -515,8 +491,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_customer_details"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginEnd="@dimen/size_2"
             android:layout_weight="1"
@@ -539,8 +514,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_customer_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginTop="@dimen/size_16"
             android:layout_weight="1"
@@ -562,8 +536,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_customer_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginTop="@dimen/size_5"
             android:layout_weight="1"
             android:ellipsize="end"
@@ -584,8 +557,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_customer_email"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginTop="@dimen/size_5"
             android:layout_weight="1"
             android:ellipsize="end"
@@ -604,7 +576,7 @@
             app:layout_constraintTop_toBottomOf="@id/text_customer_phone"
             tools:text="tester@gmail.com" />
 
-          <ImageView
+          <com.framework.views.customViews.CustomImageView
             android:id="@+id/image_email"
             android:layout_width="@dimen/size_15"
             android:layout_height="@dimen/size_15"
@@ -616,8 +588,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_email"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginEnd="@dimen/size_2"
             android:layout_weight="0"
             android:ellipsize="end"
@@ -638,7 +609,7 @@
             app:layout_constraintStart_toEndOf="@id/image_email"
             app:layout_constraintTop_toTopOf="@id/image_email" />
 
-          <ImageView
+          <com.framework.views.customViews.CustomImageView
             android:id="@+id/image_phone"
             android:layout_width="@dimen/size_15"
             android:layout_height="@dimen/size_15"
@@ -651,8 +622,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/wrap_match"
             android:layout_marginEnd="@dimen/size_2"
             android:layout_weight="0"
             android:fontFamily="@font/regular"
@@ -689,7 +659,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_email" />
 
-          <ImageView
+          <com.framework.views.customViews.CustomImageView
             android:id="@+id/image_location_pointer"
             android:layout_width="@dimen/size_20"
             android:layout_height="@dimen/size_20"
@@ -711,8 +681,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_addr"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginEnd="@dimen/size_2"
               android:fontFamily="@font/regular"
@@ -731,8 +700,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_addr_value"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_6"
               android:layout_marginEnd="@dimen/size_5"

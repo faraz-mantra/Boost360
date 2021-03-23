@@ -12,8 +12,7 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/match_wrap"
                 android:layout_marginTop="@dimen/size_10"
                 android:background="@drawable/bg_rounded_top_gray"
                 android:orientation="vertical"
@@ -22,8 +21,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:layout_marginTop="@dimen/size_20">
 
                     <com.framework.views.customViews.CustomTextView
@@ -38,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end">
 
-                        <ImageView
+                        <com.framework.views.customViews.CustomImageView
                             android:layout_width="@dimen/size_15"
                             android:layout_height="@dimen/size_15"
                             android:layout_gravity="center_vertical"
@@ -59,8 +57,7 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/coordinatorLayoutBottomSheet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:layout_marginTop="@dimen/size_20"
                     android:background="@drawable/bg_rounded_top_white_2"
                     android:orientation="vertical"
@@ -85,8 +82,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_staff"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/match_wrap"
                         android:layout_marginTop="@dimen/size_10" />
 
                     <com.framework.views.customViews.CustomTextView
@@ -97,16 +93,14 @@
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/lyt_shipping_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/match_wrap"
                         android:layout_marginTop="@dimen/size_10"
                         android:background="@drawable/ic_rectangle_light_black_outline"
                         android:orientation="horizontal">
 
-                        <ImageView
+                        <com.framework.views.customViews.CustomImageView
                             android:id="@+id/image_prev"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            style="@style/wrap_match"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/size_2"
                             android:layout_marginTop="@dimen/size_2"
@@ -126,10 +120,9 @@
                             android:gravity="center"
                             android:text="@string/monday_07_january_2021" />
 
-                        <ImageView
+                        <com.framework.views.customViews.CustomImageView
                             android:id="@+id/image_next"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            style="@style/wrap_match"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/size_2"
                             android:layout_marginTop="@dimen/size_2"
@@ -153,8 +146,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_time_slots"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/match_wrap"
                         android:layout_marginTop="@dimen/size_10"
                         android:background="@drawable/bg_rect_edit_txt"
                         android:padding="@dimen/size_5" />
@@ -163,8 +155,7 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/btn_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/match_wrap"
                 android:background="@color/white"
                 android:gravity="end"
                 android:orientation="horizontal"

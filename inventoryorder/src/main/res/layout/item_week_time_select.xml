@@ -8,8 +8,7 @@
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView

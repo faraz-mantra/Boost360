@@ -47,8 +47,7 @@
         android:visibility="visible">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:background="@drawable/booking_successful_gradient"
           android:orientation="vertical"
           android:paddingBottom="@dimen/size_60">
@@ -85,8 +84,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_gravity="center"
           android:layout_marginStart="@dimen/size_40"
           android:layout_marginTop="@dimen/size_30"

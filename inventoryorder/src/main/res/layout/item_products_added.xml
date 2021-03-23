@@ -4,8 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/match_wrap"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingStart="@dimen/size_16"
@@ -21,8 +20,7 @@
 
     <LinearLayout
       android:id="@+id/vw_details"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginTop="@dimen/size_12"
       android:layout_marginEnd="@dimen/size_14"
       android:layout_marginBottom="@dimen/size_12"
@@ -41,15 +39,13 @@
         tools:src="@drawable/placeholder_image_n" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical"
         android:paddingStart="@dimen/size_6"
         tools:ignore="RtlSymmetry">
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomTextView
@@ -99,8 +95,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_3"
           android:orientation="horizontal">
 

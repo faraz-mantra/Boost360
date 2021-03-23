@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
@@ -39,8 +38,7 @@
 
             <com.framework.views.customViews.CustomEditText
                 android:id="@+id/edit_customer_name_with_contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/match_wrap"
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
@@ -55,7 +53,7 @@
                 android:layout_marginEnd="@dimen/size_10"
                 android:background="@color/grey_dark_3" />
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
                 android:id="@+id/image_contact"
                 android:layout_width="@dimen/size_15"
                 android:layout_height="@dimen/size_15"
@@ -121,16 +119,14 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyt_customer_gstn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_16"
             android:orientation="vertical"
             android:visibility="gone"
             tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                style="@style/match_wrap">
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"

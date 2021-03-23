@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/match_wrap">
 
         <RadioButton
             android:id="@+id/radio_btn"
@@ -22,8 +21,7 @@
 
         <LinearLayout
             android:id="@+id/linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:orientation="vertical"
             android:paddingStart="@dimen/size_60"
             android:paddingTop="@dimen/size_18"

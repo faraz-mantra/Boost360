@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:background="@android:color/transparent">
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginBottom="@dimen/size_8"
             android:text="@string/edit_customer_address"
@@ -25,8 +23,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvSubTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginBottom="@dimen/size_8"
             android:text="@string/make_changes_to_the_customer_info"
@@ -41,8 +38,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/coordinatorLayoutBottomSheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:background="@drawable/bg_rounded_top_white_2"
             android:orientation="vertical"
             android:layout_marginTop="@dimen/size_10"
@@ -93,8 +89,7 @@
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/lyt_shipping_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/match_wrap"
                         android:visibility="gone"
                         android:orientation="vertical">
 
@@ -116,8 +111,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/btn_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:background="@color/white"
             android:gravity="end"
             android:orientation="horizontal"
