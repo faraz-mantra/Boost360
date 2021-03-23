@@ -477,4 +477,7 @@
   <string name="coming_soon">Coming soon..</string>
     <string name="there_are_no_email_clients_installed">There are no email clients installed.</string>
   <string name="appointment_details_empty">Appointment detail empty.</string>
+    <string name="appointment_send_email">Send Email</string>
+  <string name="call">call</string>
+  <string name="customer_info">Customer info</string>
 </resources>

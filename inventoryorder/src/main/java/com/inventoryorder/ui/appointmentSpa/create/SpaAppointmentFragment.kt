@@ -290,6 +290,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         bookingSlotResponse?.Result?.get(0)?.Staff?.get(0)?.isSelected = true
         selectedDateTimeBottomSheetDialog?.setData(bookingSlotResponse!!, selectedService!!)
         binding?.groupTiming?.visibility = View.VISIBLE
+        binding?.layoutShowSelectedSlot?.visibility = View.GONE
       } else {
         showLongToast(getString(R.string.not_able_to_get_booking_slots))
         binding?.groupTiming?.visibility = View.GONE
