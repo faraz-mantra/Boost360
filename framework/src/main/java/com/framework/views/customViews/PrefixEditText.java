@@ -2,7 +2,9 @@ package com.framework.views.customViews;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.Gravity;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
@@ -40,7 +42,7 @@ public class PrefixEditText extends CustomEditText {
             }
             mOriginalLeftPadding = getCompoundPaddingLeft();
             setPadding((int) (textWidth + mOriginalLeftPadding),
-                    getPaddingRight(), getPaddingTop(),
+                    getPaddingTop(), getPaddingRight(),
                     getPaddingBottom());
         }
     }
@@ -49,7 +51,13 @@ public class PrefixEditText extends CustomEditText {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         String prefix = (String) getTag();
+        Rect bounds  = new Rect(0,0,0,0);
         canvas.drawText(prefix, mOriginalLeftPadding,
-                getLineBounds(0, null), getPaint());
+                getLineBounds(0,bounds ), getPaint());
+    }
+
+    @Override
+    public int getInputType() {
+        return super.getInputType();
     }
 }
