@@ -8,10 +8,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.customization.adapter.DetailsAdapter
+import dev.patrickgold.florisboard.customization.adapter.PhotosAdapter
+import dev.patrickgold.florisboard.customization.adapter.ProductsAdapter
+import dev.patrickgold.florisboard.customization.adapter.UpdatesAdapter
 import dev.patrickgold.florisboard.customization.util.MethodUtils
 import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
 import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
@@ -28,6 +33,11 @@ class BusinessFeaturesViewPager : ViewPager, FlorisBoard.EventListener {
     private lateinit var recyclerViewPost: RecyclerView
     private lateinit var recyclerViewPhotos: RecyclerView
     private lateinit var viewModel: BusinessFeaturesViewModel
+    private lateinit var updatesAdapter: UpdatesAdapter
+    private lateinit var productsAdapter: ProductsAdapter
+    private lateinit var detailsAdapter: DetailsAdapter
+    private lateinit var photosAdapter: PhotosAdapter
+    private val pagerSnapHelper = PagerSnapHelper()
 
     override fun onWindowShown() {
         Timber.i("onWindowShown")
@@ -65,6 +75,7 @@ class BusinessFeaturesViewPager : ViewPager, FlorisBoard.EventListener {
         recyclerViewPost.layoutManager = LinearLayoutManager(mContext).apply {
             orientation = LinearLayoutManager.HORIZONTAL
         }
+        pagerSnapHelper.attachToRecyclerView(recyclerViewPost)
 
         recyclerViewPhotos = binding.rvListPhotos
         recyclerViewPhotos.layoutManager = GridLayoutManager(mContext, 2,
@@ -75,21 +86,35 @@ class BusinessFeaturesViewPager : ViewPager, FlorisBoard.EventListener {
                 binding.clSelectionLayout.visibility = View.GONE
                 binding.productShareRvList.visibility = View.VISIBLE
                 binding.rvListPhotos.visibility = View.GONE
+
+                recyclerViewPost.adapter = UpdatesAdapter().also {
+                    updatesAdapter = it
+                }
             }
             BusinessFeatureEnum.INVENTORY -> {
                 binding.clSelectionLayout.visibility = View.GONE
                 binding.productShareRvList.visibility = View.VISIBLE
                 binding.rvListPhotos.visibility = View.GONE
+
+                recyclerViewPost.adapter = ProductsAdapter().also {
+                    productsAdapter = it
+                }
             }
             BusinessFeatureEnum.PHOTOS -> {
                 binding.clSelectionLayout.visibility = View.VISIBLE
                 binding.productShareRvList.visibility = View.GONE
                 binding.rvListPhotos.visibility = View.VISIBLE
+                recyclerViewPhotos.adapter = PhotosAdapter().also {
+                    photosAdapter = it
+                }
             }
             BusinessFeatureEnum.DETAILS -> {
                 binding.clSelectionLayout.visibility = View.GONE
                 binding.productShareRvList.visibility = View.VISIBLE
                 binding.rvListPhotos.visibility = View.GONE
+                recyclerViewPost.adapter = DetailsAdapter().also {
+                    detailsAdapter = it
+                }
             }
         }
 
@@ -114,6 +139,7 @@ class BusinessFeaturesViewPager : ViewPager, FlorisBoard.EventListener {
                         )
                         viewModel.updates.observeForever {
                             Timber.e("updates - $it.")
+                            updatesAdapter.submitList(it.floats)
                         }
                     }
                     BusinessFeatureEnum.INVENTORY -> {
@@ -124,6 +150,7 @@ class BusinessFeaturesViewPager : ViewPager, FlorisBoard.EventListener {
                         )
                         viewModel.products.observeForever {
                             Timber.e("products - $it.")
+                            productsAdapter.submitList(it)
                         }
                     }
                     BusinessFeatureEnum.DETAILS -> {
@@ -133,6 +160,16 @@ class BusinessFeaturesViewPager : ViewPager, FlorisBoard.EventListener {
                         )
                         viewModel.details.observeForever {
                             Timber.e("details - $it.")
+                            detailsAdapter.submitList(listOf(it))
+                        }
+                    }
+                    BusinessFeatureEnum.PHOTOS -> {
+                        viewModel.getPhotos(
+                                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId
+                        )
+                        viewModel.photos.observeForever {
+                            Timber.e("photos - $it.")
+                            photosAdapter.submitList(it)
                         }
                     }
                 }
@@ -144,6 +181,9 @@ class BusinessFeaturesViewPager : ViewPager, FlorisBoard.EventListener {
 
     override fun onDestroy() {
         Timber.i("onDestroy")
-        viewModel.updates.removeObserver({})
+        viewModel.updates.removeObserver {}
+        viewModel.details.removeObserver {}
+        viewModel.photos.removeObserver {}
+        viewModel.products.removeObserver {}
     }
 }

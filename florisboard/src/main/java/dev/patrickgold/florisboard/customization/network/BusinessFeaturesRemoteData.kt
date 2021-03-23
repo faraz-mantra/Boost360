@@ -1,10 +1,7 @@
 package dev.patrickgold.florisboard.customization.network
 
 import dev.patrickgold.florisboard.customization.model.request.CreateOrderRequest
-import dev.patrickgold.florisboard.customization.model.response.CreatedOffer
-import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
-import dev.patrickgold.florisboard.customization.model.response.Product
-import dev.patrickgold.florisboard.customization.model.response.Updates
+import dev.patrickgold.florisboard.customization.model.response.*
 import retrofit2.http.*
 
 interface BusinessFeaturesRemoteData {

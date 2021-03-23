@@ -3,13 +3,17 @@ package dev.patrickgold.florisboard.customization
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
+import dev.patrickgold.florisboard.customization.model.response.Photo
 import dev.patrickgold.florisboard.customization.model.response.Product
 import dev.patrickgold.florisboard.customization.model.response.Updates
 import dev.patrickgold.florisboard.customization.network.BusinessFeatureRepository
+import dev.patrickgold.florisboard.customization.network.GetGalleryImagesAsyncTask
+import dev.patrickgold.florisboard.customization.util.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class BusinessFeaturesViewModel {
 
@@ -49,6 +53,27 @@ class BusinessFeaturesViewModel {
             withContext(Dispatchers.Main) {
                 _details.value = details
             }
+        }
+    }
+
+    private val _photo = MutableLiveData<List<Photo>>()
+    val photos: LiveData<List<Photo>>
+        get() = _photo
+
+    fun getPhotos(fpId: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            BusinessFeatureRepository.getAllImageList(object : GetGalleryImagesAsyncTask.GetGalleryImagesInterface {
+                override fun imagesReceived() {
+                    Timber.i("Images Received")
+                    CoroutineScope(Dispatchers.Main).launch {
+                        _photo.value = Constants.storeSecondaryImages.map { url ->
+                            Photo().apply {
+                                imageUri = url
+                            }
+                        }
+                    }
+                }
+            }, fpId)
         }
     }
 }

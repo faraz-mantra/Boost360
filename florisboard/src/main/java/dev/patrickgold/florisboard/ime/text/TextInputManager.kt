@@ -162,7 +162,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         loadingPlaceholderKeyboard = inputView.findViewById(R.id.keyboard_preview)
         businessFeatureViewPager = inputView.findViewById(R.id.business_feature_viewpager)
 
-        businessFeatureViewPager?.setOnTouchListener { v, event -> true }
+        //businessFeatureViewPager?.setOnTouchListener { v, event -> true }
 
         launch(Dispatchers.Main) {
             textViewGroup?.let {

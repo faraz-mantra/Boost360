@@ -27,11 +27,7 @@
             android:id="@+id/business_feature_viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:longClickable="false"
-            android:clickable="true"
-            android:overScrollMode="never"
-            android:scrollbars="none"/>
+            android:overScrollMode="never" />
 
         <include layout="@layout/editing_layout"/>
 

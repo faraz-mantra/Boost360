@@ -4,7 +4,6 @@ import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
 import dev.patrickgold.florisboard.customization.model.response.Product
 import dev.patrickgold.florisboard.customization.model.response.Updates
 import retrofit2.Retrofit
-import timber.log.Timber
 import java.util.*
 
 object BusinessFeatureRepository : AppBaseRepository<BusinessFeaturesRemoteData, AppBaseLocalService>() {
@@ -35,11 +34,7 @@ object BusinessFeatureRepository : AppBaseRepository<BusinessFeaturesRemoteData,
 
     fun getAllImageList(listener: GetGalleryImagesAsyncTask.GetGalleryImagesInterface, fpId: String) {
         val gallery = GetGalleryImagesAsyncTask()
-        gallery.setGalleryInterfaceListener(object : GetGalleryImagesAsyncTask.GetGalleryImagesInterface {
-            override fun imagesReceived() {
-                Timber.i("Images received in constants feids")
-            }
-        }, fpId)
+        gallery.setGalleryInterfaceListener(listener, fpId)
         gallery.execute()
     }
 
