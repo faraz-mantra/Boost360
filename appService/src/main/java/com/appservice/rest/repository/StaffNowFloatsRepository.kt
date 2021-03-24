@@ -2,6 +2,7 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
+import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.StaffNowFloatsApiClient
 import com.appservice.rest.services.StaffNowFloatsRemoteData
@@ -56,5 +57,20 @@ object StaffNowFloatsRepository : AppBaseRepository<StaffNowFloatsRemoteData, Ap
 
     fun deleteStaffProfile(request: StaffDeleteImageProfileRequest): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.staffProfileDelete(request),TaskCode.DELETE_STAFF_PROFILE)
+    }
+
+    fun addServiceTiming(request: AddServiceTimingRequest?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.addServiceTiming(request), TaskCode.POST_ADD_SERVICE_TIMING)
+
+    }
+
+    fun updateServiceTiming(request: AddServiceTimingRequest?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.updateServiceTiming(request), TaskCode.POST_UPDATE_SERVICE_TIMING)
+
+    }
+
+    fun getServiceTiming(serviceId: String?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.getServiceTimings(serviceId), TaskCode.GET_SERVICE_TIMING)
+
     }
 }

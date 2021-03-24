@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size_14"
+    android:background="@drawable/rounded_stroke_grey"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/ccv_day"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_46"
+      android:background="@drawable/rounded_light_blue"
+      android:orientation="horizontal">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_title_day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_weight="1"
+        android:textColor="@color/black_4f4f4f"
+        app:textType="BODY_1"
+        tools:text="Monday" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_close_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/size_8"
+        android:text="@string/business_closed"
+        android:textColor="@color/black_4a4a4a_50"
+        android:visibility="gone"
+        app:textType="CAPTION" />
+
+      <com.appservice.views.toggle.widget.LabeledSwitch
+        android:id="@+id/toggle_on_off"
+        android:layout_width="@dimen/size_54"
+        android:layout_height="@dimen/size_24"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="@dimen/size_8"
+        android:clickable="false"
+        android:focusable="false"
+        app:colorBorder="@android:color/transparent"
+        app:colorOff="@color/light_lemon"
+        app:colorOn="@color/light_green_1"
+        app:on="false"
+        app:textOff="NO"
+        app:textOn="YES"
+        app:txtColorOff="@color/white"
+        app:txtColorOn="@color/white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/layout_timing_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/ccv_day"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_12"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/size_18"
+        android:paddingVertical="@dimen/size_4">
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/size_4"
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_2"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/from"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="9sp"
+            android:textStyle="normal" />
+
+          <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_start_timing"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@drawable/spinner_catalog" />
+        </LinearLayout>
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/size_40"
+          android:layout_gravity="center_vertical|bottom"
+          android:alpha="0.2"
+          android:gravity="center_vertical"
+          android:text="@string/to"
+          android:textColor="@color/black_2A2A2A"
+          android:textSize="14sp" />
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_4"
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_2"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/to"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="9sp"
+            android:textStyle="normal" />
+
+          <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_end_timing"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@drawable/spinner_catalog" />
+          <!--   android:entries="@array/business_hours_arrays"-->
+        </LinearLayout>
+      </LinearLayout>
+
+      <com.framework.views.customViews.CustomCheckBox
+        android:id="@+id/ccb_all_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_8"
+        android:layout_marginBottom="@dimen/size_12"
+        android:clickable="true"
+        android:text="@string/apply_same_on_all_working_days"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="13sp"
+        android:textStyle="normal"
+        android:theme="@style/ActiveTheme" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

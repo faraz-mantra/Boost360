@@ -7,4 +7,5 @@ object PreferenceConstant {
   const val AUTHORIZATION = "Authorization"
   const val KEY_FP_ID = "fpid"
   const val KEY_sourceClientId = "source_clientid"
+  const val SHOW_CREATE_ORDER_WELCOME = "create_order_welcome"
 }

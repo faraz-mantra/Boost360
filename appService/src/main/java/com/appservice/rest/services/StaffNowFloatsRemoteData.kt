@@ -1,9 +1,12 @@
 package com.appservice.rest.services
 
+import com.appservice.model.serviceTiming.AddServiceTimingRequest
+import com.appservice.model.serviceTiming.ServiceTimingResponse
 import com.appservice.rest.EndPoints
 import com.appservice.staffs.model.*
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -41,5 +44,14 @@ interface StaffNowFloatsRemoteData {
     @GET(EndPoints.GET_STAFF_DETAILS)
     fun staffDetails(@Query(value = "staffId") staffId: String?): Observable<Response<StaffDetailsResponse>>
 
+    // Service timing
+    @POST(EndPoints.POST_ADD_SERVICE_TIMING)
+    fun addServiceTiming(@Body requestWeeklyAppointment: AddServiceTimingRequest?): Observable<Response<ResponseBody>>
+
+    @POST(EndPoints.POST_UPDATE_SERVICE_TIMING)
+    fun updateServiceTiming(@Body requestWeeklyAppointment: AddServiceTimingRequest?): Observable<Response<ResponseBody>>
+
+    @GET(EndPoints.GET_SERVICE_TIMING)
+    fun getServiceTimings(@Query("serviceId") serviceId: String?, ): Observable<Response<ServiceTimingResponse>>
 
 }

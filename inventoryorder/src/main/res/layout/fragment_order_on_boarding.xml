@@ -1,163 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.order.createorder.CreateOrderOnBoardingFragment">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context=".ui.order.createorder.CreateOrderOnBoardingFragment">
 
-    <androidx.core.widget.NestedScrollView
-        android:fillViewport="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      app:layout_constraintBottom_toTopOf="@id/guideline"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/iv_curve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_create_order_onboarding_orange_curve_bags" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:layout_marginEnd="@dimen/size_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_create_order_onboarding_close" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/text_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_50"
+        android:layout_marginTop="@dimen/size_16"
+        android:maxEms="7"
+        android:text="@string/placing_order_is_super_easy"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/semi_bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_curve"
+        app:textType="HEADING_2" />
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_heading">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+          android:id="@+id/linear_layout_1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_50"
+          android:layout_marginTop="@dimen/size_20"
+          android:gravity="center_vertical"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:background="@drawable/bg_circle_orange"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:fontFamily="@font/bold" />
 
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/iv_curve"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_create_order_onboarding_orange_curve_bags" />
-
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/iv_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/size_18"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_create_order_onboarding_close" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_50"
-                android:layout_marginTop="@dimen/size_30"
-                android:maxEms="7"
-                android:text="@string/placing_order_is_super_easy"
-                android:textColor="@color/black_4a4a4a"
-                app:fontFamily="@font/semi_bold"
-                app:textType="HEADING_2" />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_50"
-                android:layout_marginTop="@dimen/size_30"
-                android:gravity="center_vertical">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
-                    android:background="@drawable/bg_circle_orange"
-                    android:gravity="center"
-                    android:text="@string/_1"
-                    android:textColor="@color/white"
-                    app:fontFamily="@font/bold" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_10"
-                    android:text="@string/select_add_a_customer"
-                    android:textColor="@color/black_4a4a4a"
-                    app:fontFamily="@font/regular"
-                    app:textType="BODY_1" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_50"
-                android:layout_marginTop="@dimen/size_20"
-                android:gravity="center_vertical">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
-                    android:background="@drawable/bg_circle_orange"
-                    android:gravity="center"
-                    android:text="@string/_2"
-                    android:textColor="@color/white"
-                    app:fontFamily="@font/bold" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_10"
-                    android:text="@string/select_products_services"
-                    android:textColor="@color/black_4a4a4a"
-                    app:fontFamily="@font/regular"
-                    app:textType="BODY_2" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_50"
-                android:layout_marginTop="@dimen/size_20"
-                android:gravity="center_vertical">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
-                    android:background="@drawable/bg_circle_orange"
-                    android:gravity="center"
-                    android:text="@string/_3"
-                    android:textColor="@color/white"
-                    app:fontFamily="@font/bold" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_10"
-                    android:text="@string/review_details_and_confirm"
-                    android:textColor="@color/black_4a4a4a"
-                    app:fontFamily="@font/regular"
-                    app:textType="BODY_2" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/size_100"
-                android:layout_height="@dimen/size_200"
-                android:background="@drawable/ic_bkg_order_onboarding_grey_curve">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_get_started"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_50"
-                    android:layout_marginEnd="@dimen/size_50"
-                    android:background="@drawable/bg_rounded_36"
-                    android:fontFamily="@font/bold"
-                    android:gravity="center"
-                    android:padding="@dimen/size_14"
-                    android:text="@string/get_started"
-                    android:textColor="@color/black_4a4a4a"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:textAllCaps="true"
-                    app:textType="BODY_2" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_10"
+            android:text="@string/select_add_a_customer"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="14sp"
+            app:fontFamily="@font/regular" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.core.widget.NestedScrollView>
+
+        <View
+          android:id="@+id/view_connect_1"
+          android:layout_width="0.5dp"
+          android:layout_height="0dp"
+          android:layout_marginStart="@dimen/size_12"
+          android:background="@color/grey_dark_2"
+          app:layout_constraintBottom_toTopOf="@id/linear_layout_2"
+          app:layout_constraintStart_toStartOf="@id/linear_layout_1"
+          app:layout_constraintTop_toBottomOf="@id/linear_layout_1" />
+
+        <ImageView
+          android:id="@+id/image_arrow_yellow_down_1"
+          android:layout_width="@dimen/size_10"
+          android:layout_height="@dimen/size_10"
+          app:layout_constraintBottom_toBottomOf="@id/view_connect_1"
+          app:layout_constraintEnd_toEndOf="@id/view_connect_1"
+          app:layout_constraintStart_toStartOf="@id/view_connect_1"
+          app:layout_constraintTop_toTopOf="@id/view_connect_1"
+          app:srcCompat="@drawable/ic_arrow_down_yellow" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/linear_layout_2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_50"
+          android:layout_marginTop="@dimen/size_22"
+          android:gravity="center_vertical"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/linear_layout_1">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:background="@drawable/bg_circle_orange"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:fontFamily="@font/bold" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_10"
+            android:text="@string/select_products_services"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="14sp"
+            app:fontFamily="@font/regular" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+          android:id="@+id/view_connect_2"
+          android:layout_width="0.5dp"
+          android:layout_height="0dp"
+          android:layout_marginStart="@dimen/size_12"
+          android:background="@color/grey_dark_2"
+          app:layout_constraintBottom_toTopOf="@id/linear_layout_3"
+          app:layout_constraintStart_toStartOf="@id/linear_layout_2"
+          app:layout_constraintTop_toBottomOf="@id/linear_layout_2" />
+
+        <ImageView
+          android:id="@+id/image_arrow_yellow_down_2"
+          android:layout_width="@dimen/size_10"
+          android:layout_height="@dimen/size_10"
+          app:layout_constraintBottom_toBottomOf="@id/view_connect_2"
+          app:layout_constraintEnd_toEndOf="@id/view_connect_2"
+          app:layout_constraintStart_toStartOf="@id/view_connect_2"
+          app:layout_constraintTop_toTopOf="@id/view_connect_2"
+          app:srcCompat="@drawable/ic_arrow_down_yellow" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/linear_layout_3"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_50"
+          android:layout_marginTop="@dimen/size_22"
+          android:gravity="center_vertical"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/linear_layout_2">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:background="@drawable/bg_circle_orange"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:fontFamily="@font/bold" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_10"
+            android:text="@string/review_details_and_confirm"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="14sp"
+            app:fontFamily="@font/regular" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_percent="0.78" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:background="@drawable/ic_bkg_order_onboarding_grey_curve"
+      android:paddingTop="@dimen/size_30"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/guideline">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_get_started"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/size_30"
+        android:layout_marginEnd="@dimen/size_30"
+        android:background="@drawable/bg_rounded_20"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:padding="@dimen/size_14"
+        android:text="@string/get_started"
+        android:textColor="@color/black_4a4a4a"
+        app:textAllCaps="true"
+        app:textType="BODY_1" />
+    </LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

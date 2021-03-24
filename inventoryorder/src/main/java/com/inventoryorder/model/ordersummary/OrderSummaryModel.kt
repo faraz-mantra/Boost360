@@ -91,7 +91,7 @@ class OrderSummaryModel(
     FEEDBACK_PENDING, FEEDBACK_RECEIVED, DELIVERY_DELAYED, DELIVERY_FAILED, ORDER_COMPLETED, ORDER_CANCELLED, ESCALATED;
 
     companion object {
-      fun from(value: String): OrderStatus? = values().firstOrNull { it.name.equals(value, ignoreCase = true) }
+      fun from(value: String?): OrderStatus? = values().firstOrNull { it.name.equals(value, ignoreCase = true) }
     }
   }
 

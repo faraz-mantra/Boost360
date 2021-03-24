@@ -9,7 +9,7 @@ object EndPoints {
   const val GET_LIST_INVENTORY_SYNC = "product/v1/GetListingsWithInventorySync"
   const val SEND_SMS = "discover/v1/floatingpoint/CreateSMSHighPriorityIndia"
   const val GET_BIZ_FLOATS_MESSAGE = "/Discover/v1/floatingPoint/bizFloats"
-
+  const val GET_PRODUCT_LIST = "Product/v1/GetListings"
 
   // API with float
   const val BOOST_API_WITH_FLOAT = "https://api.withfloats.com"
@@ -25,11 +25,13 @@ object EndPoints {
   const val GET_PRODUCT_DETAILS = "Home/GetProductDetails"
   const val SEND_MAIL = "Home/SendEmail"
 
-
   // NFX APIs
   const val ASSURED_PURCHASE_BASE_URL = "https://assuredpurchase.withfloats.com/"
 
   const val POST_INITIATE_ORDER = "api/assuredPurchase/v2/InitiateOrder"
+  const val POST_INITIATE_APPOINTMENT = "api/assuredPurchase/v2.5/InitiateOrder"
+  const val GET_CONFIRM_ORDER_2_5 = "api/assuredPurchase/v2.5/ConfirmOrder"
+  const val GET_ORDER_DETAIL_2_5 = "api/assuredPurchase/v2.5/GetOrderDetails"
   const val POST_UPDATE_ORDER = "api/assuredPurchase/v2/UpdateOrder"
 
   const val GET_SELLER_SUMMARY_URL = "api/assuredPurchase/v2/SellerSummary"
@@ -48,8 +50,10 @@ object EndPoints {
   const val MARK_AS_SHIPPED = "api/assuredPurchase/v2/MarkOrderAsShipped"
   const val SEND_PAYMENT_REMINDER = "api/assuredPurchase/v2/SendPaymentReminder"
   const val MARK_COD_PAYMENT_DONE = "api/assuredPurchase/v2/MarkPaymentReceivedForCODOrder"
+  const val MARK_PAYMENT_RECEIVED_MERCHANT = "api/assuredPurchase/v2/MarkPaymentReceivedForPlacedOrderByMerchant"
+  const val ORDER_FEEDBACK_REQUEST= "api/assuredPurchase/v2/RequestOrderFeedback"
+  const val ORDER_RE_BOOKING_REQUEST= "api/assuredPurchase/v2/SendRebookingReminder"
   //new API order
-
 
 
   // Boost Kit APIs
@@ -59,5 +63,9 @@ object EndPoints {
   const val ADD_APT_CONSULT_DATA = "api/v1/appointment/add-data"
   const val UPDATE_APT_CONSULT_DATA = "api/v1/appointment/update-data"
 
+  //Now FLoats Api
+  const val API_NOW_FLOATS = "https://api.nowfloats.com/"
+  const val GET_SEARCH_LISTING = "Service/v1/GetSearchListings"
+  const val GET_BOOKING_SLOTS = "staff/v1/GetBookingSlots"
 }
 

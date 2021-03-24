@@ -4,7 +4,6 @@ import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.rest.EndPoints
-import com.appservice.ui.catalog.RequestWeeklyAppointment
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -43,12 +42,12 @@ interface WithFloatTwoRemoteData {
   @POST(EndPoints.CREATE_PRODUCT)
   fun createProduct(@Body request: CatalogProduct?): Observable<Response<String>>
 
-  @GET(EndPoints.GET_PRODUCT_LISTING)
-  fun getAllProducts(
-          @Query("clientId") clientId: String?,
-          @Query("skipBy") skipBy: Int?,
-          @Query("fpTag") fpTag: String?,
-  )
+//  @GET(EndPoints.GET_PRODUCT_LISTING)
+//  fun getAllProducts(
+//          @Query("clientId") clientId: String?,
+//          @Query("skipBy") skipBy: Int?,
+//          @Query("fpTag") fpTag: String?,
+//  )
 
   @PUT(EndPoints.UPDATE_PRODUCT)
   fun updateProduct(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
@@ -67,15 +66,4 @@ interface WithFloatTwoRemoteData {
           @Query("productId") productId: String?,
           @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
-
-  @POST(EndPoints.POST_ADD_SERVICE_TIMING)
-  fun addServiceTiming(@Body requestWeeklyAppointment: RequestWeeklyAppointment?): Observable<Response<ResponseBody>>
-
-  @POST(EndPoints.POST_UPDATE_SERVICE_TIMING)
-  fun updateServiceTiming(@Body requestWeeklyAppointment: RequestWeeklyAppointment?): Observable<Response<ResponseBody>>
-
-  @GET(EndPoints.GET_SERVICE_TIMING)
-  fun getServiceTimings(
-          @Query("serviceId") serviceId: String?,
-  ): Observable<Response<List<String>>>
 }

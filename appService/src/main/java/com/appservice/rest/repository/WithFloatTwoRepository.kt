@@ -8,7 +8,6 @@ import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.WithFloatsApiTwoClient
 import com.appservice.rest.services.WithFloatTwoRemoteData
-import com.appservice.ui.catalog.RequestWeeklyAppointment
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -55,6 +54,7 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun createProduct(request: CatalogProduct?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.createProduct(request = request), TaskCode.POST_CREATE_PRODUCT)
   }
+
   fun updateProduct(request: ProductUpdate?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateProduct(request), TaskCode.POST_UPDATE_PRODUCT)
   }
@@ -64,25 +64,11 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
   fun addUpdateImageProduct(
-          clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-          productId: String?, requestBody: RequestBody?,
+      clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
+      productId: String?, requestBody: RequestBody?,
   ): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.addUpdateImageProduct(clientId, requestType, requestId, totalChunks,
-            currentChunkNumber, productId, requestBody), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE)
+        currentChunkNumber, productId, requestBody), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE)
   }
 
-  fun addServiceTiming(request: RequestWeeklyAppointment?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.addServiceTiming(request),TaskCode.GET_SERVICE_TIMING)
-
-  }
-
-  fun updateServiceTiming(request: RequestWeeklyAppointment?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.updateServiceTiming(request),TaskCode.GET_SERVICE_TIMING)
-
-  }
-
-  fun getServiceTiming(serviceId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getServiceTimings(serviceId),TaskCode.GET_SERVICE_TIMING)
-
-  }
 }
