@@ -8,14 +8,12 @@
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match_match"
     android:background="@color/grey_f9f9f9">
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/error"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:gravity="center"
       android:textColor="@color/scarlet_40"
       android:visibility="gone"
@@ -25,13 +23,11 @@
 
     <androidx.core.widget.NestedScrollView
       android:id="@+id/main_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:fillViewport="true">
 
       <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/match_match"
         android:background="@color/grey_f9f9f9">
 
         <com.framework.views.customViews.CustomCardView
@@ -145,7 +141,7 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/tv_consultation_type">
 
-          <RadioButton
+          <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_in_clinic"
             style="@style/wrap_wrap"
             android:checked="true"
@@ -154,7 +150,7 @@
             android:textSize="16sp"
             app:buttonTint="@drawable/radio_selected" />
 
-          <RadioButton
+          <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_video_consultation"
             style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_20"

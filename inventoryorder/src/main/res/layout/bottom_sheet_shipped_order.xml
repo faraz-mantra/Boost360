@@ -65,7 +65,7 @@
           android:layout_marginTop="@dimen/size_10"
           android:orientation="vertical">
 
-          <RadioButton
+          <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_local"
             style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_16"
@@ -75,7 +75,7 @@
             android:textColor="@color/black_4a4a4a" />
 
 
-          <RadioButton
+          <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_partner"
             style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_16"
@@ -101,7 +101,7 @@
 
           <com.framework.views.customViews.CustomTextField
             android:id="@+id/tv_delivery_person_name"
-            style="@style/match_wrap"
+            style="@style/EditTextStyle"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"

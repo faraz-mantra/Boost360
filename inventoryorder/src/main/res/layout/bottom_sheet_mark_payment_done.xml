@@ -57,49 +57,33 @@
         app:textType="HEADING_6" />
 
       <RadioGroup
-        android:id="@+id/radioGroup"
-        style="@style/match_wrap"
-        android:layout_marginTop="@dimen/size_10"
-        android:orientation="horizontal">
-
-        <RadioButton
-          android:id="@+id/radio_cash"
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_16"
-          android:layout_weight="1"
-          android:buttonTint="@color/colorAccent"
-          android:checked="true"
-          android:text="@string/cash_payment"
-          android:textColor="@color/black_2A2A2A"
-          app:textType="HEADING_6" />
+          android:id="@+id/radioGroup"
+          style="@style/match_wrap"
+          android:layout_marginTop="@dimen/size_10"
+          android:orientation="horizontal">
 
         <com.framework.views.customViews.CustomRadioButton
-          android:id="@+id/radio_card"
-          style="@style/wrap_wrap"
-          android:layout_weight="1"
-          android:buttonTint="@color/colorAccent"
-          android:text="@string/card_payment"
-          android:textColor="@color/black_2A2A2A"
-          app:textType="HEADING_6" />
-
-        <RadioButton
-          android:id="@+id/radio_upi"
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_16"
-          android:layout_weight="1"
-          android:buttonTint="@color/colorAccent"
-          android:text="@string/upi_payment"
-          android:textColor="@color/black_2A2A2A"
-          app:textType="HEADING_6" />
+            android:id="@+id/radio_cash"
+            style="@style/RadioButtonMarkPaymentDoneStyle"
+            android:layout_marginStart="@dimen/size_16"
+            android:checked="true"
+            android:text="@string/cash_payment" />
 
         <com.framework.views.customViews.CustomRadioButton
-          android:id="@+id/radio_others"
-          style="@style/wrap_wrap"
-          android:layout_weight="1"
-          android:buttonTint="@color/colorAccent"
-          android:text="@string/others_payment"
-          android:textColor="@color/black_2A2A2A"
-          app:textType="HEADING_6" />
+            android:id="@+id/radio_card"
+            style="@style/RadioButtonMarkPaymentDoneStyle"
+            android:text="@string/card_payment" />
+
+        <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/radio_upi"
+            style="@style/RadioButtonMarkPaymentDoneStyle"
+            android:layout_marginStart="@dimen/size_16"
+            android:text="@string/upi_payment" />
+
+        <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/radio_others"
+            style="@style/RadioButtonMarkPaymentDoneStyle"
+            android:text="@string/others_payment" />
 
       </RadioGroup>
 
@@ -134,34 +118,17 @@
         android:padding="@dimen/size_14">
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancel"
-          style="@style/wrap_wrap"
-          android:layout_gravity="center"
-          android:layout_marginEnd="@dimen/size_10"
-          android:padding="@dimen/size_4"
-          android:text="@string/cancel"
-          android:textAllCaps="true"
-          android:textColor="@color/pinkish_grey"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_1" />
+            android:id="@+id/tvCancel"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:layout_marginEnd="@dimen/size_10"
+            android:background="@color/white"
+            android:text="@string/cancel" />
 
         <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          android:layout_width="wrap_content"
-          android:layout_height="@dimen/size_38"
-          android:layout_gravity="center"
-          android:background="@drawable/button_rounded_6"
-          android:gravity="center"
-          android:paddingStart="@dimen/size_28"
-          android:paddingEnd="@dimen/size_28"
-          android:shadowRadius="0"
-          android:stateListAnimator="@null"
-          android:text="@string/confirm_payment"
-          android:textAllCaps="true"
-          android:textColor="@color/white"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_1"
-          tools:ignore="UnusedAttribute" />
+            android:id="@+id/buttonDone"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:text="@string/confirm_payment"
+            android:textColor="@color/white" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
 

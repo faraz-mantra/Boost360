@@ -12,8 +12,7 @@
     style="@style/match_wrap">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:background="@color/lightest_grey"
       android:orientation="vertical"
       tools:context=".ui.FragmentContainerOrderActivity">
@@ -42,8 +41,7 @@
         android:background="@drawable/down_shadow" />
 
       <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        style="@style/match_match">
 
 
         <com.framework.views.viewgroups.BaseRecyclerView
@@ -64,8 +62,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
           android:id="@+id/error_view"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          style="@style/match_match"
           android:layout_marginStart="@dimen/size_50"
           android:layout_marginEnd="@dimen/size_50"
           android:visibility="gone">

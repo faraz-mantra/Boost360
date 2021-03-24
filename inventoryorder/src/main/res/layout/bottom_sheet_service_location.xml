@@ -29,12 +29,9 @@
             android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
-              style="@style/wrap_wrap"
-              android:includeFontPadding="false"
+              style="@style/BottomSheetTextHeader"
               android:text="@string/service_location"
-              android:textColor="@color/orange"
-              app:fontFamily="@font/bold"
-              app:textType="HEADING_4" />
+              android:textColor="@color/orange" />
 
           <com.framework.views.customViews.CustomTextView
               style="@style/wrap_wrap"

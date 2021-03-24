@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
@@ -17,8 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          style="@style/match_match"
           android:layout_marginTop="@dimen/size_18"
           android:orientation="vertical">
 
@@ -258,8 +256,7 @@
           android:background="@drawable/up_shadow" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          style="@style/match_match"
           android:orientation="vertical"
           android:paddingTop="@dimen/size_16"
           android:paddingBottom="@dimen/size_16">

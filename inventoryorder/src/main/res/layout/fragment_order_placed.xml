@@ -8,8 +8,7 @@
     android:fillViewport="true">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:background="@color/white_smoke_1"
       android:orientation="vertical"
       tools:context=".ui.order.createorder.OrderPlacedFragment">
