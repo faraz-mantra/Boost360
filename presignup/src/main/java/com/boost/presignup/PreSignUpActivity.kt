@@ -51,6 +51,9 @@ class PreSignUpActivity : AppCompatActivity() {
     binding.viewModel = viewModel
     navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
+    if(!packageName.equals(getString(R.string.package_name_sign_up_visibility))){
+      binding.createAccountButton.visibility = View.VISIBLE
+    }
     //custome navigation controller after language selection
     if (intent.hasExtra("fragmentState")) {
       val fragmetState = intent.getStringExtra("fragmentState")
