@@ -8,8 +8,7 @@
   </data>
 
   <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match_match"
     android:background="@color/grey_f9f9f9"
     android:orientation="vertical">
 
@@ -446,8 +445,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_dropdown_order_status"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              style="@style/match_match"
               android:layout_gravity="center"
               android:layout_weight="1"
               android:gravity="center"
@@ -722,8 +720,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/error"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:gravity="center"
       android:textColor="@color/scarlet_40"
       android:visibility="visible"

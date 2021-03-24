@@ -55,7 +55,7 @@
         <com.framework.views.customViews.CustomTextView
           style="@style/match_wrap"
           android:fontFamily="@font/regular"
-          android:text="Do you want to remove the item name from the list? "
+          android:text="@string/do_you_want_to_remove_the_item_name_from_the_list"
           android:textColor="@color/black_4a4a4a"
           android:layout_margin="@dimen/size_20"
           app:textType="BODY_1" />
@@ -127,34 +127,19 @@
       app:layout_constraintStart_toStartOf="parent">
 
       <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tvCancel"
-        style="@style/wrap_wrap"
-        android:layout_gravity="center"
-        android:layout_marginEnd="@dimen/size_20"
-        android:padding="@dimen/size_4"
-        android:text="@string/cancel"
-        android:textAllCaps="true"
-        android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/semi_bold"
-        app:textType="BODY_3" />
+          android:id="@+id/tvCancel"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:layout_marginEnd="@dimen/size_20"
+          android:background="@color/white"
+          android:text="@string/cancel"
+          android:textColor="@color/black_4a4a4a" />
 
       <com.framework.views.customViews.CustomButton
-        android:id="@+id/buttonDone"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_36"
-        android:layout_gravity="center"
-        android:background="@drawable/bg_rounded_red"
-        android:gravity="center"
-        android:paddingStart="@dimen/size_28"
-        android:paddingEnd="@dimen/size_28"
-        android:shadowRadius="0"
-        android:stateListAnimator="@null"
-        android:text="@string/yes_remove"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        app:fontFamily="@font/bold"
-        app:textType="CAPTION"
-        tools:ignore="UnusedAttribute" />
+          android:id="@+id/buttonDone"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:background="@drawable/bg_rounded_red"
+          android:text="@string/yes_remove"
+          android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

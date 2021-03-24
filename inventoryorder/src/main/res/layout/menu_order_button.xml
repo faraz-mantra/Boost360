@@ -19,8 +19,7 @@
 
       <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/rv_menu_order"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/match_match"
         android:layout_marginTop="@dimen/size_4"
         android:layout_marginBottom="@dimen/size_8"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

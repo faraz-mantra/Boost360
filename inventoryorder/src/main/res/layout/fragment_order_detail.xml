@@ -8,26 +8,22 @@
   </data>
 
   <androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match_match"
     android:background="@color/white"
     android:orientation="vertical">
 
     <FrameLayout
       android:id="@+id/main_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:visibility="gone"
       tools:visibility="visible">
 
       <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        style="@style/match_match">
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/content"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          style="@style/match_match"
           android:orientation="vertical">
 
           <androidx.appcompat.widget.LinearLayoutCompat
@@ -511,8 +507,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/error"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:gravity="center"
       android:textColor="@color/scarlet_40"
       android:visibility="visible"

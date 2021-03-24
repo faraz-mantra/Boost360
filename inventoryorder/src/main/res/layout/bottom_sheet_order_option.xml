@@ -5,15 +5,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/match_wrap">
 
-        <RadioButton
+        <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_btn"
-            style="@style/wrap_wrap"
-            android:layout_marginStart="@dimen/size_16"
-            android:layout_marginEnd="@dimen/size_16"
-            android:buttonTint="@color/light_blue_1"
-            android:fontFamily="@font/regular"
-            android:textColor="@color/black_2A2A2A"
-            android:textSize="16sp"
+            style="@style/RadioButtonStyle"
+            android:layout_width="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

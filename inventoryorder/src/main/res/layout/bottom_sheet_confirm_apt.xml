@@ -144,27 +144,15 @@
           tools:visibility="visible">
 
           <com.framework.views.customViews.CustomCheckBox
-            android:id="@+id/checkbox_sms"
-            style="@style/match_wrap"
-            android:buttonTint="@color/colorAccent"
-            android:checked="true"
-            android:clickable="false"
-            android:focusable="false"
-            android:textColor="@color/black_4a4a4a"
-            app:textType="HEADING_6"
-            tools:text="via SMS (+91-9876543243)" />
+              android:id="@+id/checkbox_sms"
+              style="@style/CheckBoxStyle"
+              tools:text="via SMS (+91-9876543243)" />
 
           <com.framework.views.customViews.CustomCheckBox
-            android:id="@+id/checkbox_email"
-            style="@style/match_wrap"
-            android:layout_marginTop="@dimen/size_4"
-            android:buttonTint="@color/colorAccent"
-            android:checked="true"
-            android:clickable="false"
-            android:focusable="false"
-            android:textColor="@color/black_4a4a4a"
-            app:textType="HEADING_6"
-            tools:text="via Email (brajmadhav@gmail.com)" />
+              android:id="@+id/checkbox_email"
+              style="@style/CheckBoxStyle"
+              android:layout_marginTop="@dimen/size_4"
+              tools:text="via Email (brajmadhav@gmail.com)" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View
@@ -210,73 +198,41 @@
         android:visibility="gone">
 
         <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDoneN"
-          android:layout_width="wrap_content"
-          android:layout_height="@dimen/size_36"
-          android:background="@drawable/button_rounded_6"
-          android:gravity="center"
-          android:paddingStart="@dimen/size_28"
-          android:paddingEnd="@dimen/size_28"
-          android:shadowRadius="0"
-          android:stateListAnimator="@null"
-          android:text="CONFIRM AND SEND PAYMENT LINK"
-          android:textAllCaps="true"
-          android:textColor="@color/white"
-          app:fontFamily="@font/bold"
-          app:textType="CAPTION"
-          tools:ignore="UnusedAttribute" />
+            android:id="@+id/buttonDoneN"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:text="@string/confirm_and_send_payment_link"
+            android:textColor="@color/white" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancelN"
-          style="@style/wrap_wrap"
-          android:layout_marginTop="@dimen/size_10"
-          android:padding="@dimen/size_4"
-          android:text="@string/go_back"
-          android:textAllCaps="true"
-          android:textColor="@color/pinkish_grey"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_3" />
+            android:id="@+id/tvCancelN"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@color/white"
+            android:text="@string/go_back" />
 
 
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/btn_horizontal"
-        style="@style/match_wrap"
-        android:background="@color/white"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:padding="@dimen/size_14">
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancel"
-          style="@style/wrap_wrap"
-          android:layout_gravity="center"
-          android:layout_marginEnd="@dimen/size_10"
-          android:padding="@dimen/size_4"
-          android:text="@string/cancel"
-          android:textAllCaps="true"
-          android:textColor="@color/pinkish_grey"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_1" />
+          android:id="@+id/btn_horizontal"
+          style="@style/match_wrap"
+          android:background="@color/white"
+          android:gravity="end"
+          android:orientation="horizontal"
+          android:padding="@dimen/size_14">
 
         <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          android:layout_width="wrap_content"
-          android:layout_height="@dimen/size_38"
-          android:layout_gravity="center"
-          android:background="@drawable/button_rounded_6"
-          android:gravity="center"
-          android:paddingStart="@dimen/size_28"
-          android:paddingEnd="@dimen/size_28"
-          android:shadowRadius="0"
-          android:stateListAnimator="@null"
-          android:text="@string/confirm"
-          android:textAllCaps="true"
-          android:textColor="@color/white"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_1"
-          tools:ignore="UnusedAttribute" />
+            android:id="@+id/tvCancel"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:layout_marginEnd="@dimen/size_10"
+            android:background="@color/white"
+            android:text="@string/cancel" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/buttonDone"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:text="@string/confirm"
+            android:textColor="@color/white" />
       </androidx.appcompat.widget.LinearLayoutCompat>
     </FrameLayout>
   </androidx.constraintlayout.widget.ConstraintLayout>

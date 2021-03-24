@@ -484,4 +484,19 @@
   <string name="customer_address">Customer address</string>
   <string name="appointment_id">Appointment ID</string>
   <string name="confirmed_on">Confirmed On</string>
+  <string name="tools_text_phone_hint">+91 88888 8888</string>
+  <string name="tools_text_email">tester@gmail.com</string>
+  <string name="tools_text_simple_massage">Simple Massage</string>
+  <string name="tools_text_rs_20000">₹2,000.00</string>
+  <string name="tools_text_11_00_am_on_mon_12_jan_2020">11:00 AM on Mon, 12 Jan 2020</string>
+  <string name="tools_text_staff_sushil_singh">Staff: Sushil Singh</string>
+    <string name="tools_text_cash_on_delivery">Cash on delivery</string>
+    <string name="tools_text_hint_date">Apr 15, 2020 at 3:16 pm</string>
+    <string name="tools_text_email_address">via Email (brajmadhav@gmail.com)</string>
+  <string name="tools_text_sms_91">via SMS (+91-9876543243)</string>
+  <string name="tools_text_order_id">Order ID #VDJNVBJD</string>
+  <string name="send_feedback_form">Send feedback form</string>
+  <string name="tools_text_appointment_id">Appointment ID #VDJNVBJD</string>
+  <string name="do_you_want_to_remove_the_item_name_from_the_list">Do you want to remove the item name from the list?</string>
+    <string name="rupee_symbol">₹</string>
 </resources>

@@ -85,15 +85,10 @@
                                 android:textSize="12sp" />
                         </LinearLayout>
 
-                        <RadioButton
+                        <com.framework.views.customViews.CustomRadioButton
                             android:id="@+id/radio_store"
-                            style="@style/match_wrap"
-                            android:layout_marginStart="@dimen/size_16"
-                            android:layout_marginEnd="@dimen/size_16"
-                            android:buttonTint="@color/light_blue_1"
-                            android:fontFamily="@font/regular"
-                            android:textColor="@color/black_2A2A2A"
-                            android:textSize="16sp"
+                            style="@style/RadioButtonStyle"
+                            android:layout_width="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -137,15 +132,10 @@
                                 android:textSize="12sp" />
                         </LinearLayout>
 
-                        <RadioButton
+                        <com.framework.views.customViews.CustomRadioButton
                             android:id="@+id/radio_home"
-                            style="@style/match_wrap"
-                            android:layout_marginStart="@dimen/size_16"
-                            android:layout_marginEnd="@dimen/size_16"
-                            android:buttonTint="@color/light_blue_1"
-                            android:fontFamily="@font/regular"
-                            android:textColor="@color/black_2A2A2A"
-                            android:textSize="16sp"
+                            style="@style/RadioButtonStyle"
+                            android:layout_width="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -177,33 +167,16 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCancel"
-                style="@style/wrap_wrap"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/size_30"
-                android:padding="@dimen/size_4"
-                android:text="@string/go_back"
-                android:textAllCaps="true"
-                android:textColor="@color/orange"
-                app:fontFamily="@font/semi_bold"
-                app:textType="BODY_3" />
+                style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                android:layout_marginEnd="@dimen/size_20"
+                android:background="@color/white"
+                android:text="@string/go_back" />
 
             <com.framework.views.customViews.CustomButton
                 android:id="@+id/buttonDone"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/size_36"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_rounded_yellow"
-                android:gravity="center"
-                android:paddingStart="@dimen/size_28"
-                android:paddingEnd="@dimen/size_28"
-                android:shadowRadius="0"
-                android:stateListAnimator="@null"
-                android:text="@string/done"
-                android:textAllCaps="true"
+                style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                 android:textColor="@color/white"
-                app:fontFamily="@font/bold"
-                app:textType="CAPTION"
-                tools:ignore="UnusedAttribute" />
+                android:text="@string/done" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

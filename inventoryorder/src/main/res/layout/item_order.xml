@@ -71,8 +71,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/txt_order_date"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              style="@style/match_match"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginEnd="@dimen/size_2"
               android:layout_weight="1"
@@ -105,8 +104,7 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            style="@style/match_match"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_12">
 
@@ -152,8 +150,7 @@
         android:paddingBottom="@dimen/size_18">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          style="@style/match_match">
 
           <androidx.appcompat.widget.LinearLayoutCompat
             style="@style/match_wrap"
@@ -218,8 +215,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_dropdown_order_status"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          style="@style/match_match"
           android:layout_gravity="center"
           android:layout_weight="1"
           android:gravity="center"

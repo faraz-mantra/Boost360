@@ -7,12 +7,10 @@
   </data>
 
   <androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/match_match">
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:orientation="vertical"
       app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -27,8 +25,7 @@
 
       <WebView
         android:id="@+id/webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        style="@style/match_match" />
     </LinearLayout>
 
 
