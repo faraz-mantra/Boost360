@@ -55,7 +55,10 @@ fun ArrayList<PromoBanners>.promoBannerFilter(expCode: String?,fpTag: String?): 
                         if (it.exclusive_to_customers!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == fpTag?.toLowerCase() } != null) list.add(it)
                 }else{
                         if(it.cta_feature_key.isNullOrEmpty().not() || it.cta_feature_key.isNullOrBlank().not()
-                                || it.cta_bundle_identifier.isNullOrEmpty().not() || it.cta_bundle_identifier.isNullOrBlank().not() ){
+                                || it.cta_bundle_identifier.isNullOrEmpty().not() || it.cta_bundle_identifier.isNullOrBlank().not()
+                                || it.cta_web_link.isNullOrEmpty().not() || it.cta_web_link.isNullOrBlank().not()
+                                || it.cta_offer_identifier.isNullOrEmpty().not() || it.cta_offer_identifier.isNullOrBlank().not()
+                        ){
                                 list.add(it)
                         }
                 }

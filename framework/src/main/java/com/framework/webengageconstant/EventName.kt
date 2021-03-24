@@ -352,6 +352,7 @@ const val ADDONS_MARKETPLACE_UPI_VALIDATION_FAILED_2 = "ADD-ONS Marketplace UPI 
 const val ADDONS_MARKETPLACE_FAILED_PAYMENT_TRANSACTION_LOAD = "ADD-ONS Marketplace Failed Payment Transaction Load"
 const val ADDONS_MARKETPLACE_PAYMENT_FAILED = "ADD-ONS Marketplace Payment Failed"
 const val ADDONS_MARKETPLACE_PROMO_BANNER = "ADD-ONS Marketplace Promo Banner Clicked"
+const val ADDONS_MARKETPLACE_OFFERS_LOADED = "ADD-ONS Marketplace Offers loaded"
 const val CHOOSE_BUSINESS_CATEGORY = "CHOOSE BUSINESS CATEGORY"
 const val WHATS_APP_CONNECTED = "WhatsApp connected"
 const val BUILDING_YOUR_BUSINESS_CONTACT_INFO = "Building Your Business Contact Info"
