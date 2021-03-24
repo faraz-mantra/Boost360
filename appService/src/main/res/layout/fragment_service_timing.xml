@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_smoke_1">
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_text_header"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:padding="@dimen/size_18"
+      android:text="@string/note_service_business_is_open"
+      android:textColor="@color/gray_4e4e4e"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/rv_staff_timing"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginStart="@dimen/size_16"
+      android:layout_marginEnd="@dimen/size_16"
+      android:clipToPadding="false"
+      android:paddingBottom="@dimen/size_80"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      tools:itemCount="6"
+      app:layout_constraintTop_toBottomOf="@+id/ctv_text_header"
+      app:layout_constraintBottom_toBottomOf="parent"
+      tools:listitem="@layout/item_service_timing" />
+
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_save"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginHorizontal="@dimen/size_14"
+      android:layout_marginBottom="@dimen/size_14"
+      android:background="@drawable/bg_button_proceed"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:stateListAnimator="@null"
+      android:text="@string/save"
+      android:textAllCaps="true"
+      android:textColor="@color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:textType="HEADING_6" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

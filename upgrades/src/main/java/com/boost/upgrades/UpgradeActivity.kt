@@ -89,8 +89,7 @@ class UpgradeActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
- var connectionStatus = checkNetworkType(applicationContext)
-    Log.v("checkNetworkType", " " + connectionStatus)
+
     isDeepLink = intent.getBooleanExtra("isDeepLink", false)
     deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
     deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
@@ -106,20 +105,12 @@ class UpgradeActivity : AppCompatActivity() {
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
-    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
-
-    if (userPurchsedWidgets != null) {
-      for (a in userPurchsedWidgets) {
-//      println("userPurchsedWidgets  ${userPurchsedWidgets}")
-      }
-
-
-    }
+    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")?:ArrayList()
 
     progressDialog = ProgressDialog(this)
 
     prefs = SharedPrefs(this)
-    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, ADDONS_MARKETPLACE_HOME)
+    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
     initView()
     initRazorPay()
   }

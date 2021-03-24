@@ -663,7 +663,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 ft.replace(R.id.mainFrame, customPageFragment)
                         .commit();
             } else if (url.contains(getResources().getString(R.string.deeplink_analytics_website_visits))) {
-                WebEngageController.trackEvent(WEBSITE_VISITS_CHART_DURATION_CHANGED, EVENT_LABEL_NULL, session.getFpTag());
+//                WebEngageController.trackEvent(WEBSITE_VISITS_CHART_DURATION_CHANGED, EVENT_LABEL_NULL, session.getFpTag());
                 MixPanelController.track("OverallVisitsDetailedView", null);
                 Intent q = new Intent(HomeActivity.this, SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);

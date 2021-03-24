@@ -2,6 +2,7 @@ package com.appservice.staffs.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.appservice.rest.repository.NowfloatsApiRepository
 import com.appservice.rest.repository.StaffNowFloatsRepository
 import com.appservice.staffs.model.*
 import com.appservice.ui.catalog.common.AppointmentModel
@@ -51,5 +52,8 @@ class StaffViewModel : BaseViewModel() {
         return StaffNowFloatsRepository.updateImage(request = request).toLiveData()
     }
 
+    fun getSearchListings(fpTag: String?, fpId: String?, searchString: String?="", offset: Int?=0, limit: Int?=0):LiveData<BaseResponse>{
+        return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
+    }
 
 }

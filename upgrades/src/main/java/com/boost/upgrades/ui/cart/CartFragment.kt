@@ -145,7 +145,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
         prefs = SharedPrefs(activity as UpgradeActivity)
-        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, ADDONS_MARKETPLACE_CART)
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
 
         return root
     }
@@ -1141,11 +1141,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         viewModel.getLoaderStatus().observe(this, Observer {
             if (it) {
                 val status = viewModel.getAPIRequestStatus()
-                progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-                progressDialog.show()
+                showProgress(status?:"Please wait...")
             } else {
-                progressDialog.dismiss()
+                hideProgress()
             }
         })
 
@@ -1229,12 +1227,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         //getting all features
         viewModel.updateAllFeaturesResult().observe(this, Observer {
-            featuresList = it
+           if (it.isNullOrEmpty().not()) featuresList = it
         })
 
         //getting all bunles
         viewModel.updateAllBundlesResult().observe(this, Observer {
-            bundlesList = it
+          if (it.isNullOrEmpty().not()) bundlesList = it
         })
 
         //getting valid Coupon Code
@@ -1505,4 +1503,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     fun isRenewalListNotEmpty(): Boolean {
         return ::cartList.isInitialized && cartList.isNotEmpty() && ::renewalList.isInitialized && renewalList.isNotEmpty()
     }
+
+  private fun showProgress(message: String = "Please wait...") {
+    try {
+      if (!progressDialog.isShowing) {
+        progressDialog.setMessage(message)
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+      }
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+  }
+
+  private fun hideProgress() {
+    try {
+      if (progressDialog.isShowing) progressDialog.hide()
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+  }
 }

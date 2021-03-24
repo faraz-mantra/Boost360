@@ -3,6 +3,7 @@ package com.framework.extensions
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.framework.views.customViews.CustomAutoCompleteTextView
 import com.framework.views.customViews.CustomEditText
 
 
@@ -21,6 +22,21 @@ fun CustomEditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
 }
 
 fun CustomEditText.onTextChanged(onTextChanged: (String) -> Unit) {
+  this.addTextChangedListener(object : TextWatcher {
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+      onTextChanged.invoke(p0.toString())
+    }
+
+    override fun afterTextChanged(editable: Editable?) {
+
+    }
+  })
+}
+
+fun CustomAutoCompleteTextView.onTextChanged(onTextChanged: (String) -> Unit) {
   this.addTextChangedListener(object : TextWatcher {
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }

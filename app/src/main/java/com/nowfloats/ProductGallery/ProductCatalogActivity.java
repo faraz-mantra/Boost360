@@ -53,9 +53,13 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
-import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventLabelKt.CLICK;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ITEM;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATALOGUE_LIST;
+import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
 public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
@@ -82,7 +86,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_product_catalog);
-
+    WebEngageController.trackEvent(PRODUCT_CATALOGUE_LIST, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
     setSupportActionBar(binding.layoutToolbar.toolbar);
 
     session = new UserSessionManager(getApplicationContext(), this);
@@ -208,7 +212,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       }
     });
     adapter.SetOnItemClickListener(product -> {
-      WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ITEM, EVENT_LABEL_PRODUCT_CATALOGUE, NO_EVENT_VALUE);
+      WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ITEM, CLICK, NO_EVENT_VALUE);
       openAddProductActivity(product);
 //            Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
 //            intent.putExtra("PRODUCT", selected_product);
@@ -325,7 +329,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
         Methods.showFeatureNotAvailDialog(this);
       } else {
-        WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW, EVENT_LABEL_PRODUCT_CATALOGUE, NO_EVENT_VALUE);
+        WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW, CLICK, NO_EVENT_VALUE);
         openAddProductActivity(new Product());
       }
 
@@ -340,7 +344,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && adapter.getItemCount() >= Integer.parseInt(value)) {
         Toast.makeText(getApplicationContext(), getString(R.string.message_add_product_limit), Toast.LENGTH_LONG).show();
       } else {
-        WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW, EVENT_LABEL_PRODUCT_CATALOGUE, NO_EVENT_VALUE);
+        WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW, CLICK, NO_EVENT_VALUE);
         openAddProductActivity(new Product());
       }
 

@@ -17,38 +17,35 @@ import com.framework.models.BaseViewModel
 class ScheduledBreaksFragmnt : AppBaseFragment<FragmentScheduleBreaksBinding, BaseViewModel>() {
 
 
-    companion object {
-        // TODO: Rename parameter arguments, choose names that match
-        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-        private const val ARG_PARAM1 = "param1"
-        private const val ARG_PARAM2 = "param2"
-        fun newInstance(): ScheduledBreaksFragmnt {
-            return ScheduledBreaksFragmnt()
-        }
+  companion object {
+    private const val ARG_PARAM1 = "param1"
+    private const val ARG_PARAM2 = "param2"
+    fun newInstance(): ScheduledBreaksFragmnt {
+      return ScheduledBreaksFragmnt()
     }
+  }
 
-    override fun getLayout(): Int {
-        return R.layout.fragment_schedule_breaks
-    }
+  override fun getLayout(): Int {
+    return R.layout.fragment_schedule_breaks
+  }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
-    }
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
 
-    override fun onCreateView() {
-        super.onCreateView()
-        setOnClickListener(binding!!.flAddBreaks)
-        binding!!.ctvHeading.text = Html.fromHtml(getString(R.string.add_a_leave_break_for_br_gaurav_sharma))
-    }
+  override fun onCreateView() {
+    super.onCreateView()
+    setOnClickListener(binding!!.flAddBreaks)
+    binding?.ctvHeading?.text = Html.fromHtml(getString(R.string.add_a_leave_break_for_br_gaurav_sharma))
+  }
 
-    override fun onClick(v: View) {
-        super.onClick(v)
-//        val bundle: Bundle = Bundle.EMPTY
-        when (v) {
-            binding?.flAddBreaks -> {
-                val bottomSheet = BottomSheetFragment()
-                bottomSheet.show(requireActivity().supportFragmentManager, null)
-            }
-        }
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.flAddBreaks -> {
+        val bottomSheet = BottomSheetFragment()
+        bottomSheet.show(requireActivity().supportFragmentManager, null)
+      }
     }
+  }
 }
