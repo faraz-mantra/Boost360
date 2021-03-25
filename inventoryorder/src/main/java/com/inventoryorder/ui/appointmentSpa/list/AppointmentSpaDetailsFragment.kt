@@ -162,17 +162,22 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     }
 
     binding?.textCustomerName?.text = order?.BuyerDetails?.ContactDetails?.FullName
+    if (order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber ==null) {
+      binding?.textCustomerPhone?.gone()
+    }else{ binding?.textCustomerPhone?.gone()}
     binding?.textCustomerPhone?.text = "Phone: ${order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber}"
+      if (order?.BuyerDetails?.ContactDetails?.EmailId ==null) {
+          binding?.textCustomerEmail?.gone()
+      }else{ binding?.textCustomerEmail?.gone()}
     binding?.textCustomerEmail?.text = "Email: ${order?.BuyerDetails?.ContactDetails?.EmailId}"
     if (order?.BuyerDetails?.GSTIN ==null) {
       binding?.ctvGstin?.gone()
     }else{ binding?.ctvGstin?.gone()}
     binding?.ctvGstin?.text = "GSTIN: ${order?.BuyerDetails?.GSTIN as String}"
-
     binding?.textPaymentStatusDropdown?.text = "${order?.PaymentDetails?.statusValue()}"
     binding?.textPaymentTypeDropdown?.text = "${order?.PaymentDetails?.methodValue()}"
 //    binding?.textServiceLocationDropdown?.text = "${order?.SellerDetails?.Address?.City?.capitalizeUtil()}"
-    binding?.textServiceLocationDropdown?.text = "Business"
+    binding?.textServiceLocationDropdown?.text = getString(R.string.business)
 
     order?.BuyerDetails?.let {
       val address = it.getFullAddressDetail()
