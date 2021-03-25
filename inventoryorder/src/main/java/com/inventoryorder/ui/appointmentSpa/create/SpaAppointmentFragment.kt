@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
+import com.framework.utils.fromHtml
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
@@ -268,6 +269,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       setAdapter(serviceAdapter)
       onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->
         selectedService = serviceList?.get(pos)
+        binding?.editServiceName?.setText(fromHtml("<b><color='#2a2a2a'>${selectedService?.Name}</color></b> <color='#adadad'>(${selectedService?.Currency}${selectedService?.DiscountedPrice} for ${selectedService?.Duration}min)</color>"))
         totalPrice = selectedService?.Price ?: 0.0
         discountedPrice = selectedService?.DiscountedPrice ?: 0.0
         currency = selectedService?.Currency ?: ""
