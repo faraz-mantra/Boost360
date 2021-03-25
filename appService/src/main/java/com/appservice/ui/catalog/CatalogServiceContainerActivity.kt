@@ -75,7 +75,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
             FragmentType.EDIT_ACCOUNT_DETAILS, -> R.style.CatalogTheme
             FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
-            FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.CREATE_CATEGORY,FragmentType.APPOINTMENT_SETTINGS -> R.style.OffersThemeBase
+            FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.CREATE_CATEGORY,FragmentType.APPOINTMENT_SETTINGS -> R.style.CatalogTheme_FragmentAppointment
             else -> super.customTheme()
         }
     }
