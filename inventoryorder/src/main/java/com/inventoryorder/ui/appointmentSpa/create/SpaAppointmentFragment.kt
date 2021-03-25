@@ -242,7 +242,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
   private fun getSearchListing() {
     showProgress(getString(R.string.loading))
-    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 10)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 100)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
 
       if (it.error is NoNetworkException) {
