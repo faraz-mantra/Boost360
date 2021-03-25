@@ -5,10 +5,16 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
+import com.framework.extensions.getChildOrNull
 import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
+import com.framework.utils.fromHtml
+import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
@@ -264,7 +270,6 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       threshold = 1
       (serviceAdapter as? CustomArrayAdapter)?.initList()
       setAdapter(serviceAdapter)
-
       onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->
         selectedService = serviceList?.get(pos)
         totalPrice = selectedService?.Price ?: 0.0

@@ -2,18 +2,24 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
-        style="@style/match_match">
+        style="@style/match_wrap"
+        android:layout_width="@dimen/size_0"
+        app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/match_match">
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 style="@style/match_wrap"
                 android:background="@drawable/bg_rounded_top_gray"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -105,6 +111,7 @@
                             android:background="@drawable/bg_rounded_grey"
                             android:gravity="center"
                             android:paddingStart="@dimen/size_5"
+
                             android:paddingEnd="@dimen/size_5"
                             android:textColor="@color/black_4a4a4a"
                             app:srcCompat="@drawable/ic_filled_arrow_left" />
@@ -150,32 +157,35 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/btn_bottom"
-                style="@style/match_wrap"
-                android:background="@color/white"
-                android:gravity="end"
-                android:orientation="horizontal"
-                android:padding="@dimen/size_14"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tvCancel"
-                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-                    android:background="@color/white"
-                    android:layout_marginEnd="@dimen/size_20"
-                    android:text="@string/cancel"
-                    android:textColor="@color/orange" />
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/buttonDone"
-                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-                    android:layout_marginEnd="@dimen/size_10"
-                    android:text="@string/done"
-                    android:textColor="@color/white" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/btn_bottom"
+        style="@style/match_wrap"
+        android:background="@color/white"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tvCancel"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:layout_marginEnd="@dimen/size_20"
+            android:background="@color/white"
+            android:text="@string/cancel"
+            android:textColor="@color/orange" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/buttonDone"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:layout_marginEnd="@dimen/size_10"
+            android:text="@string/done"
+            android:textColor="@color/white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
