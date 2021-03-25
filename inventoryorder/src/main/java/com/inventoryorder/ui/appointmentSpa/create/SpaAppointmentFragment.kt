@@ -3,12 +3,14 @@ package com.inventoryorder.ui.appointmentSpa.create
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
+import com.framework.extensions.onTextChanged
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
@@ -135,7 +137,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     val pinCode = binding?.layoutBillingAddr?.editPin?.text ?: ""
     val gstNo = binding?.layoutCustomer?.editGstin?.text ?: ""
 
-    if (appointmentRequestModel._id == null || appointmentRequestModel._id?.isEmpty() == true) {
+    if (appointmentRequestModel._id == null || appointmentRequestModel?._id?.isEmpty() == true) {
       showShortToast(getString(R.string.please_select_staff_and_time_slot))
       return
     }
@@ -227,9 +229,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     binding?.layoutShowSelectedSlot?.visibility = View.VISIBLE
     binding?.groupTiming?.visibility = View.GONE
 
-    binding?.textDate?.text = getDisplayDate(appointmentRequestModel.scheduledDateTime ?: "")
-    binding?.textTime?.text = appointmentRequestModel.startTime
-    binding?.textBy?.text = appointmentRequestModel.staffName
+    binding?.textDate?.text = getDisplayDate(appointmentRequestModel?.scheduledDateTime ?: "")
+    binding?.textTime?.text = appointmentRequestModel?.startTime
+    binding?.textBy?.text = appointmentRequestModel?.staffName
 
     this.appointmentRequestModel = appointmentRequestModel
     this.dateCounter = dateCounter

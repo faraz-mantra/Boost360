@@ -80,6 +80,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
   override fun customTheme(): Int? {
     return when (type) {
+      FragmentType.REVIEW_SPA_DETAILS-> R.style.AppThemeReviewAndConfirm
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2,
       -> R.style.AppTheme_Order_create

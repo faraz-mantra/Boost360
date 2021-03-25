@@ -64,12 +64,14 @@ class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSl
         dateCounter++
         binding?.textSelectedDate?.text = getDisplayDate(getDateTime())
         dateChangedListener?.onDateChanged(getSlotsAndStaff())
+        binding?.imagePrev?.setImageResource(R.drawable.ic_filled_arrow_left)
       }
 
       binding?.imagePrev -> {
-        if(dateCounter == 0) {
-          showShortToast(getString(R.string.cannot_go_beyond_todays_date))
+        if (dateCounter == 0) { binding?.imagePrev?.setImageResource(R.drawable.ic_filled_arrow_left_gray)
         } else {
+          binding?.imagePrev?.setImageResource(R.drawable.ic_filled_arrow_left)
+          if (dateCounter == 1) binding?.imagePrev?.setImageResource(R.drawable.ic_filled_arrow_left_gray)
           dateCounter--
           binding?.textSelectedDate?.text = getDisplayDate(getDateTime())
           dateChangedListener?.onDateChanged(getSlotsAndStaff())
