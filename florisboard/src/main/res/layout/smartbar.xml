@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/smartbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layoutDirection="locale">
+    android:layoutDirection="locale"
+    android:orientation="horizontal">
 
     <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
         android:id="@+id/action_start_area"
@@ -25,8 +24,8 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:layout_margin="@dimen/smartbar_button_margin"
-                android:padding="@dimen/smartbar_button_padding"
                 android:background="@null"
+                android:padding="@dimen/smartbar_button_padding"
                 android:scaleType="fitXY"
                 android:src="@drawable/business_feature_quick_actions" />
 
@@ -52,19 +51,44 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constrainedWidth="true"
-        app:layout_constraintStart_toEndOf="@id/action_start_area"
         app:layout_constraintEnd_toStartOf="@id/action_end_area"
+        app:layout_constraintStart_toEndOf="@id/action_start_area"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--<com.google.android.material.tabs.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/business_feature_tab_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:tabTextColor="@color/white"
+            app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabMode="scrollable"/>-->
+            app:tabTextColor="@color/white">
 
-        <LinearLayout
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Updates" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inventory" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photos" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Details" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <!--<LinearLayout
             android:id="@+id/business_quick_actions_container"
             style="@style/SmartbarContainer"
             android:gravity="top">
@@ -148,7 +172,7 @@
                 android:background="@color/white"
                 android:visibility="invisible" />
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/candidates"
@@ -156,19 +180,19 @@
 
             <Button
                 android:id="@+id/candidate0"
-                style="@style/SmartbarCandidate"/>
+                style="@style/SmartbarCandidate" />
 
-            <View style="@style/SmartbarDivider"/>
+            <View style="@style/SmartbarDivider" />
 
             <Button
                 android:id="@+id/candidate1"
-                style="@style/SmartbarCandidate"/>
+                style="@style/SmartbarCandidate" />
 
-            <View style="@style/SmartbarDivider"/>
+            <View style="@style/SmartbarDivider" />
 
             <Button
                 android:id="@+id/candidate2"
-                style="@style/SmartbarCandidate"/>
+                style="@style/SmartbarCandidate" />
 
         </LinearLayout>
 
@@ -178,8 +202,8 @@
 
             <Button
                 android:id="@+id/clipboard_suggestion"
-                android:drawableStart="@drawable/ic_content_paste_with_padding"
-                style="@style/SmartbarQuickAction.ClipboardSuggestion"/>
+                style="@style/SmartbarQuickAction.ClipboardSuggestion"
+                android:drawableStart="@drawable/ic_content_paste_with_padding" />
 
         </LinearLayout>
 
@@ -191,38 +215,38 @@
                 android:id="@+id/quick_action_undo"
                 style="@style/SmartbarQuickAction"
                 android:contentDescription="@string/smartbar__quick_action__undo"
-                android:src="@drawable/ic_undo"/>
+                android:src="@drawable/ic_undo" />
 
             <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
                 android:id="@+id/quick_action_redo"
                 style="@style/SmartbarQuickAction"
                 android:contentDescription="@string/smartbar__quick_action__redo"
-                android:src="@drawable/ic_redo"/>
+                android:src="@drawable/ic_redo" />
 
             <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
                 android:id="@+id/quick_action_switch_to_media_context"
                 style="@style/SmartbarQuickAction"
                 android:contentDescription="@string/smartbar__quick_action__switch_to_media_context"
-                android:src="@drawable/ic_sentiment_satisfied"/>
+                android:src="@drawable/ic_sentiment_satisfied" />
 
             <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
                 android:id="@+id/quick_action_open_settings"
                 style="@style/SmartbarQuickAction"
                 android:contentDescription="@string/smartbar__quick_action__open_settings"
-                android:src="@drawable/ic_settings"/>
+                android:src="@drawable/ic_settings" />
 
             <!-- TODO: find better icon for one-handed mode -->
             <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
                 android:id="@+id/quick_action_one_handed_toggle"
                 style="@style/SmartbarQuickAction"
                 android:contentDescription="@string/smartbar__quick_action__one_handed_mode"
-                android:src="@drawable/ic_smartphone"/>
+                android:src="@drawable/ic_smartphone" />
 
             <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
                 android:id="@+id/quick_action_switch_to_editing_context"
                 style="@style/SmartbarQuickAction"
                 android:contentDescription="@string/smartbar__quick_action__switch_to_editing_context"
-                android:src="@drawable/ic_open_with"/>
+                android:src="@drawable/ic_open_with" />
 
         </LinearLayout>
 
@@ -230,14 +254,14 @@
             android:id="@+id/clipboard_cursor_row"
             style="@style/SmartbarContainer"
             android:layoutDirection="ltr"
-            app:isSmartbarKeyboard="true"/>
+            app:isSmartbarKeyboard="true" />
 
         <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
             android:id="@+id/number_row"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layoutDirection="ltr"
-            app:isSmartbarKeyboard="true"/>
+            app:isSmartbarKeyboard="true" />
 
     </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
 
@@ -245,8 +269,8 @@
         android:id="@+id/action_end_area"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:layout_constrainedWidth="true"
         android:visibility="gone"
+        app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -254,7 +278,7 @@
             android:id="@+id/private_mode_button"
             style="@style/SmartbarQuickAction.PrivateModeButton"
             android:contentDescription="@string/smartbar__quick_action__private_mode"
-            android:src="@drawable/ic_security"/>
+            android:src="@drawable/ic_security" />
 
     </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
 

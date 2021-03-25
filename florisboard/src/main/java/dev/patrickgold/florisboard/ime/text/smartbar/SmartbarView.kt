@@ -19,11 +19,12 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
+import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SmartbarBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -43,12 +44,13 @@ import timber.log.Timber
 import java.lang.ref.WeakReference
 import kotlin.math.roundToInt
 
+
 /**
  * View class which manages the state and the UI of the Smartbar, a key element in the usefulness
  * of FlorisBoard. The view automatically tries to get the current FlorisBoard instance, which it
  * needs to decide when a specific feature component is shown.
  */
-class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
+class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabLayout.OnTabSelectedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager = ThemeManager.default()
@@ -75,7 +77,12 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         }
     var isBusinessFeatureVisible: Boolean = false
         set(v) {
-            binding.businessFeatureToggleAction.rotation = if (v) 180.0f else 0.0f
+            binding.businessFeatureToggleAction.rotation = if (v) {
+                binding.businessFeatureTabLayout.getTabAt(0)?.select()
+                180.0f
+            } else {
+                0.0f
+            }
             field = v
         }
     private var shouldSuggestClipboardContents: Boolean = false
@@ -192,25 +199,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             eventListener?.get()?.onSmartbarQuickActionPressed(binding.businessFeatureToggleAction.id)
         }
 
-        for (textViewTab in binding.businessQuickActions.children) {
-            if (textViewTab is TextView) {
-                textViewTab.id.let { id ->
-                    textViewTab.setOnClickListener {
-
-                        findViewById<View>(R.id.tv_updates).setBackgroundResource(if (it.id
-                                == R.id.tv_updates) R.drawable.round_414141 else android.R.color.transparent)
-                        findViewById<View>(R.id.tv_products).setBackgroundResource(if (it.id
-                                == R.id.tv_products) R.drawable.round_414141 else android.R.color.transparent)
-                        findViewById<View>(R.id.tv_photos).setBackgroundResource(if (it.id
-                                == R.id.tv_photos) R.drawable.round_414141 else android.R.color.transparent)
-                        findViewById<View>(R.id.tv_details).setBackgroundResource(if (it.id
-                                == R.id.tv_details) R.drawable.round_414141 else android.R.color.transparent)
-
-                        eventListener?.get()?.onBusinessTabSelectedListener(id)
-                    }
-                }
-            }
-        }
+        setupTabLayout()
 
         configureFeatureVisibility(
                 actionStartAreaVisible = false,
@@ -225,7 +214,15 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         florisboard?.textInputManager?.registerSmartbarView(this)
     }
 
+    private fun setupTabLayout() {
+        (binding.businessFeatureTabLayout.getChildAt(0) as ViewGroup)
+                .getChildAt(0).visibility = GONE
+
+        binding.businessFeatureTabLayout.addOnTabSelectedListener(this)
+    }
+
     override fun onDetachedFromWindow() {
+        binding.businessFeatureTabLayout.removeOnTabSelectedListener(this)
         eventListener = null
         florisboard?.textInputManager?.unregisterSmartbarView(this)
         themeManager.unregisterOnThemeUpdatedListener(this)
@@ -322,7 +319,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                                     R.id.quick_actions
                                 }
                                 isBusinessFeatureVisible -> {
-                                    R.id.business_quick_actions_container
+                                    R.id.business_feature_tab_layout
                                 }
                                 else -> {
                                     when (florisboard.textInputManager.getActiveKeyboardMode()) {
@@ -452,6 +449,21 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         fun onSmartbarCandidatePressed(word: String) {}
         fun onSmartbarPrivateModeButtonClicked() {}
         fun onSmartbarQuickActionPressed(@IdRes quickActionId: Int) {}
-        fun onBusinessTabSelectedListener(@IdRes tabId: Int) {}
+
+        fun onTabSelected(tab: TabLayout.Tab?)
+        fun onTabUnselected(tab: TabLayout.Tab?)
+        fun onTabReselected(tab: TabLayout.Tab?)
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        eventListener?.get()?.onTabSelected(tab)
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+        eventListener?.get()?.onTabUnselected(tab)
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+        eventListener?.get()?.onTabReselected(tab)
     }
 }

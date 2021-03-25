@@ -9,7 +9,7 @@ import dev.patrickgold.florisboard.customization.model.response.Product
 import dev.patrickgold.florisboard.customization.viewholder.ProductViewHolder
 
 
-class ProductsAdapter : ListAdapter<Product, ProductViewHolder>(ProductItemDiffCallback()) {
+class ProductsAdapter : ListAdapter<Product, ProductViewHolder>(ItemDiffUtilCallback<Product>()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ProductViewHolder {
         return ProductViewHolder(
@@ -21,10 +21,4 @@ class ProductsAdapter : ListAdapter<Product, ProductViewHolder>(ProductItemDiffC
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.bindTo(getItem(position))
     }
-}
-
-class ProductItemDiffCallback : DiffUtil.ItemCallback<Product>() {
-    override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean = oldItem == newItem
-
-    override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean = oldItem == newItem
 }

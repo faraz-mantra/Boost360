@@ -18,14 +18,31 @@ package dev.patrickgold.florisboard.ime.text
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Context
 import android.view.KeyEvent
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import android.widget.ViewFlipper
-import androidx.annotation.IdRes
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.framework.extensions.gone
+import com.framework.extensions.visible
+import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.customization.BusinessFeaturesViewPager
+import dev.patrickgold.florisboard.customization.BusinessFeatureEnum
+import dev.patrickgold.florisboard.customization.BusinessFeaturesViewModel
+import dev.patrickgold.florisboard.customization.adapter.DetailsAdapter
+import dev.patrickgold.florisboard.customization.adapter.PhotosAdapter
+import dev.patrickgold.florisboard.customization.adapter.ProductsAdapter
+import dev.patrickgold.florisboard.customization.adapter.UpdatesAdapter
+import dev.patrickgold.florisboard.customization.util.MethodUtils
+import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
+import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -57,7 +74,8 @@ import kotlin.math.roundToLong
  * instance and the Smartbar.
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
-    FlorisBoard.EventListener, SmartbarView.EventListener {
+        FlorisBoard.EventListener, SmartbarView.EventListener, TabLayout.OnTabSelectedListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private val florisboard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
@@ -67,7 +85,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var animator: ObjectAnimator? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
     private var editingKeyboardView: EditingKeyboardView? = null
-    private var businessFeatureViewPager: BusinessFeaturesViewPager? = null
     private var loadingPlaceholderKeyboard: KeyboardView? = null
     private var textViewFlipper: ViewFlipper? = null
     private var textViewGroup: LinearLayout? = null
@@ -101,7 +118,19 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var isManualSelectionModeStart: Boolean = false
     private var isManualSelectionModeEnd: Boolean = false
 
+    private lateinit var mContext: Context
     private var showFeatureUI = false
+    private lateinit var binding: BusinessFeaturesLayoutBinding
+    private lateinit var recyclerViewPost: RecyclerView
+    private lateinit var recyclerViewPhotos: RecyclerView
+    private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var businessFeatureProgressBar: ProgressBar
+    private val viewModel: BusinessFeaturesViewModel = BusinessFeaturesViewModel()
+    private val updatesAdapter: UpdatesAdapter = UpdatesAdapter()
+    private val productsAdapter: ProductsAdapter = ProductsAdapter()
+    private val detailsAdapter: DetailsAdapter = DetailsAdapter()
+    private val photosAdapter: PhotosAdapter = PhotosAdapter()
+    private val pagerSnapHelper = PagerSnapHelper()
 
 
     companion object {
@@ -156,14 +185,31 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onRegisterInputView(inputView: InputView) {
         Timber.i("onRegisterInputView(inputView)")
 
+        mContext = inputView.context
         textViewGroup = inputView.findViewById(R.id.text_input)
         textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
         editingKeyboardView = inputView.findViewById(R.id.editing)
         loadingPlaceholderKeyboard = inputView.findViewById(R.id.keyboard_preview)
-        businessFeatureViewPager = inputView.findViewById(R.id.business_feature_viewpager)
 
-        //businessFeatureViewPager?.setOnTouchListener { v, event -> true }
+        // initialize business features views
+        binding = BusinessFeaturesLayoutBinding.bind(inputView.findViewById(R.id.business_features))
 
+        swipeRefresh = binding.swipeRefresh
+        swipeRefresh.setOnRefreshListener(this)
+
+        businessFeatureProgressBar = binding.businessFeatureProgress
+
+        recyclerViewPost = binding.productShareRvList
+        recyclerViewPost.layoutManager = LinearLayoutManager(mContext).apply {
+            orientation = LinearLayoutManager.HORIZONTAL
+        }
+        pagerSnapHelper.attachToRecyclerView(recyclerViewPost)
+
+        recyclerViewPhotos = binding.rvListPhotos.also {
+            it.layoutManager = GridLayoutManager(mContext, 2,
+                    GridLayoutManager.HORIZONTAL, false)
+            it.adapter = photosAdapter
+        }
         launch(Dispatchers.Main) {
             textViewGroup?.let {
                 animator = ObjectAnimator.ofFloat(it, "alpha", 0.9f, 1.0f).apply {
@@ -176,7 +222,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         try {
                             duration = 500
                             setFloatValues(1.0f, 0.4f)
-                        } catch (_: Exception) {}
+                        } catch (_: Exception) {
+                        }
                     }
                 }
             }
@@ -217,10 +264,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         Timber.i("onDestroy()")
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
+        clearObservers()
         cancel()
         layoutManager.onDestroy()
-        businessFeatureViewPager?.onDestroy()
         instance = null
+    }
+
+    private fun clearObservers() {
+        viewModel.updates.removeObserver {}
+        viewModel.details.removeObserver {}
+        viewModel.photos.removeObserver {}
+        viewModel.products.removeObserver {}
     }
 
     /**
@@ -294,7 +348,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onWindowShown() {
         keyboardViews[KeyboardMode.CHARACTERS]?.updateVisibility()
         smartbarView?.updateSmartbarState()
-        businessFeatureViewPager?.onWindowShown()
     }
 
     /**
@@ -312,7 +365,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
         textViewFlipper?.displayedChild = textViewFlipper?.indexOfChild(when (mode) {
             KeyboardMode.EDITING -> editingKeyboardView
-            KeyboardMode.BUSINESS_FEATURES -> businessFeatureViewPager
+            KeyboardMode.BUSINESS_FEATURES -> binding.root
             else -> keyboardViews[mode]
         })?.coerceAtLeast(0) ?: 0
         keyboardViews[mode]?.updateVisibility()
@@ -323,7 +376,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
         smartbarView?.isQuickActionsVisible = false
-        if(mode != KeyboardMode.BUSINESS_FEATURES)
+        if (mode != KeyboardMode.BUSINESS_FEATURES)
             smartbarView?.isBusinessFeatureVisible = false
         smartbarView?.updateSmartbarState()
     }
@@ -458,7 +511,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
             R.id.business_feature_toggle_action -> {
                 showFeatureUI = !showFeatureUI
-                if(!showFeatureUI){
+                if (!showFeatureUI) {
                     setActiveKeyboardMode(KeyboardMode.CHARACTERS)
                 }
             }
@@ -466,21 +519,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         smartbarView?.isQuickActionsVisible = false
         smartbarView?.updateSmartbarState()
     }
-
-    override fun onBusinessTabSelectedListener(@IdRes tabId: Int){
-        if(showFeatureUI){
-            setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES)
-        }else{
-            setActiveKeyboardMode(KeyboardMode.CHARACTERS)
-        }
-        when(tabId){
-            R.id.tv_updates -> {businessFeatureViewPager?.setCurrentItem(0,false)}
-            R.id.tv_products -> businessFeatureViewPager?.setCurrentItem(1,false)
-            R.id.tv_photos -> businessFeatureViewPager?.setCurrentItem(2,false)
-            R.id.tv_details -> businessFeatureViewPager?.setCurrentItem(3,false)
-        }
-    }
-
 
     /**
      * Handles a [KeyCode.DELETE] event.
@@ -689,7 +727,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Adjusts a given key data for caps state and returns the correct reference.
      */
     private fun getAdjustedKeyData(keyData: KeyData): KeyData {
-        return if (caps && keyData is FlorisKeyData && keyData.shift != null) { keyData.shift!! } else { keyData }
+        return if (caps && keyData is FlorisKeyData && keyData.shift != null) {
+            keyData.shift!!
+        } else {
+            keyData
+        }
     }
 
     override fun onInputKeyDown(ev: InputKeyEvent) {
@@ -822,5 +864,121 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         when (data.code) {
             KeyCode.SHIFT -> handleShiftCancel()
         }
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        if (showFeatureUI) {
+            setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES)
+        } else {
+            setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+        }
+        tab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { showSelectedBusinessFeature(it) }
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+
+    }
+
+    private fun showSelectedBusinessFeature(businessFeatureEnum: BusinessFeatureEnum) {
+        when (businessFeatureEnum) {
+            BusinessFeatureEnum.UPDATES -> {
+                binding.clSelectionLayout.gone()
+                binding.productShareRvList.visible()
+                binding.rvListPhotos.gone()
+
+                recyclerViewPost.adapter = updatesAdapter
+            }
+            BusinessFeatureEnum.INVENTORY -> {
+                binding.clSelectionLayout.gone()
+                binding.productShareRvList.visible()
+                binding.rvListPhotos.gone()
+
+                recyclerViewPost.adapter = productsAdapter
+            }
+            BusinessFeatureEnum.PHOTOS -> {
+                binding.clSelectionLayout.visible()
+                binding.productShareRvList.gone()
+                binding.rvListPhotos.visible()
+            }
+            BusinessFeatureEnum.DETAILS -> {
+                binding.clSelectionLayout.gone()
+                binding.productShareRvList.visible()
+                binding.rvListPhotos.gone()
+
+                recyclerViewPost.adapter = detailsAdapter
+            }
+        }
+
+        initializeAdapters(businessFeatureEnum)
+    }
+
+    private fun initializeAdapters(businessFeatureEnum: BusinessFeatureEnum) {
+        if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
+            Timber.i("Please do login")
+            // set login adapter
+            // show login UI
+        } else {
+            if (MethodUtils.isOnline(mContext)) {
+                businessFeatureProgressBar.visible()
+                when (businessFeatureEnum) {
+                    BusinessFeatureEnum.UPDATES -> {
+                        viewModel.getUpdates(
+                                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId,
+                                mContext.getString(R.string.client_id),
+                                0, 10
+                        )
+                        viewModel.updates.observeForever {
+                            Timber.e("updates - $it.")
+                            businessFeatureProgressBar.gone()
+                            updatesAdapter.submitList(it.floats)
+                        }
+                    }
+                    BusinessFeatureEnum.INVENTORY -> {
+                        viewModel.getProducts(
+                                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
+                                mContext.getString(R.string.client_id),
+                                0, "SINGLE"
+                        )
+                        viewModel.products.observeForever {
+                            Timber.e("products - $it.")
+                            businessFeatureProgressBar.gone()
+                            productsAdapter.submitList(it)
+                        }
+                    }
+                    BusinessFeatureEnum.DETAILS -> {
+                        viewModel.getDetails(
+                                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
+                                mContext.getString(R.string.client_id)
+                        )
+                        viewModel.details.observeForever {
+                            Timber.e("details - $it.")
+                            businessFeatureProgressBar.gone()
+                            detailsAdapter.submitList(listOf(it))
+                        }
+                    }
+                    BusinessFeatureEnum.PHOTOS -> {
+                        viewModel.getPhotos(
+                                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId
+                        )
+                        viewModel.photos.observeForever {
+                            Timber.e("photos - $it.")
+                            businessFeatureProgressBar.gone()
+                            photosAdapter.submitList(it)
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(mContext, "Check your Network Connection", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onRefresh() {
+        swipeRefresh.isRefreshing = false
+        Toast.makeText(mContext, "Functionality to be implemented", Toast.LENGTH_SHORT).show()
     }
 }

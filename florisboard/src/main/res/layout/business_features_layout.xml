@@ -3,20 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_selection_layout"
         android:layout_width="match_parent"
-        android:layout_height="39dp"
+        android:layout_height="wrap_content"
         android:background="#2f2f2f"
-        android:orientation="horizontal"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -24,10 +20,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white_70"
+            android:text="@string/_0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/cl_selection_layout"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="120" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_photos"
@@ -37,9 +33,9 @@
             android:paddingEnd="4dp"
             android:text="@string/tv_photos"
             android:textColor="@color/white_70"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/tv_total"
             app:layout_constraintStart_toEndOf="@id/tv_total"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/tv_total" />
 
         <Button
             android:id="@+id/btn_share"
@@ -57,9 +53,9 @@
             android:text="@string/share"
             android:textColor="@color/white"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/cl_selection_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/cl_selection_layout" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_deselect_all"
@@ -67,6 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/deselect_all"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/btn_share"
@@ -75,33 +73,42 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/product_share_rv_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="#212121"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_selection_layout" />
+        android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list_photos"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/product_share_rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:background="#212121"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#212121"
+            android:overScrollMode="never"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_selection_layout" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/business_feature_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#212121"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_selection_layout" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

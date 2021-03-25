@@ -23,11 +23,10 @@
             android:layout_height="wrap_content"
             app:isLoadingPlaceholderKeyboard="true"/>
 
-        <dev.patrickgold.florisboard.customization.BusinessFeaturesViewPager
-            android:id="@+id/business_feature_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never" />
+        <include
+            android:id="@+id/business_features"
+            layout="@layout/business_features_layout"
+            android:visibility="gone" />
 
         <include layout="@layout/editing_layout"/>
 

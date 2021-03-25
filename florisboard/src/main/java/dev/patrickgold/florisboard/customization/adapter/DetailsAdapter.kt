@@ -2,14 +2,13 @@ package dev.patrickgold.florisboard.customization.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
 import dev.patrickgold.florisboard.customization.viewholder.DetailsViewHolder
 
 
-class DetailsAdapter : ListAdapter<CustomerDetails, DetailsViewHolder>(DetailsItemDiffCallback()) {
+class DetailsAdapter : ListAdapter<CustomerDetails, DetailsViewHolder>(ItemDiffUtilCallback<CustomerDetails>()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): DetailsViewHolder {
         return DetailsViewHolder(
@@ -21,11 +20,4 @@ class DetailsAdapter : ListAdapter<CustomerDetails, DetailsViewHolder>(DetailsIt
     override fun onBindViewHolder(holder: DetailsViewHolder, position: Int) {
         holder.bindTo(getItem(position))
     }
-}
-
-class DetailsItemDiffCallback : DiffUtil.ItemCallback<CustomerDetails>() {
-    override fun areItemsTheSame(oldItem: CustomerDetails, newItem: CustomerDetails): Boolean = oldItem == newItem
-
-    override fun areContentsTheSame(oldItem: CustomerDetails, newItem: CustomerDetails): Boolean = oldItem == newItem
-
 }
