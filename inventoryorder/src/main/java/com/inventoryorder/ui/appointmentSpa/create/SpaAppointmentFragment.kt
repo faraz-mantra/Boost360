@@ -229,9 +229,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     binding?.layoutShowSelectedSlot?.visibility = View.VISIBLE
     binding?.groupTiming?.visibility = View.GONE
 
-    binding?.textDate?.text = getDisplayDate(appointmentRequestModel?.scheduledDateTime ?: "")
-    binding?.textTime?.text = appointmentRequestModel?.startTime
-    binding?.textBy?.text = appointmentRequestModel?.staffName
+    binding?.textDate?.text = getDisplayDate(appointmentRequestModel.scheduledDateTime ?: "")
+    binding?.textTime?.text = appointmentRequestModel.startTime
+    binding?.textBy?.text = appointmentRequestModel.staffName
 
     this.appointmentRequestModel = appointmentRequestModel
     this.dateCounter = dateCounter
@@ -239,7 +239,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
   private fun getSearchListing() {
     showProgress(getString(R.string.loading))
-    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 10)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 500)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
 
       if (it.error is NoNetworkException) {
