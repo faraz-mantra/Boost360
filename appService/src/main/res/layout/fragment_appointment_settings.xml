@@ -15,8 +15,8 @@
 
             <androidx.appcompat.widget.SearchView
                 style="@style/SearchView.WhiteBackground"
-                android:layout_height="@dimen/size_40"
                 app:iconifiedByDefault="false"
+                android:layout_height="@dimen/size_40"
                 android:gravity="center_vertical"
                 app:queryHint="@string/search_in_the_appointment_settings" />
         </LinearLayout>
@@ -34,8 +34,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
                 android:id="@+id/catalog_setup"
-                android:foreground="?selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:paddingBottom="@dimen/size_20"
+                android:focusable="true"
                 android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
@@ -77,13 +78,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/HorizontalDivider" />
+            <View style="@style/AppointmentHorizontalDivider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
                 android:id="@+id/payment_collection_setup"
                 android:paddingBottom="@dimen/size_20"
-                android:foreground="?selectableItemBackground"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
@@ -125,13 +127,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/HorizontalDivider" />
+            <View style="@style/AppointmentHorizontalDivider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/match_wrap"
                 android:id="@+id/customer_invoice_setup"
-                android:foreground="?selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:paddingBottom="@dimen/size_20"
+                android:focusable="true"
                 android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
@@ -175,13 +178,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/HorizontalDivider" />
+            <View style="@style/AppointmentHorizontalDivider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/policies_for_customer"
                 style="@style/match_wrap"
-                android:foreground="?selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:paddingBottom="@dimen/size_20"
+                android:focusable="true"
                 android:clickable="true">
 
                 <com.framework.views.customViews.CustomImageView
@@ -222,7 +226,7 @@
                     app:layout_constraintVertical_bias="0.7" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/HorizontalDivider" />
+            <View style="@style/AppointmentHorizontalDivider" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
