@@ -162,17 +162,17 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     }
 
     binding?.textCustomerName?.text = order?.BuyerDetails?.ContactDetails?.FullName
-    if (order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber ==null) {
+    if (order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber.isNullOrEmpty()) {
       binding?.textCustomerPhone?.gone()
-    }else{ binding?.textCustomerPhone?.gone()}
+    }else{ binding?.textCustomerPhone?.visible()}
     binding?.textCustomerPhone?.text = "Phone: ${order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber}"
-      if (order?.BuyerDetails?.ContactDetails?.EmailId ==null) {
+      if (order?.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty()) {
           binding?.textCustomerEmail?.gone()
-      }else{ binding?.textCustomerEmail?.gone()}
+      }else{ binding?.textCustomerEmail?.visible()}
     binding?.textCustomerEmail?.text = "Email: ${order?.BuyerDetails?.ContactDetails?.EmailId}"
-    if (order?.BuyerDetails?.GSTIN ==null) {
+    if (order?.BuyerDetails?.GSTIN ==null||order.BuyerDetails.GSTIN=="") {
       binding?.ctvGstin?.gone()
-    }else{ binding?.ctvGstin?.gone()}
+    }else{ binding?.ctvGstin?.visible()}
     binding?.ctvGstin?.text = "GSTIN: ${order?.BuyerDetails?.GSTIN as String}"
     binding?.textPaymentStatusDropdown?.text = "${order?.PaymentDetails?.statusValue()}"
     binding?.textPaymentTypeDropdown?.text = "${order?.PaymentDetails?.methodValue()}"
