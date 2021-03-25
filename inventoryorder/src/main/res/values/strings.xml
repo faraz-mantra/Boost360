@@ -488,6 +488,7 @@
   <string name="tools_text_email">tester@gmail.com</string>
   <string name="tools_text_simple_massage">Simple Massage</string>
   <string name="tools_text_rs_20000">₹2,000.00</string>
+  <string name="customer_street_address" translatable="false" tools:ignore="ExtraTranslation">Customer street address*</string>
   <string name="tools_text_11_00_am_on_mon_12_jan_2020">11:00 AM on Mon, 12 Jan 2020</string>
   <string name="tools_text_staff_sushil_singh">Staff: Sushil Singh</string>
     <string name="tools_text_cash_on_delivery">Cash on delivery</string>
@@ -499,4 +500,6 @@
   <string name="tools_text_appointment_id">Appointment ID #VDJNVBJD</string>
   <string name="do_you_want_to_remove_the_item_name_from_the_list">Do you want to remove the item name from the list?</string>
     <string name="rupee_symbol">₹</string>
+  <string name="city_name">City name*</string>
+  <string name="type_the_plot_number_and_street_address">Type the plot number and street address</string>
 </resources>

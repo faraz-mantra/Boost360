@@ -3,66 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@drawable/bg_rounded_top_gray"
+    style="@style/match_match">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.appcompat.widget.LinearLayoutCompat
         style="@style/match_wrap"
-        android:layout_width="@dimen/size_0"
-        app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
+        app:layout_constraintVertical_bias="1"
+        android:paddingTop="@dimen/size_20"
+        android:paddingBottom="@dimen/size_20"
+        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/text_service_name"
+            style="@style/FormHeading"
+            android:layout_marginStart="@dimen/size_20"
+            android:layout_weight="1"
+            tools:text="@string/simple_dry_massage" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/wrap_wrap"
+            android:layout_gravity="end">
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="@dimen/size_15"
+                android:layout_height="@dimen/size_15"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_clock_outline" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/text_duration"
+                style="@style/EditTextLabelStyle"
+                android:layout_marginEnd="@dimen/size_20"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/size_5"
+                android:text="@string/_30_minutes"
+                app:layout_constraintStart_toStartOf="@id/linear_service"
+                app:layout_constraintTop_toBottomOf="@id/linear_service" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView4"
+        style="@style/match_wrap"
+        android:layout_height="@dimen/size_0"
+        app:layout_constrainedHeight="true"
+        android:background="@drawable/bg_rounded_top_white_2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 style="@style/match_wrap"
-                android:background="@drawable/bg_rounded_top_gray"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    style="@style/match_wrap"
-                    android:layout_marginTop="@dimen/size_20">
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/text_service_name"
-                        style="@style/FormHeading"
-                        android:layout_marginStart="@dimen/size_20"
-                        android:layout_weight="1"
-                        tools:text="@string/simple_dry_massage" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        style="@style/wrap_wrap"
-                        android:layout_gravity="end">
-
-                        <com.framework.views.customViews.CustomImageView
-                            android:layout_width="@dimen/size_15"
-                            android:layout_height="@dimen/size_15"
-                            android:layout_gravity="center_vertical"
-                            app:srcCompat="@drawable/ic_clock_outline" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/text_duration"
-                            style="@style/EditTextLabelStyle"
-                            android:layout_marginEnd="@dimen/size_20"
-                            android:layout_weight="1"
-                            android:paddingStart="@dimen/size_5"
-                            android:text="@string/_30_minutes"
-                            app:layout_constraintStart_toStartOf="@id/linear_service"
-                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/coordinatorLayoutBottomSheet"
                     style="@style/match_wrap"
-                    android:layout_marginTop="@dimen/size_20"
-                    android:background="@drawable/bg_rounded_top_white_2"
                     android:orientation="vertical"
                     android:padding="@dimen/size_20"
                     app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
