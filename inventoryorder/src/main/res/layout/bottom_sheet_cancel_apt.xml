@@ -100,6 +100,7 @@
           style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_10"
+            android:textCursorDrawable="@drawable/color_cursor"
           android:layout_marginEnd="@dimen/size_20"
           android:background="@drawable/bg_rect_edit_txt"
           android:hint="@string/type_if_there_are_any_known_reason"
