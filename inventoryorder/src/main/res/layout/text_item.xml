@@ -9,22 +9,19 @@
 
   <androidx.appcompat.widget.LinearLayoutCompat
     android:id="@+id/main_view"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    style="@style/wrap_wrap"
     android:orientation="horizontal">
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:textColor="@color/primary_grey"
       app:textType="SUBTITLE_2"
       tools:text="Payment:" />
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/value"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginStart="@dimen/size_6"
       android:textColor="@color/black"
       app:textType="BODY_1"

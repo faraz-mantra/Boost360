@@ -144,7 +144,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   private fun setDetails(order: OrderItem?) {
     val product = order?.firstItemForAptConsult()?.product()
     val extraAptDetail = product?.extraItemProductConsultation()
-    binding?.textFromBookingValue?.text = "#${order?.ReferenceNumber}"
+    binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
     binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
     binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
@@ -268,7 +268,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
-    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
+    item.actionView.setOnClickListener {
       startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
     }
   }
