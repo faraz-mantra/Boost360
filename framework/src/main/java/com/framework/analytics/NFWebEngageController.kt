@@ -91,7 +91,7 @@ object NFWebEngageController {
 
 
     fun initiateUserLogin(userId: String?) {
-        if (!userId.isNullOrEmpty()) {
+        if (userId != null && !userId.isNullOrEmpty()) {
             weUser.login(userId)
 
             //Firebase Analytics User Session Event.

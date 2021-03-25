@@ -47,15 +47,17 @@ object FirestoreManager {
     fun readDrScoreDocument() {
         Log.e("readDrScoreDocument ","readDrScoreDocument")
         val docRef = getDocumentReference();
-        docRef?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
-            if (e == null) {
-                Log.d(TAG, "No Exception")
-                Log.d(TAG, "Document Data is : "+snapshot?.data)
-                model = snapshot?.data?.toDataClass<DrScoreModel>();
-                updateDrScoreIfNull()
-                listener?.invoke()
-            } else {
-                Log.d(TAG, "Exception" + e);
+        if(docRef != null){
+            docRef?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
+                if (e == null) {
+                    Log.d(TAG, "No Exception")
+                    Log.d(TAG, "Document Data is : "+snapshot?.data)
+                    model = snapshot?.data?.toDataClass<DrScoreModel>();
+                    updateDrScoreIfNull()
+                    listener?.invoke()
+                } else {
+                    Log.d(TAG, "Exception" + e);
+                }
             }
         }
     }
@@ -65,6 +67,7 @@ object FirestoreManager {
             return db?.collection(COLLECTION_NAME)?.document(this.fpTag);
         }catch (e:Exception){
             e.printStackTrace()
+            Log.e(TAG, "Firestore document reference");
         }
         return null
     }
