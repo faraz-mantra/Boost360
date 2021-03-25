@@ -28,6 +28,16 @@
     <item name="android:timePickerStyle">@style/MyDatePicker</item>
   </style>
 
+  <style name="AppThemeReviewAndConfirm">
+    <item name="bottomSheetDialogTheme">@style/DialogStyle</item>
+  </style>
+
+  <style name="DialogStyle" parent="BottomSheetTheme">
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:windowSoftInputMode">adjustResize</item>
+  </style>
+
   <style name="AppTheme.Order.create" parent="AppTheme.Order">
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:timePickerStyle">@style/MyDatePicker</item>

@@ -99,6 +99,8 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       binding?.layoutCustomer?.tvRemove -> {
         binding?.layoutCustomer?.textAddCustomerGstin?.visibility = View.VISIBLE
         binding?.layoutCustomer?.lytCustomerGstn?.visibility = View.GONE
+        binding?.layoutCustomer?.editGstin?.text?.clear()
+
       }
 
       binding?.imageEdit -> {
@@ -162,11 +164,11 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       showShortToast(getString(R.string.please_enter_valid_email))
       return
     }
-
-    if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
-      showShortToast(getString(R.string.enter_valid_gstin_number))
-      return
-    }
+    if (binding?.layoutCustomer?.lytCustomerGstn?.visibility == View.VISIBLE)
+      if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
+        showShortToast(getString(R.string.enter_valid_gstin_number))
+        return
+      }
 
     if (address.isEmpty()) {
       showShortToast(getString(R.string.customer_address_cannot_be_empty))
