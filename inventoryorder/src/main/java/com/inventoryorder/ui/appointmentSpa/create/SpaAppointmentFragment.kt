@@ -2,19 +2,15 @@ package com.inventoryorder.ui.appointmentSpa.create
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
-import com.framework.extensions.getChildOrNull
 import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
-import com.framework.utils.fromHtml
-import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
@@ -276,11 +272,25 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         discountedPrice = selectedService?.DiscountedPrice ?: 0.0
         currency = selectedService?.Currency ?: ""
         val bookingSlotsRequest = BookingSlotsRequest(BatchType = "DAILY",
-            ServiceId = serviceList?.get(pos)?._id!!,
-            DateRange = DateRange(StartDate = startDate, EndDate = startDate))
+                ServiceId = serviceList?.get(pos)?._id!!,
+                DateRange = DateRange(StartDate = startDate, EndDate = startDate))
         getBookingSlots(bookingSlotsRequest)
       }
     }
+    binding?.editServiceName?.addTextChangedListener(object : TextWatcher {
+      override fun afterTextChanged(s: Editable?) {
+        if (s.toString().isBlank() || s.toString().isEmpty()) {
+          binding?.groupTiming?.visibility = View.VISIBLE
+          binding?.layoutShowSelectedSlot?.visibility = View.GONE
+        }
+      }
+
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+      }
+
+      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+      }
+    })
   }
 
   private fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) {
@@ -292,7 +302,11 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       }
       if (it.isSuccess()) {
         bookingSlotResponse = (it as? BookingSlotResponse)
-        bookingSlotResponse?.Result?.get(0)?.Staff?.get(0)?.isSelected = true
+        if (bookingSlotResponse?.Result.isNullOrEmpty().not()) {
+          if (bookingSlotResponse?.Result?.get(0)?.Staff.isNullOrEmpty().not()) {
+            bookingSlotResponse?.Result?.get(0)?.Staff?.get(0)?.isSelected = true
+          }
+        }
         selectedDateTimeBottomSheetDialog?.setData(bookingSlotResponse!!, selectedService!!)
         binding?.groupTiming?.visibility = View.VISIBLE
         binding?.layoutShowSelectedSlot?.visibility = View.GONE
