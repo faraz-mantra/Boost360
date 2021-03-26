@@ -103,11 +103,11 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
+        },
+        {
+          "quickActionType": "LIST_STAFF",
+          "title": "List a\nstaff"
         }
-        //        {
-        //          "quickActionType": "LIST_STAFF",
-        //          "title": "List a\nstaff"
-        //        }
       ]
     },
     {
@@ -141,11 +141,11 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
+        },
+        {
+          "quickActionType": "LIST_STAFF",
+          "title": "List a\nstaff"
         }
-        //        {
-        //          "quickActionType": "LIST_STAFF",
-        //          "title": "List a\nstaff"
-        //        }
       ]
     },
     {
@@ -311,19 +311,19 @@
           "quickActionType": "ADD_PHOTO_GALLERY",
           "title": "Post new\nphotos"
         },
-        //        {
-        //          "quickActionType": "PLACE_ORDER_BOOKING",
-        //          "title": "Add an\norder",
-        //          "isNew": true
-        //        },
+        {
+          "quickActionType": "PLACE_ORDER_BOOKING",
+          "title": "Add an\norder",
+          "isNew": true
+        },
         {
           "quickActionType": "ADD_PRODUCT",
           "title": "Add a\nproduct"
         },
-        //        {
-        //          "quickActionType": "ADD_TESTIMONIAL",
-        //          "title": "Add customer\ntestimonial"
-        //        },
+        {
+          "quickActionType": "ADD_TESTIMONIAL",
+          "title": "Add customer\ntestimonial"
+        },
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
@@ -361,11 +361,11 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
+        },
+        {
+          "quickActionType": "LIST_STAFF",
+          "title": "List a\nstaff"
         }
-        //        {
-        //          "quickActionType": "LIST_STAFF",
-        //          "title": "List a\nstaff"
-        //        }
       ]
     },
     {
