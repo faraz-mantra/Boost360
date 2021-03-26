@@ -93,7 +93,7 @@
                         <com.framework.views.customViews.CustomTextView
                             style="@style/DashBoard_Text_Title"
                             android:layout_marginTop="@dimen/size_20"
-                            android:text="@string/add_service_image"
+                            android:text="@string/add_profile_image"
                             android:textColor="@color/yellow_ffb900"
                             app:textAllCaps="true"
                             app:textType="BODY_1" />
@@ -147,6 +147,7 @@
                         android:id="@+id/ctf_description"
                         style="@style/DashBoard_Text_Field"
                         android:inputType="textMultiLine"
+                        android:singleLine="false"
                         android:hint="@string/type_owner_s_description_in_around_2000_characters_at_max"
                         android:textCursorDrawable="@null" />
                 </LinearLayout>

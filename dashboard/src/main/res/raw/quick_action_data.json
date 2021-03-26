@@ -31,6 +31,10 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
+        },
+        {
+          "quickActionType": "SERVICES_OFFERS",
+          "title": "Service Offers"
         }
       ]
     },
@@ -69,6 +73,10 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
+        },
+        {
+          "quickActionType": "SERVICES_OFFERS",
+          "title": "Service Offers"
         }
       ]
     },
@@ -103,6 +111,10 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
+        },
+        {
+          "quickActionType": "SERVICES_OFFERS",
+          "title": "Service Offers"
         }
         //        {
         //          "quickActionType": "LIST_STAFF",
@@ -141,6 +153,10 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
+        },
+        {
+          "quickActionType": "SERVICES_OFFERS",
+          "title": "Service Offers"
         }
         //        {
         //          "quickActionType": "LIST_STAFF",
@@ -361,6 +377,10 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
+        },
+        {
+          "quickActionType": "SERVICES_OFFERS",
+          "title": "Service Offers"
         }
         //        {
         //          "quickActionType": "LIST_STAFF",
