@@ -119,7 +119,9 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     }
 
     private fun onDeliveryDetailsReceived(it: BaseResponse) {
-        val data = it as DeliveryDetailsResponse
-        binding?.toggleCod?.isOn = data.result?.isBusinessLocationPickupAllowed ?: false
+            val data = it as? DeliveryDetailsResponse
+            binding?.toggleCod?.isOn = data?.result?.isBusinessLocationPickupAllowed ?: false
+
+
     }
 }

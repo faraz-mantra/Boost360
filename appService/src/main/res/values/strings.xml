@@ -611,7 +611,7 @@
   <string name="add_a_new_offer">Add a new offer</string>
   <string name="offers">Offers</string>
     <string name="offer_description_optional">Offer description (optional)</string>
-  <string name="describe_this_offer_in_around_2000_characters_at_max">Describe this offer in around 2000 characters at max…</string>
+  <string name="describe_this_offer_in_around_2000_characters_at_max">Describe this offer in around 2000 characters at max……</string>
     <string name="add_offer_image">Add offer image.</string>
   <string name="add_offer_description">Add offer Description.</string>
   <string name="add_offer_title">Add offer Title</string>

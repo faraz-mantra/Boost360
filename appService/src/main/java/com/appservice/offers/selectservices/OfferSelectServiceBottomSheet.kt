@@ -64,14 +64,12 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText.isNullOrBlank().not()) {
                     newText?.let { startFilter(it.trim().toLowerCase(Locale.ROOT)) }
-                }
                 return false
             }
         })
         binding?.searchServices?.setOnCloseListener {
-            adapter?.notify(finalList!!)
+            adapter?.updateList(finalList!!)
             true
         }
     }

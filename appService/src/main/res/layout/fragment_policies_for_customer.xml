@@ -26,7 +26,7 @@
                 <com.framework.views.customViews.CustomTextView
                     style="@style/match_wrap"
                     android:layout_gravity="center"
-                    android:text="@string/select_how_you_want_to_recieve_money_for_all_your_online_appointments"
+                    android:text="@string/boost_auto_generates_the_customer_policies_using_policy_generator_you_can_still_customise_few_of_these"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -53,7 +53,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    android:padding="@dimen/size_10">
+                    android:padding="@dimen/size_20">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -91,7 +91,7 @@
                     android:layout_marginTop="@dimen/size_20"
                     android:background="@drawable/bg_rect_white_rounded_4"
                     android:foreground="?attr/selectableItemBackground"
-                    android:padding="@dimen/size_10">
+                    android:padding="@dimen/size_20">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    android:padding="@dimen/size_10">
+                    android:padding="@dimen/size_20">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -166,7 +166,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    android:padding="@dimen/size_10">
+                    android:padding="@dimen/size_20">
 
                     <LinearLayout
                         android:layout_width="0dp"
