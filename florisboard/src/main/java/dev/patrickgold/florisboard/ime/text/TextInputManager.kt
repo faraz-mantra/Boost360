@@ -36,7 +36,9 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.BusinessFeatureEnum
 import dev.patrickgold.florisboard.customization.BusinessFeaturesViewModel
-import dev.patrickgold.florisboard.customization.adapter.*
+import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
+import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
+import dev.patrickgold.florisboard.customization.adapter.SharedAdapter
 import dev.patrickgold.florisboard.customization.util.MethodUtils
 import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
 import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
@@ -54,7 +56,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
-import kotlinx.android.synthetic.main.business_features_layout.view.*
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
@@ -125,7 +126,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var businessFeatureProgressBar: ProgressBar
     private val viewModel: BusinessFeaturesViewModel = BusinessFeaturesViewModel()
-    private val adapter: SharedAdapter = SharedAdapter()
+    private val adapter: SharedAdapter = SharedAdapter(this)
     private val pagerSnapHelper = PagerSnapHelper()
 
 
@@ -979,27 +980,23 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         Toast.makeText(mContext, "Functionality to be implemented", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onItemClick(pos: Int) {
-        currentTab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { /*handleListItemClick(it, pos)*/ }
+    override fun onItemClick(pos: Int, item: BaseRecyclerItem) {
+        currentTab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { handleListItemClick(it, pos, item) }
     }
 
-    private fun handleListItemClick(businessFeatureEnum: BusinessFeatureEnum, pos: Int) {
+    private fun handleListItemClick(businessFeatureEnum: BusinessFeatureEnum, pos: Int, item: BaseRecyclerItem) {
         when (businessFeatureEnum) {
             BusinessFeatureEnum.UPDATES -> {
-                val item = adapter.currentList[pos]
-                Timber.i("$item")
+                Timber.i("pos - $pos item = $item")
             }
             BusinessFeatureEnum.INVENTORY -> {
-                val item = adapter.currentList[pos]
-                Timber.i("$item")
+                Timber.i("pos - $pos item = $item")
             }
             BusinessFeatureEnum.PHOTOS -> {
-                val item = adapter.currentList[pos]
-                Timber.i("$item")
+                Timber.i("pos - $pos item = $item")
             }
             BusinessFeatureEnum.DETAILS -> {
-                val item = adapter.currentList[pos]
-                Timber.i("$item")
+                Timber.i("pos - $pos item = $item")
             }
         }
     }

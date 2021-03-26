@@ -7,14 +7,16 @@ import com.bumptech.glide.Glide
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
+import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.Float
 
-class FloatViewHolder(itemView: View) : BaseRecyclerViewHolder(itemView) {
+class FloatViewHolder(itemView: View, val listener: OnItemClickListener?) : BaseRecyclerViewHolder(itemView) {
 
-    val desc: TextView = itemView.findViewById(R.id.textView)
-    val image: ImageView = itemView.findViewById(R.id.imageView)
+    private val desc: TextView = itemView.findViewById(R.id.textView)
+    private val image: ImageView = itemView.findViewById(R.id.imageView)
+    private val itemCardView = itemView
 
-    override fun bindTo(item: BaseRecyclerItem?) {
+    override fun bindTo(position: Int, item: BaseRecyclerItem?) {
         val float = item as Float
         // bind views with data
         desc.text = float.message
@@ -26,5 +28,6 @@ class FloatViewHolder(itemView: View) : BaseRecyclerViewHolder(itemView) {
         } else {
             image.visibility = View.GONE
         }
+        itemCardView.setOnClickListener { listener?.onItemClick(position, float) }
     }
 }
