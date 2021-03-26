@@ -225,6 +225,7 @@
   <string name="save_and_publish"><![CDATA[Save & Publish]]></string>
   <string name="year_of_experience">Year of Experience</string>
   <string name="edit"><u>EDIT</u></string>
+  <string name="edit_">EDIT</string>
   <string name="special">Specialization</string>
   <string name="upcoming_leaves">Upcoming Leaves</string>
   <string name="upcoming_leave_s">Upcoming Leave(s)</string>
@@ -748,6 +749,7 @@
   <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to recieve money for all your online appointments.</string>
     <string name="i_understood">i understood</string>
     <string name="search_in_the_appointment_settings">Search in appointment settings</string>
+  <string name="gstin_">GSTIN</string>
 
 
 </resources>

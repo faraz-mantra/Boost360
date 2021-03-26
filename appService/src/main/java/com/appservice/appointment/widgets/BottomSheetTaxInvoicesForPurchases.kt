@@ -44,6 +44,13 @@ class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetu
         val images = arguments?.getSerializable(IntentConstant.IMAGE_SIGNATURE.name) as ArrayList<FileModel>
         if (images.isNotEmpty()) setImage(images, parent = parent) else setImage(parent)
         if (paymentProfileDetails?.uPIId.isNullOrEmpty().not()) binding?.checkboxUpiId?.isChecked = true
+        if (binding?.checkboxUpiId?.isChecked == true) binding?.cetUpiId?.visible() else binding?.cetUpiId?.gone()
+        binding?.checkboxUpiId?.setOnCheckedChangeListener { buttonView, isChecked ->
+            when (isChecked) {
+                true -> binding?.cetUpiId?.visible()
+                else -> binding?.cetUpiId?.gone()
+            }
+        }
         parent.onImageClick = {
             val path = it[0].path
             setImage(it, path, parent)

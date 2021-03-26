@@ -11,17 +11,17 @@
 
         <com.framework.views.viewgroups.BaseRecyclerView
             android:id="@+id/rv_category"
-            android:paddingTop="@dimen/size_30"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:clipToPadding="false"
             android:orientation="vertical"
+            android:paddingTop="@dimen/size_10"
+            android:paddingBottom="@dimen/size_60"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/btn_add_new_category"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/size_60"
             tools:itemCount="5"
             tools:listitem="@layout/item_create_category" />
 
@@ -33,6 +33,7 @@
             android:layout_marginHorizontal="@dimen/size_16"
             android:layout_marginBottom="@dimen/size_16"
             android:text="@string/add_new_category"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

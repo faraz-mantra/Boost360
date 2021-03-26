@@ -1,6 +1,7 @@
 package com.appservice.appointment.ui
 
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Base64
 import android.view.View
@@ -26,6 +27,7 @@ import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
+import com.framework.utils.fromHtml
 
 class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetupBinding, AppointmentSettingsViewModel>() {
     override fun getLayout(): Int {
@@ -53,7 +55,9 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding?.gstinContainer, binding?.editPurchases)
+        binding?.editPurchases?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        binding?.editPurchases?.text = getString(R.string.edit_)
+        setOnClickListener(binding?.gstinContainer, binding?.invoiceSetupContainer)
         getprofileDetails()
     }
 
@@ -87,20 +91,44 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     }
 
     private fun updatePreviousData() {
-        binding?.ctvGstNum?.text = data?.result?.taxDetails?.gSTDetails?.gSTIN
-        binding?.upiId?.text = data?.result?.uPIId
-        binding?.ctvCompanyName?.text = data?.result?.taxDetails?.gSTDetails?.businessName
-        binding?.ctvCompanyName?.visible()
-        binding?.ctvCompanyNameHeading?.visible()
-        binding?.hintEnterGst?.gone()
+        if (data?.result?.taxDetails?.gSTDetails?.gSTIN.isNullOrEmpty()) {
+            binding?.hintEnterGst?.visible()
+            binding?.ctvGstinHeading?.text = getString(R.string.gstin_)
+
+        } else {
+            binding?.ctvGstinHeading?.text = getString(R.string.gstin)
+            binding?.ctvGstNum?.text = data?.result?.taxDetails?.gSTDetails?.gSTIN
+            binding?.icDone?.visible()
+            binding?.hintEnterGst?.gone()
+
+        }
+        if (data?.result?.uPIId.isNullOrEmpty()) {
+            binding?.upiIdHeading?.gone()
+            binding?.upiId?.gone()
+
+        } else {
+            binding?.upiIdHeading?.visible()
+            binding?.upiId?.visible()
+            binding?.upiId?.text = data?.result?.uPIId
+        }
+        if (data?.result?.taxDetails?.gSTDetails?.businessName.isNullOrEmpty()) {
+            binding?.ctvCompanyName?.gone()
+            binding?.ctvCompanyNameHeading?.gone()
+        } else {
+            binding?.ctvCompanyName?.visible()
+            binding?.ctvCompanyNameHeading?.visible()
+            binding?.ctvCompanyName?.text = data?.result?.taxDetails?.gSTDetails?.businessName
+        }
         if (data?.result?.merchantSignature != null) {
             binding?.icDoneImg?.visible()
             binding?.signatureHeading?.visible()
             binding?.signature?.visible()
+        }else{
+            binding?.icDoneImg?.gone()
+            binding?.signatureHeading?.gone()
+            binding?.signature?.gone()
         }
-        if (data?.result?.taxDetails?.gSTDetails?.gSTIN != null) {
-            binding?.icDone?.visible()
-        }
+
 
     }
 
@@ -110,7 +138,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
             binding?.gstinContainer -> {
                 showEnterBusinessGSTIN()
             }
-            binding?.editPurchases -> {
+            binding?.invoiceSetupContainer -> {
                 showTaxInvoicesForPurchases()
             }
         }
