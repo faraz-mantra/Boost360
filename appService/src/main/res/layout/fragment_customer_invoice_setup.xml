@@ -115,8 +115,10 @@
 
                     <com.framework.views.customViews.CustomTextView
                         style="@style/Appointment_Text_Title"
+                        app:layout_constraintHorizontal_bias="0"
                         android:text="@string/setup_tax_invoice_for_customer_purchases"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/edit_purchases"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,6 +128,7 @@
                         android:layout_gravity="end"
                         android:includeFontPadding="false"
                         android:text="@string/edit"
+                        app:textAllCaps="true"
                         android:textColor="@color/yellow_ffb900"
                         app:fontFamily="@font/semi_bold"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -200,7 +203,7 @@
         <com.framework.views.customViews.CustomButton
             style="@style/Appointment.ButtonStyle.Rounded.Solid.Stroke"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/size_30"
+            android:layout_marginHorizontal="@dimen/size_20"
             android:text="@string/view_sample_invoice"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

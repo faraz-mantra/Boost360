@@ -20,6 +20,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/ll_top"
                 style="@style/match_wrap"
+                android:background="@drawable/rectangle_smoked"
                 android:orientation="vertical">
 
                 <FrameLayout style="@style/match_wrap">
@@ -49,7 +50,6 @@
                         android:id="@+id/image_add_btn"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_180"
-                        android:background="@color/white_smoke_1"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?attr/selectableItemBackground"
@@ -81,7 +81,7 @@
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_change_picture"
-                    style="@style/Offers.ButtonStyle.Rounded.Solid.Stroke"
+                    style="@style/ButtonStyle.Rounded.Solid.Stroke.ChangeImage"
                     android:layout_width="match_parent"
                     android:layout_gravity="bottom"
                     android:text="@string/change_picture"
@@ -192,7 +192,7 @@
                                 android:layout_marginTop="@dimen/size_20"
                                 android:layout_marginBottom="@dimen/size_10"
                                 android:text="@string/select_service"
-                                android:visibility="visible" />
+                                android:visibility="gone" />
 
 
                             <LinearLayout
@@ -217,6 +217,7 @@
                                     style="@style/Offers_Text_Header"
                                     android:layout_gravity="end"
                                     android:text="@string/change"
+                                    android:layout_marginBottom="-10dp"
                                     android:textAllCaps="true"
                                     android:textColor="@color/yellow_ffb900"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -298,12 +299,10 @@
                     android:layout_marginTop="@dimen/size_20"
                     android:text="@string/offer_description_optional" />
 
-                <com.framework.views.customViews.CustomTextField
+                <com.framework.views.customViews.CustomEditText
                     android:id="@+id/ctv_offers_description"
-                    style="@style/Offers_Text_Field"
-                    android:drawablePadding="@dimen/size_5"
-                    android:hint="@string/describe_this_offer_in_around_2000_characters_at_max"
-                    android:inputType="textMultiLine" />
+                    style="@style/Offers_MultiLineEditText"
+                    android:hint="@string/describe_this_offer_in_around_2000_characters_at_max" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_other_info"

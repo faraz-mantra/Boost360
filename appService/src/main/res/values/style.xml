@@ -77,10 +77,11 @@
         <item name="android:editTextColor">@color/gray_828282</item>
         <!-- Hint text color -->
         <item name="android:textColorHint">@color/gray_light_3</item>
-        <item name="android:iconifiedByDefault">true</item>
-        <item name="closeIcon">@drawable/ic_close_black</item>
-        <item name="searchIcon">@drawable/ic_search_black_24dp</item>
-<!--        <item name="android:background">@drawable/rounded_stroke_grey_4</item>-->
+        <item name="android:iconifiedByDefault">false</item>
+        <item name="closeIcon">@drawable/ic_close_gray_light</item>
+        <item name="searchIcon">@drawable/ic_search_gray_24dp</item>
+        <item name="android:drawablePadding">0dp</item>
+        <!--        <item name="android:background">@drawable/rounded_stroke_grey_4</item>-->
 
     </style>
 
@@ -581,6 +582,10 @@
         <item name="android:paddingEnd">@dimen/size_60</item>
         <item name="android:textColor">@color/yellow_ffb900</item>
     </style>
+    <style name="ButtonStyle.Rounded.Solid.Stroke.ChangeImage" parent="Offers.ButtonStyle.Rounded.Solid.Stroke">
+        <item name="android:background">@drawable/offer_button_stroke_orange_radius_one</item>
+
+    </style>
 
     <style name="Offers_Text_Heading">
         <item name="android:layout_height">wrap_content</item>
@@ -638,6 +643,20 @@
         <item name="android:textColor">@color/warm_grey_10</item>
         <item name="android:textColorHint">@color/primary_grey</item>
     </style>
+    <style name="Offers_MultiLineEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:inputType">textMultiLine|textImeMultiLine</item>
+        <item name="singleLine">false</item>
+        <item name="android:gravity">top|start</item>
+        <item name="android:background">@drawable/bg_rect_edit_txt</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">@dimen/size_5</item>
+        <item name="android:padding">@dimen/size_12</item>
+        <item name="android:textColor">@color/warm_grey_10</item>
+        <item name="android:textColorHint">@color/primary_grey</item>
+    </style>
+
 
     <style name="Offers_Text_Title">
         <item name="android:layout_width">wrap_content</item>

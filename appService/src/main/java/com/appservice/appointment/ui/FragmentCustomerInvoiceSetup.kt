@@ -59,8 +59,6 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
 
     private fun getprofileDetails() {
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_payment_details))
-        showProgress()
-
     }
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)

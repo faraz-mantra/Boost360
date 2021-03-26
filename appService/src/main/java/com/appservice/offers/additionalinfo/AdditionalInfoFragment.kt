@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
+import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentOfferAdditionalInfoBinding
 import com.appservice.model.FileModel
 import com.appservice.model.servicev1.ImageModel
@@ -145,57 +146,44 @@ class AdditionalInfoFragment : AppBaseFragment<FragmentOfferAdditionalInfoBindin
         } else adapterImage?.notifyDataSetChanged()
     }
 
-    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        TODO("Not yet implemented")
-    }
 
-//    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-//        when (actionType) {
-//            RecyclerViewActionType.IMAGE_CLEAR_CLICK.ordinal -> {
-//                val data = item as? FileModel
-//                if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
-//                    val dataImage = secondaryDataImage?.firstOrNull { it. ac== data?.pathUrl }
-//                            ?: return
-//                    showProgress(resources.getString(R.string.removing_image))
-//                    val request = DeleteSecondaryImageRequest(offerModel?.offerId, dataImage.ImageId);
-//                    viewModel?.dele(request)?.observeOnce(viewLifecycleOwner, Observer {
-//                        if (it.status == 200 || it.status == 201 || it.status == 202) {
-//                            secondaryDataImage?.remove(dataImage)
-//                            secondaryImage.remove(data)
-//                            setAdapter()
-//                        } else showLongToast(resources.getString(R.string.removing_image_failed))
-//                        hideProgress()
-//                    })
-//                } else {
-//                    secondaryImage.remove(data)
-//                    setAdapter()
-//                }
-//
-//            }
-//            RecyclerViewActionType.IMAGE_CHANGE.ordinal -> {
-//                val data = item as? FileModel
-//                if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
-//                    val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
-//                            ?: return
-//                    showProgress(resources.getString(R.string.removing_image))
-//                    val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId);
-//                    viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, {
-//                        if (it.status == 200 || it.status == 201 || it.status == 202) {
-//                            secondaryDataImage?.remove(dataImage)
-//                            secondaryImage.remove(data)
-//                            setAdapter()
-//                        } else showLongToast(resources.getString(R.string.removing_image_failed))
-//                        hideProgress()
-//                    })
-//                } else {
-//                    secondaryImage.remove(data)
-//                    setAdapter()
-//                }
-//                openImagePicker()
-//
-//            }
-//        }
-//    }
+    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+        when (actionType) {
+            RecyclerViewActionType.IMAGE_CLEAR_CLICK.ordinal -> {
+                val data = item as? FileModel
+                if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
+                    val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
+                            ?: return
+                    showProgress(resources.getString(R.string.removing_image))
+                    secondaryDataImage?.remove(dataImage)
+                    secondaryImage.remove(data)
+                    setAdapter()
+                    hideProgress()
+                } else {
+                    secondaryImage.remove(data)
+                    setAdapter()
+                }
+
+            }
+            RecyclerViewActionType.IMAGE_CHANGE.ordinal -> {
+                val data = item as? FileModel
+                if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
+                    val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
+                            ?: return
+                    showProgress(resources.getString(R.string.removing_image))
+                    secondaryDataImage?.remove(dataImage)
+                    secondaryImage.remove(data)
+                    setAdapter()
+                    hideProgress()
+                } else {
+                    secondaryImage.remove(data)
+                    setAdapter()
+                }
+                openImagePicker()
+
+            }
+        }
+    }
 
 
 }

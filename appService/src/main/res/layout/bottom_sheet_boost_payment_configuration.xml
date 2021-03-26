@@ -73,6 +73,7 @@
                         style="@style/wrap_wrap"
                         android:minWidth="0dp"
                         android:minHeight="0dp"
+                        android:checked="true"
                         android:layout_width="@dimen/size_30"
                         android:height="@dimen/size_30"
                         android:gravity="center"
@@ -86,7 +87,7 @@
 
                         <com.framework.views.customViews.CustomTextView
                             style="@style/match_wrap"
-
+                            android:maxLines="1"
                             android:drawableStart="@drawable/ic_boost_payment"
                             android:drawablePadding="@dimen/size_5"
                             android:text="@string/boost_payment_gateway"
@@ -152,9 +153,9 @@
 
                         <com.framework.views.customViews.CustomTextView
                             style="@style/match_wrap"
-
                             android:drawableStart="@drawable/ic_custom_payment_gateway"
                             android:drawablePadding="@dimen/size_5"
+                            android:maxLines="1"
                             android:text="@string/my_custom_payment_gateway"
                             android:textColor="@color/black_2A2A2A"
                             android:textSize="19sp"

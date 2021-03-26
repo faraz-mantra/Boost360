@@ -112,26 +112,18 @@
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_apply"
-                    style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
-                    android:paddingStart="@dimen/size_10"
-                    android:paddingEnd="@dimen/size_10"
-                    android:layout_width="wrap_content"
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                     android:text="@string/apply"
-                    android:textSize="12sp"
+                    android:textColor="@color/white"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.framework.views.customViews.CustomButton
-                    style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                     android:layout_marginEnd="@dimen/size_20"
-                    android:background="@null"
-                    android:paddingEnd="@dimen/size_10"
-                    android:paddingStart="@dimen/size_10"
                     android:text="@string/cancel"
-                    android:layout_width="wrap_content"
                     android:id="@+id/btn_cancel"
-                    android:textColor="@color/yellow_ffb900"
-                    android:textSize="12sp"
+                    android:background="@null"
                     app:layout_constraintRight_toLeftOf="@id/btn_apply"
                     app:layout_constraintTop_toTopOf="parent" />
 

@@ -36,7 +36,7 @@
 
                 <FrameLayout
                     style="@style/match_wrap"
-                    android:background="@drawable/shape_color_accent_stroke_rect_title">
+                    android:background="@drawable/rectangle_smoked">
 
                     <com.framework.views.customViews.CustomImageView
                         android:layout_width="match_parent"
@@ -104,8 +104,7 @@
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_change_image"
                     android:visibility="gone"
-                    style="@style/Dashboard.ButtonStyle.Rounded.Solid.Stroke"
-                    android:layout_marginHorizontal="@dimen/size_2"
+                    style="@style/ButtonStyle.Rounded.Solid.Stroke.ChangeImage"
                     android:text="@string/change_image" />
 
                 <LinearLayout
