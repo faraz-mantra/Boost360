@@ -1,6 +1,8 @@
 package dev.patrickgold.florisboard.customization.model.response
 
 import com.google.gson.annotations.SerializedName
+import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
+import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
 
 data class CustomerDetails(
         @SerializedName("ImageUri")
@@ -21,4 +23,6 @@ data class CustomerDetails(
         var rootAliasUri: String,
         var lat: Double = 0.0,
         var lng: Double = 0.0,
-)
+) : BaseRecyclerItem(){
+        override fun getViewType(): Int = FeaturesEnum.DETAILS.ordinal
+}

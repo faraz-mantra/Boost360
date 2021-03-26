@@ -2,6 +2,8 @@ package dev.patrickgold.florisboard.customization.model.response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
+import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
 
 data class Float(
         @SerializedName("_id")
@@ -46,4 +48,7 @@ data class Float(
 
         @SerializedName("url")
         @Expose
-        var url: String? = null)
+        var url: String? = null) : BaseRecyclerItem() {
+
+        override fun getViewType(): Int = FeaturesEnum.UPDATES.ordinal
+}

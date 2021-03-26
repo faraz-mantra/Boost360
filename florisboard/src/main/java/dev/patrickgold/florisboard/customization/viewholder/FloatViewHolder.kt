@@ -3,22 +3,19 @@ package dev.patrickgold.florisboard.customization.viewholder
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
+import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
+import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.model.response.Float
 
-class FloatViewHolder(itemView: View, private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
-    init {
-        itemView.setOnClickListener(this)
-    }
+class FloatViewHolder(itemView: View) : BaseRecyclerViewHolder(itemView) {
 
     val desc: TextView = itemView.findViewById(R.id.textView)
     val image: ImageView = itemView.findViewById(R.id.imageView)
 
-    fun bindTo(float: Float) {
+    override fun bindTo(item: BaseRecyclerItem?) {
+        val float = item as Float
         // bind views with data
         desc.text = float.message
 
@@ -26,15 +23,8 @@ class FloatViewHolder(itemView: View, private val listener: OnItemClickListener)
             image.visibility = View.VISIBLE
             Glide.with(image).load(float.imageUri)
                     .placeholder(R.drawable.default_product_image).into(image)
-        }else{
+        } else {
             image.visibility = View.GONE
-        }
-    }
-
-    override fun onClick(v: View?) {
-        val pos = adapterPosition
-        if (pos != RecyclerView.NO_POSITION) {
-            listener.onItemClick(pos)
         }
     }
 }

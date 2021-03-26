@@ -2,6 +2,8 @@ package dev.patrickgold.florisboard.customization.model.response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
+import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
 
 data class Product(
         @SerializedName("ApplicationId")
@@ -122,4 +124,6 @@ data class Product(
         @SerializedName("sharedPlatforms")
         @Expose
         var sharedPlatforms: List<Any>? = null
-)
+) : BaseRecyclerItem() {
+    override fun getViewType(): Int = FeaturesEnum.PRODUCTS.ordinal
+}

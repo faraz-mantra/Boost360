@@ -9,20 +9,20 @@ import dev.patrickgold.florisboard.customization.model.response.Updates
 import dev.patrickgold.florisboard.customization.network.BusinessFeatureRepository
 import dev.patrickgold.florisboard.customization.network.GetGalleryImagesAsyncTask
 import dev.patrickgold.florisboard.customization.util.Constants
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import timber.log.Timber
 
 class BusinessFeaturesViewModel {
+
+    var job: Job? = null
 
     private val _updates = MutableLiveData<Updates>()
     val updates: LiveData<Updates>
         get() = _updates
 
     fun getUpdates(fpId: String, clientId: String, skipBy: Int, limit: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
+        job?.cancel()
+        job = CoroutineScope(Dispatchers.IO).launch {
             val updates = BusinessFeatureRepository.getAllUpdates(fpId, clientId, skipBy, limit)
             withContext(Dispatchers.Main) {
                 _updates.value = updates
@@ -35,7 +35,8 @@ class BusinessFeaturesViewModel {
         get() = _products
 
     fun getProducts(fpTag: String, clientId: String, skipBy: Int, identifierType: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        job?.cancel()
+        job = CoroutineScope(Dispatchers.IO).launch {
             val products = BusinessFeatureRepository.getAllProducts(fpTag, clientId, skipBy, identifierType)
             withContext(Dispatchers.Main) {
                 _products.value = products
@@ -48,7 +49,8 @@ class BusinessFeaturesViewModel {
         get() = _details
 
     fun getDetails(fpTag: String, clientId: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        job?.cancel()
+        job = CoroutineScope(Dispatchers.IO).launch {
             val details = BusinessFeatureRepository.getAllDetails(fpTag, clientId)
             withContext(Dispatchers.Main) {
                 _details.value = details
@@ -61,7 +63,8 @@ class BusinessFeaturesViewModel {
         get() = _photo
 
     fun getPhotos(fpId: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        job?.cancel()
+        job = CoroutineScope(Dispatchers.IO).launch {
             BusinessFeatureRepository.getAllImageList(object : GetGalleryImagesAsyncTask.GetGalleryImagesInterface {
                 override fun imagesReceived() {
                     Timber.i("Images Received")

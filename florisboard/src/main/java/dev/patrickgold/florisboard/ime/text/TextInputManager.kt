@@ -125,10 +125,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var businessFeatureProgressBar: ProgressBar
     private val viewModel: BusinessFeaturesViewModel = BusinessFeaturesViewModel()
-    private val updatesAdapter: UpdatesAdapter = UpdatesAdapter(this)
-    private val productsAdapter: ProductsAdapter = ProductsAdapter(this)
-    private val detailsAdapter: DetailsAdapter = DetailsAdapter(this)
-    private val photosAdapter: PhotosAdapter = PhotosAdapter()
+    private val adapter: SharedAdapter = SharedAdapter()
     private val pagerSnapHelper = PagerSnapHelper()
 
 
@@ -198,16 +195,18 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
         businessFeatureProgressBar = binding.businessFeatureProgress
 
-        recyclerViewPost = binding.productShareRvList
-        recyclerViewPost.layoutManager = LinearLayoutManager(mContext).apply {
-            orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewPost = binding.productShareRvList.also {
+            it.layoutManager = LinearLayoutManager(mContext).apply {
+                orientation = LinearLayoutManager.HORIZONTAL
+            }
+            it.adapter = adapter
         }
         pagerSnapHelper.attachToRecyclerView(recyclerViewPost)
 
         recyclerViewPhotos = binding.rvListPhotos.also {
             it.layoutManager = GridLayoutManager(mContext, 2,
                     GridLayoutManager.HORIZONTAL, false)
-            it.adapter = photosAdapter
+            it.adapter = adapter
         }
         launch(Dispatchers.Main) {
             textViewGroup?.let {
@@ -889,15 +888,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 binding.clSelectionLayout.gone()
                 binding.productShareRvList.visible()
                 binding.rvListPhotos.gone()
-
-                recyclerViewPost.adapter = updatesAdapter
             }
             BusinessFeatureEnum.INVENTORY -> {
                 binding.clSelectionLayout.gone()
                 binding.productShareRvList.visible()
                 binding.rvListPhotos.gone()
-
-                recyclerViewPost.adapter = productsAdapter
             }
             BusinessFeatureEnum.PHOTOS -> {
                 binding.clSelectionLayout.visible()
@@ -908,8 +903,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 binding.clSelectionLayout.gone()
                 binding.productShareRvList.visible()
                 binding.rvListPhotos.gone()
-
-                recyclerViewPost.adapter = detailsAdapter
             }
         }
 
@@ -938,7 +931,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         viewModel.updates.observeForever {
                             Timber.e("updates - $it.")
                             businessFeatureProgressBar.gone()
-                            updatesAdapter.submitList(it.floats)
+                            adapter.submitList(it.floats)
                         }
                     }
                     BusinessFeatureEnum.INVENTORY -> {
@@ -950,7 +943,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         viewModel.products.observeForever {
                             Timber.e("products - $it.")
                             businessFeatureProgressBar.gone()
-                            productsAdapter.submitList(it)
+                            adapter.submitList(it)
                         }
                     }
                     BusinessFeatureEnum.DETAILS -> {
@@ -961,7 +954,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         viewModel.details.observeForever {
                             Timber.e("details - $it.")
                             businessFeatureProgressBar.gone()
-                            detailsAdapter.submitList(listOf(it))
+                            adapter.submitList(listOf(it))
                         }
                     }
                     BusinessFeatureEnum.PHOTOS -> {
@@ -971,7 +964,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         viewModel.photos.observeForever {
                             Timber.e("photos - $it.")
                             businessFeatureProgressBar.gone()
-                            photosAdapter.submitList(it)
+                            adapter.submitList(it)
                         }
                     }
                 }
@@ -987,25 +980,25 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onItemClick(pos: Int) {
-        currentTab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { handleListItemClick(it, pos) }
+        currentTab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { /*handleListItemClick(it, pos)*/ }
     }
 
     private fun handleListItemClick(businessFeatureEnum: BusinessFeatureEnum, pos: Int) {
         when (businessFeatureEnum) {
             BusinessFeatureEnum.UPDATES -> {
-                val item = updatesAdapter.currentList[pos]
+                val item = adapter.currentList[pos]
                 Timber.i("$item")
             }
             BusinessFeatureEnum.INVENTORY -> {
-                val item = productsAdapter.currentList[pos]
+                val item = adapter.currentList[pos]
                 Timber.i("$item")
             }
             BusinessFeatureEnum.PHOTOS -> {
-                val item = photosAdapter.currentList[pos]
+                val item = adapter.currentList[pos]
                 Timber.i("$item")
             }
             BusinessFeatureEnum.DETAILS -> {
-                val item = detailsAdapter.currentList[pos]
+                val item = adapter.currentList[pos]
                 Timber.i("$item")
             }
         }
