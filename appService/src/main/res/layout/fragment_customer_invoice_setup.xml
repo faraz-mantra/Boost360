@@ -40,6 +40,7 @@
 
                     <com.framework.views.customViews.CustomTextView
                         style="@style/Appointment_Text_Title"
+                        android:id="@+id/ctv_gstin_heading"
                         android:text="@string/gstin" />
 
                     <Space
@@ -92,7 +93,7 @@
             android:layout_marginHorizontal="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:background="@drawable/bg_rect_white_rounded_4"
-            android:paddingHorizontal="@dimen/size_10"
+            android:paddingHorizontal="@dimen/size_20"
             android:paddingTop="@dimen/size_10"
             android:paddingBottom="@dimen/size_30"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +102,7 @@
 
 
             <LinearLayout
-                android:id="@+id/linearLayout2"
+                android:id="@+id/invoice_setup_container"
                 style="@style/match_wrap"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -141,9 +142,7 @@
 
                 <com.framework.views.customViews.CustomTextView
                     style="@style/Appointment_Text_Title.SubHeading"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:text="@string/signature_bank_details_upi_id_for_non_prepaid_sales" />
-
+                    android:layout_marginTop="@dimen/size_5"                    android:text="@string/signature_bank_details_upi_id_for_non_prepaid_sales" />
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/upi_id_heading"
                     android:layout_marginTop="@dimen/size_10"
@@ -159,6 +158,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+
                     android:layout_marginTop="@dimen/size_5">
 
                     <com.framework.views.customViews.CustomTextView
@@ -176,6 +176,7 @@
                         android:layout_marginEnd="@dimen/size_5"
                         android:text="@string/uploaded"
                         android:textAllCaps="true"
+                        android:textColor="@color/green_27AE60"
                         android:visibility="gone"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"

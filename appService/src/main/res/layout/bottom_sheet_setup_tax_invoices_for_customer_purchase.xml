@@ -184,21 +184,13 @@
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btnCancel"
                     style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-                    android:layout_height="@dimen/size_36"
-                    android:layout_width="wrap_content"
-                    android:paddingHorizontal="@dimen/size_10"
                     android:layout_marginEnd="@dimen/size_10"
-                    android:background="@color/white"
-                    android:text="@string/cancel"
-                    android:textColor="@color/pinkish_grey" />
+                    android:background="@null"
+                    android:text="@string/cancel" />
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_save_changes"
                     style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/size_36"
-                    android:paddingStart="@dimen/size_10"
-                    android:paddingEnd="@dimen/size_10"
                     android:text="@string/save_changes"
                     android:textColor="@color/white" />
             </androidx.appcompat.widget.LinearLayoutCompat>
