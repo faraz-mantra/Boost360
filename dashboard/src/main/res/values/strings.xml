@@ -152,4 +152,5 @@
     <string name="uploading_image">uploading image</string>
     <string name="updating">updating..</string>
     <string name="update_details">UPDATE DETAILS</string>
+    <string name="add_profile_image">Add profile Image*</string>
 </resources>
