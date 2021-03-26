@@ -6,9 +6,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.Float
 
-class FloatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class FloatViewHolder(itemView: View, private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+    init {
+        itemView.setOnClickListener(this)
+    }
 
     val desc: TextView = itemView.findViewById(R.id.textView)
     val image: ImageView = itemView.findViewById(R.id.imageView)
@@ -23,6 +28,13 @@ class FloatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     .placeholder(R.drawable.default_product_image).into(image)
         }else{
             image.visibility = View.GONE
+        }
+    }
+
+    override fun onClick(v: View?) {
+        val pos = adapterPosition
+        if (pos != RecyclerView.NO_POSITION) {
+            listener.onItemClick(pos)
         }
     }
 }

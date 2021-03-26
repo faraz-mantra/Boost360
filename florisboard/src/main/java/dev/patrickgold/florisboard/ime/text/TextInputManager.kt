@@ -36,10 +36,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.BusinessFeatureEnum
 import dev.patrickgold.florisboard.customization.BusinessFeaturesViewModel
-import dev.patrickgold.florisboard.customization.adapter.DetailsAdapter
-import dev.patrickgold.florisboard.customization.adapter.PhotosAdapter
-import dev.patrickgold.florisboard.customization.adapter.ProductsAdapter
-import dev.patrickgold.florisboard.customization.adapter.UpdatesAdapter
+import dev.patrickgold.florisboard.customization.adapter.*
 import dev.patrickgold.florisboard.customization.util.MethodUtils
 import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
 import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
@@ -57,6 +54,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
+import kotlinx.android.synthetic.main.business_features_layout.view.*
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
@@ -75,7 +73,7 @@ import kotlin.math.roundToLong
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
         FlorisBoard.EventListener, SmartbarView.EventListener, TabLayout.OnTabSelectedListener,
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
     private val florisboard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
@@ -120,15 +118,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     private lateinit var mContext: Context
     private var showFeatureUI = false
+    private var currentTab: TabLayout.Tab? = null
     private lateinit var binding: BusinessFeaturesLayoutBinding
     private lateinit var recyclerViewPost: RecyclerView
     private lateinit var recyclerViewPhotos: RecyclerView
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var businessFeatureProgressBar: ProgressBar
     private val viewModel: BusinessFeaturesViewModel = BusinessFeaturesViewModel()
-    private val updatesAdapter: UpdatesAdapter = UpdatesAdapter()
-    private val productsAdapter: ProductsAdapter = ProductsAdapter()
-    private val detailsAdapter: DetailsAdapter = DetailsAdapter()
+    private val updatesAdapter: UpdatesAdapter = UpdatesAdapter(this)
+    private val productsAdapter: ProductsAdapter = ProductsAdapter(this)
+    private val detailsAdapter: DetailsAdapter = DetailsAdapter(this)
     private val photosAdapter: PhotosAdapter = PhotosAdapter()
     private val pagerSnapHelper = PagerSnapHelper()
 
@@ -867,6 +866,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
+        currentTab = tab
         if (showFeatureUI) {
             setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES)
         } else {
@@ -919,9 +919,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun initializeAdapters(businessFeatureEnum: BusinessFeatureEnum) {
         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
             Timber.i("Please do login")
-            // set login adapter
             // show login UI
+            binding.pleaseLoginCard.visible()
+            binding.pleaseLoginCard.setOnClickListener {
+                MethodUtils.startBoostActivity(mContext)
+            }
         } else {
+            binding.pleaseLoginCard.gone()
             if (MethodUtils.isOnline(mContext)) {
                 businessFeatureProgressBar.visible()
                 when (businessFeatureEnum) {
@@ -980,5 +984,30 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onRefresh() {
         swipeRefresh.isRefreshing = false
         Toast.makeText(mContext, "Functionality to be implemented", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemClick(pos: Int) {
+        currentTab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { handleListItemClick(it, pos) }
+    }
+
+    private fun handleListItemClick(businessFeatureEnum: BusinessFeatureEnum, pos: Int) {
+        when (businessFeatureEnum) {
+            BusinessFeatureEnum.UPDATES -> {
+                val item = updatesAdapter.currentList[pos]
+                Timber.i("$item")
+            }
+            BusinessFeatureEnum.INVENTORY -> {
+                val item = productsAdapter.currentList[pos]
+                Timber.i("$item")
+            }
+            BusinessFeatureEnum.PHOTOS -> {
+                val item = photosAdapter.currentList[pos]
+                Timber.i("$item")
+            }
+            BusinessFeatureEnum.DETAILS -> {
+                val item = detailsAdapter.currentList[pos]
+                Timber.i("$item")
+            }
+        }
     }
 }

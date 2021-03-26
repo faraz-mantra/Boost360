@@ -8,12 +8,13 @@ import dev.patrickgold.florisboard.customization.model.response.Float
 import dev.patrickgold.florisboard.customization.viewholder.FloatViewHolder
 
 
-class UpdatesAdapter : ListAdapter<Float, FloatViewHolder>(ItemDiffUtilCallback<Float>()) {
+class UpdatesAdapter(private val listener: OnItemClickListener) : ListAdapter<Float, FloatViewHolder>(ItemDiffUtilCallback<Float>()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): FloatViewHolder {
         return FloatViewHolder(
                 LayoutInflater.from(parent.context)
-                        .inflate(R.layout.adapter_item_update, parent, false)
+                        .inflate(R.layout.adapter_item_update, parent, false),
+                listener
         )
     }
 

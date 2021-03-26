@@ -8,12 +8,13 @@ import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
 import dev.patrickgold.florisboard.customization.viewholder.DetailsViewHolder
 
 
-class DetailsAdapter : ListAdapter<CustomerDetails, DetailsViewHolder>(ItemDiffUtilCallback<CustomerDetails>()) {
+class DetailsAdapter(private val listener: OnItemClickListener) : ListAdapter<CustomerDetails, DetailsViewHolder>(ItemDiffUtilCallback<CustomerDetails>()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): DetailsViewHolder {
         return DetailsViewHolder(
                 LayoutInflater.from(parent.context)
-                        .inflate(R.layout.adapter_item_details, parent, false)
+                        .inflate(R.layout.adapter_item_details, parent, false),
+                listener
         )
     }
 
