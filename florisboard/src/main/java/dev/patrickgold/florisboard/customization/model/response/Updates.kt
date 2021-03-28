@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class Updates(
         @SerializedName("floats")
         @Expose
-        var floats: List<Float>? = null,
+        var floats: List<Float?>? = null,
 
         @SerializedName("moreFloatsAvailable")
         @Expose

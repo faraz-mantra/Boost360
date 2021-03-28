@@ -22,7 +22,11 @@ class SharedAdapter(private var listener: OnItemClickListener? = null) : ListAda
     }
 
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).getViewType()
+        return if(getItem(position) == null){
+            FeaturesEnum.LOADER.ordinal
+        }else{
+            getItem(position).getViewType()
+        }
     }
 
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder, position: Int) {
