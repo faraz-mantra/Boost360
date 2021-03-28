@@ -180,6 +180,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             e.printStackTrace();
         }
 
+
+
         //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
     }
 

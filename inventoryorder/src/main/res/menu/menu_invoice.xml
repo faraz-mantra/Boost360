@@ -5,7 +5,7 @@
   <item
       android:id="@+id/menu_item_invoice"
       android:orderInCategory="100"
-      android:title=""
-      app:actionLayout="@layout/invoice_menu_item_action_layout"
+      android:title="Invoice"
+      android:icon="@drawable/ic_invoice"
       app:showAsAction="always" />
 </menu>

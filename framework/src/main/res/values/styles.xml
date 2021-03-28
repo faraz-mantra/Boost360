@@ -41,6 +41,7 @@
   <style name="MaterialDialogThemeFull" parent="MaterialDialogTheme">
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowIsFloating">false</item>
+    <item name="colorAccent">@color/colorAccent</item>
   </style>
 
 
