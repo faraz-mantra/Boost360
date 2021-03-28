@@ -18,29 +18,15 @@ package dev.patrickgold.florisboard.ime.text
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-import android.content.Context
 import android.view.KeyEvent
 import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.Toast
 import android.widget.ViewFlipper
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.framework.extensions.gone
-import com.framework.extensions.visible
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.BusinessFeatureEnum
-import dev.patrickgold.florisboard.customization.BusinessFeaturesViewModel
-import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
-import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
-import dev.patrickgold.florisboard.customization.adapter.SharedAdapter
-import dev.patrickgold.florisboard.customization.util.MethodUtils
-import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
-import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
+import dev.patrickgold.florisboard.customization.BusinessFeaturesManager
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -58,7 +44,6 @@ import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
-import kotlin.NoSuchElementException
 import kotlin.math.roundToLong
 
 /**
@@ -73,7 +58,7 @@ import kotlin.math.roundToLong
  * instance and the Smartbar.
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
-        FlorisBoard.EventListener, SmartbarView.EventListener, TabLayout.OnTabSelectedListener, OnItemClickListener {
+        FlorisBoard.EventListener, SmartbarView.EventListener {
 
     private val florisboard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
@@ -116,20 +101,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var isManualSelectionModeStart: Boolean = false
     private var isManualSelectionModeEnd: Boolean = false
 
-    private lateinit var mContext: Context
-    private var showFeatureUI = false
-    private var currentTab: TabLayout.Tab? = null
-    private lateinit var binding: BusinessFeaturesLayoutBinding
-    private lateinit var recyclerViewPost: RecyclerView
-    private lateinit var recyclerViewPhotos: RecyclerView
-    private lateinit var businessFeatureProgressBar: ProgressBar
-    private val viewModel: BusinessFeaturesViewModel = BusinessFeaturesViewModel()
-    private val adapter: SharedAdapter = SharedAdapter(this)
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private val pagerSnapHelper = PagerSnapHelper()
-
-    var isLoading = false
-    val dataSet = mutableListOf<BaseRecyclerItem?>()
+    private var showFeatureUI: Boolean = false
+    private lateinit var businessFeaturesManager: BusinessFeaturesManager
 
     companion object {
         private var instance: TextInputManager? = null
@@ -183,45 +156,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onRegisterInputView(inputView: InputView) {
         Timber.i("onRegisterInputView(inputView)")
 
-        mContext = inputView.context
         textViewGroup = inputView.findViewById(R.id.text_input)
         textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
         editingKeyboardView = inputView.findViewById(R.id.editing)
         loadingPlaceholderKeyboard = inputView.findViewById(R.id.keyboard_preview)
 
-        // initialize business features views
-        binding = BusinessFeaturesLayoutBinding.bind(inputView.findViewById(R.id.business_features))
-
-        businessFeatureProgressBar = binding.businessFeatureProgress
-
-        linearLayoutManager = LinearLayoutManager(mContext).apply {
-            orientation = LinearLayoutManager.HORIZONTAL
-        }
-
-        recyclerViewPost = binding.productShareRvList.also {
-            it.layoutManager = linearLayoutManager
-            it.adapter = adapter
-        }
-        pagerSnapHelper.attachToRecyclerView(recyclerViewPost)
-
-        recyclerViewPhotos = binding.rvListPhotos.also {
-            it.layoutManager = GridLayoutManager(mContext, 2,
-                    GridLayoutManager.HORIZONTAL, false)
-            it.adapter = adapter
-        }
-
-        recyclerViewPost.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (!isLoading) {
-                    if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == adapter.currentList.size - 1) {
-                        //bottom of list!
-                        currentTab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { loadMoreItems(it) }
-                        isLoading = true;
-                    }
-                }
-            }
-        })
+        businessFeaturesManager = BusinessFeaturesManager(inputView)
 
         launch(Dispatchers.Main) {
             textViewGroup?.let {
@@ -277,17 +217,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         Timber.i("onDestroy()")
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
-        clearObservers()
+        businessFeaturesManager.clearObservers()
         cancel()
         layoutManager.onDestroy()
         instance = null
-    }
-
-    private fun clearObservers() {
-        viewModel.updates.removeObserver {}
-        viewModel.details.removeObserver {}
-        viewModel.photos.removeObserver {}
-        viewModel.products.removeObserver {}
     }
 
     /**
@@ -378,7 +311,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
         textViewFlipper?.displayedChild = textViewFlipper?.indexOfChild(when (mode) {
             KeyboardMode.EDITING -> editingKeyboardView
-            KeyboardMode.BUSINESS_FEATURES -> binding.root
+            KeyboardMode.BUSINESS_FEATURES -> businessFeaturesManager.getBindingRoot()
             else -> keyboardViews[mode]
         })?.coerceAtLeast(0) ?: 0
         keyboardViews[mode]?.updateVisibility()
@@ -880,13 +813,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        currentTab = tab
         if (showFeatureUI) {
             setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES)
         } else {
             setActiveKeyboardMode(KeyboardMode.CHARACTERS)
         }
-        tab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { showSelectedBusinessFeature(it) }
+        tab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { businessFeaturesManager.showSelectedBusinessFeature(it) }
     }
 
     override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -895,149 +827,5 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
 
-    }
-
-    private fun showSelectedBusinessFeature(businessFeatureEnum: BusinessFeatureEnum) {
-        when (businessFeatureEnum) {
-            BusinessFeatureEnum.UPDATES, BusinessFeatureEnum.INVENTORY, BusinessFeatureEnum.DETAILS -> {
-                binding.clSelectionLayout.gone()
-                binding.rvListPhotos.gone()
-                binding.productShareRvList.visible()
-            }
-
-            BusinessFeatureEnum.PHOTOS -> {
-                binding.productShareRvList.gone()
-                binding.clSelectionLayout.visible()
-                binding.rvListPhotos.visible()
-            }
-        }
-
-        initializeAdapters(businessFeatureEnum)
-    }
-
-    private fun initializeAdapters(businessFeatureEnum: BusinessFeatureEnum) {
-        if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
-            Timber.i("Please do login")
-            // show login UI
-            binding.pleaseLoginCard.visible()
-            binding.pleaseLoginCard.setOnClickListener {
-                MethodUtils.startBoostActivity(mContext)
-            }
-        } else {
-            binding.pleaseLoginCard.gone()
-            if (MethodUtils.isOnline(mContext)) {
-                businessFeatureProgressBar.visible()
-                // clearing list when changing tabs
-                dataSet.clear()
-                adapter.submitList(null)
-                when (businessFeatureEnum) {
-                    BusinessFeatureEnum.UPDATES -> {
-                        viewModel.getUpdates(
-                                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId,
-                                mContext.getString(R.string.client_id),
-                                0, 10
-                        )
-                        viewModel.updates.observeForever {
-                            Timber.i("updates - $it.")
-                            businessFeatureProgressBar.gone()
-
-                            try {
-                                //  remove the pagination loader placeholder
-                                dataSet.removeLast()
-                            }catch (e : NoSuchElementException){
-                                Timber.i("$e")
-                            }
-
-                            Timber.i("dataset before api's item added = ${dataSet.size}")
-
-                            it.floats?.let { newList -> dataSet.addAll(newList) }
-
-                            Timber.i("dataset before null = ${dataSet.size}")
-
-                            if (it.totalCount!! > dataSet.size) {
-                                // adding null to show pagination loader
-                                dataSet.add(null)
-                            }
-
-                            Timber.i("dataset after adding null = ${dataSet.size}")
-
-                            adapter.submitList(dataSet as List<BaseRecyclerItem>?)
-                            adapter.notifyDataSetChanged()
-
-                            Timber.i("adapter current list size after submit list = ${adapter.currentList.size}")
-
-                            isLoading = false
-                        }
-                    }
-                    BusinessFeatureEnum.INVENTORY -> {
-                        viewModel.getProducts(
-                                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
-                                mContext.getString(R.string.client_id),
-                                0, "SINGLE"
-                        )
-                        viewModel.products.observeForever {
-                            Timber.i("products - $it.")
-                            businessFeatureProgressBar.gone()
-                            adapter.submitList(it)
-                        }
-                    }
-                    BusinessFeatureEnum.DETAILS -> {
-                        viewModel.getDetails(
-                                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
-                                mContext.getString(R.string.client_id)
-                        )
-                        viewModel.details.observeForever {
-                            Timber.e("details - $it.")
-                            businessFeatureProgressBar.gone()
-                            adapter.submitList(listOf(it))
-                        }
-                    }
-                    BusinessFeatureEnum.PHOTOS -> {
-                        viewModel.getPhotos(
-                                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId
-                        )
-                        viewModel.photos.observeForever {
-                            Timber.e("photos - $it.")
-                            businessFeatureProgressBar.gone()
-                            adapter.submitList(it)
-                        }
-                    }
-                }
-            } else {
-                Toast.makeText(mContext, "Check your Network Connection", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    override fun onItemClick(pos: Int, item: BaseRecyclerItem) {
-        currentTab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { handleListItemClick(it, pos, item) }
-    }
-
-    private fun handleListItemClick(businessFeatureEnum: BusinessFeatureEnum, pos: Int, item: BaseRecyclerItem) {
-        when (businessFeatureEnum) {
-            BusinessFeatureEnum.UPDATES -> {
-                Timber.i("pos - $pos item = $item")
-            }
-            BusinessFeatureEnum.INVENTORY -> {
-                Timber.i("pos - $pos item = $item")
-            }
-            BusinessFeatureEnum.PHOTOS -> {
-                Timber.i("pos - $pos item = $item")
-            }
-            BusinessFeatureEnum.DETAILS -> {
-                Timber.i("pos - $pos item = $item")
-            }
-        }
-    }
-
-    private fun loadMoreItems(businessFeatureEnum: BusinessFeatureEnum) {
-        when (businessFeatureEnum) {
-            BusinessFeatureEnum.UPDATES -> {
-                viewModel.getUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId,
-                        mContext.getString(R.string.client_id),
-                        adapter.currentList.size - 1, 10
-                )
-            }
-        }
     }
 }

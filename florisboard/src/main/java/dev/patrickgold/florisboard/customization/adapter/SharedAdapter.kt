@@ -2,11 +2,12 @@ package dev.patrickgold.florisboard.customization.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import dev.patrickgold.florisboard.customization.viewholder.*
+import java.util.*
 
 
-class SharedAdapter(private var listener: OnItemClickListener? = null) : ListAdapter<BaseRecyclerItem, BaseRecyclerViewHolder>(ItemDiffUtilCallback<BaseRecyclerItem>()) {
+class SharedAdapter<T : BaseRecyclerItem>(list: ArrayList<T>, val listener: OnItemClickListener? = null)
+    : BaseRecyclerViewAdapter<T>(list, listener) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -19,17 +20,5 @@ class SharedAdapter(private var listener: OnItemClickListener? = null) : ListAda
             FeaturesEnum.PHOTOS -> PhotoViewHolder(view, listener)
             FeaturesEnum.DETAILS -> DetailsViewHolder(view, listener)
         }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if(getItem(position) == null){
-            FeaturesEnum.LOADER.ordinal
-        }else{
-            getItem(position).getViewType()
-        }
-    }
-
-    override fun onBindViewHolder(holder: BaseRecyclerViewHolder, position: Int) {
-        holder.bindTo(position, getItem(position))
     }
 }
