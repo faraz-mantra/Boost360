@@ -3,10 +3,7 @@ package dev.patrickgold.florisboard.customization.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import dev.patrickgold.florisboard.customization.viewholder.DetailsViewHolder
-import dev.patrickgold.florisboard.customization.viewholder.FloatViewHolder
-import dev.patrickgold.florisboard.customization.viewholder.PhotoViewHolder
-import dev.patrickgold.florisboard.customization.viewholder.ProductViewHolder
+import dev.patrickgold.florisboard.customization.viewholder.*
 
 
 class SharedAdapter(private var listener: OnItemClickListener? = null) : ListAdapter<BaseRecyclerItem, BaseRecyclerViewHolder>(ItemDiffUtilCallback<BaseRecyclerItem>()) {
@@ -16,10 +13,11 @@ class SharedAdapter(private var listener: OnItemClickListener? = null) : ListAda
         val itemType = FeaturesEnum.values()[viewType]
         val view = inflater.inflate(itemType.getLayout(), parent, false)
         return when (itemType) {
-            FeaturesEnum.UPDATES -> FloatViewHolder(view,listener)
-            FeaturesEnum.PRODUCTS -> ProductViewHolder(view,listener)
-            FeaturesEnum.PHOTOS -> PhotoViewHolder(view,listener)
-            FeaturesEnum.DETAILS -> DetailsViewHolder(view,listener)
+            FeaturesEnum.LOADER -> LoaderViewHolder(view, listener)
+            FeaturesEnum.UPDATES -> FloatViewHolder(view, listener)
+            FeaturesEnum.PRODUCTS -> ProductViewHolder(view, listener)
+            FeaturesEnum.PHOTOS -> PhotoViewHolder(view, listener)
+            FeaturesEnum.DETAILS -> DetailsViewHolder(view, listener)
         }
     }
 

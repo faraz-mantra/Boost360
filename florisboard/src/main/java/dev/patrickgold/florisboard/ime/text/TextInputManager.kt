@@ -885,25 +885,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     private fun showSelectedBusinessFeature(businessFeatureEnum: BusinessFeatureEnum) {
         when (businessFeatureEnum) {
-            BusinessFeatureEnum.UPDATES -> {
+            BusinessFeatureEnum.UPDATES, BusinessFeatureEnum.INVENTORY, BusinessFeatureEnum.DETAILS -> {
                 binding.clSelectionLayout.gone()
-                binding.productShareRvList.visible()
                 binding.rvListPhotos.gone()
-            }
-            BusinessFeatureEnum.INVENTORY -> {
-                binding.clSelectionLayout.gone()
                 binding.productShareRvList.visible()
-                binding.rvListPhotos.gone()
             }
+
             BusinessFeatureEnum.PHOTOS -> {
-                binding.clSelectionLayout.visible()
                 binding.productShareRvList.gone()
+                binding.clSelectionLayout.visible()
                 binding.rvListPhotos.visible()
-            }
-            BusinessFeatureEnum.DETAILS -> {
-                binding.clSelectionLayout.gone()
-                binding.productShareRvList.visible()
-                binding.rvListPhotos.gone()
             }
         }
 
@@ -922,6 +913,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             binding.pleaseLoginCard.gone()
             if (MethodUtils.isOnline(mContext)) {
                 businessFeatureProgressBar.visible()
+                adapter.submitList(null)
                 when (businessFeatureEnum) {
                     BusinessFeatureEnum.UPDATES -> {
                         viewModel.getUpdates(
