@@ -19,6 +19,7 @@ import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
 import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
 import dev.patrickgold.florisboard.ime.core.InputView
 import timber.log.Timber
+import java.util.*
 
 class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
 
@@ -33,7 +34,7 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
     private lateinit var recyclerViewPhotos: RecyclerView
     private lateinit var businessFeatureProgressBar: ProgressBar
     private lateinit var viewModel: BusinessFeaturesViewModel
-    private lateinit var adapter: SharedAdapter<BaseRecyclerItem>
+    private lateinit var adapter: SharedAdapter<BaseRecyclerItem?>
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var pagerSnapHelper: PagerSnapHelper
 
@@ -102,6 +103,7 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
     }
 
     private fun initializeAdapters(businessFeatureEnum: BusinessFeatureEnum) {
+        adapter.clearList()
         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
             Timber.i("Please do login")
             // show login UI
@@ -113,10 +115,6 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
             binding.pleaseLoginCard.gone()
             if (MethodUtils.isOnline(mContext)) {
                 businessFeatureProgressBar.visible()
-
-                // clearing list when changing tabs
-                adapter.list.clear()
-
                 when (businessFeatureEnum) {
                     BusinessFeatureEnum.UPDATES -> {
                         viewModel.getUpdates(
@@ -128,10 +126,17 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                             Timber.i("updates - $it.")
                             businessFeatureProgressBar.gone()
 
+                            try {
+                                // last item can be null which is added for pagination
+                                adapter.list.removeLast()
+                            } catch (e: NoSuchElementException) {
+                                Timber.i("List is empty")
+                            }
+
                             if (it.totalCount!! > adapter.list.size) {
-                                adapter.appendList(it.floats as List<BaseRecyclerItem>)
+                                it.floats?.let { it1 -> adapter.submitList(it1, true) }
                             } else {
-                                adapter.submitList(it.floats as List<BaseRecyclerItem>)
+                                it.floats?.let { it1 -> adapter.submitList(it1) }
                             }
                             isLoading = false
                         }
@@ -145,6 +150,7 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                         viewModel.products.observeForever {
                             Timber.i("products - $it.")
                             businessFeatureProgressBar.gone()
+                            // need to now how to load more products as there's no flag in response which indicates to load more data
                             adapter.submitList(it)
                         }
                     }
@@ -203,6 +209,13 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                 viewModel.getUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId,
                         mContext.getString(R.string.client_id),
                         adapter.list.size, 10
+                )
+            }
+            BusinessFeatureEnum.INVENTORY -> {
+                viewModel.getProducts(
+                        SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
+                        mContext.getString(R.string.client_id),
+                        adapter.list.size, "SINGLE"
                 )
             }
         }
