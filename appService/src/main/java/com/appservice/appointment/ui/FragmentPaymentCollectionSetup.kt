@@ -99,11 +99,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
             binding?.bankAddedStatus?.text = "Bank Account Added (${(paymentProfileResponse.result?.bankAccountDetails?.getVerifyText())})"
             binding?.bankNameAccountNumber?.text = "${paymentProfileResponse.result?.bankAccountDetails?.bankName} - ${paymentProfileResponse.result?.bankAccountDetails?.accountNumber}"
         } else {
-            binding?.btnAddAccount?.visible()
-            binding?.llDisclaimer?.gone()
-            binding?.llBankStatus?.gone()
-            binding?.ctvAccountText?.visible()
-            binding?.arrowRight?.gone()
+           setUpBankDetails()
 
         }
 
@@ -116,6 +112,21 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
             TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
 
         }
+    }
+
+    override fun onFailure(it: BaseResponse) {
+        super.onFailure(it)
+        when (it.taskcode) {
+            TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> setUpBankDetails()
+        }
+    }
+
+    private fun setUpBankDetails() {
+        binding?.btnAddAccount?.visible()
+        binding?.llDisclaimer?.gone()
+        binding?.llBankStatus?.gone()
+        binding?.ctvAccountText?.visible()
+        binding?.arrowRight?.gone()
     }
 
     private fun onDeliveryDetailsReceived(it: BaseResponse) {

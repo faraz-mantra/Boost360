@@ -320,7 +320,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun checkStoragePermission(): Boolean {
     if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      showDialog(requireActivity(), "Storage Permission", "To share the image we need storage permission."
+      showDialog(requireActivity(), getString(R.string.storage_permission), getString(R.string.to_share_the_image_we_need_storage_permission)
       ) { _: DialogInterface?, _: Int -> ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_CODE) }
       return false
     }

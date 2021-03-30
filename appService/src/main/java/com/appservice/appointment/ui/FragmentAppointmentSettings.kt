@@ -26,6 +26,12 @@ class FragmentAppointmentSettings: AppBaseFragment<FragmentAppointmentSettingsBi
     override fun onCreateView() {
         super.onCreateView()
         setOnClickListener(binding?.catalogSetup, binding?.paymentCollectionSetup, binding?.customerInvoiceSetup, binding?.policiesForCustomer)
+        clearSearchFocus()
+    }
+
+    private fun clearSearchFocus() {
+        // closes the soft keyboard when this fragment loafds
+        binding?.svSettings?.clearFocus()
     }
 
     override fun onClick(v: View) {
