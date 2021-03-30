@@ -172,8 +172,8 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     binding?.textCustomerEmail?.text = "Email: ${order?.BuyerDetails?.ContactDetails?.EmailId}"
     if (order?.BuyerDetails?.GSTIN ==null||order.BuyerDetails.GSTIN=="") {
       binding?.ctvGstin?.gone()
-    }else{ binding?.ctvGstin?.visible()}
-    binding?.ctvGstin?.text = "GSTIN: ${order?.BuyerDetails?.GSTIN as String}"
+    }else binding?.ctvGstin?.visible()
+    binding?.ctvGstin?.text = "GSTIN: ${order?.BuyerDetails?.GSTIN as? String}"
     binding?.textPaymentStatusDropdown?.text = "${order?.PaymentDetails?.statusValue()}"
     binding?.textPaymentTypeDropdown?.text = "${order?.PaymentDetails?.methodValue()}"
 //    binding?.textServiceLocationDropdown?.text = "${order?.SellerDetails?.Address?.City?.capitalizeUtil()}"
