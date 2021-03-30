@@ -604,8 +604,6 @@
     <string name="tags_help_site_visitors_filter_offers_in_your_website">Tags help site visitors filter offers in your website.</string>
     <string name="offer_saved_successfully">Offer saved Successfully</string>
   <string name="your_offer_is_saved_successfully_and_published_live_on_your_website_click_on_below_button_to_see_it_live_or_share_with_in_your_connections">Your offer is saved successfully and published live on your website. Click on below button to see it live or share with in your connections.</string>
-  <string name="storage_permission">Storage Permission</string>
-  <string name="to_share_the_image_we_need_storage_permission">To share the image we need storage permission.</string>
   <string name="ok">Ok</string>
   <string name="sharing">Sharing...</string>
   <string name="additional_info">Additional info</string>
@@ -750,6 +748,8 @@
     <string name="i_understood">i understood</string>
     <string name="search_in_the_appointment_settings">Search in appointment settings</string>
   <string name="gstin_">GSTIN</string>
+    <string name="storage_permission">Storage Permission</string>
+  <string name="to_share_the_image_we_need_storage_permission">To share the image we need storage permission.</string>
 
 
 </resources>

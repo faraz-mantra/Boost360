@@ -585,6 +585,8 @@
     </style>
     <style name="ButtonStyle.Rounded.Solid.Stroke.ChangeImage" parent="Offers.ButtonStyle.Rounded.Solid.Stroke">
         <item name="android:background">@drawable/offer_button_stroke_orange_radius_one</item>
+        <item name="android:layout_width">match_parent</item>
+
 
     </style>
 

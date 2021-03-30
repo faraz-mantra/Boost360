@@ -39,19 +39,19 @@
       app:textType="HEADING_7" />
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/ctv_add_service_subheading"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginHorizontal="@dimen/size_30"
-      android:gravity="center"
-      android:stateListAnimator="@null"
-      android:textAlignment="center"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/customTextView"
-      app:layout_constraintVertical_bias="0.039"
-      tools:text="@string/you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video" />
+        android:id="@+id/ctv_add_service_subheading"
+        style="@style/match_wrap"
+        android:layout_marginHorizontal="@dimen/size_30"
+        android:gravity="center"
+        android:stateListAnimator="@null"
+        android:textAlignment="center"
+        android:textColor="@color/black_4a4a4a"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView"
+        app:layout_constraintVertical_bias="0.039"
+        tools:text="@string/you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video" />
 
     <com.framework.views.customViews.CustomButton
       android:id="@+id/cb_add_service"

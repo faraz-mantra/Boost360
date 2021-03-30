@@ -37,12 +37,12 @@ class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetu
 
     override fun onCreateView() {
         setOnClickListener(binding?.btnSaveChanges, binding?.btnCancel, binding?.btnClickPhoto)
-        val parent = (requireParentFragment() as FragmentCustomerInvoiceSetup)
-        this.paymentProfileDetails = arguments?.getSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name) as PaymentResult
+        val parent = (requireParentFragment() as? FragmentCustomerInvoiceSetup)
+        this.paymentProfileDetails = arguments?.getSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name) as? PaymentResult
         if (paymentProfileDetails == null) isEdit = false
         binding?.cetUpiId?.setText(paymentProfileDetails?.uPIId)
         val images = arguments?.getSerializable(IntentConstant.IMAGE_SIGNATURE.name) as ArrayList<FileModel>
-        if (images.isNotEmpty()) setImage(images, parent = parent) else setImage(parent)
+        if (images.isNotEmpty()) setImage(images, parent = parent) else setImage(parent!!)
         if (paymentProfileDetails?.uPIId.isNullOrEmpty().not()) binding?.checkboxUpiId?.isChecked = true
         if (binding?.checkboxUpiId?.isChecked == true) binding?.cetUpiId?.visible() else binding?.cetUpiId?.gone()
         binding?.checkboxUpiId?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -51,7 +51,7 @@ class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetu
                 else -> binding?.cetUpiId?.gone()
             }
         }
-        parent.onImageClick = {
+        parent?.onImageClick = {
             val path = it[0].path
             setImage(it, path, parent)
         }

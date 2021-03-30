@@ -16,6 +16,7 @@
             <androidx.appcompat.widget.SearchView
                 style="@style/SearchView.WhiteBackground"
                 app:iconifiedByDefault="false"
+                android:id="@+id/sv_settings"
                 android:layout_height="@dimen/size_40"
                 android:gravity="center_vertical"
                 app:queryHint="@string/search_in_the_appointment_settings" />
