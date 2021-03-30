@@ -3,7 +3,9 @@ package com.appservice.appointment.widgets
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.appservice.R
+import com.appservice.appointment.model.GSTDetails
 import com.appservice.appointment.model.PaymentResult
+import com.appservice.appointment.model.TaxDetails
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetEnterGstDetailsBinding
 import com.appservice.viewmodel.AppointmentSettingsViewModel
@@ -123,6 +125,9 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
     }
 
     private fun setAndGoBack() {
+        if (paymentProfileDetails==null) paymentProfileDetails = PaymentResult()
+        if (paymentProfileDetails?.taxDetails==null) paymentProfileDetails?.taxDetails = TaxDetails()
+        if(paymentProfileDetails?.taxDetails?.gSTDetails==null) paymentProfileDetails?.taxDetails?.gSTDetails = GSTDetails();
         paymentProfileDetails?.taxDetails?.gSTDetails?.gSTIN = binding?.cetGst?.text.toString()
         paymentProfileDetails?.taxDetails?.gSTDetails?.businessName = binding?.cetBusinessName?.text.toString()
         gstIn(binding?.cetGst?.text.toString())
