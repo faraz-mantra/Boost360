@@ -7,14 +7,16 @@
 
   </data>
 
-  <FrameLayout
+  <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size_260"
-    android:background="@drawable/ic_fill_business_bg">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/viewOne"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/size_224"
+      android:background="@drawable/ic_fill_business_bg"
       android:orientation="vertical">
 
       <LinearLayout
@@ -58,20 +60,22 @@
         app:spanCount="4"
         tools:itemCount="4"
         tools:listitem="@layout/item_manage_business_d" />
-
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/size_8"
-        android:background="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+      android:id="@+id/viewTwo"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_28"
+      android:layout_below="@+id/viewOne"
+      android:background="@color/white" />
 
     <com.framework.views.customViews.CustomCardView
       android:id="@+id/btn_show_all"
-      android:layout_width="@dimen/size_110"
+      android:layout_width="wrap_content"
       android:layout_height="@dimen/size_28"
-      android:layout_gravity="center_horizontal|bottom"
-      android:layout_marginBottom="@dimen/size_30"
+      android:layout_alignBottom="@+id/viewTwo"
+      android:layout_centerHorizontal="true"
+      android:layout_marginBottom="@dimen/_14dp"
       app:cardBackgroundColor="@color/white"
       app:cardCornerRadius="@dimen/size_14">
 
@@ -79,7 +83,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/size_14"
+        android:paddingEnd="@dimen/size_14">
 
         <com.framework.views.customViews.CustomTextView
           android:layout_width="wrap_content"
@@ -103,5 +109,6 @@
       </LinearLayout>
 
     </com.framework.views.customViews.CustomCardView>
-  </FrameLayout>
+
+  </RelativeLayout>
 </layout>

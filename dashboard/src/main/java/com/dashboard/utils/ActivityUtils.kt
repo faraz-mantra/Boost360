@@ -749,7 +749,7 @@ fun AppCompatActivity.startListProjectAndTeams(session: UserSessionManager?) {
 fun AppCompatActivity.startListTripAdvisor(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(TRIP_ADVISOR_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("ccom.nowfloats.hotel.tripadvisor.TripAdvisorActivity"))
+    val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.tripadvisor.TripAdvisorActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
