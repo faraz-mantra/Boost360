@@ -38,6 +38,7 @@ class DrScoreItem(
     boolean_social_channel_connected,
     number_services_added,
     number_products_added,
+    boolean_create_staff,
     boolean_add_bank_account,
     boolean_image_uploaded_to_gallery,
     boolean_create_custom_page,
