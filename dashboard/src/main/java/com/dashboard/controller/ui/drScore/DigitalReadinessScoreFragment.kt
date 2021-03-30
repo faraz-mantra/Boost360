@@ -143,6 +143,9 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       DrScoreItem.DrScoreItemType.boolean_add_contact_details -> {
         baseActivity.startBusinessInfoEmail(session)
       }
+      DrScoreItem.DrScoreItemType.boolean_create_staff -> {
+        baseActivity.startAddStaff(session)
+      }
       DrScoreItem.DrScoreItemType.boolean_add_custom_domain_name_and_ssl -> {
         baseActivity.startDomainDetail(session)
       }
