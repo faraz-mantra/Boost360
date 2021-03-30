@@ -320,7 +320,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             //todo not mentioned in ui
-            R.id.action_more -> true
+//            R.id.action_more -> true
             R.id.action_sort_by -> {
                 opeFilterByBottomSheet()
                 true
