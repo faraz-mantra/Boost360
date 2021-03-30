@@ -1,6 +1,7 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+  id 'com.android.library'
+  id 'kotlin-android'
+}
 
 android {
   compileSdkVersion rootProject.compileSdkVersion
@@ -13,7 +14,7 @@ android {
     versionName version
     vectorDrawables.useSupportLibrary = true
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    consumerProguardFiles 'consumer-rules.pro'
+    consumerProguardFiles "consumer-rules.pro"
     renderscriptTargetApi rootProject.targetSdkVersion
   }
 
@@ -37,8 +38,5 @@ android {
 }
 
 dependencies {
-  api project(path: ':onboarding')
-  api project(path: ':inventoryorder')
-  api project(path: ':appService')
-  api project(path: ':presignin')
+  api project(path: ':resources')
 }

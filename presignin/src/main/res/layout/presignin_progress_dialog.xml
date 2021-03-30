@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/size_2"
+    app:cardElevation="@dimen/size_1"
+    app:cardUseCompatPadding="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_100"
+      android:background="@color/white"
+      android:gravity="center"
+      android:orientation="horizontal">
+
+      <ProgressBar
+        android:layout_width="@dimen/size_42"
+        android:layout_height="@dimen/size_42"
+        android:layout_marginEnd="@dimen/size_20"
+        android:indeterminateTint="@color/colorPrimary" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/please_wait"
+        android:textColor="@color/greyish_brown"
+        app:textType="HEADING_6" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>
