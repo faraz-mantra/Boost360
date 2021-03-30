@@ -17,6 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
+import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
@@ -117,6 +118,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppServiceApplication.initModule(this);
         AppDashboardApplication.instance = this;
         AppDashboardApplication.initModule(this);
+        AppPreSignInApplication.instance = this;
+        AppPreSignInApplication.initModule(this);
         initWebEngage();
         //Invite Referral
         InviteReferralsApplication.register(this);
