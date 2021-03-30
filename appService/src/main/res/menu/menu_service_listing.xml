@@ -13,9 +13,9 @@
         android:title="@string/appointment_settings"
         android:id="@+id/action_service_configuration"
         app:showAsAction="always" />
-    <item
-        android:icon="@drawable/ic_menu_dotted"
-        android:title="@string/more"
-        android:id="@+id/action_more"
-        app:showAsAction="always" />
+<!--    <item-->
+<!--        android:icon="@drawable/ic_menu_dotted"-->
+<!--        android:title="@string/more"-->
+<!--        android:id="@+id/action_more"-->
+<!--        app:showAsAction="always" />-->
 </menu>

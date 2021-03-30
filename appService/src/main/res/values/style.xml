@@ -352,6 +352,7 @@
         <item name="singleLine">true</item>
         <item name="android:textSize">12sp</item>
         <item name="android:background">@drawable/bg_rect_edit_txt</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
         <item name="android:textColor">@color/warm_grey_10</item>
         <item name="android:textColorHint">@color/primary_grey</item>
     </style>

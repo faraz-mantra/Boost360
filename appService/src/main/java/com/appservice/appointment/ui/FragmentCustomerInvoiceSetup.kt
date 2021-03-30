@@ -105,11 +105,14 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         if (data?.result?.uPIId.isNullOrEmpty()) {
             binding?.upiIdHeading?.gone()
             binding?.upiId?.gone()
+            binding?.divider3?.gone()
 
         } else {
             binding?.upiIdHeading?.visible()
             binding?.upiId?.visible()
             binding?.upiId?.text = data?.result?.uPIId
+            binding?.divider3?.visible()
+
         }
         if (data?.result?.taxDetails?.gSTDetails?.businessName.isNullOrEmpty()) {
             binding?.ctvCompanyName?.gone()

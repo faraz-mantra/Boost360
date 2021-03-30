@@ -92,6 +92,7 @@
                             android:drawableEnd="@drawable/ic_arrow_right_grey_staff"
                             android:drawablePadding="@dimen/size_8"
                             android:text="@string/change"
+                            android:gravity="center_vertical"
                             android:textSize="12sp"
                             android:textAllCaps="true"
                             android:textColor="@color/black_4a4a4a" />
