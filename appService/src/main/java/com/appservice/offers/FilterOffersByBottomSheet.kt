@@ -35,15 +35,20 @@ class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersLis
 
     override fun onCreateView() {
         setOnClickListener(binding?.btnCancel, binding?.btnApply, binding?.radioGroupSorting, binding?.ctvReset)
+        markDefaultSelection()
+    }
+
+    private fun markDefaultSelection() {
+        binding?.rbLatestOnTop?.isChecked = true
+
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
             binding?.btnApply -> {
-                if (binding?.radioGroupSorting!=null){
+                if (binding?.radioGroupSorting != null) {
                     val radioButton: RadioButton = binding?.radioGroupSorting!!.findViewById(binding?.radioGroupSorting!!.checkedRadioButtonId)
-                    showShortToast(radioButton.text.toString())
                     onClicked(filters.getValue(radioButton.text.toString()))
                 }
                 dismiss()
@@ -53,6 +58,7 @@ class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersLis
             }
             binding?.ctvReset -> {
                 binding?.radioGroupSorting?.clearCheck()
+                markDefaultSelection()
             }
         }
     }
