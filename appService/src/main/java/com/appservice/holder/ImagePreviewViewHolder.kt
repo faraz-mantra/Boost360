@@ -57,6 +57,7 @@ class ImagePreviewViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecycler
       }
     }
     binding.cbChange.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.IMAGE_CHANGE.ordinal) }
+    binding.crossIcon.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.IMAGE_CLEAR_CLICK.ordinal) }
   }
 
   private fun getImageSize(f: Bitmap?): String {

@@ -18,6 +18,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -89,6 +90,11 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
         }
     private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
         binding?.rvListing?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && binding?.fbAddOffer?.visibility == View.VISIBLE) binding?.fbAddOffer?.hide()
+                else if (dy < 0 && binding?.fbAddOffer?.visibility != View.VISIBLE) binding?.fbAddOffer?.show()
+            }
             override fun loadMoreItems() {
                 if (!isLastPageD) {
                     isLoadingD = true
