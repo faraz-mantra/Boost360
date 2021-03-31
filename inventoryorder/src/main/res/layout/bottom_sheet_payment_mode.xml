@@ -80,8 +80,8 @@
                             <com.framework.views.customViews.CustomTextView
                                 style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
-                                android:textColor="#747474"
                                 android:text="@string/if_customer_wants_to_pay_via_upi_card_wallets_etc"
+                                android:textColor="#747474"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -125,8 +125,8 @@
                             <com.framework.views.customViews.CustomTextView
                                 style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
-                                android:textColor="#747474"
                                 android:text="@string/if_you_ve_recieved_the_payment_already"
+                                android:textColor="#747474"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -170,8 +170,8 @@
                             <com.framework.views.customViews.CustomTextView
                                 style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
-                                android:textColor="#747474"
                                 android:text="@string/if_customer_prefers_paying_to_delivery_executive"
+                                android:textColor="#747474"
                                 android:textSize="12sp" />
                         </LinearLayout>
 

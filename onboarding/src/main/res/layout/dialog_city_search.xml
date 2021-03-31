@@ -57,9 +57,9 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="gone"
         android:padding="@dimen/size_4"
         android:tint="@color/greyish_brown"
+        android:visibility="gone"
         app:srcCompat="@drawable/ic_close_grey" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

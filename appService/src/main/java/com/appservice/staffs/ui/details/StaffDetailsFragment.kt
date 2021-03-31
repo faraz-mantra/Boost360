@@ -346,7 +346,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         this.resultCode = resultCode
         this.serviceListId = arrayListOf()
         this.servicesList = data?.extras?.get(IntentConstant.STAFF_SERVICES.name) as? ArrayList<DataItemService>
-        serviceListId = ArrayList();
+        serviceListId = ArrayList()
         servicesList?.forEach { dataItem ->
           if (dataItem.id.isNullOrEmpty().not()) serviceListId?.add(dataItem.id!!)
         }

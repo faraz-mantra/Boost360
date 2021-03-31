@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.appservice.offers.startOfferFragmentActivity
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
@@ -99,7 +100,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
-        binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
+            binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getAllDashboardSummary()
@@ -426,7 +427,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
-        WebEngageController.trackEvent(SITE_HEALTH_PAGE, SITE_HEALTH, session?.fpTag);
+        WebEngageController.trackEvent(SITE_HEALTH_PAGE, SITE_HEALTH, session?.fpTag)
 //        session?.let { baseActivity.startOldSiteMeter(it) }
         baseActivity.startReadinessScoreView(session, 0)
       }
@@ -525,6 +526,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
+      QuickActionItem.QuickActionType.SERVICES_OFFERS ->session?.let { startOfferFragmentActivity(baseActivity,com.appservice.constant.FragmentType.OFFER_LISTING_FRAGMENT, bundle = getBundleData(it)) }
       QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)

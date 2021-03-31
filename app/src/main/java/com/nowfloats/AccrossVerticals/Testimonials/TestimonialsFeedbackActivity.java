@@ -67,10 +67,16 @@ import retrofit.converter.GsonConverter;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_TESTIMONIAL_ADDED;
 import static com.framework.webengageconstant.EventNameKt.TESTIMONIAL_ADDED;
-
 import static com.framework.webengageconstant.EventNameKt.TESTIMONIAL_UPDATED;
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.getDescTitle;
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.getProfileDescValue;
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.getReviewSecondTitle;
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.getReviewSecondValue;
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.getTitleProfileDesc;
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.isProfileDescFill;
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.isProfileDescShow;
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.isReviewSecondValue;
 import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity.allTestimonialType;
-import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
 
 public class TestimonialsFeedbackActivity extends AppCompatActivity implements TestimonialsFeedbackListener {
 
@@ -112,7 +118,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
 
   void initialization() {
-    saveButton = (TextView) findViewById(R.id.save_review);
+    saveButton = findViewById(R.id.save_review);
     session = new UserSessionManager(this, this);
     userNameText = findViewById(R.id.user_name);
     reviewTitleText = findViewById(R.id.review_title);

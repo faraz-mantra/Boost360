@@ -1,7 +1,6 @@
 package com.inventoryorder.model.orderRequest
 
 import com.framework.base.BaseRequest
-import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

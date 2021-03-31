@@ -25,7 +25,6 @@ import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.startFragmentActivity
-import com.appservice.ui.model.ItemsItem
 import com.appservice.ui.model.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone

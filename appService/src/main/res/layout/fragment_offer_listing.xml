@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/offer_list_swipe_refresh"
+        style="@style/match_match">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            style="@style/match_match"
+            android:orientation="vertical">
+            <com.framework.views.viewgroups.BaseRecyclerView
+                android:id="@+id/rv_listing"
+                style="@style/match_match"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="3"
+                tools:listitem="@layout/recycler_item_offer" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/wrap_wrap"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:theme="@style/progressBar" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fb_add_offer"
+                style="@style/wrap_wrap"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="@dimen/size_30"
+                android:src="@drawable/ic_add_white"
+                app:fabSize="normal"
+                android:layout_marginBottom="@dimen/size_30" />
+            <include
+                android:id="@+id/offer_listing_empty_view"
+                layout="@layout/fragment_offer_listing_empty"
+                android:visibility="gone" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</layout>

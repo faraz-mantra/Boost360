@@ -107,6 +107,4 @@ data class ImageModel(
     var ImageId: String?,
     var ActualImage: String?,
     var TileImage: String?,
-) : Serializable {
-
-}
+) : Serializable

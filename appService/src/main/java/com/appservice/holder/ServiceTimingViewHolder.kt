@@ -10,10 +10,8 @@ import com.appservice.databinding.ItemServiceTimingBinding
 import com.appservice.model.serviceTiming.ServiceTiming
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
-import com.framework.BaseApplication
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_HH_MMA
 import com.framework.utils.DateUtils.FORMAT_HH_MM_A
 import com.framework.utils.DateUtils.isBetweenValidTime

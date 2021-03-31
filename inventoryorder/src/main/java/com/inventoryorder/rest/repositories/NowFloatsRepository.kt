@@ -5,10 +5,8 @@ import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.rest.TaskCode
-import com.inventoryorder.rest.apiClients.ApiWithFloatClient
 import com.inventoryorder.rest.apiClients.NowFloatClient
 import com.inventoryorder.rest.services.NowFloatsDataSource
-import com.inventoryorder.rest.services.WithFloatDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
 

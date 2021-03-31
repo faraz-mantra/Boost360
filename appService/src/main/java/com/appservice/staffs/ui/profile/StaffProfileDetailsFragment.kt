@@ -147,8 +147,8 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   }
 
   private fun getTimeView(appointmentModel: AppointmentModel?): View {
-    val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false);
-    val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
+    val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false)
+      val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
     if (staffDetails?.isAvailable == true) timeTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else timeTextView.setTextColor(resources.getColor(R.color.pinkish_grey))
 
     val str = StringBuilder()
@@ -211,11 +211,11 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   }
 
   private fun getServiceView(services: String?): View {
-    val itemView = LayoutInflater.from(binding?.llServices?.context).inflate(R.layout.recycler_item_service_timing, null, false);
-    val serviceTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
+    val itemView = LayoutInflater.from(binding?.llServices?.context).inflate(R.layout.recycler_item_service_timing, null, false)
+      val serviceTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
     if (staffDetails?.isAvailable == true) serviceTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else serviceTextView.setTextColor(resources.getColor(R.color.pinkish_grey))
     serviceTextView.text = services
-    return itemView;
+    return itemView
   }
 
   override fun onClick(v: View) {

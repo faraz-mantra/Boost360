@@ -1,6 +1,8 @@
 package com.dashboard.constant
 
 enum class IntentConstant {
-  SESSION_DATA,
-  POSITION,
+  SESSION_DATA,FPTAG,
+  POSITION,;
+
+
 }

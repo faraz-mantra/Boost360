@@ -39,7 +39,7 @@ const val RIA_NODE_DATA = "riaNodeDatas"
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
     WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, CLICK, TO_BE_ADDED)
-    val bundle = Bundle()
+      val bundle = Bundle()
     session.setHeader(WA_KEY)
     bundle.putString(UserSessionManager.KEY_FP_ID, session.fPID)
     bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.fpTag)
@@ -125,7 +125,7 @@ fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE, CLICK, TO_BE_ADDED)
-    val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
+      val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -136,7 +136,7 @@ fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) 
 fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(FEVICON_IMAGE_PAGE, CLICK, TO_BE_ADDED)
-    val queries = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"))
+      val queries = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -395,7 +395,7 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   try {
     if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
       WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
-      session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_LISTING, bundle = getBundleData(it)) }
+      session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, bundle = getBundleData(it)) }
     } else {
       WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
       val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
@@ -866,7 +866,7 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
     request.setDescription("boost360 File")
     request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
+      request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
     downloader.enqueue(request)
     if (isToast) Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
   } catch (e: Exception) {

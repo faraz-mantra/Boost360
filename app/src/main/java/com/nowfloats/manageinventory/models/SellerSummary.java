@@ -2,7 +2,6 @@ package com.nowfloats.manageinventory.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.j256.ormlite.stmt.query.In;
 
 /**
  * Created by vinay on 13-06-2018.
@@ -14,6 +13,14 @@ public class SellerSummary {
   @SerializedName("Data")
   @Expose
   private Data data;
+
+  public Data getData() {
+    return data;
+  }
+
+  public void setData(Data data) {
+    this.data = data;
+  }
 
   public class Data {
 
@@ -132,13 +139,5 @@ public class SellerSummary {
     public void setCurrencyCode(String currencyCode) {
       this.currencyCode = currencyCode;
     }
-  }
-
-  public Data getData() {
-    return data;
-  }
-
-  public void setData(Data data) {
-    this.data = data;
   }
 }

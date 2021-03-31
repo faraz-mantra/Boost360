@@ -222,7 +222,7 @@ class SignUpActivity : AppCompatActivity() {
           try {
             val error: Throwable = PreSignUpException(response.errorBody()?.string() ?: "")
             val reader = JSONObject(error.localizedMessage)
-            val message: String = reader.getJSONObject("Error")?.getJSONObject("ErrorList")
+            val message: String = reader.getJSONObject("Error").getJSONObject("ErrorList")
                 ?.getString("EXCEPTION") ?: applicationContext.getString(R.string.failed_create_user)
             Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
           } catch (e: Exception) {
@@ -337,7 +337,7 @@ class SignUpActivity : AppCompatActivity() {
           try {
             val error: Throwable = PreSignUpException(response.errorBody()?.string() ?: "")
             val reader = JSONObject(error.localizedMessage)
-            val message: String = reader.getJSONObject("Error")?.getJSONObject("ErrorList")
+            val message: String = reader.getJSONObject("Error").getJSONObject("ErrorList")
                 ?.getString("EXCEPTION") ?: applicationContext.getString(R.string.failed_create_user)
             Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
           } catch (e: Exception) {

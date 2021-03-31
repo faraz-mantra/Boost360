@@ -2,5 +2,9 @@ package com.dashboard.constant
 
 enum class FragmentType {
   DIGITAL_READINESS_SCORE,
-  ALL_BOOST_ADD_ONS
+  ALL_BOOST_ADD_ONS,
+  CONSULTATION_HOURS,
+  CREATE_DOCTOR_PROFILE,
+    OWNER_INFO,
+  DOCTOR_ADDITIONAL_INFO
 }

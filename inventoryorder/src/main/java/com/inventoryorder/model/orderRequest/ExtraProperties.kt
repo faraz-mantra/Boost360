@@ -47,11 +47,11 @@ data class ExtraProperties(
 ) : Serializable {
 
   fun startTime(): String {
-    return startTime ?: ""
+    return startTime
   }
 
   fun endTime(): String {
-    return endTime ?: ""
+    return endTime
   }
 
   fun getScheduledDateN(): String? {

@@ -73,9 +73,9 @@ data class ItemsItem(
 
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
 
-	var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_LISTING_VIEW.getLayout();
+	var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_LISTING_VIEW.getLayout()
 
-	override fun getViewType(): Int {
+    override fun getViewType(): Int {
 		return recyclerViewItem
 	}
 

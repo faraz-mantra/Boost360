@@ -239,9 +239,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun createUpdateApi() {
     showProgress()
     if (product?.productId == null) {
-      hitApi(viewModel?.createService(product), R.string.service_adding_error);
+      hitApi(viewModel?.createService(product), R.string.service_adding_error)
     } else {
-      hitApi(viewModel?.updateService(product), R.string.service_updating_error);
+      hitApi(viewModel?.updateService(product), R.string.service_updating_error)
     }
   }
 
@@ -249,7 +249,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     if (serviceImage != null) {
       showProgress(getString(R.string.image_uploading))
       val request = UploadImageRequest.getInstance(0, product?.productId!!, serviceImage!!)
-      hitApi(viewModel?.addPrimaryImage(request), R.string.error_service_image);
+      hitApi(viewModel?.addPrimaryImage(request), R.string.error_service_image)
     } else uploadSecondaryImages()
   }
 
@@ -441,8 +441,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
               showProgress()
               WebEngageController.trackEvent(DELETE_SERVICE_CATALOGUE, DELETE, NO_EVENT_VALUE)
               val req = DeleteServiceRequest(this.fpTag, product?.productId)
-              hitApi(viewModel?.deleteService(req), R.string.removing_service_failed);
-            }.show()
+              hitApi(viewModel?.deleteService(req), R.string.removing_service_failed)
+                }.show()
         true
       }
       else -> super.onOptionsItemSelected(item)

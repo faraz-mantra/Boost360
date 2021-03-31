@@ -47,10 +47,10 @@
                 android:id="@+id/image_anybody"
                 android:layout_width="@dimen/size_40"
                 android:layout_height="@dimen/size_40"
-                android:padding="@dimen/size_5"
-                android:visibility="gone"
                 android:background="@color/transparent"
-                android:src="@drawable/user" />
+                android:padding="@dimen/size_5"
+                android:src="@drawable/user"
+                android:visibility="gone" />
         </androidx.cardview.widget.CardView>
 
         <com.framework.views.roundedimageview.RoundedImageView

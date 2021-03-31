@@ -2,7 +2,6 @@ package com.inventoryorder.ui.appointment
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
@@ -10,13 +9,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
-import com.framework.webengageconstant.APPOINTMENTS
-import com.framework.webengageconstant.CLICKED_ON_APPOINTMENTS
 import com.framework.webengageconstant.APPOINTMENTS
 import com.framework.webengageconstant.CLICKED_ON_APPOINTMENTS
 import com.inventoryorder.R

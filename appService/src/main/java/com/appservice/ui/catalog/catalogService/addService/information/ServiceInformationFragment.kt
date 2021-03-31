@@ -2,8 +2,6 @@ package com.appservice.ui.catalog.catalogService.addService.information
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -177,10 +175,6 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-  }
-
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
@@ -340,7 +334,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
               ?: return
           showProgress(resources.getString(R.string.removing_image))
-          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId);
+          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId)
           viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               secondaryDataImage?.remove(dataImage)
@@ -361,7 +355,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
               ?: return
           showProgress(resources.getString(R.string.removing_image))
-          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId);
+          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId)
           viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               secondaryDataImage?.remove(dataImage)
@@ -416,6 +410,4 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
 }
 
-data class SpinnerImageModel(var state: Pair<String, Boolean>, var resId: Int) {
-
-}
+data class SpinnerImageModel(var state: Pair<String, Boolean>, var resId: Int)

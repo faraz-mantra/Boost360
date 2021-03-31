@@ -5,8 +5,6 @@ import android.widget.CompoundButton
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
-import com.inventoryorder.databinding.BottomSheetCancelOrderBinding
-import com.inventoryorder.databinding.BottomSheetDeliveryTypeBinding
 import com.inventoryorder.databinding.BottomSheetPaymentModeBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 

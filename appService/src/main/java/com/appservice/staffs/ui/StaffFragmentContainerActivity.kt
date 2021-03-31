@@ -198,11 +198,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     }
   }
 
-  override fun isHideToolbar(): Boolean {
-    return super.isHideToolbar()
-  }
-
-  override fun onBackPressed() {
+    override fun onBackPressed() {
     when (fragmentType) {
       FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> staffProfileDetailsFragment?.onBackPresDetail()
       else -> super.onBackPressed()

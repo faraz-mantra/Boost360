@@ -139,9 +139,9 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   private fun onPaymentStatusSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
-    binding?.tvPaymentStatus?.text = bottomSheetOptionsItem?.displayValue
-    orderInitiateRequest?.paymentDetails?.status = bottomSheetOptionsItem?.serverValue
-    paymentStatus = bottomSheetOptionsItem?.serverValue!!
+    binding?.tvPaymentStatus?.text = bottomSheetOptionsItem.displayValue
+    orderInitiateRequest?.paymentDetails?.status = bottomSheetOptionsItem.serverValue
+    paymentStatus = bottomSheetOptionsItem.serverValue!!
     this.orderBottomSheet = orderBottomSheet
   }
 
