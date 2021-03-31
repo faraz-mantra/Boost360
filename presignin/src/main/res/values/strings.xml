@@ -1,4 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="ps_accept_tnc">By getting started, you agree to Boost 360 terms and conditions</string>
+    <string name="psn_get_started">GET STARTED</string>
+
+
+    <string name="intro_title_0">Be wherever\nyour customers are</string>
+    <string name="intro_title_1">Create a website for</string>
+    <string name="intro_title_2">Showcase your</string>
+    <string name="intro_title_3">Sell online and</string>
+    <string name="intro_title_4">Find new customers with</string>
+    <string name="intro_title_5">Manage your</string>
+    <string name="intro_title_6">Track your</string>
+    <string name="intro_title_7">Readymade solution for</string>
+
+
+
+    <string name="intro_sub_title_1">your business</string>
+    <string name="intro_sub_title_2">product or services</string>
+    <string name="intro_sub_title_3">collect payments easily</string>
+    <string name="intro_sub_title_4">digital marketing tools</string>
+    <string name="intro_sub_title_5">orders and appointments</string>
+    <string name="intro_sub_title_6">business performance</string>
+    <string name="intro_sub_title_7">all businesses</string>
+    <string name="terms">terms</string>
+    <string name="conditions">conditions</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>
