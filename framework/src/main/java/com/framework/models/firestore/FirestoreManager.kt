@@ -11,25 +11,25 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 object FirestoreManager {
-    var db: FirebaseFirestore? = null;
-    val gson = Gson();
-    var model: DrScoreModel? = null;
-    var fpTag: String = "";
-    var fpId: String = "";
-    var clientId: String = "";
-    var TAG = "FirestoreManager";
-    val COLLECTION_NAME = "drsMerchants";
+    var db: FirebaseFirestore? = null
+    val gson = Gson()
+    var model: DrScoreModel? = null
+    var fpTag: String = ""
+    var fpId: String = ""
+    var clientId: String = ""
+    var TAG = "FirestoreManager"
+    val COLLECTION_NAME = "drsMerchants"
     var listener: (()->Unit)? = null
 
     fun initData(fpTag: String, fpId: String, clientId: String) {
-        this.fpTag = fpTag;
-        this.fpId = fpId;
-        this.clientId = clientId;
-        this.db = Firebase.firestore;
+        this.fpTag = fpTag
+        this.fpId = fpId
+        this.clientId = clientId
+        this.db = Firebase.firestore
         if (this.model == null) {
-            this.model = DrScoreModel();
+            this.model = DrScoreModel()
         }
-        readDrScoreDocument();
+        readDrScoreDocument()
     }
 
 //    fun readCollection() {
@@ -46,23 +46,23 @@ object FirestoreManager {
 
     fun readDrScoreDocument() {
         Log.e("readDrScoreDocument ","readDrScoreDocument")
-        val docRef = getDocumentReference();
+        val docRef = getDocumentReference()
         docRef?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
             if (e == null) {
                 Log.d(TAG, "No Exception")
                 Log.d(TAG, "Document Data is : "+snapshot?.data)
-                model = snapshot?.data?.toDataClass<DrScoreModel>();
+                model = snapshot?.data?.toDataClass<DrScoreModel>()
                 updateDrScoreIfNull()
                 listener?.invoke()
             } else {
-                Log.d(TAG, "Exception" + e);
+                Log.d(TAG, "Exception" + e)
             }
         }
     }
 
     fun getDocumentReference(): DocumentReference? {
         try {
-            return db?.collection(COLLECTION_NAME)?.document(this.fpTag);
+            return db?.collection(COLLECTION_NAME)?.document(this.fpTag)
         }catch (e:Exception){
             e.printStackTrace()
         }
@@ -71,15 +71,15 @@ object FirestoreManager {
 
     fun updateDrScoreIfNull() {
         if (this.model == null) {
-            this.model = DrScoreModel();
-            val docRef = getDocumentReference();
-            updateDocument(docRef, this.model.serializeToMap());
+            this.model = DrScoreModel()
+            val docRef = getDocumentReference()
+            updateDocument(docRef, this.model.serializeToMap())
         }
     }
 
     fun updateDocument(doc: DocumentReference?, map: Map<String, Any>) {
         doc?.set(map)?.addOnSuccessListener {
-            Log.d(TAG, "document updated");
+            Log.d(TAG, "document updated")
         }
     }
 
@@ -88,13 +88,13 @@ object FirestoreManager {
     }
 
     fun updateDrScoreData(model: DrScoreModel) {
-        this.model = model;
-        updateDocument(getDocumentReference(), this.model.serializeToMap());
+        this.model = model
+        updateDocument(getDocumentReference(), this.model.serializeToMap())
     }
 
     fun updateDocument() {
         if(this.model != null && !TextUtils.isEmpty(this.model?.client_id)){
-            updateDocument(getDocumentReference(), this.model.serializeToMap());
+            updateDocument(getDocumentReference(), this.model.serializeToMap())
         }
     }
 

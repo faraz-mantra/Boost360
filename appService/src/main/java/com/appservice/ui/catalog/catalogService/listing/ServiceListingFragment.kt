@@ -20,6 +20,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
@@ -39,6 +40,7 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.ui.catalog.catalogService.ServiceCatalogHomeFragment
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.model.*
@@ -81,15 +83,30 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private var isLastPageD = false
 
   companion object {
-    fun newInstance(): ServiceListingFragment {
-      return ServiceListingFragment()
+    fun newInstance(isNonPhysicalExperience: Boolean?, currencyType: String?, fpId: String?, fpTag: String?, clientId: String?, externalSourceId: String?, applicationId: String?, userProfileId: String?): ServiceListingFragment {
+      val bundle = Bundle()
+      bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience!!)
+      bundle.putString(IntentConstant.CURRENCY_TYPE.name, "INR")
+      bundle.putString(IntentConstant.FP_ID.name, fpId)
+      bundle.putString(IntentConstant.FP_TAG.name, fpTag)
+      bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
+      bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
+      bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
+      bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
+      val serviceListingFragment = ServiceListingFragment()
+      serviceListingFragment.arguments = bundle
+      return serviceListingFragment
     }
 
     private const val STORAGE_CODE = 120
     var defaultShareGlobal = true
     var shareType = 2
     var shareProduct: ItemsItem? = null
+    fun newInstance(): ServiceListingFragment {
+      return ServiceListingFragment()
+    }
   }
+
 
   override fun getLayout(): Int {
     return R.layout.fragment_service_listing
@@ -165,7 +182,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
         setAdapterNotify()
-        setToolbarTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})")
+//        setToolbarTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})")
+        (parentFragment as ServiceCatalogHomeFragment).setTabTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})",0)
+
       } else if (isFirstLoad) setEmptyView(View.VISIBLE)
     } else {
       if (listService.isNullOrEmpty().not()) {
@@ -199,7 +218,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     val searchView = searchItem.actionView as? SearchView
     val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
     val searchCloseIcon = searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
-    searchCloseIcon?.setColorFilter(resources.getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
+    searchCloseIcon?.setColorFilter(getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
     searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
     searchAutoComplete?.setTextColor(getColor(R.color.white))
     searchView?.setIconifiedByDefault(true)
@@ -214,6 +233,16 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         return false
       }
     })
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.action_service_configuration -> {
+        startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
+        return true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
   }
 
   private fun startFilter(query: String?) {
@@ -291,7 +320,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun checkStoragePermission(): Boolean {
     if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      showDialog(requireActivity(), "Storage Permission", "To share the image we need storage permission."
+      showDialog(requireActivity(), getString(R.string.storage_permission), getString(R.string.to_share_the_image_we_need_storage_permission)
       ) { _: DialogInterface?, _: Int -> ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_CODE) }
       return false
     }
@@ -420,6 +449,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun hideProgress() {
     binding?.progress?.gone()
   }
+
 }
 
 

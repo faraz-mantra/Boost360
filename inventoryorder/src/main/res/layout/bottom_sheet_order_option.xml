@@ -44,8 +44,8 @@
         <com.framework.views.DashedDividerView
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:layout_marginTop="@dimen/size_10"
             android:layout_marginStart="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_10"
             android:layout_marginBottom="@dimen/size_5"
             android:textColor="@color/black_2A2A2A"

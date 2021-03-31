@@ -55,7 +55,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   protected fun isResponseSuccessful(it: BaseResponse, errorMessage: String?): Boolean {
     if ((it.error is NoNetworkException).not()) {
       if ((it.isSuccess())) {
-        return true;
+        return true
       } else {
         Log.d("API_ERROR", it.message())
         Log.d("BaseResponseData", it.message())
@@ -64,7 +64,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     } else {
       showErrorMessage(resources.getString(R.string.internet_connection_not_available))
     }
-    return false;
+    return false
   }
 
   protected fun hitApi(liveData: LiveData<BaseResponse>?, errorStringId: Int) {
@@ -78,7 +78,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   open fun onSuccess(it: BaseResponse) {
-    Log.d("TAG", "onSuccess");
+    Log.d("TAG", "onSuccess")
   }
 
   open fun onFailure(it: BaseResponse) {

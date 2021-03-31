@@ -80,8 +80,8 @@
                             <com.framework.views.customViews.CustomTextView
                                 style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
-                                android:textColor="#747474"
                                 android:text="@string/ask_customer_to_pick_the_order_from_your_store"
+                                android:textColor="#747474"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -127,8 +127,8 @@
                             <com.framework.views.customViews.CustomTextView
                                 style="@style/wrap_wrap"
                                 android:fontFamily="@font/regular"
-                                android:textColor="#747474"
                                 android:text="@string/deliver_to_customer_via_your_shipping_partner"
+                                android:textColor="#747474"
                                 android:textSize="12sp" />
                         </LinearLayout>
 

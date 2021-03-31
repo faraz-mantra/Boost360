@@ -30,8 +30,8 @@
               android:layout_gravity="center_vertical"
               android:layout_marginStart="@dimen/size_8"
               android:layout_weight="1"
-              android:textColor="@color/black_4f4f4f"
               android:fontFamily="@font/open_sans"
+              android:textColor="@color/black_4f4f4f"
               app:textType="CAPTION"
               tools:text="Monday" />
 

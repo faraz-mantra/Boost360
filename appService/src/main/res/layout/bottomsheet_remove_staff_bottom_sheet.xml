@@ -27,10 +27,10 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:textColor="@color/white"
                 android:text="@string/do_you_want_to_permanently_delete_this_staff_member"
-                app:fontFamily="@font/semi_bold"
+                android:textColor="@color/white"
                 android:textSize="24sp"
+                app:fontFamily="@font/semi_bold"
                 tools:textColor="@color/black_4a4a4a" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -68,17 +68,17 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_height="@dimen/size_36"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/bg_button_proceed_radius_4dp"
-                android:fontFamily="@font/semi_bold"
                 android:backgroundTint="#D03F3F"
+                android:fontFamily="@font/semi_bold"
                 android:gravity="center"
                 android:padding="12dp"
                 android:stateListAnimator="@null"
                 android:text="@string/delete_staff"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
+                android:textSize="11sp"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textSize="11sp"
                 app:layout_constraintWidth_percent="0.50" />
 
             <com.framework.views.customViews.CustomButton
@@ -88,16 +88,16 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_gravity="center_horizontal"
                 android:layout_marginRight="@dimen/size_20"
                 android:background="@null"
-                android:padding="@dimen/size_12"
                 android:fontFamily="@font/semi_bold"
                 android:gravity="center"
+                android:padding="@dimen/size_12"
                 android:stateListAnimator="@null"
                 android:text="@string/cancel"
                 android:textAllCaps="true"
                 android:textColor="@color/grey_787878"
+                android:textSize="11sp"
                 app:layout_constraintRight_toLeftOf="@id/btn_done"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textSize="11sp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

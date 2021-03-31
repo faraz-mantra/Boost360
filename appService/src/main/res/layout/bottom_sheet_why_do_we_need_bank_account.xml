@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/verification_ui"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_top_strock"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/size_16">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/text_verification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginEnd="@dimen/size_10"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/why_do_we_need_to_add_and_verify_your_bank_account"
+            android:textAlignment="gravity"
+            android:textColor="@color/greyish_brown"
+            app:textType="HEADING_5" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/text_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_4"
+            android:layout_marginTop="@dimen/size_14"
+            android:layout_marginEnd="@dimen/size_4"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/this_account_is_being_used_to_send_you_money_collected_from_your_customers_who_are_making_payments_on_your_boost_business_website"
+            android:textAlignment="gravity"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/regular"
+            app:textType="CAPTION" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/understood_btn"
+            style="@style/ButtonStyle.Rounded.Solid"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/size_30"
+            android:layout_marginTop="@dimen/size_24"
+            android:layout_marginEnd="@dimen/size_30"
+            android:layout_marginBottom="@dimen/size_16"
+            android:text="@string/understood" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

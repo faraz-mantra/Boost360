@@ -1,4 +1,3 @@
 package com.appservice.ui.catalog.catalogProduct.listing
 
-class ProductListingFragment {
-}
+class ProductListingFragment

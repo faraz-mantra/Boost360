@@ -3,14 +3,14 @@ package com.inventoryorder.ui.order.createorder
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.framework.webengageconstant.CLICKED_ON_ADD_CUSTOMER
-import com.framework.webengageconstant.ORDERS
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.extensions.observeOnce
+import com.framework.webengageconstant.CLICKED_ON_ADD_CUSTOMER
+import com.framework.webengageconstant.ORDERS
 import com.google.android.material.textview.MaterialTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant

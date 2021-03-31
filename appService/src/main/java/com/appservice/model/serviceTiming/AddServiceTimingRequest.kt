@@ -11,6 +11,4 @@ data class AddServiceTimingRequest(
     var duration: Int? = null,
     @SerializedName("Timings")
     var timings: ArrayList<ServiceTiming>? = null,
-) : BaseRequest(), Serializable {
-
-}
+) : BaseRequest(), Serializable

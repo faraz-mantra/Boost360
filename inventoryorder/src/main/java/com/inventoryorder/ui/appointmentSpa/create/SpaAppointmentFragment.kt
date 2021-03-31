@@ -1,17 +1,17 @@
 package com.inventoryorder.ui.appointmentSpa.create
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
+import com.framework.extensions.onTextChanged
 import com.framework.utils.DateUtils
-import com.framework.utils.fromHtml
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
@@ -29,7 +29,6 @@ import com.inventoryorder.recyclerView.CustomArrayAdapter
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
-import com.onboarding.nowfloats.extensions.capitalizeWords
 import com.onboarding.nowfloats.model.CityDataModel
 import com.onboarding.nowfloats.ui.CitySearchDialog
 import kotlinx.android.synthetic.main.item_date_view.*
@@ -99,8 +98,6 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       binding?.layoutCustomer?.tvRemove -> {
         binding?.layoutCustomer?.textAddCustomerGstin?.visibility = View.VISIBLE
         binding?.layoutCustomer?.lytCustomerGstn?.visibility = View.GONE
-        binding?.layoutCustomer?.editGstin?.text?.clear()
-
       }
 
       binding?.imageEdit -> {
@@ -118,8 +115,8 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
   }
 
   private fun setCityState(cityDataModel: CityDataModel) {
-    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName().capitalizeWords())
-    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName().capitalizeWords())
+    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName())
+    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName())
   }
 
   fun getBundleData(): Bundle? {
@@ -164,11 +161,11 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       showShortToast(getString(R.string.please_enter_valid_email))
       return
     }
-    if (binding?.layoutCustomer?.lytCustomerGstn?.visibility == View.VISIBLE)
-      if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
-        showShortToast(getString(R.string.enter_valid_gstin_number))
-        return
-      }
+
+    if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
+      showShortToast(getString(R.string.enter_valid_gstin_number))
+      return
+    }
 
     if (address.isEmpty()) {
       showShortToast(getString(R.string.customer_address_cannot_be_empty))
@@ -232,9 +229,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     binding?.layoutShowSelectedSlot?.visibility = View.VISIBLE
     binding?.groupTiming?.visibility = View.GONE
 
-    binding?.textDate?.text = getDisplayDate(appointmentRequestModel?.scheduledDateTime ?: "")
-    binding?.textTime?.text = appointmentRequestModel?.startTime
-    binding?.textBy?.text = appointmentRequestModel?.staffName
+    binding?.textDate?.text = getDisplayDate(appointmentRequestModel.scheduledDateTime ?: "")
+    binding?.textTime?.text = appointmentRequestModel.startTime
+    binding?.textBy?.text = appointmentRequestModel.staffName
 
     this.appointmentRequestModel = appointmentRequestModel
     this.dateCounter = dateCounter
@@ -242,7 +239,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
   private fun getSearchListing() {
     showProgress(getString(R.string.loading))
-    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 100)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 500)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
 
       if (it.error is NoNetworkException) {
@@ -269,32 +266,18 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       threshold = 1
       (serviceAdapter as? CustomArrayAdapter)?.initList()
       setAdapter(serviceAdapter)
+
       onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->
         selectedService = serviceList?.get(pos)
-        binding?.editServiceName?.setText(fromHtml("<b><color='#2a2a2a'>${selectedService?.Name}</color></b> <color='#adadad'>(${selectedService?.Currency}${selectedService?.DiscountedPrice} for ${selectedService?.Duration}min)</color>"))
         totalPrice = selectedService?.Price ?: 0.0
         discountedPrice = selectedService?.DiscountedPrice ?: 0.0
         currency = selectedService?.Currency ?: ""
         val bookingSlotsRequest = BookingSlotsRequest(BatchType = "DAILY",
-                ServiceId = serviceList?.get(pos)?._id!!,
-                DateRange = DateRange(StartDate = startDate, EndDate = startDate))
+            ServiceId = serviceList?.get(pos)?._id!!,
+            DateRange = DateRange(StartDate = startDate, EndDate = startDate))
         getBookingSlots(bookingSlotsRequest)
       }
     }
-    binding?.editServiceName?.addTextChangedListener(object : TextWatcher {
-      override fun afterTextChanged(s: Editable?) {
-        if (s.toString().isBlank() || s.toString().isEmpty()) {
-          binding?.groupTiming?.visibility = View.VISIBLE
-          binding?.layoutShowSelectedSlot?.visibility = View.GONE
-        }
-      }
-
-      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-      }
-
-      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-      }
-    })
   }
 
   private fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) {
@@ -306,14 +289,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       }
       if (it.isSuccess()) {
         bookingSlotResponse = (it as? BookingSlotResponse)
-        if (bookingSlotResponse?.Result.isNullOrEmpty().not()) {
-          if (bookingSlotResponse?.Result?.get(0)?.Staff.isNullOrEmpty().not()) {
-            bookingSlotResponse?.Result?.get(0)?.Staff?.get(0)?.isSelected = true
-          }
-        }
+        bookingSlotResponse?.Result?.get(0)?.Staff?.get(0)?.isSelected = true
         selectedDateTimeBottomSheetDialog?.setData(bookingSlotResponse!!, selectedService!!)
         binding?.groupTiming?.visibility = View.VISIBLE
-        binding?.layoutShowSelectedSlot?.visibility = View.GONE
       } else {
         showLongToast(getString(R.string.not_able_to_get_booking_slots))
         binding?.groupTiming?.visibility = View.GONE

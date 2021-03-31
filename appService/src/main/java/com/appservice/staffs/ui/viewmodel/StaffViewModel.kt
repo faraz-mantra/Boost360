@@ -1,11 +1,9 @@
 package com.appservice.staffs.ui.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.appservice.rest.repository.NowfloatsApiRepository
 import com.appservice.rest.repository.StaffNowFloatsRepository
 import com.appservice.staffs.model.*
-import com.appservice.ui.catalog.common.AppointmentModel
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData

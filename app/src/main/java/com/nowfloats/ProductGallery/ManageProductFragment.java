@@ -101,7 +101,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static android.app.Activity.RESULT_OK;
-import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventLabelKt.PRODUCT_CATALOGUE_ADD_UPDATE;
 import static com.framework.webengageconstant.EventNameKt.ADD_UPDATE_PRODUCT_CATALOGUE_LOADED;
 import static com.framework.webengageconstant.EventNameKt.ERROR_UPDATE_PRODUCT_CATALOGUE;
@@ -113,57 +112,44 @@ import static com.nowfloats.util.Constants.DEV_ASSURED_PURCHASE_URL;
 public class ManageProductFragment extends Fragment implements AdapterView.OnItemClickListener,
     UploadImage.ImageUploadListener, FileUpload.OnFileUpload {
 
-  private String TAG = ManageProductFragment.class.getSimpleName();
+  public static final String[] FILE_EXTENSIONS = new String[]{"doc", "docx", "xls", "xlsx", "pdf"};
+  private final String TAG = ManageProductFragment.class.getSimpleName();
+  private final String productType = "PRODUCTS";
+  private final int MAX_IMAGE_ALLOWED = 8;
 
-  private String currencyType = "";
-  private String productType = "PRODUCTS";
-  private int MAX_IMAGE_ALLOWED = 8;
-
-  private List<ProductImageResponseModel> imageList = new ArrayList<>();
-
-  private ProductSpecificationRecyclerAdapter adapter;
-  private ProductImageRecyclerAdapter adapterImage;
-  private ProductPickupAddressRecyclerAdapter adapterAddress;
-
+  private final List<ProductImageResponseModel> imageList = new ArrayList<>();
   private final int CAMERA_PERMISSION_REQUEST_CODE = 1;
-
   private final int CAMERA_PRIMARY_IMAGE_REQUEST_CODE = 101;
   private final int CAMERA_SECONDARY_IMAGE_REQUEST_CODE = 102;
   private final int CAMERA_PROOF_IMAGE_REQUEST_CODE = 103;
-
   private final int GALLERY_PRIMARY_IMAGE_REQUEST_CODE = 201;
   private final int GALLERY_SECONDARY_IMAGE_REQUEST_CODE = 202;
   private final int GALLERY_PROOF_IMAGE_REQUEST_CODE = 203;
-
   private final int DIALOG_REQUEST_CODE_PRIMARY = 1;
   private final int DIALOG_REQUEST_CODE_SECONDARY = 2;
-
-  public static final String[] FILE_EXTENSIONS = new String[]{"doc", "docx", "xls", "xlsx", "pdf"};
-
+  private final List<Tag> tags = new ArrayList<>();
+  private String currencyType = "";
+  private ProductSpecificationRecyclerAdapter adapter;
+  private ProductImageRecyclerAdapter adapterImage;
+  private ProductPickupAddressRecyclerAdapter adapterAddress;
   private Uri primaryUri, secondaryUri, proofUri;
   private File file;
-
   private String CATEGORY;
   private UserSessionManager session;
   private MaterialDialog materialDialog;
-
   private Constants.PaymentAndDeliveryMode paymentAndDeliveryMode = Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE;
-
   private com.nowfloats.ProductGallery.Model.Product product;
   private AssuredPurchase assuredPurchase;
   private BankInformation bankInformation;
   private AddressInformation addressInformation;
   private List<AddressInformation> addressInformationList;
-
   private BottomSheetBehavior sheetBehavior;
   private BottomSheetBehavior sheetBehaviorAddress;
-
   private ProductPickupAddressFragment pickupAddressFragment;
   private String[] paymentOptionTitles;
   private WebAction mWebAction;
-  private List<Tag> tags = new ArrayList<>();
-
   private boolean isService = false;
+  private FragmentManageProductBinding binding;
 
   public static ManageProductFragment newInstance(com.nowfloats.ProductGallery.Model.Product product) {
     ManageProductFragment fragment = new ManageProductFragment();
@@ -174,8 +160,6 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
     return fragment;
   }
-
-  private FragmentManageProductBinding binding;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -608,11 +592,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
    */
   private void setFinalPrice() {
     try {
-      if (binding.editBasePrice.getText().toString().isEmpty()) {
-        binding.editDiscount.setEnabled(false);
-      } else {
-        binding.editDiscount.setEnabled(true);
-      }
+      binding.editDiscount.setEnabled(!binding.editBasePrice.getText().toString().isEmpty());
 
       String basePrice = binding.editBasePrice.getText().toString().isEmpty() ? "0" : binding.editBasePrice.getText().toString();
       String discount = binding.editDiscount.getText().toString().isEmpty() ? "0" : binding.editDiscount.getText().toString();
@@ -2768,6 +2748,12 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     showDialog(getString(R.string.please_wait_));
   }
 
+  @Override
+  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    addTag(parent.getItemAtPosition(position).toString());
+  }
+
   /**
    * Product Specification Dynamic Input Filed Adapter Class
    */
@@ -3032,11 +3018,5 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         });
       }
     }
-  }
-
-  @Override
-  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    addTag(parent.getItemAtPosition(position).toString());
   }
 }

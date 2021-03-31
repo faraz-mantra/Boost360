@@ -76,7 +76,7 @@ class RazorPayWebView : DialogFragment() {
 
             try {
                 // Make webview visible before submitting payment details
-                razorpay.setWebView(razorpay_webview);
+                razorpay.setWebView(razorpay_webview)
                 razorpay.submit(data, object : PaymentResultListener {
 
                     override fun onPaymentSuccess(razorpayPaymentId: String) {

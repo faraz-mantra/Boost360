@@ -249,8 +249,8 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
 fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
   try {
-    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE);
-    startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE)
+      startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
   }

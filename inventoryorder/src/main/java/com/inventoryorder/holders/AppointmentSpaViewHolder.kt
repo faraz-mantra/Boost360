@@ -8,11 +8,8 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.utils.DateUtils
-import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
-import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.fromHtml
 import com.inventoryorder.R
@@ -52,7 +49,7 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
     binding.orderId.text = "# ${order.ReferenceNumber}"
 
     order.BillingDetails?.let { bill ->
-      val currency = takeIf { bill.getCurrencyCodeValue().isNullOrEmpty().not() }?.let { bill.getCurrencyCodeValue()?.trim() } ?: "INR"
+      val currency = takeIf { bill.getCurrencyCodeValue().isNullOrEmpty().not() }?.let { bill.getCurrencyCodeValue().trim() } ?: "INR"
       val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
       val ss = SpannableString("$formatAmount")
       ss.setSpan(RelativeSizeSpan(0.5f), "$formatAmount".indexOf("."), "$formatAmount".length, 0)

@@ -51,7 +51,7 @@ class WeeklyAppointmentViewHolder (binding: RecyclerItemSessionBinding) : AppBas
             data.changeDayTurned(isOn)
             listener?.onItemClick(position, data, RecyclerViewActionType.TOGGLE_STATE_CHANGED.ordinal)
         }
-        applyOnAllDaysLogic(data);
+        applyOnAllDaysLogic(data)
 
         binding.ctvAddSession.setOnClickListener {
             data.addSession()
@@ -85,22 +85,22 @@ class WeeklyAppointmentViewHolder (binding: RecyclerItemSessionBinding) : AppBas
 
     fun addTimeSlots(data: AppointmentModel) {
         if (data.timeSlots.isNullOrEmpty()) {
-            binding.llTimeSlot.removeAllViewsInLayout();
+            binding.llTimeSlot.removeAllViewsInLayout()
         } else {
             for (item in data.timeSlots) {
-                binding.llTimeSlot.addView(getTimeSlotView(item));
+                binding.llTimeSlot.addView(getTimeSlotView(item))
             }
         }
     }
 
     private fun getTimeSlotView(timeSlot: TimeSlot): View {
-        val itemView = LayoutInflater.from(binding.llTimeSlot.context).inflate(R.layout.item_ts_staff, null, false);
+        val itemView = LayoutInflater.from(binding.llTimeSlot.context).inflate(R.layout.item_ts_staff, null, false)
         val fromSpinner = itemView.findViewById(R.id.spinner_start_timing) as AppCompatSpinner
         val toSpinner = itemView.findViewById(R.id.spinner_end_timing) as AppCompatSpinner
         sessionTimingHandler(fromSpinner, timeSlot, toSpinner)
         fromSpinner.setSelection(businessHours.indexOf(element =timeSlot.from))
         toSpinner.setSelection(businessHours.indexOf(element= timeSlot.to))
-        return itemView;
+        return itemView
     }
 
     private fun sessionTimingHandler(fromSpinner: AppCompatSpinner, timeSlot: TimeSlot, toSpinner: AppCompatSpinner) {

@@ -5,7 +5,6 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetCancelAptBinding
-import com.inventoryorder.databinding.BottomSheetCancelOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 
 class CancelAptSheetDialog : BaseBottomSheetDialog<BottomSheetCancelAptBinding, BaseViewModel>() {

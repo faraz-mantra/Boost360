@@ -205,26 +205,7 @@ import static com.framework.webengageconstant.EventNameKt.NAV_SITE_HEALTH;
 import static com.framework.webengageconstant.EventNameKt.NAV_SOCIAL_SHARING_MY_DIGITAL_CHANNELS_CLICK;
 import static com.framework.webengageconstant.EventNameKt.NAV_SUBSCRIPTIONS;
 import static com.framework.webengageconstant.EventNameKt.NAV_SUPPORT;
-import static com.framework.webengageconstant.EventNameKt.WEBSITE_VISITS_CHART_DURATION_CHANGED;
 import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_HOME_PAGE;
-import static com.framework.webengageconstant.EventValueKt.NULL;
-import static com.framework.webengageconstant.EventLabelKt.BIZ_KEYBOARD;
-import static com.framework.webengageconstant.EventLabelKt.CONTENT_SHARING_SETTINGS;
-import static com.framework.webengageconstant.EventLabelKt.ENQUIRIES;
-import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
-import static com.framework.webengageconstant.EventLabelKt.ONLINE_ADVERTISING;
-import static com.framework.webengageconstant.EventLabelKt.ORDERS;
-import static com.framework.webengageconstant.EventLabelKt.SITE_HEALTH;
-import static com.framework.webengageconstant.EventLabelKt.SUPPORT;
-import static com.framework.webengageconstant.EventNameKt.CONTACT_NF;
-import static com.framework.webengageconstant.EventNameKt.NAV_BIZ_KEYBOARD;
-import static com.framework.webengageconstant.EventNameKt.NAV_ENQUIRIES;
-import static com.framework.webengageconstant.EventNameKt.NAV_ONLINE_ADVERTISING;
-import static com.framework.webengageconstant.EventNameKt.NAV_ORDERS;
-import static com.framework.webengageconstant.EventNameKt.NAV_SITE_HEALTH;
-import static com.framework.webengageconstant.EventNameKt.NAV_SOCIAL_SHARING_MY_DIGITAL_CHANNELS_CLICK;
-import static com.framework.webengageconstant.EventNameKt.NAV_SUPPORT;
-import static com.framework.webengageconstant.EventNameKt.WEBSITE_VISITS_CHART_DURATION_CHANGED;
 import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.inventoryorder.ui.FragmentContainerOrderActivityKt.startFragmentActivityNew;
 import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
@@ -285,13 +266,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
   private SharedPreferences pref = null;
   private DrawerLayout mDrawerLayout;
   private boolean isExpiredCheck = false;
-  private boolean showLookupDomain = false;
+  private final boolean showLookupDomain = false;
   private int clickCnt = 0;
-  private boolean backChk = false;
-  private boolean isShownExpireDialog = false;
+  private final boolean backChk = false;
+  private final boolean isShownExpireDialog = false;
   private RiaNodeDataModel mRiaNodeDataModel;
   private String mDeepLinkUrl, mPayload;
-  private String TAG = HomeActivity.class.getSimpleName();
+  private final String TAG = HomeActivity.class.getSimpleName();
   //private ArrayList<AccountDetailModel> accountDetailsModel = new ArrayList<>();
   private ProgressDialog progressDialog;
 
@@ -2031,7 +2012,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
       public void run() {
         for (ActivePackage activePackage : storeMainModel.activePackages) {
           int featuresCount = 0;
-          StringBuilder featuresBuilder = new StringBuilder("");
+          StringBuilder featuresBuilder = new StringBuilder();
           if (activePackage.getWidgetPacks() != null) {
             for (WidgetPacks widget : activePackage.getWidgetPacks()) {
               if (widget.Name != null) {

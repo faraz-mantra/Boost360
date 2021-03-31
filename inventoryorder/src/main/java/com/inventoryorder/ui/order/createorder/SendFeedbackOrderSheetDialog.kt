@@ -4,7 +4,6 @@ import android.view.View
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
-import com.inventoryorder.databinding.BottomSheetSendFeedbackAptBinding
 import com.inventoryorder.databinding.BottomSheetSendFeedbackOrderBinding
 import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
 import com.inventoryorder.model.ordersdetails.OrderItem

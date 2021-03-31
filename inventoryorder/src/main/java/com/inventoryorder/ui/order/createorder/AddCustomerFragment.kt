@@ -4,6 +4,8 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.framework.webengageconstant.CLICKED_ON_ADD_CUSTOMER
+import com.framework.webengageconstant.ORDERS
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
@@ -20,8 +22,6 @@ import com.inventoryorder.utils.WebEngageController
 import com.onboarding.nowfloats.model.CityDataModel
 import com.onboarding.nowfloats.ui.CitySearchDialog
 import java.util.regex.Pattern
-import com.framework.webengageconstant.CLICKED_ON_ADD_CUSTOMER
-import com.framework.webengageconstant.ORDERS
 
 class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() {
 

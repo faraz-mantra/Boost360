@@ -504,7 +504,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       }
       if (it.isSuccess()) {
         WebEngageController.trackEvent(if (isVideoConsult) CONSULATION_CREATE else APPOINTMENT_CREATE, ADDED, TO_BE_ADDED)
-        onInClinicAptConsultAddedOrUpdated(true);
+        onInClinicAptConsultAddedOrUpdated(true)
         hitApiAddAptConsult((it as? OrderInitiateResponse)?.data)
       } else {
         hideProgress()

@@ -2,7 +2,6 @@ package com.inventoryorder.ui.order.createorder
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import com.framework.extensions.observeOnce
 import com.framework.utils.NumbersToWords
 import com.inventoryorder.R
@@ -65,7 +64,7 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
       binding?.textPaymentLink?.text = orderItem.PaymentDetails?.methodValue() ?: ""
       binding?.textPaymentStatus?.text = orderItem.PaymentDetails?.statusValue() ?: ""
       binding?.textDeliveryType?.text = orderItem.LogisticsDetails?.DeliveryMode ?: ""
-      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
+      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem.BillingDetails?.GrossAmount ?: 0.0}"
     }
 
   }

@@ -6,7 +6,6 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
-import com.inventoryorder.databinding.BottomSheetSendReBookingAptBinding
 import com.inventoryorder.databinding.BottomSheetSendReBookingOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 

@@ -426,7 +426,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
                         widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
                         dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY), endDate = DateUtils.getAmountDate((activity as UpgradeActivity).deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY))
-        Log.v("allPurchasedWidgets"," "+ request1);
+        Log.v("allPurchasedWidgets"," "+ request1)
         val ac = (activity as UpgradeActivity)
         if (ac.isBackCart.not() && (ac.isDeepLink || ac.isOpenCardFragment)) {
             val currentDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY)
@@ -481,7 +481,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     private fun createPurchaseOrder(cartStateId: String?) {
-        Log.v("createPurchaseOrder", " "+ "createPurchaseOrder");
+        Log.v("createPurchaseOrder", " "+ "createPurchaseOrder")
         var couponCode: String? = null
         var couponDiscountPercentage: Int = 0
         if (validCouponCode != null) {
@@ -1117,7 +1117,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         })
 
 //        viewModel.getPurchaseOrderAutoRenewResponse().observe(getViewLifecycleOwner(),  -> {})
-        viewModel.getPurchaseOrderAutoRenewResponse().observe(getViewLifecycleOwner(), Observer {
+        viewModel.getPurchaseOrderAutoRenewResponse().observe(viewLifecycleOwner, Observer {
             Log.v("getPurchaseOrderAuto", " "+ it)
             if (it != null) {
 //                prefs.storeLatestPurchaseOrderId(it.Result.OrderId)
@@ -1271,8 +1271,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
 //                    validCouponCode = it
                     couponServiceModel = it
-                    couponCode = it!!.coupon_key!!
-                    discount_coupon_title.text = it!!.coupon_key
+                    couponCode = it.coupon_key!!
+                    discount_coupon_title.text = it.coupon_key
                     cart_apply_coupon.visibility = View.GONE
                     discount_coupon_remove.visibility = View.VISIBLE
                     if(it.success!!){

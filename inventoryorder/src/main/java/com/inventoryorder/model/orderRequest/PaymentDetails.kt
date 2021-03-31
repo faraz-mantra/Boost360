@@ -8,6 +8,4 @@ data class PaymentDetails(
     var method: String? = null,
     @SerializedName("Status")
     var status : String?= null
-) : Serializable {
-
-}
+) : Serializable
