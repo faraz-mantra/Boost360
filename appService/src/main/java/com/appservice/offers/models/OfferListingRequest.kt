@@ -5,32 +5,32 @@ import com.google.gson.annotations.SerializedName
 data class OfferListingRequest(
 
 	@field:SerializedName("Filter")
-	val filter: Filter? = null,
+	var filter: Filter? = null,
 
 	@field:SerializedName("SortBy")
-	val sortBy: SortBy? = null,
+	var sortBy: SortBy? = null,
 
 	@field:SerializedName("FloatingPointTag")
-	val floatingPointTag: String? = null,
+	var floatingPointTag: String? = null,
 
 	@field:SerializedName("Limit")
-	val limit: Int? = null,
+	var limit: Int? = null,
 
 	@field:SerializedName("Offset")
-	val offset: Int? = null
+	var offset: Int? = null
 )
 
 data class SortBy(
 
 	@field:SerializedName("SortingOrder")
-	val sortingOrder: Int? = null,
+	var sortingOrder: Int? = null,
 
 	@field:SerializedName("SortingFactor")
-	val sortingFactor: Int? = null
+	var sortingFactor: Int? = null
 )
 
 data class Filter(
 
 	@field:SerializedName("IsAvailable")
-	val isAvailable: Boolean? = null
+	var isAvailable: Boolean? = null
 )

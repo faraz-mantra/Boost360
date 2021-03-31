@@ -5,12 +5,13 @@ import android.widget.RadioButton
 import com.appservice.AppServiceApplication
 import com.appservice.R
 import com.appservice.databinding.BottomSheetSortOffersListingBinding
+import com.appservice.offers.offerlisting.OfferListingFragment.Companion.selectedRadioTag
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
 class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersListingBinding, BaseViewModel>() {
 
-    var onClicked: (value:  Int) -> Unit = { }
+    var onClicked: (value: Int) -> Unit = { }
 
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_sort_offers_listing
@@ -39,7 +40,13 @@ class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersLis
     }
 
     private fun markDefaultSelection() {
-        binding?.rbLatestOnTop?.isChecked = true
+        if (selectedRadioTag == null)
+            binding?.rbLatestOnTop?.isChecked = true
+        else {
+            val radioButton: RadioButton = binding?.radioGroupSorting!!.findViewWithTag(selectedRadioTag)
+            radioButton.isChecked = true
+
+        }
 
     }
 
@@ -50,6 +57,8 @@ class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersLis
                 if (binding?.radioGroupSorting != null) {
                     val radioButton: RadioButton = binding?.radioGroupSorting!!.findViewById(binding?.radioGroupSorting!!.checkedRadioButtonId)
                     onClicked(filters.getValue(radioButton.text.toString()))
+                    selectedRadioTag = radioButton.text.toString()
+
                 }
                 dismiss()
             }

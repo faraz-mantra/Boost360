@@ -64,7 +64,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
         fun newInstance(): OfferListingFragment {
             return OfferListingFragment()
         }
-
+ var selectedRadioTag: String? = null
         private const val STORAGE_CODE = 120
         var defaultShareGlobal = true
         var shareType = 2
@@ -83,9 +83,9 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
     }
 
         private fun opeFilterByBottomSheet() {
-            val createdSuccess = FilterOffersByBottomSheet()
-            createdSuccess.onClicked = { fetchOfferListing(isFirst = true, sortBy = SortBy(0, it), offSet = offSet, limit = limit) }
-            createdSuccess.show(this@OfferListingFragment.parentFragmentManager, FilterOffersByBottomSheet::class.java.name)
+            val filterOffersByBottomSheet = FilterOffersByBottomSheet()
+            filterOffersByBottomSheet.onClicked = { fetchOfferListing(isFirst = true, sortBy = SortBy(0, it), offSet = 0, limit = 10) }
+            filterOffersByBottomSheet.show(this@OfferListingFragment.parentFragmentManager, FilterOffersByBottomSheet::class.java.name)
         }
     private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
         binding?.rvListing?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
@@ -140,7 +140,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
             isLastPageD = (finalList.size == totalElements)
             setAdapterNotify()
         } else if (isFirstLoad) setEmptyView(true)
-        if (listOffer.isNullOrEmpty().not()) {
+        else if (listOffer.isNullOrEmpty().not()) {
             list.clear()
             list.addAll(listOffer!!)
             setAdapterNotify()

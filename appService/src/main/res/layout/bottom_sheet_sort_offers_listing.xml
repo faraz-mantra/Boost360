@@ -63,6 +63,7 @@
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:paddingHorizontal="@dimen/size_10"
                     android:id="@+id/rb_latest_on_top"
+                    android:tag="@string/latest_on_top"
                     android:text="@string/latest_on_top" />
 
                 <View
@@ -73,6 +74,7 @@
                 <com.framework.views.customViews.CustomRadioButton
                     style="@style/RadioButtonOffers"
                     android:layout_marginHorizontal="@dimen/size_20"
+                    android:tag="@string/oldest_on_top"
                     android:paddingHorizontal="@dimen/size_10"
                     android:text="@string/oldest_on_top" />
 
@@ -85,6 +87,7 @@
                     style="@style/RadioButtonOffers"
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:paddingHorizontal="@dimen/size_10"
+                    android:tag="@string/active_first"
                     android:text="@string/active_first" />
 
                 <View
@@ -95,6 +98,7 @@
                 <com.framework.views.customViews.CustomRadioButton
                     style="@style/RadioButtonOffers"
                     android:layout_marginHorizontal="@dimen/size_20"
+                    android:tag="@string/deactive_first"
                     android:paddingHorizontal="@dimen/size_10"
                     android:text="@string/deactive_first" />
 
