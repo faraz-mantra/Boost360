@@ -60,7 +60,7 @@ class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetu
     fun setImage(parent: FragmentCustomerInvoiceSetup) {
         binding?.btnClickPhoto?.gone()
         binding?.layoutImagePreview?.root?.visible()
-        binding?.layoutImagePreview?.ctvSize?.text = paymentProfileDetails?.taxDetails?.gSTDetails?.documentName
+        binding?.layoutImagePreview?.ctvSize?.text = paymentProfileDetails?.taxDetails?.gSTDetails?.documentName ?: paymentProfileDetails?.merchantSignature?.split("/")?.last()
         activity?.glideLoad(binding?.layoutImagePreview?.image, paymentProfileDetails?.merchantSignature)
         imageClickListners(parent)
 
