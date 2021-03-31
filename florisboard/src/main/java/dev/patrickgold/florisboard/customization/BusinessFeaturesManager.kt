@@ -19,7 +19,6 @@ import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
 import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
 import dev.patrickgold.florisboard.ime.core.InputView
 import timber.log.Timber
-import java.util.*
 
 class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
 
@@ -103,6 +102,7 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
     }
 
     private fun initializeAdapters(businessFeatureEnum: BusinessFeatureEnum) {
+        //clear adapter dataset
         adapter.clearList()
         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
             Timber.i("Please do login")
@@ -126,17 +126,13 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                             Timber.i("updates - $it.")
                             businessFeatureProgressBar.gone()
 
-                            try {
-                                // last item can be null which is added for pagination
-                                adapter.list.removeLast()
-                            } catch (e: NoSuchElementException) {
-                                Timber.i("List is empty")
-                            }
+                            adapter.removeLoader()
 
-                            if (it.totalCount!! > adapter.list.size) {
-                                it.floats?.let { it1 -> adapter.submitList(it1, true) }
+                            if (it.floats?.isNotEmpty() == true) {
+                                it.floats?.let { list -> adapter.submitList(list, hasMoreItems = true) }
                             } else {
-                                it.floats?.let { it1 -> adapter.submitList(it1) }
+                                adapter.removeLoader()
+                                Timber.i("List from api came empty")
                             }
                             isLoading = false
                         }
@@ -150,8 +146,16 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                         viewModel.products.observeForever {
                             Timber.i("products - $it.")
                             businessFeatureProgressBar.gone()
-                            // need to now how to load more products as there's no flag in response which indicates to load more data
-                            adapter.submitList(it)
+
+                            adapter.removeLoader()
+
+                            if (it.isNotEmpty()) {
+                                it.let { list -> adapter.submitList(list, hasMoreItems = true) }
+                            } else {
+                                adapter.removeLoader()
+                                Timber.i("List from api came empty")
+                            }
+                            isLoading = false
                         }
                     }
                     BusinessFeatureEnum.DETAILS -> {
@@ -172,7 +176,16 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                         viewModel.photos.observeForever {
                             Timber.e("photos - $it.")
                             businessFeatureProgressBar.gone()
-                            adapter.submitList(it)
+
+                            adapter.removeLoader()
+
+                            if (it.isNotEmpty()) {
+                                it.let { list -> adapter.submitList(list, hasMoreItems = true) }
+                            } else {
+                                adapter.removeLoader()
+                                Timber.i("List from api came empty")
+                            }
+                            isLoading = false
                         }
                     }
                 }

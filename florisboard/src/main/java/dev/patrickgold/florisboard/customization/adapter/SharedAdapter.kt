@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.customization.viewholder.*
+import timber.log.Timber
 import java.util.*
 
 
@@ -41,8 +42,27 @@ class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T?>, val listener
         // for pagination
         if (hasMoreItems) {
             list.add(null)
+            notifyItemRangeInserted(list.size, newList.size + 1)
+        } else {
+            notifyItemRangeInserted(list.size, newList.size)
         }
-        notifyDataSetChanged()
+    }
+
+    fun removeLoader() {
+        try {
+            // get last item
+            val item = list[list.size - 1]
+            // if last item is null then it was added for pagination
+            if (item == null) {
+                list.removeLast()
+            }
+        } catch (e: NoSuchElementException) {
+            Timber.i("List is empty")
+        } catch (e: IndexOutOfBoundsException) {
+            Timber.i("tried to remove item with no items present in it")
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
     }
 
     fun clearList() {
