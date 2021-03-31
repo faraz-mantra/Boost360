@@ -14,6 +14,9 @@ import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
 import com.appservice.ui.catalog.catalogProduct.addProduct.ProductDetailFragment
 import com.appservice.ui.catalog.catalogProduct.addProduct.information.ProductInformationFragment
+import com.appservice.ui.catalog.catalogProduct.listing.FragmentProductCategory
+import com.appservice.ui.catalog.catalogProduct.listing.FragmentProductHome
+import com.appservice.ui.catalog.catalogProduct.listing.FragmentProductListing
 import com.appservice.ui.catalog.catalogService.ServiceCatalogHomeFragment
 import com.appservice.ui.catalog.catalogService.addService.ServiceDetailFragment
 import com.appservice.ui.catalog.catalogService.addService.information.ServiceInformationFragment
@@ -48,6 +51,9 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     private var fragmentAccountAddHome: FragmentAccountAddHome? = null
     private var fragmentAddAccountDetails: FragmentAddAccountDetails? = null
     private var fragmentEditAccountDetails: FragmentEditBankDetails? = null
+    private var fragmentProductCategory: FragmentProductCategory? = null
+    private var fragmentProductHome: FragmentProductHome? = null
+    private var fragmentProductListing: FragmentProductListing? = null
 
     override fun getLayout(): Int {
         return com.framework.R.layout.activity_fragment_container
@@ -73,7 +79,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
             FragmentType.SERVICE_LISTING, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
             FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
-            FragmentType.EDIT_ACCOUNT_DETAILS,
+            FragmentType.EDIT_ACCOUNT_DETAILS, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
             -> R.style.CatalogTheme
             FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
             FragmentType.SERVICE_CATALOG_HOME_FRAGMENT -> R.style.OffersThemeBase
@@ -96,7 +102,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         return when (type) {
             FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
             FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT,
-            FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
+            FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
             FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, FragmentType.EDIT_ACCOUNT_DETAILS,
             FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES,
             -> ContextCompat.getColor(this, R.color.orange)
@@ -118,7 +124,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
             FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES,
             FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
-            FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.EDIT_ACCOUNT_DETAILS,
+            FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.EDIT_ACCOUNT_DETAILS, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
             -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
             else -> super.getNavigationIcon()
         }
@@ -145,6 +151,9 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS -> getString(R.string.my_bank_account)
             FragmentType.EDIT_ACCOUNT_DETAILS -> getString(R.string.my_bank_account)
             FragmentType.SERVICE_CATALOG_HOME_FRAGMENT -> getString(R.string.catalog)
+            FragmentType.FRAGMENT_PRODUCT_LISTING -> getString(R.string.catalog)
+            FragmentType.FRAGMENT_PRODUCT_HOME -> getString(R.string.catalog)
+            FragmentType.FRAGMENT_PRODUCT_CATEGORY -> getString(R.string.catalog)
             else -> super.getToolbarTitle()
         }
     }
@@ -212,6 +221,18 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
             FragmentType.SERVICE_CATALOG_HOME_FRAGMENT -> {
                 serviceCatalogHomeFragment = ServiceCatalogHomeFragment.newInstance()
                 serviceCatalogHomeFragment
+            }
+            FragmentType.FRAGMENT_PRODUCT_HOME -> {
+                fragmentProductHome = FragmentProductHome.newInstance()
+                fragmentProductHome
+            }
+            FragmentType.FRAGMENT_PRODUCT_LISTING -> {
+                fragmentProductListing = FragmentProductListing.newInstance()
+                fragmentProductListing
+            }
+            FragmentType.FRAGMENT_PRODUCT_CATEGORY -> {
+                fragmentProductCategory = FragmentProductCategory.newInstance()
+                fragmentProductCategory
             }
             FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE -> {
                 fragmentCustomerInvoiceSetup = FragmentCustomerInvoiceSetup.newInstance()
