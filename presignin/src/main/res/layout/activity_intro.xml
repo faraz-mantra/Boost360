@@ -12,7 +12,7 @@
         tools:context=".ui.intro.IntroActivity">
 
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/intro_viewpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -20,49 +20,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="40dp"
             app:layout_constraintBottom_toTopOf="@id/intro_indicator"/>
 
 
-        <com.google.android.material.tabs.TabLayout
+        <com.boost.presignin.views.IntroDotIndicator
             android:layout_width="wrap_content"
-            android:id="@+id/intro_indicator"
             android:layout_height="wrap_content"
+            android:id="@+id/intro_indicator"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="16dp"
-            app:tabIndicator="@null"
-            app:tabPadding="0dp"
-            app:tabRippleColor="@android:color/transparent"
-            app:tabGravity="center"
-            app:tabMinWidth="20dp"
-            app:layout_constraintBottom_toTopOf="@id/get_started"
-            app:tabBackground="@drawable/indicator_selector"/>
+            app:dotsColor="@color/intro_indi_inactive"
+            android:layout_marginBottom="@dimen/_14sdp"
+            app:dotsSize="@dimen/_7sdp"
+            app:dotsSpacing="@dimen/_3sdp"
+            app:dotsWidthFactor="1"
+            app:selectedDotColor="@color/intro_indi_active"
+            app:layout_constraintBottom_toTopOf="@id/get_started"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+        <com.framework.views.customViews.CustomButton
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/psn_get_started"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             style="@style/started_button"
             app:layout_constraintBottom_toTopOf="@id/accept_tnc"
             android:layout_marginBottom="@dimen/size_20"
             android:id="@+id/get_started"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/accept_tnc"
-            android:textSize="12sp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textColor="@color/tnc_color"
-            android:fontFamily="@font/open_sans"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_18ssp"
             android:layout_marginBottom="@dimen/size_20"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/ps_accept_tnc"/>
