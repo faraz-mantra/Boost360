@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorAccent">#ffb900</color>
+    <color name="colorPrimary">#ffb900</color>
+    <color name="colorPrimaryDark">#d99d00</color>
+
+
+    <color name="intro_indi_inactive">#D7D7D7</color>
+    <color name="intro_indi_active">#000</color>
+
+    <color name="started_button_start">#FFB900</color>
+    <color name="started_button_end">#FFC800</color>
+    <color name="tnc_color">#4a4a4a</color>
+</resources>
