@@ -12,15 +12,8 @@ class IntroAdapter(fragmentManager: FragmentManager, val items: List<IntroItem>)
     override fun getCount(): Int {
             return items.size;
     }
-//
-//    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-//        return  view===`object`;
-//    }
 
     override fun getItem(position: Int): Fragment {
         return PreSigninIntroFragment.newInstance(items[position],position);
     }
-
-
-
 }
