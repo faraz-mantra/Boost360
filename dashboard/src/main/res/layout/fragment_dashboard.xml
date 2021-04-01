@@ -609,7 +609,7 @@
               <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager_ria_academy"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_210"
+                android:layout_height="@dimen/size_90"
                 android:layout_marginTop="@dimen/size_14"
                 android:clipChildren="false"
                 android:clipToPadding="false" />
@@ -747,7 +747,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                   android:id="@+id/pager_boost_premium"
                   android:layout_width="match_parent"
-                  android:layout_height="@dimen/size_210"
+                  android:layout_height="@dimen/size_190"
                   android:layout_marginTop="@dimen/size_14"
                   android:clipChildren="false"
                   android:clipToPadding="false" />

@@ -9,8 +9,7 @@
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match_match"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,16 +23,14 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/iv_curve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_create_order_onboarding_orange_curve_bags" />
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/iv_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_marginTop="@dimen/size_10"
         android:layout_marginEnd="@dimen/size_16"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,8 +39,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/text_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_marginStart="@dimen/size_50"
         android:layout_marginTop="@dimen/size_16"
         android:maxEms="7"
@@ -55,16 +51,14 @@
         app:textType="HEADING_2" />
 
       <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_heading">
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/linear_layout_1"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_50"
           android:layout_marginTop="@dimen/size_20"
           android:gravity="center_vertical"
@@ -82,8 +76,7 @@
             app:fontFamily="@font/bold" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_10"
             android:text="@string/select_add_a_customer"
             android:textColor="@color/black_4a4a4a"
@@ -102,7 +95,7 @@
           app:layout_constraintStart_toStartOf="@id/linear_layout_1"
           app:layout_constraintTop_toBottomOf="@id/linear_layout_1" />
 
-        <ImageView
+        <com.framework.views.customViews.CustomImageView
           android:id="@+id/image_arrow_yellow_down_1"
           android:layout_width="@dimen/size_10"
           android:layout_height="@dimen/size_10"
@@ -114,8 +107,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/linear_layout_2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginStart="@dimen/size_50"
           android:layout_marginTop="@dimen/size_22"
           android:gravity="center_vertical"
@@ -133,8 +125,7 @@
             app:fontFamily="@font/bold" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_10"
             android:text="@string/select_products_services"
             android:textColor="@color/black_4a4a4a"
@@ -153,7 +144,7 @@
           app:layout_constraintStart_toStartOf="@id/linear_layout_2"
           app:layout_constraintTop_toBottomOf="@id/linear_layout_2" />
 
-        <ImageView
+        <com.framework.views.customViews.CustomImageView
           android:id="@+id/image_arrow_yellow_down_2"
           android:layout_width="@dimen/size_10"
           android:layout_height="@dimen/size_10"
@@ -165,8 +156,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/linear_layout_3"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginStart="@dimen/size_50"
           android:layout_marginTop="@dimen/size_22"
           android:gravity="center_vertical"
@@ -184,8 +174,7 @@
             app:fontFamily="@font/bold" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_10"
             android:text="@string/review_details_and_confirm"
             android:textColor="@color/black_4a4a4a"
@@ -198,8 +187,7 @@
 
     <androidx.constraintlayout.widget.Guideline
       android:id="@+id/guideline"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:orientation="horizontal"
       app:layout_constraintGuide_percent="0.78" />
 
@@ -216,8 +204,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_get_started"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/size_30"
         android:layout_marginEnd="@dimen/size_30"

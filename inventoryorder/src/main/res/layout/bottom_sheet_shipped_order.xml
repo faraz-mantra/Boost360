@@ -4,14 +4,12 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/match_wrap"
     android:background="@android:color/transparent">
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
       android:text="@string/marking_as_shipped"
@@ -25,8 +23,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvSubTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
       android:textColor="@color/white"
@@ -40,8 +37,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/coordinatorLayoutBottomSheet"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginTop="@dimen/size_10"
       android:background="@drawable/bg_rounded_top_white_2"
       android:orientation="vertical"
@@ -52,14 +48,12 @@
       app:layout_constraintTop_toBottomOf="@+id/tvSubTitle">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginTop="@dimen/size_20"
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_20"
           android:text="@string/order_shipped_via"
           android:textColor="@color/black_4a4a4a"
@@ -67,15 +61,13 @@
 
         <RadioGroup
           android:id="@+id/radioGroup"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_10"
           android:orientation="vertical">
 
-          <RadioButton
+          <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_local"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_16"
             android:buttonTint="@color/colorAccent"
             android:checked="true"
@@ -83,10 +75,9 @@
             android:textColor="@color/black_4a4a4a" />
 
 
-          <RadioButton
+          <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_partner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_16"
             android:layout_marginTop="@dimen/size_4"
             android:buttonTint="@color/colorAccent"
@@ -97,13 +88,11 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/local_edt_view"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_16"
             android:text="@string/delivery_person_name"
@@ -112,8 +101,7 @@
 
           <com.framework.views.customViews.CustomTextField
             android:id="@+id/tv_delivery_person_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/EditTextStyle"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
@@ -127,8 +115,7 @@
             tools:ignore="UnusedAttribute" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_16"
             android:text="@string/delivery_person_contact_number"
@@ -136,8 +123,7 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextField
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
@@ -161,8 +147,7 @@
           android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_16"
             android:text="@string/consignment_id"
@@ -170,8 +155,7 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextField
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
@@ -185,8 +169,7 @@
             tools:ignore="UnusedAttribute" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_16"
             android:text="@string/consignment_tracking_url_provided_by_vendor"
@@ -194,8 +177,7 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextField
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
@@ -210,8 +192,7 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_16"
           android:layout_marginEnd="@dimen/size_20"
@@ -235,8 +216,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/btn_bottom"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:background="@color/white"
       android:gravity="end"
       android:orientation="horizontal"
@@ -247,8 +227,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tvCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/size_10"
         android:padding="@dimen/size_4"
