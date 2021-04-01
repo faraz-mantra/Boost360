@@ -740,16 +740,21 @@
     <string name="please_enter_valid_upi_id">please enter valid UPI id.</string>
     <string name="error_updating_upi_id">error updating upi id</string>
   <string name="signature_uploaded">signature uploaded</string>
-  <string name="merchant_upi_added">merchant upi added.</string>
+    <string name="merchant_upi_added">merchant upi added.</string>
     <string name="_4_products_under_this_category">4 products under this category</string>
     <string name="search">Search</string>
     <string name="catalog">Catalog</string>
-  <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to recieve money for all your online appointments.</string>
+    <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to recieve money for all your online appointments.</string>
     <string name="i_understood">i understood</string>
     <string name="search_in_the_appointment_settings">Search in appointment settings</string>
-  <string name="gstin_">GSTIN</string>
+    <string name="gstin_">GSTIN</string>
     <string name="storage_permission">Storage Permission</string>
-  <string name="to_share_the_image_we_need_storage_permission">To share the image we need storage permission.</string>
+    <string name="to_share_the_image_we_need_storage_permission">To share the image we need storage permission.</string>
+    <string name="add_product_to_your_catalog">Add product to your catalog</string>
+    <string name="yout_dont_have_product_added_to_your_catalog">You don’t have any product added to your digital catalog as of yet. Watch video</string>
+    <string name="add_a_product">Add a product</string>
+    <string name="setup_e_commerce">setup e-commerce</string>
+    <string name="products">PRODUCTS</string>
 
 
 </resources>
