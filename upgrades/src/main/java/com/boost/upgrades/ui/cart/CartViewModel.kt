@@ -10,7 +10,6 @@ import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
-import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
@@ -200,7 +199,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
-        Log.v("InitiatePurchaseOld", " " + createPurchaseOrderV2)
+        Log.d("InitiatePurchaseOld", " " + createPurchaseOrderV2)
         if (Utils.isConnectedToInternet(getApplication())) {
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
@@ -225,7 +224,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun InitiatePurchaseAutoRenewOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
-        Log.v("InitiatePurchaseAuto", " " + createPurchaseOrderV2)
+        Log.d("InitiatePurchaseAuto", " " + createPurchaseOrderV2)
         if (Utils.isConnectedToInternet(getApplication())) {
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
@@ -597,8 +596,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun getCouponRedeem(redeemCouponRequest: RedeemCouponRequest,coupon_key: String) {
-        Log.v("InitiatePurchaseAuto", " " + redeemCouponRequest + " "+ coupon_key)
+    fun getCouponRedeem(redeemCouponRequest: RedeemCouponRequest, coupon_key: String) {
+        Log.v("InitiatePurchaseAuto", " " + redeemCouponRequest + " " + coupon_key)
         if (Utils.isConnectedToInternet(getApplication())) {
 //            updatesLoader.postValue(true)
 //            APIRequestStatus = "Order registration in progress..."
@@ -609,7 +608,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             .subscribe(
                                     {
                                         Log.v("getCouponRedeem>>", it.toString())
-                                        val couponServiceModel= CouponServiceModel(coupon_key, it.discountAmount, it.success,it.message)
+                                        val couponServiceModel = CouponServiceModel(coupon_key, it.discountAmount, it.success, it.message)
                                         redeemCouponResult.postValue(couponServiceModel)
 
 //                                        updatesLoader.postValue(false)
