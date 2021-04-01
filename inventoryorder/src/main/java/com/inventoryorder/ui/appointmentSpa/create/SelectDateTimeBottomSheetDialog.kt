@@ -1,26 +1,19 @@
 package com.inventoryorder.ui.appointmentSpa.create
 
 import android.view.View
-import android.widget.CheckBox
-import android.widget.RadioGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.base.BaseBottomSheetDialog
-import com.framework.exceptions.NoNetworkException
-import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.constant.RecyclerViewItemType
-import com.inventoryorder.databinding.*
-import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.databinding.BottomSheetSelectDateTimeBinding
 import com.inventoryorder.model.spaAppointment.ServiceItem
 import com.inventoryorder.model.spaAppointment.bookingslot.request.AppointmentRequestModel
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.DateRange
 import com.inventoryorder.model.spaAppointment.bookingslot.response.BookingSlotResponse
-import com.inventoryorder.model.spaAppointment.bookingslot.response.Date
 import com.inventoryorder.model.spaAppointment.bookingslot.response.Slots
 import com.inventoryorder.model.spaAppointment.bookingslot.response.Staff
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
@@ -71,12 +64,14 @@ class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSl
         dateCounter++
         binding?.textSelectedDate?.text = getDisplayDate(getDateTime())
         dateChangedListener?.onDateChanged(getSlotsAndStaff())
+        binding?.imagePrev?.setImageResource(R.drawable.ic_filled_arrow_left)
       }
 
       binding?.imagePrev -> {
-        if(dateCounter == 0) {
-          showShortToast(getString(R.string.cannot_go_beyond_todays_date))
+        if (dateCounter == 0) { binding?.imagePrev?.setImageResource(R.drawable.ic_filled_arrow_left_gray)
         } else {
+          binding?.imagePrev?.setImageResource(R.drawable.ic_filled_arrow_left)
+          if (dateCounter == 1) binding?.imagePrev?.setImageResource(R.drawable.ic_filled_arrow_left_gray)
           dateCounter--
           binding?.textSelectedDate?.text = getDisplayDate(getDateTime())
           dateChangedListener?.onDateChanged(getSlotsAndStaff())
