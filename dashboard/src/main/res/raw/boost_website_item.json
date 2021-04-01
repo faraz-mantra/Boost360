@@ -347,6 +347,13 @@
           "premiumCode": ""
         },
         {
+          "title": "Owner’s info",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "owners_information",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
           "title": "Updates & Tips",
           "desc": "Add updates like new services, DIY tips, offers, events etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -383,6 +390,13 @@
           "title": "Service Catalogue",
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Owner’s info",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "owners_information",
           "isLock": false,
           "premiumCode": ""
         },
@@ -425,7 +439,8 @@
           "type": "service_product_catalogue",
           "isLock": false,
           "premiumCode": ""
-        },  {
+        },
+        {
           "title": "Owner’s info",
           "desc": "Description of this asset Description of this assetDescription of this asset",
           "type": "owners_information",
