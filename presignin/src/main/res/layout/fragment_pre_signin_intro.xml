@@ -19,56 +19,70 @@
             android:layout_height="match_parent"
             android:id="@+id/intro_img_container">
 
-            <ImageView
-                android:id="@+id/boost_logo"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:src="@drawable/psn_boost_intro_logo"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:id="@+id/first_screen_logo_container">
 
-            <TextView
-                android:id="@+id/presigin_intro_title"
-                android:layout_width="wrap_content"
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/boost_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/psn_boost_intro_logo"
+                    android:layout_gravity="center"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/intro_title_text_style"
+                    android:id="@+id/first_title"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@{introItem.title}" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="@{introItem.title}"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="invisible"
+                android:id="@+id/intro_text_container"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/boost_logo" />
-
-            <TextView
-                android:id="@+id/presigin_intro_sub_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:text="@{introItem.subTitle}"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/presigin_intro_title" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/presigin_intro_img"
+                android:orientation="vertical">
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/presigin_intro_title"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    style="@style/intro_title_text_style"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@{introItem.title}" />
 
-            <ImageView
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/presigin_intro_sub_title"
+                    style="@style/intro_title_text_style"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:text="@{introItem.subTitle}"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <com.framework.views.customViews.CustomImageView
                 android:id="@+id/presigin_intro_img"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="20dp"
-
+                android:layout_marginEnd="@dimen/_16sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/presigin_intro_sub_title" />
+                app:layout_constraintTop_toBottomOf="@id/first_screen_logo_container" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="please_wait">Please wait...</string>
-    <string name="ps_accept_tnc">By getting started, you agree to Boost 360 terms and conditions</string>
+    <string name="ps_accept_tnc">By getting started, you agree to Boost 360 <b><u>terms</u></b> and conditions</string>
     <string name="psn_get_started">GET STARTED</string>
 
 
@@ -13,7 +13,6 @@
     <string name="intro_title_5">Manage your</string>
     <string name="intro_title_6">Track your</string>
     <string name="intro_title_7">Readymade solution for</string>
--
 
 
     <string name="intro_sub_title_1">your business</string>

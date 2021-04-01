@@ -48,9 +48,8 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         binding?.introItem = introItem;
         binding?.presiginIntroImg?.setImageResource(introItem.imageResource)
 
-
         if (position == 0) {
-            binding?.boostLogo?.isVisible = true;
+            binding?.firstScreenLogoContainer?.isVisible = true;
             binding?.playPauseLottie?.setAnimation(R.raw.play_pause_lottie);
             binding?.presiginIntroImg?.setOnClickListener {
                 binding?.introImgContainer?.isVisible = false;
@@ -58,7 +57,8 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
                 binding?.videoView?.setOnPreparedListener {
                   //  it.setDataSource("https://cdn.withfloats.com/boost/videos/en/intro.mp4")
                 }
-                binding?.videoView?.setVideoURI(Uri.parse("https://cdn.withfloats.com/boost/videos/en/intro.mp4"));
+                binding?.videoView?.setVideoPath("https://cdn.withfloats.com/boost/videos/en/intro.mp4")
+                binding?.videoView?.start();
                 binding?.videoView?.setOnInfoListener { p0, p1, p2 ->
                     when (p1) {
                         MediaPlayer.MEDIA_INFO_BUFFERING_START -> {
@@ -72,7 +72,7 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
                         }
 
                         MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START -> {
-
+                            binding?.progressBar?.isVisible = false
                         }
                     }
                     true
@@ -91,30 +91,30 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
             }
 
         }
+        else {
+            binding?.introTextContainer?.isVisible = true;
+        }
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
         return BaseViewModel::class.java
     }
 
-
     override fun onPause() {
         super.onPause()
-        if (position == 0) binding?.videoView?.pause()
+        if (position == 0){
+            if(binding?.videoView?.isPlaying==true){
+                binding?.videoView?.pause()
+                binding?.playPauseLottie?.isVisible = true;
+            }
+
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
 
     override fun onStop() {
         super.onStop()
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+        binding?.videoView?.suspend()
     }
 
 }
