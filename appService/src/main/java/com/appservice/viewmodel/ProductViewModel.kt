@@ -23,6 +23,11 @@ class ProductViewModel :BaseViewModel() {
         return WithFloatTwoRepository.createProduct(request).toLiveData()
     }
 
+    fun getProductListing(fpTag: String?, clientId: String?, skipBy: Int?): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.getProductListing(fpTag, clientId, skipBy).toLiveData()
+
+    }
+
     fun updateProduct(request: ProductUpdate?): LiveData<BaseResponse> {
         return WithFloatTwoRepository.updateProduct(request).toLiveData()
     }

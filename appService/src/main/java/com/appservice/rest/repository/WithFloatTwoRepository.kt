@@ -29,26 +29,30 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
   fun addUpdateImageProductService(
-      clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-      productId: String?, requestBody: RequestBody?,
+          clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
+          productId: String?, requestBody: RequestBody?,
   ): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.addUpdateImageProductService(clientId, requestType, requestId, totalChunks,
-        currentChunkNumber, productId, requestBody), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE)
+      return makeRemoteRequest(remoteDataSource.addUpdateImageProductService(clientId, requestType, requestId, totalChunks,
+              currentChunkNumber, productId, requestBody), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE)
   }
 
-  fun getNotificationCount(clientId: String?, fpId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getNotificationCount(clientId, fpId), TaskCode.GET_NOTIFICATION)
-  }
+    fun getNotificationCount(clientId: String?, fpId: String?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.getNotificationCount(clientId, fpId), TaskCode.GET_NOTIFICATION)
+    }
 
-  override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
-    return WithFloatTwoRemoteData::class.java
-  }
+    fun getProductListing(fptag: String?, clientId: String?, skipBy: Int?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.getProductListing(fptag, clientId, skipBy), TaskCode.GET_PRODUCT_LISTING)
+    }
 
-  override fun getLocalDataSourceInstance(): AppBaseLocalService {
-    return AppBaseLocalService()
-  }
+    override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
+        return WithFloatTwoRemoteData::class.java
+    }
 
-  override fun getApiClient(): Retrofit {
+    override fun getLocalDataSourceInstance(): AppBaseLocalService {
+        return AppBaseLocalService()
+    }
+
+    override fun getApiClient(): Retrofit {
     return WithFloatsApiTwoClient.shared.retrofit
   }
 

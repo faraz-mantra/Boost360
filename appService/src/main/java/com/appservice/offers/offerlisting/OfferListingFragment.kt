@@ -140,7 +140,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
             isLastPageD = (finalList.size == totalElements)
             setAdapterNotify()
         } else if (isFirstLoad) setEmptyView(true)
-        if (listOffer.isNullOrEmpty().not()) {
+        else if (listOffer.isNullOrEmpty().not()) {
             list.clear()
             list.addAll(listOffer!!)
             setAdapterNotify()

@@ -42,7 +42,7 @@ class FragmentProductCategory : AppBaseFragment<FragmentProductCategoryBinding, 
     override fun onCreateView() {
         getBundleData()
         getProductListing()
-        setOnClickListener(binding?.btnAddNewCategory)
+//        setOnClickListener(binding?.btnAddNewCategory)
     }
 
     private fun getProductListing() {

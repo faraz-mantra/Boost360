@@ -392,19 +392,15 @@ fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boole
 }
 
 fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
-  try {
+
     if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
       WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
       session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, bundle = getBundleData(it)) }
     } else {
       WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
-      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
-      startActivity(webIntent)
-      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+      session?.let { startFragmentActivity(com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_HOME, bundle = getBundleData(it)) }
+
     }
-  } catch (e: ClassNotFoundException) {
-    e.printStackTrace()
-  }
 }
 
 fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
