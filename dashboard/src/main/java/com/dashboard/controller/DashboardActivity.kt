@@ -1,6 +1,7 @@
 package com.dashboard.controller
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
@@ -46,23 +47,24 @@ import com.framework.webengageconstant.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
+import com.nowfloats.facebook.managers.FBEventManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
+import kotlin.system.exitProcess
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
   private var exitToast: Toast? = null
-  private var mDeepLinkUrl: String? = null
-    private var mPayload: String? = null
+  private var mDeepLinkUrl: String? = null;
+  private var mPayload: String? = null
   private var deepLinkUtil: DeepLinkUtil? = null
   private lateinit var mNavController: NavController
   private var session: UserSessionManager? = null
@@ -137,14 +139,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val uri = intent.data
       Log.d("Data: ", "$data  $action")
       if (session?.isLoginCheck == true) {
-        //Appsflyer Deep Link...
         if (uri != null && uri.toString().contains("onelink", true)) {
-          if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-            val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
-            val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
-
-            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
-          }
+          isAppFlyerLink()
         } else {
           //Default Deep Link..
           val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
@@ -154,11 +150,22 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
           } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
         }
-      } else this.startPreSignUp(session)
+      } else {
+        this.startPreSignUp(session,true)
+        finish()
+      }
+    } else isAppFlyerLink()
+  }
+
+  private fun isAppFlyerLink() {
+    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+      val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+      val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
+      if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
+      AppsFlyerUtils.sAttributionData= mapOf()
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
     }
-
   }
 
   override fun onResume() {
@@ -373,11 +380,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         startReadinessScoreView(session, 0)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.imgBusinessLogo ->{
+      binding?.drawerView?.imgBusinessLogo -> {
         this.startBusinessProfileDetailEdit(session)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.txtDomainName ->{
+      binding?.drawerView?.txtDomainName -> {
         this.startWebViewPageLoad(session, session!!.getDomainName(false))
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
@@ -451,7 +458,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
     val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
-            ?: "bg_${UUID.randomUUID()}.png"
+        ?: "bg_${UUID.randomUUID()}.png"
     return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
   }
 
