@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/match_match"
+        android:background="@color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_bottom_sheet_tutorial_title"
+            app:layout_constraintBottom_toTopOf="@+id/nestedScrollView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.10"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView"
+                style="@style/wrap_wrap"
+                android:src="@drawable/ic_help_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView"
+                style="@style/wrap_wrap"
+                android:fontFamily="@font/lato"
+                android:text="@string/learning_about"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toEndOf="@+id/customImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.4" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView2"
+                style="@style/wrap_wrap"
+                android:fontFamily="@font/lato"
+                android:text="@string/appointment_management"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toEndOf="@+id/customImageView"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView"
+                app:layout_constraintVertical_bias="0.01" />
+
+            <com.framework.views.customViews.CustomImageView
+                style="@style/wrap_wrap"
+                android:src="@drawable/ic_translation_orange"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/civ_close"
+                style="@style/wrap_wrap"
+                android:src="@drawable/ic_close_grey_bottom_sheet"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.93"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.80"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                style="@style/match_match"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/size_20">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_wrap"
+                    android:layout_marginHorizontal="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_how_it_works_heading"
+                        style="@style/wrap_wrap"
+                        android:text="@string/how_it_works"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:textAllCaps="true" />
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/civ_speak_how_it_works"
+                        style="@style/wrap_wrap"
+                        android:src="@drawable/ic_speaker_oragne"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_how_it_works_content"
+                    style="@style/wrap_wrap"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:layout_marginVertical="@dimen/size_20"
+                    tools:text="This feature enables you to display your products on your website. You can easily add detailed information about your products and their prices through the inbuilt product catalogue to enable quick sales." />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_wrap"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="@dimen/size_10">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_videos_heading"
+                        style="@style/wrap_wrap"
+                        android:text="@string/videos_3"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:textAllCaps="true" />
+
+                    <com.framework.views.dotsindicator.DotsIndicator
+                        android:id="@+id/di_pager_indicator"
+                        style="@style/wrap_wrap"
+                        android:src="@drawable/ic_speaker_oragne"
+                        app:dotsColor="@color/gray_text_hint"
+                        app:dotsSize="7dp"
+                        app:dotsSpacing="@dimen/size_4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:selectedDotColor="@color/orange" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_videos"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_200"
+                    android:layerType="hardware" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_wrap"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:layout_marginVertical="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_tips_heading"
+                        style="@style/wrap_wrap"
+                        android:text="@string/tips"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:textAllCaps="true" />
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/civ_speak_tips"
+                        style="@style/wrap_wrap"
+                        android:src="@drawable/ic_speaker_oragne"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_tips_container"
+                    style="@style/match_wrap"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:layout_marginVertical="@dimen/size_20" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
