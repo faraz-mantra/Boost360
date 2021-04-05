@@ -507,4 +507,9 @@
     <string name="how_it_works">HOW IT WORKS:</string>
     <string name="videos_3">VIDEOS (3)</string>
     <string name="tips">Tips:</string>
+    <string name="contact_support">Contact support</string>
+    <string name="read_faqs">Read FAQs</string>
+    <string name="tutorials_on">Tutorials on</string>
+    <string name="tutorial_contents">Tutorial contents _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</string>
+    <string name="tutorial_videos">Tutorial videos</string>
 </resources>
