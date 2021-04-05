@@ -9,7 +9,7 @@ object NetworkUtils {
 
   fun isNetworkConnected(): Boolean {
     val connectivityManager = BaseApplication.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo.isConnected
+    return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo?.isConnected?:false
 
   }
 

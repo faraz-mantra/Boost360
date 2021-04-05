@@ -15,6 +15,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.appservice.model.kycData.PaymentKycDataResponse;
+import com.boost.presignup.PreSignUpActivity;
 import com.boost.presignup.utils.PresignupManager;
 import com.boost.upgrades.UpgradeActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
@@ -66,21 +67,31 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_splash_screen_);
-    Methods.isOnline(SplashScreen_Activity.this);
-    Bundle bundle = getIntent().getExtras();
-    if (getIntent() != null && getIntent().getStringExtra("from") != null) {
-      MixPanelController.track(EventKeysWL.NOTIFICATION_CLICKED, null);
-      deepLink = getIntent().getStringExtra("url");
+    Methods.isOnline(this);
+    session = new UserSessionManager(this, SplashScreen_Activity.this);
+    if (!session.isLoginCheck()) {
+      Intent webIntent = new Intent(this, PreSignUpActivity.class);
+      webIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+      startActivity(webIntent);
+      overridePendingTransition(0, 0);
+      finish();
+    } else {
+      Bundle bundle = getIntent().getExtras();
+      if (getIntent() != null && getIntent().getStringExtra("from") != null) {
+        MixPanelController.track(EventKeysWL.NOTIFICATION_CLICKED, null);
+        deepLink = getIntent().getStringExtra("url");
+      }
+      if (bundle != null) {
+        deepLinkViewType = bundle.getString("deepLinkViewType");
+        deepLinkFpId = bundle.getString("deepLinkFpId");
+        deepLinkFpTag = bundle.getString("deepLinkFpTag");
+        deepLinkDay = bundle.getString("deepLinkDay");
+      }
+      bus = BusProvider.getInstance().getBus();
+      initLottieAnimation();
+      if (mThread == null) mThread = new Thread(new DataRunnable());
+      mThread.start();
     }
-    if (bundle != null) {
-      deepLinkViewType = bundle.getString("deepLinkViewType");
-      deepLinkFpId = bundle.getString("deepLinkFpId");
-      deepLinkFpTag = bundle.getString("deepLinkFpTag");
-      deepLinkDay = bundle.getString("deepLinkDay");
-    }
-    bus = BusProvider.getInstance().getBus();
-    session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
-    initLottieAnimation();
   }
 
   private void initLottieAnimation() {
@@ -99,11 +110,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     intent.putExtras(getIntent());
     startActivity(intent);
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-  }
-
-  private void Start() {
-    if (mThread == null) mThread = new Thread(new DataRunnable());
-    mThread.start();
   }
 
   private void fetchData() {
@@ -203,7 +209,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
   @Override
   protected void onResume() {
     super.onResume();
-    Start();
     bus.register(this);
   }
 
