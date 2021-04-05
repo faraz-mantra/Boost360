@@ -30,5 +30,6 @@ enum class IntentConstant {
   STAFF_DATA,
   STAFF_SERVICES,
   STAFF_ID,
+  IS_ADD_NEW,
   STAFF_TIMINGS
 }

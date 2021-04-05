@@ -141,8 +141,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
         //AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
 
-        /* Init AppsFlyer SDK */
-        AppsFlyerUtils.initAppsFlyer(this, APPSFLAYER_DEV_KEY);
+        appsFlyerEvent(this);
 
         try {
             //Fabric.with(this, new Crashlytics());
@@ -181,8 +180,12 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         }
 
 
-
         //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
+    }
+
+    private void appsFlyerEvent(AppController appController) {
+        /* Init AppsFlyer SDK */
+        AppsFlyerUtils.initAppsFlyer(appController, APPSFLAYER_DEV_KEY);
     }
 
     void initWebEngage() {
