@@ -12,21 +12,40 @@
     </style>
 
 
-    <style name="started_button">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/_36sdp</item>
-        <item name="android:background">@drawable/getting_started_button_shape</item>
-        <item name="textColor">@color/white</item>
-        <item name="android:fontFamily">@font/open_sans_bold</item>
-        <item name="fontWeight">700</item>
-        <item name="android:layout_marginStart">@dimen/_20sdp</item>
-        <item name="android:layout_marginEnd">@dimen/_20sdp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="textSize">@dimen/heading_6</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:gravity">center</item>
-        <item name="android:stateListAnimator">@null</item>
+    <style name="start_guide_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="layout_constraintGuide_begin">@dimen/_16sdp</item>
+        <item name="android:id">@id/startGuide</item>
     </style>
+
+    <style name="end_guide_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="layout_constraintGuide_end">@dimen/_16sdp</item>
+        <item name="android:id">@id/endGuide</item>
+    </style>
+
+    <style name="bottom_guide_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="layout_constraintGuide_end">@dimen/_16sdp</item>
+        <item name="android:id">@id/bottomGuide</item>
+    </style>
+
+
+    <style name="psn_toolbar_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
+        <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+    </style>
+
+
 
     <style name="tnc_textview_style">
         <item name="fontFamily">@font/open_sans</item>
@@ -41,6 +60,101 @@
         <item name="android:textSize">@dimen/heading_4</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
 
+
+    <style name="psn_heading_style">
+        <item name="android:textSize">@dimen/heading_4</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="textColor">@color/psn_heading_color</item>
+        <item name="android:layout_marginStart">@dimen/_16sdp</item>
+        <item name="android:fontFamily">@font/open_sans_semibold</item>
+        <item name="android:layout_marginEnd">@dimen/_16sdp</item>
+        <item name="android:layout_marginTop">@dimen/_20sdp</item>
+        <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
+        <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
+    </style>
+
+    <style name="psn_subheading_style">
+        <item name="android:textSize">@dimen/body_3</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="textColor">@color/psn_signin_sub_heading_color</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
+        <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
+<!--        <item name="android:layout_marginTop">@dimen/_4sdp</item>-->
+    </style>
+
+    <style name="psn_wrong_otp_style" parent="psn_subheading_style">
+        <item name="android:textColor">@color/wrongOTPColor</item>
+    </style>
+
+    <style name="started_button" parent="psn_button_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
+    </style>
+
+    <style name="psn_signin_bt_style" parent="psn_button_base_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/signin_button_selector</item>
+    </style>
+
+    <style name="psn_button_style" parent="psn_button_base_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/signin_button_selector</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
+        <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
+    </style>
+
+
+    <style name="psn_button_base_style">
+        <item name="android:textSize">@dimen/body_3</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/_38sdp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">@dimen/_4sdp</item>
+        <item name="android:fontFamily">@font/open_sans_semibold</item>
+        <item name="android:paddingStart">@dimen/_24sdp</item>
+        <item name="android:paddingEnd">@dimen/_20sdp</item>
+        <item name="android:drawableEnd">@drawable/ic_singin_next_icon</item>
+    </style>
+
+    <style name="psn_stroke_button_style" parent="psn_button_base_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:background">@drawable/psn_stroke_button_shape</item>
+        <item name="android:layout_marginTop">@dimen/_20sdp</item>
+        <item name="android:drawableEnd">@drawable/ic_stroke_bt_next_icon</item>
+        <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
+        <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
+    </style>
+
+
+    <style name="psn_login_edittext_style" >
+        <item name="android:colorControlNormal">@color/black</item>
+        <item name="android:colorControlActivated">@color/colorAccent</item>
+        <item name="android:colorControlHighlight">@color/colorAccent</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textColor">@color/psn_heading_color</item>
+        <item name="drawableTint">@color/psn_edittext_color</item>
+        <item name="backgroundTint">@color/psn_edittext_color</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/_4sdp</item>
+        <item name="android:paddingBottom">@dimen/_16sdp</item>
+        <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
+        <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
+    </style>
+
+    <style name="forget_tv_style" parent="psn_subheading_style">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 </resources>

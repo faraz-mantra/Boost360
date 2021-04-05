@@ -16,4 +16,7 @@ class MobileVerificationActivity : FragmentContainerActivity() {
        return MobileFragment.newInstance()
     }
 
+    override fun isHideToolbar(): Boolean {
+        return true
+    }
 }

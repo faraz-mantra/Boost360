@@ -1,28 +1,21 @@
 package com.boost.presignin.ui.intro
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.style.ClickableSpan
-import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.viewpager.widget.ViewPager
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroAdapter
 import com.boost.presignin.databinding.ActivityIntroBinding
 import com.boost.presignin.model.IntroItem
+import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
-import com.google.android.material.tabs.TabLayout
-import java.lang.reflect.Type
 import kotlin.math.abs
 
 class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
@@ -118,8 +111,8 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         }
 
         binding?.getStarted?.setOnClickListener {
-            //startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
-           // finish()
+            startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+            finish()
         }
     }
 
