@@ -3,12 +3,14 @@ package dev.patrickgold.florisboard.customization.network
 import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
 import dev.patrickgold.florisboard.customization.model.response.Product
 import dev.patrickgold.florisboard.customization.model.response.Updates
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import java.util.*
 
 object BusinessFeatureRepository : AppBaseRepository<BusinessFeaturesRemoteData, AppBaseLocalService>() {
 
-    suspend fun getAllUpdates(fpId: String, clientId: String, skipBy: Int, limit: Int): Updates {
+    suspend fun getAllUpdates(fpId: String, clientId: String, skipBy: Int, limit: Int): Response<Updates> {
         val queries: MutableMap<String, String> = HashMap()
         queries["fpId"] = fpId
         queries["clientId"] = clientId
@@ -17,13 +19,13 @@ object BusinessFeatureRepository : AppBaseRepository<BusinessFeaturesRemoteData,
         return remoteDataSource.getAllUpdates(queries)
     }
 
-    suspend fun getAllDetails(fpTag: String, clientId: String): CustomerDetails {
+    suspend fun getAllDetails(fpTag: String, clientId: String): Response<CustomerDetails> {
         val queries: MutableMap<String, String> = HashMap()
         queries["clientId"] = clientId
         return remoteDataSource.getAllDetails(fpTag, queries)
     }
 
-    suspend fun getAllProducts(fpTag: String, clientId: String, skipBy: Int, identifierType: String): List<Product> {
+    suspend fun getAllProducts(fpTag: String, clientId: String, skipBy: Int, identifierType: String): Response<List<Product>> {
         val queries: MutableMap<String, String> = HashMap()
         queries["fpTag"] = fpTag
         queries["clientId"] = clientId

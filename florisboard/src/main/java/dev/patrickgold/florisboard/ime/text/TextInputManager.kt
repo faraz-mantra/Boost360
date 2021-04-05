@@ -826,6 +826,5 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
-
     }
 }
