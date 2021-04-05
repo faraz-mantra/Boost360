@@ -82,7 +82,7 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     }
 
     private val dataSourceFactory: DataSource.Factory by lazy {
-        DefaultDataSourceFactory(requireActivity(), "exoplayer-sample")
+        DefaultDataSourceFactory(requireActivity(), getString(R.string.app_name))
     }
 
     private fun buildMediaSource(uri: Uri, type: String): MediaSource {
