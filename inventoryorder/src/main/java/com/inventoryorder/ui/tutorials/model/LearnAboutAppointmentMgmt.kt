@@ -1,48 +1,49 @@
 package com.inventoryorder.ui.tutorials.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class LearnAboutAppointmentMgmt(
 
         @field:SerializedName("Contents")
-        val contents: Contents? = null,
+        var contents: Contents? = null,
 
         @field:SerializedName("Tips:")
-        val tips: List<String?>? = null,
+        var tips: List<String?>? = null,
 
         @field:SerializedName("Menus")
-        val menus: List<String?>? = null,
+        var menus: List<String?>? = null,
 
         @field:SerializedName("Fragment Data")
-        val fragmentData: FragmentData? = null,
+        var fragmentData: FragmentData? = null,
 )
 
 data class FragmentData(
 
         @field:SerializedName("subject")
-        val subject: String? = null,
+        var subject: String? = null,
 
         @field:SerializedName("title")
-        val title: String? = null,
+        var title: String? = null,
 )
 
 data class VIDEOSItem(
 
         @field:SerializedName("video url")
-        val videoUrl: String? = null,
+        var videoUrl: String? = null,
 
         @field:SerializedName("video title")
-        val videoTitle: String? = null,
-)
+        var videoTitle: String? = null,
+) : Serializable
 
 data class Contents(
 
         @field:SerializedName("Description")
-        val description: String? = null,
+        var description: String? = null,
 
         @field:SerializedName("Title")
-        val title: String? = null,
+        var title: String? = null,
 
         @field:SerializedName("VIDEOS")
-        val vIDEOS: List<VIDEOSItem?>? = null,
+        var videos: List<VIDEOSItem?>? = null,
 )
