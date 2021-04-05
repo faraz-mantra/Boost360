@@ -12,4 +12,16 @@
     <color name="started_button_start">#FFB900</color>
     <color name="started_button_end">#FFC800</color>
     <color name="tnc_color">#4a4a4a</color>
+    <color name="back_button_color">#ffc733</color>
+    <color name="psn_heading_color">#4a4a4a</color>
+    <color name="psn_signin_sub_heading_color">#747474</color>
+
+    <color name="psn_color_button_disabled">#BBBBBB</color>
+
+    <color name="grey">#a9a9a9</color>
+    <color name="red">#d32f2f</color>
+    <color name="psn_back_button_color">#334A4A4A</color>
+    <color name="wrongOTPColor">#E39595</color>
+    <color name="et_unselected_color">#E5E5E5</color>
+
 </resources>
