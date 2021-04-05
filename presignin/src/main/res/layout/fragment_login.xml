@@ -52,7 +52,6 @@
             android:layout_height="wrap_content"
             style="@style/forget_tv_style"
             android:id="@+id/forgot_tv"
-            app:layout_constraintEnd_toEndOf="@id/endGuide"
             app:layout_constraintTop_toTopOf="@id/pass_et"
             app:layout_constraintBottom_toBottomOf="@id/pass_et"
             android:text="@string/forgot"/>
