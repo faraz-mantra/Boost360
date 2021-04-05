@@ -31,6 +31,7 @@ import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
@@ -79,6 +80,15 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     layoutManagerN?.let { scrollPagingListener(it) }
     swipeRefreshListener()
     setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService)
+    checkIsAddNewStaff()
+  }
+
+  private fun checkIsAddNewStaff() {
+    val b = arguments?.getBoolean(IntentConstant.IS_ADD_NEW.name)?:false
+    if (b) {
+      WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
+      startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+    }
   }
 
   private fun getBundleData() {
@@ -144,6 +154,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     val listStaff = resultStaff?.data
     if (isSearchString.not()) {
       if (isFirstLoad) finalList.clear()
+      onStaffAddedOrUpdated(listStaff.isNullOrEmpty().not())
       if (listStaff.isNullOrEmpty().not()) {
         removeLoader()
         setEmptyView(false)
@@ -161,6 +172,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         setAdapterNotify()
       }
     }
+  }
+
+  private fun onStaffAddedOrUpdated(b: Boolean) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
+    instance.getDrScoreData()?.metricdetail?.boolean_create_staff = b
+    instance.updateDocument()
   }
 
   private fun setAdapterNotify() {
