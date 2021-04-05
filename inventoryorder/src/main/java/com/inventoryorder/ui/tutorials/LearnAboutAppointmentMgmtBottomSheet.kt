@@ -32,6 +32,17 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
         return TutorialViewModel::class.java
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        textToSpeechEngine.stop()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        textToSpeechEngine.stop()
+    }
+
     override fun onCreateView() {
         setOnClickListener(binding?.civClose, binding?.civSpeakHowItWorks, binding?.civSpeakTips, binding?.actionContactSupport, binding?.actionReadFaq)
         binding?.vpVideos?.clipToPadding = false
@@ -146,6 +157,14 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
         super.onCreateView()
         val videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
         setView(videosItem)
+        binding?.root?.setOnClickListener {
+            val bottomSheetTutorialVideos = BottomSheetTutorialVideos()
+            val bundle = Bundle()
+            bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, videosItem)
+            bottomSheetTutorialVideos.arguments = bundle
+            bottomSheetTutorialVideos.show(parentFragmentManager, BottomSheetTutorialVideos::class.java.name)
+
+        }
 
     }
 
