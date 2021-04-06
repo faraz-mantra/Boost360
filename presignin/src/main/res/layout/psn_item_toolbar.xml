@@ -15,7 +15,7 @@
 
     <ImageView
         app:tint="@color/back_button_color"
-        android:layout_width="@dimen/_55sdp"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/_55sdp"
         android:layout_gravity="end"
         android:layout_marginStart="16dp"

@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.boost.presignin.R
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentOtpVerificationBinding
 import com.boost.presignin.ui.AccountNotFoundActivity
 import com.boost.presignin.views.otptextview.OTPListener
@@ -128,7 +129,10 @@ class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, Bas
             return
         }
 
-        startActivity(Intent(requireContext(), AccountNotFoundActivity::class.java))
+        navigator?.startActivity( AccountNotFoundActivity::class.java, args = Bundle().apply {
+            putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+        })
+        //startActivity(Intent(requireContext(), AccountNotFoundActivity::class.java))
 
     }
 }

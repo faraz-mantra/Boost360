@@ -37,8 +37,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:dotsColor="@color/intro_indi_inactive"
             android:layout_marginBottom="@dimen/_14sdp"
-            app:dotsSize="@dimen/_7sdp"
-            app:dotsSpacing="@dimen/_3sdp"
+            app:dotsSize="@dimen/_5sdp"
+            app:dotsSpacing="@dimen/_5sdp"
             app:dotsWidthFactor="1"
             app:selectedDotColor="@color/intro_indi_active"
             app:layout_constraintBottom_toTopOf="@id/get_started"/>
@@ -55,6 +55,7 @@
             style="@style/psn_subheading_style"
             android:id="@+id/accept_tnc"
             android:gravity="center"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
             android:text="@string/ps_accept_tnc"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

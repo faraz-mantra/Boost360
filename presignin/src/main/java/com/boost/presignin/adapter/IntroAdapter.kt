@@ -9,13 +9,19 @@ import com.boost.presignin.model.IntroItem
 import com.boost.presignin.ui.intro.PreSigninIntroFragment
 
 
-class IntroAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle, val items: List<IntroItem>) : FragmentStateAdapter(fragmentManager,lifecycle) {
+class IntroAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,
+                   val items: List<IntroItem>,
+                   val skip: () -> Unit,
+                   val playPauseState: (state:Boolean) -> Unit) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int {
         return items.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        return PreSigninIntroFragment.newInstance(items[position],position);
+        return PreSigninIntroFragment.newInstance(items[position], position).apply {
+            this.onSkip = skip
+            this.playPause = playPauseState
+        };
     }
 }

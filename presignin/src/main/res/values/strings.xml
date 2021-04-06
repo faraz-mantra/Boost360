@@ -37,7 +37,8 @@
     <string name="psn_resend_hint">Didn’t get the code? Resend</string>
     <string name="psn_resend">Resend</string>
     <string name="psn_resend_in">Resend in %d s</string>
-    <string name="psn_no_account_hint">We did not find any business registered with +91-%s. Add business details to start now.</string>
+    <string name="psn_no_account_hint_before">We did not find any business registered with</string>
+    <string name="psn_no_account_hint_after">. Add business details to start now.</string>
     <string name="psn_no_account_heading">Bring your business\non Boost 360.</string>
     <string name="psn_create_your_business_profile">Create your business profile</string>
     <string name="psn_already_have_your_account">Already have your\nbusiness on Boost 360?</string>
@@ -57,4 +58,12 @@
     <string name="psn_forget_pass_hint">Type your Username or registered Email or registered Phone Number. We will mail you the reset link.</string>
     <string name="psn_get_password_reset_link">Get password reset link</string>
     <string name="psn_username_email_phone_number">Username/Email/Phone Number</string>
+    <string name="psn_retrieve_your_account">Retrieve your account</string>
+    <string name="contact_support"><u>contact support</u></string>
+    <string name="something_doesnt_seem_right">Something doesn’t seem right?</string>
+    <string name="password_link_has_sent">Password reset link has been sent to your registered Email ID or Mobile number.</string>
+    <string name="go_to_login">Go to login</string>
+    <string name="mute" >mute</string>
+    <string name="skip">skip</string>
+    <string name="intro_video_time">%d Seconds</string>
 </resources>
