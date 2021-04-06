@@ -1,6 +1,7 @@
 package com.boost.presignin.ui.intro
 
 import android.content.Intent
+import android.os.Handler
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
@@ -8,6 +9,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.os.postDelayed
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroAdapter
 import com.boost.presignin.databinding.ActivityIntroBinding
@@ -21,6 +23,19 @@ import kotlin.math.abs
 class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
 
     private lateinit var items: List<IntroItem>
+    private var isVideoPlaying = false;
+
+
+    private val nextRunnable = Runnable {
+        if (!isVideoPlaying) {
+            val item = binding!!.introViewpager.currentItem
+            val currentIndex = if (item < items.size-1) item + 1 else 0
+            binding?.introViewpager?.currentItem = currentIndex
+            nextPageTimer()
+        }
+    }
+
+    private val handler = Handler()
 
     private fun initItems() {
         items = listOf(
@@ -91,11 +106,13 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     }
 
     override fun onCreateView() {
-        initItems();
+        initItems()
         initTncString()
+        nextPageTimer()
 
-
-        binding?.introViewpager?.adapter = IntroAdapter(supportFragmentManager, lifecycle,items)
+        binding?.introViewpager?.adapter = IntroAdapter(supportFragmentManager, lifecycle, items, {
+            binding?.introViewpager?.currentItem = binding!!.introViewpager.currentItem + 1
+        }, { isVideoPlaying = it; })
 
         binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
         binding?.introViewpager?.setPageTransformer() { page, position ->
@@ -114,6 +131,13 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
             startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
             finish()
         }
+
+
     }
+
+    private fun nextPageTimer() {
+        handler.postDelayed(nextRunnable, 3000)
+    }
+
 
 }

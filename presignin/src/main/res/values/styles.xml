@@ -53,12 +53,14 @@
     </style>
 
     <style name="intro_title_text_style">
+        <item name="android:fontFamily">@font/open_sans</item>
         <item name="android:textAlignment">center</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:textSize">@dimen/heading_4</item>
+        <item name="android:textSize">@dimen/heading_5</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/psn_heading_color</item>
     </style>
 
 
@@ -79,7 +81,7 @@
         <item name="android:textSize">@dimen/body_3</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="textColor">@color/psn_signin_sub_heading_color</item>
+        <item name="textColor">@color/psn_sub_heading_color</item>
         <item name="android:fontFamily">@font/open_sans</item>
         <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
         <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
@@ -91,14 +93,16 @@
     </style>
 
     <style name="started_button" parent="psn_button_style">
-        <item name="android:layout_width">0dp</item>
         <item name="android:stateListAnimator">@null</item>
-        <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
+        <item name="android:drawableEnd">@null</item>
     </style>
 
     <style name="psn_signin_bt_style" parent="psn_button_base_style">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/signin_button_selector</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingStart">@dimen/_24sdp</item>
+        <item name="android:paddingEnd">@dimen/_24sdp</item>
     </style>
 
     <style name="psn_button_style" parent="psn_button_base_style">
@@ -112,14 +116,16 @@
 
 
     <style name="psn_button_base_style">
+        <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/body_3</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/_38sdp</item>
+        <item name="android:layout_height">@dimen/_36sdp</item>
         <item name="android:gravity">center</item>
         <item name="android:drawablePadding">@dimen/_4sdp</item>
-        <item name="android:fontFamily">@font/open_sans_semibold</item>
-        <item name="android:paddingStart">@dimen/_24sdp</item>
-        <item name="android:paddingEnd">@dimen/_20sdp</item>
+        <item name="android:fontFamily">@font/open_sans_bold</item>
+        <item name="fontFamily">@font/open_sans_bold</item>
+        <item name="android:paddingStart">@dimen/_16sdp</item>
+        <item name="android:paddingEnd">@dimen/_16sdp</item>
         <item name="android:drawableEnd">@drawable/ic_singin_next_icon</item>
     </style>
 
@@ -156,6 +162,24 @@
         <item name="android:textSize">@dimen/body_3</item>
         <item name="android:fontFamily">@font/open_sans</item>
         <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
+    </style>
 
+
+    <style name="link_sent_style" parent="psn_subheading_style">
+        <item name="android:textSize">@dimen/body_2</item>
+        <item name="textColor">@color/psn_heading_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginStart">@dimen/_16sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_16sdp</item>
+    </style>
+
+    <style name="material_button_style" parent="psn_button_style">
+       <item name="android:theme">@style/Theme.MaterialComponents.Light</item>
+       <item name="icon">@drawable/ic_singin_next_icon</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="iconTint">@color/white</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="backgroundTint">@color/material_button_background_state</item>
+        <item name="iconStartPadding">@dimen/_12sdp</item>
     </style>
 </resources>

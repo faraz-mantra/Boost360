@@ -56,18 +56,19 @@
             app:layout_constraintBottom_toBottomOf="@id/pass_et"
             android:text="@string/forgot"/>
 
-        <com.framework.views.customViews.CustomButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/login_bt"
-            style="@style/started_button"
-            android:text="@string/psn_login_to_boost_360"
-            android:layout_marginTop="@dimen/_16sdp"
+            style="@style/material_button_style"
+            android:layout_marginTop="28dp"
             android:enabled="false"
-            app:layout_constraintTop_toBottomOf="@+id/pass_et" />
+            android:text="@string/psn_login_to_boost_360"
+            app:layout_constraintTop_toBottomOf="@+id/pass_et"/>
 
         <com.framework.views.customViews.CustomTextView
             android:layout_width="wrap_content"
             style="@style/psn_subheading_style"
             android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/open_sans_semibold"
             app:layout_constraintTop_toBottomOf="@id/login_bt"
             android:id="@+id/help_tv"
             android:text="@string/psn_need_help_in_login" />

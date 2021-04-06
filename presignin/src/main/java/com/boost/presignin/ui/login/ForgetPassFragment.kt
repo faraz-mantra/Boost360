@@ -2,6 +2,7 @@ package com.boost.presignin.ui.login
 
 import com.boost.presignin.R
 import com.boost.presignin.databinding.FragmentForgetPassBinding
+import com.boost.presignin.ui.ResetLinkBottomSheet
 import com.framework.base.BaseFragment
 import com.framework.extensions.onTextChanged
 import com.framework.models.BaseViewModel
@@ -27,5 +28,8 @@ class ForgetPassFragment : BaseFragment<FragmentForgetPassBinding, BaseViewModel
             binding?.getLinkBt?.isEnabled = it.isNotEmpty()
         }
 
+        binding?.getLinkBt?.setOnClickListener {
+            ResetLinkBottomSheet().show(childFragmentManager, "")
+        }
     }
 }

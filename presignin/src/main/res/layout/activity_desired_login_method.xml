@@ -49,14 +49,37 @@
         <com.framework.views.customViews.CustomButton
             android:id="@+id/username_or_email_bt"
             style="@style/psn_stroke_button_style"
+            android:gravity="start|center"
             android:text="@string/psn_login_using_username_or_email_id"
             app:layout_constraintTop_toBottomOf="@id/sub_heading_tv" />
 
         <com.framework.views.customViews.CustomButton
             android:id="@+id/another_method_bt"
+            android:gravity="start|center"
             style="@style/psn_stroke_button_style"
             android:text="@string/psn_try_a_different_mobile_number"
             app:layout_constraintTop_toBottomOf="@id/username_or_email_bt" />
+
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/contact_support_hint_tv"
+            style="@style/psn_subheading_style"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/_4sdp"
+            app:layout_constraintBottom_toTopOf="@id/contact_support_tv"
+            android:text="@string/something_doesnt_seem_right" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/contact_support_tv"
+            style="@style/psn_subheading_style"
+            app:textAllCaps="true"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"
+            android:fontFamily="@font/open_sans_semibold"
+            app:layout_constraintBottom_toTopOf="@id/bottomGuide"
+            android:text="@string/contact_support" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
