@@ -113,20 +113,12 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
                 speak(data?.contents?.description.toString())
                 if (textToSpeechEngine.isSpeaking) {
                     binding?.civSpeakHowItWorks?.setTintColor(Color.parseColor("#ffb900"))
-
-                } else {
-                    binding?.civSpeakHowItWorks?.setTintColor(Color.parseColor("#e1e1e1"))
-
                 }
             }
             binding?.civSpeakTips -> {
                 speak(data?.tips.toString())
                 if (textToSpeechEngine.isSpeaking) {
                     binding?.civSpeakTips?.setTintColor(Color.parseColor("#ffb900"))
-
-                } else {
-                    binding?.civSpeakTips?.setTintColor(Color.parseColor("#e1e1e1"))
-
                 }
 
             }
@@ -190,12 +182,12 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
         val videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
         setView(videosItem)
         binding?.root?.setOnClickListener {
-            val bottomSheetTutorialVideos = BottomSheetTutorialVideos()
+
+        val bottomSheetTutorialVideos = BottomSheetTutorialVideos()
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, videosItem)
             bottomSheetTutorialVideos.arguments = bundle
             bottomSheetTutorialVideos.show(parentFragmentManager, BottomSheetTutorialVideos::class.java.name)
-
         }
 
     }
