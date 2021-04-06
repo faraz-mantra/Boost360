@@ -1,6 +1,8 @@
 package com.inventoryorder.ui.tutorials
 
 import android.net.Uri
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -17,10 +19,14 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseFragment
 import com.inventoryorder.constant.IntentConstant
+import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.BottomSheetTutorialsOnAppointmentMgmtBinding
 import com.inventoryorder.databinding.FragmentAllTutorialsBinding
 import com.inventoryorder.databinding.FragmentTutorialDescBinding
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
+import com.inventoryorder.recyclerView.BaseRecyclerViewItem
+import com.inventoryorder.recyclerView.RecyclerItemClickListener
+import com.inventoryorder.ui.tutorials.model.AllTutorialsItem
 import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 
@@ -36,6 +42,7 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     private var videosItem: VIDEOSItem? = null
     override fun onCreateView() {
         getBundle()
+        setOnClickListener(binding?.civBack, binding?.civClose)
         val tutorialPagerAdapter = TutorialPagerAdapter(childFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
         viewModel?.getTutorialsList()?.observeOnce(viewLifecycleOwner, {
             binding?.viewPagerTutorials?.adapter = tutorialPagerAdapter
@@ -45,9 +52,23 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
 
     }
 
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when (v) {
+            binding?.civBack -> {
+                dismiss()
+                val learnAboutAppointmentMgmtBottomSheet = LearnAboutAppointmentMgmtBottomSheet()
+                learnAboutAppointmentMgmtBottomSheet.show(childFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
+            }
+            binding?.civClose -> {
+                dismiss()
+            }
+        }
+    }
 
     private fun getBundle() {
         this.videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
+        binding?.ctvVideoTitle?.setText(videosItem?.videoTitle)
     }
 
     private fun getVideoUrl(): String? {
@@ -67,12 +88,23 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     }
 
     override fun onStop() {
+        releasePlayer()
         super.onStop()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
         releasePlayer()
     }
 
+    override fun onDetach() {
+        releasePlayer()
+        super.onDetach()
+    }
+
     private fun initializePlayer() {
-        simpleExoplayer = SimpleExoPlayer.Builder(requireActivity()).build()
+        simpleExoplayer = SimpleExoPlayer.Builder(requireParentFragment().requireContext()).build()
         val randomUrl = urlList.random()
         preparePlayer(randomUrl.first, randomUrl.second)
         binding?.videoView?.player = simpleExoplayer
@@ -103,19 +135,16 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
 
     private fun releasePlayer() {
         playbackPosition = simpleExoplayer.currentPosition
+        simpleExoplayer.stop()
+        simpleExoplayer.clearVideoSurface();
+        binding?.videoView?.player?.stop()
+        binding?.videoView?.player?.release()
         simpleExoplayer.release()
     }
 
     override fun onPlayerError(error: ExoPlaybackException) {
         // handle error
     }
-
-//    override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-//        if (playbackState == Player.STATE_BUFFERING)
-//            progressBar.visibility = View.VISIBLE
-//        else if (playbackState == Player.STATE_READY || playbackState == Player.STATE_ENDED)
-//            progressBar.visibility = View.INVISIBLE
-//    }
 
 
 }
@@ -144,7 +173,7 @@ class TutorialPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentStatePa
 
 }
 
-class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, TutorialViewModel>() {
+class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, TutorialViewModel>(), RecyclerItemClickListener {
     companion object {
         fun newInstance(): FragmentAllTutorials {
             return FragmentAllTutorials()
@@ -162,8 +191,20 @@ class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, Tutori
     override fun onCreateView() {
         super.onCreateView()
         viewModel?.getTutorialsList()?.observeOnce(viewLifecycleOwner, {
-            binding?.rvVideos?.adapter = AppBaseRecyclerViewAdapter(baseActivity, it.contents?.allTutorials!!)
+            binding?.rvVideos?.adapter = AppBaseRecyclerViewAdapter(baseActivity, it.contents?.allTutorials!!, this)
         })
+    }
+
+    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+        when (actionType) {
+            RecyclerViewActionType.VIDEO_ITEM_CLICK.ordinal -> {
+                val bottomSheetTutorialVideos = BottomSheetTutorialVideos()
+                val bundle = Bundle()
+                bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, item as? AllTutorialsItem)
+                bottomSheetTutorialVideos.arguments = bundle
+                bottomSheetTutorialVideos.show(parentFragmentManager, BottomSheetTutorialVideos::class.java.name)
+            }
+        }
     }
 
 }

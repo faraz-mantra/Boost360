@@ -25,7 +25,6 @@ import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.startFragmentActivity
-import com.appservice.ui.model.ItemsItem
 import com.appservice.ui.model.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
@@ -33,6 +32,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.webengageconstant.*
+import com.inventoryorder.ui.tutorials.LearnAboutAppointmentMgmtBottomSheet
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
@@ -231,8 +231,17 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       R.id.app_bar_search -> {
         true
       }
+      R.id.menu_help -> {
+        openHelpBottomSheet()
+        true
+      }
       else -> super.onOptionsItemSelected(item)
     }
+  }
+
+  private fun openHelpBottomSheet() {
+    val sheet = LearnAboutAppointmentMgmtBottomSheet()
+    sheet.show(parentFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
   }
 
   override fun onClick(v: View) {

@@ -20,7 +20,7 @@ class BottomSheetAppointmentFaq : BaseBottomSheetDialog<BottomSheetFaqAppointmen
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding?.civClose)
+        setOnClickListener(binding?.civClose, binding?.civBack)
         viewModel?.getFaqResponse()?.observeOnce(viewLifecycleOwner, {
             val adapter = AppBaseRecyclerViewAdapter(baseActivity, it.contents!!)
             binding?.rvFaq?.adapter = adapter
@@ -32,10 +32,16 @@ class BottomSheetAppointmentFaq : BaseBottomSheetDialog<BottomSheetFaqAppointmen
         super.onClick(v)
         when (v) {
             binding?.civClose -> dismiss()
+            binding?.civBack -> {
+                dismiss()
+                val learnAboutAppointmentMgmtBottomSheet = LearnAboutAppointmentMgmtBottomSheet()
+                learnAboutAppointmentMgmtBottomSheet.show(childFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
+            }
+
         }
+
+
     }
-
-
 }
 
 

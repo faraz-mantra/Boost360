@@ -107,6 +107,7 @@
                     <com.framework.views.customViews.CustomImageView
                         android:id="@+id/civ_speak_how_it_works"
                         style="@style/wrap_wrap"
+                        android:tint="@color/gray_light_3"
                         android:src="@drawable/ic_speaker_oragne"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -183,6 +184,7 @@
                     <com.framework.views.customViews.CustomImageView
                         android:id="@+id/civ_speak_tips"
                         style="@style/wrap_wrap"
+                        android:tint="@color/gray_light_3"
                         android:src="@drawable/ic_speaker_oragne"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

@@ -1,6 +1,7 @@
 package com.inventoryorder.holders
 
 import com.inventoryorder.R
+import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.RecyclerItemListVideosBinding
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
@@ -13,5 +14,8 @@ class VideoListViewHolder(binding: RecyclerItemListVideosBinding) : AppBaseRecyc
         binding.ctvVideoDuration.text = "4:30"
         binding.videoThumbnails.setImageResource(R.drawable.placeholder_image)
         binding.ctvVideoTitle.text = data?.videoTitle
+        binding.root.setOnClickListener {
+            listener?.onItemClick(position, item, actionType = RecyclerViewActionType.VIDEO_ITEM_CLICK.ordinal)
+        }
     }
 }
