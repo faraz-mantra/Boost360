@@ -1,8 +1,10 @@
 package com.inventoryorder.ui.tutorials
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -48,9 +50,12 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
         binding?.vpVideos?.clipToPadding = false
         binding?.vpVideos?.setPadding(40, 0, 40, 0)
         setData()
+        textToSpeechEngine
     }
 
+
     private fun setData() {
+
         viewModel?.getLearnAppointmentmgmtResponse()?.observeOnce(viewLifecycleOwner, {
             this.data = it
             binding?.ctvHowItWorksContent?.text = data?.contents?.description
@@ -58,7 +63,7 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
             binding?.vpVideos?.adapter = pagerAdapter
             binding?.diPagerIndicator?.setViewPager(binding?.vpVideos!!)
             loadTips(data!!)
-            textToSpeechEngine
+            binding?.ctvVideosHeading?.text = "VIDEOS (${data?.contents?.videos?.size})"
 
 
         })
@@ -71,7 +76,23 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
             // set our locale only if init was success.
             if (status == TextToSpeech.SUCCESS) {
                 textToSpeechEngine.language = Locale.UK
+                textToSpeechEngine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) {
+                    }
+
+                    override fun onDone(utteranceId: String?) {
+                        binding?.civSpeakHowItWorks?.setTintColor(Color.parseColor("#e1e1e1"))
+                        binding?.civSpeakTips?.setTintColor(Color.parseColor("#e1e1e1"))
+
+                    }
+
+                    override fun onError(utteranceId: String?) {
+                    }
+
+                })
+
             }
+
         }
     }
 
@@ -89,22 +110,23 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
         super.onClick(v)
         when (v) {
             binding?.civSpeakHowItWorks -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    // Call Lollipop+ function
-                    textToSpeechEngine.speak(data?.contents?.description, TextToSpeech.QUEUE_FLUSH, null, "tts1")
-                } else {
-                    // Call Legacy function
-                    textToSpeechEngine.speak(data?.contents?.description, TextToSpeech.QUEUE_FLUSH, null)
-                }
+                speak(data?.contents?.description.toString())
+                if (textToSpeechEngine.isSpeaking) {
+                    binding?.civSpeakHowItWorks?.setTintColor(Color.parseColor("#ffb900"))
 
+                } else {
+                    binding?.civSpeakHowItWorks?.setTintColor(Color.parseColor("#e1e1e1"))
+
+                }
             }
             binding?.civSpeakTips -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    // Call Lollipop+ function
-                    textToSpeechEngine.speak(data?.tips.toString(), TextToSpeech.QUEUE_FLUSH, null, "tts1")
+                speak(data?.tips.toString())
+                if (textToSpeechEngine.isSpeaking) {
+                    binding?.civSpeakTips?.setTintColor(Color.parseColor("#ffb900"))
+
                 } else {
-                    // Call Legacy function
-                    textToSpeechEngine.speak(data?.tips?.toString(), TextToSpeech.QUEUE_FLUSH, null)
+                    binding?.civSpeakTips?.setTintColor(Color.parseColor("#e1e1e1"))
+
                 }
 
             }
@@ -118,6 +140,16 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
             binding?.civClose -> {
                 dismiss()
             }
+        }
+    }
+
+    private fun speak(string: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Call Lollipop+ function
+            textToSpeechEngine.speak(string, TextToSpeech.QUEUE_FLUSH, null, "tts1")
+        } else {
+            // Call Legacy function
+            textToSpeechEngine.speak(string, TextToSpeech.QUEUE_FLUSH, null)
         }
     }
 
