@@ -58,7 +58,6 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
 
 
   private fun setData() {
-
     viewModel?.getLearnAppointmentmgmtResponse()?.observeOnce(viewLifecycleOwner, {
       this.data = it
       binding?.ctvHowItWorksContent?.text = data?.contents?.description
@@ -189,7 +188,6 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
     val videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
     setView(videosItem)
     binding?.root?.setOnClickListener {
-
       val bottomSheetTutorialVideos = BottomSheetTutorialVideos()
       val bundle = Bundle()
       bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, videosItem)
@@ -207,7 +205,6 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
         .centerCrop()
         .apply(RequestOptions())
         .thumbnail(0.1f)
-        .placeholder(R.drawable.play_video_thumbs)
         .into(binding?.videoThumbnails!!)
   }
 }
