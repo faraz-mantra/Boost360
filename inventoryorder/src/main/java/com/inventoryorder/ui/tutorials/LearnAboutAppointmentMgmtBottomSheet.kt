@@ -1,8 +1,6 @@
 package com.inventoryorder.ui.tutorials
 
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.media.MediaMetadataRetriever
 import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -11,7 +9,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.bumptech.glide.Glide
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.observeOnce
 import com.framework.views.customViews.CustomTextView
@@ -198,24 +195,24 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
     private fun setView(videosItem: VIDEOSItem?) {
         binding?.ctvVideoTitle?.text = videosItem?.videoTitle
         binding?.ctvVideoDuration?.text = videosItem?.videoLength
-        Glide.with(requireContext()).load(retrieveVideoFrameFromVideo(videosItem?.videoUrl)).into(binding?.videoThumbnails!!)
+//        Glide.with(requireContext()).load(retrieveVideoFrameFromVideo(videosItem?.videoUrl)).into(binding?.videoThumbnails!!)
 
     }
 
-    private fun retrieveVideoFrameFromVideo(videoPath: String?): Bitmap? {
-
-        var bitmap: Bitmap? = null
-        var mediaMetadataRetriever: MediaMetadataRetriever? = null
-        try {
-            mediaMetadataRetriever = MediaMetadataRetriever()
-            mediaMetadataRetriever.setDataSource(videoPath, HashMap<String, String>())
-            bitmap = mediaMetadataRetriever.frameAtTime
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            mediaMetadataRetriever?.release()
-        }
-
-        return bitmap
-    }
+//    private fun retrieveVideoFrameFromVideo(videoPath: String?): Bitmap? {
+//
+//        var bitmap: Bitmap? = null
+//        var mediaMetadataRetriever: MediaMetadataRetriever? = null
+//        try {
+//            mediaMetadataRetriever = MediaMetadataRetriever()
+//            mediaMetadataRetriever.setDataSource(videoPath, HashMap<String, String>())
+//            bitmap = mediaMetadataRetriever.frameAtTime
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        } finally {
+//            mediaMetadataRetriever?.release()
+//        }
+//
+//        return bitmap
+//    }
 }

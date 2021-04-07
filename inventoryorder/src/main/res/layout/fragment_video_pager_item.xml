@@ -33,7 +33,7 @@
                 android:id="@+id/video_thumbnails"
                 android:layout_height="match_parent"
                 android:paddingVertical="@dimen/size_10"
-                android:scaleType="fitXY"
+                android:scaleType="centerInside"
                 android:src="@drawable/play_video_thumbs" />
 
         </com.framework.views.customViews.CustomCardView>
