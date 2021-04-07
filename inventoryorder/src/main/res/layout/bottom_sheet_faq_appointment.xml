@@ -43,13 +43,13 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toEndOf="@+id/civ_back"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.4" />
+                app:layout_constraintVertical_bias="0.35" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/ctv_fragment_subject"
                 style="@style/wrap_wrap"
                 android:fontFamily="@font/lato"
-                android:text="@string/appointment_management"
+                android:text="@string/staff_profile"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
