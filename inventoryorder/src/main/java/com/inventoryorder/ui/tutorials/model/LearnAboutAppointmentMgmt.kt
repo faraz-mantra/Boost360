@@ -34,6 +34,8 @@ data class VIDEOSItem(
 
         @field:SerializedName("video title")
         var videoTitle: String? = null,
+        @field:SerializedName("video length")
+        var videoLength: String? = null,
 ) : Serializable
 
 data class Contents(

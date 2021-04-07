@@ -10,7 +10,7 @@ class VideoListViewHolder(binding: RecyclerItemListVideosBinding) : AppBaseRecyc
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         super.bind(position, item)
         val data = item as? AllTutorialsItem
-        binding.ctvVideoDuration.text = "4:30"
+        binding.ctvVideoDuration.text = data?.videoLength
         binding.ctvVideoTitle.text = data?.videoTitle
         binding.root.setOnClickListener {
             listener?.onItemClick(position, item, actionType = RecyclerViewActionType.VIDEO_ITEM_CLICK.ordinal)
