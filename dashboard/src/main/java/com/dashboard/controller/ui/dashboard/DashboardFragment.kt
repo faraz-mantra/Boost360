@@ -27,9 +27,9 @@ import com.dashboard.model.live.drScore.getDrScoreData
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
-import com.dashboard.pref.*
-import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
-import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
+import com.framework.pref.*
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -529,7 +529,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
-      QuickActionItem.QuickActionType.LIST_STAFF -> baseActivity.startListStaff(session)
+      QuickActionItem.QuickActionType.ADD_STAFF_PROFILE -> baseActivity.startAddStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,
       QuickActionItem.QuickActionType.LIST_PRODUCT,
       QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,

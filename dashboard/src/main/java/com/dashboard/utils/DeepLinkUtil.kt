@@ -6,10 +6,10 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.dashboard.pref.FACEBOOK_PAGE_WITH_ID
-import com.dashboard.pref.FACEBOOK_URL
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.UserSessionManager
+import com.framework.pref.FACEBOOK_PAGE_WITH_ID
+import com.framework.pref.FACEBOOK_URL
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
 import java.util.*
 
 const val facebook_chat_main = "facebookchatMain"

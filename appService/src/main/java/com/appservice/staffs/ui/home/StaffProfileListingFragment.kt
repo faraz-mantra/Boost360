@@ -14,6 +14,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffListingBinding
+import com.appservice.model.StatusKyc
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
@@ -74,17 +75,32 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   override fun onCreateView() {
     super.onCreateView()
     getBundleData()
-    layoutManagerN = LinearLayoutManager(baseActivity)
-    WebEngageController.trackEvent(STAFF_PROFILE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
-    getListServiceFilterApi()
-    layoutManagerN?.let { scrollPagingListener(it) }
-    swipeRefreshListener()
-    setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService)
-    checkIsAddNewStaff()
+    if (isLockStaff().not()) {
+      layoutManagerN = LinearLayoutManager(baseActivity)
+      WebEngageController.trackEvent(STAFF_PROFILE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
+      getListServiceFilterApi()
+      layoutManagerN?.let { scrollPagingListener(it) }
+      swipeRefreshListener()
+      setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService)
+      checkIsAddNewStaff()
+    }
+  }
+
+  private fun isLockStaff(): Boolean {
+    return if (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE) == true) {
+      binding?.staffListSwipeRefresh?.visible()
+      binding?.staffLock?.root?.gone()
+      false
+    } else {
+      binding?.staffListSwipeRefresh?.gone()
+      binding?.staffLock?.root?.visible()
+      binding?.staffLock?.btnStaffAddOns?.setOnClickListener(this)
+      true
+    }
   }
 
   private fun checkIsAddNewStaff() {
-    val b = arguments?.getBoolean(IntentConstant.IS_ADD_NEW.name)?:false
+    val b = arguments?.getBoolean(IntentConstant.IS_ADD_NEW.name) ?: false
     if (b) {
       WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
       startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
@@ -221,6 +237,16 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     searchView?.setOnQueryTextListener(this)
   }
 
+  override fun onPrepareOptionsMenu(menu: Menu) {
+    super.onPrepareOptionsMenu(menu)
+    val menuSearch: MenuItem? = menu.findItem(R.id.menu_add_staff)
+    val menuAdd: MenuItem? = menu.findItem(R.id.app_bar_search)
+    val b = sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE) ?: false
+    menuSearch?.isVisible = b
+    menuAdd?.isVisible = b
+
+  }
+
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.menu_add_staff -> {
@@ -241,6 +267,9 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       binding?.serviceEmpty?.cbAddService -> {
         isServiceAdd = true
         startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)
+      }
+      binding?.staffLock?.btnStaffAddOns -> {
+
       }
     }
   }

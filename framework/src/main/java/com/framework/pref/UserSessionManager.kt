@@ -1,16 +1,15 @@
-package com.dashboard.pref
+package com.framework.pref
 
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.text.TextUtils
-import com.dashboard.AppDashboardApplication
-import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
-import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_TAG
-import com.dashboard.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
-import com.dashboard.pref.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM
-import com.dashboard.pref.Key_Preferences.WEBSITE_SHARE
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
+import com.framework.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
+import com.framework.pref.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM
+import com.framework.pref.Key_Preferences.WEBSITE_SHARE
 import com.framework.utils.convertStringToList
 import java.util.*
 
@@ -20,11 +19,7 @@ class UserSessionManager(var activity: Activity) {
   private var pref = activity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
   // Editor reference for Shared preferences
-  var editor: SharedPreferences.Editor
-
-  init {
-    this.editor = pref.edit()
-  }
+  var editor: SharedPreferences.Editor = pref.edit()
 
   private val PROFILE_ID = "user_profile_id"
   private val PROFILE_EMAIL = "user_profile_email"
@@ -82,8 +77,8 @@ class UserSessionManager(var activity: Activity) {
   private val KEY_FP_SHARE_ENABLE = "fbShareEnabled"
   private val KEY_FP_PAGE_SHARE_ENABLE = "fbPageShareEnabled"
 
-  fun getPreferenceTwitter(): SharedPreferences {
-    return AppDashboardApplication.instance.getSharedPreferences(Key_Preferences.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
+  fun Context.getPreferenceTwitter(): SharedPreferences {
+    return getSharedPreferences(Key_Preferences.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
   }
 
   //Create login session
