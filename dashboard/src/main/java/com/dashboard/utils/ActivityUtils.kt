@@ -419,13 +419,13 @@ fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
 fun AppCompatActivity.startAddStaff(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(ADD_STAFF_DASHBOARD, CLICK, TO_BE_ADDED)
-    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session,true))
+    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session, true))
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
 }
 
-fun getBundleData(session: UserSessionManager?,isAddNew:Boolean=false): Bundle {
+fun getBundleData(session: UserSessionManager?, isAddNew: Boolean = false): Bundle {
   val bundle = Bundle()
   bundle.putBoolean(com.appservice.constant.IntentConstant.NON_PHYSICAL_EXP_CODE.name, session?.isNonPhysicalProductExperienceCode ?: false)
   bundle.putString(com.appservice.constant.IntentConstant.CURRENCY_TYPE.name, "INR")
@@ -458,10 +458,11 @@ fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startPreSignUp(session: UserSessionManager?) {
+fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: Boolean = false) {
   try {
     WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.boost.presignup.PreSignUpActivity"))
+    if (isClearTask) webIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
