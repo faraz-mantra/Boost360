@@ -144,10 +144,11 @@ public class ProcessFPDetails {
                 }
             }catch(Exception e){e.printStackTrace();}
 
-            ArrayList<String> widgetsList = get_fp_details_model.FPWebWidgets;
+            ArrayList<String> widgetsList = get_fp_details_model.getFPWebWidgets();
+            widgetsList.add("STAFFPROFILE");// For Testing Add
             Constants.StorePackageIds = get_fp_details_model.PackageIds;
-            Constants.StoreWidgets = get_fp_details_model.FPWebWidgets;
-            session.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(get_fp_details_model.FPWebWidgets));
+            Constants.StoreWidgets = widgetsList;
+            session.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(widgetsList));
             Log.d("Constants.storeWidgets", "widgets : " + Constants.StoreWidgets + " "+ Constants.StorePackageIds);
             Constants.storeSecondaryImages = get_fp_details_model.SecondaryTileImages;
 
