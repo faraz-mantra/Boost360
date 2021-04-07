@@ -402,8 +402,7 @@ public class Get_FP_Details_Model implements Serializable {
   }
 
   public ArrayList<String> getFPWebWidgets() {
-    if (FPWebWidgets != null) return FPWebWidgets;
-    else return new ArrayList();
+    return FPWebWidgets;
   }
 
   public void setFPWebWidgets(ArrayList<String> FPWebWidgets) {
