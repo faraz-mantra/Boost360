@@ -35,7 +35,7 @@ class BottomSheetAppointmentFaq : BaseBottomSheetDialog<BottomSheetFaqAppointmen
             binding?.civBack -> {
                 dismiss()
                 val learnAboutAppointmentMgmtBottomSheet = LearnAboutAppointmentMgmtBottomSheet()
-                learnAboutAppointmentMgmtBottomSheet.show(childFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
+                learnAboutAppointmentMgmtBottomSheet.show(parentFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
             }
 
         }

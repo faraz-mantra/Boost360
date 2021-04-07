@@ -15,10 +15,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1">
 
-            <com.framework.views.customViews.CustomImageView
+            <com.framework.views.roundedimageview.RoundedImageView
                 android:id="@+id/civ_back"
-                android:layout_width="@dimen/size_10"
-                android:layout_height="@dimen/size_15"
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                android:background="#585959"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="@dimen/size_8"
+                app:riv_corner_radius="@dimen/size_8"
+                app:riv_mutate_background="true"
+                app:riv_oval="true"
                 android:src="@drawable/ic_back_arrow_left"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -55,6 +61,7 @@
 
             <com.framework.views.customViews.CustomImageView
                 style="@style/wrap_wrap"
+                android:visibility="gone"
                 android:src="@drawable/ic_translation_orange"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -135,6 +142,10 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         app:auto_show="true"
+                        app:buffered_color="@color/gray_light_3"
+                        app:played_color="@color/red_F40000"
+                        app:show_buffering="always"
+                        app:use_artwork="true"
                         app:fastforward_increment="10000"
                         app:repeat_toggle_modes="none"
                         app:rewind_increment="10000"
