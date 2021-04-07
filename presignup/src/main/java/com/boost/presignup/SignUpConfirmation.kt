@@ -39,7 +39,7 @@ class SignUpConfirmation : AppCompatActivity() {
     if ((profileUrl == null || profileUrl.isEmpty()) && currentFirebaseUser != null) {
       profileUrl = currentFirebaseUser.photoUrl?.toString()
     } else
-      if (!profileUrl.isEmpty()) {
+      if (profileUrl.isNullOrEmpty().not()) {
         Thread {
           val url = URL(profileUrl)
           val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
