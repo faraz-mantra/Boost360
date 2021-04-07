@@ -63,7 +63,7 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
             binding?.vpVideos?.adapter = pagerAdapter
             binding?.diPagerIndicator?.setViewPager(binding?.vpVideos!!)
             loadTips(data!!)
-            binding?.ctvVideosHeading?.text = "VIDEOS (${data?.contents?.videos?.size})"
+            binding?.ctvVideosHeading?.text = "${if (data?.contents?.videos?.size ?: 0 > 1) "VIDEOS" else "VIDEO"} (${data?.contents?.videos?.size})"
 
 
         })
@@ -194,5 +194,6 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
 
     private fun setView(videosItem: VIDEOSItem?) {
         binding?.ctvVideoTitle?.text = videosItem?.videoTitle
+        binding?.ctvVideoDuration?.text = videosItem?.videoLength
     }
 }

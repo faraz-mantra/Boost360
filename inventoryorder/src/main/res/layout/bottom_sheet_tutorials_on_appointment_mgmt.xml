@@ -107,6 +107,7 @@
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/ctv_playing_status"
                         style="@style/wrap_wrap"
+                        android:visibility="gone"
                         android:text="@string/playing_1_of_4"
                         android:textColor="@color/black_4a4a4a"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -136,9 +137,9 @@
                         app:auto_show="true"
                         app:fastforward_increment="10000"
                         app:repeat_toggle_modes="none"
-                        app:resize_mode="fixed_width"
                         app:rewind_increment="10000"
                         app:surface_type="surface_view"
+                        app:resize_mode="fill"
                         app:use_controller="true" />
 
                 </com.framework.views.customViews.CustomCardView>

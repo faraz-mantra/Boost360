@@ -23,6 +23,8 @@ data class ContentVideo(
 		@field:SerializedName("Tutorial contents")
 		val tutorialContents: List<String?>? = null,
 
-		@field:SerializedName("Video title")
+		@field:SerializedName("video title")
 		val videoTitle: String? = null,
+		@field:SerializedName("video length")
+		var videoLength: String? = null,
 )

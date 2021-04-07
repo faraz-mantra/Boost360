@@ -13,7 +13,6 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.inventoryorder.R
@@ -68,7 +67,7 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
 
     private fun getBundle() {
         this.videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
-        binding?.ctvVideoTitle?.setText(videosItem?.videoTitle)
+        binding?.ctvVideoTitle?.text = videosItem?.videoTitle
     }
 
     private fun getVideoUrl(): String? {
@@ -77,9 +76,6 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
 
     private lateinit var simpleExoplayer: SimpleExoPlayer
     private var playbackPosition: Long = 0
-    private val mp4Url = "https://html5demos.com/assets/dizzy.mp4"
-    private val dashUrl = "https://storage.googleapis.com/wvmedia/clear/vp9/tears/tears_uhd.mpd"
-    private val urlList = listOf(mp4Url to "default", dashUrl to "dash")
 
 
     override fun onStart() {
@@ -105,8 +101,7 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
 
     private fun initializePlayer() {
         simpleExoplayer = SimpleExoPlayer.Builder(requireParentFragment().requireContext()).build()
-        val randomUrl = urlList.random()
-        preparePlayer(randomUrl.first, randomUrl.second)
+        preparePlayer(videosItem?.videoUrl.toString())
         binding?.videoView?.player = simpleExoplayer
         simpleExoplayer.seekTo(playbackPosition)
         simpleExoplayer.playWhenReady = true
@@ -117,19 +112,15 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
         DefaultDataSourceFactory(requireActivity(), getString(R.string.app_name))
     }
 
-    private fun buildMediaSource(uri: Uri, type: String): MediaSource {
-        return if (type == "dash") {
-            DashMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(uri)
-        } else {
-            ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(uri)
-        }
+    private fun buildMediaSource(uri: Uri): MediaSource {
+        return ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(uri)
     }
 
-    private fun preparePlayer(videoUrl: String, type: String) {
+
+    private fun preparePlayer(videoUrl: String) {
         val uri = Uri.parse(videoUrl)
-        val mediaSource = buildMediaSource(uri, type)
+        val mediaSource = buildMediaSource(uri)
         simpleExoplayer.prepare(mediaSource)
     }
 
