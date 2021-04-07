@@ -89,7 +89,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun isLockStaff(): Boolean {
-    return if (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE) == true) {
+    return if (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true) {
       binding?.staffListSwipeRefresh?.visible()
       binding?.staffLock?.root?.gone()
       false
