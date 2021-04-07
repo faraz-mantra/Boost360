@@ -265,14 +265,15 @@
               app:layout_constraintTop_toTopOf="parent" />
 
             <com.framework.views.customViews.CustomImageView
-              android:layout_width="@dimen/size_15"
-              android:layout_height="@dimen/size_15"
-              android:src="@drawable/ic_arrow_right_small_orange"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintHorizontal_bias="0.95"
-              app:layout_constraintStart_toEndOf="@id/ctv_contact_support"
-              app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="@dimen/size_15"
+                android:layout_height="@dimen/size_15"
+                android:src="@drawable/ic_arrow_right_small_orange"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintStart_toEndOf="@id/ctv_contact_support"
+                app:layout_constraintTop_toTopOf="parent" />
           </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.framework.views.customViews.CustomCardView>

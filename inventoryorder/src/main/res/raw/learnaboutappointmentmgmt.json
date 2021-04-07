@@ -8,7 +8,7 @@
     "Description": "This feature allows you to add detailed staff profiles to your website. You can track your employee’s weekly availability, manage leaves and stay organized. When making an appointment, clients can see all available staff’s calendar providing the service they are looking for.",
     "VIDEOS": [
       {
-        "video url": "https://firebasestorage.googleapis.com/v0/b/fir-storage-3779a.appspot.com/o/Staff%20Module%20Product%20Walkthrough%20video.mp4?alt=media&token=5d9dd2b5-b2e0-4aab-9d92-ec5e3b73e248",
+        "video url": "https://firebasestorage.googleapis.com/v0/b/nowfloats-boost.appspot.com/o/Staff%20Module%20Product%20Walkthrough%20video.mp4?alt=media&token=31c2b1fd-c250-402d-882c-f526debd4f29",
         "video title": "How to Setup an Staff Profile on Boost 360",
         "video length": "2:37"
       }
@@ -18,7 +18,6 @@
     "Mentioning the staff’s professional experience, specializations, and awards will help in building and maintaining great relationships with your clients."
   ],
   "Menus": [
-    "Read FAQs",
-    "Contact support"
+    "Read FAQs"
   ]
 }
