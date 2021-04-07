@@ -34,7 +34,7 @@
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/video_thumbnails"
                     android:layout_width="@dimen/size_150"
-
+                    android:scaleType="fitXY"
                     android:layout_height="@dimen/size_100"
                     android:src="@drawable/play_video_thumbs" />
             </FrameLayout>
