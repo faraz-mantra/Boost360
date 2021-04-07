@@ -106,7 +106,8 @@
         },
         {
           "quickActionType": "ADD_STAFF_PROFILE",
-          "title": "Add a\nstaff"
+          "title": "Add a\nstaff",
+          "isNew": true
         }
       ]
     },
@@ -143,8 +144,9 @@
           "title": "Add a\ncustom page"
         },
         {
-          "quickActionType": "LIST_STAFF",
-          "title": "Add a\nstaff"
+          "quickActionType": "ADD_STAFF_PROFILE",
+          "title": "Add a\nstaff",
+          "isNew": true
         }
       ]
     },
@@ -363,8 +365,9 @@
           "title": "Add a\ncustom page"
         },
         {
-          "quickActionType": "LIST_STAFF",
-          "title": "Add a\nstaff"
+          "quickActionType": "ADD_STAFF_PROFILE",
+          "title": "Add a\nstaff",
+          "isNew": true
         }
       ]
     },
