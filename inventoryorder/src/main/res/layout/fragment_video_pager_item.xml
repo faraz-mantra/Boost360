@@ -16,14 +16,24 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/video_thumbnails"
+      <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black_10"
-        android:paddingVertical="@dimen/size_10"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/play_video_thumbs" />
+        android:layout_height="match_parent">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/video_thumbnails"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/black_10"
+          android:scaleType="centerCrop"/>
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="centerInside"
+          app:srcCompat="@drawable/play_video_thumbs" />
+      </FrameLayout>
+
 
     </com.framework.views.customViews.CustomCardView>
 
