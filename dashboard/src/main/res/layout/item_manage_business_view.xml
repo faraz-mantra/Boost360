@@ -46,7 +46,7 @@
           android:ellipsize="end"
           android:maxLines="2"
           android:text="@string/manage_business_description"
-          android:textColor="@color/black_4a4a4a"
+          android:textColor="@color/warm_grey"
           app:textType="CAPTION" />
       </LinearLayout>
 
