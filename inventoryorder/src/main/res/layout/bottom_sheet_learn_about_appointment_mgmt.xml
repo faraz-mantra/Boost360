@@ -251,7 +251,8 @@
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey_5">
+              android:visibility="gone"
+              android:background="@color/light_grey_5">
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_contact_support"
@@ -268,7 +269,6 @@
                 android:layout_width="@dimen/size_15"
                 android:layout_height="@dimen/size_15"
                 android:src="@drawable/ic_arrow_right_small_orange"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.95"
