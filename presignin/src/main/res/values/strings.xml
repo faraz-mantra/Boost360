@@ -63,7 +63,7 @@
     <string name="something_doesnt_seem_right">Something doesn’t seem right?</string>
     <string name="password_link_has_sent">Password reset link has been sent to your registered Email ID or Mobile number.</string>
     <string name="go_to_login">Go to login</string>
-    <string name="mute" >mute</string>
+    <string name="mute">mute</string>
     <string name="skip">skip</string>
     <string name="intro_video_time">%d Seconds</string>
 </resources>
