@@ -1,0 +1,25 @@
+{
+  "Fragment Data": {
+    "title": "Learning about",
+    "subject": "Appointment management"
+  },
+  "Contents": {
+    "Title": "HOW IT WORKS:",
+    "Description": "This feature enables you to display your products on your website. You can easily add detailed information about your products and their prices through the inbuilt product catalogue to enable quick sales.",
+    "VIDEOS": [
+      {
+        "video url": "https://firebasestorage.googleapis.com/v0/b/fir-storage-3779a.appspot.com/o/Staff%20Module%20Product%20Walkthrough%20video.mp4?alt=media&token=5d9dd2b5-b2e0-4aab-9d92-ec5e3b73e248",
+        "video title": "How to Setup an Staff Profile on Boost 360",
+        "video length": "2:37"
+      }
+    ]
+  },
+  "Tips:": [
+    "Adding multiple product images and a detailed description helps customers make decisions faster.",
+    "Adding prodocts availability helps you manage stock and offer discounts to increase sales (whenever your offer type is ‘till stock lasts’)."
+  ],
+  "Menus": [
+    "Read FAQs",
+    "Contact support"
+  ]
+}

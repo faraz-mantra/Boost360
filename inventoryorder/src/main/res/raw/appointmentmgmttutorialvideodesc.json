@@ -1,0 +1,18 @@
+{
+  "Fragment Data": {
+    "title": "Learning about",
+    "subject": "Appointment management"
+  },
+  "Content Video": {
+    "Heading": "Tutorial video",
+    "video url": "https://firebasestorage.googleapis.com/v0/b/fir-storage-3779a.appspot.com/o/Staff%20Module%20Product%20Walkthrough%20video.mp4?alt=media&token=5d9dd2b5-b2e0-4aab-9d92-ec5e3b73e248",
+    "video title": "How to Setup an Staff Profile on Boost 360",
+    "Tutorial contents": [
+      "Step 1. Click on ‘Add A New Order’.",
+      "Step 2. Fill in the customer details.",
+      "Step 3. Select products from your product list.",
+      "Step 4. Review your order. Verify the payment options.",
+      "Step 5. Done."
+    ]
+  }
+}
