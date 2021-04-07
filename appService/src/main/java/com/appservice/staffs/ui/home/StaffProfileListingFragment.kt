@@ -3,6 +3,7 @@ package com.appservice.staffs.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -33,6 +34,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.Key_Preferences
 import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
@@ -116,12 +118,12 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun getListServiceFilterApi() {
-    showProgress()
+    showProgressN()
     viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)?.observeOnce(viewLifecycleOwner, {
       if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
         fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
       } else {
-        hideProgress()
+        hideProgressN()
         setEmptyView(isStaffEmpty = false, isServiceEmpty = true)
       }
     })
@@ -157,12 +159,12 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun fetchStaffListing(isProgress: Boolean = true, isFirst: Boolean = false, searchString: String = "", offSet: Int, limit: Int) {
-    if ((isFirst || searchString.isNotEmpty()) && isProgress) showProgress()
+    if ((isFirst || searchString.isNotEmpty()) && isProgress) showProgressN()
     viewModel?.getStaffList(getFilterRequest(offSet, limit))?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         setStaffDataItems((it as? GetStaffListingResponse)?.result, searchString.isNotEmpty(), isFirst)
       } else if (isFirst) showShortToast(it.errorMessage())
-      if (isFirst || searchString.isNotEmpty()) hideProgress()
+      if (isFirst || searchString.isNotEmpty()) hideProgressN()
     })
   }
 
@@ -268,9 +270,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         isServiceAdd = true
         startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)
       }
-      binding?.staffLock?.btnStaffAddOns -> {
-
-      }
+      binding?.staffLock?.btnStaffAddOns -> startStorePage()
     }
   }
 
@@ -312,13 +312,35 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     }
   }
 
-  override fun showProgress(title: String?, cancelable: Boolean?) {
+  fun showProgressN() {
     binding?.progress?.visible()
   }
 
-  override fun hideProgress() {
+   fun hideProgressN() {
     binding?.staffListSwipeRefresh?.isRefreshing = false
     binding?.progress?.gone()
+  }
+
+
+  private fun startStorePage() {
+    try {
+     showProgress("Loading. Please wait...")
+      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
+      intent.putExtra("fpName", sessionLocal.fpTag)
+      intent.putExtra("fpid", sessionLocal.fPID)
+      intent.putExtra("fpTag", sessionLocal.fpTag)
+      intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
+      intent.putExtra("email", sessionLocal.fPEmail ?: "ria@nowfloats.com")
+      intent.putExtra("mobileNo", sessionLocal.fPPrimaryContactNumber ?: "9160004303")
+      intent.putExtra("profileUrl", sessionLocal.fPLogo)
+      intent.putExtra("buyItemKey", StatusKyc.STAFFPROFILE.name)
+      baseActivity.startActivity(intent)
+      Handler().postDelayed({ hideProgress() }, 1000)
+    } catch (e: Exception) {
+      showLongToast("Unable to start upgrade activity.")
+    }
   }
 
 }
