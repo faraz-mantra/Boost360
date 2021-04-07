@@ -10,38 +10,34 @@ import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 
 class BottomSheetAppointmentFaq : BaseBottomSheetDialog<BottomSheetFaqAppointmentBinding, TutorialViewModel>() {
 
-    override fun getLayout(): Int {
+  override fun getLayout(): Int {
+    return R.layout.bottom_sheet_faq_appointment
+  }
 
-        return R.layout.bottom_sheet_faq_appointment
+  override fun getViewModelClass(): Class<TutorialViewModel> {
+    return TutorialViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    setOnClickListener(binding?.civClose, binding?.civBack)
+    viewModel?.getFaqResponse()?.observeOnce(viewLifecycleOwner, {
+      val adapter = AppBaseRecyclerViewAdapter(baseActivity, it.contents!!)
+      binding?.rvFaq?.adapter = adapter
+
+    })
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.civClose -> dismiss()
+      binding?.civBack -> {
+        dismiss()
+        val learnAboutAppointmentMgmtBottomSheet = LearnAboutAppointmentMgmtBottomSheet()
+        learnAboutAppointmentMgmtBottomSheet.show(parentFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
+      }
     }
-
-    override fun getViewModelClass(): Class<TutorialViewModel> {
-        return TutorialViewModel::class.java
-    }
-
-    override fun onCreateView() {
-        setOnClickListener(binding?.civClose, binding?.civBack)
-        viewModel?.getFaqResponse()?.observeOnce(viewLifecycleOwner, {
-            val adapter = AppBaseRecyclerViewAdapter(baseActivity, it.contents!!)
-            binding?.rvFaq?.adapter = adapter
-
-        })
-    }
-
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when (v) {
-            binding?.civClose -> dismiss()
-            binding?.civBack -> {
-                dismiss()
-                val learnAboutAppointmentMgmtBottomSheet = LearnAboutAppointmentMgmtBottomSheet()
-                learnAboutAppointmentMgmtBottomSheet.show(parentFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
-            }
-
-        }
-
-
-    }
+  }
 }
 
 
