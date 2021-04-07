@@ -5,8 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application android:networkSecurityConfig="@xml/network_security_config">
-        <activity android:name=".ui.login.LoginActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.registration.RegistrationActivity"></activity>
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.DesiredLoginMethodActivity" />
         <activity android:name=".ui.AccountNotFoundActivity" />
         <activity
