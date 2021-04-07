@@ -105,8 +105,8 @@
           "title": "Add a\ncustom page"
         },
         {
-          "quickActionType": "LIST_STAFF",
-          "title": "List a\nstaff"
+          "quickActionType": "ADD_STAFF_PROFILE",
+          "title": "Add a\nstaff"
         }
       ]
     },
@@ -144,7 +144,7 @@
         },
         {
           "quickActionType": "LIST_STAFF",
-          "title": "List a\nstaff"
+          "title": "Add a\nstaff"
         }
       ]
     },
@@ -364,7 +364,7 @@
         },
         {
           "quickActionType": "LIST_STAFF",
-          "title": "List a\nstaff"
+          "title": "Add a\nstaff"
         }
       ]
     },

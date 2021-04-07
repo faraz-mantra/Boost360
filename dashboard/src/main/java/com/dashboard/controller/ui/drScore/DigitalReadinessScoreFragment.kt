@@ -15,9 +15,9 @@ import com.dashboard.controller.ui.dashboard.getLocalSession
 import com.dashboard.databinding.FragmentDigitalReadinessScoreBinding
 import com.dashboard.model.live.drScore.*
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.WA_KEY
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.WA_KEY
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
