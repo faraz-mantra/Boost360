@@ -1,5 +1,6 @@
 package com.inventoryorder.ui.tutorials
 
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -32,201 +33,198 @@ import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 
 class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAppointmentMgmtBinding, TutorialViewModel>(), Player.EventListener {
-    override fun getLayout(): Int {
-        return R.layout.bottom_sheet_tutorials_on_appointment_mgmt
+
+  private lateinit var simpleExoplayer: SimpleExoPlayer
+  private var playbackPosition: Long = 0
+  private var videosItem: VIDEOSItem? = null
+
+  override fun getLayout(): Int {
+    return R.layout.bottom_sheet_tutorials_on_appointment_mgmt
+  }
+
+  override fun getViewModelClass(): Class<TutorialViewModel> {
+    return TutorialViewModel::class.java
+  }
+
+
+  override fun onCreateView() {
+    getBundle()
+    setOnClickListener(binding?.civBack, binding?.civClose)
+    viewModel?.getTutorialsList()?.observeOnce(viewLifecycleOwner, {
+      val tutorialPagerAdapter = TutorialPagerAdapter(childFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, it.contents?.allTutorials)
+      binding?.viewPagerTutorials?.adapter = tutorialPagerAdapter
+      if (it.contents?.allTutorials?.size ?: 0 > 1)
+        binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
+      else binding?.tabLayout?.gone()
+    })
+    initializePlayer()
+
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.civBack -> {
+        dismiss()
+        val learnAboutAppointmentMgmtBottomSheet = LearnAboutAppointmentMgmtBottomSheet()
+        learnAboutAppointmentMgmtBottomSheet.show(childFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
+      }
+      binding?.civClose -> {
+        dismiss()
+      }
     }
+  }
 
-    override fun getViewModelClass(): Class<TutorialViewModel> {
-        return TutorialViewModel::class.java
+  private fun getBundle() {
+    this.videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
+    binding?.ctvVideoTitle?.text = videosItem?.videoTitle
+  }
+
+  private fun getVideoUrl(): String? {
+    return videosItem?.videoUrl
+  }
+
+  override fun onStart() {
+    super.onStart()
+    initializePlayer()
+  }
+
+  override fun onStop() {
+    releasePlayer()
+    super.onStop()
+
+  }
+
+  override fun onDismiss(dialog: DialogInterface) {
+    releasePlayer()
+    super.onDismiss(dialog)
+  }
+
+
+  private fun initializePlayer() {
+    simpleExoplayer = SimpleExoPlayer.Builder(requireParentFragment().requireContext()).build()
+    preparePlayer(videosItem?.videoUrl.toString())
+    binding?.videoView?.player = simpleExoplayer
+    simpleExoplayer.seekTo(playbackPosition)
+    simpleExoplayer.playWhenReady = true
+    simpleExoplayer.addListener(this)
+  }
+
+  private val dataSourceFactory: DataSource.Factory by lazy {
+    DefaultDataSourceFactory(requireActivity(), getString(R.string.app_name))
+  }
+
+  private fun buildMediaSource(uri: Uri): MediaSource {
+    return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
+  }
+
+
+  private fun preparePlayer(videoUrl: String) {
+    val uri = Uri.parse(videoUrl)
+    val mediaSource = buildMediaSource(uri)
+    simpleExoplayer.prepare(mediaSource)
+  }
+
+  private fun releasePlayer() {
+    if (this::simpleExoplayer.isInitialized) {
+      playbackPosition = simpleExoplayer.currentPosition
+      binding?.videoView?.player?.stop()
+      binding?.videoView?.player?.release()
+      simpleExoplayer.playWhenReady = false
+      simpleExoplayer.stop()
+      simpleExoplayer.clearVideoSurface()
+      simpleExoplayer.seekTo(0)
+      simpleExoplayer.release()
     }
+  }
 
-    private var videosItem: VIDEOSItem? = null
-    override fun onCreateView() {
-        getBundle()
-        setOnClickListener(binding?.civBack, binding?.civClose)
-        viewModel?.getTutorialsList()?.observeOnce(viewLifecycleOwner, {
-            val tutorialPagerAdapter = TutorialPagerAdapter(childFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, it.contents?.allTutorials)
-            binding?.viewPagerTutorials?.adapter = tutorialPagerAdapter
-            if (it.contents?.allTutorials?.size ?: 0 > 1)
-                binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
-            else binding?.tabLayout?.gone()
-        })
-        initializePlayer()
-
-    }
-
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when (v) {
-            binding?.civBack -> {
-                dismiss()
-                val learnAboutAppointmentMgmtBottomSheet = LearnAboutAppointmentMgmtBottomSheet()
-                learnAboutAppointmentMgmtBottomSheet.show(childFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
-            }
-            binding?.civClose -> {
-                dismiss()
-            }
-        }
-    }
-
-    private fun getBundle() {
-        this.videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
-        binding?.ctvVideoTitle?.text = videosItem?.videoTitle
-    }
-
-    private fun getVideoUrl(): String? {
-        return videosItem?.videoUrl
-    }
-
-    private lateinit var simpleExoplayer: SimpleExoPlayer
-    private var playbackPosition: Long = 0
-
-
-    override fun onStart() {
-        super.onStart()
-        initializePlayer()
-    }
-
-    override fun onStop() {
-        releasePlayer()
-        super.onStop()
-
-    }
-
-    override fun onPause() {
-        releasePlayer()
-        super.onPause()
-
-    }
-
-    override fun onDetach() {
-        releasePlayer()
-        super.onDetach()
-    }
-
-    private fun initializePlayer() {
-        simpleExoplayer = SimpleExoPlayer.Builder(requireParentFragment().requireContext()).build()
-        preparePlayer(videosItem?.videoUrl.toString())
-        binding?.videoView?.player = simpleExoplayer
-        simpleExoplayer.seekTo(playbackPosition)
-        simpleExoplayer.playWhenReady = true
-        simpleExoplayer.addListener(this)
-    }
-
-    private val dataSourceFactory: DataSource.Factory by lazy {
-        DefaultDataSourceFactory(requireActivity(), getString(R.string.app_name))
-    }
-
-    private fun buildMediaSource(uri: Uri): MediaSource {
-        return ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(uri)
-    }
-
-
-    private fun preparePlayer(videoUrl: String) {
-        val uri = Uri.parse(videoUrl)
-        val mediaSource = buildMediaSource(uri)
-        simpleExoplayer.prepare(mediaSource)
-    }
-
-    private fun releasePlayer() {
-        playbackPosition = simpleExoplayer.currentPosition
-        simpleExoplayer.stop()
-        simpleExoplayer.clearVideoSurface();
-        binding?.videoView?.player?.stop()
-        binding?.videoView?.player?.release()
-        simpleExoplayer.release()
-    }
-
-    override fun onPlayerError(error: ExoPlaybackException) {
-        // handle error
-    }
-
+  override fun onPlayerError(error: ExoPlaybackException) {
+    // handle error
+  }
 
 }
 
 class TutorialPagerAdapter(fm: FragmentManager, behavior: Int, private var allTutorials: ArrayList<AllTutorialsItem>?) : FragmentStatePagerAdapter(fm, behavior) {
-    override fun getCount(): Int {
-        return if (allTutorials?.size ?: 0 <= 1) 1
-        else 2
+  override fun getCount(): Int {
+    return if (allTutorials?.size ?: 0 <= 1) 1
+    else 2
+  }
+
+  override fun getItem(position: Int): Fragment {
+    return when (position) {
+      0 -> FragmentTutorialDesc.newInstance()
+      1 -> FragmentAllTutorials.newInstance()
+      else -> FragmentTutorialDesc.newInstance()
     }
 
-    override fun getItem(position: Int): Fragment {
-        return when (position) {
+  }
 
-            0 -> FragmentTutorialDesc.newInstance()
-            1 -> FragmentAllTutorials.newInstance()
-            else -> FragmentTutorialDesc.newInstance()
-        }
-
+  override fun getPageTitle(position: Int): CharSequence? {
+    return when (position) {
+      0 -> "Tutorial contents"
+      1 -> "All tutorials"
+      else -> ""
     }
-
-    override fun getPageTitle(position: Int): CharSequence? {
-        return when (position) {
-            0 -> "Tutorial contents"
-            1 -> "All tutorials"
-            else -> ""
-        }
-    }
+  }
 
 }
 
 class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, TutorialViewModel>(), RecyclerItemClickListener {
-    companion object {
-        fun newInstance(): FragmentAllTutorials {
-            return FragmentAllTutorials()
-        }
+  companion object {
+    fun newInstance(): FragmentAllTutorials {
+      return FragmentAllTutorials()
     }
+  }
 
-    override fun getLayout(): Int {
-        return R.layout.fragment_all_tutorials
-    }
+  override fun getLayout(): Int {
+    return R.layout.fragment_all_tutorials
+  }
 
-    override fun getViewModelClass(): Class<TutorialViewModel> {
-        return TutorialViewModel::class.java
-    }
+  override fun getViewModelClass(): Class<TutorialViewModel> {
+    return TutorialViewModel::class.java
+  }
 
-    override fun onCreateView() {
-        super.onCreateView()
-        viewModel?.getTutorialsList()?.observeOnce(viewLifecycleOwner, {
-            binding?.rvVideos?.adapter = AppBaseRecyclerViewAdapter(baseActivity, it.contents?.allTutorials!!, this)
-        })
-    }
+  override fun onCreateView() {
+    super.onCreateView()
+    viewModel?.getTutorialsList()?.observeOnce(viewLifecycleOwner, {
+      binding?.rvVideos?.adapter = AppBaseRecyclerViewAdapter(baseActivity, it.contents?.allTutorials!!, this)
+    })
+  }
 
-    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        when (actionType) {
-            RecyclerViewActionType.VIDEO_ITEM_CLICK.ordinal -> {
-                val bottomSheetTutorialVideos = BottomSheetTutorialVideos()
-                val bundle = Bundle()
-                bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, item as? AllTutorialsItem)
-                bottomSheetTutorialVideos.arguments = bundle
-                bottomSheetTutorialVideos.show(parentFragmentManager, BottomSheetTutorialVideos::class.java.name)
-            }
-        }
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.VIDEO_ITEM_CLICK.ordinal -> {
+        val bottomSheetTutorialVideos = BottomSheetTutorialVideos()
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, item as? AllTutorialsItem)
+        bottomSheetTutorialVideos.arguments = bundle
+        bottomSheetTutorialVideos.show(parentFragmentManager, BottomSheetTutorialVideos::class.java.name)
+      }
     }
+  }
 
 }
 
 class FragmentTutorialDesc : AppBaseFragment<FragmentTutorialDescBinding, TutorialViewModel>() {
-    companion object {
-        fun newInstance(): FragmentTutorialDesc {
-            return FragmentTutorialDesc()
-        }
+  companion object {
+    fun newInstance(): FragmentTutorialDesc {
+      return FragmentTutorialDesc()
     }
+  }
 
-    override fun getLayout(): Int {
-        return R.layout.fragment_tutorial_desc
-    }
+  override fun getLayout(): Int {
+    return R.layout.fragment_tutorial_desc
+  }
 
-    override fun getViewModelClass(): Class<TutorialViewModel> {
-        return TutorialViewModel::class.java
-    }
+  override fun getViewModelClass(): Class<TutorialViewModel> {
+    return TutorialViewModel::class.java
+  }
 
-    override fun onCreateView() {
-        super.onCreateView()
-        viewModel?.getVideoDesc()?.observeOnce(viewLifecycleOwner, Observer {
-            binding?.ctvSteps?.text = it.contentVideo?.tutorialContents?.joinToString("\n")
-        })
-    }
+  override fun onCreateView() {
+    super.onCreateView()
+    viewModel?.getVideoDesc()?.observeOnce(viewLifecycleOwner, Observer {
+      binding?.ctvSteps?.text = it.contentVideo?.tutorialContents?.joinToString("\n")
+    })
+  }
 
 }
