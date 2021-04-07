@@ -57,8 +57,6 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
         binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
       else binding?.tabLayout?.gone()
     })
-    initializePlayer()
-
   }
 
   override fun onClick(v: View) {
@@ -80,10 +78,6 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     binding?.ctvVideoTitle?.text = videosItem?.videoTitle
   }
 
-  private fun getVideoUrl(): String? {
-    return videosItem?.videoUrl
-  }
-
   override fun onStart() {
     super.onStart()
     initializePlayer()
@@ -100,9 +94,18 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     super.onDismiss(dialog)
   }
 
+  override fun onDetach() {
+    releasePlayer()
+    super.onDetach()
+  }
+
+  override fun onDestroy() {
+    releasePlayer()
+    super.onDestroy()
+  }
 
   private fun initializePlayer() {
-    simpleExoplayer = SimpleExoPlayer.Builder(requireParentFragment().requireContext()).build()
+    simpleExoplayer = SimpleExoPlayer.Builder(requireContext()).build()
     preparePlayer(videosItem?.videoUrl.toString())
     binding?.videoView?.player = simpleExoplayer
     simpleExoplayer.seekTo(playbackPosition)
@@ -111,7 +114,7 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
   }
 
   private val dataSourceFactory: DataSource.Factory by lazy {
-    DefaultDataSourceFactory(requireActivity(), getString(R.string.app_name))
+    DefaultDataSourceFactory(requireContext(), getString(R.string.app_name))
   }
 
   private fun buildMediaSource(uri: Uri): MediaSource {
