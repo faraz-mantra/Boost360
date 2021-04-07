@@ -55,6 +55,7 @@
 
             <com.framework.views.customViews.CustomImageView
                 style="@style/wrap_wrap"
+                android:visibility="gone"
                 android:src="@drawable/ic_translation_orange"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

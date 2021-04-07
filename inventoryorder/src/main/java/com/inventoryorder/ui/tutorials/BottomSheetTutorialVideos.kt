@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
@@ -43,10 +44,12 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     override fun onCreateView() {
         getBundle()
         setOnClickListener(binding?.civBack, binding?.civClose)
-        val tutorialPagerAdapter = TutorialPagerAdapter(childFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
         viewModel?.getTutorialsList()?.observeOnce(viewLifecycleOwner, {
+            val tutorialPagerAdapter = TutorialPagerAdapter(childFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, it.contents?.allTutorials)
             binding?.viewPagerTutorials?.adapter = tutorialPagerAdapter
-            binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
+            if (it.contents?.allTutorials?.size ?: 0 > 1)
+                binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
+            else binding?.tabLayout?.gone()
         })
         initializePlayer()
 
@@ -91,8 +94,9 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     }
 
     override fun onPause() {
-        super.onPause()
         releasePlayer()
+        super.onPause()
+
     }
 
     override fun onDetach() {
@@ -141,13 +145,15 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
 
 }
 
-class TutorialPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {
+class TutorialPagerAdapter(fm: FragmentManager, behavior: Int, private var allTutorials: ArrayList<AllTutorialsItem>?) : FragmentStatePagerAdapter(fm, behavior) {
     override fun getCount(): Int {
-        return 2
+        return if (allTutorials?.size ?: 0 <= 1) 1
+        else 2
     }
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
+
             0 -> FragmentTutorialDesc.newInstance()
             1 -> FragmentAllTutorials.newInstance()
             else -> FragmentTutorialDesc.newInstance()
