@@ -85,8 +85,7 @@
         },
         {
           "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Add an\nappointment",
-          "isNew": true
+          "title": "Add an\nappointment"
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
@@ -124,8 +123,7 @@
         },
         {
           "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Add an\nappointment",
-          "isNew": true
+          "title": "Add an\nappointment"
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
@@ -345,8 +343,7 @@
         },
         {
           "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Add an\nappointment",
-          "isNew": true
+          "title": "Add an\nappointment"
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
