@@ -46,15 +46,15 @@ class ManageBusinessData(
     featured_image_video("featured_image_video", R.drawable.picture_gallery),
     business_hours("business_hours", R.drawable.business_hours),
     contact_details("contact_details", R.drawable.contact_details),
-    business_kyc_verification("business_kyc_verification", R.drawable.boost_payment_gateway), //check
-    boost_payment_gateway("boost_payment_gateway", R.drawable.boost_payment_gateway),//
+    business_kyc_verification("business_kyc_verification", R.drawable.boost_payment_gateway),
+    boost_payment_gateway("boost_payment_gateway", R.drawable.boost_payment_gateway),
     domain_name_ssl("domain_name_ssl", R.drawable.domain_name_ssl),
     my_email_accounts("my_email_accounts", R.drawable.my_email_accounts),
     boost_data_security("boost_data_security", R.drawable.boost_data_security),
     my_bank_account("my_bank_account", R.drawable.my_bank_account),
     custom_payment_gateway("custom_payment_gateway", R.drawable.custom_payment_gateway),
     e_commerce_website("e_commerce_website", R.drawable.e_commerce_website),
-    content_sync_acros_channels("content_sync_acros_channels", R.drawable.content_sync_acros_channels), //check
+    content_sync_acros_channels("content_sync_acros_channels", R.drawable.content_sync_acros_channels),
     facebook_likebox_plugin("facebook_likebox_plugin", R.drawable.facebook_likebox_plugin),
     ic_customer_call_tracker_d("ic_customer_call_tracker_d", R.drawable.ic_customer_call_d),
     ic_ivr_faculty("ic_ivr_faculty", R.drawable.ic_tracker_ivr_d),
@@ -65,7 +65,7 @@ class ManageBusinessData(
     advertising_google_fb("advertising_google_fb", R.drawable.advertising_google_fb),
     facebook_lead_ads("facebook_lead_ads", R.drawable.facebook_lead_ads),
     website_visits_visitors("website_visits_visitors", R.drawable.website_visits_visitors_d),
-    social_sharing_analytics("social_sharing_analytics", R.drawable.social_sharing_analytics), //check
+    social_sharing_analytics("social_sharing_analytics", R.drawable.social_sharing_analytics),
     sales_analytics("sales_analytics", R.drawable.sales_analytics),
     search_analytics("search_analytics", R.drawable.search_analytics),
     chatbot_analytics("chatbot_analytics", R.drawable.ic_chatbot_v2_d),
@@ -91,7 +91,7 @@ class ManageBusinessData(
     trip_advisor_reviews_d("trip_advisor_reviews_d", R.drawable.trip_advisor_reviews_d),
     room_booking_engine_d("room_booking_engine_d", R.drawable.room_inventory_d),
     table_reservations_d("table_reservations_d", R.drawable.table_reservations_d),
-    ic_staff_profile_d("ic_staff_profile_d", R.drawable.ic_customer_enquiries_d);
+    ic_staff_profile_d("ic_staff_profile_d", R.drawable.ic_staff_profile_d);
 
    //R.drawable.ic_project_terms_d
 
