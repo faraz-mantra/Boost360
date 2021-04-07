@@ -16,7 +16,7 @@ class FaqViewHolder(binding: ItemFaqBinding) : AppBaseRecyclerViewHolder<ItemFaq
         binding.ctvQuestion.text = contentsItem.question
         binding.ctvAnswer.text = contentsItem.answer
         binding.ctvQuestionNo.text = "Q${position + 1}."
-        binding.civExpand.setOnClickListener {
+        binding.root.setOnClickListener {
             when (binding.ctvAnswer.isVisible()) {
                 true -> {
                     binding.civExpand.setImageResource(R.drawable.ic_arrow_up)
