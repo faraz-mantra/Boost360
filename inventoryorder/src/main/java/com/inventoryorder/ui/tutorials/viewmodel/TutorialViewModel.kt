@@ -11,6 +11,7 @@ import com.inventoryorder.R
 import com.inventoryorder.ui.tutorials.model.AllVideoResponse
 import com.inventoryorder.ui.tutorials.model.AppointmentfaqResponse
 import com.inventoryorder.ui.tutorials.model.LearnAboutAppointmentMgmt
+import com.inventoryorder.ui.tutorials.model.VideoDescAppointmentMgmt
 import java.io.*
 
 class TutorialViewModel : BaseViewModel() {
@@ -26,9 +27,9 @@ class TutorialViewModel : BaseViewModel() {
         return MutableLiveData(jsonObj)
     }
 
-    fun get(): MutableLiveData<AppointmentfaqResponse> {
-        val jsonResourceReader = JSONResourceReader(BaseOrderApplication.instance.applicationContext.resources, R.raw.appointmentfaq)
-        val jsonObj = jsonResourceReader.constructUsingGson(AppointmentfaqResponse::class.java)
+    fun getVideoDesc(): MutableLiveData<VideoDescAppointmentMgmt> {
+        val jsonResourceReader = JSONResourceReader(BaseOrderApplication.instance.applicationContext.resources, R.raw.appointmentmgmttutorialvideodesc)
+        val jsonObj = jsonResourceReader.constructUsingGson(VideoDescAppointmentMgmt::class.java)
         return MutableLiveData(jsonObj)
     }
 

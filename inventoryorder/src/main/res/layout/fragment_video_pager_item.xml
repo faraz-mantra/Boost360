@@ -30,9 +30,10 @@
             <!--                app:use_controller="true" />-->
             <com.framework.views.customViews.CustomImageView
                 android:layout_width="match_parent"
+                android:id="@+id/video_thumbnails"
                 android:layout_height="match_parent"
                 android:paddingVertical="@dimen/size_10"
-                android:scaleType="centerInside"
+                android:scaleType="fitXY"
                 android:src="@drawable/play_video_thumbs" />
 
         </com.framework.views.customViews.CustomCardView>

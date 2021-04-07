@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Observer
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.observeOnce
 import com.google.android.exoplayer2.ExoPlaybackException
@@ -217,11 +218,9 @@ class FragmentTutorialDesc : AppBaseFragment<FragmentTutorialDescBinding, Tutori
 
     override fun onCreateView() {
         super.onCreateView()
-        binding?.ctvSteps?.text = "Step 1. Click on ‘Add A New Order’.\n" +
-                "Step 2. Fill in the customer details.\n" +
-                "Step 3. Select products from your product list.\n" +
-                "Step 4. Review your order. Verify the payment options.\n" +
-                "Step 5. Done."
+        viewModel?.getVideoDesc()?.observeOnce(viewLifecycleOwner, Observer {
+            binding?.ctvSteps?.text = it.contentVideo?.tutorialContents?.joinToString("\n")
+        })
     }
 
 }
