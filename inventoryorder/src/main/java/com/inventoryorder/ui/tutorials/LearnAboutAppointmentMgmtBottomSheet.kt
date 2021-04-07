@@ -110,15 +110,22 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
         super.onClick(v)
         when (v) {
             binding?.civSpeakHowItWorks -> {
-                speak(data?.contents?.description.toString())
+
                 if (textToSpeechEngine.isSpeaking) {
+                    binding?.civSpeakHowItWorks?.setTintColor(Color.parseColor("#e1e1e1"))
+                    textToSpeechEngine.stop()
+                } else {
                     binding?.civSpeakHowItWorks?.setTintColor(Color.parseColor("#ffb900"))
+                    speak(data?.contents?.description.toString())
                 }
             }
             binding?.civSpeakTips -> {
-                speak(data?.tips.toString())
                 if (textToSpeechEngine.isSpeaking) {
+                    textToSpeechEngine.stop()
+                    binding?.civSpeakTips?.setTintColor(Color.parseColor("#e1e1e1"))
+                } else {
                     binding?.civSpeakTips?.setTintColor(Color.parseColor("#ffb900"))
+                    speak(data?.tips.toString())
                 }
 
             }
