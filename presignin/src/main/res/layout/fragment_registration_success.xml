@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.registration.RegistrationSuccessFragment">
+
+
+        <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+        <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+        <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+
+        <com.framework.views.customViews.CustomImageView
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:src="@drawable/ic_tick_success"
+            android:id="@+id/sucess_iv"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/startGuide"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"/>
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/psn_heading_style"
+            app:textType="HEADING_3"
+            android:id="@+id/heading_tv"
+            android:text="Congratulations\nSubhajit Mondal"
+            app:layout_constraintTop_toBottomOf="@id/sucess_iv"/>
+
+        <com.framework.views.customViews.CustomTextView
+            style="@style/psn_heading_style"
+            app:textType="BODY_2"
+            android:id="@+id/subheading"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:text="@string/registration_complete_subheading"
+            app:layout_constraintTop_toBottomOf="@id/heading_tv"/>
+
+        <com.framework.views.customViews.CustomImageView
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:id="@+id/icon_iv"
+            app:layout_constraintStart_toStartOf="@id/startGuide"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            app:layout_constraintTop_toBottomOf="@id/subheading"
+            android:src="@drawable/business_registed_icon"/>
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            style="@style/psn_heading_style"
+            app:textType="HEADING_1"
+            android:fontFamily="@font/open_sans"
+            android:id="@+id/business_name_tv"
+            android:layout_marginTop="0dp"
+            android:lineHeight="22dp"
+            android:gravity="center"
+            android:text="Downtown\nSpa Salon"
+            app:layout_constraintTop_toBottomOf="@id/icon_iv"/>
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            style="@style/psn_subheading_style"
+            app:textType="BODY_2"
+            android:fontFamily="@font/open_sans"
+            android:id="@+id/website_tv"
+            android:layout_marginTop="0dp"
+            android:textColor="@color/link_color"
+            android:text="downtownspa.nowfloats.com"
+            app:layout_constraintTop_toBottomOf="@id/business_name_tv"/>
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/preview_account_bt"
+            style="@style/psn_button_style"
+            android:drawableEnd="@null"
+            android:text="@string/go_to_business_dashboard"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:layout_constraintBottom_toTopOf="@id/dashboard_bt" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/dashboard_bt"
+            style="@style/psn_stroke_button_style"
+            android:text="@string/preview_your_website"
+            android:drawableEnd="@null"
+            app:layout_constraintBottom_toTopOf="@id/bottomGuide" />
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

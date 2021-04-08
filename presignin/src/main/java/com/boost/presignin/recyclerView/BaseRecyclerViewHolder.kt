@@ -1,4 +1,4 @@
-package com.dashboard.recyclerView
+package com.boost.presignin.recyclerView
 
 import android.view.View
 import androidx.databinding.ViewDataBinding

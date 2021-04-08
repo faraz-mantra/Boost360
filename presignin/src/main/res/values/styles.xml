@@ -182,4 +182,15 @@
         <item name="backgroundTint">@color/material_button_background_state</item>
         <item name="iconStartPadding">@dimen/_12sdp</item>
     </style>
+
+
+    <style name="category_text_style">
+        <item name="android:textSize">@dimen/subheading_2</item>
+        <item name="textType">SUBHEADING_2</item>
+        <item name="textColor">@color/psn_heading_color</item>
+        <item name="android:fontFamily">@font/open_sans_semibold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
 </resources>

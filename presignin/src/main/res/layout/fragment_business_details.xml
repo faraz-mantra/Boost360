@@ -1,0 +1,96 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+        <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+        <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+        <com.boost.presignin.views.PsnCustomToolbar
+            android:id="@+id/toolbar"
+            style="@style/psn_toolbar_style"
+            app:rightIcon="@drawable/ic_business_detail_toolbar_icon" />
+
+        <com.framework.views.customViews.CustomTextView
+            style="@style/psn_heading_style"
+            android:id="@+id/heading_tv"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:text="@string/creating_your_business_profile" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/sub_heading_tv"
+            style="@style/psn_subheading_style"
+            android:text="@string/business_details_hint"
+            app:layout_constraintTop_toBottomOf="@id/heading_tv" />
+
+        <com.framework.views.customViews.CustomEditText
+            android:id="@+id/namet_et"
+            android:layout_marginTop="@dimen/_16sdp"
+            style="@style/psn_login_edittext_style"
+            android:hint="@string/enter_your_name"
+            android:drawableStart="@drawable/ic_business_detail_user"
+            app:layout_constraintTop_toBottomOf="@id/sub_heading_tv" />
+
+        <com.framework.views.customViews.CustomEditText
+            android:id="@+id/business_name_et"
+            android:layout_marginTop="@dimen/_16sdp"
+            style="@style/psn_login_edittext_style"
+            android:hint="@string/enter_your_business_name"
+            android:drawableStart="@drawable/ic_business_detail_catelog"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            android:inputType="textPassword"
+            app:layout_constraintTop_toBottomOf="@id/namet_et" />
+
+        <com.framework.views.customViews.CustomEditText
+            android:id="@+id/email_et"
+            android:layout_marginTop="@dimen/_16sdp"
+            style="@style/psn_login_edittext_style"
+            android:hint="@string/your_business_email"
+            android:drawableStart="@drawable/ic_business_detail_email"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            android:inputType="textPassword"
+            app:layout_constraintTop_toBottomOf="@id/business_name_et" />
+
+        <com.framework.views.customViews.CustomEditText
+            android:id="@+id/phone_et"
+            android:layout_marginTop="@dimen/_16sdp"
+            style="@style/psn_login_edittext_style"
+            android:hint="@string/your_business_phone"
+            android:drawableStart="@drawable/ic_business_detail_phone"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            android:inputType="textPassword"
+            app:layout_constraintTop_toBottomOf="@id/email_et" />
+
+        <com.framework.views.customViews.CustomCheckBox
+            android:layout_width="wrap_content"
+            android:id="@+id/checkbox"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@id/phone_et"
+            android:layout_height="wrap_content"/>
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/checkbox"
+            app:layout_constraintBottom_toBottomOf="@id/checkbox"
+            android:text="@string/use_this_as_my_whatsapp_contact_number"
+            style="@style/psn_subheading_style"/>
+
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/confirm_button"
+            style="@style/psn_button_style"
+            android:enabled="true"
+            android:text="@string/choose_website_address"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/bottomGuide" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

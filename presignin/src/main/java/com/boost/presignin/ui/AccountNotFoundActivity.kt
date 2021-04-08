@@ -16,6 +16,7 @@ import android.widget.TextView
 import com.boost.presignin.R
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.ActivityAccountNotFoundBinding
+import com.boost.presignin.ui.registration.RegistrationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 
@@ -53,6 +54,9 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
         binding?.subheading?.text = spannable
 
 
+        binding?.createAccountBt?.setOnClickListener {
+            navigator?.startActivity(RegistrationActivity::class.java)
+        }
 
     }
 }
