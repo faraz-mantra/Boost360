@@ -244,8 +244,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     val menuSearch: MenuItem? = menu.findItem(R.id.menu_add_staff)
     val menuAdd: MenuItem? = menu.findItem(R.id.app_bar_search)
     val b = sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) ?: false
-//    menuSearch?.isVisible = b
-//    menuAdd?.isVisible = b
+    menuSearch?.isVisible = b
+    menuAdd?.isVisible = b
 
   }
 
