@@ -15,9 +15,9 @@ import com.dashboard.controller.ui.dashboard.getLocalSession
 import com.dashboard.databinding.FragmentDigitalReadinessScoreBinding
 import com.dashboard.model.live.drScore.*
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.WA_KEY
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.WA_KEY
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -142,6 +142,9 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       }
       DrScoreItem.DrScoreItemType.boolean_add_contact_details -> {
         baseActivity.startBusinessInfoEmail(session)
+      }
+      DrScoreItem.DrScoreItemType.boolean_create_staff -> {
+        baseActivity.startAddStaff(session)
       }
       DrScoreItem.DrScoreItemType.boolean_add_custom_domain_name_and_ssl -> {
         baseActivity.startDomainDetail(session)

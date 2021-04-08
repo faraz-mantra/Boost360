@@ -18,8 +18,8 @@ import com.dashboard.model.live.addOns.AllBoostAddOnsData
 import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.domainDetail.DomainDetailResponse
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.clientId
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -216,6 +216,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
     ManageBusinessData.BusinessType.sales_analytics -> baseActivity.startAptOrderSummary(session)
     ManageBusinessData.BusinessType.search_analytics -> baseActivity.startSearchQuery(session)
+    ManageBusinessData.BusinessType.ic_staff_profile_d -> baseActivity.startListStaff(session)
 
     ManageBusinessData.BusinessType.room_booking_engine_d,
     ManageBusinessData.BusinessType.ic_ivr_faculty,

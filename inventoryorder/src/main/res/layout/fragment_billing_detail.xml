@@ -5,23 +5,19 @@
   tools:context=".ui.order.createorder.BillingDetailFragment">
 
   <androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/match_match">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:orientation="vertical">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:background="@color/white_smoke_1"
         android:padding="@dimen/size_12">
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_gravity="center_vertical"
           android:drawableStart="@drawable/ic_info_black"
           android:drawablePadding="@dimen/size_10"
@@ -33,27 +29,23 @@
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/match_match"
         android:orientation="vertical"
         android:padding="@dimen/size_14">
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:text="@string/billing_to"
           android:textColor="@color/black_2A2A2A"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_2" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+          style="@style/match_wrap">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_5"
             android:textColor="@color/black_4a4a4a"
             app:fontFamily="@font/regular"
@@ -64,8 +56,7 @@
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/iv_options"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -75,8 +66,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_email"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_5"
           android:textColor="@color/black_4a4a4a"
           app:fontFamily="@font/regular"
@@ -85,8 +75,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_phone"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_6"
           android:textColor="@color/black_4a4a4a"
           app:fontFamily="@font/regular"
@@ -95,8 +84,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_gst"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_6"
           android:textColor="@color/black_4a4a4a"
           android:visibility="gone"
@@ -106,8 +94,7 @@
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginTop="@dimen/size_20"
         android:orientation="vertical"
         android:paddingStart="@dimen/size_6"
@@ -119,8 +106,7 @@
           android:background="@color/colorLightGrey" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:gravity="center_vertical"
           android:orientation="horizontal"
           android:padding="@dimen/size_14">
@@ -159,14 +145,12 @@
           android:background="@color/colorLightGrey" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:orientation="horizontal"
           android:padding="@dimen/size_14">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_weight="1"
             android:includeFontPadding="false"
             android:text="@string/str_payment_mode"
@@ -176,8 +160,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvPaymentMode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_weight="1"
             android:drawableEnd="@drawable/ic_arrow_down_orange"
             android:drawablePadding="@dimen/size_8"
@@ -198,14 +181,12 @@
           android:background="@color/colorLightGrey" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:orientation="horizontal"
           android:padding="@dimen/size_14">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_weight="1"
             android:drawablePadding="@dimen/size_4"
             android:includeFontPadding="false"
@@ -216,8 +197,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvPaymentStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_weight="1"
             android:drawableEnd="@drawable/ic_arrow_down_orange"
             android:drawablePadding="@dimen/size_8"
@@ -240,15 +220,13 @@
       <include
         android:id="@+id/layout_order_shipping_address"
         layout="@layout/layout_order_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_margin="@dimen/size_12" />
 
       <include
         android:id="@+id/layout_order_billing_address"
         layout="@layout/layout_order_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_margin="@dimen/size_12"
         android:visibility="gone" />
 
@@ -259,13 +237,11 @@
         android:background="@color/lightest_grey" />
 
       <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:padding="@dimen/size_14">
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:text="@string/items_included"
           android:textColor="@color/black_2A2A2A"
           app:fontFamily="@font/semi_bold"
@@ -275,8 +251,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_add_more"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:text="@string/add_more"
           android:textAllCaps="true"
           android:textColor="@color/orange"
@@ -291,8 +266,7 @@
 
       <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/product_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -306,14 +280,12 @@
         android:background="@color/lightest_grey" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical"
         android:padding="@dimen/size_16">
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_gravity="center_vertical"
           android:fontFamily="@font/regular"
           android:layout_marginTop="@dimen/size_6"
@@ -322,8 +294,7 @@
           android:textSize="12sp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_20"
           android:gravity="center_vertical"
           android:orientation="horizontal">
@@ -354,8 +325,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_10"
           android:gravity="center_vertical"
           android:orientation="horizontal">
@@ -387,15 +357,13 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_10"
           android:gravity="center_vertical"
           android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:drawablePadding="@dimen/size_4"
             android:includeFontPadding="false"
             android:text="@string/delivery_fee"
@@ -451,8 +419,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_10">
 
           <com.framework.views.customViews.CustomTextView
@@ -483,8 +450,7 @@
           android:background="@color/gray_light_1" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_16"
           android:layout_marginBottom="@dimen/size_10"
           android:gravity="center_vertical"
@@ -524,8 +490,7 @@
         android:background="@color/lightest_grey" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical"
         android:padding="@dimen/size_14">
 

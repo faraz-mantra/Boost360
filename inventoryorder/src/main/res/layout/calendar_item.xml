@@ -8,8 +8,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/cl_calendar_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_marginEnd="@dimen/size_8"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
@@ -20,8 +19,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_date_calendar_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:text="@string/_12"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -29,8 +27,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_day_calendar_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_2"
             android:text="@string/sun"
             android:textColor="@color/black"

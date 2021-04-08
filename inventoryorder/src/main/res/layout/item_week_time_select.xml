@@ -8,14 +8,12 @@
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_available_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_6"
             android:text="@string/mon_9_am_to_5_pm_br_1_pm_to_2pm"
             android:textColor="@color/black_4a4a4a"
@@ -23,8 +21,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_mark_off"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_6"
             android:text="@string/tuesday_has_been_marked_as_off"
             android:textColor="@color/pinkish_grey"

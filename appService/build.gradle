@@ -39,6 +39,8 @@ android {
 
 dependencies {
     api project(path: ':resources')
+    api project(path: ':inventoryorder')
+
     // MY added libraries
     api 'com.otaliastudios:cameraview:2.6.4'
     implementation "androidx.core:core-ktx:+"
