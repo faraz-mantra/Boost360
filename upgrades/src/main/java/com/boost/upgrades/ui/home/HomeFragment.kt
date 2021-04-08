@@ -20,6 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -42,12 +43,14 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
+import com.boost.upgrades.ui.marketplace_offers.MarketPlaceOfferFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.MARKET_OFFER_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
@@ -144,7 +147,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         shimmer_view_recommended.startShimmer()
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
-        WebEngageController.trackEvent(ADDONS_MARKETPLACE_LOADED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
 //        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
         imageView21.setOnClickListener {
@@ -193,7 +196,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         }
 
-        share_fb_1.setOnClickListener {
+        refer_and_earn.setOnClickListener {
+            startReferralView()
+        }
+        /*share_fb_1.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, FACEBOOK_MESSENGER, NO_EVENT_VALUE)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
@@ -237,8 +243,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 )
             }
 
-        }
-        share_referal.setOnClickListener {
+        }*/
+        /*share_referal.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, CARD, NO_EVENT_VALUE)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
@@ -248,7 +254,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             )
             sendIntent.type = "text/plain"
             startActivity(sendIntent)
-        }
+        }*/
 
 //        if(::localStorage.isInitialized) {
 //            cart_list = localStorage.getCartItems()
@@ -403,7 +409,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         val referralText = SpannableString(getString(R.string.upgrade_boost_tnc_link))
         referralText.setSpan(UnderlineSpan(), 0, referralText.length, 0)
         boost360_tnc.text = referralText
-        boost360_tnc.setOnClickListener {
+        /*boost360_tnc.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_TN_C_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
@@ -413,9 +419,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     webViewFragment,
                     Constants.WEB_VIEW_FRAGMENT
             )
-        }
+        }*/
 
-        val refText = SpannableString(getString(R.string.referral_card_explainer_text))
+       /* val refText = SpannableString(getString(R.string.referral_card_explainer_text))
         refText.setSpan(StyleSpan(Typeface.BOLD), 18, 26, 0)
         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
         refText.setSpan(
@@ -425,6 +431,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 0
         )
         ref_txt.text = refText
+        ref_txt.text = "Get special discounts for you and your friends after successful signup."*/
     }
 
     fun loadData() {
@@ -679,6 +686,25 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         })
 
+        viewModel.promoBannerAndMarketOfferResult().observe(this, androidx.lifecycle.Observer {
+            if (it.size > 0) {
+                if (shimmer_view_banner.isShimmerStarted) {
+                    shimmer_view_banner.stopShimmer()
+                    shimmer_view_banner.visibility = View.GONE
+                }
+//                updateBannerViewPager(it)
+                banner_layout.visibility = View.VISIBLE
+            } else {
+                if (shimmer_view_banner.isShimmerStarted) {
+                    shimmer_view_banner.stopShimmer()
+                    shimmer_view_banner.visibility = View.GONE
+                }
+                banner_layout.visibility = View.GONE
+            }
+
+        })
+
+
         viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
@@ -929,7 +955,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPackageClicked(item: Bundles?) {
-        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, item?.name
+        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, CLICK, item?.name
                 ?: NO_EVENT_VALUE)
         val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
@@ -949,7 +975,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         item?.let { event_attributes.put("title", it.title) }
 //        (activity as UpgradeActivity).experienceCode?.let { event_attributes.put("category", it) }
 //        (activity as UpgradeActivity).fpTag?.let { event_attributes.put("customer", it) }
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Promo Banner Clicked", "ADDONS_MARKETPLACE", event_attributes)
+      if (event_attributes.isEmpty()) WebEngageController.trackEvent(ADDONS_MARKETPLACE_PROMO_BANNER, CLICK, NO_EVENT_VALUE)
+      else WebEngageController.trackEvent(ADDONS_MARKETPLACE_PROMO_BANNER, CLICK, event_attributes)
         if (!item!!.cta_feature_key.isNullOrBlank()) {
             if (item!!.cta_feature_key != null) {
                 val details = DetailsFragment.newInstance()
@@ -1023,6 +1050,45 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                 Constants.WEB_VIEW_FRAGMENT
                         )
                     }
+                } else if (!item.coupon_code.isNullOrBlank() || !item.cta_offer_identifier.isNullOrBlank()) {
+                    if (item.coupon_code != null || item.cta_offer_identifier != null) {
+//Log.v("coupon_code", " "+ item.coupon_code + " "+ item.title)
+                        CompositeDisposable().add(
+                                AppDatabase.getInstance(requireActivity().application)!!
+                                        .marketOffersDao()
+//                                        .getMarketOffersByCouponCode(item!!.coupon_code)
+//                                        .getMarketOffersByCouponCode(if(item!!.coupon_code != null ) item.coupon_code else item.cta_offer_identifier )
+                                        .getMarketOffersById(item.cta_offer_identifier )
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnError {  }
+                                        .subscribe({
+                                            var selectedMarketOfferModel: MarketPlaceOffers? = null
+                                            var item = it
+
+                                            selectedMarketOfferModel = MarketPlaceOffers( coupon_code = item.coupon_code,
+                                                    extra_information = item.extra_information!!,
+                                                    createdon = item.createdon!!,
+                                                    updatedon = item.updatedon!!,
+                                                    _kid = item._kid!!,
+                                                    websiteid = item.websiteid!!,
+                                                    isarchived = item.isarchived!!,
+                                                    expiry_date = item.expiry_date!!,
+                                                    title = item.title!!,
+                                                    exclusive_to_categories = Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                                    image = PrimaryImage(item.image),
+                                            )
+                                            val marketPlaceOfferFragment = MarketPlaceOfferFragment.newInstance()
+                                            val args = Bundle()
+                                            args.putString("marketOffersData", Gson().toJson(selectedMarketOfferModel))
+                                            marketPlaceOfferFragment.arguments = args
+                                            (activity as UpgradeActivity).addFragment(marketPlaceOfferFragment, MARKET_OFFER_FRAGMENT)
+
+                                        }, {
+                                            it.printStackTrace()
+                                        })
+                        )
+                    }
                 }
             }
         }
@@ -1090,8 +1156,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPartnerZoneClicked(item: PartnerZone?) {
-        WebEngageController.trackEvent(PARTNER_S_PROMO_BANNERS_CLICKED, ADDONS_MARKETPLACE, item?.title
-                ?: NO_EVENT_VALUE)
+        WebEngageController.trackEvent(PARTNER_S_PROMO_BANNERS_CLICKED, CLICK, item?.title ?: NO_EVENT_VALUE)
         Log.i("onPartnerZoneClicked >>", item.toString())
         if (item!!.cta_feature_key.isNullOrEmpty().not()) {
 
@@ -1178,9 +1243,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        WebEngageController.trackEvent(VIDEO_GALLERY_CLICKED, ADDONS_MARKETPLACE, videoItem.title
-                ?: NO_EVENT_VALUE)
-        Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
+        WebEngageController.trackEvent(VIDEO_GALLERY_CLICKED, CLICK, videoItem.title ?: NO_EVENT_VALUE)
+        Log.i("onPlayYouTubeVideo", videoItem.youtube_link?:"")
         val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
 //    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
@@ -1255,7 +1319,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                             event_attributes.put("Discounted Price", offeredBundlePrice)
                                             event_attributes.put("Discount %", item!!.overall_discount_percent)
                                             item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                                            WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
+                                            WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART, ADDED, event_attributes)
 //                packageInCartStatus = true
 //                package_submit.background = ContextCompat.getDrawable(
 //                        requireContext(),
@@ -1647,7 +1711,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     override fun backComparePress() {
         if (prefs.getCompareState() == 1) {
             prefs.storeCompareState(0)
-            val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+            val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
             val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
             var code: String = (activity as UpgradeActivity).experienceCode!!
             if (!code.equals("null", true)) {
@@ -1655,6 +1719,17 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
 
             viewModel.loadPackageUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
+        }
+    }
+
+    fun startReferralView() {
+        try {
+            WebEngageController.trackEvent(REFER_A_FRIEND, CLICK, TO_BE_ADDED)
+            val webIntent = Intent(activity, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
+            startActivity(webIntent)
+//            overridePendingTransition(0, 0)
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
         }
     }
 }

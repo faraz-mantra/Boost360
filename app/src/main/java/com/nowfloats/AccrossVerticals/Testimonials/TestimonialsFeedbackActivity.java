@@ -66,9 +66,9 @@ import retrofit.converter.GsonConverter;
 
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_TESTIMONIAL_ADDED;
-import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventNameKt.TESTIMONIAL_ADDED;
 
+import static com.framework.webengageconstant.EventNameKt.TESTIMONIAL_UPDATED;
 import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity.allTestimonialType;
 import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
 
@@ -363,7 +363,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
               Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
               return;
             }
-              WebEngageController.trackEvent(EVENT_NAME_MANAGE_CONTENT, EVENT_LABEL_TESTIMONIAL_ADDED, session.getFpTag());
+              WebEngageController.trackEvent(TESTIMONIAL_UPDATED, EVENT_LABEL_TESTIMONIAL_ADDED, session.getFpTag());
             Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
             onBackPressed();
           }

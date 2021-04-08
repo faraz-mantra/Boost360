@@ -304,7 +304,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
-                  android:paddingStart="@dimen/size_8"
+                  android:paddingLeft="@dimen/size_8"
                   android:paddingTop="@dimen/size_10"
                   android:paddingRight="@dimen/size_5"
                   android:paddingBottom="@dimen/size_10">
@@ -430,8 +430,8 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginStart="@dimen/size_8"
-                  android:layout_marginEnd="@dimen/size_10"
+                  android:layout_marginLeft="@dimen/size_8"
+                  android:layout_marginRight="@dimen/size_10"
                   android:layout_marginBottom="@dimen/size_10"
                   android:background="@drawable/shape_grey_stroke_rect_bkg"
                   android:orientation="vertical">
@@ -522,7 +522,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_arrow_right_grey" />
+                        app:srcCompat="@drawable/ic_arrow_right_grey_staff" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -565,7 +565,7 @@
                           android:background="@android:color/transparent"
                           android:hint="Website name"
                           android:maxLines="1"
-                          android:paddingStart="@dimen/size_8"
+                          android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
                           android:textColor="@color/greyish_brown"
                           android:textColorHint="@color/primary_grey"
@@ -584,7 +584,7 @@
                           android:background="@android:color/transparent"
                           android:hint="Paste your URL here"
                           android:maxLines="1"
-                          android:paddingStart="@dimen/size_8"
+                          android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
                           android:textColor="@color/greyish_brown"
                           android:textColorHint="@color/primary_grey"
@@ -809,7 +809,7 @@
                   <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_5"
+                    android:layout_marginLeft="@dimen/size_5"
                     android:includeFontPadding="false"
                     android:text="My business Location"
                     android:textColor="@color/warm_grey"
@@ -871,7 +871,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_arrow_right_grey" />
+                app:srcCompat="@drawable/ic_arrow_right_grey_staff" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

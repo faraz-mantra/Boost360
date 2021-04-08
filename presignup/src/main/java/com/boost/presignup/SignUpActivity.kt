@@ -295,9 +295,7 @@ class SignUpActivity : AppCompatActivity() {
   }
 
   private fun isValidMobile(phone: String): Boolean {
-    return Pattern.compile(
-        "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
-        .matcher(phone).matches()
+    return Pattern.compile("[6-9][0-9]{9}").matcher(phone).matches()
   }
 
   fun registerUserProfileAPI() {

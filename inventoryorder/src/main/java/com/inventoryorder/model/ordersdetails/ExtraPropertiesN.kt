@@ -1,6 +1,5 @@
 package com.inventoryorder.model.ordersdetails
 
-import com.framework.utils.DateUtils
 import com.inventoryorder.utils.convertMinutesToDays
 import java.io.Serializable
 
@@ -9,7 +8,7 @@ data class ExtraPropertiesN(
     val additionalProp2: AdditionalPropN,
     val additionalProp3: AdditionalPropN,
 
-    //TODO ExtraItemProductConsultation model value
+    //ExtraItemProductConsultation model value
     val age: String? = null,
     val appointmentMessage: String? = null,
     val businessLicense: String? = null,
@@ -28,9 +27,11 @@ data class ExtraPropertiesN(
     val patientName: String? = null,
     val referenceId: String? = null,
     val scheduledDateTime: String? = null,
-    val startTime: String? = null
-    //TODO ExtraItemProductConsultation model value
+    val startTime: String? = null,
+    //ExtraItemProductConsultation model value
 
+    //additional items for SPA
+    val Appointment: ArrayList<SpaAppointmentStaff>? = null,
 ) : Serializable {
 
   fun durationTxt(): String? {
@@ -54,5 +55,9 @@ data class ExtraPropertiesN(
 
   fun getNumberPatient(): String? {
     return if (patientMobileNumber?.contains("+91") == true) patientMobileNumber.replace("+91", "") else patientMobileNumber
+  }
+
+  fun getSpaAptStaffDetail(): SpaAppointmentStaff? {
+    return Appointment?.firstOrNull()
   }
 }

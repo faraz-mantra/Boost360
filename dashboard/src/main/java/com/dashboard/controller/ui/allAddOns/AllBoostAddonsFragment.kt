@@ -18,8 +18,8 @@ import com.dashboard.model.live.addOns.AllBoostAddOnsData
 import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.domainDetail.DomainDetailResponse
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.clientId
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -28,6 +28,7 @@ import com.dashboard.viewmodel.AddOnsViewModel
 import com.framework.extensions.observeOnce
 import com.framework.webengageconstant.BOOST_ADD_ONS_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.WEBSITE_REPORT_ALL_VISITS
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -205,7 +206,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.team_page_d -> baseActivity.startListProjectAndTeams(session)
     ManageBusinessData.BusinessType.upcoming_batches_d -> baseActivity.startListBatches(session)
     ManageBusinessData.BusinessType.toppers_institute_d -> baseActivity.startListToppers(session)
-    ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(session, "TOTAL")
+    ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS)
     ManageBusinessData.BusinessType.business_name_d,
     ManageBusinessData.BusinessType.clinic_basic_info,
     -> baseActivity.startBusinessProfileDetailEdit(session)
@@ -215,6 +216,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
     ManageBusinessData.BusinessType.sales_analytics -> baseActivity.startAptOrderSummary(session)
     ManageBusinessData.BusinessType.search_analytics -> baseActivity.startSearchQuery(session)
+    ManageBusinessData.BusinessType.ic_staff_profile_d -> baseActivity.startListStaff(session)
 
     ManageBusinessData.BusinessType.room_booking_engine_d,
     ManageBusinessData.BusinessType.ic_ivr_faculty,

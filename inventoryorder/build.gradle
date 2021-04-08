@@ -38,7 +38,8 @@ android {
 
 dependencies {
     api project(path: ':resources')
-    api 'com.michalsvec:single-row-calednar:1.0.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    api project(path: ':onboarding')
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.12.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.12.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.0'
 }

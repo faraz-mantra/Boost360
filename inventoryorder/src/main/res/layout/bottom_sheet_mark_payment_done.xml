@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    style="@style/match_wrap"
+    android:background="@android:color/transparent">
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvTitle"
+      style="@style/match_wrap"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_8"
+      android:text="@string/payment_info"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:textType="HEADING_4"
+      tools:ignore="RtlSymmetry"
+      tools:textColor="@color/dimgray" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvSubTitle"
+      style="@style/match_wrap"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_8"
+      android:textColor="@color/white"
+      android:visibility="gone"
+      app:fontFamily="@font/italic"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+      app:textType="BODY_1"
+      tools:text="Appointment ID #VDJNVBJD"
+      tools:textColor="@color/dimgray" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/coordinatorLayoutBottomSheet"
+      style="@style/match_wrap"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@drawable/bg_rounded_top_white_2"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvSubTitle">
+
+      <com.framework.views.customViews.CustomTextView
+        style="@style/match_wrap"
+        android:layout_marginStart="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_20"
+        android:text="@string/how_did_customer_pay_you"
+        app:fontFamily="@font/regular"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="HEADING_6" />
+
+      <RadioGroup
+          android:id="@+id/radioGroup"
+          style="@style/match_wrap"
+          android:layout_marginTop="@dimen/size_10"
+          android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/radio_cash"
+            style="@style/RadioButtonMarkPaymentDoneStyle"
+            android:layout_marginStart="@dimen/size_16"
+            android:checked="true"
+            android:text="@string/cash_payment" />
+
+        <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/radio_card"
+            style="@style/RadioButtonMarkPaymentDoneStyle"
+            android:text="@string/card_payment" />
+
+        <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/radio_upi"
+            style="@style/RadioButtonMarkPaymentDoneStyle"
+            android:layout_marginStart="@dimen/size_16"
+            android:text="@string/upi_payment" />
+
+        <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/radio_others"
+            style="@style/RadioButtonMarkPaymentDoneStyle"
+            android:text="@string/others_payment" />
+
+      </RadioGroup>
+
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_marginStart="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_10"
+        android:layout_marginEnd="@dimen/size_10"
+        android:background="@color/light_grey_2" />
+
+      <com.framework.views.customViews.CustomTextView
+        style="@style/match_wrap"
+        android:layout_marginStart="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_16"
+        android:layout_marginEnd="@dimen/size_20"
+        android:text="@string/payment_done_merchant_desc"
+        android:textColor="@color/grey_dark_2"
+        app:fontFamily="@font/regular"
+        app:textType="CAPTION" />
+
+
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/btn_bottom"
+        style="@style/match_wrap"
+        android:background="@color/white"
+        android:gravity="end"
+        android:layout_marginTop="@dimen/size_10"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_14">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tvCancel"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:layout_marginEnd="@dimen/size_10"
+            android:background="@color/white"
+            android:text="@string/cancel" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/buttonDone"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:text="@string/confirm_payment"
+            android:textColor="@color/white" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

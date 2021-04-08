@@ -36,7 +36,7 @@ class AutoRenewSubsFragment : BaseFragment() {
             savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.auto_renew_fragment, container, false)
-        link = arguments!!.getString("link")
+        link = requireArguments().getString("link")?:""
         Log.v("weblink"," "+ link)
         return root
     }
@@ -45,8 +45,8 @@ class AutoRenewSubsFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AutoRenewViewModel::class.java)
 
-        if(arguments !=null && arguments!!.containsKey("title")){
-            autoRenewPageTitle.setText(arguments!!.getString("title"))
+        if(arguments !=null && requireArguments().containsKey("title")){
+            autoRenewPageTitle.text = requireArguments().getString("title")
         }
         loadSpinner(root)
         if (link != null) {
@@ -82,7 +82,7 @@ class AutoRenewSubsFragment : BaseFragment() {
                 }
 
             })
-            webviewAutoRenew.loadUrl(link)
+            webviewAutoRenew.loadUrl(link!!)
 
 
         } else {
@@ -112,13 +112,13 @@ class AutoRenewSubsFragment : BaseFragment() {
 
     fun loadSpinner(view: View?) {
         if(progressBar != null){
-            progressBar.setVisibility(View.VISIBLE)
+            progressBar.visibility = View.VISIBLE
         }
 
     }
     fun unloadSpinner(view: View?) {
         if(progressBar != null) {
-            progressBar.setVisibility(View.GONE)
+            progressBar.visibility = View.GONE
         }
     }
 }

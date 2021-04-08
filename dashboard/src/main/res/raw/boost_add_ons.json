@@ -864,14 +864,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nName"
-            },
-            {
-              "businessType": "business_description_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nDescription"
+              "title": "Basic\nInformation"
             },
             {
               "businessType": "clinic_logo",
@@ -1247,14 +1240,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nName"
-            },
-            {
-              "businessType": "business_description_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nDescription"
+              "title": "Basic\nInformation"
             },
             {
               "businessType": "clinic_logo",
@@ -1630,14 +1616,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nName"
-            },
-            {
-              "businessType": "business_description_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nDescription"
+              "title": "Basic\nInformation"
             },
             {
               "businessType": "clinic_logo",
@@ -2034,14 +2013,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nName"
-            },
-            {
-              "businessType": "business_description_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nDescription"
+              "title": "Basic\nInformation"
             },
             {
               "businessType": "clinic_logo",
@@ -2410,14 +2382,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nName"
-            },
-            {
-              "businessType": "business_description_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nDescription"
+              "title": "Basic\nInformation"
             },
             {
               "businessType": "clinic_logo",
@@ -2739,6 +2704,13 @@
               "title": "Testimonials"
             },
             {
+              "businessType": "ic_staff_profile_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "STAFFPROFILE",
+              "title": "Staff\nProfile"
+            },
+            {
               "businessType": "unlimited_content_updates",
               "isLock": false,
               "isHide": true,
@@ -2779,14 +2751,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nName"
-            },
-            {
-              "businessType": "business_description_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nDescription"
+              "title": "Basic\nInformation"
             },
             {
               "businessType": "clinic_logo",
@@ -3108,6 +3073,13 @@
               "title": "Testimonials"
             },
             {
+              "businessType": "ic_staff_profile_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "STAFFPROFILE",
+              "title": "Staff\nProfile"
+            },
+            {
               "businessType": "unlimited_content_updates",
               "isLock": false,
               "isHide": true,
@@ -3148,14 +3120,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nName"
-            },
-            {
-              "businessType": "business_description_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nDescription"
+              "title": "Basic\nInformation"
             },
             {
               "businessType": "clinic_logo",
@@ -3491,6 +3456,13 @@
               "title": "Testimonials"
             },
             {
+              "businessType": "ic_staff_profile_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "STAFFPROFILE",
+              "title": "Staff\nProfile"
+            },
+            {
               "businessType": "unlimited_content_updates",
               "isLock": false,
               "isHide": true,
@@ -3531,14 +3503,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nName"
-            },
-            {
-              "businessType": "business_description_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nDescription"
+              "title": "Basic\nInformation"
             },
             {
               "businessType": "clinic_logo",
