@@ -16,6 +16,7 @@ import com.boost.presignin.databinding.ActivityIntroBinding
 import com.boost.presignin.model.IntroItem
 import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
+import com.boost.presignin.ui.registration.RegistrationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import kotlin.math.abs
@@ -128,7 +129,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         }
 
         binding?.getStarted?.setOnClickListener {
-            startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+            startActivity(Intent(this@IntroActivity, RegistrationActivity::class.java))
             finish()
         }
 

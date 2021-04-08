@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.presignin.constant.RecyclerViewItemType
-import com.dashboard.recyclerView.BaseRecyclerViewHolder
+import com.boost.presignin.recyclerView.BaseRecyclerViewHolder
 import com.framework.base.BaseActivity
 
 abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(

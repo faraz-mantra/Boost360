@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.ViewDataBinding
-import com.dashboard.recyclerView.BaseRecyclerViewHolder
+import com.boost.presignin.recyclerView.BaseRecyclerViewHolder
 
 abstract class AppBaseRecyclerViewHolder<Binding : ViewDataBinding>(binding: Binding) :
     BaseRecyclerViewHolder<Binding>(binding), View.OnClickListener {
