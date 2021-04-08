@@ -12,6 +12,7 @@ import com.framework.pref.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM
 import com.framework.pref.Key_Preferences.WEBSITE_SHARE
 import com.framework.utils.convertStringToList
 import java.util.*
+import kotlin.collections.ArrayList
 
 class UserSessionManager(var activity: Activity) {
 
@@ -242,7 +243,9 @@ class UserSessionManager(var activity: Activity) {
 
   fun getStoreWidgets(): List<String>? {
     val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
-    return if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)
+    val list= ArrayList(if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str))
+    list.add("STAFFPROFILE")
+    return list
   }
 
   val sourceClientId: String?

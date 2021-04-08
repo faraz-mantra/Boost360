@@ -200,11 +200,6 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
   private fun setView(videosItem: VIDEOSItem?) {
     binding?.ctvVideoTitle?.text = videosItem?.videoTitle
     binding?.ctvVideoDuration?.text = videosItem?.videoLength
-    Glide.with(baseActivity)
-        .load(videosItem?.videoUrl)
-        .centerCrop()
-        .apply(RequestOptions())
-        .thumbnail(0.1f)
-        .into(binding?.videoThumbnails!!)
+    Glide.with(baseActivity).load(videosItem?.videoUrl).apply(RequestOptions()).thumbnail(0.1f).into(binding?.videoThumbnails!!)
   }
 }
