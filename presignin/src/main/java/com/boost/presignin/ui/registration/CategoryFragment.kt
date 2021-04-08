@@ -11,6 +11,7 @@ import com.boost.presignin.R
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.constant.RecyclerViewItemType
 import com.boost.presignin.databinding.FragmentCategoryBinding
+import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
@@ -74,13 +75,14 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
         }
 
         binding?.confirmButton?.setOnClickListener {
-            addFragmentReplace(com.framework.R.id.container, BusinessDetailsFragment.newInstance(category!!),true);
+            addFragmentReplace(com.framework.R.id.container, BusinessDetailsFragment.newInstance(RequestFloatsModel(
+                    categoryDataModel = category
+            )),true);
          //   addFragmentReplace()
         }
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        Log.d(TAG, "onItemClick: ")
         when (actionType) {
             RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
                 category = item as? CategoryDataModel

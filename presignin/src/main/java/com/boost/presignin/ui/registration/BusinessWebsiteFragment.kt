@@ -7,18 +7,24 @@ import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import com.boost.presignin.R
 import com.boost.presignin.databinding.FragmentBusinessWebsiteBinding
+import com.boost.presignin.extensions.isWebsiteValid
+import com.boost.presignin.model.RequestFloatsModel
 import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
 class BusinessWebsiteFragment : BaseFragment<FragmentBusinessWebsiteBinding, BaseViewModel>() {
 
 
+    private lateinit var registerRequest: RequestFloatsModel;
+
     companion object {
 
         @JvmStatic
-        fun newInstance() =
+        fun newInstance( registerRequest: RequestFloatsModel) =
                 BusinessWebsiteFragment().apply {
-                    arguments = Bundle().apply {}
+                    arguments = Bundle().apply {
+                        putParcelable("request", registerRequest)
+                    }
                 }
     }
 
@@ -31,18 +37,31 @@ class BusinessWebsiteFragment : BaseFragment<FragmentBusinessWebsiteBinding, Bas
     }
 
     override fun onCreateView() {
+        registerRequest = requireArguments().getParcelable("request")!!
 
-        val amountSpannableString = SpannableString("'downtownspa'").apply {
+        val websiteHint = registerRequest.contactInfo!!.businessName.trim().replace(" ","")
+        val amountSpannableString = SpannableString("'$websiteHint' ").apply {
            // setSpan(ForegroundColorSpan(Color.rgb(0,0,0)), 0, length, 0)
             setSpan(StyleSpan(Typeface.BOLD), 0,length,0)
         }
 
-        binding?.subHeadingTv?.text = SpannableStringBuilder().apply {
-            append(getString(R.string.website_available_text))
+        binding?.websiteEt?.setText(websiteHint)
+
+        binding?.websiteStatusTv?.text = SpannableStringBuilder().apply {
             append(amountSpannableString)
+            append(getString(R.string.website_available_text))
         }
         binding?.confirmButton?.setOnClickListener {
-            addFragmentReplace(com.framework.R.id.container, RegistrationSuccessFragment.newInstance(),true);
+            val website = binding?.websiteEt?.text?.toString()
+
+            if(!website.isWebsiteValid()){
+                showShortToast("Enter a valid website name")
+                return@setOnClickListener
+            }
+
+            registerRequest.websiteUrl = "$website.nowfloats.com"
+
+            addFragmentReplace(com.framework.R.id.container, RegistrationSuccessFragment.newInstance(registerRequest),true);
         }
     }
 

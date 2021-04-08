@@ -71,7 +71,7 @@
     <string name="creating_your_business_profile">Creating your business profile</string>
     <string name="business_details_hint">This information will be used to onboard and sync across all marketing channels.</string>
     <string name="enter_your_name">Enter your name*</string>
-    <string name="enter_your_business_name">Enter your business name*</string>
+    <string name="your_business_name_hint">Enter your business name* </string>
     <string name="your_business_email">Your business email*</string>
     <string name="your_business_phone">Your your phone*</string>
     <string name="choose_website_address">Choose website address</string>
@@ -81,8 +81,11 @@
     <string name="create_my_business_website">Create my business website</string>
     <string name="website_available_text"> will also work as your username to login to Boost 360 app and web.</string>
     <string name="website_error_text"> username/subdomain not available. Try with something else.</string>
-    <string name="registration_complete_subheading"> business is successfully setup on Boost></string>
+    <string name="registration_complete_subheading"> business is successfully setup on Boost</string>
     <string name="your">Your</string>
+    <string name="you">Your</string>
     <string name="preview_your_website">Preview your website</string>
     <string name="go_to_business_dashboard">Go to business dashboard</string>
+    <string name="congratulations_n_s">Congratulations\n%s</string>
+    <string name="www_sravansclinic_com"><u>www.sravansclinic.com</u></string>
 </resources>

@@ -129,7 +129,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         }
 
         binding?.getStarted?.setOnClickListener {
-            startActivity(Intent(this@IntroActivity, RegistrationActivity::class.java))
+            startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
             finish()
         }
 
