@@ -225,7 +225,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val response = it as? ManageBusinessDataResponse
         val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (dataAction?.actionItem.isNullOrEmpty().not()) {
-          dataAction!!.actionItem!!.map { it1 -> if (it1.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it1.premiumCode).not()) it1.isLock = true }
+          dataAction!!.actionItem!!.map { it1 ->
+            if (it1.premiumCode.isNullOrEmpty().not()){
+              it1.isLock = session.checkIsPremiumUnlock(it1.premiumCode).not()
+            }
+          }
           if (adapterBusinessData == null) {
             rvManageBusiness.apply {
               adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
