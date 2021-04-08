@@ -3,7 +3,8 @@ package com.appservice.model
 import java.io.Serializable
 
 enum class StatusKyc {
-  CUSTOM_PAYMENTGATEWAY
+  CUSTOM_PAYMENTGATEWAY,
+  STAFFPROFILE
 }
 
 const val auth_3 = "58ede4d4ee786c1604f6c535"

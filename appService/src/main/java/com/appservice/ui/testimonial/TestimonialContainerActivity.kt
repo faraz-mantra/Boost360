@@ -11,12 +11,6 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
-import com.appservice.ui.catalog.catalogProduct.information.ProductInformationFragment
-import com.appservice.ui.catalog.catalogProduct.product.ProductDetailFragment
-import com.appservice.ui.catalog.catalogService.information.ServiceInformationFragment
-import com.appservice.ui.catalog.catalogService.service.ServiceDetailFragment
-import com.appservice.ui.catalog.common.CreateCategoryFragment
-import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding

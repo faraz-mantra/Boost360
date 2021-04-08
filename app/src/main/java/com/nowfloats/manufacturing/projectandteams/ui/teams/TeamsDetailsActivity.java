@@ -215,7 +215,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.creating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setName(nameValue.getText().toString());
                 actionData.setDesignation(designationValue.getText().toString());
@@ -291,7 +291,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.updating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setName(nameValue.getText().toString());
                 actionData.setDesignation(designationValue.getText().toString());
@@ -585,11 +585,9 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader(getString(R.string.updating_record_please_wait));
             updateExistingTeamsAPI();
             Methods.hideKeyboard(TeamsDetailsActivity.this);
         } else {
-            showLoader(getString(R.string.creating_record_please_wait));
             createNewTeamsAPI();
             Methods.hideKeyboard(TeamsDetailsActivity.this);
         }

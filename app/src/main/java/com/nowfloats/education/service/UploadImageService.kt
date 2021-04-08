@@ -71,7 +71,7 @@ class UploadImageService(private val listener: UploadImageServiceListener, priva
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.e(TAG, e.message)
+                Log.e(TAG, e.message?:"")
             }
         }
         return null

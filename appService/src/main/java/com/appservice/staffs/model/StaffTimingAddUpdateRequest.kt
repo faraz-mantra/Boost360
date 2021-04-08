@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class StaffTimingAddUpdateRequest(
 
-    @field:SerializedName("StaffId", alternate = ["staffId"])
+    @field:SerializedName("staffId", alternate = ["StaffId"])
     val staffId: String? = null,
-    @field:SerializedName("WorkTimings", alternate = ["workTimings", "Timings"])
-    val workTimings: List<AppointmentModel?>? = null,
+    @field:SerializedName("workTimings", alternate = ["WorkTimings", "Timings"])
+    val workTimings: ArrayList<AppointmentModel>? = null,
 )
 

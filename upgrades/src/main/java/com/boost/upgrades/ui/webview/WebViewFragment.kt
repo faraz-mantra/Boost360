@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.webview
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,26 +33,27 @@ class WebViewFragment : BaseFragment() {
             savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.web_view_fragment, container, false)
-        link = arguments!!.getString("link")
+        link = requireArguments().getString("link")?:""
         return root
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(WebViewViewModel::class.java)
 
-        if(arguments !=null && arguments!!.containsKey("title")){
-            browser_title.setText(arguments!!.getString("title"))
+        if(arguments !=null && requireArguments().containsKey("title")){
+            browser_title.text = requireArguments().getString("title")
         }
 
         if (link != null) {
-            webview.getSettings().setJavaScriptEnabled(true)
+            webview.settings.javaScriptEnabled = true
             webview.webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                     return false
                 }
             }
-            webview.loadUrl(link)
+            webview.loadUrl(link!!)
         } else {
             Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
             (activity as UpgradeActivity).popFragmentFromBackStack()

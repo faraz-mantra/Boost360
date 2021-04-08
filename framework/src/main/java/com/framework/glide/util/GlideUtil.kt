@@ -46,11 +46,20 @@ fun Context.glideLoad(mImageView: CircularImageView, url: String?, placeholder: 
     placeholder?.let { glide.placeholder(it) }
     if (isCrop) glide.centerCrop()
     glide.into(mImageView)
-  }catch (e:Exception){
-    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  } catch (e: Exception) {
+    Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
 }
 
+
+fun Context.glideLoad(mImageView: RoundedImageView?, url: String?) {
+  try {
+    if (mImageView == null) return
+    Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
+  } catch (e: Exception) {
+    Log.e("GlideUtil", "Error: ${e.localizedMessage}")
+  }
+}
 
 fun Context.glideLoad(mImageView: RoundedImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   try {
@@ -59,8 +68,8 @@ fun Context.glideLoad(mImageView: RoundedImageView, url: String?, placeholder: I
     placeholder?.let { glide.placeholder(it) }
     if (isCrop) glide.centerCrop()
     glide.into(mImageView)
-  }catch (e:Exception){
-    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  } catch (e: Exception) {
+    Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
 }
 
@@ -71,8 +80,8 @@ fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: In
     placeholder?.let { glide.placeholder(it) }
     if (isCrop) glide.centerCrop()
     glide.into(mImageView)
-  }catch (e:Exception){
-    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  } catch (e: Exception) {
+    Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
 }
 
@@ -81,8 +90,8 @@ fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholde
     val glide = Glide.with(this).load(gif_file).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     placeholder?.let { glide.placeholder(it) }
     glide.into(DrawableImageViewTarget(mImageView))
-  }catch (e:Exception){
-    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  } catch (e: Exception) {
+    Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
 }
 
@@ -110,8 +119,8 @@ fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: In
         }
       })
     } else glideImage.into(mImageView)
-  }catch (e:Exception){
-    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  } catch (e: Exception) {
+    Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
 }
 

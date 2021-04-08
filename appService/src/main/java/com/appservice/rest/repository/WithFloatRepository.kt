@@ -26,6 +26,7 @@ object WithFloatRepository : AppBaseRepository<WithFloatRemoteData, AppBaseLocal
     return makeRemoteRequest(remoteDataSource.updateAccount(fpId, clientId, request), TaskCode.UPDATE_ACCOUNT)
   }
 
+
   override fun getRemoteDataSourceClass(): Class<WithFloatRemoteData> {
     return WithFloatRemoteData::class.java
   }

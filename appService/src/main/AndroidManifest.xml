@@ -2,7 +2,9 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.appservice">
 
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.CAMERA" />
+
   <uses-feature
     android:name="android.hardware.camera"
     android:required="false" />
@@ -30,6 +32,7 @@
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.payment"
       android:windowSoftInputMode="adjustPan" />
+
     <activity
       android:name=".staffs.ui.StaffFragmentContainerActivity"
       android:screenOrientation="portrait"
@@ -51,4 +54,11 @@
       android:resource="@array/preloaded_fonts" />
 
   </application>
+
+  <!-- Android 11 changes -->
+  <queries>
+    <intent>
+      <action android:name="android.media.action.IMAGE_CAPTURE" />
+    </intent>
+  </queries>
 </manifest>

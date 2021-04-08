@@ -48,21 +48,20 @@ class OrderConfirmationFragment : BaseFragment() {
 
         try {
             if(arguments!=null) {
-                if (arguments!!.containsKey("payment_type") && arguments!!.getString("payment_type").equals("External_Link")) {
+                if (requireArguments().containsKey("payment_type") && requireArguments().getString("payment_type").equals("External_Link")) {
                     external_link_payment_status.visibility = View.VISIBLE
                 } else {
                     external_link_payment_status.visibility = View.GONE
                 }
             }
-            order_details_feature_count.setText("Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month.")
-            paymentBanner.setText("Order #"+prefs.getLatestPurchaseOrderId())
+            order_details_feature_count.text = "Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month."
+            paymentBanner.text = "Order #"+prefs.getLatestPurchaseOrderId()
             val date = Calendar.getInstance().time
             val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")
-            order_id_details.setText("Order placed on " + formatter.format(date) +
-                    "\nOrder ID #" + prefs.getLatestPurchaseOrderId() +
-                    "\nTransaction ID #" + prefs.getTransactionIdFromCart())
+            order_id_details.text = "Order placed on " + formatter.format(date) +
+                "\nOrder ID #" + prefs.getLatestPurchaseOrderId() + "\nTransaction ID #" + prefs.getTransactionIdFromCart()
         } catch (e: Exception){
-            Log.e("Error", e.message)
+            Log.e("Error", e.message?:"")
         }
 
         back_button.setOnClickListener {

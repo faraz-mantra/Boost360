@@ -1,19 +1,22 @@
 package com.inventoryorder.model.ordersdetails
 
-
-import com.inventoryorder.utils.capitalizeUtil
 import java.io.Serializable
 
 data class PaymentDetailsN(
-    val ExtraProperties: ExtraPropertiesN,
+    val ExtraProperties: Any,
     val Method: String? = null,
     val OnlinePaymentProvider: String? = null,
     val Status: String? = null,
     val TransactionId: String? = null,
+    val TransactionReferenceNo: String? = null,
 ) : Serializable {
 
   fun status(): String {
-    return (Status ?: "").capitalizeUtil()
+    return Status ?: ""
+  }
+
+  fun statusValue(): String {
+    return STATUS.from(Status)?.title ?: status()
   }
 
   fun method(): String {
@@ -25,23 +28,24 @@ data class PaymentDetailsN(
   }
 
   fun payment(): String {
-    return if (methodValue().isNotEmpty() && status().isNotEmpty()) "${methodValue()}, ${status()}" else "${methodValue()}${status()}"
+    return if (methodValue().isNotEmpty() && statusValue().isNotEmpty()) "${methodValue()}, ${statusValue()}" else "${methodValue()}${statusValue()}"
   }
 
   fun paymentWithColor(color: String?): String {
-    return if (methodValue().isNotEmpty() && status().isNotEmpty()) "${methodValue()}, <font color='$color'>${status()}</font>" else "${methodValue()}<font color='$color'>${status()}</font>"
+    return if (methodValue().isNotEmpty() && statusValue().isNotEmpty()) "${methodValue()}, <font color='$color'>${statusValue()}</font>" else "${methodValue()}<font color='$color'>${statusValue()}</font>"
   }
 
   enum class METHOD(val value: String, val type: String) {
-    COD("Offline", "COD"), ONLINEPAYMENT("Online", "ONLINEPAYMENT"), FREE("Free", "FREE"), ONLINE("Online", "ONLINE");
+    COD("COD", "COD"), ONLINEPAYMENT("ONLINE", "ONLINEPAYMENT"), FREE("FREE", "FREE"), ONLINE("ONLINE", "ONLINE");
 
     companion object {
       fun fromType(type: String?): METHOD? = values().firstOrNull { it.type.equals(type, ignoreCase = true) }
     }
   }
 
-  enum class STATUS {
-    PENDING, INITIATED, SUCCESS, INPROCESS, SUBMITTEDFORREFUND, REFUNDED, REFUNDDENIED, FAILED, CANCELLED;
+  enum class STATUS(var title: String) {
+    PENDING("PENDING"), INITIATED("INITIATED"), SUCCESS("RECEIVED"), INPROCESS("IN-PROCESS"),
+    SUBMITTEDFORREFUND("SUBMITFORREFUND"), REFUNDED("REFUNDED"), REFUNDDENIED("REFUND-DENIED"), FAILED("FAILED"), CANCELLED("CANCELLED");
 
     companion object {
       fun from(value: String?): STATUS? = values().firstOrNull { it.name.equals(value, ignoreCase = true) }

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    style="@style/match_wrap"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/size_16"
+    android:paddingBottom="@dimen/size_12"
+    tools:ignore="RtlSymmetry">
+
+    <View
+      android:id="@+id/view"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_1"
+      android:background="@color/light_grey_2"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+      android:id="@+id/vw_details"
+      style="@style/match_wrap"
+      android:layout_marginTop="@dimen/size_12"
+      android:layout_marginEnd="@dimen/size_14"
+      android:layout_marginBottom="@dimen/size_12"
+      android:orientation="horizontal"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/view">
+
+      <com.framework.views.roundedimageview.RoundedImageView
+        android:id="@+id/itemImage"
+        android:layout_width="@dimen/size_66"
+        android:layout_height="@dimen/size_66"
+        android:scaleType="centerCrop"
+        app:riv_border_color="@color/pinkish_grey"
+        app:riv_border_width="@dimen/size_1"
+        app:riv_corner_radius="@dimen/size_3"
+        tools:src="@drawable/placeholder_image_n" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/match_wrap"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/size_6"
+        tools:ignore="RtlSymmetry">
+
+        <LinearLayout
+          style="@style/match_wrap"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/regular"
+            app:textType="HEADING_6"
+            tools:text="Mutton Rogan Josh" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_options"
+            style="@style/wrap_wrap"
+            android:tint="@color/grey_dark_2"
+            app:srcCompat="@drawable/ic_dot_menu" />
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          style="@style/wrap_wrap">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_product_Price"
+            style="@style/wrap_wrap"
+            android:textColor="@color/greyish_brown"
+            android:textSize="14sp"
+            app:fontFamily="@font/regular"
+            tools:text="₹ 3,000.00" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_product_quantity"
+            style="@style/wrap_wrap"
+            android:textColor="@color/pinkish_grey"
+            android:textSize="14sp"
+            app:fontFamily="@font/regular"
+            tools:text=" x 2" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <LinearLayout
+          style="@style/match_wrap"
+          android:layout_marginTop="@dimen/size_3"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_discount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/green_light_1"
+            app:textType="BODY_1"
+            tools:text="20 % off" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_actual_price"
+            style="@style/wrap_wrap"
+            android:layout_marginEnd="@dimen/size_4"
+            android:textColor="@color/light_grey_9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_total_item_price"
+            app:textType="BODY_1"
+            tools:text="₹2,000.00" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_total_item_price"
+            style="@style/wrap_wrap"
+            android:layout_marginEnd="@dimen/size_6"
+            android:textColor="@color/black_4a4a4a"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:textType="BODY_1"
+            tools:text="₹2,000.00" />
+        </LinearLayout>
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
