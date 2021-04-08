@@ -2,6 +2,7 @@ package com.boost.presignin.ui.registration
 
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -9,17 +10,24 @@ import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import com.boost.presignin.R
 import com.boost.presignin.databinding.FragmentRegistrationSuccessBinding
+import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.ui.WebPreviewActivity
 import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
 
 class RegistrationSuccessFragment : BaseFragment<FragmentRegistrationSuccessBinding, BaseViewModel>() {
+    private lateinit var registerRequest: RequestFloatsModel;
 
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-                RegistrationSuccessFragment().apply {}
+        fun newInstance(registerRequest:RequestFloatsModel) =
+                RegistrationSuccessFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("request", registerRequest)
+                    }
+                }
     }
 
     override fun getLayout(): Int {
@@ -31,34 +39,41 @@ class RegistrationSuccessFragment : BaseFragment<FragmentRegistrationSuccessBind
     }
 
     override fun onCreateView() {
-        val amountSpannableString = SpannableString("Beauty & Makeup").apply {
+        registerRequest = requireArguments().getParcelable("request")!!
+
+        val businessName = registerRequest.contactInfo!!.businessName
+        val name = registerRequest.contactInfo!!.name
+        val websiteUrl = registerRequest.websiteUrl!!
+
+        binding?.headingTv?.text = String.format(getString(R.string.congratulations_n_s),name)
+        binding?.businessNameTv?.text = businessName;
+
+
+        val amountSpannableString = SpannableString(" $businessName ").apply {
              setSpan(ForegroundColorSpan(Color.rgb(0,0,0)), 0, length, 0)
             setSpan(StyleSpan(Typeface.BOLD), 0,length,0)
         }
 
+
+        val your = getString(R.string.you);
         binding?.subheading?.text = SpannableStringBuilder().apply {
-            append(getString(R.string.your))
+            append(your)
             append(amountSpannableString)
             append(getString(R.string.registration_complete_subheading))
         }
-        val underLineSpan = SpannableString(getString(R.string.contact_support)).apply {
+
+
+        val underLineSpan = SpannableString(websiteUrl).apply {
             setSpan(UnderlineSpan(), 0, length, 0)
         }
-
+        binding?.websiteTv?.text = SpannableStringBuilder().apply { append(underLineSpan) }
 
         binding?.lottieAnimation?.setAnimation(R.raw.lottie_anim_congratulation)
         binding?.lottieAnimation?.repeatCount = 0
         binding?.lottieAnimation?.playAnimation()
-//        binding?.lottieAnimation?.let {
-//            if (it.isAnimating) it.pauseAnimation()
-//            else it.playAnimation()
-//        }
 
-
-//        binding?.linkTv?.text = SpannableStringBuilder().apply {
-//            append(amountSpannableString)
-//        }
-//
-//        binding?.li
+        binding?.previewAccountBt?.setOnClickListener {
+            navigator?.startActivity(WebPreviewActivity::class.java)
+        }
     }
 }

@@ -26,5 +26,7 @@
     <color name="et_color">#2a2a2a</color>
     <color name="website_status_error_color">#E39595</color>
     <color name="link_color">#2F80ED</color>
+    <color name="link_preview_title">#4F4F4F</color>
+    <color name="preview_toolbar_background">#BABABA</color>
 
 </resources>
