@@ -50,7 +50,7 @@ import com.inventoryorder.ui.order.createorder.SendFeedbackOrderSheetDialog
 import com.inventoryorder.ui.order.createorder.SendReBookingOrderSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
-import com.inventoryorder.ui.tutorials.LearnAboutAppointmentMgmtBottomSheet
+import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
@@ -571,8 +571,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     binding?.orderRecycler?.gone()
     binding?.errorView?.visible()
     binding?.btnActionTutorials?.setOnClickListener {
-      val sheet = LearnAboutAppointmentMgmtBottomSheet()
-      sheet.show(parentFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
+      val sheet = LearnHowItWorkBottomSheet()
+      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
     }
   }
 

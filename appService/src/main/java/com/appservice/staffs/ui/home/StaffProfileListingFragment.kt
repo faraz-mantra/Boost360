@@ -35,7 +35,7 @@ import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.webengageconstant.*
-import com.inventoryorder.ui.tutorials.LearnAboutAppointmentMgmtBottomSheet
+import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
@@ -273,8 +273,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun openHelpBottomSheet() {
-    val sheet = LearnAboutAppointmentMgmtBottomSheet()
-    sheet.show(parentFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
+    val sheet = LearnHowItWorkBottomSheet()
+    sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
   }
 
   override fun onClick(v: View) {

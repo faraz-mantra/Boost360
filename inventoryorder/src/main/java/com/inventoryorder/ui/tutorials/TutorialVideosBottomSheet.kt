@@ -32,7 +32,7 @@ import com.inventoryorder.ui.tutorials.model.AllTutorialsItem
 import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 
-class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAppointmentMgmtBinding, TutorialViewModel>(), Player.EventListener {
+class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnAppointmentMgmtBinding, TutorialViewModel>(), Player.EventListener {
 
   private lateinit var simpleExoplayer: SimpleExoPlayer
   private var playbackPosition: Long = 0
@@ -50,7 +50,7 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
   override fun onCreateView() {
     getBundle()
     setOnClickListener(binding?.civBack, binding?.civClose)
-    viewModel?.getTutorialsList()?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getTutorialsStaffList()?.observeOnce(viewLifecycleOwner, {
       val tutorialPagerAdapter = TutorialPagerAdapter(childFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, it.contents?.allTutorials)
       binding?.viewPagerTutorials?.adapter = tutorialPagerAdapter
       if (it.contents?.allTutorials?.size ?: 0 > 1)
@@ -64,8 +64,8 @@ class BottomSheetTutorialVideos : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     when (v) {
       binding?.civBack -> {
         dismiss()
-        val learnAboutAppointmentMgmtBottomSheet = LearnAboutAppointmentMgmtBottomSheet()
-        learnAboutAppointmentMgmtBottomSheet.show(childFragmentManager, LearnAboutAppointmentMgmtBottomSheet::class.java.name)
+        val learnAboutAppointmentMgmtBottomSheet = LearnHowItWorkBottomSheet()
+        learnAboutAppointmentMgmtBottomSheet.show(childFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
       }
       binding?.civClose -> {
         dismiss()
@@ -189,7 +189,7 @@ class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, Tutori
 
   override fun onCreateView() {
     super.onCreateView()
-    viewModel?.getTutorialsList()?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getTutorialsStaffList()?.observeOnce(viewLifecycleOwner, {
       binding?.rvVideos?.adapter = AppBaseRecyclerViewAdapter(baseActivity, it.contents?.allTutorials!!, this)
     })
   }
@@ -197,11 +197,11 @@ class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, Tutori
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.VIDEO_ITEM_CLICK.ordinal -> {
-        val bottomSheetTutorialVideos = BottomSheetTutorialVideos()
+        val bottomSheetTutorialVideos = TutorialVideosBottomSheet()
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, item as? AllTutorialsItem)
         bottomSheetTutorialVideos.arguments = bundle
-        bottomSheetTutorialVideos.show(parentFragmentManager, BottomSheetTutorialVideos::class.java.name)
+        bottomSheetTutorialVideos.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
       }
     }
   }
@@ -225,7 +225,7 @@ class FragmentTutorialDesc : AppBaseFragment<FragmentTutorialDescBinding, Tutori
 
   override fun onCreateView() {
     super.onCreateView()
-    viewModel?.getVideoDesc()?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getVideoDetailStaff()?.observeOnce(viewLifecycleOwner, Observer {
       binding?.ctvSteps?.text = it.contentVideo?.tutorialContents?.joinToString("\n")
     })
   }
