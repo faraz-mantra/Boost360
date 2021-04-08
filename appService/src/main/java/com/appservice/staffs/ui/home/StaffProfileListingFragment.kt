@@ -51,6 +51,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   private var externalSourceId: String? = null
   private var applicationId: String? = null
   private var userProfileId: String? = null
+  private lateinit var menuAdd: MenuItem
+  private var isServiceEmpty = false
 
   /* Paging */
   private var isLoadingD = false
@@ -84,7 +86,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
       setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService)
-      checkIsAddNewStaff()
     }
   }
 
@@ -121,20 +122,25 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     showProgressN()
     viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)?.observeOnce(viewLifecycleOwner, {
       if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
+        checkIsAddNewStaff()
         fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+        isServiceEmpty = false
       } else {
         hideProgressN()
         setEmptyView(isStaffEmpty = false, isServiceEmpty = true)
+        isServiceEmpty = true
       }
     })
   }
 
   private fun swipeRefreshListener() {
     binding?.staffListSwipeRefresh?.setOnRefreshListener {
-      binding?.staffListSwipeRefresh?.isRefreshing = true
-      this.offSet = PAGE_START
-      this.limit = PAGE_SIZE
-      fetchStaffListing(isProgress = false, isFirst = true, offSet = offSet, limit = limit)
+      if (isServiceEmpty.not()) {
+        binding?.staffListSwipeRefresh?.isRefreshing = true
+        this.offSet = PAGE_START
+        this.limit = PAGE_SIZE
+        fetchStaffListing(isProgress = false, isFirst = true, offSet = offSet, limit = limit)
+      } else binding?.staffListSwipeRefresh?.isRefreshing = false
     }
   }
 
@@ -212,6 +218,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
     binding?.staffEmpty?.root?.visibility = if (isStaffEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
     binding?.rvStaffList?.visibility = if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
+    if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
   }
 
   private fun removeLoader() {
@@ -241,12 +248,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onPrepareOptionsMenu(menu: Menu) {
     super.onPrepareOptionsMenu(menu)
-    val menuSearch: MenuItem? = menu.findItem(R.id.menu_add_staff)
-    val menuAdd: MenuItem? = menu.findItem(R.id.app_bar_search)
+    menuAdd = menu.findItem(R.id.menu_add_staff)
     val b = sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) ?: false
-    menuSearch?.isVisible = b
-    menuAdd?.isVisible = b
-
+    menuAdd.isVisible = b
+    if (b) menuAdd.isVisible = isServiceEmpty.not()
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -325,7 +330,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     binding?.progress?.visible()
   }
 
-   fun hideProgressN() {
+  fun hideProgressN() {
     binding?.staffListSwipeRefresh?.isRefreshing = false
     binding?.progress?.gone()
   }
@@ -333,7 +338,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun startStorePage() {
     try {
-     showProgress("Loading. Please wait...")
+      showProgress("Loading. Please wait...")
       val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
       intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
       intent.putExtra("fpName", sessionLocal.fpTag)
