@@ -2704,6 +2704,13 @@
               "title": "Testimonials"
             },
             {
+              "businessType": "ic_staff_profile_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "STAFFPROFILE",
+              "title": "Staff\nProfile"
+            },
+            {
               "businessType": "unlimited_content_updates",
               "isLock": false,
               "isHide": true,
@@ -3064,6 +3071,13 @@
               "isHide": false,
               "premiumCode": "",
               "title": "Testimonials"
+            },
+            {
+              "businessType": "ic_staff_profile_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "STAFFPROFILE",
+              "title": "Staff\nProfile"
             },
             {
               "businessType": "unlimited_content_updates",
@@ -3440,6 +3454,13 @@
               "isHide": false,
               "premiumCode": "",
               "title": "Testimonials"
+            },
+            {
+              "businessType": "ic_staff_profile_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "STAFFPROFILE",
+              "title": "Staff\nProfile"
             },
             {
               "businessType": "unlimited_content_updates",

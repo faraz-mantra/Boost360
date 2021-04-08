@@ -8,14 +8,12 @@
   </data>
 
   <androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/match_wrap"
     android:orientation="vertical">
 
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:drawableStart="@drawable/ic_shipping_address"
       android:drawablePadding="@dimen/size_16"
       android:gravity="center"
@@ -27,8 +25,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvShippingAddress"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_30"
       android:layout_marginTop="@dimen/size_3"
       android:includeFontPadding="false"
@@ -39,8 +36,7 @@
 
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginTop="@dimen/size_18"
       android:drawableStart="@drawable/ic_billing_address"
       android:drawablePadding="@dimen/size_16"
@@ -52,8 +48,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvBillingAddress"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_30"
       android:layout_marginTop="@dimen/size_3"
       android:includeFontPadding="false"

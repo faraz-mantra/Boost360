@@ -27,7 +27,7 @@ import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
 import com.dashboard.model.live.welcomeData.WelcomeData
 import com.dashboard.model.live.welcomeData.getIsShowWelcome
-import com.dashboard.pref.*
+import com.framework.pref.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -46,7 +46,6 @@ import com.framework.webengageconstant.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
-import com.nowfloats.facebook.managers.FBEventManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
@@ -137,14 +136,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val uri = intent.data
       Log.d("Data: ", "$data  $action")
       if (session?.isLoginCheck == true) {
-        //Appsflyer Deep Link...
         if (uri != null && uri.toString().contains("onelink", true)) {
-          if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-            val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
-            val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
-
-            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
-          }
+          isAppFlyerLink()
         } else {
           //Default Deep Link..
           val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
@@ -154,11 +147,22 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
           } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
         }
-      } else this.startPreSignUp(session)
+      } else {
+        this.startPreSignUp(session,true)
+        finish()
+      }
+    } else isAppFlyerLink()
+  }
+
+  private fun isAppFlyerLink() {
+    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+      val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+      val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
+      if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
+      AppsFlyerUtils.sAttributionData= mapOf()
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
     }
-
   }
 
   override fun onResume() {
@@ -373,11 +377,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         startReadinessScoreView(session, 0)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.imgBusinessLogo ->{
+      binding?.drawerView?.imgBusinessLogo -> {
         this.startBusinessProfileDetailEdit(session)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.txtDomainName ->{
+      binding?.drawerView?.txtDomainName -> {
         this.startWebViewPageLoad(session, session!!.getDomainName(false))
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }

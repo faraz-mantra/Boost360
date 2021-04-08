@@ -1,6 +1,6 @@
 package com.dashboard.model.live.dashboardBanner
 
-import com.dashboard.pref.UserSessionManager
+import com.framework.pref.UserSessionManager
 import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

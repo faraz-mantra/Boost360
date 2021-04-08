@@ -1,4 +1,4 @@
-package com.dashboard.pref
+package com.framework.pref
 
 object Key_Preferences {
   const val AUTHORIZATION = "Authorization"

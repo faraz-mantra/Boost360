@@ -8,32 +8,27 @@
   </data>
 
   <androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match_match"
     android:background="@color/white"
     android:orientation="vertical">
 
     <FrameLayout
       android:id="@+id/main_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:visibility="gone"
       tools:visibility="visible">
 
       <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        style="@style/match_match">
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/content"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          style="@style/match_match"
           android:orientation="vertical">
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -52,8 +47,7 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/orderType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_4"
                 android:textAlignment="center"
                 android:textAllCaps="true"
@@ -65,16 +59,14 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginStart="@dimen/size_14"
               android:layout_marginTop="@dimen/size_14"
               android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvOrderAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/black_4a4a4a"
@@ -83,8 +75,7 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvItemCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_4"
                 android:gravity="end"
                 android:textAlignment="textEnd"
@@ -96,8 +87,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/orderDate"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_14"
               android:layout_marginTop="@dimen/size_3"
               android:gravity="end"
@@ -109,8 +99,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_label_feedback"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_14"
               android:layout_marginTop="@dimen/size_6"
               android:drawablePadding="@dimen/size_4"
@@ -121,14 +110,12 @@
               app:textType="BODY_1" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_14"
               android:orientation="horizontal">
 
               <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/match_wrap"
                 android:layout_marginStart="@dimen/size_6"
                 android:layout_marginEnd="@dimen/size_6"
                 android:orientation="vertical">
@@ -139,8 +126,7 @@
                   android:background="@color/colorLightGrey" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  style="@style/match_wrap"
                   android:layout_marginStart="@dimen/size_8"
                   android:layout_marginEnd="@dimen/size_8"
                   android:gravity="center_vertical"
@@ -163,8 +149,7 @@
                   <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvDeliveryType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
 
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -180,8 +165,7 @@
                   android:background="@color/colorLightGrey" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  style="@style/match_wrap"
                   android:layout_marginStart="@dimen/size_8"
                   android:layout_marginEnd="@dimen/size_8"
                   android:orientation="horizontal"
@@ -201,8 +185,7 @@
                   <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvPaymentMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -218,8 +201,7 @@
                   android:background="@color/colorLightGrey" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  style="@style/match_wrap"
                   android:layout_marginStart="@dimen/size_8"
                   android:layout_marginEnd="@dimen/size_8"
                   android:orientation="horizontal"
@@ -240,8 +222,7 @@
                   <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvOrderStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
 
                     android:ellipsize="end"
                     android:includeFontPadding="false"
@@ -264,8 +245,7 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:orientation="horizontal">
 
             <com.framework.views.customViews.CustomButton
@@ -316,14 +296,12 @@
             android:background="@color/lightest_grey" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:orientation="vertical"
             android:padding="@dimen/size_14">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:gravity="center_vertical"
               android:orientation="horizontal">
 
@@ -340,8 +318,7 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_change_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:gravity="end"
                 android:text="@string/change"
                 android:textAllCaps="true"
@@ -354,8 +331,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvCustomerName"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_12"
               android:includeFontPadding="false"
               android:textColor="@color/black_4a4a4a"
@@ -364,8 +340,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvCustomerDetail"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_6"
               android:includeFontPadding="false"
               android:lineSpacingExtra="4dp"
@@ -374,16 +349,14 @@
               tools:text="+91 654323 54546\nazgarhn@gmail.com" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_14"
               android:orientation="horizontal"
               tools:ignore="RtlSymmetry">
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCustomerEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:drawableStart="@drawable/ic_inbox_orange"
                 android:drawablePadding="@dimen/size_8"
                 android:includeFontPadding="false"
@@ -395,8 +368,7 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCustomerContactNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_30"
                 android:drawableStart="@drawable/ic_call_phone_orange"
                 android:drawablePadding="@dimen/size_8"
@@ -417,8 +389,7 @@
             <include
               android:id="@+id/user_address"
               layout="@layout/layout_shipping_billing_address"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_20" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -431,14 +402,12 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_14"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginStart="@dimen/size_14"
               android:layout_marginEnd="@dimen/size_14"
               android:orientation="horizontal">
@@ -454,8 +423,7 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_change_order"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:gravity="end"
                 android:text="@string/change"
                 android:textAllCaps="true"
@@ -468,8 +436,7 @@
 
             <com.framework.views.viewgroups.BaseRecyclerView
               android:id="@+id/recyclerViewOrderDetails"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:overScrollMode="never"
               app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
               tools:itemCount="3"
@@ -486,8 +453,7 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_14"
             android:layout_marginEnd="@dimen/size_14"
             android:gravity="end"
@@ -497,8 +463,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvShippingCost"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:textColor="@color/warm_grey_10"
               app:fontFamily="@font/regular"
               app:textType="CAPTION"
@@ -506,8 +471,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvTotalOrderAmount"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_2"
               android:textColor="@color/black_4a4a4a"
               app:textType="HEADING_6"
@@ -525,8 +489,7 @@
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/size_10"
         android:background="@drawable/ic_initiated_order_btn_bkg"
@@ -544,8 +507,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/error"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:gravity="center"
       android:textColor="@color/scarlet_40"
       android:visibility="visible"

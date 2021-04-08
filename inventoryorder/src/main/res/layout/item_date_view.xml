@@ -8,8 +8,7 @@
   </data>
 
   <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:orientation="vertical">
 
     <View
@@ -19,8 +18,7 @@
 
     <com.framework.views.customViews.CustomTextView
         android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginBottom="@dimen/size_8"
         android:background="@color/lightest_grey_10"
         android:gravity="center_horizontal"

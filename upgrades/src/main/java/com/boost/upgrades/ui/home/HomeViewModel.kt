@@ -32,6 +32,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var allVideoDetails: MutableLiveData<List<YoutubeVideoModel>> = MutableLiveData()
     var expertConnectDetails: MutableLiveData<ExpertConnect> = MutableLiveData()
     var promoBanners: MutableLiveData<List<PromoBanners>> = MutableLiveData()
+    var marketplaceOffers: MutableLiveData<List<PromoBanners>> = MutableLiveData()
+    var promoBannersList: MutableLiveData<List<PromoBanners>> = MutableLiveData()
+    val promoList = ArrayList<PromoBanners>()
     var partnerZone: MutableLiveData<List<PartnerZone>> = MutableLiveData()
     var feedbackLink: MutableLiveData<String> = MutableLiveData()
 
@@ -78,6 +81,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun getPromoBanners(): LiveData<List<PromoBanners>> {
         return promoBanners
+    }
+
+    fun promoBannerAndMarketOfferResult(): LiveData<List<PromoBanners>> {
+        return promoBannersList
     }
 
     fun getPartnerZone(): LiveData<List<PartnerZone>> {
@@ -385,6 +392,54 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                             val promoBannerFilter = (it.Data[0].promo_banners
                                                     ?: ArrayList()).promoBannerFilter(expCode, fpTag)
                                             promoBanners.postValue(promoBannerFilter)
+
+                                            promoList.addAll(promoBannerFilter)
+                                            //marketplace offers
+                                            if (it.Data[0].marketplace_offers != null && it.Data[0].marketplace_offers.size > 0) {
+//                                            marketplaceOffers.value = it.Data[0].marketplace_offers
+                                                marketplaceOffers.postValue(it.Data[0].marketplace_offers)
+                                                val marketplaceOffersFilter = (it.Data[0].marketplace_offers
+                                                        ?: ArrayList()).promoMarketOfferFilter(expCode, fpTag)
+                                                promoList.addAll(marketplaceOffersFilter)
+                                                promoBannersList.postValue(promoList)
+                                                var marketOfferData = arrayListOf<MarketOfferModel>()
+                                                for (item in marketplaceOffersFilter){
+                                                    marketOfferData.add(MarketOfferModel(
+                                                            item.coupon_code,
+                                                            item.extra_information,
+                                                            item.createdon,
+                                                            item.updatedon,
+                                                            item._kid,
+                                                            item.websiteid,
+                                                            item.isarchived,
+                                                            item.expiry_date,
+                                                            item.title,
+                                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) Gson().toJson(item.exclusive_to_categories) else null,
+                                                            if (item.image != null) item.image.url else null,
+                                                            if (item.cta_offer_identifier != null) item.cta_offer_identifier else null,
+                                                    ))
+                                                }
+                                                Completable.fromAction {
+                                                    AppDatabase.getInstance(getApplication())!!
+                                                            .marketOffersDao()
+                                                            .insertAllMarketOffers(marketOfferData)
+                                                }
+                                                        .subscribeOn(Schedulers.io())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .doOnComplete {
+                                                            Log.i("insertMarketOffers", "Successfully")
+
+                                                        }
+                                                        .doOnError {
+                                                            updatesError.postValue(it.message)
+                                                            updatesLoader.postValue(false)
+                                                        }
+                                                        .subscribe()
+
+                                            }else{
+                                                promoBannersList.postValue(promoList)
+                                            }
+
                                         }
 
                                         //partnerZone
