@@ -142,6 +142,7 @@
               android:id="@+id/playerView"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_200"
+              app:player_layout_id="@layout/exo_player_ui"
               app:buffered_color="@color/gray_light_3"
               app:played_color="@color/red_F40000"
               app:show_buffering="always" />
