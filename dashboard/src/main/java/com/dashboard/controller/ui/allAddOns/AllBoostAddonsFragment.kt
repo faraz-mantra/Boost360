@@ -75,7 +75,11 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
       if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
         dataAction.actionItem?.forEach { it2 -> it2.manageBusinessList = ArrayList(it2.manageBusinessList?.filter { it3 -> !it3.isHide } ?: ArrayList()) }
-        dataAction.actionItem?.map { it2 -> it2.manageBusinessList?.map { it3 -> if (it3.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it3.premiumCode).not()) it3.isLock = true } }
+        dataAction.actionItem?.map { it2 -> it2.manageBusinessList?.map { it3 ->
+          if (it3.premiumCode.isNullOrEmpty().not()){
+            it3.isLock = session.checkIsPremiumUnlock(it3.premiumCode).not()
+          }
+        } }
         addOnsList.clear()
         addOnsListFilter.clear()
         val list = setLastSeenData(dataAction.actionItem!!)

@@ -185,8 +185,7 @@
             style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
             android:layout_marginEnd="@dimen/size_20"
             android:background="@color/white"
-            android:text="@string/cancel"
-            android:textColor="@color/orange" />
+            android:text="@string/cancel" />
 
         <com.framework.views.customViews.CustomButton
             android:id="@+id/buttonDone"

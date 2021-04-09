@@ -32,32 +32,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_fragment_title"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 style="@style/wrap_wrap"
-                android:fontFamily="@font/lato"
-                android:text="@string/learning_about"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.06"
-                app:layout_constraintStart_toEndOf="@+id/civ_back"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.35" />
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_fragment_subject"
-                style="@style/wrap_wrap"
-                android:fontFamily="@font/lato"
-                android:text="@string/staff_profile"
-                android:textColor="@color/white"
-                android:textSize="16sp"
+                android:layout_marginStart="@dimen/size_10"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@+id/ctv_fragment_title"
-                app:layout_constraintTop_toBottomOf="@+id/ctv_fragment_title"
-                app:layout_constraintVertical_bias="0.01" />
+                app:layout_constraintStart_toEndOf="@+id/civ_back"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_fragment_title"
+                    style="@style/wrap_wrap"
+                    android:fontFamily="@font/lato"
+                    android:text="@string/learning_about"
+                    android:textColor="@color/white" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_fragment_subject"
+                    style="@style/wrap_wrap"
+                    android:fontFamily="@font/lato"
+                    android:text="@string/staff_profile"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             <com.framework.views.customViews.CustomImageView
                 style="@style/wrap_wrap"
