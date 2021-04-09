@@ -2705,7 +2705,7 @@
             },
             {
               "businessType": "ic_staff_profile_d",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "STAFFPROFILE",
               "title": "Staff\nProfile"
@@ -3074,7 +3074,7 @@
             },
             {
               "businessType": "ic_staff_profile_d",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "STAFFPROFILE",
               "title": "Staff\nProfile"
@@ -3457,7 +3457,7 @@
             },
             {
               "businessType": "ic_staff_profile_d",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "STAFFPROFILE",
               "title": "Staff\nProfile"

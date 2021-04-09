@@ -25,7 +25,7 @@ import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 import java.util.*
 
-class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLearnAboutAppointmentMgmtBinding, TutorialViewModel>() {
+class LearnHowItWorkBottomSheet : BaseBottomSheetDialog<BottomSheetLearnAboutAppointmentMgmtBinding, TutorialViewModel>() {
 
   private var data: LearnAboutAppointmentMgmt? = null
 
@@ -58,7 +58,7 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
 
 
   private fun setData() {
-    viewModel?.getLearnAppointmentmgmtResponse()?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getLearnStaffResponse()?.observeOnce(viewLifecycleOwner, {
       this.data = it
       binding?.ctvHowItWorksContent?.text = data?.contents?.description
       val pagerAdapter = PagerAdapter(childFragmentManager, behavior = FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, data?.contents?.videos)
@@ -130,8 +130,8 @@ class LearnAboutAppointmentMgmtBottomSheet : BaseBottomSheetDialog<BottomSheetLe
       }
       binding?.actionReadFaq -> {
         dismiss()
-        val bottomSheetAppointmentFaq = BottomSheetAppointmentFaq()
-        bottomSheetAppointmentFaq.show(parentFragmentManager, BottomSheetAppointmentFaq::class.java.name)
+        val bottomSheetAppointmentFaq = FAQsReadBottomSheet()
+        bottomSheetAppointmentFaq.show(parentFragmentManager, FAQsReadBottomSheet::class.java.name)
       }
       binding?.actionContactSupport -> {
       }
@@ -188,11 +188,12 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
     val videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
     setView(videosItem)
     binding?.root?.setOnClickListener {
-      val bottomSheetTutorialVideos = BottomSheetTutorialVideos()
+      val bottomSheetTutorialVideos = TutorialVideosBottomSheet()
       val bundle = Bundle()
       bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, videosItem)
       bottomSheetTutorialVideos.arguments = bundle
-      bottomSheetTutorialVideos.show(parentFragmentManager, BottomSheetTutorialVideos::class.java.name)
+      bottomSheetTutorialVideos.isCancelable=false
+      bottomSheetTutorialVideos.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
     }
 
   }
