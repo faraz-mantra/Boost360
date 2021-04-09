@@ -34,36 +34,36 @@ class SplashActivity : AppCompatActivity() {
     startActivity(intent);
     finish();
 
-//    /*if (intent != null) {
-//      val uri = intent.data ?: null
-//      if (uri == null) {
-//        if (uri.toString().contains("onelink", true)) {
-//          if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-//            deepLinkViewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
-//            deepLinkFpId = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpId.name] ?: ""
-//            deepLinkFpTag = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpTag.name] ?: ""
-//            deepLinkDay = AppsFlyerUtils.sAttributionData[DynamicLinkParams.day.name] ?: ""
-//          }
-//        } else {
-//          val deepHashMap = FirebaseDynamicLinksManager().getURILinkParams(uri)
-//          if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
-//            deepLinkViewType = deepHashMap[DynamicLinkParams.viewType] ?: ""
-//            deepLinkFpId = deepHashMap[DynamicLinkParams.fpId] ?: ""
-//            deepLinkFpTag = deepHashMap[DynamicLinkParams.fpTag] ?: ""
-//            deepLinkDay = deepHashMap[DynamicLinkParams.day] ?: ""
-//          }
-//        }
-//      }
-//    }
-//    val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", 0)
-//    isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
-//    isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
-//
-//    if (isUserLoggedIn) {
-//      val profileId = pref.getString("user_profile_id", null)
-//      isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
-//    }
-//    onCreateView()*/
+    /*if (intent != null) {
+      val uri = intent.data ?: null
+      if (uri == null) {
+        if (uri.toString().contains("onelink", true)) {
+          if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+            deepLinkViewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+            deepLinkFpId = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpId.name] ?: ""
+            deepLinkFpTag = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpTag.name] ?: ""
+            deepLinkDay = AppsFlyerUtils.sAttributionData[DynamicLinkParams.day.name] ?: ""
+          }
+        } else {
+          val deepHashMap = FirebaseDynamicLinksManager().getURILinkParams(uri)
+          if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+            deepLinkViewType = deepHashMap[DynamicLinkParams.viewType] ?: ""
+            deepLinkFpId = deepHashMap[DynamicLinkParams.fpId] ?: ""
+            deepLinkFpTag = deepHashMap[DynamicLinkParams.fpTag] ?: ""
+            deepLinkDay = deepHashMap[DynamicLinkParams.day] ?: ""
+          }
+        }
+      }
+    }
+    val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", 0)
+    isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
+    isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
+
+    if (isUserLoggedIn) {
+      val profileId = pref.getString("user_profile_id", null)
+      isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
+    }
+    onCreateView()*/
   }
 
   private fun onCreateView() {
