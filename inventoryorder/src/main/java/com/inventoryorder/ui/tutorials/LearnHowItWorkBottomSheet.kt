@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.observeOnce
 import com.framework.views.customViews.CustomTextView
@@ -18,19 +17,19 @@ import com.inventoryorder.BaseOrderApplication
 import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseFragment
 import com.inventoryorder.constant.IntentConstant
-import com.inventoryorder.databinding.BottomSheetLearnAboutAppointmentMgmtBinding
+import com.inventoryorder.databinding.BottomSheetLearnHowItWorksBinding
 import com.inventoryorder.databinding.FragmentVideoPagerItemBinding
 import com.inventoryorder.ui.tutorials.model.LearnAboutAppointmentMgmt
 import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 import java.util.*
 
-class LearnHowItWorkBottomSheet : BaseBottomSheetDialog<BottomSheetLearnAboutAppointmentMgmtBinding, TutorialViewModel>() {
+class LearnHowItWorkBottomSheet : BaseBottomSheetDialog<BottomSheetLearnHowItWorksBinding, TutorialViewModel>() {
 
   private var data: LearnAboutAppointmentMgmt? = null
 
   override fun getLayout(): Int {
-    return R.layout.bottom_sheet_learn_about_appointment_mgmt
+    return R.layout.bottom_sheet_learn_how_it_works
   }
 
   override fun getViewModelClass(): Class<TutorialViewModel> {
@@ -188,19 +187,24 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
     val videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
     setView(videosItem)
     binding?.root?.setOnClickListener {
-      val bottomSheetTutorialVideos = TutorialVideosBottomSheet()
-      val bundle = Bundle()
-      bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, videosItem)
-      bottomSheetTutorialVideos.arguments = bundle
-      bottomSheetTutorialVideos.isCancelable=false
-      bottomSheetTutorialVideos.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
+      openTutorialBottomSheet(videosItem)
     }
 
+  }
+
+  private fun openTutorialBottomSheet(videosItem: VIDEOSItem?) {
+    val bottomSheetTutorialVideos = TutorialVideosBottomSheet()
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, videosItem)
+    bottomSheetTutorialVideos.arguments = bundle
+    bottomSheetTutorialVideos.isCancelable = false
+    bottomSheetTutorialVideos.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
   }
 
   private fun setView(videosItem: VIDEOSItem?) {
     binding?.ctvVideoTitle?.text = videosItem?.videoTitle
     binding?.ctvVideoDuration?.text = videosItem?.videoLength
-    Glide.with(baseActivity).load(videosItem?.videoUrl).apply(RequestOptions()).thumbnail(0.1f).into(binding?.videoThumbnails!!)
+//    Glide.with(baseActivity).load(videosItem?.videoThumbnails).apply(RequestOptions()).thumbnail().into(binding?.videoThumbnails!!))
+    Glide.with(baseActivity).load(videosItem?.videoThumbnails).into(binding?.videoThumbnails!!)
   }
 }
