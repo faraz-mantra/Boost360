@@ -75,4 +75,5 @@
     <color name="website_url">@color/white</color>
     <color name="yellow_ffb900">@color/colorPrimary</color>
     <color name="yellow_f5b200">@color/colorPrimaryDark</color>
+    <color name="light_grey_boost_jio">@android:color/transparent</color>
 </resources>
