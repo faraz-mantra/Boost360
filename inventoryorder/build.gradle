@@ -39,7 +39,4 @@ android {
 dependencies {
     api project(path: ':resources')
     api project(path: ':onboarding')
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.12.0'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.12.0'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.0'
 }

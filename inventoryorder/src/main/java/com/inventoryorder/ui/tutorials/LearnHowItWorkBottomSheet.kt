@@ -192,6 +192,7 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
       val bundle = Bundle()
       bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, videosItem)
       bottomSheetTutorialVideos.arguments = bundle
+      bottomSheetTutorialVideos.isCancelable=false
       bottomSheetTutorialVideos.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
     }
 

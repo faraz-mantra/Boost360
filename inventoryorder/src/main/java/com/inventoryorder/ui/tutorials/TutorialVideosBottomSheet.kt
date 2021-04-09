@@ -1,23 +1,21 @@
 package com.inventoryorder.ui.tutorials
 
 import android.content.DialogInterface
-import android.net.Uri
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.exoFullScreen.MediaPlayer
+import com.framework.exoFullScreen.preparePlayer
+import com.framework.exoFullScreen.setSource
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseFragment
 import com.inventoryorder.constant.IntentConstant
@@ -32,11 +30,11 @@ import com.inventoryorder.ui.tutorials.model.AllTutorialsItem
 import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 
-class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnAppointmentMgmtBinding, TutorialViewModel>(), Player.EventListener {
+class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnAppointmentMgmtBinding, TutorialViewModel>() {
 
-  private lateinit var simpleExoplayer: SimpleExoPlayer
   private var playbackPosition: Long = 0
   private var videosItem: VIDEOSItem? = null
+  private var viewClose:View?=null
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_tutorials_on_appointment_mgmt
@@ -46,8 +44,8 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     return TutorialViewModel::class.java
   }
 
-
   override fun onCreateView() {
+    setupBackPressListener()
     getBundle()
     setOnClickListener(binding?.civBack, binding?.civClose)
     viewModel?.getTutorialsStaffList()?.observeOnce(viewLifecycleOwner, {
@@ -57,6 +55,18 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
         binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
       else binding?.tabLayout?.gone()
     })
+  }
+
+  private fun setupBackPressListener() {
+    this.view?.isFocusableInTouchMode = true
+    this.view?.requestFocus()
+    this.view?.setOnKeyListener { _, keyCode, _ ->
+      if (keyCode == KeyEvent.KEYCODE_BACK) {
+        viewClose?.performClick()
+        true
+      } else
+        false
+    }
   }
 
   override fun onClick(v: View) {
@@ -78,72 +88,56 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
     binding?.ctvVideoTitle?.text = videosItem?.videoTitle
   }
 
+  override fun onPause() {
+    super.onPause()
+    MediaPlayer.pausePlayer()
+  }
+
   override fun onStart() {
     super.onStart()
     initializePlayer()
   }
 
   override fun onStop() {
-    releasePlayer()
+    MediaPlayer.stopPlayer()
     super.onStop()
 
   }
 
   override fun onDismiss(dialog: DialogInterface) {
-    releasePlayer()
+    MediaPlayer.stopPlayer()
     super.onDismiss(dialog)
   }
 
   override fun onDetach() {
-    releasePlayer()
+    MediaPlayer.stopPlayer()
     super.onDetach()
   }
 
   override fun onDestroy() {
-    releasePlayer()
+    MediaPlayer.stopPlayer()
     super.onDestroy()
   }
 
   private fun initializePlayer() {
-    simpleExoplayer = SimpleExoPlayer.Builder(requireContext()).build()
-    preparePlayer(videosItem?.videoUrl.toString())
-    binding?.videoView?.player = simpleExoplayer
-    simpleExoplayer.seekTo(playbackPosition)
-    simpleExoplayer.playWhenReady = true
-    simpleExoplayer.addListener(this)
+    MediaPlayer.initialize(baseActivity)
+    viewClose =  MediaPlayer.exoPlayer?.preparePlayer(binding?.playerView!!, baseActivity, true)
+    MediaPlayer.exoPlayer?.setSource(playbackPosition,baseActivity, videosItem?.videoUrl.toString())
+    MediaPlayer.startPlayer()
   }
 
-  private val dataSourceFactory: DataSource.Factory by lazy {
-    DefaultDataSourceFactory(requireContext(), getString(R.string.app_name))
-  }
-
-  private fun buildMediaSource(uri: Uri): MediaSource {
-    return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
-  }
-
-
-  private fun preparePlayer(videoUrl: String) {
-    val uri = Uri.parse(videoUrl)
-    val mediaSource = buildMediaSource(uri)
-    simpleExoplayer.prepare(mediaSource)
-  }
-
-  private fun releasePlayer() {
-    if (this::simpleExoplayer.isInitialized) {
-      playbackPosition = simpleExoplayer.currentPosition
-      binding?.videoView?.player?.stop()
-      binding?.videoView?.player?.release()
-      simpleExoplayer.playWhenReady = false
-      simpleExoplayer.stop()
-      simpleExoplayer.clearVideoSurface()
-      simpleExoplayer.seekTo(0)
-      simpleExoplayer.release()
-    }
-  }
-
-  override fun onPlayerError(error: ExoPlaybackException) {
-    // handle error
-  }
+//  private fun releasePlayer() {
+//    if (this::simpleExoplayer.isInitialized) {
+//      playbackPosition = simpleExoplayer.currentPosition
+//      binding?.videoView?.player?.stop()
+//      binding?.videoView?.player?.release()
+//      simpleExoplayer.playWhenReady = false
+//      simpleExoplayer.stop()
+//      simpleExoplayer.clearVideoSurface()
+//      simpleExoplayer.seekTo(0)
+//      simpleExoplayer.release()
+//    }
+//  }
 
 }
 
@@ -201,6 +195,7 @@ class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, Tutori
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, item as? AllTutorialsItem)
         bottomSheetTutorialVideos.arguments = bundle
+        bottomSheetTutorialVideos.isCancelable = false
         bottomSheetTutorialVideos.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
       }
     }

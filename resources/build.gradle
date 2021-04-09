@@ -38,8 +38,6 @@ android {
 
 dependencies {
     api project(path: ':framework')
-    //Webengage Library
-    api 'com.webengage:android-sdk:3.+'
     //calednar row
     api 'com.michalsvec:single-row-calednar:1.0.0'
     // MY added libraries
