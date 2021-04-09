@@ -27,4 +27,6 @@ data class ContentVideo(
 		val videoTitle: String? = null,
 		@field:SerializedName("video length")
 		var videoLength: String? = null,
+		@field:SerializedName("video thumbnails")
+		var videoThumbnails: String? = null,
 )
