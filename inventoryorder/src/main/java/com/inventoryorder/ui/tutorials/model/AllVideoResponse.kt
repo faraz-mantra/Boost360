@@ -18,7 +18,8 @@ data class AllTutorialsItem(
 
 		@field:SerializedName("video url")
 		var videoUrl: String? = null,
-
+		@field:SerializedName("video thumbnails")
+		var videoThumbnails: String? = null,
 		@field:SerializedName("video title")
 		var videoTitle: String? = null,
 		@field:SerializedName("video length")

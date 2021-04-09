@@ -14,13 +14,11 @@ import com.framework.exoFullScreen.preparePlayer
 import com.framework.exoFullScreen.setSource
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.Player
 import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseFragment
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.databinding.BottomSheetTutorialsOnAppointmentMgmtBinding
+import com.inventoryorder.databinding.BottomSheetTutorialsOnStaffProfileBinding
 import com.inventoryorder.databinding.FragmentAllTutorialsBinding
 import com.inventoryorder.databinding.FragmentTutorialDescBinding
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
@@ -30,14 +28,14 @@ import com.inventoryorder.ui.tutorials.model.AllTutorialsItem
 import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 
-class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnAppointmentMgmtBinding, TutorialViewModel>() {
+class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnStaffProfileBinding, TutorialViewModel>() {
 
   private var playbackPosition: Long = 0
   private var videosItem: VIDEOSItem? = null
-  private var viewClose:View?=null
+  private var viewClose: View? = null
 
   override fun getLayout(): Int {
-    return R.layout.bottom_sheet_tutorials_on_appointment_mgmt
+    return R.layout.bottom_sheet_tutorials_on_staff_profile
   }
 
   override fun getViewModelClass(): Class<TutorialViewModel> {
@@ -55,8 +53,9 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
         binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
       else binding?.tabLayout?.gone()
     })
-  }
+    getBehaviour().isDraggable = false
 
+  }
   private fun setupBackPressListener() {
     this.view?.isFocusableInTouchMode = true
     this.view?.requestFocus()
@@ -95,7 +94,13 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnAp
 
   override fun onStart() {
     super.onStart()
+    dialog?.window?.setWindowAnimations(-1)
     initializePlayer()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    dialog?.window?.setWindowAnimations(-1)
   }
 
   override fun onStop() {
