@@ -85,7 +85,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       getListServiceFilterApi()
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
-      setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService)
+      setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService, binding?.staffEmpty?.btnHowWork)
     }
   }
 
@@ -285,6 +285,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)
       }
       binding?.staffLock?.btnStaffAddOns -> startStorePage()
+      binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
     }
   }
 

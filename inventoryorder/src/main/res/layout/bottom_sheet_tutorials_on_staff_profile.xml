@@ -3,37 +3,37 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-      style="@style/match_match"
-      android:keepScreenOn="true">
+    style="@style/match_match"
+    android:keepScreenOn="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_bottom_sheet_tutorial_title"
-        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.10"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1">
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:background="@drawable/bg_bottom_sheet_tutorial_title"
+      app:layout_constraintBottom_toTopOf="@+id/nestedScrollView2"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHeight_default="percent"
+      app:layout_constraintHeight_percent="0.10"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="1">
 
 
       <com.framework.views.roundedimageview.RoundedImageView
-          android:id="@+id/civ_back"
-          android:layout_width="@dimen/size_30"
-          android:layout_height="@dimen/size_30"
-          android:background="#585959"
-          android:foreground="?attr/selectableItemBackground"
-          android:padding="@dimen/size_8"
-          android:src="@drawable/ic_back_arrow_left"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.05"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:riv_corner_radius="@dimen/size_8"
-          app:riv_mutate_background="true"
-          app:riv_oval="true" />
+        android:id="@+id/civ_back"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
+        android:background="#585959"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="@dimen/size_8"
+        android:src="@drawable/ic_back_arrow_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="@dimen/size_8"
+        app:riv_mutate_background="true"
+        app:riv_oval="true" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
         style="@style/wrap_wrap"
@@ -139,13 +139,15 @@
           app:layout_constraintTop_toTopOf="parent">
 
           <com.google.android.exoplayer2.ui.PlayerView
-              android:id="@+id/playerView"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/size_200"
-              app:player_layout_id="@layout/exo_player_ui"
-              app:buffered_color="@color/gray_light_3"
-              app:played_color="@color/red_F40000"
-              app:show_buffering="always" />
+            android:id="@+id/playerView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_200"
+            app:buffered_color="@color/gray_light_3"
+            app:played_color="@color/red_F40000"
+            app:player_layout_id="@layout/exo_player_ui"
+            app:show_buffering="always"
+            app:resize_mode="fill"
+            app:use_artwork="true" />
           <!--                    <com.google.android.exoplayer2.ui.PlayerView-->
           <!--                        android:id="@+id/video_view"-->
           <!--                        android:layout_width="match_parent"-->
