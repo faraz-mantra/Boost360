@@ -34,18 +34,8 @@ fun SimpleExoPlayer.preparePlayer(playerView: PlayerView, context: AppCompatActi
     val normalScreenButton: ImageView = playerViewFullscreen.findViewById(R.id.exo_fullscreen_icon)
     fullScreenButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_fullscreen_open))
     normalScreenButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_fullscreen_close))
-    fullScreenButton.setOnClickListener {
-      context.window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
-      context.supportActionBar?.hide()
-      if (forceLandscape)
-        context.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-      playerView.visibility = View.GONE
-      playerViewFullscreen.visibility = View.VISIBLE
-      PlayerView.switchTargetView(this@preparePlayer, playerView, playerViewFullscreen)
-    }
-    normalScreenButton.setOnClickListener {
-      closeExoplayer(context, forceLandscape, playerView, playerViewFullscreen)
-    }
+    fullScreenButton.setOnClickListener { fullScreenExoPlayer(context, forceLandscape, playerView, playerViewFullscreen) }
+    normalScreenButton.setOnClickListener { fullScreenCloseExoplayer(context, forceLandscape, normalScreenButton, playerView, playerViewFullscreen) }
     playerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT
     playerView.player = this@preparePlayer
     return normalScreenButton
@@ -55,12 +45,24 @@ fun SimpleExoPlayer.preparePlayer(playerView: PlayerView, context: AppCompatActi
   return null
 }
 
-private fun SimpleExoPlayer.closeExoplayer(context: AppCompatActivity, forceLandscape: Boolean, playerView: PlayerView, playerViewFullscreen: PlayerView) {
-  val normalScreenButton: ImageView = playerViewFullscreen.findViewById(R.id.exo_fullscreen_icon)
-  context.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+private fun SimpleExoPlayer.fullScreenExoPlayer(context: AppCompatActivity, forceLandscape: Boolean, playerView: PlayerView, playerViewFullscreen: PlayerView) {
+  context.window.decorView.apply {
+    systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+//        (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN )
+  }
+  context.supportActionBar?.hide()
+  if (forceLandscape) context.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+  playerView.visibility = View.GONE
+  playerViewFullscreen.visibility = View.VISIBLE
+  PlayerView.switchTargetView(this, playerView, playerViewFullscreen)
+}
+
+private fun SimpleExoPlayer.fullScreenCloseExoplayer(context: AppCompatActivity, forceLandscape: Boolean, normalScreenButton: ImageView, playerView: PlayerView, playerViewFullscreen: PlayerView) {
+  context.window.decorView.apply { systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE }
   context.supportActionBar?.show()
-  if (forceLandscape)
-    context.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+  if (forceLandscape) context.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
   normalScreenButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_fullscreen_close))
   playerView.visibility = View.VISIBLE
   playerViewFullscreen.visibility = View.GONE
@@ -68,12 +70,10 @@ private fun SimpleExoPlayer.closeExoplayer(context: AppCompatActivity, forceLand
 }
 
 fun SimpleExoPlayer.setSource(playbackPosition: Long, context: Context, url: String) {
-  val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(context, Util.getUserAgent(context, "app"))
+  val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(context, Util.getUserAgent(context, "Boost"))
   val videoSource: MediaSource =
-      if (url.endsWith("m3u8") || url.endsWith("m3u"))
-        HlsMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url))
-      else
-        ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url))
+      if (url.endsWith("m3u8") || url.endsWith("m3u")) HlsMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url))
+      else ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url))
   this.prepare(videoSource)
   this.seekTo(playbackPosition)
   this.playWhenReady = true

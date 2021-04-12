@@ -43,48 +43,42 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnSt
   }
 
   override fun onCreateView() {
-    setupBackPressListener()
     getBundle()
+    setupBackPressListener()
     setOnClickListener(binding?.civBack, binding?.civClose)
     viewModel?.getTutorialsStaffList()?.observeOnce(viewLifecycleOwner, {
       val tutorialPagerAdapter = TutorialPagerAdapter(childFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, it.contents?.allTutorials)
       binding?.viewPagerTutorials?.adapter = tutorialPagerAdapter
-      if (it.contents?.allTutorials?.size ?: 0 > 1)
-        binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
+      if (it.contents?.allTutorials?.size ?: 0 > 1) binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
       else binding?.tabLayout?.gone()
     })
-    getBehaviour().isDraggable = false
-
-  }
-  private fun setupBackPressListener() {
-    this.view?.isFocusableInTouchMode = true
-    this.view?.requestFocus()
-    this.view?.setOnKeyListener { _, keyCode, _ ->
-      if (keyCode == KeyEvent.KEYCODE_BACK) {
-        viewClose?.performClick()
-        true
-      } else
-        false
-    }
-  }
-
-  override fun onClick(v: View) {
-    super.onClick(v)
-    when (v) {
-      binding?.civBack -> {
-        dismiss()
-        val learnAboutAppointmentMgmtBottomSheet = LearnHowItWorkBottomSheet()
-        learnAboutAppointmentMgmtBottomSheet.show(childFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
-      }
-      binding?.civClose -> {
-        dismiss()
-      }
-    }
   }
 
   private fun getBundle() {
     this.videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
     binding?.ctvVideoTitle?.text = videosItem?.videoTitle
+  }
+  
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.civBack, binding?.civClose -> dismiss()
+    }
+  }
+
+  override fun isDraggable(): Boolean? {
+    return false
+  }
+
+  private fun setupBackPressListener() {
+    this.view?.isFocusableInTouchMode = true
+    this.view?.requestFocus()
+    this.view?.setOnKeyListener { _, keyCode, _ ->
+      if (keyCode == KeyEvent.KEYCODE_BACK) {
+        viewClose?.post { viewClose?.performClick() }
+        true
+      } else false
+    }
   }
 
   override fun onPause() {
@@ -94,40 +88,33 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnSt
 
   override fun onStart() {
     super.onStart()
-    dialog?.window?.setWindowAnimations(-1)
     initializePlayer()
   }
 
-  override fun onResume() {
-    super.onResume()
-    dialog?.window?.setWindowAnimations(-1)
-  }
-
   override fun onStop() {
-    MediaPlayer.stopPlayer()
     super.onStop()
-
+    MediaPlayer.stopPlayer()
   }
 
   override fun onDismiss(dialog: DialogInterface) {
-    MediaPlayer.stopPlayer()
     super.onDismiss(dialog)
+    MediaPlayer.stopPlayer()
   }
 
   override fun onDetach() {
-    MediaPlayer.stopPlayer()
     super.onDetach()
+    MediaPlayer.stopPlayer()
   }
 
   override fun onDestroy() {
-    MediaPlayer.stopPlayer()
     super.onDestroy()
+    MediaPlayer.stopPlayer()
   }
 
   private fun initializePlayer() {
     MediaPlayer.initialize(baseActivity)
-    viewClose =  MediaPlayer.exoPlayer?.preparePlayer(binding?.playerView!!, baseActivity, true)
-    MediaPlayer.exoPlayer?.setSource(playbackPosition,baseActivity, videosItem?.videoUrl.toString())
+    viewClose = MediaPlayer.exoPlayer?.preparePlayer(binding?.playerView!!, baseActivity, true)
+    MediaPlayer.exoPlayer?.setSource(playbackPosition, baseActivity, videosItem?.videoUrl.toString())
     MediaPlayer.startPlayer()
   }
 
@@ -225,7 +212,7 @@ class FragmentTutorialDesc : AppBaseFragment<FragmentTutorialDescBinding, Tutori
 
   override fun onCreateView() {
     super.onCreateView()
-    viewModel?.getVideoDetailStaff()?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getVideoDetailStaff()?.observeOnce(viewLifecycleOwner, {
       binding?.ctvSteps?.text = it.contentVideo?.tutorialContents?.joinToString("\n")
     })
   }
