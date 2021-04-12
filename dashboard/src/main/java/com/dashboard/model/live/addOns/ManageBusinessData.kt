@@ -18,10 +18,8 @@ class ManageBusinessData(
     var isHide: Boolean = false,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
 
-  var recyclerViewItemType: Int = RecyclerViewItemType.MANAGE_BUSINESS_ITEM_VIEW.getLayout()
-
   override fun getViewType(): Int {
-    return recyclerViewItemType
+    return RecyclerViewItemType.MANAGE_BUSINESS_ITEM_VIEW.getLayout()
   }
 
 
