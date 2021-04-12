@@ -30,11 +30,11 @@ class SplashActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splash)
 
-    val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+  /*  val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
     startActivity(intent);
-    finish();
+    finish();*/
 
-    /*if (intent != null) {
+    if (intent != null) {
       val uri = intent.data ?: null
       if (uri == null) {
         if (uri.toString().contains("onelink", true)) {
@@ -63,7 +63,7 @@ class SplashActivity : AppCompatActivity() {
       val profileId = pref.getString("user_profile_id", null)
       isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
     }
-    onCreateView()*/
+    onCreateView()
   }
 
   private fun onCreateView() {
