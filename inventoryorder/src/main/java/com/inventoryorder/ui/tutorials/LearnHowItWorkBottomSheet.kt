@@ -186,25 +186,22 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
     super.onCreateView()
     val videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
     setView(videosItem)
-    binding?.root?.setOnClickListener {
-      openTutorialBottomSheet(videosItem)
-    }
-
+    binding?.root?.setOnClickListener { openTutorialBottomSheet(videosItem) }
   }
 
   private fun openTutorialBottomSheet(videosItem: VIDEOSItem?) {
-    val bottomSheetTutorialVideos = TutorialVideosBottomSheet()
+    val tutorialVideosBottomSheet = TutorialVideosBottomSheet()
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, videosItem)
-    bottomSheetTutorialVideos.arguments = bundle
-    bottomSheetTutorialVideos.isCancelable = false
-    bottomSheetTutorialVideos.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
+    tutorialVideosBottomSheet.arguments = bundle
+    tutorialVideosBottomSheet.isCancelable = false
+    tutorialVideosBottomSheet.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
   }
 
   private fun setView(videosItem: VIDEOSItem?) {
     binding?.ctvVideoTitle?.text = videosItem?.videoTitle
     binding?.ctvVideoDuration?.text = videosItem?.videoLength
-//    Glide.with(baseActivity).load(videosItem?.videoThumbnails).apply(RequestOptions()).thumbnail().into(binding?.videoThumbnails!!))
+//    Glide.with(baseActivity).load(videosItem?.videoUrl).apply(RequestOptions()).thumbnail(0.1f).into(binding?.videoThumbnails!!)
     Glide.with(baseActivity).load(videosItem?.videoThumbnails).into(binding?.videoThumbnails!!)
   }
 }
