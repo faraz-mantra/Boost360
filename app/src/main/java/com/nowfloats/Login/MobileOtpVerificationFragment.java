@@ -79,10 +79,13 @@ public class MobileOtpVerificationFragment extends Fragment {
         tvResendUnderline.setVisibility(View.GONE);
 
         new Handler().postDelayed(() -> {
-            String resendValue = getString(R.string.didnt_get_the_code);
-            SpannableString resendString = new SpannableString(resendValue);
-            resendString.setSpan(new UnderlineSpan(),resendValue.length() - 6, resendValue.length(),0);
-            tvResend.setText(resendString);
+            if(null != getActivity()){
+                // getting crash here due to not being attached to context
+                String resendValue = getString(R.string.didnt_get_the_code);
+                SpannableString resendString = new SpannableString(resendValue);
+                resendString.setSpan(new UnderlineSpan(),resendValue.length() - 6, resendValue.length(),0);
+                tvResend.setText(resendString);
+            }
 //            tvResendUnderline.setVisibility(View.VISIBLE);
         }, 30000);
 
