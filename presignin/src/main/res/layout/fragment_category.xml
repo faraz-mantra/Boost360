@@ -65,12 +65,12 @@
                 android:id="@+id/customTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:fontFamily="@font/open_sans_bold"
                 android:text="Select business category"
                 android:textColor="@color/white"
                 android:textSize="24sp"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_16sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/back_iv" />
 
