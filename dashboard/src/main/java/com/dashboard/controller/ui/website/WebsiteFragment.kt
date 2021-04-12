@@ -11,9 +11,9 @@ import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
 import com.dashboard.databinding.FragmentWebsiteBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
 import com.dashboard.model.live.websiteItem.WebsiteDataResponse
-import com.dashboard.pref.BASE_IMAGE_URL
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.UserSessionManager
+import com.framework.pref.BASE_IMAGE_URL
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener

@@ -2,7 +2,6 @@ package com.inventoryorder.ui.order
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
@@ -51,6 +50,7 @@ import com.inventoryorder.ui.order.createorder.SendFeedbackOrderSheetDialog
 import com.inventoryorder.ui.order.createorder.SendReBookingOrderSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
@@ -570,6 +570,10 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun emptyView() {
     binding?.orderRecycler?.gone()
     binding?.errorView?.visible()
+    binding?.btnActionTutorials?.setOnClickListener {
+      val sheet = LearnHowItWorkBottomSheet()
+      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+    }
   }
 
   private fun getRequestFilterData(statusList: ArrayList<String>, paymentStatus: String? = null, operatorType: String = QueryObject.Operator.EQ.name, searchTxt: String = ""): OrderFilterRequest {

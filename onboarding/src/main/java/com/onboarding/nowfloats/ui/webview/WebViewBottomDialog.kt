@@ -104,7 +104,7 @@ class WebViewBottomDialog : BaseBottomSheetDialog<WebViewBottomsheetBinding, Bas
     return true
   }
 
-  override fun getDraggable(): Boolean? {
+  override fun isDraggable(): Boolean? {
     return false
   }
 }

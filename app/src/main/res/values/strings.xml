@@ -3045,4 +3045,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="unable_to_open_facebook">unable to open facebook</string>
     <string name="enter_valid_open_close_timing"><![CDATA[Please enter valid open & close time!]]></string>
 
+<!--    <string name="ir_actionbarBackground">#ffb900</string>-->
+<!--    <string name="ir_statusBarColor">#ffb900</string>-->
+
 </resources>
