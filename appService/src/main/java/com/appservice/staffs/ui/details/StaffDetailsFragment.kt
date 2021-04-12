@@ -38,6 +38,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.firestore.FirestoreManager
 import com.framework.webengageconstant.*
 import java.io.ByteArrayOutputStream
 
@@ -267,10 +268,18 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
       if (t.isSuccess()) {
         addStaffTimings((t as StaffCreateProfileResponse).result)
         showShortToast(getString(R.string.profile_created))
+        onStaffAddedOrUpdated()
         WebEngageController.trackEvent(STAFF_PROFILE_CREATE, ADDED, NO_EVENT_VALUE)
       } else showShortToast(getString(R.string.something_went_wrong))
       hideProgress()
     })
+  }
+
+  private fun onStaffAddedOrUpdated() {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
+    instance.getDrScoreData()?.metricdetail?.boolean_create_staff =true
+    instance.updateDocument()
   }
 
   private fun updateStaffTimings() {

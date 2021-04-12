@@ -20,6 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -42,12 +43,14 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
+import com.boost.upgrades.ui.marketplace_offers.MarketPlaceOfferFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.MARKET_OFFER_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
@@ -193,7 +196,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         }
 
-        share_fb_1.setOnClickListener {
+        refer_and_earn.setOnClickListener {
+            startReferralView()
+        }
+        /*share_fb_1.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, FACEBOOK_MESSENGER, NO_EVENT_VALUE)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
@@ -237,8 +243,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 )
             }
 
-        }
-        share_referal.setOnClickListener {
+        }*/
+        /*share_referal.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, CARD, NO_EVENT_VALUE)
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
@@ -248,7 +254,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             )
             sendIntent.type = "text/plain"
             startActivity(sendIntent)
-        }
+        }*/
 
 //        if(::localStorage.isInitialized) {
 //            cart_list = localStorage.getCartItems()
@@ -403,7 +409,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         val referralText = SpannableString(getString(R.string.upgrade_boost_tnc_link))
         referralText.setSpan(UnderlineSpan(), 0, referralText.length, 0)
         boost360_tnc.text = referralText
-        boost360_tnc.setOnClickListener {
+        /*boost360_tnc.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_TN_C_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
@@ -413,9 +419,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     webViewFragment,
                     Constants.WEB_VIEW_FRAGMENT
             )
-        }
+        }*/
 
-        val refText = SpannableString(getString(R.string.referral_card_explainer_text))
+       /* val refText = SpannableString(getString(R.string.referral_card_explainer_text))
         refText.setSpan(StyleSpan(Typeface.BOLD), 18, 26, 0)
         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
         refText.setSpan(
@@ -425,6 +431,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 0
         )
         ref_txt.text = refText
+        ref_txt.text = "Get special discounts for you and your friends after successful signup."*/
     }
 
     fun loadData() {
@@ -679,6 +686,25 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         })
 
+        viewModel.promoBannerAndMarketOfferResult().observe(this, androidx.lifecycle.Observer {
+            if (it.size > 0) {
+                if (shimmer_view_banner.isShimmerStarted) {
+                    shimmer_view_banner.stopShimmer()
+                    shimmer_view_banner.visibility = View.GONE
+                }
+//                updateBannerViewPager(it)
+                banner_layout.visibility = View.VISIBLE
+            } else {
+                if (shimmer_view_banner.isShimmerStarted) {
+                    shimmer_view_banner.stopShimmer()
+                    shimmer_view_banner.visibility = View.GONE
+                }
+                banner_layout.visibility = View.GONE
+            }
+
+        })
+
+
         viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
@@ -730,7 +756,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     fun updateAddonCategoryRecycler(list: List<FeaturesModel>) {
         val addonsCategoryTypes = arrayListOf<String>()
         for (singleFeaturesModel in list) {
-            if (!addonsCategoryTypes.contains(singleFeaturesModel.target_business_usecase)) {
+            if (singleFeaturesModel.target_business_usecase != null && !addonsCategoryTypes.contains(singleFeaturesModel.target_business_usecase)) {
                 addonsCategoryTypes.add(singleFeaturesModel.target_business_usecase!!)
             }
         }
@@ -1024,6 +1050,45 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                 Constants.WEB_VIEW_FRAGMENT
                         )
                     }
+                } else if (!item.coupon_code.isNullOrBlank() || !item.cta_offer_identifier.isNullOrBlank()) {
+                    if (item.coupon_code != null || item.cta_offer_identifier != null) {
+//Log.v("coupon_code", " "+ item.coupon_code + " "+ item.title)
+                        CompositeDisposable().add(
+                                AppDatabase.getInstance(requireActivity().application)!!
+                                        .marketOffersDao()
+//                                        .getMarketOffersByCouponCode(item!!.coupon_code)
+//                                        .getMarketOffersByCouponCode(if(item!!.coupon_code != null ) item.coupon_code else item.cta_offer_identifier )
+                                        .getMarketOffersById(item.cta_offer_identifier )
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnError {  }
+                                        .subscribe({
+                                            var selectedMarketOfferModel: MarketPlaceOffers? = null
+                                            var item = it
+
+                                            selectedMarketOfferModel = MarketPlaceOffers( coupon_code = item.coupon_code,
+                                                    extra_information = item.extra_information!!,
+                                                    createdon = item.createdon!!,
+                                                    updatedon = item.updatedon!!,
+                                                    _kid = item._kid!!,
+                                                    websiteid = item.websiteid!!,
+                                                    isarchived = item.isarchived!!,
+                                                    expiry_date = item.expiry_date!!,
+                                                    title = item.title!!,
+                                                    exclusive_to_categories = Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                                    image = PrimaryImage(item.image),
+                                            )
+                                            val marketPlaceOfferFragment = MarketPlaceOfferFragment.newInstance()
+                                            val args = Bundle()
+                                            args.putString("marketOffersData", Gson().toJson(selectedMarketOfferModel))
+                                            marketPlaceOfferFragment.arguments = args
+                                            (activity as UpgradeActivity).addFragment(marketPlaceOfferFragment, MARKET_OFFER_FRAGMENT)
+
+                                        }, {
+                                            it.printStackTrace()
+                                        })
+                        )
+                    }
                 }
             }
         }
@@ -1179,7 +1244,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
         WebEngageController.trackEvent(VIDEO_GALLERY_CLICKED, CLICK, videoItem.title ?: NO_EVENT_VALUE)
-        Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
+        Log.i("onPlayYouTubeVideo", videoItem.youtube_link?:"")
         val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
 //    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
@@ -1646,7 +1711,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     override fun backComparePress() {
         if (prefs.getCompareState() == 1) {
             prefs.storeCompareState(0)
-            val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+            val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
             val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
             var code: String = (activity as UpgradeActivity).experienceCode!!
             if (!code.equals("null", true)) {
@@ -1654,6 +1719,17 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
 
             viewModel.loadPackageUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
+        }
+    }
+
+    fun startReferralView() {
+        try {
+            WebEngageController.trackEvent(REFER_A_FRIEND, CLICK, TO_BE_ADDED)
+            val webIntent = Intent(activity, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
+            startActivity(webIntent)
+//            overridePendingTransition(0, 0)
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
         }
     }
 }

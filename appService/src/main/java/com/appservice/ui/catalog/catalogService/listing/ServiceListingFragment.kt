@@ -47,6 +47,7 @@ import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.framework.utils.NetworkUtils.isNetworkConnected
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
@@ -155,6 +156,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private fun setServiceDataItems(resultService: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
     val listService = resultService?.data as? ArrayList<ItemsItem>
     if (isSearchString.not()) {
+      onServiceAddedOrUpdated(listService?.size ?: 0)
       if (isFirstLoad) finalList.clear()
       if (listService.isNullOrEmpty().not()) {
         removeLoader()
@@ -174,6 +176,13 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         setAdapterNotify()
       }
     }
+  }
+
+  private fun onServiceAddedOrUpdated(count: Int) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
+    instance.getDrScoreData()?.metricdetail?.number_services_added = count
+    instance.updateDocument()
   }
 
   private fun setAdapterNotify() {

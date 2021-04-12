@@ -7,12 +7,10 @@
   </data>
 
   <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    style="@style/wrap_wrap">
 
     <androidx.cardview.widget.CardView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginStart="@dimen/size_10"
       android:layout_marginTop="@dimen/size_10"
       android:layout_marginEnd="@dimen/size_30"
@@ -20,17 +18,14 @@
       app:cardCornerRadius="@dimen/size_6">
 
       <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:gravity="end"
         android:orientation="vertical">
 
         <TextView
           android:id="@+id/text_remove_item"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/TextSemiBoldStyle"
           android:layout_gravity="start"
-          android:fontFamily="@font/semi_bold"
           android:gravity="start"
           android:paddingStart="@dimen/size_16"
           android:paddingTop="@dimen/size_14"
@@ -38,8 +33,7 @@
           android:paddingBottom="@dimen/size_14"
           android:text="@string/str_remove_item"
           android:textAllCaps="true"
-          android:textColor="@color/red_F40000"
-          android:textSize="14sp" />
+          android:textColor="@color/red_F40000" />
       </LinearLayout>
     </androidx.cardview.widget.CardView>
   </LinearLayout>

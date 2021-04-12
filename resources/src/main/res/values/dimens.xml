@@ -105,6 +105,7 @@
   <dimen name="size_200">200dp</dimen>
   <dimen name="size_210">210dp</dimen>
   <dimen name="size_220">220dp</dimen>
+  <dimen name="size_224">224dp</dimen>
   <dimen name="size_226">226dp</dimen>
   <dimen name="size_230">230dp</dimen>
   <dimen name="size_240">240dp</dimen>

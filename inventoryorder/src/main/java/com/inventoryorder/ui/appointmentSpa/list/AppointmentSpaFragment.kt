@@ -2,7 +2,6 @@ package com.inventoryorder.ui.appointmentSpa.list
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
@@ -10,7 +9,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -50,6 +48,7 @@ import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.*
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
@@ -207,8 +206,12 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   }
 
   private fun emptyView() {
-    binding?.bookingRecycler?.gone()
-    binding?.errorView?.visible()
+      binding?.bookingRecycler?.gone()
+      binding?.errorView?.visible()
+      binding?.btnActionTutorials?.setOnClickListener {
+          val sheet = LearnHowItWorkBottomSheet()
+          sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+      }
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
