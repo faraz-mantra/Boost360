@@ -640,6 +640,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_16"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:id="@+id/view_business_report"
                 android:background="@drawable/ic_bg_dark_white_round"
                 android:orientation="vertical">
 
@@ -772,6 +775,9 @@
               <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:id="@+id/view_website_report"
                 android:orientation="vertical">
 
                 <FrameLayout
