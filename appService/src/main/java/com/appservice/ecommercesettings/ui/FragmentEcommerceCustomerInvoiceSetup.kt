@@ -1,4 +1,4 @@
-package com.appservice.appointment.ui
+package com.appservice.ecommercesettings.ui
 
 import android.content.Intent
 import android.graphics.Paint
@@ -16,7 +16,7 @@ import com.appservice.appointment.widgets.BottomSheetEnterGSTDetails
 import com.appservice.appointment.widgets.BottomSheetTaxInvoicesForPurchases
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
-import com.appservice.databinding.FragmentCustomerInvoiceSetupBinding
+import com.appservice.databinding.FragmentEcommerceCustomerInvoiceSetupBinding
 import com.appservice.model.FileModel
 import com.appservice.rest.TaskCode
 import com.appservice.staffs.ui.UserSession
@@ -28,9 +28,9 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
 
-class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetupBinding, AppointmentSettingsViewModel>() {
+class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceCustomerInvoiceSetupBinding, AppointmentSettingsViewModel>() {
     override fun getLayout(): Int {
-        return R.layout.fragment_customer_invoice_setup
+        return R.layout.fragment_ecommerce_customer_invoice_setup
     }
 
     private var data: PaymentProfileResponse? = null
@@ -47,8 +47,8 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     }
 
     companion object {
-        fun newInstance(): FragmentCustomerInvoiceSetup {
-            return FragmentCustomerInvoiceSetup()
+        fun newInstance(): FragmentEcommerceCustomerInvoiceSetup {
+            return FragmentEcommerceCustomerInvoiceSetup()
         }
     }
 
@@ -63,6 +63,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     private fun getprofileDetails() {
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_payment_details))
     }
+
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
         when (it.taskcode) {
@@ -125,7 +126,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
             binding?.icDoneImg?.visible()
             binding?.signatureHeading?.visible()
             binding?.signature?.visible()
-        }else{
+        } else {
             binding?.icDoneImg?.gone()
             binding?.signatureHeading?.gone()
             binding?.signature?.gone()
@@ -154,8 +155,8 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
 //                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
                 hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(UserSession.clientId, uPIId = binding?.upiId?.text.toString(), UserSession.fpId)), (R.string.error_updating_upi_id))
                 if (imageList.isNotEmpty())
-                hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT), UserSession.clientId,
-                        floatingPointId = UserSession.fpId, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
+                    hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT), UserSession.clientId,
+                            floatingPointId = UserSession.fpId, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
 
             }
             if (it == BottomSheetTaxInvoicesForPurchases.ClickType.CANCEL) {
@@ -253,7 +254,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     }
 
 
-    fun clearImage() {
+    private fun clearImage() {
         imageList.clear()
 
     }
