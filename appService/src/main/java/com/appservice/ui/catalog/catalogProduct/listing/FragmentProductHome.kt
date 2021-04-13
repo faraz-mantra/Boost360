@@ -1,13 +1,18 @@
 package com.appservice.ui.catalog.catalogProduct.listing
 
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentServiceHomeContainerBinding
 import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.catalog.startFragmentActivity
 import com.framework.models.BaseViewModel
 
 class FragmentProductHome : AppBaseFragment<FragmentServiceHomeContainerBinding, BaseViewModel>() {
@@ -84,6 +89,21 @@ class FragmentProductHome : AppBaseFragment<FragmentServiceHomeContainerBinding,
                     return ""
                 }
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_product_listing, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_product_configuration -> {
+                startFragmentActivity(FragmentType.ECOMMERCE_SETTINGS)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

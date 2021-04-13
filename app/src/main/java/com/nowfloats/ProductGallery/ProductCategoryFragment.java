@@ -62,7 +62,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_category, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_category_listing, container, false);
 //        binding.btnStart.setOnClickListener(this);
         return binding.getRoot();
     }

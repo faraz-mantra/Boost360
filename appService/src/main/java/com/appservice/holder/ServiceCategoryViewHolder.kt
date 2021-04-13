@@ -8,8 +8,6 @@ import android.widget.PopupWindow
 import com.appservice.AppServiceApplication
 import com.appservice.R
 import com.appservice.appointment.ui.Category
-import com.appservice.constant.RecyclerViewActionType
-import com.appservice.databinding.ItemCreateCategoryBinding
 import com.appservice.databinding.RecyclerItemServiceCategoryBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -23,7 +21,7 @@ class ServiceCategoryViewHolder(binding: RecyclerItemServiceCategoryBinding) : A
         super.bind(position, item)
         val category = item as Category
         binding.ctvCategory.text = category.name
-        binding.ctvProductCount.text = "${category.countItems} products under this category"
+        binding.ctvProductCount.text = "${category.countItems} service under this category"
         binding.civCategoryMenu.setOnClickListener {
             if (this.popupWindow?.isShowing == true) this.popupWindow?.dismiss() else showPopupWindow(it, item)
         }
