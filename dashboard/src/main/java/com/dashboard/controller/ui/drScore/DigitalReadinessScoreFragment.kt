@@ -82,7 +82,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       val response = it as? DrScoreUiDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val drScoreData = FirestoreManager.getDrScoreData()
-        isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 80)
+        isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 85)
         val drScoreSetupList = drScoreData?.getDrScoreData(response.data)
         if (drScoreSetupList.isNullOrEmpty().not()) {
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }

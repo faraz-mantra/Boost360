@@ -20,6 +20,7 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
+import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
@@ -68,6 +69,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isSecondaryImage = false
   var isLoadShimmer = true
+  var count = 0
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -94,7 +96,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     mNavController.graph = graph
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
-    binding?.navView?.setActiveItem(0)
+//    binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
@@ -177,7 +179,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
 
   fun setPercentageData(score: Int) {
-    val isHigh = (score >= 80)
+    val isHigh = (score >= 85)
     binding?.drawerView?.txtPercentage?.text = "$score% "
     binding?.drawerView?.progressBar?.progress = score
     binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
@@ -201,7 +203,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setDrawerHome() {
-    viewModel.getNavDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
+    viewModel.getNavDashboardData(this).observeOnce(this, {
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         binding?.drawerView?.rvLeftDrawer?.apply {
