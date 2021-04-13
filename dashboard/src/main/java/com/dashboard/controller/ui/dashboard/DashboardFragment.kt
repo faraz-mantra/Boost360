@@ -15,6 +15,9 @@ import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.DashboardActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
+import com.dashboard.controller.ui.dialog.DrScoreDirectionDialog
+import com.dashboard.controller.ui.dialog.DrScoreNewDashboardDialog
+import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.ProgressDashboardDialog
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
@@ -68,6 +71,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 const val IS_FIRST_LOAD = "isFirsLoad"
+const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
@@ -95,7 +99,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   override fun onCreateView() {
-    super.onCreateView()
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
@@ -157,14 +160,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 //        binding?.lowReadinessScoreView?.gone()
 //        showSimmerDrScore(false)
 //      }else{}
-      val isHighDrScore = drScoreData!!.getDrsTotal() >= 80
-      val drScoreSetupList = response?.data?.let { it1 -> drScoreData.getDrScoreData(it1) }
+      val isHighDrScore = drScoreData != null && (drScoreData.getDrsTotal() >= 85)
+      val drScoreSetupList = response?.data?.let { it1 -> drScoreData?.getDrScoreData(it1) }
       if (response?.isSuccess() == true && drScoreSetupList.isNullOrEmpty().not()) {
         if (isHighDrScore.not()) {
           binding?.highReadinessScoreView?.gone()
           binding?.lowReadinessScoreView?.visible()
-          binding?.txtReadinessScore?.text = "${drScoreData.getDrsTotal()}"
-          binding?.progressScore?.progress = drScoreData.getDrsTotal()
+          binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal()}"
+          binding?.progressScore?.progress = drScoreData?.getDrsTotal()?:0
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
           binding?.pagerBusinessSetupLow?.apply {
             binding?.motionOne?.transitionToStart()
@@ -194,13 +197,43 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.motionOne?.transitionToStart()
           baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
           baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+          binding?.viewBusinessReport?.gone()
+          binding?.viewWebsiteReport?.gone()
         } else {
+          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false).not()) welcomeDrScoreDialog()
+          binding?.viewBusinessReport?.visible()
+          binding?.viewWebsiteReport?.visible()
           binding?.highReadinessScoreView?.visible()
           binding?.lowReadinessScoreView?.gone()
         }
         showSimmerDrScore(false)
       } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
     })
+  }
+
+  private fun welcomeDrScoreDialog() {
+    if ((baseActivity as? DashboardActivity)?.count == 0) {
+      DrScoreWelcomeDialog.newInstance().apply {
+        binding?.nestedScrollView?.fullScroll(View.FOCUS_UP)
+        binding?.nestedScrollView?.fling(0)
+        binding?.nestedScrollView?.smoothScrollTo(0, 0)
+        onClicked = {
+          DrScoreDirectionDialog.newInstance().apply {
+            onClicked = {
+              DrScoreNewDashboardDialog.newInstance().apply {
+                onClicked = {
+                  PreferencesUtils.instance.saveData(IS_DR_HIGH_DIALOG, true)
+                }
+                showDialog(this@DashboardFragment.childFragmentManager)
+              }
+            }
+            showDialog(this@DashboardFragment.childFragmentManager)
+          }
+        }
+        showDialog(this@DashboardFragment.childFragmentManager)
+        (baseActivity as? DashboardActivity)?.count = 1
+      }
+    }
   }
 
   private fun setPage(position: Int) {

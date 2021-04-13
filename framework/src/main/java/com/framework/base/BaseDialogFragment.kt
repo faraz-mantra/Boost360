@@ -84,6 +84,7 @@ abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel
     params.height = getHeight() ?: params.height
     window.attributes = params
   }
+
   fun BlurView.setBlur(value: Float) {
     val decorView: View? = activity?.window?.decorView
     val rootView: ViewGroup = decorView?.findViewById(android.R.id.content) as ViewGroup
