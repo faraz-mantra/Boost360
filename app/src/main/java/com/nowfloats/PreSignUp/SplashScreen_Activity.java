@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -70,11 +71,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     Methods.isOnline(this);
     session = new UserSessionManager(this, SplashScreen_Activity.this);
     if (!session.isLoginCheck()) {
-      Intent webIntent = new Intent(this, PreSignUpActivity.class);
-      webIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-      startActivity(webIntent);
-      overridePendingTransition(0, 0);
-      finish();
+      signUpStart();
     } else {
       Bundle bundle = getIntent().getExtras();
       if (getIntent() != null && getIntent().getStringExtra("from") != null) {
@@ -92,6 +89,14 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
       if (mThread == null) mThread = new Thread(new DataRunnable());
       mThread.start();
     }
+  }
+
+  private void signUpStart() {
+    Intent webIntent = new Intent(this, PreSignUpActivity.class);
+    webIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    startActivity(webIntent);
+    overridePendingTransition(0, 0);
+    finish();
   }
 
   private void initLottieAnimation() {
@@ -260,7 +265,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         finish();
       }
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      Log.e("Home Page",e.getLocalizedMessage());
+      session.logoutUser();
     }
   }
 

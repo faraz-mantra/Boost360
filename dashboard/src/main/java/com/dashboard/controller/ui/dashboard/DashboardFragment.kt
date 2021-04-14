@@ -225,17 +225,18 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val response = it as? ManageBusinessDataResponse
         val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (dataAction?.actionItem.isNullOrEmpty().not()) {
-          dataAction!!.actionItem!!.map { it1 ->
+          dataAction?.actionItem?.map { it1 ->
             if (it1.premiumCode.isNullOrEmpty().not()){
               it1.isLock = session.checkIsPremiumUnlock(it1.premiumCode).not()
             }
           }
           if (adapterBusinessData == null) {
             rvManageBusiness.apply {
-              adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
+              adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction?.actionItem!!, this@DashboardFragment)
               adapter = adapterBusinessData
             }
-          } else adapterBusinessData?.notify(dataAction.actionItem!!)
+          } else adapterBusinessData?.notify(dataAction?.actionItem!!)
+
         } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
       })
       btnShowAll.setOnClickListener {
@@ -285,8 +286,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setBusinessSummary(drTotal: Int, totalOrder: String, summary: SummaryEntity?) {
-    val data = BusinessSetupHighData().getData(drTotal, summary?.getNoOfUniqueViews() ?: "0", totalOrder, getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode),
-        summary?.getNoOfMessages() ?: "0")
+    val data = BusinessSetupHighData().getData(drTotal, summary?.getNoOfUniqueViews() ?: "0", totalOrder,
+        getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
     data.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout() }
     if (adapterPagerBusinessUpdate == null) {
       binding?.pagerBusinessSetupHigh?.apply {
