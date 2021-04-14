@@ -5,6 +5,8 @@ import android.content.pm.PackageManager
 import android.os.Handler
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.viewpager2.widget.ViewPager2
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -39,6 +41,7 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
+import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
@@ -87,6 +90,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var ctaFileLink: String? = null
   private var mCurrentPage: Int = 0
 
+
   private var handler = Handler()
   private var runnable = Runnable { showSimmerDrScore(isSimmer = false, isRetry = true) }
 
@@ -104,7 +108,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
         binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
-    binding?.txtVersion?.text = "Version $versionName"
+    binding?.txtVersion1?.text = "Version $versionName"
+    binding?.txtVersion2?.text = "Version $versionName"
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
@@ -165,41 +170,50 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.progressScore?.progress = drScoreData.getDrsTotal()
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
           binding?.pagerBusinessSetupLow?.apply {
-            binding?.motionOne?.transitionToStart()
+//            binding?.motionOne?.transitionToStart()
             adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DashboardFragment)
             offscreenPageLimit = 3
             adapter = adapterBusinessContent
             binding?.dotIndicator?.setViewPager2(this)
             setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-            postInvalidateOnAnimation()
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-              override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                mCurrentPage = position
-              }
-
-              override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                if (position == mCurrentPage) {
-                  if (positionOffset > 0.5) setPage(position + 1) else setPage(position)
-                } else {
-                  if (positionOffset < 0.5) setPage(position) else setPage(position + 1)
-                }
-              }
-            })
+//            postInvalidateOnAnimation()
+//            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//              override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                mCurrentPage = position
+//              }
+//
+//              override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+//                if (position == mCurrentPage) {
+//                  if (positionOffset > 0.5) setPage(position + 1) else setPage(position)
+//                } else {
+//                  if (positionOffset < 0.5) setPage(position) else setPage(position + 1)
+//                }
+//              }
+//            })
           }
-          binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
-          binding?.motionOne?.transitionToStart()
-          baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
-          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+//          binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
+//          binding?.motionOne?.transitionToStart()
+//          baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
+//          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
           binding?.viewBusinessReport?.gone()
           binding?.viewWebsiteReport?.gone()
+          binding?.viewVersionLow?.visible()
+          binding?.viewVersionHigh?.gone()
+          binding?.scrollDownBtn?.gone()
         } else {
           if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false).not()) welcomeDrScoreDialog()
           binding?.viewBusinessReport?.visible()
           binding?.viewWebsiteReport?.visible()
           binding?.highReadinessScoreView?.visible()
           binding?.lowReadinessScoreView?.gone()
+          binding?.viewVersionLow?.gone()
+          binding?.viewVersionHigh?.visible()
+          binding?.scrollDownBtn?.apply {
+            visible()
+            setNoDoubleClickListener(this@DashboardFragment)
+          }
         }
         showSimmerDrScore(false)
       } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
@@ -232,7 +246,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setPage(position: Int) {
-    binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: R.xml.fragment_dashboard_scene_hide)
+//    binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: R.xml.fragment_dashboard_scene_hide)
   }
 
   private fun setBusinessManageTask() {
@@ -526,6 +540,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       binding?.retryDrScore -> setSummaryAndDrScore(true)
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.scrollDownBtn -> {
+        binding?.nestedScrollView?.scrollToTopBottom()
+        binding?.arrowBtn?.rotation = if (binding?.arrowBtn?.rotation?.toInt() == 90) -91F else 90F
+      }
     }
   }
 

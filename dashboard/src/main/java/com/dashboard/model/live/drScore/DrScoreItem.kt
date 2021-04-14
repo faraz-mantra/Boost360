@@ -22,7 +22,7 @@ class DrScoreItem(
   }
 
   fun getIcon(): Int {
-    return if (isUpdate) R.drawable.ic_ok_11_d else R.drawable.ic_circle_grey_9_d
+    return if (isUpdate) R.drawable.ic_ok_11_d else R.drawable.ic_alert_error
   }
 
   enum class DrScoreItemType {

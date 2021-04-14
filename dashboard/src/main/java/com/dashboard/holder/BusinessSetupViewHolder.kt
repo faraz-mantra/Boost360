@@ -25,7 +25,7 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
     } else {
       val subTitle = data.getPendingText()
       binding.btnTitle.text = if (subTitle.isNullOrEmpty()) data.type?.title else subTitle
-      getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }
+      getColor(R.color.red_light_1)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.visible()
       binding.viewImage.visible()
       binding.lottySyncOk.gone()
