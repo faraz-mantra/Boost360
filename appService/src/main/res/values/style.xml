@@ -54,6 +54,7 @@
         <item name="searchHintIcon">@null</item>
         <item name="closeIconTint">@color/white</item>
     </style>
+
     <style name="OffersThemeBase" parent="AppTheme.cataloge">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -64,14 +65,21 @@
         <item name="colorBackgroundFloating">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="OffersThemeBase.AdditionalInfo" parent="OffersThemeBase">
-     <item name="android:windowSoftInputMode">adjustNothing|stateHidden</item>
+
+    <style name="EcommerceSettings" parent="CatalogTheme.FragmentAppointment">
+        <item name="bottomSheetDialogTheme">@style/OfferBottomSheet</item>
     </style>
+
+    <style name="OffersThemeBase.AdditionalInfo" parent="OffersThemeBase">
+        <item name="android:windowSoftInputMode">adjustNothing|stateHidden</item>
+    </style>
+
     <style name="OfferBottomSheet" parent="BottomSheetTheme">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="android:statusBarColor">@color/transparent</item>
     </style>
+
     <style name="OfferThemeOverlay.SearchView" parent="">
         <!-- Text color -->
         <item name="android:editTextColor">@color/gray_828282</item>
