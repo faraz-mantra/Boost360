@@ -42,7 +42,7 @@
       android:gravity="center"
       android:layout_marginBottom="@dimen/size_60"
       app:layout_constraintBottom_toTopOf="@+id/btn_new_dashboard"
-      app:textType="HEADING_3" />
+      app:textType="HEADING_4" />
 
     <com.framework.views.customViews.CustomButton
       android:id="@+id/btn_new_dashboard"
