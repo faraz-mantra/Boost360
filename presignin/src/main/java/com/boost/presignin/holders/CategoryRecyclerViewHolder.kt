@@ -44,8 +44,8 @@ class CategoryRecyclerViewHolder constructor(binding: ItemCategoryLayoutBinding)
         } else {
             binding.cardBg.background = null
             getColor(R.color.white)?.let { binding.cardBg.setBackgroundColor(it)  }
-            getColor(R.color.psn_heading_color)?.let { binding.name.setTextColorCompat(it) }
-            getColor(R.color.psn_heading_color)?.let { binding.image.setTintColor(it) }
+            getColor(R.color.black_4a4a4a)?.let { binding.name.setTextColorCompat(it) }
+            getColor(R.color.black_4a4a4a)?.let { binding.image.setTintColor(it) }
             binding.check.invisible()
         }
     }
