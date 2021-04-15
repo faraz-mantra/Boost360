@@ -4,7 +4,9 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <data />
-
+<FrameLayout
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/staff_list_swipe_refresh"
     android:layout_width="match_parent"
@@ -47,4 +49,11 @@
         android:theme="@style/progressBar" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+  <include
+    android:id="@+id/staff_lock"
+    layout="@layout/staff_lock_view"
+    android:visibility="gone" />
+</FrameLayout>
+
 </layout>

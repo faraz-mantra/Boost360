@@ -50,6 +50,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       ORDER_MENU_ITEM -> OrderMenuHolder(binding as ItemOrderMenuBinding)
       STAFF_ITEM -> StaffItemViewHolder(binding as StaffItemBinding)
       SLOTS_ITEM -> SlotsItemViewHolder(binding as ItemTimeSlotAppointmentBinding)
+      ITEM_FAQ -> FaqViewHolder(binding as ItemFaqBinding)
+      ITEM_VIDEO -> VideoListViewHolder(binding as RecyclerItemListVideosBinding)
     }
   }
 

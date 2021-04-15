@@ -14,7 +14,7 @@ class GrowthStateViewHolder(binding: ItemGrowthStateBinding) : AppBaseRecyclerVi
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? GrowthStatsData ?: return
-    ContextCompat.getColorStateList(activity!!,if (position % 2 == 0) R.color.light_grey_4 else R.color.white)?.let { binding.mainContent.backgroundTintList=it }
+    ContextCompat.getColorStateList(activity!!,if (position % 2 == 0) R.color.white_smoke_1 else R.color.white)?.let { binding.mainContent.backgroundTintList=it }
     binding.txtTitle.text = data.title
     binding.txtAmount.text = if (data.value.equals("0")) "_" else data.value
     binding.txtAmountCountDay.text = data.dayAmountTitle

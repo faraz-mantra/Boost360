@@ -88,7 +88,7 @@
         android:gravity="center"
         android:includeFontPadding="false"
         android:padding="@dimen/size_4"
-        app:srcCompat="@drawable/ic_minus" />
+        app:srcCompat="@drawable/ic_minus_n" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_item_count"

@@ -1,4 +1,4 @@
-package com.dashboard.pref
+package com.framework.pref
 
 import android.content.ContentValues
 import android.content.Context

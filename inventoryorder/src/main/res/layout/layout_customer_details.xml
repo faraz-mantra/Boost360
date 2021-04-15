@@ -79,7 +79,8 @@
             android:tag="+91"
             android:imeOptions="actionNext"
             android:hint="@string/phone_hint_appointment"
-            android:inputType="number" />
+            android:inputType="number"
+            tools:ignore="MissingClass" />
 
         <com.framework.views.customViews.CustomTextView
             style="@style/wrap_wrap"
