@@ -60,7 +60,7 @@
         <item name="android:textSize">@dimen/heading_5</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/psn_heading_color</item>
+        <item name="android:textColor">@color/black_4a4a4a</item>
     </style>
 
 
@@ -68,7 +68,7 @@
         <item name="android:textSize">@dimen/heading_4</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="textColor">@color/psn_heading_color</item>
+        <item name="textColor">@color/black_4a4a4a</item>
         <item name="android:layout_marginStart">@dimen/_16sdp</item>
         <item name="android:fontFamily">@font/open_sans_semibold</item>
         <item name="android:layout_marginEnd">@dimen/_16sdp</item>
@@ -95,7 +95,6 @@
         <item name="android:fontFamily">@font/open_sans</item>
         <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
         <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
-        <!--        <item name="android:layout_marginTop">@dimen/_4sdp</item>-->
     </style>
 
     <style name="psn_wrong_otp_style" parent="psn_subheading_style">
@@ -153,7 +152,7 @@
     <style name="psn_login_edittext_style">
         <item name="android:singleLine">true</item>
         <item name="android:fontFamily">@font/open_sans</item>
-        <item name="android:textColor">@color/psn_heading_color</item>
+        <item name="android:textColor">@color/black_4a4a4a</item>
         <item name="drawableTint">@color/psn_edittext_color</item>
         <item name="backgroundTint">@color/psn_edittext_color</item>
         <item name="android:layout_width">0dp</item>
@@ -177,7 +176,7 @@
 
     <style name="link_sent_style" parent="psn_subheading_style">
         <item name="android:textSize">@dimen/body_2</item>
-        <item name="textColor">@color/psn_heading_color</item>
+        <item name="textColor">@color/black_4a4a4a</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginStart">@dimen/_16sdp</item>
         <item name="android:layout_marginEnd">@dimen/_16sdp</item>
@@ -197,7 +196,7 @@
     <style name="category_text_style">
         <item name="android:textSize">@dimen/subheading_2</item>
         <item name="textType">SUBHEADING_2</item>
-        <item name="textColor">@color/psn_heading_color</item>
+        <item name="textColor">@color/black_4a4a4a</item>
         <item name="android:fontFamily">@font/open_sans_semibold</item>
         <item name="android:gravity">center</item>
     </style>

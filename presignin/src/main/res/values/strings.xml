@@ -5,8 +5,8 @@
     <string name="psn_get_started">GET STARTED</string>
 
 
-    <string name="intro_title_0">Be wherever\nyour customers are</string>
-    <string name="intro_title_1">Create a website for</string>
+    <string name="intro_title_0">Be, wherever</string>
+    <string name="intro_title_1">Create a website</string>
     <string name="intro_title_2">Showcase your</string>
     <string name="intro_title_3">Sell online and</string>
     <string name="intro_title_4">Find new customers with</string>
@@ -15,7 +15,8 @@
     <string name="intro_title_7">Readymade solution for</string>
 
 
-    <string name="intro_sub_title_1">your business</string>
+    <string name="intro_sub_title_0">your customers are</string>
+    <string name="intro_sub_title_1">for your business</string>
     <string name="intro_sub_title_2">product or services</string>
     <string name="intro_sub_title_3">collect payments easily</string>
     <string name="intro_sub_title_4">digital marketing tools</string>
@@ -88,4 +89,6 @@
     <string name="go_to_business_dashboard">Go to business dashboard</string>
     <string name="congratulations_n_s">Congratulations\n%s</string>
     <string name="www_sravansclinic_com"><u>www.sravansclinic.com</u></string>
+  <string name="select_business_category">Select business category</string>
+    <string name="select_business_type">Select your business type</string>
 </resources>

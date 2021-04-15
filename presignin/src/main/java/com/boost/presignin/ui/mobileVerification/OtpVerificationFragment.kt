@@ -129,9 +129,7 @@ class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, Bas
             return
         }
 
-        navigator?.startActivity( AccountNotFoundActivity::class.java, args = Bundle().apply {
-            putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-        })
+        navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
         //startActivity(Intent(requireContext(), AccountNotFoundActivity::class.java))
 
     }

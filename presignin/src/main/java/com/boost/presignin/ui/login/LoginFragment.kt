@@ -45,8 +45,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, BaseViewModel>() {
     private fun onDataChanged(){
         val username = binding?.usernameEt?.text?.toString()
         val password = binding?.passEt?.text?.toString()
-
-        //TODO LENGTH VALIDATION
         binding?.loginBt?.isEnabled = !username.isNullOrBlank() && !password.isNullOrBlank()
     }
 }
