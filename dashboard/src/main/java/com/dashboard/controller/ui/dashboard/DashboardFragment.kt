@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
+import com.dashboard.constant.PreferenceConstant
 import com.dashboard.constant.PreferenceConstant.CHANNEL_SHARE_URL
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
@@ -21,11 +22,13 @@ import com.dashboard.controller.ui.dialog.DrScoreDirectionDialog
 import com.dashboard.controller.ui.dialog.DrScoreNewDashboardDialog
 import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.ProgressDashboardDialog
+import com.dashboard.controller.ui.drScore.clickEventUpdateScoreN
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.dashboardBanner.*
+import com.dashboard.model.live.drScore.DrScoreItem
 import com.dashboard.model.live.drScore.DrScoreSetupData
 import com.dashboard.model.live.drScore.DrScoreUiDataResponse
 import com.dashboard.model.live.drScore.getDrScoreData
@@ -483,6 +486,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         baseActivity.startReadinessScoreView(session, 0)
       }
       RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> baseActivity.startReadinessScoreView(session, position)
+      RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal -> {
+        val dataDr = (item as? DrScoreSetupData)?.getDrScoreData()
+        if (dataDr != null) {
+          val type = DrScoreItem.DrScoreItemType.fromName(dataDr.id)
+          if (type == DrScoreItem.DrScoreItemType.boolean_share_business_card) {
+            val messageChannelUrl = PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "")
+            if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
+            else getChannelAccessToken(true)
+          } else clickEventUpdateScoreN(type, baseActivity, session)
+        } else baseActivity.startReadinessScoreView(session, position)
+      }
       RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
         val data = item as? QuickActionItem ?: return
         QuickActionItem.QuickActionType.from(data.quickActionType)?.let { quickActionClick(it) }

@@ -120,6 +120,9 @@
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="@dimen/size_42"
+          android:clickable="true"
+          android:focusable="true"
+          android:id="@+id/btn_add_item_start"
           android:layout_gravity="center_vertical"
           android:layout_marginStart="@dimen/size_14"
           android:layout_marginEnd="@dimen/size_14">

@@ -1,7 +1,5 @@
 package com.dashboard.holder
 
-import androidx.core.content.ContextCompat
-import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemBusinessSetupHighBinding
 import com.dashboard.databinding.ItemDetailBusinessBinding
@@ -44,6 +42,6 @@ class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBa
 
 private fun ItemDetailBusinessBinding.setData(listener: RecyclerItemClickListener?, position: Int, item: Specification?) {
   txtTitle.text = item?.title
-  txtValue.text = item?.value
+  txtValue.text = if (item?.value.isNullOrEmpty().not() && item?.value.equals("0").not()) item?.value else "_"
   viewBusinessCount.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.BUSINESS_UPDATE_CLICK.ordinal) }
 }
