@@ -50,7 +50,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="@+id/arrow_icon"
       app:layout_constraintTop_toBottomOf="@+id/arrow_icon"
-      app:textType="HEADING_3" />
+      app:textType="HEADING_4" />
 
     <com.framework.views.customViews.CustomButton
       android:id="@+id/btn_next"
