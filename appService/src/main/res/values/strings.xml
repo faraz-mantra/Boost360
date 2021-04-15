@@ -764,18 +764,36 @@
   <string name="this_will_be_used_as_default_tax_rate_for_any_product_in_your_catalog_in_case_you_ve_not_entered_any_specific_tax_for_that_product">This will be used as default tax rate for any product in your catalog in case you’ve not entered any specific tax% for that product.</string>
   <string name="search_in_order_settings">Search in order settings</string>
   <string name="delivery_setup">Delivery setup</string>
-  <string name="default_delivery_charges_warehouse_addresses">Default delivery charges, Warehouse addresses</string>
+  <string name="default_delivery_charges_warehouse_addresses">Default delivery charges, Warehouse \naddresses</string>
   <string name="warehouse_address">Warehouse address*</string>
-  <string name="contact_number">Contact number*</string>
-  <string name="add_warehouse">Add warehouse</string>
-  <string name="add_location_of_warehouse_for_users_to_self_pick_orders">Add location of warehouse for users to self pick orders.</string>
-  <string name="warehouse_name">Warehouse name*</string>
-  <string name="enter_warehouse_name">Enter warehouse name</string>
-  <string name="add_delivery_charges">Add delivery charges</string>
-  <string name="set_the_cart_value_slab_and_delivery_charges_for_it">Set the cart value slab and delivery charges for it.</string>
-  <string name="note_if_you_want_to_charge_50_for_cart_orders_between_0_to_300_then_put_lower_limit_as_0_and_upper_limit_as_300_and_delivery_charges_as_50"><b>Note:</b> If you want to charge ₹50 for cart orders between ₹0 to ₹300, then put lower limit as ₹0 and upper limit as ₹300 and delivery charges as ₹50.</string>
-  <string name="enter_lower_limit">Enter lower limit</string>
-  <string name="no_upper_limit">No upper limit</string>
+    <string name="contact_number">Contact number*</string>
+    <string name="add_warehouse">Add warehouse</string>
+    <string name="add_location_of_warehouse_for_users_to_self_pick_orders">Add location of warehouse for users to self pick orders.</string>
+    <string name="warehouse_name">Warehouse name*</string>
+    <string name="enter_warehouse_name">Enter warehouse name</string>
+    <string name="add_delivery_charges">Add delivery charges</string>
+    <string name="set_the_cart_value_slab_and_delivery_charges_for_it">Set the cart value slab and delivery charges for it.</string>
+    <string name="note_if_you_want_to_charge_50_for_cart_orders_between_0_to_300_then_put_lower_limit_as_0_and_upper_limit_as_300_and_delivery_charges_as_50"><b>Note:</b> If you want to charge ₹50 for cart orders between ₹0 to ₹300, then put lower limit as ₹0 and upper limit as ₹300 and delivery charges as ₹50.</string>
+    <string name="enter_lower_limit">Enter lower limit</string>
+    <string name="no_upper_limit">No upper limit</string>
+    <string name="where_can_your_customers_pick_up_this_order_from">Where can your customers pick up this order from?</string>
+    <string name="from_your_business_location">From your business location</string>
+    <string name="_24th_street_city_center_hsbl_colony_kolkata_west_bengal_100009">24th street, City Center, HSBL Colony, Kolkata, West Bengal-100009</string>
+    <string name="allow_order_pickup">Allow order pickup</string>
+    <string name="from_your_warehouse_s">From your warehouse(s)</string>
+    <string name="allow_home_delivery">Allow home delivery</string>
+    <string name="boost_360_does_not_handle_shipping_to_deliver_the_orders_to_customers_location_you_need_to_arrange_for_home_home_delivery_via_a_local_delivery_partner_or_any_trusted_shipping_company">Boost 360 does not handle shipping. To deliver the orders to customers’ location, you need to arrange for home home delivery via a local delivery partner or any trusted shipping company.</string>
+    <string name="delivery_charges_setup">Delivery charges setup</string>
+    <string name="set_the_default_delivery_fee_inclusive_of_taxes_that_you_want_to_charge_for_all_orders_requiring_home_delivery_please_note_that_the_shipping_charges_will_be_taxed_with_the_rate_of_that_item_which_has_the_highest_rate_of_tax_in_the_order">Set the default delivery fee (inclusive of taxes) that you want to charge for all orders requiring home delivery. Please note that the shipping charges will be taxed with the rate of that item which has the highest rate of tax in the order.</string>
+    <string name="flat_charges">Flat charges</string>
+    <string name="cart_value_slab_s">Cart value slab(s)</string>
+    <string name="above_delivery_fee_will_be_charged_for_all_home_delivery_orders_irrespective_or_cart_value">Above delivery fee will be charged for all home delivery orders irrespective or cart value.</string>
+    <string name="_50">50</string>
+    <string name="enter_upper_limit">enter upper limit</string>
+    <string name="enter_delivery_charges">enter delivery charges</string>
+    <string name="lower_limit">Lower limit</string>
+    <string name="add_another_slab">ADD ANOTHER SLAB</string>
+    <string name="no_lower_limit">no lower limit</string>
 
 
 </resources>

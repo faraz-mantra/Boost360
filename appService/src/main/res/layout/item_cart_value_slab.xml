@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match_wrap"
+    android:orientation="vertical"
+    android:padding="@dimen/size_10">
+
+
+    <LinearLayout
+        style="@style/match_wrap"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/size_10">
+
+        <LinearLayout
+            style="@style/wrap_wrap"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/wrap_wrap"
+                android:text="@string/lower_limit" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_lower_limit"
+                style="@style/AppointmentSetting_Text_Heading"
+                android:layout_marginTop="@dimen/size_8"
+                android:text="@string/lower_limit" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/size_0"
+            android:layout_height="@dimen/size_0"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            style="@style/wrap_wrap"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/wrap_wrap"
+                android:text="@string/enter_upper_limit" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/AppointmentSetting_Text_Heading"
+                android:layout_marginTop="@dimen/size_8"
+                android:text="@string/enter_upper_limit" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/size_0"
+            android:layout_height="@dimen/size_0"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            style="@style/wrap_wrap"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/wrap_wrap"
+                android:text="@string/lower_limit" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/AppointmentSetting_Text_Heading"
+                android:layout_marginTop="@dimen/size_8"
+                android:stateListAnimator="@style/wrap_wrap"
+                android:text="@string/lower_limit" />
+        </LinearLayout>
+
+        <com.framework.views.customViews.CustomImageView
+            android:layout_width="@dimen/size_15"
+            android:layout_height="@dimen/size_15"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/size_20"
+            android:src="@drawable/ic_pencil_orange" />
+
+
+    </LinearLayout>
+
+    <view
+        style="@style/AppointmentHorizontalDivider"
+        android:layout_marginTop="@dimen/size_15" />
+</LinearLayout>

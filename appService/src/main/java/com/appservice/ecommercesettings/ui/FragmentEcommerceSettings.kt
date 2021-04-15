@@ -25,7 +25,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding?.catalogSetup, binding?.paymentCollectionSetup, binding?.customerInvoiceSetup, binding?.policiesForCustomer)
+        setOnClickListener(binding?.catalogSetup, binding?.paymentCollectionSetup, binding?.customerInvoiceSetup, binding?.policiesForCustomer, binding?.deliverySetup)
         clearSearchFocus()
     }
 
@@ -50,6 +50,10 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
             }
             binding?.policiesForCustomer -> {
                 startFragmentActivity(FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES)
+
+            }
+            binding?.deliverySetup -> {
+                startFragmentActivity(FragmentType.ECOMMERCE_DELIVERY_CONFIG)
 
             }
         }
