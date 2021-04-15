@@ -35,14 +35,14 @@
       android:layout_height="wrap_content"
       android:text="Your new\ndashboard is\nready."
       android:textColor="@color/white"
-      app:fontFamily="@font/semi_bold"
+      app:fontFamily="@font/bold"
       android:padding="@dimen/size_6"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       android:gravity="center"
       android:layout_marginBottom="@dimen/size_60"
       app:layout_constraintBottom_toTopOf="@+id/btn_new_dashboard"
-      app:textType="HEADING_4" />
+      app:textType="HEADING_3" />
 
     <com.framework.views.customViews.CustomButton
       android:id="@+id/btn_new_dashboard"
