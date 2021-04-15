@@ -18,10 +18,8 @@ class ManageBusinessData(
     var isHide: Boolean = false,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
 
-  var recyclerViewItemType: Int = RecyclerViewItemType.MANAGE_BUSINESS_ITEM_VIEW.getLayout()
-
   override fun getViewType(): Int {
-    return recyclerViewItemType
+    return RecyclerViewItemType.MANAGE_BUSINESS_ITEM_VIEW.getLayout()
   }
 
 
@@ -90,7 +88,8 @@ class ManageBusinessData(
     places_look_around_d("places_look_around_d", R.drawable.places_look_around_d),
     trip_advisor_reviews_d("trip_advisor_reviews_d", R.drawable.trip_advisor_reviews_d),
     room_booking_engine_d("room_booking_engine_d", R.drawable.room_inventory_d),
-    table_reservations_d("table_reservations_d", R.drawable.table_reservations_d);
+    table_reservations_d("table_reservations_d", R.drawable.table_reservations_d),
+    ic_staff_profile_d("ic_staff_profile_d", R.drawable.ic_staff_profile_d);
 
    //R.drawable.ic_project_terms_d
 

@@ -5,9 +5,9 @@ import com.dashboard.AppDashboardApplication
 import com.dashboard.R
 import com.dashboard.model.live.drScore.siteMeter.SiteMeterModel
 import com.dashboard.model.live.drScore.siteMeter.SiteMeterScoreDetails
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
-import com.dashboard.pref.UserSessionManager
+import com.framework.pref.Key_Preferences
+import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
+import com.framework.pref.UserSessionManager
 import com.inventoryorder.model.floatMessage.MessageModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -46,7 +46,7 @@ const val domain = 11
 
 fun UserSessionManager.siteMeterCalculation(): Int {
   val res = AppDashboardApplication.instance.resources
-  val prefTwitter = getPreferenceTwitter()
+  val prefTwitter = AppDashboardApplication.instance.getPreferenceTwitter()
   siteMeterTotalWeight = 0
   if (getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI).isNullOrEmpty().not()) {
     siteMeterTotalWeight += 10
@@ -126,8 +126,9 @@ private fun loadData(res: Resources): ArrayList<SiteMeterModel> {
 }
 
 fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) -> Unit) {
-  val res = AppDashboardApplication.instance.resources
-  val prefTwitter = getPreferenceTwitter()
+  val context = AppDashboardApplication.instance
+  val res = context.resources
+  val prefTwitter = context.getPreferenceTwitter()
   val siteData = loadData(res)
   val siteMeterScoreDetails = SiteMeterScoreDetails()
   siteMeterTotalWeight = 0

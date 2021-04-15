@@ -137,7 +137,7 @@
         android:layout_marginBottom="@dimen/size_2"
         android:max="100"
         android:progress="50"
-        android:progressDrawable="@drawable/ic_progress_bar_horizontal_high" />
+        android:progressDrawable="@drawable/ic_progress_bar_high_grey" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </FrameLayout>
 </layout>

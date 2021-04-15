@@ -20,7 +20,7 @@ import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
-import com.dashboard.pref.*
+import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
@@ -409,22 +409,31 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Staff Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent(LIST_STAFF_DASHBOARD, CLICK, TO_BE_ADDED)
     startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
 }
 
-fun getBundleData(session: UserSessionManager?): Bundle {
+fun AppCompatActivity.startAddStaff(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent(ADD_STAFF_DASHBOARD, CLICK, TO_BE_ADDED)
+    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session, true))
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun getBundleData(session: UserSessionManager?, isAddNew: Boolean = false): Bundle {
   val bundle = Bundle()
-  bundle.putBoolean(com.appservice.constant.IntentConstant.NON_PHYSICAL_EXP_CODE.name, session?.isNonPhysicalProductExperienceCode
-      ?: false)
+  bundle.putBoolean(com.appservice.constant.IntentConstant.NON_PHYSICAL_EXP_CODE.name, session?.isNonPhysicalProductExperienceCode ?: false)
   bundle.putString(com.appservice.constant.IntentConstant.CURRENCY_TYPE.name, "INR")
   bundle.putString(com.appservice.constant.IntentConstant.FP_ID.name, session?.fPID)
   bundle.putString(com.appservice.constant.IntentConstant.FP_TAG.name, session?.fpTag)
   bundle.putString(com.appservice.constant.IntentConstant.USER_PROFILE_ID.name, session?.userProfileId)
   bundle.putString(com.appservice.constant.IntentConstant.CLIENT_ID.name, clientId)
+  bundle.putBoolean(com.appservice.constant.IntentConstant.IS_ADD_NEW.name, isAddNew)
   bundle.putString(com.appservice.constant.IntentConstant.EXTERNAL_SOURCE_ID.name, session?.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID))
   bundle.putString(com.appservice.constant.IntentConstant.APPLICATION_ID.name, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))
   return bundle
@@ -449,10 +458,11 @@ fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startPreSignUp(session: UserSessionManager?) {
+fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: Boolean = false) {
   try {
     WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.boost.presignup.PreSignUpActivity"))
+    if (isClearTask) webIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -704,8 +714,7 @@ fun UserSessionManager.getBundleDataKyc(): Bundle? {
   session.fpEmail = fPEmail
   session.fpNumber = fPPrimaryContactNumber
   session.isSelfBrandedAdd = isSelfBrandedKycAdd ?: false
-  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
-      ?: false
+  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name) ?: false
   val bundle = Bundle()
   bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name, session)
   return bundle

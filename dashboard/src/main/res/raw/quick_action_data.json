@@ -85,8 +85,7 @@
         },
         {
           "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Add an\nappointment",
-          "isNew": true
+          "title": "Add an\nappointment"
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
@@ -105,8 +104,9 @@
           "title": "Add a\ncustom page"
         },
         {
-          "quickActionType": "LIST_STAFF",
-          "title": "List a\nstaff"
+          "quickActionType": "ADD_STAFF_PROFILE",
+          "title": "Add a\nstaff",
+          "isNew": true
         }
       ]
     },
@@ -123,8 +123,7 @@
         },
         {
           "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Add an\nappointment",
-          "isNew": true
+          "title": "Add an\nappointment"
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
@@ -143,8 +142,9 @@
           "title": "Add a\ncustom page"
         },
         {
-          "quickActionType": "LIST_STAFF",
-          "title": "List a\nstaff"
+          "quickActionType": "ADD_STAFF_PROFILE",
+          "title": "Add a\nstaff",
+          "isNew": true
         }
       ]
     },
@@ -343,8 +343,7 @@
         },
         {
           "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Add an\nappointment",
-          "isNew": true
+          "title": "Add an\nappointment"
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
@@ -363,8 +362,9 @@
           "title": "Add a\ncustom page"
         },
         {
-          "quickActionType": "LIST_STAFF",
-          "title": "List a\nstaff"
+          "quickActionType": "ADD_STAFF_PROFILE",
+          "title": "Add a\nstaff",
+          "isNew": true
         }
       ]
     },

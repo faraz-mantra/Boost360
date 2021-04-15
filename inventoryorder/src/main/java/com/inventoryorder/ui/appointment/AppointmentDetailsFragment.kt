@@ -267,12 +267,18 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
-    item.actionView.setOnClickListener {
-      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
-    }
+    menu.findItem(R.id.menu_item_invoice)
   }
 
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.menu_item_invoice -> {
+        startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
 
   fun getBundleData(): Bundle {
     return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, isRefresh) }

@@ -272,11 +272,16 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    menu.findItem(R.id.menu_item_invoice).setOnMenuItemClickListener {
-      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply {
-        putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "")
-      })
-      false
+    menu.findItem(R.id.menu_item_invoice)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.menu_item_invoice -> {
+        startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
     }
   }
 

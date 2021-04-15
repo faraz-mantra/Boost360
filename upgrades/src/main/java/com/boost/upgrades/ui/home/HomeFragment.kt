@@ -756,7 +756,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     fun updateAddonCategoryRecycler(list: List<FeaturesModel>) {
         val addonsCategoryTypes = arrayListOf<String>()
         for (singleFeaturesModel in list) {
-            if (!addonsCategoryTypes.contains(singleFeaturesModel.target_business_usecase)) {
+            if (singleFeaturesModel.target_business_usecase != null && !addonsCategoryTypes.contains(singleFeaturesModel.target_business_usecase)) {
                 addonsCategoryTypes.add(singleFeaturesModel.target_business_usecase!!)
             }
         }
@@ -1244,7 +1244,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
         WebEngageController.trackEvent(VIDEO_GALLERY_CLICKED, CLICK, videoItem.title ?: NO_EVENT_VALUE)
-        Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
+        Log.i("onPlayYouTubeVideo", videoItem.youtube_link?:"")
         val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
 //    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
@@ -1711,7 +1711,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     override fun backComparePress() {
         if (prefs.getCompareState() == 1) {
             prefs.storeCompareState(0)
-            val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+            val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
             val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
             var code: String = (activity as UpgradeActivity).experienceCode!!
             if (!code.equals("null", true)) {

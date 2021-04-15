@@ -15,9 +15,9 @@ import com.dashboard.controller.ui.dashboard.getLocalSession
 import com.dashboard.databinding.FragmentDigitalReadinessScoreBinding
 import com.dashboard.model.live.drScore.*
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.WA_KEY
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.WA_KEY
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -82,7 +82,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       val response = it as? DrScoreUiDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val drScoreData = FirestoreManager.getDrScoreData()
-        isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 80)
+        isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 85)
         val drScoreSetupList = drScoreData?.getDrScoreData(response.data)
         if (drScoreSetupList.isNullOrEmpty().not()) {
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
@@ -99,11 +99,11 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
             }
           } else adapterPager?.notify(drScoreSetupList)
         } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
-        binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
-        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+        binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "85%")
+//        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
         binding?.txtPercentage?.text = "${drScoreData?.getDrsTotal()}%"
         binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
-        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+//        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
 
       } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
 
@@ -142,6 +142,9 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       }
       DrScoreItem.DrScoreItemType.boolean_add_contact_details -> {
         baseActivity.startBusinessInfoEmail(session)
+      }
+      DrScoreItem.DrScoreItemType.boolean_create_staff -> {
+        baseActivity.startAddStaff(session)
       }
       DrScoreItem.DrScoreItemType.boolean_add_custom_domain_name_and_ssl -> {
         baseActivity.startDomainDetail(session)
