@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/wrap_wrap">
+    style="@style/match_wrap">
 
     <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_warehouse_name"
         style="@style/AppointmentSetting_Text_Heading"
+        android:layout_width="@dimen/size_0"
         android:layout_marginStart="@dimen/size_20"
         android:layout_marginTop="@dimen/size_15"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,7 +21,7 @@
     <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_warehouse_address_phone"
         style="@style/Appointment_Text_Subheading"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:gravity="start|top"
         android:paddingEnd="@dimen/size_20"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -5,30 +5,25 @@
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:background="@android:color/transparent"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/size_10">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/match_wrap"
                 android:layout_marginStart="@dimen/size_10"
                 android:layout_marginBottom="@dimen/size_6"
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:drawablePadding="@dimen/size_4"
                     android:includeFontPadding="false"
                     android:text="@string/add_warehouse"
@@ -39,8 +34,7 @@
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvCustomerAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:includeFontPadding="false"
                     android:text="@string/add_location_of_warehouse_for_users_to_self_pick_orders"
                     android:textColor="@color/white"
@@ -121,6 +115,7 @@
                     style="@style/Appointment_Text_Field"
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:hint="@string/xxxxx_xxxxx"
+                    android:inputType="phone"
                     android:tag="+91" />
 
                 <View

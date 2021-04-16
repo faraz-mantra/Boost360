@@ -41,6 +41,8 @@
 
                         <com.appservice.views.toggle.widget.LabeledSwitch
                             style="@style/Appointment_Label_Switch"
+                            android:id="@+id/toggle_allow_pickup"
+
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -93,6 +95,7 @@
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/orange"
                         android:fontFamily="@font/regular"
+                        app:layout_constraintVertical_bias="0"
                         android:text="@string/from_your_warehouse_s"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -103,12 +106,29 @@
                     <LinearLayout
                         android:id="@+id/container_ware_house_address"
                         android:layout_width="0dp"
+                        app:layout_constraintStart_toStartOf="@+id/ccb_warehouse_address"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size_10"
                         android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="@+id/ccb_warehouse_address"
                         app:layout_constraintEnd_toEndOf="@+id/ccb_warehouse_address"
-                        app:layout_constraintStart_toStartOf="@+id/ccb_warehouse_address" />
+                        app:layout_constraintTop_toBottomOf="@+id/ccb_warehouse_address"
+                        app:layout_constraintVertical_bias="0" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/add_wareHouse_address"
+                        style="@style/wrap_wrap"
+                        android:layout_height="@dimen/size_0"
+                        android:layout_marginEnd="@dimen/size_20"
+                        android:drawableStart="@drawable/ic_add_orange_10"
+                        android:drawablePadding="@dimen/size_2"
+                        android:gravity="center"
+                        android:text="@string/add"
+                        android:textAllCaps="true"
+                        android:textColor="@color/orange"
+                        app:layout_constraintBottom_toBottomOf="@+id/ccb_warehouse_address"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ccb_warehouse_address"
+                        app:layout_constraintTop_toBottomOf="@+id/ctv_business_address"
+                        app:layout_constraintVertical_bias="0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -216,6 +236,7 @@
                             style="@style/RadioAppointment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="true"
                             android:layout_marginHorizontal="@dimen/size_5"
                             android:tag="@string/flat_charges"
                             android:text="@string/flat_charges" />
@@ -223,6 +244,7 @@
                         <com.framework.views.customViews.CustomRadioButton
                             android:id="@+id/crb_cart_slab"
                             style="@style/RadioAppointment"
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/size_20"
@@ -242,13 +264,14 @@
                         android:id="@+id/btn_add_another_slab"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:layout_marginHorizontal="@dimen/size_20"
                         android:layout_marginTop="@dimen/size_20"
                         android:background="@drawable/appointment_button_stroke_orange"
                         android:drawableStart="@drawable/ic_add_orange"
                         android:gravity="center"
                         android:padding="@dimen/size_10"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@+id/radio_group">
 
                         <com.framework.views.customViews.CustomImageView
@@ -300,12 +323,12 @@
                             android:textColor="@color/warm_grey_10"
                             android:textColorHint="@color/primary_grey"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/btn_add_tag"
+                            app:layout_constraintRight_toLeftOf="@id/btn_save_charges"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/btn_add_tag"
+                            android:id="@+id/btn_save_charges"
                             android:layout_width="@dimen/size_80"
                             android:layout_height="0dp"
                             android:layout_margin="@dimen/size_4"
