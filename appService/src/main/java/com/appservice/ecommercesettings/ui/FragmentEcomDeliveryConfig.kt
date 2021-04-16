@@ -1,16 +1,26 @@
 package com.appservice.ecommercesettings.ui
 
+import android.view.LayoutInflater
 import android.view.View
 import com.appservice.R
+import com.appservice.appointment.model.DeliveryDetailsResponse
+import com.appservice.appointment.model.DeliverySetup
+import com.appservice.appointment.model.GetWareHouseResponse
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentDeliveryConfigurationBinding
 import com.appservice.ecommercesettings.ui.bottomsheets.BottomSheetAddCartSlab
 import com.appservice.ecommercesettings.ui.bottomsheets.BottomSheetAddWareHouse
+import com.appservice.staffs.ui.UserSession
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.utils.fromHtml
+import com.framework.views.customViews.CustomTextView
 
 class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigurationBinding, AppointmentSettingsViewModel>() {
+    private var wareHouseAddress: GetWareHouseResponse? = null
+
     override fun getLayout(): Int {
         return R.layout.fragment_delivery_configuration
     }
@@ -28,6 +38,57 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
     override fun onCreateView() {
         super.onCreateView()
         setupView()
+        getWareHouseAddress()
+
+
+    }
+
+    private fun getDeliveryDetails() {
+        showProgress("loading...")
+        viewModel?.getDeliveryDetails(UserSession.fpId, UserSession.clientId)?.observeOnce(viewLifecycleOwner, {
+            hideProgress()
+            if (it.isSuccess()) {
+                val data = it as? DeliveryDetailsResponse
+                binding?.toggleAllowPickup?.isOn = data?.result?.isPickupAllowed ?: true
+                binding?.toggleHomeDelivery?.isOn = data?.result?.isHomeDeliveryAllowed ?: true
+                binding?.etdFlatCharges?.setText(data?.result?.flatDeliveryCharge.toString())
+            }
+
+        })
+    }
+
+    private fun getWareHouseAddress() {
+        showProgress("loading...")
+        viewModel?.getWareHouseAddress(UserSession.fpId, UserSession.clientId)?.observeOnce(viewLifecycleOwner, { baseResponse ->
+            hideProgress()
+            getDeliveryDetails()
+            if (baseResponse.isSuccess()) {
+                this.wareHouseAddress = baseResponse as? GetWareHouseResponse
+                if (wareHouseAddress == null) {
+                    binding?.ccbWarehouseAddress?.isChecked = false
+                    binding?.addWareHouseAddress?.gone()
+                    binding?.toggleAllowPickup?.isOn = true
+                } else {
+                    wareHouseAddress?.result?.data?.forEachIndexed { index, dataItem ->
+                        binding?.ccbWarehouseAddress?.isChecked = true
+                        binding?.addWareHouseAddress?.visible()
+                        binding?.containerWareHouseAddress?.addView(inflateWareHouseView(index, dataItem?.name, dataItem?.fullAddress, dataItem?.contactNumber))
+                    }
+                }
+
+            }
+
+
+        })
+    }
+
+    private fun inflateWareHouseView(index: Int, name: String?, fullAddress: String?, contactNumber: String?): View {
+        val itemView = LayoutInflater.from(context).inflate(R.layout.item_warehouse_address, null, false)
+        val warehouseName = itemView.findViewById<CustomTextView>(R.id.ctv_warehouse_name)
+        val wareHouseAddressPhone = itemView.findViewById<CustomTextView>(R.id.ctv_warehouse_address_phone)
+        warehouseName.text = "#${index + 1}. ${name}"
+        wareHouseAddressPhone.text = fromHtml("$fullAddress <u>$contactNumber</u>")
+        return itemView
     }
 
     private fun setupView() {
@@ -64,15 +125,31 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
         binding?.ccbWarehouseAddress?.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 binding?.containerWareHouseAddress?.visible()
-                showAddWareHouse()
+                if (wareHouseAddress?.result?.data.isNullOrEmpty())
+                    showAddWareHouse()
             }
         }
-        setOnClickListener(binding?.btnAddAnotherSlab, binding?.btnFlatCharges)
+        setOnClickListener(binding?.btnAddAnotherSlab, binding?.btnFlatCharges, binding?.addWareHouseAddress, binding?.btnSaveCharges)
+
     }
 
     private fun showAddWareHouse() {
         val bottomSheetAddWareHouse = BottomSheetAddWareHouse()
-        bottomSheetAddWareHouse.bottomSheetAddWareHouse.show(parentFragmentManager, BottomSheetAddWareHouse::class.java.name)
+        bottomSheetAddWareHouse.onClicked = { requestAddWareHouseAddress ->
+            showProgress(getString(R.string.updating))
+            requestAddWareHouseAddress.floatingPointId = UserSession.fpId
+            requestAddWareHouseAddress.clientId = UserSession.clientId
+            viewModel?.addWareHouseAddress(requestAddWareHouseAddress)?.observeOnce(viewLifecycleOwner, {
+                hideProgress()
+                if (it.isSuccess()) {
+                    showShortToast(getString(R.string.updated))
+                    binding?.containerWareHouseAddress?.removeAllViews()
+                    getWareHouseAddress()
+                } else
+                    showShortToast(getString(R.string.something_went_wrong))
+            })
+        }
+        bottomSheetAddWareHouse.show(parentFragmentManager, BottomSheetAddWareHouse::class.java.name)
     }
 
     override fun onClick(v: View) {
@@ -84,6 +161,14 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
             binding?.btnFlatCharges -> {
                 showAddWareHouse()
             }
+            binding?.addWareHouseAddress -> {
+                showAddWareHouse()
+            }
+            binding?.btnSaveCharges -> {
+                updateDeliveryStatus(binding?.toggleAllowPickup?.isOn
+                        ?: true, binding?.toggleHomeDelivery?.isOn
+                        ?: true, binding?.etdFlatCharges?.text.toString())
+            }
 
         }
     }
@@ -91,5 +176,13 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
     private fun showAddCartSlab() {
         val bottomSheetAddCartSlab = BottomSheetAddCartSlab()
         bottomSheetAddCartSlab.show(parentFragmentManager, BottomSheetAddCartSlab::class.java.name)
+    }
+
+    private fun updateDeliveryStatus(isPickup: Boolean, isHomePickup: Boolean, flatDeliverCharge: String) {
+        viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = isPickup, isBusinessLocationPickupAllowed = false, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = isHomePickup, flatDeliveryCharge = flatDeliverCharge, clientId = UserSession.clientId, floatingPointId = UserSession.fpId))?.observeOnce(viewLifecycleOwner, {
+            if (it.isSuccess()) {
+                showShortToast(getString(R.string.updated))
+            }
+        })
     }
 }

@@ -44,4 +44,12 @@ class AppointmentSettingsViewModel : BaseViewModel() {
     fun uploadSignature(request: UploadMerchantSignature): LiveData<BaseResponse> {
         return WithFloatTwoRepository.addMerchantSignature(request = request).toLiveData()
     }
+
+    fun getWareHouseAddress(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.getWareHouseAddress(floatingPointId, clientId).toLiveData()
+    }
+
+    fun addWareHouseAddress(request: RequestAddWareHouseAddress): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.addWareHouseAddress(request = request).toLiveData()
+    }
 }

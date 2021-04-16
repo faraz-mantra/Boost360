@@ -99,4 +99,10 @@ interface WithFloatTwoRemoteData {
   @GET(EndPoints.GET_PAYMENT_PROFILE_DETAILS + "/{fpId}/")
   fun paymentProfileDetailsGet(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<PaymentProfileResponse>>
 
+  //TODO Ecommerce settings
+  @POST(EndPoints.ADD_WARE_HOUSE)
+  fun addWareHouse(@Body request: RequestAddWareHouseAddress): Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.GET_WARE_HOUSE + "/{fpId}/")
+  fun getWareHouseAddress(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<GetWareHouseResponse>>
 }

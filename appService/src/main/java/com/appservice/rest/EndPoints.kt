@@ -71,7 +71,7 @@ object EndPoints {
     const val DELIVERY_SETUP = "discover/v9/business/deliveryDetails/update"
     const val GET_DELIVERY_CONFIG = "discover/v9/business/deliveryDetails"
     const val ADD_WARE_HOUSE = "discover/v9/business/warehouse/add"
-    const val GET_WARE_HOUSE = "discover/v9/business/warehouse/{{floatingPointId}?clientId=<string>&offset=<int>&limit=<int>"
+    const val GET_WARE_HOUSE = "discover/v9/business/warehouse/"
     const val INVOICE_SETUP = "discover/v9/business/paymentProfile/taxDetails/update"
   const val UPLOAD_MERCHANT_SIGNATURE = "discover/v9/business/paymentProfile/uploadSignature"
   const val ADD_MERCHANT_UPI = "discover/v9/business/paymentProfile/upiid/update"

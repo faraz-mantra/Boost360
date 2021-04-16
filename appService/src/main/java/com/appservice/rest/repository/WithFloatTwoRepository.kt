@@ -104,4 +104,12 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.addBankAccounts(fpId = fpId, clientId, request), TaskCode.ADD_BANK_ACCOUNT)
   }
 
+  fun getWareHouseAddress(floatingPointId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getWareHouseAddress(floatingPointId, clientId), TaskCode.GET_WARE_HOUSE_ADDRESS)
+  }
+
+  fun addWareHouseAddress(request: RequestAddWareHouseAddress): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.addWareHouse(request), TaskCode.ADD_WARE_HOUSE_ADDRESS)
+  }
+
 }

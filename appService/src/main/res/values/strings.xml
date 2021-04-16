@@ -793,7 +793,14 @@
     <string name="enter_delivery_charges">enter delivery charges</string>
     <string name="lower_limit">Lower limit</string>
     <string name="add_another_slab">ADD ANOTHER SLAB</string>
-    <string name="no_lower_limit">no lower limit</string>
+    <string name="no_lower_limit">No lower limit</string>
+    <string name="warehouse_name_cannot_empty">WareHouse name cannot empty</string>
+    <string name="warehouse_address_cannot_empty">WareHouse address can not empty</string>
+    <string name="invalid_phone_number">invalid phone number</string>
+    <string name="updating">updating...</string>
+    <string name="for_home_delivery">for home delivery</string>
+    <string name="for_store_pickup">for store pickup</string>
+    <string name="return_policy">Return policy</string>
 
 
 </resources>

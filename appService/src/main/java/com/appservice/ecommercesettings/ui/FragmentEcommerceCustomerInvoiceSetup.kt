@@ -13,10 +13,10 @@ import com.appservice.appointment.model.UpdateUPIRequest
 import com.appservice.appointment.model.UploadMerchantSignature
 import com.appservice.appointment.widgets.BottomSheetConfirmGST
 import com.appservice.appointment.widgets.BottomSheetEnterGSTDetails
-import com.appservice.appointment.widgets.BottomSheetTaxInvoicesForPurchases
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEcommerceCustomerInvoiceSetupBinding
+import com.appservice.ecommercesettings.ui.bottomsheets.BottomEcommerceTaxInvoices
 import com.appservice.model.FileModel
 import com.appservice.rest.TaskCode
 import com.appservice.staffs.ui.UserSession
@@ -38,7 +38,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
     var setBusinessName: (businessName: String) -> Unit = {}
     var onImageClick: (Image: ArrayList<FileModel>) -> Unit = { }
 
-    private lateinit var bottomSheetTaxInvoicesForPurchases: BottomSheetTaxInvoicesForPurchases
+    private lateinit var bottomSheetTaxInvoicesForPurchases: BottomEcommerceTaxInvoices
     var imageList: ArrayList<FileModel> = ArrayList()
 
 
@@ -148,10 +148,10 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
     }
 
     private fun showTaxInvoicesForPurchases() {
-        this.bottomSheetTaxInvoicesForPurchases = BottomSheetTaxInvoicesForPurchases()
+        this.bottomSheetTaxInvoicesForPurchases = BottomEcommerceTaxInvoices()
         bottomSheetTaxInvoicesForPurchases.upiId = { binding?.upiId?.text = it.toString() }
         bottomSheetTaxInvoicesForPurchases.clickType = {
-            if (it == BottomSheetTaxInvoicesForPurchases.ClickType.SAVECHANGES) {
+            if (it == BottomEcommerceTaxInvoices.ClickType.SAVECHANGES) {
 //                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
                 hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(UserSession.clientId, uPIId = binding?.upiId?.text.toString(), UserSession.fpId)), (R.string.error_updating_upi_id))
                 if (imageList.isNotEmpty())
@@ -159,7 +159,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
                             floatingPointId = UserSession.fpId, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
 
             }
-            if (it == BottomSheetTaxInvoicesForPurchases.ClickType.CANCEL) {
+            if (it == BottomEcommerceTaxInvoices.ClickType.CANCEL) {
 
             }
         }
@@ -167,7 +167,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
         bundle.putSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name, data?.result)
         bundle.putSerializable(IntentConstant.IMAGE_SIGNATURE.name, imageList)
         bottomSheetTaxInvoicesForPurchases.arguments = bundle
-        bottomSheetTaxInvoicesForPurchases.show(childFragmentManager, BottomSheetTaxInvoicesForPurchases::class.java.name)
+        bottomSheetTaxInvoicesForPurchases.show(childFragmentManager, BottomEcommerceTaxInvoices::class.java.name)
     }
 
     private fun showEnterBusinessGSTIN() {
@@ -254,7 +254,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
     }
 
 
-    private fun clearImage() {
+    fun clearImage() {
         imageList.clear()
 
     }
