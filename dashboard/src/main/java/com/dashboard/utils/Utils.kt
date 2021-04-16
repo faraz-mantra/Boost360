@@ -156,11 +156,17 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
   }
 }
 
-fun NestedScrollView.scrollToTopBottom() {
+fun NestedScrollView.scrollToTopBottom(image: CustomImageView) {
   val lastChild = getChildAt(childCount - 1)
   val bottom = lastChild.bottom + paddingBottom
-  val delta = bottom - (scrollY+ height)
-  ObjectAnimator.ofInt(this, "scrollY",  delta).setDuration(1000).start()
+  val delta = bottom - (scrollY + height)
+  if (delta == 0) {
+    smoothScrollTo(0, 0, 1000)
+    image.rotation = 90F
+  } else {
+    smoothScrollTo(0, getChildAt(0).height, 1000)
+    image.rotation = -90F
+  }
 }
 
 

@@ -230,10 +230,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         binding?.nestedScrollView?.fling(0)
         binding?.nestedScrollView?.smoothScrollTo(0, 0)
         onClicked = {
+          WebEngageController.trackEvent(DASHBOARD_DR_SCORE_HIGH, PAGE_VIEW, session?.fpTag)
           DrScoreDirectionDialog.newInstance().apply {
             onClicked = {
               DrScoreNewDashboardDialog.newInstance().apply {
                 onClicked = {
+                  WebEngageController.trackEvent(DASHBOARD_COACHMARKS, PAGE_VIEW, session?.fpTag)
                   PreferencesUtils.instance.saveData(IS_DR_HIGH_DIALOG, true)
                 }
                 showDialog(this@DashboardFragment.childFragmentManager)
@@ -555,8 +557,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.retryDrScore -> setSummaryAndDrScore(true)
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.scrollDownBtn -> {
-        binding?.nestedScrollView?.scrollToTopBottom()
-        binding?.arrowBtn?.rotation = if (binding?.arrowBtn?.rotation?.toInt() == 90) -91F else 90F
+        binding?.nestedScrollView?.scrollToTopBottom(binding?.arrowBtn!!)
+        WebEngageController.trackEvent(if (binding?.arrowBtn?.rotation?.toInt() != 90) DASHBOARD_DOWN_PAGE else DASHBOARD_UP_PAGE, PAGE_VIEW, session?.fpTag)
       }
     }
   }
