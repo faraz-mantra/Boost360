@@ -125,7 +125,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         localStorage = LocalStorage.getInstance(requireContext())!!
         cart_list = localStorage.getCartItems()
         prefs = SharedPrefs(activity as UpgradeActivity)
-
         return root
     }
 
