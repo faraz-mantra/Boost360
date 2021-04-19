@@ -755,7 +755,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     fun updateAddonCategoryRecycler(list: List<FeaturesModel>) {
         val addonsCategoryTypes = arrayListOf<String>()
         for (singleFeaturesModel in list) {
-            if (!addonsCategoryTypes.contains(singleFeaturesModel.target_business_usecase)) {
+            if (singleFeaturesModel.target_business_usecase != null && !addonsCategoryTypes.contains(singleFeaturesModel.target_business_usecase)) {
                 addonsCategoryTypes.add(singleFeaturesModel.target_business_usecase!!)
             }
         }

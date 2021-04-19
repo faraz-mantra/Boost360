@@ -18,8 +18,8 @@ import com.dashboard.model.live.addOns.AllBoostAddOnsData
 import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.domainDetail.DomainDetailResponse
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.clientId
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -75,7 +75,11 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
       if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
         dataAction.actionItem?.forEach { it2 -> it2.manageBusinessList = ArrayList(it2.manageBusinessList?.filter { it3 -> !it3.isHide } ?: ArrayList()) }
-        dataAction.actionItem?.map { it2 -> it2.manageBusinessList?.map { it3 -> if (it3.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it3.premiumCode).not()) it3.isLock = true } }
+        dataAction.actionItem?.map { it2 -> it2.manageBusinessList?.map { it3 ->
+          if (it3.premiumCode.isNullOrEmpty().not()){
+            it3.isLock = session.checkIsPremiumUnlock(it3.premiumCode).not()
+          }
+        } }
         addOnsList.clear()
         addOnsListFilter.clear()
         val list = setLastSeenData(dataAction.actionItem!!)
@@ -217,6 +221,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
     ManageBusinessData.BusinessType.sales_analytics -> baseActivity.startAptOrderSummary(session)
     ManageBusinessData.BusinessType.search_analytics -> baseActivity.startSearchQuery(session)
+    ManageBusinessData.BusinessType.ic_staff_profile_d -> baseActivity.startListStaff(session)
 
     ManageBusinessData.BusinessType.room_booking_engine_d,
     ManageBusinessData.BusinessType.ic_ivr_faculty,
