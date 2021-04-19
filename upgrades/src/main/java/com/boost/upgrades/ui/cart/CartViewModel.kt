@@ -136,7 +136,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun updateProceedClick(renewValue: Boolean) {
-        Log.v("updateProceedClick", " " + renewValue)
         _updateProceedClick.postValue(renewValue)
     }
 
@@ -145,12 +144,10 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun updateRenewValue(renewValue: String) {
-        Log.v("updateRenewValue", " " + renewValue)
         _updateCardRenew.postValue(renewValue)
     }
 
     fun updateRenewPopupClick(renewPopValue: String) {
-        Log.v("updateRenewPopupClick", " " + renewPopValue)
         _updateRenewPopup.postValue(renewPopValue)
     }
 
