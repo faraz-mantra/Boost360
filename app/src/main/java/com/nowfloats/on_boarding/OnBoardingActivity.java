@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
-import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResult;
-import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
-import com.boost.presignup.datamodel.userprofile.VerificationRequestResult;
+import com.boost.presignin.rest.userprofile.ConnectUserProfileResponse;
+import com.boost.presignin.rest.userprofile.ConnectUserProfileResult;
+import com.boost.presignin.rest.userprofile.UserProfileResponse;
+import com.boost.presignin.rest.userprofile.VerificationRequestResult;
 import com.boost.presignup.utils.CustomFirebaseAuthHelpers;
 import com.boost.presignup.utils.CustomFirebaseAuthListeners;
 import com.facebook.CallbackManager;

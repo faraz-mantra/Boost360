@@ -1,34 +1,28 @@
 package com.boost.presignin.ui.mobileVerification
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.style.ClickableSpan
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.boost.presignin.R
-import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentOtpVerificationBinding
-import com.boost.presignin.ui.AccountNotFoundActivity
+import com.boost.presignin.rest.userprofile.ResponseMobileIsRegistered
+import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.boost.presignin.views.otptextview.OTPListener
 import com.framework.base.BaseFragment
-import com.framework.models.BaseViewModel
-import com.framework.utils.hideKeyBoard
+import com.framework.extensions.observeOnce
 
-class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, BaseViewModel>() {
+class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, LoginSignUpViewModel>() {
 
     private val TAG = OtpVerificationFragment::class.java.canonicalName;
 
-    private lateinit var countDown : CountDownTimer;
+    private lateinit var countDown: CountDownTimer;
 
     companion object {
         private const val PHONE_NUMBER = "phone_number"
@@ -48,8 +42,8 @@ class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, Bas
         return R.layout.fragment_otp_verification
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<LoginSignUpViewModel> {
+        return LoginSignUpViewModel::class.java
     }
 
 
@@ -58,7 +52,7 @@ class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, Bas
         countDown.cancel();
     }
 
-    fun onCodeSent(){
+    fun onCodeSent() {
         countDown = object : CountDownTimer(50 * 1000, 1000) {
             override fun onTick(p0: Long) {
                 val resendIn = getString(R.string.psn_resend_in);
@@ -120,17 +114,21 @@ class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, Bas
     }
 
 
-    fun verify(){
-        val otp = binding?.pinTv?.otp?:return
+    fun verify() {
+        val otp = binding?.pinTv?.otp ?: return
 
         //TEST ONLY
-        if(otp=="12345"){
+        if (otp == "12345") {
             binding?.wrongOtpErrorTv?.isVisible = true;
             return
         }
+        viewModel?.checkMobileIsRegistered(phoneNumber?.toLong())?.observeOnce(viewLifecycleOwner, {
+            val data = it as? ResponseMobileIsRegistered
 
-        navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
-        //startActivity(Intent(requireContext(), AccountNotFoundActivity::class.java))
+        })
+//        navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
+//        //startActivity(Intent(requireContext(), AccountNotFoundActivity::class.java))
+//        navigator?
 
     }
 }
