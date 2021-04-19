@@ -5,37 +5,46 @@ import android.content.pm.PackageManager
 import android.os.Handler
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.viewpager2.widget.ViewPager2
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
+import com.dashboard.constant.PreferenceConstant
 import com.dashboard.constant.PreferenceConstant.CHANNEL_SHARE_URL
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.DashboardActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
+import com.dashboard.controller.ui.dialog.DrScoreDirectionDialog
+import com.dashboard.controller.ui.dialog.DrScoreNewDashboardDialog
+import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.ProgressDashboardDialog
+import com.dashboard.controller.ui.drScore.clickEventUpdateScoreN
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.dashboardBanner.*
+import com.dashboard.model.live.drScore.DrScoreItem
 import com.dashboard.model.live.drScore.DrScoreSetupData
 import com.dashboard.model.live.drScore.DrScoreUiDataResponse
 import com.dashboard.model.live.drScore.getDrScoreData
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
-import com.dashboard.pref.*
-import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
-import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
+import com.framework.pref.*
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
+import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
@@ -68,6 +77,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 const val IS_FIRST_LOAD = "isFirsLoad"
+const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
@@ -83,6 +93,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var ctaFileLink: String? = null
   private var mCurrentPage: Int = 0
 
+
   private var handler = Handler()
   private var runnable = Runnable { showSimmerDrScore(isSimmer = false, isRetry = true) }
 
@@ -95,13 +106,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   override fun onCreateView() {
-    super.onCreateView()
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
         binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
-    binding?.txtVersion?.text = "Version $versionName"
+    binding?.txtVersion1?.text = "Version $versionName"
+    binding?.txtVersion2?.text = "Version $versionName"
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
@@ -152,7 +163,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? DrScoreUiDataResponse
       val drScoreData = getDrScoreData()
-      val isHighDrScore = drScoreData != null && (drScoreData.getDrsTotal() >= 80)
+      val isHighDrScore = drScoreData != null && (drScoreData.getDrsTotal() >= 85)
       val drScoreSetupList = response?.data?.let { it1 -> drScoreData?.getDrScoreData(it1) }
       if (response?.isSuccess() == true && drScoreSetupList.isNullOrEmpty().not()) {
         if (isHighDrScore.not()) {
@@ -162,44 +173,85 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.progressScore?.progress = drScoreData.getDrsTotal()
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
           binding?.pagerBusinessSetupLow?.apply {
-            binding?.motionOne?.transitionToStart()
+//            binding?.motionOne?.transitionToStart()
             adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DashboardFragment)
             offscreenPageLimit = 3
             adapter = adapterBusinessContent
             binding?.dotIndicator?.setViewPager2(this)
             setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-            postInvalidateOnAnimation()
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-              override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                mCurrentPage = position
-              }
-
-              override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                if (position == mCurrentPage) {
-                  if (positionOffset > 0.5) setPage(position + 1) else setPage(position)
-                } else {
-                  if (positionOffset < 0.5) setPage(position) else setPage(position + 1)
-                }
-              }
-            })
+//            postInvalidateOnAnimation()
+//            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//              override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                mCurrentPage = position
+//              }
+//
+//              override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+//                if (position == mCurrentPage) {
+//                  if (positionOffset > 0.5) setPage(position + 1) else setPage(position)
+//                } else {
+//                  if (positionOffset < 0.5) setPage(position) else setPage(position + 1)
+//                }
+//              }
+//            })
           }
-          binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
-          binding?.motionOne?.transitionToStart()
-          baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
-          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+//          binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
+//          binding?.motionOne?.transitionToStart()
+//          baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
+//          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+          binding?.viewBusinessReport?.gone()
+          binding?.viewWebsiteReport?.gone()
+          binding?.viewVersionLow?.visible()
+          binding?.viewVersionHigh?.gone()
+          binding?.scrollDownBtn?.gone()
         } else {
+          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false).not()) welcomeDrScoreDialog()
+          binding?.viewBusinessReport?.visible()
+          binding?.viewWebsiteReport?.visible()
           binding?.highReadinessScoreView?.visible()
           binding?.lowReadinessScoreView?.gone()
+          binding?.viewVersionLow?.gone()
+          binding?.viewVersionHigh?.visible()
+          binding?.scrollDownBtn?.apply {
+            visible()
+            setNoDoubleClickListener(this@DashboardFragment)
+          }
         }
         showSimmerDrScore(false)
       } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
     })
   }
 
+  private fun welcomeDrScoreDialog() {
+    if ((baseActivity as? DashboardActivity)?.count == 0) {
+      DrScoreWelcomeDialog.newInstance().apply {
+        binding?.nestedScrollView?.fullScroll(View.FOCUS_UP)
+        binding?.nestedScrollView?.fling(0)
+        binding?.nestedScrollView?.smoothScrollTo(0, 0)
+        onClicked = {
+          WebEngageController.trackEvent(DASHBOARD_DR_SCORE_HIGH, PAGE_VIEW, session?.fpTag)
+          DrScoreDirectionDialog.newInstance().apply {
+            onClicked = {
+              DrScoreNewDashboardDialog.newInstance().apply {
+                onClicked = {
+                  WebEngageController.trackEvent(DASHBOARD_COACHMARKS, PAGE_VIEW, session?.fpTag)
+                  PreferencesUtils.instance.saveData(IS_DR_HIGH_DIALOG, true)
+                }
+                showDialog(this@DashboardFragment.childFragmentManager)
+              }
+            }
+            showDialog(this@DashboardFragment.childFragmentManager)
+          }
+        }
+        showDialog(this@DashboardFragment.childFragmentManager)
+        (baseActivity as? DashboardActivity)?.count = 1
+      }
+    }
+  }
+
   private fun setPage(position: Int) {
-    binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: R.xml.fragment_dashboard_scene_hide)
+//    binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: R.xml.fragment_dashboard_scene_hide)
   }
 
   private fun setBusinessManageTask() {
@@ -225,13 +277,18 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val response = it as? ManageBusinessDataResponse
         val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (dataAction?.actionItem.isNullOrEmpty().not()) {
-          dataAction!!.actionItem!!.map { it1 -> if (it1.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it1.premiumCode).not()) it1.isLock = true }
+          dataAction?.actionItem?.map { it1 ->
+            if (it1.premiumCode.isNullOrEmpty().not()) {
+              it1.isLock = session.checkIsPremiumUnlock(it1.premiumCode).not()
+            }
+          }
           if (adapterBusinessData == null) {
             rvManageBusiness.apply {
-              adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
+              adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction?.actionItem!!, this@DashboardFragment)
               adapter = adapterBusinessData
             }
-          } else adapterBusinessData?.notify(dataAction.actionItem!!)
+          } else adapterBusinessData?.notify(dataAction?.actionItem!!)
+
         } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
       })
       btnShowAll.setOnClickListener {
@@ -281,8 +338,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setBusinessSummary(drTotal: Int, totalOrder: String, summary: SummaryEntity?) {
-    val data = BusinessSetupHighData().getData(drTotal, summary?.getNoOfUniqueViews() ?: "0", totalOrder, getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode),
-        summary?.getNoOfMessages() ?: "0")
+    val data = BusinessSetupHighData().getData(drTotal, summary?.getNoOfUniqueViews() ?: "0", totalOrder,
+        getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
     data.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout() }
     if (adapterPagerBusinessUpdate == null) {
       binding?.pagerBusinessSetupHigh?.apply {
@@ -431,6 +488,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         baseActivity.startReadinessScoreView(session, 0)
       }
       RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> baseActivity.startReadinessScoreView(session, position)
+      RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal -> {
+        val dataDr = (item as? DrScoreSetupData)?.getDrScoreData()
+        if (dataDr != null) {
+          val type = DrScoreItem.DrScoreItemType.fromName(dataDr.id)
+          if (type == DrScoreItem.DrScoreItemType.boolean_share_business_card) {
+            val messageChannelUrl = PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "")
+            if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
+            else getChannelAccessToken(true)
+          } else clickEventUpdateScoreN(type, baseActivity, session)
+        } else baseActivity.startReadinessScoreView(session, position)
+      }
       RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
         val data = item as? QuickActionItem ?: return
         QuickActionItem.QuickActionType.from(data.quickActionType)?.let { quickActionClick(it) }
@@ -488,6 +556,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       binding?.retryDrScore -> setSummaryAndDrScore(true)
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.scrollDownBtn -> {
+        binding?.nestedScrollView?.scrollToTopBottom(binding?.arrowBtn!!)
+        WebEngageController.trackEvent(if (binding?.arrowBtn?.rotation?.toInt() != 90) DASHBOARD_DOWN_PAGE else DASHBOARD_UP_PAGE, PAGE_VIEW, session?.fpTag)
+      }
     }
   }
 
@@ -529,7 +601,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
-      QuickActionItem.QuickActionType.LIST_STAFF -> baseActivity.startListStaff(session)
+      QuickActionItem.QuickActionType.ADD_STAFF_PROFILE -> baseActivity.startAddStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,
       QuickActionItem.QuickActionType.LIST_PRODUCT,
       QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,

@@ -20,7 +20,7 @@ import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
-import com.dashboard.pref.*
+import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
@@ -714,8 +714,7 @@ fun UserSessionManager.getBundleDataKyc(): Bundle? {
   session.fpEmail = fPEmail
   session.fpNumber = fPPrimaryContactNumber
   session.isSelfBrandedAdd = isSelfBrandedKycAdd ?: false
-  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
-      ?: false
+  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name) ?: false
   val bundle = Bundle()
   bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name, session)
   return bundle

@@ -35,9 +35,12 @@
 
     <activity
       android:name=".staffs.ui.StaffFragmentContainerActivity"
+      android:configChanges="keyboardHidden|orientation|screenSize"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme_staff_home"
-      android:windowSoftInputMode="adjustPan" />
+      android:windowSoftInputMode="adjustPan"
+      android:theme="@style/AppTheme_staff_home" />
+
+
 
     <activity
       android:name=".ui.testimonial.TestimonialContainerActivity"
@@ -54,4 +57,11 @@
       android:resource="@array/preloaded_fonts" />
 
   </application>
+
+  <!-- Android 11 changes -->
+  <queries>
+    <intent>
+      <action android:name="android.media.action.IMAGE_CAPTURE" />
+    </intent>
+  </queries>
 </manifest>

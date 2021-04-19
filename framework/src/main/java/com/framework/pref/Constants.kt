@@ -1,4 +1,4 @@
-package com.dashboard.pref
+package com.framework.pref
 
 import android.util.DisplayMetrics
 import java.util.*

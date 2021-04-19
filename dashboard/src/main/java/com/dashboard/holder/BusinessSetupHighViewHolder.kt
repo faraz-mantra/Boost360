@@ -1,7 +1,5 @@
 package com.dashboard.holder
 
-import androidx.core.content.ContextCompat
-import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemBusinessSetupHighBinding
 import com.dashboard.databinding.ItemDetailBusinessBinding
@@ -32,9 +30,9 @@ class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBa
         binding.viewBusinessCount.gone()
         binding.txtTitle3.text = data.title1
         binding.txtPercentage.text = "${data.score}%"
-        val isHigh = (data.score ?: 0 >= 80)
-        binding.txtPercentage.setTextColor(ContextCompat.getColor(activity!!, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-        binding.progressBar.progressDrawable = ContextCompat.getDrawable(activity!!, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+        val isHigh = (data.score ?: 0 >= 85)
+//        binding.txtPercentage.setTextColor(ContextCompat.getColor(activity!!, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+//        binding.progressBar.progressDrawable = ContextCompat.getDrawable(activity!!, if (isHigh) R.drawable.ic_progress_bar_high_grey else R.drawable.progress_bar_horizontal)
         data.score?.let { binding.progressBar.progress = it }
         binding.viewReadinessScore.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.READING_SCORE_CLICK.ordinal) }
       }
@@ -44,6 +42,6 @@ class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBa
 
 private fun ItemDetailBusinessBinding.setData(listener: RecyclerItemClickListener?, position: Int, item: Specification?) {
   txtTitle.text = item?.title
-  txtValue.text = item?.value
+  txtValue.text = if (item?.value.isNullOrEmpty().not() && item?.value.equals("0").not()) item?.value else "_"
   viewBusinessCount.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.BUSINESS_UPDATE_CLICK.ordinal) }
 }
