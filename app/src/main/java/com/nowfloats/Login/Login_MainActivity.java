@@ -346,11 +346,12 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
       @Override
       public void onSuccess(@Nullable VerificationRequestResult response) {
-        if (progressDialog != null && progressDialog.isShowing()) {
-          progressDialog.dismiss();
+        if (response != null && response.getLoginId() != null) {
+          processLoginSuccessRequest(response);
+        } else {
+          if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+          Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
         }
-        if (response != null && response.getLoginId() != null) processLoginSuccessRequest(response);
-        else Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
       }
 
       @Override
@@ -435,12 +436,13 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void startDashboard() {
-    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-    else progressDialog = ProgressDialog.show(this, "", "Loading");
-    dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    startActivity(dashboardIntent);
-    overridePendingTransition(0, 0);
-    finish();
+    runOnUiThread(() -> {
+      dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+      startActivity(dashboardIntent);
+      overridePendingTransition(0, 0);
+      if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+      finish();
+    });
   }
 
   @Override
@@ -609,6 +611,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void processLoginSuccessRequest(VerificationRequestResult response) {
+    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
     if (response.getLoginId() != null && !response.getLoginId().isEmpty()) {
       try {
         session.setUserProfileId(response.getLoginId());
@@ -622,8 +625,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
       if (response.getValidFPIds() == null || response.getValidFPIds().length == 0) {
         showBusinessProfileCreationStartScreen(response.getLoginId());
       } else {
-        session.setUserLogin(true);
         progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
+        session.setUserLogin(true);
         session.storeISEnterprise(response.isEnterprise() + "");
         session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
         session.storeFPID(response.getValidFPIds()[0]);
@@ -746,6 +749,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void showBusinessProfileCreationStartScreen(String userProfileId) {
+    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
     WebEngageController.initiateUserLogin(userProfileId);
     WebEngageController.setUserContactInfoProperties(session);
 
@@ -792,14 +796,10 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 //            MixPanelController.setProperties("LoggedIn", "True");
       getFPDetails_retrofit(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
     } else {
-      if (progressDialog != null) {
-        progressDialog.dismiss();
-        progressDialog = null;
-      }
       if (value.equals("Partial")) {
         session.setUserLogin(true);
         showBusinessProfileCreationStartScreen(session.getUserProfileId());
-      }
+      } else if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
     }
   }
 
@@ -814,11 +814,9 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 //        businessEnquiries.getMessages();
     //VISITOR and SUBSCRIBER COUNT API
     fetchData();
-    progressDialog = ProgressDialog.show(this, "", "Loading");
-      GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
-      visit_subcribersCountAsyncTask.execute();
-      startDashboard();
-
+    GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
+    visit_subcribersCountAsyncTask.execute();
+    new Handler().postDelayed(this::startDashboard, 5000);
   }
 
   @Subscribe
