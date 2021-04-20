@@ -38,7 +38,7 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Bas
     }
 
     override fun onCreateView() {
-        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         registerRequest = requireArguments().getParcelable("request")!!
         binding?.confirmButton?.setOnClickListener {

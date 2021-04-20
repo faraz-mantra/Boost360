@@ -17,23 +17,27 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.checkIfMobileNumberIsRegistered(number), TaskCode.CHECK_MOBILE_IS_REGISTERED)
   }
 
-  fun connectUserProfile(userProfileRequest: UserProfileRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.connectUserProfile(userProfileRequest), TaskCode.CONNECT_USER_PROFILE)
-  }
+    fun connectUserProfile(userProfileRequest: UserProfileRequest): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.connectUserProfile(userProfileRequest), TaskCode.CONNECT_USER_PROFILE)
+    }
 
-  fun createUserProfile(userProfileRequest: UserProfileRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.createUserProfile(userProfileRequest), TaskCode.CREATE_USER_PROFILE)
-  }
+    fun createUserProfile(userProfileRequest: UserProfileRequest): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.createUserProfile(userProfileRequest), TaskCode.CREATE_USER_PROFILE)
+    }
 
-  fun verifyUserProfile(
-          userProfileVerificationRequest: UserProfileVerificationRequest,
-  ): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.verifyUserProfile(userProfileVerificationRequest), TaskCode.VERIFY_USER_PROFILE)
-  }
+    fun getFpDetailsByPhone(number: Long?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.getFpDetailsByPhone(number), TaskCode.GET_FP_DETAILS_BY_PHONE)
+    }
+
+    fun verifyUserProfile(
+            userProfileVerificationRequest: UserProfileVerificationRequest,
+    ): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.verifyUserProfile(userProfileVerificationRequest), TaskCode.VERIFY_USER_PROFILE)
+    }
 
 
-  override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
-    return WithFloatTwoRemoteData::class.java
+    override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
+        return WithFloatTwoRemoteData::class.java
   }
 
   override fun getLocalDataSourceInstance(): AppBaseLocalService {

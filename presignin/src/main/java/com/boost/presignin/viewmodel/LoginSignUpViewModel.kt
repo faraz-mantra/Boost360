@@ -11,4 +11,8 @@ class LoginSignUpViewModel : BaseViewModel() {
         return WithFloatTwoRepository.isMobileIsRegistered(number).toLiveData()
     }
 
+    fun getFpDetailsByPhone(number: Long?): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.getFpDetailsByPhone(number).toLiveData()
+    }
+
 }

@@ -153,6 +153,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "87687526880-hrsg6847ipqho9fo55pupuf8fdaiujrv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boost.presignin",
+            "certificate_hash": "94dd608f99e5a9c2650f6f0af0bfdfb0ea3218c3"
+          }
+        },
+        {
           "client_id": "87687526880-sv4cl2p4641peka485il80latq5i2jn3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

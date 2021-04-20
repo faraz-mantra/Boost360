@@ -12,6 +12,7 @@ object EndPoints {
     const val LOG_OUT = "/Discover/v1/floatingpoint/notification/unregisterChannel"
     const val CONNECT_MERCHANT_AUTH_PROVIDER = "/user/v9/floatingPoint/ConnectMerchantAuthProvider"
     const val CHECK_MOBILE_IS_REGISTERED = "/discover/v1/floatingpoint/CheckIfMobileIsRegistered"
+    const val GET_FP_DETAILS_BY_PHONE = "/discover/v1/floatingPoint/getfpdetailsbynumber"
 
 }
 

@@ -37,11 +37,11 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.appservice.model.kycData.PaymentKycDataResponse;
-import com.boost.presignin.rest.userprofile.ConnectUserProfileResponse;
-import com.boost.presignin.rest.userprofile.UserProfileResponse;
-import com.boost.presignin.rest.userprofile.UserResult;
-import com.boost.presignin.rest.userprofile.VerificationRequestResult;
 import com.boost.presignup.PreSignUpActivity;
+import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
+import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
+import com.boost.presignup.datamodel.userprofile.UserResult;
+import com.boost.presignup.datamodel.userprofile.VerificationRequestResult;
 import com.boost.presignup.utils.CustomFirebaseAuthHelpers;
 import com.boost.presignup.utils.CustomFirebaseAuthListeners;
 import com.daimajia.androidanimations.library.Techniques;
@@ -60,7 +60,6 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -344,18 +343,20 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
     CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
       @Override
+      public void onSuccess(@Nullable ConnectUserProfileResponse response) {
+
+      }
+
+      @Override
       public void onSuccess(@Nullable VerificationRequestResult response) {
         if (progressDialog != null && progressDialog.isShowing()) {
           progressDialog.dismiss();
         }
         if (response != null && response.getLoginId() != null) processLoginSuccessRequest(response);
-        else Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
+        else
+          Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
       }
 
-      @Override
-      public void onSuccess(@Nullable ConnectUserProfileResponse response) {
-
-      }
 
       @Override
       public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
@@ -368,6 +369,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
           Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.error_occured_while_processing_your_login));
         }
       }
+
 
       @Override
       public void onFailure() {
@@ -639,18 +641,23 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     progressDialog = ProgressDialog.show(this, "", "Loading");
 
     customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(this, new CustomFirebaseAuthListeners() {
-      @Override
-      public void onSuccess(@Nullable VerificationRequestResult response) {
-        if (progressDialog != null && progressDialog.isShowing())
-          progressDialog.dismiss();
-        if (response != null) processLoginSuccessRequest(response);
-        else Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.unable_to_validate_your_phone));
-      }
+
 
       @Override
       public void onSuccess(@Nullable ConnectUserProfileResponse response) {
 
       }
+
+
+      @Override
+      public void onSuccess(@Nullable VerificationRequestResult response) {
+        if (progressDialog != null && progressDialog.isShowing())
+          progressDialog.dismiss();
+        if (response != null) processLoginSuccessRequest(response);
+        else
+          Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.unable_to_validate_your_phone));
+      }
+
 
       @Override
       public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
@@ -768,9 +775,6 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
       response_Data.ValidFPIds = new ArrayList<>();
       session.storeFPID(result.getFpIds()[0]);
       response_Data.ValidFPIds.addAll(Arrays.asList(result.getFpIds()));
-      DataBase dataBase = new DataBase(this);
-      dataBase.insertLoginStatus(response_Data, session.getFPID());
-
       processUserProfile(userProfileResponse);
     }
   }

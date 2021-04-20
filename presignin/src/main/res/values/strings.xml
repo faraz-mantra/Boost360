@@ -91,4 +91,5 @@
     <string name="www_sravansclinic_com"><u>www.sravansclinic.com</u></string>
   <string name="select_business_category">Select business category</string>
     <string name="select_business_type">Select your business type</string>
+    <string name="error_getting_fp_details">Error getting fp details.</string>
 </resources>
