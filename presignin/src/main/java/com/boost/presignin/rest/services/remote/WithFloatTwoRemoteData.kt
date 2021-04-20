@@ -1,5 +1,6 @@
 package com.boost.presignin.rest.services.remote
 
+import com.boost.presignin.model.FPDetailsResponse
 import com.boost.presignin.rest.EndPoints
 import com.boost.presignin.rest.userprofile.*
 import io.reactivex.Observable
@@ -27,5 +28,8 @@ interface WithFloatTwoRemoteData {
     @Headers("Content-Type: application/json")
     @POST(EndPoints.VERIFY_LOGIN)
     fun verifyUserProfileAny(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<UserProfileResponse>>
+
+    @GET(EndPoints.GET_FP_DETAILS_BY_PHONE)
+    fun getFpDetailsByPhone(@Query("number") number: Long?, @Query(value = "clientId") clientId: String? = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"): Observable<Response<FPDetailsResponse>>
 
 }

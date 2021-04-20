@@ -1,5 +1,6 @@
 package com.boost.presignin.ui.mobileVerification
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Spannable
@@ -11,12 +12,17 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.boost.presignin.R
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentOtpVerificationBinding
+import com.boost.presignin.model.FPDetailsResponse
 import com.boost.presignin.rest.userprofile.ResponseMobileIsRegistered
+import com.boost.presignin.ui.AccountNotFoundActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.boost.presignin.views.otptextview.OTPListener
 import com.framework.base.BaseFragment
 import com.framework.extensions.observeOnce
+import com.framework.pref.UserSessionManager
+import java.util.*
 
 class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, LoginSignUpViewModel>() {
 
@@ -56,7 +62,7 @@ class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, Log
         countDown = object : CountDownTimer(50 * 1000, 1000) {
             override fun onTick(p0: Long) {
                 val resendIn = getString(R.string.psn_resend_in);
-                binding?.resendTv?.text = String.format(resendIn, (p0/1000).toInt());
+                binding?.resendTv?.text = String.format(resendIn, (p0 / 1000).toInt());
 
             }
 
@@ -106,10 +112,12 @@ class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, Log
 
         }
         binding?.verifyButton?.setOnClickListener {
-           verify()
+            verify()
         }
 
         onCodeSent();
+        val session = UserSessionManager(requireActivity())
+
 
     }
 
@@ -124,11 +132,55 @@ class OtpVerificationFragment : BaseFragment<FragmentOtpVerificationBinding, Log
         }
         viewModel?.checkMobileIsRegistered(phoneNumber?.toLong())?.observeOnce(viewLifecycleOwner, {
             val data = it as? ResponseMobileIsRegistered
+            when (data?.result) {
+                true -> {
+                    //number is registered redirect to dashboard
+                    //get fp details by phone number
+                    viewModel?.getFpDetailsByPhone(phoneNumber?.toLong())?.observeOnce(viewLifecycleOwner, { response ->
+                        if (response.isSuccess()) {
+                            val data = response as? FPDetailsResponse
+                            val userSessionManager = UserSessionManager(baseActivity)
+                            userSessionManager.storeFPID(data?.id)
+                            userSessionManager.storeFpTag(data?.tag)
+                            userSessionManager.setUserLogin(true)
+                            startDashboard()
+                        } else {
+                            showShortToast(getString(R.string.error_getting_fp_details))
+                        }
+
+
+                    })
+
+
+                }
+                else -> {
+                    // number is not registered
+                    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
+
+                }
+            }
 
         })
-//        navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
 //        //startActivity(Intent(requireContext(), AccountNotFoundActivity::class.java))
 //        navigator?
 
+    }
+
+
+    private fun startDashboard() {
+        val dashBoardActivity: Class<*> = try {
+            Class.forName("com.dashboard.controller.DashboardActivity")
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
+            return
+        }
+        val dashboardIntent = Intent(requireContext(), dashBoardActivity)
+        dashboardIntent.putExtras(requireActivity().intent)
+        val bundle = Bundle()
+        bundle.putParcelableArrayList("message", ArrayList())
+        dashboardIntent.putExtras(bundle)
+        dashboardIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(dashboardIntent)
+        requireActivity().finish()
     }
 }
