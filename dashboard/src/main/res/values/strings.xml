@@ -91,7 +91,7 @@
   <string name="select_duration">Select duration</string>
   <string name="digital_readiness_score_failed_to_load">Failed to load your Digital Readiness Score.</string>
   <string name="please_wait">Please wait...</string>
-  <string name="business_nsummary">Business Summary</string>
+  <string name="business_nsummary">Business\nSummary</string>
   <string name="your_site_health_heading">Your site health:</string>
   <string name="_82">82%</string>
   <string name="new_content" translatable="false">NEW</string>
@@ -105,7 +105,7 @@
   <string name="business_card">Business Card</string>
   <string name="search_boost_add_ons">Search boost add-ons</string>
   <string name="your_website_readiness_reached_above_85">Your website readiness reached above 85%.</string>
-  <string name="you_ve_successfully_completed_85_readiness_score_social_media_platforms">You’ve successfully completed 85% of tasks from the readiness score now go ahead and share promote it on all your contacts and social media platforms.</string>
-  <string name="ready_welcome_new_customers">You are now ready to welcome new customers.</string>
+  <string name="you_score_social_media_platforms">Check the new extended dashboard and share your website with all your contacts and on your social media accounts to bring initial traffic.</string>
+  <string name="ready_welcome_new_customers">It’s time to promote your business website digitally.</string>
   <string name="find_website_readiness_score_from_here">Find website\nreadiness\nscore from\nhere</string>
 </resources>

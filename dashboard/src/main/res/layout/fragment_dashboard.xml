@@ -115,9 +115,16 @@
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
+                      android:ellipsize="end"
+                      android:gravity="center_vertical"
+                      android:includeFontPadding="false"
+                      android:maxLines="1"
                       android:text="@string/digital_readiness_score"
                       android:textColor="@color/white"
-                      app:textType="HEADING_6" />
+                      app:autoSizeMaxTextSize="18sp"
+                      app:autoSizeMinTextSize="14sp"
+                      app:autoSizeStepGranularity="1sp"
+                      app:autoSizeTextType="uniform" />
 
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
@@ -427,7 +434,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/ic_add_logo_d" />
                 </com.framework.views.customViews.CustomCardView>
 
@@ -935,25 +942,25 @@
       android:visibility="gone" />
 
     <com.framework.views.customViews.CustomCardView
+      android:id="@+id/scroll_down_btn"
       android:layout_width="@dimen/size_30"
       android:layout_height="@dimen/size_30"
-      android:clickable="true"
-      android:focusable="true"
       android:layout_gravity="bottom|center_horizontal"
       android:layout_marginBottom="@dimen/size_16"
-      android:id="@+id/scroll_down_btn"
+      android:clickable="true"
+      android:focusable="true"
       app:cardBackgroundColor="@color/accent_30"
       app:cardCornerRadius="@dimen/size_15"
       app:cardElevation="0dp">
 
       <com.framework.views.customViews.CustomImageView
+        android:id="@+id/arrow_btn"
         android:layout_width="@dimen/size_12"
         android:layout_height="@dimen/size_12"
-        android:tint="@color/black_4a4a4a"
-        android:rotation="90"
-        android:id="@+id/arrow_btn"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_arrow_right_d"/>
+        android:rotation="90"
+        android:tint="@color/black_4a4a4a"
+        app:srcCompat="@drawable/ic_arrow_right_d" />
     </com.framework.views.customViews.CustomCardView>
   </FrameLayout>
 </layout>

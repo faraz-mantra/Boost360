@@ -35,6 +35,7 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
       data.type?.icon?.let { binding.imgIcon.setImageResource(it) }
     }
     binding.mainContent.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal) }
+    binding.btnAddItemStart.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal) }
   }
 
   private fun startCheckAnimation(isAnimate: Boolean) {

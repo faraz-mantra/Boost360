@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
+import com.dashboard.constant.PreferenceConstant
 import com.dashboard.constant.PreferenceConstant.CHANNEL_SHARE_URL
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
@@ -21,11 +22,13 @@ import com.dashboard.controller.ui.dialog.DrScoreDirectionDialog
 import com.dashboard.controller.ui.dialog.DrScoreNewDashboardDialog
 import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.ProgressDashboardDialog
+import com.dashboard.controller.ui.drScore.clickEventUpdateScoreN
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.dashboardBanner.*
+import com.dashboard.model.live.drScore.DrScoreItem
 import com.dashboard.model.live.drScore.DrScoreSetupData
 import com.dashboard.model.live.drScore.DrScoreUiDataResponse
 import com.dashboard.model.live.drScore.getDrScoreData
@@ -227,10 +230,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         binding?.nestedScrollView?.fling(0)
         binding?.nestedScrollView?.smoothScrollTo(0, 0)
         onClicked = {
+          WebEngageController.trackEvent(DASHBOARD_DR_SCORE_HIGH, PAGE_VIEW, session?.fpTag)
           DrScoreDirectionDialog.newInstance().apply {
             onClicked = {
               DrScoreNewDashboardDialog.newInstance().apply {
                 onClicked = {
+                  WebEngageController.trackEvent(DASHBOARD_COACHMARKS, PAGE_VIEW, session?.fpTag)
                   PreferencesUtils.instance.saveData(IS_DR_HIGH_DIALOG, true)
                 }
                 showDialog(this@DashboardFragment.childFragmentManager)
@@ -483,6 +488,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         baseActivity.startReadinessScoreView(session, 0)
       }
       RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> baseActivity.startReadinessScoreView(session, position)
+      RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal -> {
+        val dataDr = (item as? DrScoreSetupData)?.getDrScoreData()
+        if (dataDr != null) {
+          val type = DrScoreItem.DrScoreItemType.fromName(dataDr.id)
+          if (type == DrScoreItem.DrScoreItemType.boolean_share_business_card) {
+            val messageChannelUrl = PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "")
+            if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
+            else getChannelAccessToken(true)
+          } else clickEventUpdateScoreN(type, baseActivity, session)
+        } else baseActivity.startReadinessScoreView(session, position)
+      }
       RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
         val data = item as? QuickActionItem ?: return
         QuickActionItem.QuickActionType.from(data.quickActionType)?.let { quickActionClick(it) }
@@ -541,8 +557,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.retryDrScore -> setSummaryAndDrScore(true)
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.scrollDownBtn -> {
-        binding?.nestedScrollView?.scrollToTopBottom()
-        binding?.arrowBtn?.rotation = if (binding?.arrowBtn?.rotation?.toInt() == 90) -91F else 90F
+        binding?.nestedScrollView?.scrollToTopBottom(binding?.arrowBtn!!)
+        WebEngageController.trackEvent(if (binding?.arrowBtn?.rotation?.toInt() != 90) DASHBOARD_DOWN_PAGE else DASHBOARD_UP_PAGE, PAGE_VIEW, session?.fpTag)
       }
     }
   }
