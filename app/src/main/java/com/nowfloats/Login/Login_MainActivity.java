@@ -623,9 +623,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         showBusinessProfileCreationStartScreen(response.getLoginId());
       } else {
         session.setUserLogin(true);
-        if (progressDialog != null && progressDialog.isShowing())
-          progressDialog.dismiss();
-        else progressDialog = ProgressDialog.show(this, getString(R.string.loading));
+        progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
         session.storeISEnterprise(response.isEnterprise() + "");
         session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
         session.storeFPID(response.getValidFPIds()[0]);
