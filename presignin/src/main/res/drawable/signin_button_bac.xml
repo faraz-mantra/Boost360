@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:drawable="@drawable/signin_button_shape_unselected" android:state_enabled="false" />
 
-  <item android:drawable="@drawable/signin_button_shape_selected" android:state_enabled="true" />
+  <item android:drawable="@drawable/signin_button_light_selected" android:state_enabled="true" />
 
 </selector>

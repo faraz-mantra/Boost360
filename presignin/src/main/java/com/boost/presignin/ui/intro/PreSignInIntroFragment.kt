@@ -13,20 +13,20 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 
-class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, BaseViewModel>() {
-  var videoDuration: Int = 0
-  var timer: CountDownTimer? = null;
-  private var mediaPlayer: MediaPlayer? = null;
-  private var mute = false;
-
-
-  var onSkip: (() -> Unit)? = null
-
-  var playPause: ((b: Boolean) -> Unit)? = null
+class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, BaseViewModel>() {
 
   private val TAG = "IntroFragment"
+  private var buffering = true
+  private var videoDuration: Int = 0
+  private var timer: CountDownTimer? = null
+  private var mediaPlayer: MediaPlayer? = null
+  private var mute = false
+  private val introItem by lazy { requireArguments().getSerializable(INTRO_ITEM) as IntroItem }
+  private val position by lazy { requireArguments().getInt(POSITION) }
 
-  private var buffering = true;
+  var onSkip: (() -> Unit)? = null
+  var playPause: ((b: Boolean) -> Unit)? = null
+
 
   companion object {
     private var INTRO_ITEM = "INTRO_ITEM"
@@ -34,7 +34,7 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
 
     @JvmStatic
     fun newInstance(introItem: IntroItem, position: Int) =
-        PreSigninIntroFragment().apply {
+        PreSignInIntroFragment().apply {
           arguments = Bundle().apply {
             putSerializable(INTRO_ITEM, introItem)
             putInt(POSITION, position)
@@ -42,8 +42,6 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         }
   }
 
-  private val introItem by lazy { requireArguments().getSerializable(INTRO_ITEM) as IntroItem }
-  private val position by lazy { requireArguments().getInt(POSITION) }
   override fun getLayout(): Int {
     return R.layout.fragment_pre_signin_intro
   }
@@ -80,15 +78,13 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
               binding?.progressBar?.isVisible = false
               binding?.videoViewContainer?.isVisible = true
               buffering = false
-
             }
 
             MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START -> {
               Log.d(TAG, "onCreateView: MEDIA_INFO_VIDEO_RENDERING_START")
               binding?.progressBar?.isVisible = false
               binding?.videoViewContainer?.isVisible = true
-              //binding?.videoView?.isVisible = true
-              setVideoTimerCountDown();
+              setVideoTimerCountDown()
             }
           }
           true
@@ -103,6 +99,7 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
       }
       binding?.playPauseLottie?.setOnClickListener {
         binding?.videoView?.start()
+        setVideoTimerCountDown()
         it.isVisible = false
       }
     } else binding?.boostLogo?.gone()
@@ -112,7 +109,7 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     }
 
     binding?.skipVideo?.setOnClickListener {
-      onSkip?.let { it1 -> it1() };
+      onSkip?.let { it1 -> it1() }
     }
   }
 
@@ -141,7 +138,7 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         binding?.videoTime?.post {
           if (videoDuration == 0) {
             timer?.cancel()
-            binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), 0)
+            binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), "00")
           } else {
             binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), videoDuration)
           }
@@ -150,6 +147,11 @@ class PreSigninIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
 
       override fun onFinish() {
         Log.e("videoCompleted", "&&&&&&&&&&&&&")
+        binding?.introImgContainer?.post {
+          binding?.introImgContainer?.isVisible = true
+          binding?.videoViewContainer?.isVisible = false
+          binding?.progressBar?.isVisible = false
+        }
       }
     }
     timer?.start()
