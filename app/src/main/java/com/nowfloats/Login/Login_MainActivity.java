@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -435,8 +436,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void startDashboard() {
-    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-    else progressDialog = ProgressDialog.show(this, "", "Loading");
+    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();else progressDialog = ProgressDialog.show(this, "", "Loading");
     dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     startActivity(dashboardIntent);
     overridePendingTransition(0, 0);
@@ -623,9 +623,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         showBusinessProfileCreationStartScreen(response.getLoginId());
       } else {
         session.setUserLogin(true);
-        if (progressDialog != null && progressDialog.isShowing())
-          progressDialog.dismiss();
-        else progressDialog = ProgressDialog.show(this, getString(R.string.loading));
+        progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
         session.storeISEnterprise(response.isEnterprise() + "");
         session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
         session.storeFPID(response.getValidFPIds()[0]);
@@ -816,7 +814,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 //        businessEnquiries.getMessages();
     //VISITOR and SUBSCRIBER COUNT API
     fetchData();
-    progressDialog = ProgressDialog.show(this, "", "Loading");
+      progressDialog = ProgressDialog.show(this, "", "Loading");
       GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
       visit_subcribersCountAsyncTask.execute();
       startDashboard();
