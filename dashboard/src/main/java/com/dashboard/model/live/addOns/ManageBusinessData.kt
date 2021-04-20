@@ -90,7 +90,6 @@ class ManageBusinessData(
     table_reservations_d("table_reservations_d", R.drawable.table_reservations_d),
     ic_staff_profile_d("ic_staff_profile_d", R.drawable.ic_staff_profile_d);
 
-   //R.drawable.ic_project_terms_d
 
     companion object {
       fun fromName(name: String?): BusinessType? = values().firstOrNull { it.name == name }
