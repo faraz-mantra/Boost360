@@ -25,7 +25,7 @@ class ManageBusinessData(
 
   enum class BusinessType(var type: String, var icon: Int) {
     video_consultations("video_consultations", R.drawable.video_consultations),
-    in_clinic_appointments("in_clinic_appointments", R.drawable.in_clinic_appointments),
+    in_clinic_appointments("in_clinic_appointments", R.drawable.in_clinic_appontments),
     ic_customer_call_d("ic_customer_call_d", R.drawable.ic_customer_call_d),
     ic_customer_enquiries_d("ic_customer_enquiries_d", R.drawable.ic_customer_enquiries_d),
     ic_service_cataloge_d("ic_service_cataloge_d", R.drawable.ic_product_cataloge_d),
