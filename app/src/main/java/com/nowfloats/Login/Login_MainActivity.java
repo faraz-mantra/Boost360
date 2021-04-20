@@ -343,6 +343,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
 
     CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
+
       @Override
       public void onSuccess(@Nullable VerificationRequestResult response) {
         if (progressDialog != null && progressDialog.isShowing()) {
@@ -354,7 +355,9 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
       @Override
       public void onSuccess(@Nullable ConnectUserProfileResponse response) {
-
+        if (progressDialog != null && progressDialog.isShowing()) {
+          progressDialog.dismiss();
+        }
       }
 
       @Override
@@ -433,6 +436,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
   private void startDashboard() {
     if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+    else progressDialog = ProgressDialog.show(this, "", "Loading");
     dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     startActivity(dashboardIntent);
     overridePendingTransition(0, 0);
@@ -619,7 +623,9 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         showBusinessProfileCreationStartScreen(response.getLoginId());
       } else {
         session.setUserLogin(true);
-        progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
+        if (progressDialog != null && progressDialog.isShowing())
+          progressDialog.dismiss();
+        else progressDialog = ProgressDialog.show(this, getString(R.string.loading));
         session.storeISEnterprise(response.isEnterprise() + "");
         session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
         session.storeFPID(response.getValidFPIds()[0]);
@@ -810,11 +816,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 //        businessEnquiries.getMessages();
     //VISITOR and SUBSCRIBER COUNT API
     fetchData();
-    new Handler().postDelayed(() -> Login_MainActivity.this.runOnUiThread(() -> {
+    progressDialog = ProgressDialog.show(this, "", "Loading");
       GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
       visit_subcribersCountAsyncTask.execute();
       startDashboard();
-    }), 2000);
+
   }
 
   @Subscribe
@@ -845,10 +851,17 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void checkSelfBrandedKyc() {
+    if (!progressDialog.isShowing())
+      progressDialog.show();
     StoreInterface boostKit = Constants.restAdapterBoostKit.create(StoreInterface.class);
+
     boostKit.getSelfBrandedKyc(getQuery(), new Callback<PaymentKycDataResponse>() {
       @Override
       public void success(PaymentKycDataResponse data, Response response) {
+        if (progressDialog != null) {
+          progressDialog.dismiss();
+          progressDialog = null;
+        }
         if (data.getData() != null && !data.getData().isEmpty()) session.setSelfBrandedKycAdd(true);
         else session.setSelfBrandedKycAdd(false);
       }
@@ -871,11 +884,18 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void checkUserAccount() {
+    if (!progressDialog.isShowing())
+      progressDialog.show();
     StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
     getAccountDetail.userAccountDetail(session.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
       @Override
       public void success(AccountDetailsResponse data, Response response) {
-        if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) session.setAccountSave(false);
+        if (progressDialog != null) {
+          progressDialog.dismiss();
+          progressDialog = null;
+        }
+        if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null))
+          session.setAccountSave(false);
         else session.setAccountSave(true);
       }
 
