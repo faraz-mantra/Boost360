@@ -38,18 +38,30 @@
       app:dotsSize="@dimen/_5sdp"
       app:dotsSpacing="@dimen/_5sdp"
       app:dotsWidthFactor="1"
-      app:layout_constraintBottom_toTopOf="@id/get_started"
+      app:layout_constraintBottom_toTopOf="@id/btn_create"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:selectedDotColor="@color/colorAccent" />
 
 
     <com.framework.views.customViews.CustomButton
-      android:id="@+id/get_started"
+      android:id="@+id/btn_create"
       style="@style/started_button"
       android:layout_marginHorizontal="@dimen/size_20"
-      android:text="@string/psn_get_started"
       android:layout_marginBottom="@dimen/size_10"
+      android:text="@string/create_a_new_account"
+      app:layout_constraintBottom_toTopOf="@id/btn_login"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_login"
+      style="@style/started_button"
+      android:layout_marginHorizontal="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_10"
+      android:background="@drawable/signin_button_bac"
+      android:text="@string/login_to_existing_account"
+      android:textColor="@color/colorAccent"
       app:layout_constraintBottom_toTopOf="@id/accept_tnc"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
@@ -60,6 +72,8 @@
       android:layout_marginHorizontal="@dimen/size_20"
       android:gravity="center"
       android:text="@string/ps_accept_tnc"
+      android:textColorHighlight="@color/greyish_brown"
+      android:textColorLink="@color/black"
       android:textSize="12sp"
       app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
       app:layout_constraintEnd_toEndOf="parent"

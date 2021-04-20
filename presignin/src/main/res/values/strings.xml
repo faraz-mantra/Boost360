@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="please_wait">Please wait...</string>
-    <string name="ps_accept_tnc">By getting started, you agree to Boost 360 <b><u>terms</u></b> and conditions</string>
+    <string name="ps_accept_tnc">By getting started, you agree to Boost 360 <b><u>terms</u></b> and <b><u>conditions</u></b></string>
     <string name="psn_get_started">GET STARTED</string>
 
 
@@ -66,7 +66,7 @@
     <string name="go_to_login">Go to login</string>
     <string name="mute">mute</string>
     <string name="skip">skip</string>
-    <string name="intro_video_time">%d Seconds</string>
+    <string name="intro_video_time">%s Seconds</string>
     <string name="_or_">--or--</string>
     <string name="confirm_business_category">Confirm business category</string>
     <string name="creating_your_business_profile">Creating your business profile</string>
@@ -92,4 +92,6 @@
   <string name="select_business_category">Select business category</string>
     <string name="select_business_type">Select your business type</string>
     <string name="error_getting_fp_details">Error getting fp details.</string>
+  <string name="create_a_new_account">Create a new account</string>
+    <string name="login_to_existing_account">Login to existing account</string>
 </resources>
