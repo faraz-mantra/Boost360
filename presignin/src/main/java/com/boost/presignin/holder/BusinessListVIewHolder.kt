@@ -1,12 +1,10 @@
 package com.boost.presignin.holder
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import com.boost.presignin.R
 import com.boost.presignin.constant.RecyclerViewActionType
-import com.boost.presignin.constant.RecyclerViewItemType
 import com.boost.presignin.databinding.RecyclerItemFpInfoBinding
-import com.boost.presignin.model.ResultItem
+import com.boost.presignin.model.fpList.ResultItem
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
