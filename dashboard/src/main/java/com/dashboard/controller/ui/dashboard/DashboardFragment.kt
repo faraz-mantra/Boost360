@@ -127,14 +127,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun getPremiumBanner() {
     setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
-    setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
+//    setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
+    setDataRiaAcademy(ArrayList())
     viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
       val response = it as? DashboardPremiumBannerResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val data = response.data?.get(0)
         if (data?.academyBanners.isNullOrEmpty().not()) {
-          saveDataAcademy(data?.academyBanners!!)
-          setDataRiaAcademy(data.academyBanners!!)
+//          saveDataAcademy(data?.academyBanners!!)
+//          setDataRiaAcademy(data.academyBanners!!)
         }
         if (data?.marketplaceBanners.isNullOrEmpty().not()) {
           val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
@@ -175,7 +176,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.highReadinessScoreView?.gone()
           binding?.lowReadinessScoreView?.visible()
           binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal()}"
-          binding?.progressScore?.progress = drScoreData?.getDrsTotal()?:0
+          binding?.progressScore?.progress = drScoreData?.getDrsTotal() ?: 0
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
           binding?.pagerBusinessSetupLow?.apply {
 //            binding?.motionOne?.transitionToStart()
