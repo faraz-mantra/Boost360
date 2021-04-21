@@ -13,6 +13,10 @@ object EndPoints {
     const val CONNECT_MERCHANT_AUTH_PROVIDER = "/user/v9/floatingPoint/ConnectMerchantAuthProvider"
     const val CHECK_MOBILE_IS_REGISTERED = "/discover/v1/floatingpoint/CheckIfMobileIsRegistered"
     const val GET_FP_DETAILS_BY_PHONE = "/discover/v1/floatingPoint/getfpdetailsbynumber"
+    const val SEND_OTP_INDIA = "/discover/v1/floatingpoint/SendOTPIndia"
+    const val VERIFY_OTP = "/discover/v1/floatingpoint/VerifyOTP"
+    const val FP_LIST_REGISTERED_MOBILE = "/discover/v1/floatingpoint/GetFPListforRegisteredMobile"
+    const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
 
 }
 

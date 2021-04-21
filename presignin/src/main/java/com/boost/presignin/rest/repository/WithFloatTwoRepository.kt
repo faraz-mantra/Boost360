@@ -29,6 +29,18 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
         return makeRemoteRequest(remoteDataSource.getFpDetailsByPhone(number), TaskCode.GET_FP_DETAILS_BY_PHONE)
     }
 
+    fun sendOtpIndia(number: Long?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.sendOtpIndia(number), TaskCode.SEND_OTP_INDIA)
+    }
+
+    fun verifyOtp(number: String?, otp: String?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.verifyOtp(number, otp), TaskCode.VERIFY_OTP)
+    }
+
+    fun getFpListForRegisteredNumber(number: String?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.getFpListForRegisteredMobile(number), TaskCode.GET_FP_LIST_FOR_REGISTERED_NUMBER)
+    }
+
     fun verifyUserProfile(
             userProfileVerificationRequest: UserProfileVerificationRequest,
     ): Observable<BaseResponse> {

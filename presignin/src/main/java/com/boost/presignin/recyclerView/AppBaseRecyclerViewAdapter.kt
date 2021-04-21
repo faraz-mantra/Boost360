@@ -10,6 +10,8 @@ import com.boost.presignin.constant.RecyclerViewItemType.*
 import com.boost.presignin.databinding.ItemCategoryLayoutBinding
 import com.boost.presignin.databinding.ItemSectionHeaderLayoutBinding
 import com.boost.presignin.databinding.PaginationLoaderBinding
+import com.boost.presignin.databinding.RecyclerItemFpInfoBinding
+import com.boost.presignin.holder.BusinessListViewHolder
 import com.boost.presignin.holder.common.SectionHeaderRecyclerViewHolder
 import com.boost.presignin.holders.CategoryRecyclerViewHolder
 import com.boost.presignin.recyclerView.BaseRecyclerViewHolder
@@ -26,6 +28,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       SECTION_HEADER_ITEM -> SectionHeaderRecyclerViewHolder(binding as ItemSectionHeaderLayoutBinding)
       CATEGORY_ITEM -> CategoryRecyclerViewHolder(binding as ItemCategoryLayoutBinding)
+      BUSINESS_LIST_ITEM -> BusinessListViewHolder(binding as RecyclerItemFpInfoBinding)
     }
   }
 

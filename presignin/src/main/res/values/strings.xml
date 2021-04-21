@@ -94,4 +94,11 @@
     <string name="error_getting_fp_details">Error getting fp details.</string>
   <string name="create_a_new_account">Create a new account</string>
     <string name="login_to_existing_account">Login to existing account</string>
+    <string name="sending_otp">Sending OTP...</string>
+    <string name="choose_a_business">Choose a business</string>
+    <string name="you_can_always_switch_between_these_business_accounts_from_the_bottom_side_menu_on_dashboard">You can always switch between these business accounts from the bottom side menu on dashboard.</string>
+    <string name="go_to_dashboard">Go to dashboard</string>
+    <string name="otp_not_sent">otp not sent</string>
+    <string name="otp_sent">otp sent</string>
+    <string name="otp_resent">otp resent</string>
 </resources>

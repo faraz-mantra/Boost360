@@ -48,6 +48,7 @@
       android:id="@+id/btn_create"
       style="@style/started_button"
       android:layout_marginHorizontal="@dimen/size_20"
+        android:visibility="gone"
       android:layout_marginBottom="@dimen/size_10"
       android:text="@string/create_a_new_account"
       app:layout_constraintBottom_toTopOf="@id/btn_login"

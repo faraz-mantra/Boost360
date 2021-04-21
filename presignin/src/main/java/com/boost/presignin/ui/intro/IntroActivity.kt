@@ -1,5 +1,6 @@
 package com.boost.presignin.ui.intro
 
+import android.content.Intent
 import android.os.Handler
 import android.text.Spannable
 import android.text.SpannableString
@@ -12,6 +13,7 @@ import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroAdapter
 import com.boost.presignin.databinding.ActivityIntroBinding
 import com.boost.presignin.model.IntroItem
+import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.framework.utils.makeLinks
@@ -84,10 +86,10 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         page.alpha = 1.0F - abs(position)
       }
     }
-//    binding?.getStarted?.setOnClickListener {
-//      startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
-//      finish()
-//    }
+    binding?.btnLogin?.setOnClickListener {
+      startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+      finish()
+    }
   }
 
   private fun setNextPage() {

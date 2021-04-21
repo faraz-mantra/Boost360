@@ -14,5 +14,14 @@ class LoginSignUpViewModel : BaseViewModel() {
     fun getFpDetailsByPhone(number: Long?): LiveData<BaseResponse> {
         return WithFloatTwoRepository.getFpDetailsByPhone(number).toLiveData()
     }
+    fun sendOtpIndia(number: Long?):LiveData<BaseResponse>{
+        return WithFloatTwoRepository.sendOtpIndia(number).toLiveData()
+    }
+    fun verifyOtp(number: String?,otp:String?):LiveData<BaseResponse>{
+        return WithFloatTwoRepository.verifyOtp(number,otp).toLiveData()
+    }
+    fun getFpListByMobile(number: String?):LiveData<BaseResponse>{
+        return WithFloatTwoRepository.getFpListForRegisteredNumber(number).toLiveData()
+    }
 
 }
