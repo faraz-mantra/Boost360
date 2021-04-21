@@ -12,7 +12,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/size_2"
-    android:layout_marginEnd="@dimen/size_34"
+    android:layout_marginEnd="@dimen/size_16"
+    android:layout_marginStart="@dimen/size_16"
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="@color/white"
@@ -51,10 +52,9 @@
               app:cpb_background_progressbar_color="@color/grey_light_1_d"
               app:cpb_background_progressbar_width="@dimen/size_9"
               app:cpb_progress_direction="to_right"
-              app:cpb_progressbar_color="@color/grey_light_2_d"
+              app:cpb_progressbar_color="@color/red_light_1"
               app:cpb_progressbar_width="@dimen/size_9"
-              app:cpb_round_border="false"
-              tools:srcCompat="@drawable/ic_add_home_circle_d" />
+              app:cpb_round_border="false" />
 
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/img_icon"
@@ -96,7 +96,7 @@
             android:id="@+id/txt_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/light_grey_3"
+            android:textColor="@color/red_light_1"
             app:textType="BODY_1"
             tools:text="40% remaining" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -120,6 +120,9 @@
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="@dimen/size_42"
+          android:clickable="true"
+          android:focusable="true"
+          android:id="@+id/btn_add_item_start"
           android:layout_gravity="center_vertical"
           android:layout_marginStart="@dimen/size_14"
           android:layout_marginEnd="@dimen/size_14">
@@ -132,7 +135,7 @@
             android:layout_weight="1"
             android:textAllCaps="true"
             android:maxLines="1"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/black_4a4a4a"
             app:autoSizeMaxTextSize="16sp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeStepGranularity="1sp"

@@ -28,6 +28,10 @@ data class DrScoreSetupData(
     return drScoreItem?.firstOrNull { !it.isUpdate }?.drScoreUiData?.title
   }
 
+  fun getDrScoreData(): DrScoreUiData? {
+    return drScoreItem?.firstOrNull { !it.isUpdate }?.drScoreUiData
+  }
+
   enum class DrScoreType(var id: String, var title: String, var icon: Int) {
     BUSINESS_PROFILE("business_profile", "Business Profile", R.drawable.ic_business_profile_dr),
     WEBSITE_CONTENT("website_content", "Website Content", R.drawable.ic_edit_content_d),
