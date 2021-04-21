@@ -191,6 +191,14 @@
         <item name="backgroundTint">@color/material_button_background_state</item>
         <item name="iconStartPadding">@dimen/_12sdp</item>
     </style>
+    <style name="material_button_dashboard" parent="psn_button_style">
+       <item name="android:theme">@style/Theme.MaterialComponents.Light</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="iconTint">@color/white</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="backgroundTint">@color/material_button_background_state</item>
+        <item name="iconStartPadding">@dimen/_12sdp</item>
+    </style>
 
 
     <style name="category_text_style">
