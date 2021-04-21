@@ -476,6 +476,40 @@
         <item>Data privacy policy</item>
     </string-array>
 
+    <string-array name="on_boarding_btnTexts">
+        <item>Learn How JioOnline Works</item>
+        <item>Take Your Site Health To Minimum 80%</item>
+        <item>Add An \"About Us\" Page</item>
+        <item>Add Products</item>
+        <item>What\'s Next</item>
+        <item>Broadcast Your Business On WhatsApp</item>
+    </string-array>
+
+    <string-array name="wildfire_parent_0">
+        <item>WildFire is the fastest way to get your potential customers to notice your brand, product or services. It is an inorganic JioOnline provided to the organic website, in form of targeted digital advertising that ensures customer calls and website visits.</item>
+    </string-array>
+
+    <string-array name="wildfire_parent_1">
+        <item>If you already have a JioOnline plan (organic SEO), you can simply activate WildFire for your category (prices vary because of difference in supply &amp; demand for keywords by category).</item>
+        <item>A mix of advertising tools, such as Google AdWords, Facebook Ads, etc. are used to automatically create the most optimised ads &amp; targeting for your website. Which ensure people searching for what’s being advertised end up calling your business number or on your website first.</item>
+        <item><![CDATA[<b>Note:</b> A minimum of three messages are required on your website for the WildFire plan to start.]]></item>
+    </string-array>
+
+    <string-array name="dictate_parent_2">
+        <item><![CDATA[<b>For which plans can the NowFloats Dictate be used?</b><br />NowFloats Dictate can be used for JioOnline Lite customers.]]></item>
+    </string-array>
+
+    <string-array name="delivery_points">
+        <item>If you have an existing website with an integrated payment gateway you can choose to integrate that with your product catalog. To accept payments via your NowFloats JioOnline website, please add the relevant links to each one of your products via the Buy Online option in your NowFloats JioOnline product catalog.</item>
+        <item>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the NowFloats Product catalogue.</item>
+    </string-array>
+
+    <string-array name="payment_method_messages">
+        <item name="message_assured_purchase">A service by JioOnline which ensures payment protection and seamless delivery of products.</item>
+        <item name="message_external_url">If you already listed your product on some order platform simply enter the URL here and handle to purchase from there.</item>
+        <item name="message_dont_want_to_sell">Select this if you just wish to list the product on the site and wants to only receive enquiries from your customers.</item>
+    </string-array>
+
     <string name="payment_gateway_terms_point_one">JioOnline currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n</string>
     <string name="payment_gateway_terms_point_two">Please note that JioOnline just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
     <string name="payment_gateway_terms_point_three">JioOnline in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n</string>
@@ -486,4 +520,6 @@
     <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make JioOnline website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
     <string name="visibility_create_account">gone</string>
     <string name="package_name_sign_up_visibility" translatable="false">com.jio.online</string>
+
+    <string name="ir_actionbarBackground">#0400A6</string>
 </resources>

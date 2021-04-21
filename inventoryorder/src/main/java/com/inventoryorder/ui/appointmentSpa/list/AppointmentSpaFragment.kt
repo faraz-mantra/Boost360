@@ -208,10 +208,6 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   private fun emptyView() {
       binding?.bookingRecycler?.gone()
       binding?.errorView?.visible()
-      binding?.btnActionTutorials?.setOnClickListener {
-          val sheet = LearnHowItWorkBottomSheet()
-          sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
-      }
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {

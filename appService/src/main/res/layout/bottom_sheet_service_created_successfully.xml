@@ -36,8 +36,9 @@
             <com.framework.views.customViews.CustomImageView
                 android:layout_width="@dimen/size_70"
                 android:layout_height="@dimen/size_70"
+                android:padding="@dimen/size_6"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_success" />
+                app:srcCompat="@drawable/ic_selected_icon" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/txt_message"

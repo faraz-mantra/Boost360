@@ -7,7 +7,7 @@
                 android:radius="@dimen/size_5"/>
             <stroke
                 android:width="0.5dp"
-                android:color="#FFB900" />
+                android:color="@color/colorPrimary" />
         </shape>
     </item>
 

@@ -103,9 +103,9 @@
           <LinearLayout
             style="@style/match_wrap"
             android:gravity="center"
-
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="MissingConstraints">
 
             <com.framework.views.customViews.CustomTextView
               style="@style/wrap_wrap"
