@@ -53,6 +53,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     setOnClickListener(binding?.btnGoToDashboard)
     this.session = UserSessionManager(baseActivity)
     getFpList()
+
   }
 
   override fun onClick(v: View) {
