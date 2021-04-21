@@ -8,6 +8,7 @@ import com.boost.presignin.extensions.isBusinessNameValid
 import com.boost.presignin.extensions.isEmailValid
 import com.boost.presignin.extensions.isNameValid
 import com.boost.presignin.extensions.isPhoneValid
+import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.RequestFloatsModel
 import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel

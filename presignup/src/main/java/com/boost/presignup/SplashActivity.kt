@@ -51,7 +51,7 @@ class SplashActivity : AppCompatActivity() {
         }
       }
     }
-    val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", 0)
+    val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", MODE_PRIVATE)
     isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
     isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
 

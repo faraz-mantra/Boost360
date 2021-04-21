@@ -98,6 +98,8 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
 
   private fun storeFpDetails() {
     session.setUserLogin(true)
+    session.setAccountSave(true)
+
     session.storeFPID(resultItem?.floatingPointId)
     session.storeFpTag(resultItem?.floatingPointTag)
     val map = HashMap<String, String>()
@@ -106,7 +108,8 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
-        startDashboard()
+        session.userProfileId = response.accountManagerId
+                startDashboard()
       } else {
         showShortToast("Error!")
       }
