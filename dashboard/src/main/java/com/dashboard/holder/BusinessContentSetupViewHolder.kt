@@ -31,7 +31,7 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
       startCheckAnimation(true)
     }else{
 //      MATCH_PARENT.setHeight()
-      getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }
+      getColor(R.color.red_light_1)?.let { binding.txtDes.setTextColor(it) }
       binding.viewImage.visible()
       binding.lottySyncOk.gone()
       startCheckAnimation(false)

@@ -30,7 +30,7 @@
         android:text="@string/your_website_readiness_reached_above_85"
         android:textAlignment="gravity"
         android:textColor="@color/colorAccent"
-        app:fontFamily="@font/semi_bold"
+        app:fontFamily="@font/bold"
         app:textType="HEADING_4"
         tools:alpha="1" />
 
@@ -79,10 +79,10 @@
         android:id="@+id/desc"
         android:gravity="center"
         android:textColor="@color/black_4a4a4a"
-        android:text="@string/you_ve_successfully_completed_85_readiness_score_social_media_platforms"
+        android:text="@string/you_score_social_media_platforms"
         android:textAlignment="gravity"
         android:visibility="gone"
-        app:textType="BODY_2"
+        app:textType="BODY_1"
         tools:alpha="1" />
 
       <com.framework.views.customViews.CustomButton
@@ -97,7 +97,7 @@
         android:gravity="center"
         android:padding="@dimen/size_12"
         android:stateListAnimator="@null"
-        android:text="@string/done"
+        android:text="@string/understood"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:visibility="gone"
