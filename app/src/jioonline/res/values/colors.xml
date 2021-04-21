@@ -5,6 +5,10 @@
     <color name="greenDark">#458b00</color>
     <color name="product_delete_btn">#ff3f3f</color>
 
+    <color name="colorAccentLight">#0E0AC3</color>
+    <color name="colorPrimary_10">#1A0400A6</color>
+    <color name="accentLight_1">#2522D3</color>
+
 
 <!--    <color name="primaryColorDark">#d99d00</color>-->
     <color name="primaryColorDark">@color/colorPrimaryDark</color>
@@ -32,7 +36,7 @@
     <color name="grey">#a4a4a4</color>
     <color name="transparent">#00ffffff</color>
     <color name="light_black">#505050</color>
-    <color name="home_yellow">@color/primaryColor</color>
+    <color name="home_yellow">@color/colorPrimary</color>
 
     <color name="pencil_shade">#aaaaaa</color>
     <color name="biz_msg_txt_color">#3c3c3c</color>
@@ -58,13 +62,15 @@
     <color name="cell_text_color">#737373</color>
     <color name="cell_onclick_text_color">#FFEB3B</color>
 
-    <color name="multiple_image_select_primary">@color/primaryColor</color>
-    <color name="multiple_image_select_primaryDark">@color/primaryColorDark</color>
+    <color name="multiple_image_select_primary">@color/colorPrimary</color>
+    <color name="multiple_image_select_primaryDark">@color/colorPrimaryDark</color>
     <color name="multiple_image_select_accent">@color/accentColor</color>
 
-    <color name="primary">@color/primaryColor</color>
-    <color name="primary_color">@color/primaryColor</color>
-    <color name="primary_color_dark">@color/primaryColorDark</color>
+    <color name="primary">@color/colorPrimary</color>
+    <color name="primary_color">@color/colorPrimary</color>
+    <color name="primary_color_dark">@color/colorPrimaryDark</color>
+
+    <color name="accent_lemon">#1A0400A6</color>
 
     <color name="success_green">#6DCA07</color>
 
@@ -76,4 +82,8 @@
     <color name="yellow_ffb900">@color/colorPrimary</color>
     <color name="yellow_f5b200">@color/colorPrimaryDark</color>
     <color name="light_grey_boost_jio">@android:color/transparent</color>
+
+
+    <color name="ir_statusBarColor">@color/colorPrimaryDark</color>
+    <color name="ir_actionbarBackground">@color/colorPrimary</color>
 </resources>

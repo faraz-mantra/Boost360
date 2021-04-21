@@ -249,14 +249,13 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/login_button"
-            style="@style/LoginButtonStyle"
+            style="@style/CreateAccountButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
-            android:elevation="@dimen/_2sdp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/login_existing_account"
             android:visibility="gone"
