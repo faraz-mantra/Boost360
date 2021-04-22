@@ -32,7 +32,7 @@ interface WithFloatTwoRemoteData {
   fun verifyUserProfileAny(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<UserProfileResponse>>
 
   @GET(EndPoints.GET_FP_DETAILS_BY_PHONE)
-  fun getFpDetailsByPhone(@Query("number") number: Long?, @Query(value = "clientId") clientId: String? = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"): Observable<Response<Any>>
+  fun getFpDetailsByPhone(@Query("number") number: Long?, @Query(value = "clientId") clientId: String? ): Observable<Response<Any>>
 
   @GET(EndPoints.SEND_OTP_INDIA)
   fun sendOtpIndia(@Query("mobileNumber") number: Long?, @Query("messageTemplate") messageTemplate: String? = "Your Boost 360 verification code is [OTP] . Code valid for 10 minutes only, one-time use. Please DO NOT share this OTP with anyone to ensure account's security.", @Query(value = "clientId") clientId: String? = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"): Observable<Response<ResponseBody>>
@@ -40,11 +40,11 @@ interface WithFloatTwoRemoteData {
   @GET(EndPoints.VERIFY_OTP)
   fun verifyOtp(
       @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
-      @Query(value = "clientId") clientId: String? = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
+      @Query(value = "clientId") clientId: String? ,
   ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.FP_LIST_REGISTERED_MOBILE)
-  fun getFpListForRegisteredMobile(@Query("mobileNumber") number: String?, @Query(value = "clientId") clientId: String? = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"): Observable<Response<FPListResponse>>
+  fun getFpListForRegisteredMobile(@Query("mobileNumber") number: String?, @Query(value = "clientId") clientId: String? ): Observable<Response<FPListResponse>>
 
   @GET(EndPoints.GET_FP_DETAILS)
   fun getFpDetails(

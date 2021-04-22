@@ -22,22 +22,29 @@ class BusinessListViewHolder(binding: RecyclerItemFpInfoBinding) : AppBaseRecycl
         apply { activity?.glideLoad(binding.imageIcon, data.logoUrl, R.drawable.placeholder_image_n) }
         if (data.isItemSelected==true){
             binding.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_selected)
-            binding?.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.orange)!!)
-            binding?.customRadioButton.isChecked = true
+            binding.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.orange)!!)
+            binding.customRadioButton.isChecked = true
 
         }
 
         else{
-            binding?.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_unselected)
-            binding?.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.greyish_brown)!!)
-            binding?.customRadioButton.isChecked = false
+            binding.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_unselected)
+            binding.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.greyish_brown)!!)
+            binding.customRadioButton.isChecked = false
 
 
         }
         binding.root.setOnClickListener {
-            listener?.onItemClick(position,item,RecyclerViewActionType.BUSINESS_LIST_ITEM_CLICK.ordinal)
+            onItemClick(position, item)
+        }
+        binding.customRadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            onItemClick(position,item)
         }
 
+    }
+
+    private fun onItemClick(position: Int, item: BaseRecyclerViewItem) {
+        listener?.onItemClick(position, item, RecyclerViewActionType.BUSINESS_LIST_ITEM_CLICK.ordinal)
     }
 
 }

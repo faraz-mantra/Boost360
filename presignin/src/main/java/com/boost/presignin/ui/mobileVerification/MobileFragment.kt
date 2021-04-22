@@ -15,6 +15,7 @@ import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
+import com.framework.pref.clientId2
 import com.framework.utils.hideKeyBoard
 
 class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewModel>() {
@@ -75,7 +76,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
 
     private fun checkIfUserIsRegistered() {
         showProgress(getString(R.string.loading), false)
-        viewModel?.checkMobileIsRegistered(binding?.phoneEt?.text.toString().toLong())?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.checkMobileIsRegistered(binding?.phoneEt?.text.toString().toLong(),clientId2)?.observeOnce(viewLifecycleOwner, Observer {
             hideProgress()
             if (it.isSuccess()) {
                 val data = it as? ResponseMobileIsRegistered
@@ -85,7 +86,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
 
                 } else {
                     //user is not registered open signup flow
-                    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, binding?.phoneEt.toString()) })
+                    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, binding?.phoneEt?.text.toString()) })
 
                 }
 

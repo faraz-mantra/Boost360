@@ -22,6 +22,8 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.boost.presignin.views.otptextview.OTPListener
 import com.framework.base.BaseResponse
 import com.framework.extensions.observeOnce
+import com.framework.pref.clientId
+import com.framework.pref.clientId2
 import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
@@ -129,11 +131,12 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
     private fun sendOtp(phoneNumber: String?) {
         showProgress(getString(R.string.sending_otp))
-        viewModel?.sendOtpIndia(phoneNumber?.toLong())?.observeOnce(viewLifecycleOwner, {
+        viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId2)?.observeOnce(viewLifecycleOwner, {
             hideProgress()
             if (it.status == 200) {
                 if (parseResponse(it)) {
                     Toast.makeText(requireContext(), getString(R.string.otp_sent), Toast.LENGTH_SHORT).show()
+                    binding?.wrongOtpErrorTv?.isVisible = false;
                     countDown.start();
                 } else {
                     showShortToast(getString(R.string.otp_not_sent))
@@ -157,7 +160,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
     fun verify() {
         val otp = binding?.pinTv?.otp
-        viewModel?.verifyOtp(number = phoneNumber, otp)?.observeOnce(viewLifecycleOwner, {
+        viewModel?.verifyOtp(number = phoneNumber, otp,clientId2)?.observeOnce(viewLifecycleOwner, {
             if (it.isSuccess()) {
                 if (parseResponse(it)) {
                     addFragmentReplace(com.framework.R.id.container, FragmentFpList.newInstance(phoneNumber.toString()), false)
