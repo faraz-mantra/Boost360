@@ -52,8 +52,6 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
         }
 
         binding?.subheading?.text = spannable
-
-
         binding?.createAccountBt?.setOnClickListener {
             navigator?.startActivity(RegistrationActivity::class.java)
         }

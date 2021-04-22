@@ -22,6 +22,7 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.pref.clientId2
 import java.util.*
 
 
@@ -84,7 +85,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
 
   private fun getFpList() {
     showProgress(getString(R.string.loading))
-    viewModel?.getFpListByMobile(phoneNumber)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getFpListByMobile(phoneNumber,clientId2)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if (it.isSuccess()) {
         val fpListResponse = it as? FPListResponse
@@ -117,6 +118,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
   }
 
   private fun storeFpDetails() {
+    showProgress()
     session.setUserLogin(true)
     session.setAccountSave(true)
 
