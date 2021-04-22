@@ -101,4 +101,6 @@
     <string name="otp_not_sent">otp not sent</string>
     <string name="otp_sent">otp sent</string>
     <string name="otp_resent">otp resent</string>
+    <string name="profile_created">profile created</string>
+    <string name="unable_to_create_profile">profile not created</string>
 </resources>

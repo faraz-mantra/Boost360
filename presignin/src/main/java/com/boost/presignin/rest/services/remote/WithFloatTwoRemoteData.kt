@@ -1,5 +1,6 @@
 package com.boost.presignin.rest.services.remote
 
+import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.rest.EndPoints
@@ -14,14 +15,14 @@ interface WithFloatTwoRemoteData {
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.CREATE_MERCHANT_PROFILE)
-  fun createUserProfile(@Body userProfileRequest: UserProfileRequest): Observable<Response<UserProfileResponse>>
+  fun createUserProfile(@Body userProfileRequest: RequestFloatsModel): Observable<Response<BusinessProfileResponse>>
 
   @GET(EndPoints.CHECK_MOBILE_IS_REGISTERED)
   fun checkIfMobileNumberIsRegistered(@Query(value = "mobileNumber") mobileNumber: Long?, @Query(value = "clientId") clientId: String? = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"): Observable<Response<ResponseMobileIsRegistered>>
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.CONNECT_MERCHANT_AUTH_PROVIDER)
-  fun connectUserProfile(@Body userProfileRequest: UserProfileRequest): Observable<Response<ConnectUserProfileResponse>>
+  fun connectUserProfile(@Body userProfileRequest: RequestFloatsModel): Observable<Response<ConnectUserProfileResponse>>
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.VERIFY_LOGIN)
@@ -29,7 +30,7 @@ interface WithFloatTwoRemoteData {
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.VERIFY_LOGIN)
-  fun verifyUserProfileAny(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<UserProfileResponse>>
+  fun verifyUserProfileAny(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<Any>>
 
   @GET(EndPoints.GET_FP_DETAILS_BY_PHONE)
   fun getFpDetailsByPhone(@Query("number") number: Long?, @Query(value = "clientId") clientId: String? ): Observable<Response<Any>>

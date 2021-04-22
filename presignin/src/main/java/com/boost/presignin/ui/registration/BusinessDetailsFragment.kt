@@ -10,21 +10,26 @@ import com.boost.presignin.extensions.isNameValid
 import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.rest.userprofile.BusinessProfileResponse
+import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.BaseFragment
+import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
+import com.framework.pref.clientId2
+import com.framework.utils.getNumberFormat
 
 
-class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, BaseViewModel>() {
+class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
-    private lateinit var registerRequest: RequestFloatsModel;
+    private  var registerRequest: RequestFloatsModel? = null
 
 
     companion object {
         @JvmStatic
-        fun newInstance(registerRequest: RequestFloatsModel) =
+        fun newInstance(registerRequest: RequestFloatsModel?) =
                 BusinessDetailsFragment().apply {
                     arguments = Bundle().apply {
-                        putParcelable("request", registerRequest)
+                        putSerializable("request", registerRequest)
                     }
                 }
     }
@@ -33,14 +38,14 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Bas
         return R.layout.fragment_business_details
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<LoginSignUpViewModel> {
+        return LoginSignUpViewModel::class.java
     }
 
     override fun onCreateView() {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
-
-        registerRequest = requireArguments().getParcelable("request")!!
+        registerRequest = requireArguments().getSerializable("request") as? RequestFloatsModel
+        binding?.phoneEt?.setText(registerRequest?.ProfileProperties?.userMobile)
         binding?.confirmButton?.setOnClickListener {
 
             val name = binding?.nametEt?.text?.toString()
@@ -70,9 +75,28 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Bas
 
             val whatsappNoFlag = binding!!.checkbox.isChecked
 
+              if (registerRequest?.ProfileProperties==null)registerRequest?.ProfileProperties = BusinessInfoModel()
+            registerRequest?.ProfileProperties?.userName = name!!
+            registerRequest?.ProfileProperties?.userEmail = email!!
+            registerRequest?.ProfileProperties?.userMobile = phone!!
+            registerRequest?.ProfileProperties?.businessName = businessName!!
+            registerRequest?.AuthToken = phone
+            registerRequest?.ClientId = clientId2
+            registerRequest?.LoginKey = email
+            registerRequest?.LoginSecret = ""
+            registerRequest?.Provider = "EMAIL"
+            registerRequest?.whatsAppFlag = whatsappNoFlag
 
-            registerRequest.contactInfo = BusinessInfoModel(name!!, businessName!!, email!!, phone!!)
-            addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(registerRequest), true);
+            viewModel?.createMerchantProfile(request = registerRequest)?.observeOnce(viewLifecycleOwner,{
+                val businessProfileResponse = it as? BusinessProfileResponse
+                if (it.isSuccess()&&businessProfileResponse!=null){
+                    showLongToast(getString(R.string.profile_created))
+                    addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(registerRequest!!), true);
+
+                }else{
+                    showShortToast(getString(R.string.unable_to_create_profile))
+                }
+            })
         }
 
     }

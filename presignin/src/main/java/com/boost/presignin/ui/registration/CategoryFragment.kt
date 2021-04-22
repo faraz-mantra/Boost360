@@ -1,29 +1,24 @@
 package com.boost.presignin.ui.registration
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.boost.presignin.R
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.constant.RecyclerViewItemType
 import com.boost.presignin.databinding.FragmentCategoryBinding
+import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
 import com.boost.presignin.rest.response.ResponseDataCategory
+import com.boost.presignin.ui.mobileVerification.MobileFragment
 import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.base.BaseFragment
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
-import com.framework.webengageconstant.CATEGORY
-import com.framework.webengageconstant.CHOOSE_BUSINESS_CATEGORY
 
 
 class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoModel>() , RecyclerItemClickListener {
@@ -35,8 +30,14 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
 
 
     companion object {
+        private const val PHONE_NUMBER = "phone_number"
         @JvmStatic
-        fun newInstance() = CategoryFragment()
+        fun newInstance(phoneNumber: String?) =
+                CategoryFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(PHONE_NUMBER, phoneNumber)
+                    }
+                }
     }
 
     override fun getLayout(): Int {
@@ -46,13 +47,16 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
     override fun getViewModelClass(): Class<CategoryVideoModel> {
         return CategoryVideoModel::class.java
     }
+    private val phoneNumber by lazy {
+        arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
+    }
 
     override fun onCreateView() {
         baseAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
         val gridLayoutManager = GridLayoutManager(baseActivity, 2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return when (baseAdapter?.getItemViewType(position)) {
+                return when (baseAdapter.getItemViewType(position)) {
                     RecyclerViewItemType.SECTION_HEADER_ITEM.getLayout() -> 2
                     else -> 1
                 }
@@ -76,7 +80,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
 
         binding?.confirmButton?.setOnClickListener {
             addFragmentReplace(com.framework.R.id.container, BusinessDetailsFragment.newInstance(RequestFloatsModel(
-                    categoryDataModel = category
+                    categoryDataModel = category,ProfileProperties =  BusinessInfoModel(userMobile = phoneNumber)
             )),true);
          //   addFragmentReplace()
         }

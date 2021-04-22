@@ -17,6 +17,10 @@ object EndPoints {
     const val VERIFY_OTP = "/discover/v1/floatingpoint/VerifyOTP"
     const val FP_LIST_REGISTERED_MOBILE = "/discover/v1/floatingpoint/GetFPListforRegisteredMobile"
     const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
+    const val POST_BUSINESS_DOMAIN_URL = "discover/v1/floatingPoint/verifyUniqueTag"
+    const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
+    const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
+
 
 }
 
