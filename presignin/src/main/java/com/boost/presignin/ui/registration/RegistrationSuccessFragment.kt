@@ -10,6 +10,7 @@ import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import com.boost.presignin.R
 import com.boost.presignin.databinding.FragmentRegistrationSuccessBinding
+import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.ui.WebPreviewActivity
 import com.framework.base.BaseFragment
@@ -17,7 +18,7 @@ import com.framework.models.BaseViewModel
 
 
 class RegistrationSuccessFragment : BaseFragment<FragmentRegistrationSuccessBinding, BaseViewModel>() {
-    private lateinit var registerRequest: RequestFloatsModel;
+    private var registerRequest: RequestFloatsModel? = null
 
 
     companion object {
@@ -25,7 +26,7 @@ class RegistrationSuccessFragment : BaseFragment<FragmentRegistrationSuccessBind
         fun newInstance(registerRequest:RequestFloatsModel) =
                 RegistrationSuccessFragment().apply {
                     arguments = Bundle().apply {
-                        putParcelable("request", registerRequest)
+                        putSerializable("request", registerRequest)
                     }
                 }
     }
@@ -39,19 +40,19 @@ class RegistrationSuccessFragment : BaseFragment<FragmentRegistrationSuccessBind
     }
 
     override fun onCreateView() {
-        registerRequest = requireArguments().getParcelable("request")!!
+        registerRequest = arguments?.getSerializable("request") as? RequestFloatsModel
 
-        val businessName = registerRequest.contactInfo!!.businessName
-        val name = registerRequest.contactInfo!!.name
-        val websiteUrl = registerRequest.websiteUrl!!
+        val businessName = registerRequest?.ProfileProperties?.businessName
+        val name = registerRequest?.ProfileProperties!!.userName
+        val websiteUrl = registerRequest!!.webSiteUrl!!
 
-        binding?.headingTv?.text = String.format(getString(R.string.congratulations_n_s),name)
+        binding?.headingTv?.text = String.format(getString(R.string.congratulations_n_s), name)
         binding?.businessNameTv?.text = businessName;
 
 
         val amountSpannableString = SpannableString(" $businessName ").apply {
-             setSpan(ForegroundColorSpan(Color.rgb(0,0,0)), 0, length, 0)
-            setSpan(StyleSpan(Typeface.BOLD), 0,length,0)
+            setSpan(ForegroundColorSpan(Color.rgb(0, 0, 0)), 0, length, 0)
+            setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
         }
 
 

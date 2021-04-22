@@ -1,72 +1,21 @@
 package com.boost.presignin.model
 
-import android.os.Parcel
-import android.os.Parcelable
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import java.net.HttpURLConnection
-import java.net.URL
+import com.framework.base.BaseResponse
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class BusinessInfoModel(
-        val name: String,
-        var businessName: String,
-        var email: String,
-        var number: String,
-        var domainName: String? = null,
-        var addressCity: String? = null,
-) : Parcelable {
+data class BusinessInfoModel(
+        @SerializedName("userEmail")
+        var userEmail: String? = null,
+        @SerializedName("userMobile")
+        var userMobile: String? = null,
+        @SerializedName("userName")
+        var userName: String? = null,
+        @SerializedName("userPassword")
+        val userPassword: String? = null,
+        @SerializedName("businessName")
+        var businessName: String? = null,
+        @SerializedName("domainName")
+        var domainName: String? = null
 
-
-    constructor(source: Parcel) : this(
-            source.readString()!!,
-            source.readString()!!,
-            source.readString()!!,
-            source.readString()!!,
-            source.readString(),
-            source.readString(),
-    )
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(name)
-        writeString(businessName)
-        writeString(email)
-        writeString(number)
-        writeString(domainName)
-        writeString(addressCity)
-    }
-
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<BusinessInfoModel> = object : Parcelable.Creator<BusinessInfoModel> {
-            override fun createFromParcel(source: Parcel): BusinessInfoModel = BusinessInfoModel(source)
-            override fun newArray(size: Int): Array<BusinessInfoModel?> = arrayOfNulls(size)
-        }
-    }
-
-    fun getUrlStatusCode(url: String): LiveData<Int> {
-        val code = MutableLiveData<Int>()
-        Runnable {
-            try {
-                val siteURL = URL(url)
-                val connection = siteURL.openConnection() as? HttpURLConnection
-                connection?.requestMethod = "GET"
-                connection?.connectTimeout = 3000
-                connection?.connect()
-                code.postValue(connection?.responseCode ?: -1)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        return code
-    }
-
-//    fun clearAllDomain() {
-//        businessName = null
-//        addressCity = null
-//        email = null
-//        number = null
-//        domainName = null
-//    }
-}
+) : BaseResponse(), Serializable
