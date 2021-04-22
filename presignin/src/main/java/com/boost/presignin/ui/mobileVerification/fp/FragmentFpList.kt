@@ -2,7 +2,10 @@ package com.boost.presignin.ui.mobileVerification.fp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -20,6 +23,7 @@ import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import java.util.*
+
 
 class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewModel>(), RecyclerItemClickListener {
   override fun getLayout(): Int {
@@ -53,7 +57,21 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     setOnClickListener(binding?.btnGoToDashboard)
     this.session = UserSessionManager(baseActivity)
     getFpList()
+    binding?.backIv?.setOnClickListener {
+      goBack();
 
+    }
+    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        goBack();
+
+      }
+    })
+  }
+
+  private fun goBack() {
+    parentFragmentManager.popBackStackImmediate()
+    parentFragmentManager.beginTransaction().remove(this@FragmentFpList).commitAllowingStateLoss()
   }
 
   override fun onClick(v: View) {
@@ -61,6 +79,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     when (v) {
       binding?.btnGoToDashboard -> storeFpDetails()
     }
+
   }
 
   private fun getFpList() {
@@ -110,7 +129,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
         session.userProfileId = response.accountManagerId
-                startDashboard()
+        startDashboard()
       } else {
         showShortToast("Error!")
       }

@@ -8,10 +8,12 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentOtpVerificationBinding
@@ -101,6 +103,11 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
         onCodeSent()
         sendOtp(phoneNumber)
         binding?.subheading?.text = String.format(getString(R.string.code_sent_hint, phoneNumber))
+        val backbutton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+        backbutton?.setOnClickListener {
+            parentFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        }
         binding?.pinTv?.otpListener = object : OTPListener {
             override fun onInteractionListener() {
                 val otp = binding?.pinTv?.otp
@@ -153,7 +160,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
         viewModel?.verifyOtp(number = phoneNumber, otp)?.observeOnce(viewLifecycleOwner, {
             if (it.isSuccess()) {
                 if (parseResponse(it)) {
-                    addFragmentReplace(com.framework.R.id.container, FragmentFpList.newInstance(phoneNumber.toString()), true)
+                    addFragmentReplace(com.framework.R.id.container, FragmentFpList.newInstance(phoneNumber.toString()), false)
                 }
                 // get fp details
                 else {
