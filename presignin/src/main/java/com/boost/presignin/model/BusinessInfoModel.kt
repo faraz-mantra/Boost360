@@ -4,12 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.framework.utils.ValidationUtils
 import java.net.HttpURLConnection
 import java.net.URL
 
 class BusinessInfoModel(
-        val name:String,
+        val name: String,
         var businessName: String,
         var email: String,
         var number: String,
@@ -35,7 +34,7 @@ class BusinessInfoModel(
         writeString(email)
         writeString(number)
         writeString(domainName)
-      writeString(addressCity)
+        writeString(addressCity)
     }
 
     companion object {
