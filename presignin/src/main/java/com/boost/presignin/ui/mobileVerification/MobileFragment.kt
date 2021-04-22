@@ -1,6 +1,9 @@
 package com.boost.presignin.ui.mobileVerification
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -8,6 +11,7 @@ import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentMobileBinding
 import com.boost.presignin.rest.userprofile.ResponseMobileIsRegistered
 import com.boost.presignin.ui.AccountNotFoundActivity
+import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
@@ -17,9 +21,17 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
 
 
     companion object {
+        private val PHONE_NUMBER = "phone_number"
         @JvmStatic
         fun newInstance() = MobileFragment().apply {}
+        fun newInstance(phoneNumber: String) =
+                MobileFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(PHONE_NUMBER, phoneNumber)
+                    }
+                }
     }
+    private val phoneNumber by lazy { requireArguments().getString(PHONE_NUMBER) }
 
     override fun getLayout(): Int {
         return R.layout.fragment_mobile
@@ -34,8 +46,16 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
         binding?.phoneEt?.onTextChanged {
             binding?.nextButton?.isEnabled = it.length == 10
         }
-
-
+//        binding?.phoneEt?.setText(phoneNumber)
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goBack()
+            }
+        })
+        val backbutton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+        backbutton?.setOnClickListener {
+            goBack()
+        }
         binding?.nextButton?.setOnClickListener {
 
             activity?.hideKeyBoard()
@@ -48,23 +68,28 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
         }
     }
 
+    private fun goBack() {
+        startActivity(Intent(requireContext(), IntroActivity::class.java))
+        requireActivity().finish()
+    }
+
     private fun checkIfUserIsRegistered() {
         showProgress(getString(R.string.loading), false)
         viewModel?.checkMobileIsRegistered(binding?.phoneEt?.text.toString().toLong())?.observeOnce(viewLifecycleOwner, Observer {
             hideProgress()
-            if (it.isSuccess()){
+            if (it.isSuccess()) {
                 val data = it as? ResponseMobileIsRegistered
-                if (data?.result==true){
+                if (data?.result == true) {
                     //user is registered generate otp and verify it
-                    addFragmentReplace(com.framework.R.id.container, OtpVerificationFragment.newInstance(binding!!.phoneEt.text!!.toString()), true)
+                    addFragmentReplace(com.framework.R.id.container, OtpVerificationFragment.newInstance(binding!!.phoneEt.text!!.toString()), addToBackStack = true)
 
-                }else{
+                } else {
                     //user is not registered open signup flow
                     navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, binding?.phoneEt.toString()) })
 
                 }
 
-            }else{
+            } else {
                 showShortToast(getString(R.string.something_doesnt_seem_right))
             }
 
