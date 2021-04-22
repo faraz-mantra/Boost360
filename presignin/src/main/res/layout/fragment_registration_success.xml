@@ -27,11 +27,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:background=""
                 android:orientation="vertical">
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="@dimen/_48sdp"
                     android:layout_height="@dimen/_48sdp"
-                    android:src="@drawable/ic_tick_success"
+                    android:src="@drawable/ic_registration_success"
                     android:id="@+id/sucess_iv"
                     android:layout_marginTop="@dimen/_30sdp" />
 

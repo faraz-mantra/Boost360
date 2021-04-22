@@ -90,6 +90,10 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
       startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
       finish()
     }
+    binding?.btnCreate?.setOnClickListener {
+      startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+      finish()
+    }
   }
 
   private fun setNextPage() {
