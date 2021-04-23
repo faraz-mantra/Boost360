@@ -1,35 +1,34 @@
 package com.boost.presignin.ui.registration
 
 import BusinessDomainRequest
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.StyleSpan
+import android.widget.ImageView
 import com.boost.presignin.R
-import com.boost.presignin.constant.PreferenceConstant
+import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentBusinessWebsiteBinding
+import com.boost.presignin.dialog.ProgressChannelDialog
 import com.boost.presignin.extensions.isWebsiteValid
 import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.model.business.BusinessCreateRequest
+import com.boost.presignin.rest.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.BaseFragment
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged
-import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
-import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.framework.utils.NetworkUtils
 import com.framework.views.DotProgressBar
 import java.util.*
 
-class BusinessWebsiteFragment : BaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
+open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
 
 
     private var registerRequest: RequestFloatsModel? = null
@@ -37,6 +36,7 @@ class BusinessWebsiteFragment : BaseFragment<FragmentBusinessWebsiteBinding, Log
     private var domainValue: String? = null
     private var floatingPointId = ""
     private var isSyncCreateFpApi = false
+//    private lateinit var progress: ProgressChannelDialog
 
     companion object {
 
@@ -93,16 +93,31 @@ class BusinessWebsiteFragment : BaseFragment<FragmentBusinessWebsiteBinding, Log
             isDomain = true
             binding?.confirmButton?.isEnabled = true
             domainValue = response.stringResponse?.toLowerCase(Locale.ROOT)
+            registerRequest?.ProfileProperties?.domainName = domainValue
             binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_valid)
             onSuccess()
         } else errorSet()
     }
-
+//    override fun showProgress(title: String?, cancelable: Boolean?) {
+//        title?.let { progress.setTitle(it) }
+//        cancelable?.let { progress.isCancelable = it }
+//        activity?.let { progress.showProgress(it.supportFragmentManager) }
+//    }
+//
+//    override fun hideProgress() {
+//        progress.hideProgress()
+//    }
     override fun onCreateView() {
         registerRequest = arguments?.getSerializable("request") as? RequestFloatsModel
+//        progress = ProgressChannelDialog.newInstance()
         val websiteHint = registerRequest?.ProfileProperties?.businessName?.trim()?.replace(" ", "")
         val amountSpannableString = SpannableString("'$websiteHint' ").apply {
             setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
+        }
+
+        val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+        backButton?.setOnClickListener {
+            goBack()
         }
         binding?.websiteEt?.afterTextChanged {
             setSubDomain(binding?.websiteEt?.text.toString())
@@ -123,48 +138,54 @@ class BusinessWebsiteFragment : BaseFragment<FragmentBusinessWebsiteBinding, Log
         }
         binding?.confirmButton?.setOnClickListener {
             val website = binding?.websiteEt?.text?.toString()
-            apiHitBusiness()
             if (!website.isWebsiteValid()) {
                 showShortToast("Enter a valid website name")
                 return@setOnClickListener
             }
-
             registerRequest?.webSiteUrl = "$website.nowfloats.com"
-
+            apiHitCreateMerchantProfile()
         }
     }
-    protected val pref: SharedPreferences?
-        get() {
-            return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
-        }
-    protected val userProfileId: String?
-        get() {
-            return pref?.getString(PreferenceConstant.USER_PROFILE_ID, "")
-        }
 
-    private fun apiHitBusiness() {
-        getDotProgress()?.let {
+    private fun goBack() {
+        parentFragmentManager.popBackStackImmediate()
+    }
 
-            if (NetworkUtils.isNetworkConnected()) {
-                it.startAnimation()
-                putCreateBusinessOnboarding(it)
+    private fun apiHitCreateMerchantProfile() {
+        showProgress()
+        viewModel?.createMerchantProfile(request = registerRequest)?.observeOnce(viewLifecycleOwner, {
+            hideProgress()
+            val businessProfileResponse = it as? BusinessProfileResponse
+            if (it.isSuccess() && businessProfileResponse != null) {
+                showProgress()
+                apiHitBusiness(businessProfileResponse)
+
+            } else {
+                showShortToast(getString(R.string.unable_to_create_profile))
             }
+        })
+    }
+
+
+    private fun apiHitBusiness(businessProfileResponse: BusinessProfileResponse) {
+        if (NetworkUtils.isNetworkConnected()) {
+            putCreateBusinessOnboarding(businessProfileResponse)
         }
+
     }
-    fun getDotProgress(): DotProgressBar? {
-        return DotProgressBar.Builder().setMargin(0).setAnimationDuration(800)
-                .setDotBackground(R.drawable.ic_dot).setMaxScale(.7f).setMinScale(0.3f)
-                .setNumberOfDots(3).setdotRadius(8).build(baseActivity)
-    }
-    private fun putCreateBusinessOnboarding(dotProgressBar: DotProgressBar) {
-        if (checkFpCreate(dotProgressBar)) return
+
+    private fun putCreateBusinessOnboarding(businessProfileResponse: BusinessProfileResponse) {
         val request = getBusinessRequest()
         isSyncCreateFpApi = true
-        viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, {
+        viewModel?.putCreateBusinessOnboarding(businessProfileResponse.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
+            hideProgress()
             if (it.status == 200 || it.status == 201 || it.status == 202) {
                 if (it.stringResponse.isNullOrEmpty().not()) {
                     floatingPointId = it.stringResponse ?: ""
 //                    saveFpCreateData()
+                    registerRequest?.floatingPointId = floatingPointId
+                    registerRequest?.fpTag = registerRequest?.ProfileProperties?.domainName
+                    registerRequest?.profileId = businessProfileResponse.result?.loginId
                     addFragmentReplace(com.framework.R.id.container, RegistrationSuccessFragment.newInstance(registerRequest!!), true);
 
                 }

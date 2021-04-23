@@ -53,8 +53,8 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
                 goBack()
             }
         })
-        val backbutton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
-        backbutton?.setOnClickListener {
+        val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+        backButton?.setOnClickListener {
             goBack()
         }
         binding?.nextButton?.setOnClickListener {

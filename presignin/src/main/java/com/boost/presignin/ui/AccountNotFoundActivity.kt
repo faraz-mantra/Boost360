@@ -3,16 +3,12 @@ package com.boost.presignin.ui
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface.BOLD
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.util.Log
-import android.widget.TextView
 import com.boost.presignin.R
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.ActivityAccountNotFoundBinding
@@ -38,11 +34,13 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
         binding?.retrieveAccountBt?.setOnClickListener {
             startActivity(Intent(this@AccountNotFoundActivity, DesiredLoginMethodActivity::class.java))
         }
-
+        binding?.backIv?.setOnClickListener {
+            onBackPressed()
+        }
 
         val amountSpannableString = SpannableString(" +91-$phoneNumber").apply {
-            setSpan(ForegroundColorSpan(Color.rgb(0,0,0)), 0, length, 0)
-            setSpan(StyleSpan(BOLD), 0,length,0)
+            setSpan(ForegroundColorSpan(Color.rgb(0, 0, 0)), 0, length, 0)
+            setSpan(StyleSpan(BOLD), 0, length, 0)
         }
 
         val spannable: Spannable = SpannableStringBuilder().apply {
@@ -59,4 +57,6 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
         }
 
     }
+
+
 }

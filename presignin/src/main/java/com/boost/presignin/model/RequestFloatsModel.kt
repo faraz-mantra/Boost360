@@ -27,7 +27,16 @@ data class RequestFloatsModel(
         var whatsAppFlag: Boolean? = null,
         var channelAccessTokens: ArrayList<ChannelAccessToken>? = ArrayList(),
         var channelActionDatas: ArrayList<ChannelActionData>? = ArrayList(),
-) :BaseResponse(), Serializable {
+        var floatingPointId: String? = null,
+        var fpTag: String? = null,
+        var profileId: String? = null,
+        var isUpdate: Boolean? = false,
+
+
+        ) :BaseResponse(), Serializable {
+        fun getWebSiteId(): String? {
+                return if (isUpdate == true) fpTag else ProfileProperties.domainName
+        }
 }
 
 data class ChannelAccessToken(
