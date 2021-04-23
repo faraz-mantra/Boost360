@@ -66,6 +66,7 @@
                 android:letterSpacing="0.05"
                 android:inputType="phone"
                 android:id="@+id/phone_et"
+                android:digits="0123456789"
                 android:background="@null"
                 android:maxLength="10"
                 android:fontFamily="@font/open_sans"
