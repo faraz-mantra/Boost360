@@ -100,3 +100,9 @@ class RoiSummaryData(
     }
   }
 }
+
+fun ArrayList<RoiSummaryData>.isAllDataZero(): Boolean {
+  var isAllZero = true
+  this.forEach { if ((it.value.isNullOrEmpty() || it.value.equals("0")).not()) isAllZero = false }
+  return isAllZero
+}
