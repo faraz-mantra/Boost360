@@ -74,7 +74,7 @@
           android:layout_height="match_parent"
           android:gravity="center_vertical"
           android:orientation="vertical"
-          android:paddingStart="@dimen/size_20"
+          android:paddingStart="@dimen/size_24"
           android:paddingEnd="@dimen/size_10">
 
           <com.framework.views.customViews.CustomTextView
