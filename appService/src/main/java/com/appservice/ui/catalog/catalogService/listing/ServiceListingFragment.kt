@@ -87,8 +87,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
 
     private const val STORAGE_CODE = 120
-    var defaultShareGlobal = true
-    var shareType = 2
+    var shareType = 0
     var shareProduct: ItemsItem? = null
   }
 
@@ -273,14 +272,14 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
       startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, sendBundleData(item as? ItemsItem), false, isResult = true)
     }
     if (actionType == RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal) {
-      shareProduct = item as ItemsItem
-      if (checkStoragePermission())
-        share(defaultShareGlobal, 1, shareProduct)
+      shareProduct = item as? ItemsItem
+      shareType = 1
+      if (checkStoragePermission()) share(shareType, shareProduct)
     }
     if (actionType == RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) {
-      shareProduct = item as ItemsItem
-      if (checkStoragePermission())
-        share(defaultShareGlobal, 0, shareProduct)
+      shareProduct = item as? ItemsItem
+      shareType = 0
+      if (checkStoragePermission()) share(shareType, shareProduct)
     }
   }
 
@@ -301,7 +300,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private fun checkStoragePermission(): Boolean {
     if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
       showDialog(requireActivity(), "Storage Permission", "To share the image we need storage permission."
-      ) { _: DialogInterface?, _: Int -> ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_CODE) }
+      ) { _: DialogInterface?, _: Int -> requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_CODE) }
       return false
     }
     return true
@@ -310,9 +309,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     if (requestCode == STORAGE_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-      if (!defaultShareGlobal && shareType != 2 && shareProduct != null) {
-        share(defaultShareGlobal, shareType, shareProduct)
-      }
+      if (shareProduct != null) share(shareType, shareProduct)
     }
   }
 
@@ -325,7 +322,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     builder.create().show()
   }
 
-  fun share(defaultShare: Boolean, type: Int, product: ItemsItem?) {
+  fun share(type: Int, product: ItemsItem?) {
     showProgress("Sharing...")
     if (isNetworkConnected()) {
       val shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n\nfor more details visit: %s",
@@ -340,7 +337,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
             view.draw(Canvas(mutableBitmap))
             val path = MediaStore.Images.Media.insertImage(requireActivity().contentResolver, mutableBitmap, "boost_360", "")
             val uri = Uri.parse(path)
-            shareTextService(defaultShare, type, uri, shareText)
+            shareTextService(type, uri, shareText)
           } catch (e: OutOfMemoryError) {
             showShortToast(getString(R.string.image_size_is_large))
           } catch (e: Exception) {
@@ -362,7 +359,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         targetMap = target
         Picasso.get().load(product?.image ?: "").into(target)
       } else {
-        shareTextService(defaultShare, type, null, shareText)
+        shareTextService(type, null, shareText)
         hideProgress()
       }
     } else {
@@ -371,20 +368,14 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
   }
 
-  private fun shareTextService(defaultShare: Boolean, type: Int, uri: Uri?, shareText: String) {
+  private fun shareTextService(type: Int, uri: Uri?, shareText: String) {
     val share = Intent(Intent.ACTION_SEND)
     share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     share.putExtra(Intent.EXTRA_TEXT, shareText)
     uri?.let { share.putExtra(Intent.EXTRA_STREAM, uri) }
     share.type = if (uri != null) "image/*" else "text/plain"
     if (share.resolveActivity(requireActivity().packageManager) != null) {
-      if (!defaultShare) {
-        if (type == 0) {
-          share.setPackage(getString(R.string.facebook_package))
-        } else if (type == 1) {
-          share.setPackage(getString(R.string.whats_app_package))
-        }
-      }
+      if (type == 1) share.setPackage(getString(R.string.whats_app_package))
       startActivityForResult(Intent.createChooser(share, resources.getString(R.string.share_updates)), 1)
     }
   }
