@@ -43,6 +43,10 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
     return makeRemoteRequest(remoteDataSource.getChannelsStatus(nowfloatsId), Taskcode.GET_CHANNELS_STATUS)
   }
 
+  fun getChannelsInsights(nowfloatsId: String?, identifier: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getChannelsInsights(nowfloatsId, identifier), Taskcode.GET_CHANNELS_INSIGHTS)
+  }
+
   fun nfxProcess(request: NFXProcessRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.nfxProcess(request), Taskcode.NFX_PROCESS_TASK)
   }
