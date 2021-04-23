@@ -576,6 +576,10 @@
             android:orientation="vertical">
 
             <include
+              android:id="@+id/social_media"
+              layout="@layout/item_social_media_promotion" />
+
+            <include
               android:id="@+id/recommended_task"
               layout="@layout/item_recommended_task_view" />
 
