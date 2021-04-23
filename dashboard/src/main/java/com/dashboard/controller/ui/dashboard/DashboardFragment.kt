@@ -23,7 +23,7 @@ import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
-import com.dashboard.model.live.channel.ChannelData
+import com.dashboard.model.live.channel.*
 import com.dashboard.model.live.dashboardBanner.*
 import com.dashboard.model.live.drScore.DrScoreItem
 import com.dashboard.model.live.drScore.DrScoreSetupData
@@ -63,6 +63,7 @@ import com.inventoryorder.model.summaryCall.CALL_BUSINESS_REPORT
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.onboarding.nowfloats.model.channel.*
+import com.onboarding.nowfloats.model.channel.insights.ChannelInsightsResponse
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
@@ -80,6 +81,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private var session: UserSessionManager? = null
   private var adapterBusinessContent: AppBaseRecyclerViewAdapter<DrScoreSetupData>? = null
+  private var adapterSocialMedia: AppBaseRecyclerViewAdapter<ChannelStatusData>? = null
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
@@ -89,7 +91,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
   private var ctaFileLink: String? = null
   private var mCurrentPage: Int = 0
-
 
   private var handler = Handler()
   private var runnable = Runnable { showSimmerDrScore(isSimmer = false, isRetry = true) }
@@ -111,21 +112,41 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.txtVersion1?.text = "Version $versionName"
     binding?.txtVersion2?.text = "Version $versionName"
     getAllDashboardSummary()
-    getSocialMediaChannel()
     getPremiumBanner()
     getChannelAccessToken()
     WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   private fun getSocialMediaChannel() {
+    val channelStatusList = getChannelStatus()
+    updateUiSocialMedia(channelStatusList)
     viewModel?.getChannelsAccessTokenStatus(session?.fPID)?.observeOnce(viewLifecycleOwner, {
       val response = it as? ChannelAccessStatusResponse
       if (response?.isSuccess() == true) {
-
-      } else {
-
+        val channels = response.channels?.getChannelStatusList()
+        channels?.forEachIndexed { index, channelStatusData ->
+          viewModel?.getChannelsInsight(session?.fPID, channelStatusData.accountType)?.observeOnce(viewLifecycleOwner, { it2 ->
+            val response2 = it2 as? ChannelInsightsResponse
+            if (response2?.isSuccess() == true) channelStatusData.insightsData = response2.data
+            if (index + 1 == channels.size) {
+              saveDataChannelStatus(channels)
+              updateUiSocialMedia(channels)
+            }
+          })
+        }
       }
     })
+  }
+
+  private fun updateUiSocialMedia(channels: ArrayList<ChannelStatusData>) {
+    binding?.socialMedia?.apply {
+      if (adapterSocialMedia == null) {
+        rvMediaChannel.apply {
+          adapterSocialMedia = AppBaseRecyclerViewAdapter(baseActivity, channels, this@DashboardFragment)
+          adapter = adapterSocialMedia
+        }
+      } else adapterSocialMedia?.notify(channels)
+    }
   }
 
   override fun onResume() {
@@ -156,6 +177,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun refreshData() {
     setUserData()
+    getSocialMediaChannel()
     setBusinessManageTask()
     getNotificationCount()
     setSummaryAndDrScore((baseActivity as? DashboardActivity)?.isLoadShimmer ?: true)
@@ -209,27 +231,37 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 //          binding?.motionOne?.transitionToStart()
 //          baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
 //          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
-          binding?.viewBusinessReport?.gone()
-          binding?.viewWebsiteReport?.gone()
-          binding?.viewVersionLow?.visible()
-          binding?.viewVersionHigh?.gone()
-          binding?.scrollDownBtn?.gone()
+          visibleViewHighLow(true)
         } else {
           if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false).not()) welcomeDrScoreDialog()
-          binding?.viewBusinessReport?.visible()
-          binding?.viewWebsiteReport?.visible()
-          binding?.highReadinessScoreView?.visible()
-          binding?.lowReadinessScoreView?.gone()
-          binding?.viewVersionLow?.gone()
-          binding?.viewVersionHigh?.visible()
-          binding?.scrollDownBtn?.apply {
-            visible()
-            setNoDoubleClickListener(this@DashboardFragment)
-          }
+          visibleViewHighLow(true)
         }
         showSimmerDrScore(false)
       } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
     })
+  }
+
+  private fun visibleViewHighLow(isHigh: Boolean) {
+    if (isHigh) {
+      binding?.viewBusinessReport?.visible()
+      binding?.socialMedia?.root?.visible()
+      binding?.viewWebsiteReport?.visible()
+      binding?.highReadinessScoreView?.visible()
+      binding?.lowReadinessScoreView?.gone()
+      binding?.viewVersionLow?.gone()
+      binding?.viewVersionHigh?.visible()
+      binding?.scrollDownBtn?.apply {
+        visible()
+        setNoDoubleClickListener(this@DashboardFragment)
+      }
+    } else {
+      binding?.viewBusinessReport?.gone()
+      binding?.socialMedia?.root?.gone()
+      binding?.viewWebsiteReport?.gone()
+      binding?.viewVersionLow?.visible()
+      binding?.viewVersionHigh?.gone()
+      binding?.scrollDownBtn?.gone()
+    }
   }
 
   private fun welcomeDrScoreDialog() {
@@ -545,6 +577,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RecyclerViewActionType.PROMO_BOOST_ACADEMY_CLICK.ordinal -> {
         val data = item as? DashboardAcademyBanner ?: return
         academyBannerBoostClick(data)
+      }
+      RecyclerViewActionType.CHANNEL_ACTIVATE_CLICK.ordinal -> {
+        val data = item as? ChannelStatusData ?: return
+        session?.let { baseActivity.startDigitalChannel(it, data.accountType ?: "") }
       }
     }
   }
