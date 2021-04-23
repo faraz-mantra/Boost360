@@ -26,6 +26,7 @@ object EndPoints {
   const val POST_UPDATE_CHANNEL_ACCESS_TOKENS_URL = "dataexchange/v1/updateAccessTokens"
   const val GET_CHANNELS_ACCESS_TOKEN = "dataexchange/v1/getAccessTokens"
   const val NFX_PROCESS_URL = "dataexchange/v1/process"
+  const val NFX_CHANNELS_STATUS = "dataexchange/v2/channelstatus"
 
   // Web Action APIs
   const val WEB_ACTION_BASE_URL = "https://webaction.api.boostkit.dev/"
