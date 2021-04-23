@@ -488,6 +488,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             couponCode = validCouponCode!!.coupon_key
             couponDiscountPercentage = validCouponCode!!.discount_percent
         }
+        if (couponServiceModel != null) {
+            couponCode = couponServiceModel!!.coupon_key
+            couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!.toInt()
+        }
         val purchaseOrders = ArrayList<PurchaseOrder>()
         val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
         if (renewalItems.isNullOrEmpty().not()) {
@@ -736,6 +740,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         if (validCouponCode != null) {
             couponCode = validCouponCode!!.coupon_key
             couponDiscountPercentage = validCouponCode!!.discount_percent
+        }
+        if (couponServiceModel != null) {
+            couponCode = couponServiceModel!!.coupon_key
+            couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!.toInt()
         }
         val purchaseOrders = ArrayList<PurchaseOrder>()
         val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
