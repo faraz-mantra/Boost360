@@ -92,6 +92,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var ctaFileLink: String? = null
   private var mCurrentPage: Int = 0
 
+  private val messageBusiness: String
+    get() {
+      return PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "") ?: ""
+    }
+
   private var handler = Handler()
   private var runnable = Runnable { showSimmerDrScore(isSimmer = false, isRetry = true) }
 
@@ -107,7 +112,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
-        binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
+        binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore,
+        binding?.viewEmptyEnquiries?.btnWhatsappEnquiries, binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries,
+        binding?.viewEmptyEnquiries?.btnMessangerEnquiries, binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
     binding?.txtVersion2?.text = "Version $versionName"
@@ -234,6 +241,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           visibleViewHighLow(true)
         } else {
           if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false).not()) welcomeDrScoreDialog()
+          binding?.highReadinessScoreView?.visible()
+          binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
         }
         showSimmerDrScore(false)
@@ -246,8 +255,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.viewBusinessReport?.visible()
       binding?.socialMedia?.root?.visible()
       binding?.viewWebsiteReport?.visible()
-      binding?.highReadinessScoreView?.visible()
-      binding?.lowReadinessScoreView?.gone()
       binding?.viewVersionLow?.gone()
       binding?.viewVersionHigh?.visible()
       binding?.scrollDownBtn?.apply {
@@ -416,6 +423,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setRoiBusinessReport(sellerOrder: OrderSummaryModel?, noOfMessage: String, totlaCalls: String) {
     val roiData = RoiSummaryData().getData(noOfMessage, totlaCalls, sellerOrder, getRoiSummaryType(session?.fP_AppExperienceCode))
     roiData.map { it.recyclerViewItemType = RecyclerViewItemType.ROI_SUMMARY_ITEM_VIEW.getLayout() }
+    if (roiData.isAllDataZero()) binding?.viewEmptyEnquiries?.root?.visible()
+    else binding?.viewEmptyEnquiries?.root?.gone()
     if (adapterRoi == null) {
       binding?.rvRoiSummary?.apply {
         adapterRoi = AppBaseRecyclerViewAdapter(baseActivity, roiData, this@DashboardFragment)
@@ -534,8 +543,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         if (dataDr != null) {
           val type = DrScoreItem.DrScoreItemType.fromName(dataDr.id)
           if (type == DrScoreItem.DrScoreItemType.boolean_share_business_card) {
-            val messageChannelUrl = PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "")
-            if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
+            if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, isBusinessCardShare = true)
             else getChannelAccessToken(true)
           } else clickEventUpdateScoreN(type, baseActivity, session)
         } else baseActivity.startReadinessScoreView(session, position)
@@ -595,8 +603,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
       binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
       binding?.btnVisitingCard -> {
-        val messageChannelUrl = PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "")
-        if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, isBusinessCardShare = true)
         else getChannelAccessToken(true)
       }
       binding?.retryDrScore -> setSummaryAndDrScore(true)
@@ -605,10 +612,34 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         binding?.nestedScrollView?.scrollToTopBottom(binding?.arrowBtn!!)
         WebEngageController.trackEvent(if (binding?.arrowBtn?.rotation?.toInt() != 90) DASHBOARD_DOWN_PAGE else DASHBOARD_UP_PAGE, PAGE_VIEW, session?.fpTag)
       }
+      binding?.viewEmptyEnquiries?.btnWhatsappEnquiries -> {
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.WHATS_APP)
+        else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.WHATS_APP)
+      }
+      binding?.viewEmptyEnquiries?.btnInstagramEnquiries -> {
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.INSTAGRAM)
+        else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.INSTAGRAM)
+      }
+      binding?.viewEmptyEnquiries?.btnTelegramEnquiries -> {
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.TELEGRAM)
+        else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.TELEGRAM)
+      }
+      binding?.viewEmptyEnquiries?.btnMessangerEnquiries -> {
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.MESSENGER)
+        else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.MESSENGER)
+      }
+      binding?.viewEmptyEnquiries?.btnEmailEnquiries -> {
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.G_MAIL)
+        else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.G_MAIL)
+      }
+      binding?.viewEmptyEnquiries?.btnOtherShareEnquiries -> {
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = null)
+        else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
+      }
     }
   }
 
-  private fun visitingCardDetailText(shareChannelText: String?) {
+  private fun businessWebsiteDetailMessage(shareChannelText: String?, isBusinessCardShare: Boolean = false, shareType: ShareType? = null) {
     viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? ShareUserDetailResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
@@ -619,9 +650,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           var location = ""
           if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
           val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
-          visitingCard(txt)
+          if (isBusinessCardShare) visitingCard(txt) else baseActivity.shareViaAnyApp(shareType, txt)
         }
-      } else visitingCard(getString(R.string.my_business_card))
+      } else {
+        if (isBusinessCardShare) visitingCard(getString(R.string.my_business_card)) else showShortToast("Business detail getting error!")
+      }
     })
   }
 
@@ -824,8 +857,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun getChannelAccessToken(isShowLoader: Boolean = false) {
-    if (isShowLoader) showProgress()
+  private fun getChannelAccessToken(isBusinessCardShare: Boolean = false, isEnquiriesShare: Boolean = false, shareType: ShareType? = null) {
+    if (isBusinessCardShare || isEnquiriesShare) showProgress()
     viewModel?.getChannelsAccessToken(session?.fPID)?.observeOnce(this, {
       var urlString = ""
       if (it.isSuccess()) {
@@ -839,14 +872,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           }
         }
       }
-      getWhatsAppData(urlString, isShowLoader)
+      getWhatsAppData(urlString, isBusinessCardShare, isEnquiriesShare, shareType)
     })
   }
 
-  private fun getWhatsAppData(urlString: String, isShowLoader: Boolean = false) {
+  private fun getWhatsAppData(urlString: String, isBusinessCardShare: Boolean = false, isEnquiriesShare: Boolean = false, shareType: ShareType? = null) {
     var urlStringN = urlString
     viewModel?.getWhatsappBusiness(session?.fpTag, WA_KEY)?.observeOnce(this, {
-      if (isShowLoader) hideProgress()
+      if (isBusinessCardShare || isEnquiriesShare) hideProgress()
       if (it.isSuccess()) {
         val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
         if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
@@ -855,7 +888,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDECall: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
-      if (isShowLoader) visitingCardDetailText(urlStringN)
+      if (isBusinessCardShare) businessWebsiteDetailMessage(urlStringN, isBusinessCardShare = true)
+      else if (isEnquiriesShare) businessWebsiteDetailMessage(urlStringN, shareType = shareType)
     })
   }
 

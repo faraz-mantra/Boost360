@@ -187,7 +187,8 @@
   <string name="whatsapp_business_heading">WhatsApp business</string>
   <string name="why_sync_on_whatsapp">Why sync on whatsapp</string>
   <string name="error_sharing_visiting_card_please_try_again">Error sharing visiting card, please try again.</string>
-  <string name="share_your_business_card">Share your business card…</string>
+  <string name="share_your_business_card">Share your business card...</string>
+  <string name="share_your_business">Share your business...</string>
   <string name="permission_denied_to_read_your_external_storage">Permission denied to read your External storage</string>
   <string name="invalid_url">Invalid url.</string>
   <string name="share_connected_channel">Share connected channel…</string>
