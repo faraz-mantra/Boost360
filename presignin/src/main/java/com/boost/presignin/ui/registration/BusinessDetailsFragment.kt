@@ -2,6 +2,7 @@ package com.boost.presignin.ui.registration
 
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.ImageView
 import com.boost.presignin.R
 import com.boost.presignin.databinding.FragmentBusinessDetailsBinding
 import com.boost.presignin.extensions.isBusinessNameValid
@@ -41,11 +42,17 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
     override fun getViewModelClass(): Class<LoginSignUpViewModel> {
         return LoginSignUpViewModel::class.java
     }
-
+    private fun goBack() {
+        parentFragmentManager.popBackStackImmediate()
+    }
     override fun onCreateView() {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         registerRequest = requireArguments().getSerializable("request") as? RequestFloatsModel
         binding?.phoneEt?.setText(registerRequest?.ProfileProperties?.userMobile)
+        val backbutton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+        backbutton?.setOnClickListener {
+            goBack()
+        }
         binding?.confirmButton?.setOnClickListener {
 
             val name = binding?.nametEt?.text?.toString()
@@ -60,7 +67,7 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
             }
 
             if (!businessName.isBusinessNameValid()) {
-                showShortToast("Enter valid email")
+                showShortToast("Enter valid business name")
                 return@setOnClickListener
             }
 
@@ -75,7 +82,7 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
 
             val whatsappNoFlag = binding!!.checkbox.isChecked
 
-              if (registerRequest?.ProfileProperties==null)registerRequest?.ProfileProperties = BusinessInfoModel()
+            if (registerRequest?.ProfileProperties == null) registerRequest?.ProfileProperties = BusinessInfoModel()
             registerRequest?.ProfileProperties?.userName = name!!
             registerRequest?.ProfileProperties?.userEmail = email!!
             registerRequest?.ProfileProperties?.userMobile = phone!!
@@ -86,17 +93,7 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
             registerRequest?.LoginSecret = ""
             registerRequest?.Provider = "EMAIL"
             registerRequest?.whatsAppFlag = whatsappNoFlag
-
-            viewModel?.createMerchantProfile(request = registerRequest)?.observeOnce(viewLifecycleOwner,{
-                val businessProfileResponse = it as? BusinessProfileResponse
-                if (it.isSuccess()&&businessProfileResponse!=null){
-                    showLongToast(getString(R.string.profile_created))
-                    addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(registerRequest!!), true);
-
-                }else{
-                    showShortToast(getString(R.string.unable_to_create_profile))
-                }
-            })
+            addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(registerRequest!!), true);
         }
 
     }

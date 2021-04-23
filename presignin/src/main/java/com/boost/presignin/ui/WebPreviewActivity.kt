@@ -1,13 +1,12 @@
 package com.boost.presignin.ui
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.boost.presignin.R
+import com.boost.presignin.base.AppBaseActivity
 import com.boost.presignin.databinding.ActivityWebPreviewBinding
-import com.framework.base.BaseActivity
+import com.boost.presignin.model.RequestFloatsModel
 import com.framework.models.BaseViewModel
 
-class WebPreviewActivity : BaseActivity<ActivityWebPreviewBinding, BaseViewModel>() {
+class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewModel>() {
 
 
     override fun getLayout(): Int {
@@ -19,9 +18,11 @@ class WebPreviewActivity : BaseActivity<ActivityWebPreviewBinding, BaseViewModel
     }
 
     override fun onCreateView() {
-        binding?.webview?.loadUrl("https://www.google.com")
+        val requestFloatsModel = intent.getSerializableExtra("request") as? RequestFloatsModel
+        binding?.webview?.loadUrl(requestFloatsModel?.webSiteUrl!!)
+        binding?.headingTv?.text = requestFloatsModel?.categoryDataModel?.category_Name
+        binding?.ctvUrl?.text = requestFloatsModel?.webSiteUrl
         binding?.closeIcon?.setOnClickListener { finish() }
     }
-
 
 }

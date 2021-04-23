@@ -1,6 +1,9 @@
 package com.boost.presignin.ui.registration
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import com.boost.presignin.R
 import com.boost.presignin.constant.IntentConstant
@@ -14,6 +17,7 @@ import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
 import com.boost.presignin.rest.response.ResponseDataCategory
+import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.ui.mobileVerification.MobileFragment
 import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.base.BaseFragment
@@ -83,6 +87,10 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
                     categoryDataModel = category,ProfileProperties =  BusinessInfoModel(userMobile = phoneNumber)
             )),true);
          //   addFragmentReplace()
+        }
+        val backbutton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+        backbutton?.setOnClickListener {
+            requireActivity().finish()
         }
     }
 
