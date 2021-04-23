@@ -95,6 +95,7 @@
 
                 <com.framework.views.customViews.CustomEditText
                     android:id="@+id/phone_et"
+                    android:digits="0123456789"
                     style="@style/psn_login_edittext_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
