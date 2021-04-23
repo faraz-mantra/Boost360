@@ -151,7 +151,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       var email = pref?.getString(PreferenceConstant.PERSON_EMAIL, "")
       if (email.isNullOrEmpty().not()) email = requestFloatsModel?.contactInfo?.email
       InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, ""), floatingPointId)
-      prefReferral?.edit()?.apply{
+      prefReferral?.edit()?.apply {
         putString(PreferenceConstant.REFER_CODE_APP, "")
         apply()
       }
@@ -265,7 +265,10 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         list.addAll(ProcessApiSyncModel().getDataSuccessUpdate(connectedChannels))
       } else list.addAll(ProcessApiSyncModel().getDataSuccess(connectedChannels))
       dotProgressBar.stopAnimation()
+      binding?.next?.removeView(dotProgressBar)
       dotProgressBar.removeAllViews()
+      binding?.errorView?.gone()
+      binding?.next?.visible()
       binding?.next?.alpha = 1F
       binding?.textBtn?.visibility = View.VISIBLE
 
