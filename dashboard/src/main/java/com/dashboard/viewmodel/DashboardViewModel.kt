@@ -33,6 +33,14 @@ class DashboardViewModel : BaseViewModel() {
     return ChannelRepository.getChannelsAccessToken(nowfloatsId).toLiveData()
   }
 
+  fun getChannelsAccessTokenStatus(nowfloatsId: String?): LiveData<BaseResponse> {
+    return ChannelRepository.getChannelsStatus(nowfloatsId).toLiveData()
+  }
+
+  fun getChannelsInsight(nowfloatsId: String?, identifier: String?): LiveData<BaseResponse> {
+    return ChannelRepository.getChannelsInsights(nowfloatsId, identifier).toLiveData()
+  }
+
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
     return WhatsAppRepository.getWhatsappBusiness(getJsonRequest(request), auth).toLiveData()
   }

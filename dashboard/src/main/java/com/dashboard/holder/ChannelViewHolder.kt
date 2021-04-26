@@ -3,7 +3,7 @@ package com.dashboard.holder
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemChannelDBinding
-import com.dashboard.model.ChannelData
+import com.dashboard.model.live.channel.ChannelData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
