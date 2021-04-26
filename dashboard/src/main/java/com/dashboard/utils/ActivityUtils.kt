@@ -36,7 +36,7 @@ const val VISITS_TYPE_STRING = "visits_type_string"
 
 const val RIA_NODE_DATA = "riaNodeDatas"
 
-fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
+fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelType: String = "") {
   try {
     WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, CLICK, TO_BE_ADDED)
     val bundle = Bundle()
@@ -60,6 +60,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
     bundle.putString(Key_Preferences.WEBSITE_URL, session.getDomainName(false))
     bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.userPrimaryMobile)
     bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.fPEmail)
+    bundle.putString(com.onboarding.nowfloats.constant.IntentConstant.CHANNEL_TYPE.name, channelType)
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
@@ -522,7 +523,7 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
     val fragmentType = when {
       isOrder -> com.inventoryorder.constant.FragmentType.ALL_ORDER_VIEW
       isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
-      (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC")  -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
+      (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC") -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
       else -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_VIEW
     }
     this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)

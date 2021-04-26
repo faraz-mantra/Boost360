@@ -1,4 +1,4 @@
-package com.dashboard.model
+package com.dashboard.model.live.channel
 
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
