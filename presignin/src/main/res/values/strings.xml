@@ -33,7 +33,7 @@
 
     <string name="almost_there">Almost there...</string>
 
-    <string name="code_sent_hint"> Type the 5-digit code you received on your entered mobile number %s.</string>
+    <string name="code_sent_hint"> Type the 4-digit code you received on your entered mobile number %s.</string>
     <string name="verify">VERIFY</string>
     <string name="psn_resend_hint">Didn’t get the code? Resend</string>
     <string name="psn_resend">Resend</string>
