@@ -1,5 +1,6 @@
 package com.boost.presignin.rest.services.remote
 
+import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.rest.EndPoints
 import io.reactivex.Observable
@@ -14,4 +15,6 @@ interface BusinessCreateRemoteDataSource {
     @PUT(EndPoints.PUT_CREATE_BUSINESS_URL)
     fun putCreateBusinessOnboarding(@Query("existingProfileId") profileId: String?, @Body request: BusinessCreateRequest): Observable<Response<String>>
 
+    @POST(EndPoints.POST_ACTIVATE_PURCHASED_ORDER)
+    fun postActivatePurchasedOrder(@Query("clientId") clientId: String?, @Body request: ActivatePurchasedOrderRequest): Observable<Response<ResponseBody>>
 }

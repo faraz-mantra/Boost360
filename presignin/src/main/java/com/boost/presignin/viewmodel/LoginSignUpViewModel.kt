@@ -3,6 +3,7 @@ package com.boost.presignin.viewmodel
 import BusinessDomainRequest
 import androidx.lifecycle.LiveData
 import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.rest.repository.BusinessCreateRepository
 import com.boost.presignin.rest.repository.BusinessDomainRepository
@@ -15,7 +16,9 @@ class LoginSignUpViewModel : BaseViewModel() {
   fun checkMobileIsRegistered(number: Long?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.isMobileIsRegistered(number, clientId = clientId).toLiveData()
   }
-
+  fun postActivatePurchasedOrder(clientId: String?, request: ActivatePurchasedOrderRequest): LiveData<BaseResponse> {
+    return BusinessCreateRepository.postActivatePurchasedOrder(clientId, request).toLiveData()
+  }
   fun getFpDetailsByPhone(number: Long?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getFpDetailsByPhone(number, clientId).toLiveData()
   }
