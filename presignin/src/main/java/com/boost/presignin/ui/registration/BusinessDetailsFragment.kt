@@ -53,6 +53,12 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
         backbutton?.setOnClickListener {
             goBack()
         }
+        binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
+            when(hasFocus){
+                true->binding?.civPhone?.setTintColor(getColor(R.color.orange))
+                else->binding?.civPhone?.setTintColor(getColor(R.color.et_unselected_color))
+            }
+        }
         binding?.confirmButton?.setOnClickListener {
 
             val name = binding?.nametEt?.text?.toString()
