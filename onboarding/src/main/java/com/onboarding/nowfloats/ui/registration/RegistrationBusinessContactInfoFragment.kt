@@ -48,7 +48,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
             baseActivity.showKeyBoard(binding?.storeName)
           }?.subscribe()
     }
-    setOnClickListener(binding?.next, binding?.address)
+    setOnClickListener(binding?.next, binding?.textBtn, binding?.address)
     binding?.number?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
       if (hasFocus && binding?.countryCode?.visibility == GONE) {
         binding?.countryCode?.visible()
@@ -84,7 +84,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.next -> {
+      binding?.next, binding?.textBtn -> {
         requestFloatsModel?.contactInfo = businessInfoModel
         if (binding?.textBtn?.isVisible() == true && isValid()) {
           getDotProgress()?.let {
@@ -93,10 +93,10 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
             it.startAnimation()
             Handler().postDelayed({
               it.stopAnimation()
+              binding?.next?.removeView(it)
               it.removeAllViews()
               binding?.textBtn?.visibility = VISIBLE
               gotoBusinessWebsite()
-
               //Business Contact Info Event Tracker.
               WebEngageController.trackEvent(BUILDING_YOUR_BUSINESS_CONTACT_INFO, CONFIRM, CLICKED)
 
