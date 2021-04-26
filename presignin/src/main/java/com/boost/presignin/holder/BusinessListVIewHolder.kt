@@ -12,39 +12,34 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 
 class BusinessListViewHolder(binding: RecyclerItemFpInfoBinding) : AppBaseRecyclerViewHolder<RecyclerItemFpInfoBinding>(binding) {
-    override fun bind(position: Int, item: BaseRecyclerViewItem) {
-        super.bind(position, item)
-        val data = item as ResultItem
-        if (data.description == null || data.description == "") binding.ctvBusinessDesc.gone() else binding.ctvBusinessDesc.visible()
-        binding.ctvBusinessDesc.text = data.description
-        binding.ctvBusinessName.text = data.name.toString()
-        binding.ctvWebLink.text = data.rootAliasUri
-        apply { activity?.glideLoad(binding.imageIcon, data.logoUrl, R.drawable.placeholder_image_n) }
-        if (data.isItemSelected==true){
-            binding.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_selected)
-            binding.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.orange)!!)
-            binding.customRadioButton.isChecked = true
 
-        }
-
-        else{
-            binding.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_unselected)
-            binding.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.greyish_brown)!!)
-            binding.customRadioButton.isChecked = false
-
-
-        }
-        binding.root.setOnClickListener {
-            onItemClick(position, item)
-        }
-        binding.customRadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            onItemClick(position,item)
-        }
-
+  override fun bind(position: Int, item: BaseRecyclerViewItem) {
+    super.bind(position, item)
+    val data = item as ResultItem
+    if (data.description == null || data.description == "") binding.ctvBusinessDesc.gone() else binding.ctvBusinessDesc.visible()
+    binding.ctvBusinessDesc.text = data.description
+    binding.ctvBusinessName.text = data.name.toString()
+    binding.ctvWebLink.text = data.rootAliasUri
+    apply { activity?.glideLoad(binding.imageIcon, data.logoUrl, R.drawable.placeholder_image_n) }
+    if (data.isItemSelected == true) {
+      binding.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_selected)
+      binding.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.orange)!!)
+      binding.customRadioButton.isChecked = true
+    } else {
+      binding.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_unselected)
+      binding.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.greyish_brown)!!)
+      binding.customRadioButton.isChecked = false
     }
-
-    private fun onItemClick(position: Int, item: BaseRecyclerViewItem) {
-        listener?.onItemClick(position, item, RecyclerViewActionType.BUSINESS_LIST_ITEM_CLICK.ordinal)
+    binding.root.setOnClickListener {
+      onItemClick(position, item)
     }
+    binding.customRadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
+      onItemClick(position, item)
+    }
+  }
+
+  private fun onItemClick(position: Int, item: BaseRecyclerViewItem) {
+    listener?.onItemClick(position, item, RecyclerViewActionType.BUSINESS_LIST_ITEM_CLICK.ordinal)
+  }
 
 }
