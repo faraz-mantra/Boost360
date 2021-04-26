@@ -22,7 +22,7 @@ class CategoryDataModel(
     val category_descriptor: String? = null,
     val icon: String? = null,
 //    var channels: ArrayList<ChannelModel>? = null,
-//    val sections: ArrayList<SectionsFeature>? = null,
+    val sections: ArrayList<SectionsFeature>? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Parcelable {
   val sectionType: Boolean = false
   var isSelected = false

@@ -20,6 +20,8 @@ object EndPoints {
     const val POST_BUSINESS_DOMAIN_URL = "discover/v1/floatingPoint/verifyUniqueTag"
     const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
     const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
+    const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
+
 
 
 }
