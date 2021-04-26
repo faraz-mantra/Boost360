@@ -114,6 +114,8 @@
                         style="@style/psn_login_edittext_style"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:editable="false"
+                        android:focusable="false"
                         android:digits="0123456789"
                         android:paddingStart="30dp"
                         android:hint="@string/your_business_phone"

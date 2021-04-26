@@ -45,8 +45,8 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         registerRequest = requireArguments().getSerializable("request") as? RequestFloatsModel
         binding?.phoneEt?.setText(registerRequest?.ProfileProperties?.userMobile)
-        val backbutton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
-        backbutton?.setOnClickListener {
+        val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+        backButton?.setOnClickListener {
             goBack()
         }
         binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
