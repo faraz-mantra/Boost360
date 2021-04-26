@@ -1,14 +1,8 @@
 package com.boost.presignin.ui
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
-import android.os.Bundle
-import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import com.boost.presignin.R
 import com.boost.presignin.databinding.ActivityDesiredLoginMethodBinding
@@ -25,14 +19,14 @@ class DesiredLoginMethodActivity : BaseActivity<ActivityDesiredLoginMethodBindin
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
-       return BaseViewModel::class.java
+        return BaseViewModel::class.java
     }
 
     override fun onCreateView() {
         binding?.usernameOrEmailBt?.setOnClickListener {
             startActivity(Intent(this@DesiredLoginMethodActivity, LoginActivity::class.java))
         }
-
+        backPressed()
         val amountSpannableString = SpannableString(getString(R.string.contact_support)).apply {
             setSpan(UnderlineSpan(), 0, length, 0)
         }
@@ -42,6 +36,13 @@ class DesiredLoginMethodActivity : BaseActivity<ActivityDesiredLoginMethodBindin
 
         binding?.anotherMethodBt?.setOnClickListener {
             navigator?.startActivity(MobileVerificationActivity::class.java)
+        }
+
+    }
+
+    private fun backPressed() {
+        binding?.backIv?.setOnClickListener {
+           finish()
         }
 
     }

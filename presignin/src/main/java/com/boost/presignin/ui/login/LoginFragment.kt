@@ -3,6 +3,8 @@ package com.boost.presignin.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentLoginBinding
@@ -11,6 +13,7 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
+import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
@@ -43,9 +46,15 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
     setOnClickListener(binding?.forgotTv, binding?.loginBt)
-    WebEngageController.trackEvent(LOGIN,PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(LOGIN, PAGE_VIEW, NO_EVENT_VALUE)
+    val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+    backButton?.setOnClickListener {
+      goBack()
+    }
   }
-
+  private fun goBack() {
+    requireActivity().finish()
+  }
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {

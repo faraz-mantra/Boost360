@@ -154,7 +154,11 @@
         <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
         <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
     </style>
-
+    <style name="ActiveTheme" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/warm_grey</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
 
     <style name="psn_login_edittext_style">
         <item name="android:singleLine">true</item>

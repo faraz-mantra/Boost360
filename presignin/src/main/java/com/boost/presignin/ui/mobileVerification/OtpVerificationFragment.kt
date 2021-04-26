@@ -135,7 +135,6 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
             hideProgress()
             if (it.status == 200) {
                 if (parseResponse(it)) {
-                    Toast.makeText(requireContext(), getString(R.string.otp_sent), Toast.LENGTH_SHORT).show()
                     binding?.wrongOtpErrorTv?.isVisible = false;
                     countDown.start();
                 } else {
