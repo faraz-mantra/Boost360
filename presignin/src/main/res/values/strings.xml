@@ -107,4 +107,7 @@
     <string name="unable_to_activate_business_plan">unable to activate business plan</string>
     <string name="clinic_website">Clinic Website</string>
   <string name="please_enter_correct_user">Please enter a correct username/ email/ phone number.</string>
+    <string name="press_again_exit">Press again to exit</string>
+    <string name="downtownspa_nowfloats_com">downtownspa.nowfloats.com</string>
+    <string name="downtown_nspa_salon">Downtown\nSpa Salon</string>
 </resources>
