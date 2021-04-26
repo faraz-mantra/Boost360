@@ -8,10 +8,12 @@ import androidx.core.view.isVisible
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentPreSigninIntroBinding
+import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.*
 
 class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, BaseViewModel>() {
 
@@ -54,6 +56,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     if (position == 0) {
       binding?.boostLogo?.visible()
       binding?.presiginIntroImg?.setOnClickListener {
+        WebEngageController.trackEvent(PS_INTRO_VIDEO_SPLASH_CLICKED, START_INTRO_VIDEO, NO_EVENT_VALUE)
         playPause?.let { it5 -> it5(true) }
         binding?.introImgContainer?.isVisible = false;
         binding?.videoViewContainer?.isVisible = true;
@@ -90,6 +93,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
           true
         }
         binding?.videoViewContainer?.setOnClickListener {
+          WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_AREA, VIDEO_AREA_CLICKED, NO_EVENT_VALUE)
           if (binding?.videoView?.isPlaying == true) {
             binding?.videoView?.pause()
             binding?.playPauseLottie?.isVisible = true
@@ -109,6 +113,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     }
 
     binding?.skipVideo?.setOnClickListener {
+//      WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_SKIP, VIDEO_SKIPPED, NO_EVENT_VALUE)
       onSkip?.let { it1 -> it1() }
     }
   }
@@ -169,5 +174,10 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     val volume = if (mute) 0.0f else 1.0f
     mediaPlayer?.setVolume(volume, volume)
     binding?.muteIcon?.setImageResource(if (mute) R.drawable.ic_mute else R.drawable.ic_unmute)
+    if (mute){
+      WebEngageController.trackEvent(PS_CLICKED_MUTE_INTRO_VIDEO, VIDEO_MUTED, NO_EVENT_VALUE)
+    }else{
+      WebEngageController.trackEvent(PS_CLICKED_UNMUTE_INTRO_VIDEO, VIDEO_UNMUTED, NO_EVENT_VALUE)
+    }
   }
 }

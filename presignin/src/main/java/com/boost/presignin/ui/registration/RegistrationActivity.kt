@@ -7,7 +7,7 @@ import com.framework.base.FragmentContainerActivity
 class RegistrationActivity : FragmentContainerActivity() {
 
     override fun isHideToolbar(): Boolean {
-        return true;
+        return true
     }
     override fun shouldAddToBackStack(): Boolean {
         return false
