@@ -7,6 +7,7 @@ import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.rest.repository.BusinessCreateRepository
 import com.boost.presignin.rest.repository.BusinessDomainRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository
+import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -19,9 +20,11 @@ class LoginSignUpViewModel : BaseViewModel() {
   fun getFpDetailsByPhone(number: Long?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getFpDetailsByPhone(number, clientId).toLiveData()
   }
+
   fun putCreateBusinessOnboarding(profileId: String?, request: BusinessCreateRequest): LiveData<BaseResponse> {
     return BusinessCreateRepository.putCreateBusinessOnboarding(profileId, request).toLiveData()
   }
+
   fun postCheckBusinessDomain(request: BusinessDomainRequest): LiveData<BaseResponse> {
     return BusinessDomainRepository.postCheckBusinessDomain(request).toLiveData()
   }
@@ -44,5 +47,9 @@ class LoginSignUpViewModel : BaseViewModel() {
 
   fun getFpDetails(fpId: String, map: Map<String, String>): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getFpDetails(fpId, map).toLiveData()
+  }
+
+  fun verifyUserProfile(request: UserProfileVerificationRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.verifyUserProfile(request).toLiveData()
   }
 }

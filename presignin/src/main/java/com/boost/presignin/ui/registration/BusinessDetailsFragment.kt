@@ -11,13 +11,9 @@ import com.boost.presignin.extensions.isNameValid
 import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.RequestFloatsModel
-import com.boost.presignin.rest.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.BaseFragment
-import com.framework.extensions.observeOnce
-import com.framework.models.BaseViewModel
 import com.framework.pref.clientId2
-import com.framework.utils.getNumberFormat
 
 
 class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {

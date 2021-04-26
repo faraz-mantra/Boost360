@@ -11,13 +11,11 @@ import android.widget.ImageView
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentBusinessWebsiteBinding
-import com.boost.presignin.dialog.ProgressChannelDialog
 import com.boost.presignin.extensions.isWebsiteValid
 import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.model.business.BusinessCreateRequest
-import com.boost.presignin.rest.userprofile.BusinessProfileResponse
+import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
-import com.framework.base.BaseFragment
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged

@@ -3,8 +3,10 @@ package com.boost.presignin.rest.services.remote
 import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
+import com.boost.presignin.model.login.UserProfileVerificationRequest
+import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.rest.EndPoints
-import com.boost.presignin.rest.userprofile.*
+import com.boost.presignin.model.userprofile.*
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response

@@ -1,12 +1,12 @@
-package com.boost.presignin.rest.userprofile
+package com.boost.presignin.model.userprofile
 
 import com.google.gson.annotations.SerializedName
 
-data class UserProfileVerificationResponse(
+data class ConnectUserProfileResponse(
         @SerializedName("Error")
         val Error: UserError,
         @SerializedName("Result")
-        val Result: VerificationRequestResult,
+        val Result: ConnectUserProfileResult,
         @SerializedName("StatusCode")
         val StatusCode: Int,
 )
