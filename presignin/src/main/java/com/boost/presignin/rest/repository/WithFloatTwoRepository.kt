@@ -3,6 +3,7 @@ package com.boost.presignin.rest.repository
 import com.boost.presignin.base.rest.AppBaseLocalService
 import com.boost.presignin.base.rest.AppBaseRepository
 import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.rest.TaskCode
 import com.boost.presignin.rest.apiClients.WithFloatsApiTwoClient
 import com.boost.presignin.rest.services.remote.WithFloatTwoRemoteData
@@ -45,6 +46,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.verifyUserProfile(request), TaskCode.VERIFY_USER_PROFILE)
   }
 
+  fun forgotPassword(request: ForgotPassRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.forgotPassword(request), TaskCode.FORGOT_PASSWORD)
+  }
 
   fun getFpDetails(fpId: String, map: Map<String, String>): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getFpDetails(fpId, map), TaskCode.GET_FP_USER_DETAILS)

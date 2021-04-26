@@ -4,6 +4,8 @@ object EndPoints {
 
     //TODO NFX API WITH FLOAT
     const val WITH_FLOATS_BASE = "https://api.withfloats.com/"
+
+    //TODO NFX API WITH FLOAT TWO
     const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
     const val CREATE_MERCHANT_PROFILE = "/user/v9/floatingPoint/CreateMerchantProfile"
     const val VERIFY_LOGIN = "/discover/v1/floatingPoint/verifyLogin"
@@ -21,8 +23,5 @@ object EndPoints {
     const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
     const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
     const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
-
-
-
 }
 
