@@ -22,6 +22,7 @@ data class ChannelModel(
 ) : AppBaseRecyclerViewItem, Parcelable {
 
   var websiteUrl: String? = ""
+  var isSelectedClick: Boolean = false
 
   var channelAccessToken: ChannelAccessToken? = null
   var channelActionData: ChannelActionData? = null
