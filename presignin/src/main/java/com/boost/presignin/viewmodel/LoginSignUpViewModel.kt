@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.business.BusinessCreateRequest
+import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.rest.repository.BusinessCreateRepository
 import com.boost.presignin.rest.repository.BusinessDomainRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository
@@ -14,6 +15,7 @@ import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 
 class LoginSignUpViewModel : BaseViewModel() {
+
   fun checkMobileIsRegistered(number: Long?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.isMobileIsRegistered(number, clientId = clientId).toLiveData()
   }
@@ -54,5 +56,8 @@ class LoginSignUpViewModel : BaseViewModel() {
 
   fun verifyUserProfile(request: UserProfileVerificationRequest): LiveData<BaseResponse> {
     return WithFloatTwoRepository.verifyUserProfile(request).toLiveData()
+  }
+  fun forgotPassword(request: ForgotPassRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.forgotPassword(request).toLiveData()
   }
 }

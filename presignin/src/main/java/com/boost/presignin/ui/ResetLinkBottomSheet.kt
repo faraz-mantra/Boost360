@@ -6,15 +6,22 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
 class ResetLinkBottomSheet : BaseBottomSheetDialog<ResetLinkBottomSheetBinding, BaseViewModel>() {
-    override fun getLayout(): Int {
-        return R.layout.reset_link_bottom_sheet
-    }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-       return BaseViewModel::class.java
-    }
+  var onClick: () -> Unit = {}
 
-    override fun onCreateView() {
+  override fun getLayout(): Int {
+    return R.layout.reset_link_bottom_sheet
+  }
 
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    isCancelable = false
+    binding?.btnLogin?.setOnClickListener {
+      dismiss()
+      onClick()
     }
+  }
 }

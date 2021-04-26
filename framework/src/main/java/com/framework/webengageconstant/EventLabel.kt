@@ -178,6 +178,7 @@ const val CONSULTATIONS = "Consultations"
 const val CLICK = "Click"
 const val ADDED = "Added"
 const val DELETE = "Delete"
+const val RESTE_PASSWORD_LINK_SEND= "Reset password link send"
 
 
 
