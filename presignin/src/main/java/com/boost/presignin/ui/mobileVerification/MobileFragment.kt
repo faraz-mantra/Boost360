@@ -9,7 +9,7 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentMobileBinding
-import com.boost.presignin.rest.userprofile.ResponseMobileIsRegistered
+import com.boost.presignin.model.userprofile.ResponseMobileIsRegistered
 import com.boost.presignin.ui.AccountNotFoundActivity
 import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel

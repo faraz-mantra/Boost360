@@ -6,7 +6,7 @@ import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.rest.TaskCode
 import com.boost.presignin.rest.apiClients.WithFloatsApiTwoClient
 import com.boost.presignin.rest.services.remote.WithFloatTwoRemoteData
-import com.boost.presignin.rest.userprofile.UserProfileVerificationRequest
+import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -41,8 +41,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.getFpListForRegisteredMobile(number, clientId = clientId), TaskCode.GET_FP_LIST_FOR_REGISTERED_NUMBER)
   }
 
-  fun verifyUserProfile(userProfileVerificationRequest: UserProfileVerificationRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.verifyUserProfile(userProfileVerificationRequest), TaskCode.VERIFY_USER_PROFILE)
+  fun verifyUserProfile(request: UserProfileVerificationRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.verifyUserProfile(request), TaskCode.VERIFY_USER_PROFILE)
   }
 
 

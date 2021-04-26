@@ -7,8 +7,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 
-import com.boost.presignin.rest.userprofile.ConnectUserProfileResponse;
-import com.boost.presignin.rest.userprofile.ConnectUserProfileResult;
+import com.boost.presignin.model.userprofile.ConnectUserProfileResponse;
+import com.boost.presignin.model.userprofile.ConnectUserProfileResult;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.on_boarding.models.OnBoardingDataModel;

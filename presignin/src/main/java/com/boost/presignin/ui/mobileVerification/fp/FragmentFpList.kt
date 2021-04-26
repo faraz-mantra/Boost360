@@ -25,8 +25,8 @@ import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import java.util.*
 
-
 class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewModel>(), RecyclerItemClickListener {
+
   override fun getLayout(): Int {
     return R.layout.fragment_fp_list
   }
@@ -35,12 +35,11 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     private const val PHONE_NUMBER = "phone_number"
 
     @JvmStatic
-    fun newInstance(phoneNumber: String) =
-        FragmentFpList().apply {
-          arguments = Bundle().apply {
-            putString(PHONE_NUMBER, phoneNumber)
-          }
-        }
+    fun newInstance(phoneNumber: String) = FragmentFpList().apply {
+      arguments = Bundle().apply {
+        putString(PHONE_NUMBER, phoneNumber)
+      }
+    }
   }
 
   private var resultItem: ResultItem? = null
@@ -58,14 +57,10 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     setOnClickListener(binding?.btnGoToDashboard)
     this.session = UserSessionManager(baseActivity)
     getFpList()
-    binding?.backIv?.setOnClickListener {
-      goBack();
-
-    }
+    binding?.backIv?.setOnClickListener { goBack() }
     activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
-        goBack();
-
+        goBack()
       }
     })
   }
@@ -80,12 +75,11 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     when (v) {
       binding?.btnGoToDashboard -> storeFpDetails()
     }
-
   }
 
   private fun getFpList() {
     showProgress(getString(R.string.loading))
-    viewModel?.getFpListByMobile(phoneNumber,clientId2)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getFpListByMobile(phoneNumber, clientId2)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if (it.isSuccess()) {
         val fpListResponse = it as? FPListResponse
@@ -95,7 +89,6 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
           this.businessResult = fpListResponse.result
           this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = businessResult!!, itemClickListener = this)
           binding?.rvBusinessList?.adapter = adapter
-
         }
       }
     })
@@ -121,7 +114,6 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     showProgress()
     session.setUserLogin(true)
     session.setAccountSave(true)
-
     session.storeFPID(resultItem?.floatingPointId)
     session.storeFpTag(resultItem?.floatingPointTag)
     val map = HashMap<String, String>()
@@ -133,14 +125,15 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
         session.userProfileId = response.accountManagerId
         startDashboard()
       } else {
-        showShortToast("Error!")
+        hideProgress()
+        showShortToast(getString(R.string.error_getting_fp_detail))
       }
     })
-
   }
 
   private fun startDashboard() {
     try {
+      hideProgress()
       val dashboardIntent = Intent(requireContext(), Class.forName("com.dashboard.controller.DashboardActivity"))
       dashboardIntent.putExtras(requireActivity().intent)
       val bundle = Bundle()

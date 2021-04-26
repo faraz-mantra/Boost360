@@ -1,4 +1,4 @@
-package com.boost.presignin.rest.userprofile
+package com.boost.presignin.model.userprofile
 
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName

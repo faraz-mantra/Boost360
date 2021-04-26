@@ -1,9 +1,6 @@
 package com.boost.presignin.model
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.boost.presignin.model.category.CategoryDataModel
-import com.boost.presignin.rest.userprofile.ProfileProperties
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
