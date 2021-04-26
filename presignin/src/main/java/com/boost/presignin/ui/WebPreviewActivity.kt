@@ -18,7 +18,7 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
     }
 
     override fun onCreateView() {
-        val requestFloatsModel = intent.getSerializableExtra("request") as? RequestFloatsModel
+        val requestFloatsModel = intent.extras?.getSerializable("request") as? RequestFloatsModel
         binding?.webview?.loadUrl(requestFloatsModel?.webSiteUrl!!)
         binding?.headingTv?.text = requestFloatsModel?.categoryDataModel?.category_Name
         binding?.ctvUrl?.text = requestFloatsModel?.webSiteUrl

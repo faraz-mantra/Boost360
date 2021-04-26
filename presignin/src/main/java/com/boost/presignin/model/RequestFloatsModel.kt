@@ -7,6 +7,7 @@ import com.boost.presignin.rest.userprofile.ProfileProperties
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.security.SecureRandom
 
 data class RequestFloatsModel(
         @SerializedName("AuthToken")
@@ -75,7 +76,7 @@ data class ChannelAccessToken(
         //TODO url
         var profilePicture: String? = null
 
-)
+):Serializable
 
 data class ChannelTokenResponse(
         val access_token: String? = null,
@@ -85,4 +86,4 @@ data class ChannelTokenResponse(
 ) : Serializable
 data class ChannelActionData(
         var active_whatsapp_number: String? = null
-)
+):Serializable

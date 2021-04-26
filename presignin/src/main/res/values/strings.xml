@@ -104,4 +104,5 @@
     <string name="profile_created">profile created</string>
     <string name="unable_to_create_profile">profile not created</string>
     <string name="unable_to_activate_business_plan">unable to activate business plan</string>
+    <string name="clinic_website">Clinic Website</string>
 </resources>
