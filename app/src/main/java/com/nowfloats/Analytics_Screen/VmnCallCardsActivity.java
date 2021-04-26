@@ -3,15 +3,6 @@ package com.nowfloats.Analytics_Screen;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
 import com.google.gson.JsonObject;
@@ -34,11 +33,9 @@ import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.separ.neural.inputmethod.compat.TextInfoCompatUtils;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -314,7 +311,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("clientId", Constants.clientId);
-        hashMap.put("fpid", sessionManager.getFPParentId());
+        hashMap.put("fpid", sessionManager.getISEnterprise().equals("true") ? sessionManager.getFPParentId() : sessionManager.getFPID());
         hashMap.put("offset", startOffset);
         hashMap.put("limit", String.valueOf(100));
         hashMap.put("identifierType", sessionManager.getISEnterprise().equals("true") ? "MULTI" : "SINGLE");

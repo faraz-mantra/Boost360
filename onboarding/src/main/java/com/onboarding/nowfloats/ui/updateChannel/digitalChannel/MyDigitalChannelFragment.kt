@@ -79,6 +79,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   private var adapterDisconnect: AppBaseRecyclerViewAdapter<ChannelModel>? = null
   private var listDisconnect: ArrayList<ChannelModel>? = null
   private var listConnect: ArrayList<ChannelModel>? = null
+  private var channelTypeClick: String = ""
   var websiteUrl: String = ""
   private lateinit var progress: ProgressChannelDialog
 
@@ -116,6 +117,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     val bundle = arguments
     val isUpdate = bundle?.getBoolean(PreferenceConstant.IS_UPDATE)
     websiteUrl = bundle?.getString(PreferenceConstant.WEBSITE_URL) ?: ""
+    channelTypeClick = bundle?.getString(IntentConstant.CHANNEL_TYPE.name) ?: ""
     if (isUpdate != null && isUpdate) {
       NavigatorManager.clearRequest()
       val experienceCode = bundle.getString(PreferenceConstant.GET_FP_EXPERIENCE_CODE)
@@ -266,8 +268,8 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
       editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
     }
-    val timeLine=channelsAccessToken?.NFXAccessTokens?.firstOrNull { it.type() == "facebookusertimeline" }
-    if (timeLine!=null){
+    val timeLine = channelsAccessToken?.NFXAccessTokens?.firstOrNull { it.type() == "facebookusertimeline" }
+    if (timeLine != null) {
       editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.UserAccountName)
       editorFp?.putInt("fbStatus", timeLine.Status?.toIntOrNull() ?: 0)
       if (timeLine.UserAccountName.isNullOrEmpty().not()) editorFp?.putBoolean("fbShareEnabled", true)
@@ -308,7 +310,13 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun setAdapterDisconnected(list: ArrayList<ChannelModel>?) {
     binding?.recycleDisconnect?.post {
-      listDisconnect = list?.map { it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM_DISCONNECT.getLayout(); it } as? ArrayList<ChannelModel>
+      listDisconnect = list?.map {
+        if (it.getAccessTokenType() == channelTypeClick) {
+          it.isSelectedClick = true
+        }
+        it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM_DISCONNECT.getLayout(); it
+      } as? ArrayList<ChannelModel>
+//      listDisconnect = list?.map { it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM_DISCONNECT.getLayout(); it } as? ArrayList<ChannelModel>
       listDisconnect?.let {
         adapterDisconnect = AppBaseRecyclerViewAdapter(baseActivity, it, this)
         binding?.recycleDisconnect?.adapter = adapterDisconnect
@@ -347,9 +355,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         listDisconnect?.map {
           if (channel.getType() == it.getType()) {
             it.isSelected = it.isSelected?.not()
+            it.isSelectedClick = false
           };it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM_DISCONNECT.getLayout(); it
         }
-        adapterDisconnect?.notify(listDisconnect)
+        adapterDisconnect?.notifyItemChanged(position)
         val count = listDisconnect?.filter { it.isSelected == true }?.size ?: 0
         if (count > 0) {
           if (count == 1)
@@ -358,6 +367,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
             binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channels)}"
           binding?.syncBtn?.visible()
         } else binding?.syncBtn?.gone()
+        if (channelTypeClick.isNotEmpty()) {
+          channelTypeClick = ""
+          binding?.syncBtn?.performClick()
+        }
       }
       RecyclerViewActionType.CHANNEL_DISCONNECT_WHY_CLICKED.ordinal -> openWhyChannelDialog(channel)
       RecyclerViewActionType.CHANNEL_CONNECT_CLICKED.ordinal -> {
@@ -385,7 +398,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun syncChannels() {
     if (selectedChannels.isNullOrEmpty().not()) {
-      WebEngageController.trackEvent(MY_DIGITAL_CHANNEL_SYNC_BUTTON_CLICK , MY_DIGITAL_CHANNEL, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(MY_DIGITAL_CHANNEL_SYNC_BUTTON_CLICK, MY_DIGITAL_CHANNEL, NO_EVENT_VALUE)
       val bundle = Bundle()
       var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
       selectedChannels.let { channels ->
