@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.WebPreviewActivity">
@@ -23,16 +24,22 @@
             android:background="@color/preview_toolbar_background"
             android:paddingBottom="@dimen/_10sdp"
             android:paddingTop="@dimen/_10sdp">
+
             <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                android:fontFamily="@font/open_sans_bold"
-                android:textColor="@color/link_preview_title"
-                app:layout_constraintTop_toTopOf="parent"
-                app:textType="HEADING_5"
                 android:id="@+id/heading_tv"
-                android:text="Clinic Website"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingEnd="@dimen/_20sdp"
+                tools:text="@string/clinic_website"
+                app:layout_constraintHorizontal_bias="0"
+                android:textColor="@color/link_preview_title"
+                app:layout_constraintEnd_toStartOf="@+id/share_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textType="HEADING_5" />
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
