@@ -9,6 +9,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentRegistrationSuccessBinding
@@ -19,6 +20,9 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
 import com.framework.pref.UserSessionManager
 
+private const val TIME_INTERVAL = 2000 // # milliseconds, desired time passed between two back presses.
+
+private var mBackPressed: Long = 0
 
 class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessBinding, BaseViewModel>() {
     private var registerRequest: RequestFloatsModel? = null
@@ -80,7 +84,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         binding?.previewAccountBt?.setOnClickListener {
             val bundle = Bundle()
             bundle.putSerializable("request", registerRequest)
-            navigator?.startActivity(WebPreviewActivity::class.java,bundle)
+            navigator?.startActivity(WebPreviewActivity::class.java, bundle)
         }
         binding?.dashboardBt?.setOnClickListener {
             try {
@@ -93,6 +97,21 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
                 e.printStackTrace()
             }
         }
+        onBackPressed()
+    }
+
+    private fun onBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+                    baseActivity.finishAffinity()
+                    baseActivity.finish()
+                } else {
+                    showShortToast(getString(R.string.press_again_exit))
+                }
+                mBackPressed = System.currentTimeMillis();
+            }
+        })
     }
 
     private fun saveSessionData() {
@@ -104,5 +123,6 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         session?.setAccountSave(true)
         session?.setUserLogin(true)
     }
+
 
 }

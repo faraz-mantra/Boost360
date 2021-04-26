@@ -106,4 +106,7 @@
   <string name="error_getting_fp_detail">Error getting user FP detail, please try again</string>
     <string name="unable_to_activate_business_plan">unable to activate business plan</string>
     <string name="clinic_website">Clinic Website</string>
+    <string name="press_again_exit">Press again to exit</string>
+    <string name="downtownspa_nowfloats_com">downtownspa.nowfloats.com</string>
+    <string name="downtown_nspa_salon">Downtown\nSpa Salon</string>
 </resources>
