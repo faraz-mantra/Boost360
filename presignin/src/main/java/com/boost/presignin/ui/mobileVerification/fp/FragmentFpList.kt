@@ -2,10 +2,8 @@ package com.boost.presignin.ui.mobileVerification.fp
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -44,7 +42,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     }
   }
 
-  private var resultItem: ResultItem? = null
+  private var result: ResultItem? = null
   private lateinit var session: UserSessionManager
   private lateinit var adapter: AppBaseRecyclerViewAdapter<ResultItem>
   private var businessResult: ArrayList<ResultItem>? = null
@@ -97,30 +95,25 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    this.resultItem = item as? ResultItem
-    binding?.btnGoToDashboard?.isEnabled = true
     if (actionType == RecyclerViewActionType.BUSINESS_LIST_ITEM_CLICK.ordinal) {
-      resultItem?.isItemSelected = true
+      this.result = item as? ResultItem
+      binding?.btnGoToDashboard?.isEnabled = true
+      result?.isItemSelected = true
+      businessResult?.forEach { item2 -> if (item2 != result) item2.isItemSelected = false }
+      adapter.notifyItemChanged(position)
     }
-    businessResult?.forEach { dataItems ->
-      if (dataItems != resultItem) {
-        dataItems.isItemSelected = false
-      }
-    }
-    adapter.notifyDataSetChanged()
-
   }
 
   private fun storeFpDetails() {
-    WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, CHOOSE_BUSINESS, resultItem?.floatingPointId ?: "")
+    WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, CHOOSE_BUSINESS, result?.floatingPointId ?: "")
     showProgress()
     session.setUserLogin(true)
     session.setAccountSave(true)
-    session.storeFPID(resultItem?.floatingPointId)
-    session.storeFpTag(resultItem?.floatingPointTag)
+    session.storeFPID(result?.floatingPointId)
+    session.storeFpTag(result?.floatingPointTag)
     val map = HashMap<String, String>()
     map["clientId"] = clientId
-    viewModel?.getFpDetails(this.resultItem?.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getFpDetails(this.result?.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
