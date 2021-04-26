@@ -51,6 +51,7 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     backButton?.setOnClickListener {
       goBack()
     }
+    WebEngageController.trackEvent(LOGIN, PAGE_VIEW, NO_EVENT_VALUE)
   }
   private fun goBack() {
     requireActivity().finish()
@@ -82,7 +83,7 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
 
   private fun storeUserDetail(response: VerificationRequestResult) {
     WebEngageController.initiateUserLogin(response.loginId)
-    WebEngageController.setUserContactAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName,response.sourceClientId)
+    WebEngageController.setUserContactAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName, response.sourceClientId)
     WebEngageController.trackEvent(PS_LOGIN_SUCCESS, LOGIN_SUCCESS, NO_EVENT_VALUE)
     session?.userProfileId = response.loginId
     session?.userProfileEmail = response.profileProperties?.userEmail

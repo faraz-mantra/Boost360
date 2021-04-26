@@ -12,6 +12,7 @@ import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.FragmentFpListBinding
 import com.boost.presignin.helper.ProcessFPDetails
+import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpList.ResultItem
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
@@ -23,6 +24,7 @@ import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
+import com.framework.webengageconstant.*
 import java.util.*
 
 class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewModel>(), RecyclerItemClickListener {
@@ -54,6 +56,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnGoToDashboard)
     this.session = UserSessionManager(baseActivity)
     getFpList()
@@ -111,6 +114,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
   }
 
   private fun storeFpDetails() {
+    WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, CHOOSE_BUSINESS, resultItem?.floatingPointId?:"")
     showProgress()
     session.setUserLogin(true)
     session.setAccountSave(true)
@@ -146,5 +150,4 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
       e.printStackTrace()
     }
   }
-
 }
