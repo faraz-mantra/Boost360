@@ -111,4 +111,6 @@
   <string name="press_again_exit">Press again to exit</string>
   <string name="downtownspa_nowfloats_com">downtownspa.nowfloats.com</string>
   <string name="downtown_nspa_salon">Downtown\nSpa Salon</string>
+  <string name="unable_to_find_business_account_associated">Unable to find business account associated with this number!</string>
+
 </resources>

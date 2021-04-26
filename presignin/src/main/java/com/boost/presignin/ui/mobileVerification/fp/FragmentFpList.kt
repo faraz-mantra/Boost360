@@ -84,18 +84,16 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     showProgress(getString(R.string.loading))
     viewModel?.getFpListByMobile(phoneNumber, clientId2)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
-      if (it.isSuccess()) {
-        val fpListResponse = it as? FPListResponse
-        if (fpListResponse?.result == null|| fpListResponse.result.isNullOrEmpty()) {
-          showLongToast(getString(R.string.unable_to_find_business_account_associated))
-        } else {
-          this.businessResult = fpListResponse.result
-          this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = businessResult!!, itemClickListener = this)
-          binding?.rvBusinessList?.adapter = adapter
-        }
+      val fpListResponse = it as? FPListResponse
+      if (fpListResponse?.isSuccess() == true && fpListResponse.result.isNullOrEmpty().not()) {
+        this.businessResult = fpListResponse.result
+        this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = businessResult!!, itemClickListener = this)
+        binding?.rvBusinessList?.adapter = adapter
+      } else {
+        showLongToast(getString(R.string.unable_to_find_business_account_associated))
+        baseActivity.onNavPressed()
       }
     })
-
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -114,7 +112,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
   }
 
   private fun storeFpDetails() {
-    WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, CHOOSE_BUSINESS, resultItem?.floatingPointId?:"")
+    WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, CHOOSE_BUSINESS, resultItem?.floatingPointId ?: "")
     showProgress()
     session.setUserLogin(true)
     session.setAccountSave(true)

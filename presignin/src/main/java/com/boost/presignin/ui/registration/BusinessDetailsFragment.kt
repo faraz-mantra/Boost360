@@ -8,6 +8,7 @@ import com.boost.presignin.databinding.FragmentBusinessDetailsBinding
 import com.boost.presignin.extensions.isBusinessNameValid
 import com.boost.presignin.extensions.isEmailValid
 import com.boost.presignin.extensions.isNameValid
+import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.RequestFloatsModel
