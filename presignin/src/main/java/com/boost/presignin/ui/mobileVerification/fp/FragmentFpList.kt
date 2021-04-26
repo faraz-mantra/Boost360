@@ -146,4 +146,5 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
       e.printStackTrace()
     }
   }
+
 }
