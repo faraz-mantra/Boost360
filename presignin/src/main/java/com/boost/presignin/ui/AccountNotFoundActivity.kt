@@ -37,7 +37,6 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
         binding?.backIv?.setOnClickListener {
             onBackPressed()
         }
-
         val amountSpannableString = SpannableString(" +91-$phoneNumber").apply {
             setSpan(ForegroundColorSpan(Color.rgb(0, 0, 0)), 0, length, 0)
             setSpan(StyleSpan(BOLD), 0, length, 0)

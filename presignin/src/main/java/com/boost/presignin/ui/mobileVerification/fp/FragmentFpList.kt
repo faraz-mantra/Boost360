@@ -83,8 +83,8 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
       hideProgress()
       if (it.isSuccess()) {
         val fpListResponse = it as? FPListResponse
-        if (fpListResponse?.result == null) {
-          showLongToast(getString(R.string.something_doesnt_seem_right))
+        if (fpListResponse?.result == null|| fpListResponse.result.isNullOrEmpty()) {
+          showLongToast(getString(R.string.unable_to_find_business_account_associated))
         } else {
           this.businessResult = fpListResponse.result
           this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = businessResult!!, itemClickListener = this)
