@@ -2,10 +2,9 @@ package com.boost.presignin.model.category
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.core.content.res.ResourcesCompat
 import com.boost.presignin.R
+import java.io.Serializable
 
 
 data class SectionsFeature(
@@ -14,18 +13,11 @@ data class SectionsFeature(
         val icon: String? = null,
         val boost_widget_key: String? = null,
         val details: ArrayList<DetailsFeature>? = null,
-) : Parcelable {
+) : Serializable {
 
     fun getWidList(): List<String> {
         return if (boost_widget_key.isNullOrEmpty()) arrayListOf() else boost_widget_key.split(",")
     }
-
-    constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.createTypedArrayList(DetailsFeature.CREATOR))
 
 
     fun getDrawable(context: Context?): Drawable? {
@@ -48,25 +40,5 @@ data class SectionsFeature(
         }
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(title)
-        parcel.writeString(desc)
-        parcel.writeString(icon)
-        parcel.writeString(boost_widget_key)
-        parcel.writeTypedList(details)
-    }
 
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<SectionsFeature> {
-        override fun createFromParcel(parcel: Parcel): SectionsFeature {
-            return SectionsFeature(parcel)
-        }
-
-        override fun newArray(size: Int): Array<SectionsFeature?> {
-            return arrayOfNulls(size)
-        }
-    }
 }
