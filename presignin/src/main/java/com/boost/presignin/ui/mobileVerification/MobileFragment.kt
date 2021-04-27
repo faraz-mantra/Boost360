@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Observer
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
@@ -18,7 +17,10 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId2
 import com.framework.utils.hideKeyBoard
-import com.framework.webengageconstant.*
+import com.framework.webengageconstant.BOOST_360_LOGIN_NUMBER
+import com.framework.webengageconstant.LOGIN_NEXT
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 
 class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewModel>() {
 

@@ -11,6 +11,7 @@ import android.widget.ImageView
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentBusinessWebsiteBinding
+import com.boost.presignin.dialog.FullScreenProgressDialog
 import com.boost.presignin.extensions.isWebsiteValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.RequestFloatsModel
@@ -31,6 +32,7 @@ import com.framework.webengageconstant.*
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
+  private lateinit var fullScreenProgress: FullScreenProgressDialog
 
   private var registerRequest: RequestFloatsModel? = null
   private var isDomain: Boolean = false
@@ -46,6 +48,15 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         putSerializable("request", registerRequest)
       }
     }
+  }
+  override fun showProgress(title: String?, cancelable: Boolean?) {
+    title?.let { fullScreenProgress.setTitle(it) }
+    cancelable?.let { fullScreenProgress.isCancelable = it }
+    activity?.let { fullScreenProgress.showProgress(it.supportFragmentManager) }
+  }
+
+  override fun hideProgress() {
+    fullScreenProgress.hideProgress()
   }
 
   override fun getLayout(): Int {
@@ -100,6 +111,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
 
   override fun onCreateView() {
     WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, PAGE_VIEW, NO_EVENT_VALUE)
+    fullScreenProgress = FullScreenProgressDialog.newInstance()
     registerRequest = arguments?.getSerializable("request") as? RequestFloatsModel
     val websiteHint = registerRequest?.ProfileProperties?.businessName?.trim()?.replace(" ", "")
     val amountSpannableString = SpannableString("'$websiteHint' ").apply {
@@ -143,7 +155,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   private fun apiHitCreateMerchantProfile() {
-    showProgress()
+    showProgress("We're creating your online ${registerRequest?.categoryDataModel?.category_Name}...")
     if (this.responseCreateProfile == null) {
       viewModel?.createMerchantProfile(request = registerRequest)?.observeOnce(viewLifecycleOwner, {
         val businessProfileResponse = it as? BusinessProfileResponse

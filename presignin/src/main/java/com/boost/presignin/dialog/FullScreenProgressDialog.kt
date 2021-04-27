@@ -2,20 +2,20 @@ package com.boost.presignin.dialog
 
 import androidx.fragment.app.FragmentManager
 import com.boost.presignin.R
-import com.boost.presignin.databinding.DialogChannelProgressBinding
+import com.boost.presignin.databinding.FullScreenDialogBinding
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 
-class ProgressChannelDialog : BaseDialogFragment<DialogChannelProgressBinding, BaseViewModel>() {
+class FullScreenProgressDialog : BaseDialogFragment<FullScreenDialogBinding, BaseViewModel>() {
 
   private var title: CharSequence? = null
 
   companion object {
     @JvmStatic
-    fun newInstance(): ProgressChannelDialog {
-      return ProgressChannelDialog()
+    fun newInstance(): FullScreenProgressDialog {
+      return FullScreenProgressDialog()
     }
   }
 
@@ -24,7 +24,7 @@ class ProgressChannelDialog : BaseDialogFragment<DialogChannelProgressBinding, B
   }
 
   override fun getLayout(): Int {
-    return R.layout.dialog_channel_progress
+    return R.layout.full_screen_dialog
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
