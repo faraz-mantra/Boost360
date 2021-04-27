@@ -1,6 +1,6 @@
 package com.boost.presignin.rest.services.remote
 
-import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.ForgotPassRequest
@@ -9,7 +9,6 @@ import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.rest.EndPoints
 import com.boost.presignin.model.userprofile.*
 import io.reactivex.Observable
-import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -19,14 +18,14 @@ interface WithFloatTwoRemoteData {
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.CREATE_MERCHANT_PROFILE)
-  fun createUserProfile(@Body userProfileRequest: RequestFloatsModel): Observable<Response<BusinessProfileResponse>>
+  fun createUserProfile(@Body userProfileRequest: CreateProfileRequest?): Observable<Response<BusinessProfileResponse>>
 
   @GET(EndPoints.CHECK_MOBILE_IS_REGISTERED)
   fun checkIfMobileNumberIsRegistered(@Query(value = "mobileNumber") mobileNumber: Long?, @Query(value = "clientId") clientId: String? = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"): Observable<Response<ResponseMobileIsRegistered>>
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.CONNECT_MERCHANT_AUTH_PROVIDER)
-  fun connectUserProfile(@Body userProfileRequest: RequestFloatsModel): Observable<Response<ConnectUserProfileResponse>>
+  fun connectUserProfile(@Body userProfileRequest: CreateProfileRequest): Observable<Response<ConnectUserProfileResponse>>
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.VERIFY_LOGIN)

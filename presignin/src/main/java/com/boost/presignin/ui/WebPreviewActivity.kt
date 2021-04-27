@@ -7,7 +7,7 @@ import android.webkit.*
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseActivity
 import com.boost.presignin.databinding.ActivityWebPreviewBinding
-import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
@@ -24,11 +24,11 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
     }
 
     override fun onCreateView() {
-        val requestFloatsModel = intent.extras?.getSerializable("request") as? RequestFloatsModel
-        binding?.headingTv?.text = requestFloatsModel?.categoryDataModel?.category_Name
-        binding?.ctvUrl?.text = requestFloatsModel?.webSiteUrl
+        val floatsRequest = intent.extras?.getSerializable("request") as? CategoryFloatsRequest
+        binding?.headingTv?.text = floatsRequest?.categoryDataModel?.category_Name
+        binding?.ctvUrl?.text = floatsRequest?.webSiteUrl
         binding?.closeIcon?.setOnClickListener { finish() }
-        loadData(requestFloatsModel?.webSiteUrl!!)
+        loadData(floatsRequest?.webSiteUrl!!)
 
     }
     @SuppressLint("SetJavaScriptEnabled")

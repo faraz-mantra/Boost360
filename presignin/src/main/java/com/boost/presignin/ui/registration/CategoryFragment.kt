@@ -10,8 +10,9 @@ import com.boost.presignin.constant.RecyclerViewItemType
 import com.boost.presignin.databinding.FragmentCategoryBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
-import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.category.CategoryDataModel
+import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
@@ -81,9 +82,14 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
 
     binding?.confirmButton?.setOnClickListener {
       WebEngageController.trackEvent(CHOOSE_BUSINESS_CATEGORY, CATEGORY, NO_EVENT_VALUE)
-      addFragmentReplace(com.framework.R.id.container, BusinessDetailsFragment.newInstance(RequestFloatsModel(
-          categoryDataModel = category, ProfileProperties = BusinessInfoModel(userMobile = phoneNumber)
-      )), true);
+      addFragmentReplace(com.framework.R.id.container,
+          BusinessDetailsFragment.newInstance(
+              CategoryFloatsRequest(
+                  categoryDataModel = category,
+                  requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber)),
+                  userBusinessMobile = phoneNumber
+              )
+          ), true)
     }
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { requireActivity().finish() }

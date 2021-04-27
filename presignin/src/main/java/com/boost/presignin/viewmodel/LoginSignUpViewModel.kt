@@ -2,7 +2,7 @@ package com.boost.presignin.viewmodel
 
 import BusinessDomainRequest
 import androidx.lifecycle.LiveData
-import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.login.ForgotPassRequest
@@ -34,8 +34,8 @@ class LoginSignUpViewModel : BaseViewModel() {
     return BusinessDomainRepository.postCheckBusinessDomain(request).toLiveData()
   }
 
-  fun createMerchantProfile(request: RequestFloatsModel?): LiveData<BaseResponse> {
-    return WithFloatTwoRepository.createUserProfile(request!!).toLiveData()
+  fun createMerchantProfile(request: CreateProfileRequest?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.createUserProfile(request).toLiveData()
   }
 
   fun sendOtpIndia(number: Long?, clientId: String?): LiveData<BaseResponse> {
