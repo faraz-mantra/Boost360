@@ -58,7 +58,7 @@
 
       <CustomAttribute
         motion:attributeName="textSize"
-        motion:customPixelDimension="3sp" />
+        motion:customPixelDimension="3.2sp" />
       <CustomAttribute
         motion:attributeName="text"
         motion:customStringValue="@string/select_business_type" />
