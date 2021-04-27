@@ -14,18 +14,21 @@
             android:layout_height="@dimen/_60sdp"
             android:layout_margin="@dimen/size_4"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/_34sdp">
+            app:cardCornerRadius="@dimen/_30sdp"
+            app:cardElevation="0dp"
+            app:cardPreventCornerOverlap="true">
 
-          <com.airbnb.lottie.LottieAnimationView
-              android:layout_width="@dimen/_45sdp"
-              android:layout_gravity="center"
-              app:lottie_autoPlay="true"
-              app:lottie_renderMode="automatic"
-              app:lottie_repeatCount="100000"
-              app:lottie_loop="true"
-              app:lottie_rawRes="@raw/full_screen_lottie_progress"
-              android:layout_height="@dimen/_45sdp"/>
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/full_screen_lottie_progress"
+                app:lottie_renderMode="automatic"
+                app:lottie_repeatCount="100000" />
         </com.framework.views.customViews.CustomCardView>
+
         <com.framework.views.customViews.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,6 +39,7 @@
             app:fontFamily="@font/semi_bold"
             app:textType="HEADING_6"
             tools:textColor="@color/greyish_brown" />
+
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"

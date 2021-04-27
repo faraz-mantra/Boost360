@@ -163,39 +163,5 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
       }
     })
 
-
-//        viewModel?.checkMobileIsRegistered(phoneNumber?.toLong())?.observeOnce(viewLifecycleOwner, {
-//            val data = it as? ResponseMobileIsRegistered
-//            when (data?.result) {
-//                true -> {
-//                    //number is registered redirect to dashboard
-//                    //get fp details by phone number
-//                    viewModel?.getFpDetailsByPhone(phoneNumber?.toLong())?.observeOnce(viewLifecycleOwner, { response ->
-//                        if (response.isSuccess()) {
-//                            val data = response as? FPDetailsResponse
-//                            val userSessionManager = UserSessionManager(baseActivity)
-//                            userSessionManager.storeFPID(data?.id)
-//                            userSessionManager.storeFpTag(data?.tag)
-//                            userSessionManager.setUserLogin(true)
-//                            startDashboard()
-//                        } else {
-//                            showShortToast(getString(R.string.error_getting_fp_details))
-//                        }
-//
-//
-//                    })
-//
-//
-//                }
-//                else -> {
-//                    // number is not registered
-//                    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
-//
-//                }
-//            }
-//
-//        })
-//        //startActivity(Intent(requireContext(), AccountNotFoundActivity::class.java))
-//        navigator?
   }
 }

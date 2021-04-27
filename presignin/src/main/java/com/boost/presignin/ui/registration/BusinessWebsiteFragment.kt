@@ -12,6 +12,7 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentBusinessWebsiteBinding
 import com.boost.presignin.dialog.FullScreenProgressDialog
+import com.boost.presignin.extensions.isWebsiteValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.activatepurchase.ConsumptionConstraint
@@ -35,7 +36,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   private lateinit var fullScreenProgress: FullScreenProgressDialog
   private var floatsRequest: CategoryFloatsRequest? = null
   private var isDomain: Boolean = false
-  private var domainValue: String = ""
+  private var domainValue: String? = null
   private var floatingPointId = ""
   private var isSyncCreateFpApi = false
   private var responseCreateProfile: BusinessProfileResponse? = null
@@ -48,7 +49,6 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       }
     }
   }
-
   override fun showProgress(title: String?, cancelable: Boolean?) {
     title?.let { fullScreenProgress.setTitle(it) }
     cancelable?.let { fullScreenProgress.isCancelable = it }
@@ -83,6 +83,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     domainValue = ""
     binding?.confirmButton?.isEnabled = false
     binding?.fragmentStatusIv?.isClickable = true
+    binding?.websiteStatusTv?.setTextColor(getColor(R.color.red_error_e3954))
     binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_error_business_website)
     binding?.fragmentStatusIv?.setOnClickListener {
       binding?.websiteEt?.text?.clear()
@@ -99,12 +100,18 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   private fun onPostBusinessDomainCheckResponse(response: BaseResponse, onSuccess: () -> Unit) {
-    if (response.isSuccess() && response.stringResponse.isNullOrEmpty().not()) {
+    if (response.error is NoNetworkException) {
+      errorSet()
+      return
+    }
+    if (response.stringResponse.isNullOrEmpty().not()) {
       isDomain = true
       binding?.confirmButton?.isEnabled = true
-      domainValue = response.stringResponse?.toLowerCase(Locale.ROOT)?:""
+      domainValue = response.stringResponse?.toLowerCase(Locale.ROOT)
+      floatsRequest?.domainName = domainValue
       binding?.fragmentStatusIv?.isClickable = false
       binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_valid)
+      binding?.websiteStatusTv?.setTextColor(getColor(R.color.psn_sub_heading_color))
       onSuccess()
     } else errorSet()
   }
@@ -114,7 +121,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     fullScreenProgress = FullScreenProgressDialog.newInstance()
     floatsRequest = arguments?.getSerializable("request") as? CategoryFloatsRequest
     val websiteHint = floatsRequest?.businessName?.trim()?.replace(" ", "")
-    val amountSpannableString = SpannableString("'$websiteHint' ").apply {
+    val websiteHintSpannable = SpannableString("'$websiteHint' ").apply {
       setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
     }
 
@@ -123,7 +130,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
 
     binding?.websiteEt?.afterTextChanged {
       setSubDomain(binding?.websiteEt?.text.toString())
-      val sp = SpannableString(binding?.websiteEt?.text.toString()).apply {
+      val sp = SpannableString("'${binding?.websiteEt?.text.toString()}' ").apply {
         setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
       }
       binding?.websiteStatusTv?.text = SpannableStringBuilder().apply {
@@ -135,16 +142,16 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     binding?.websiteEt?.setText(websiteHint)
 
     binding?.websiteStatusTv?.text = SpannableStringBuilder().apply {
-      append(amountSpannableString)
+      append(websiteHintSpannable)
       append(getString(R.string.website_available_text))
     }
     binding?.confirmButton?.setOnClickListener {
-      if (domainValue.isEmpty()) {
-        showShortToast("Enter a valid website name")
+      val website = binding?.websiteEt?.text?.toString()
+      if (!website.isWebsiteValid()) {
+        showShortToast(getString(R.string.enter_a_valid_website_name))
         return@setOnClickListener
       }
-      floatsRequest?.domainName = domainValue
-      floatsRequest?.webSiteUrl = "$domainValue.nowfloats.com"
+      floatsRequest?.webSiteUrl = "$website.nowfloats.com"
       WebEngageController.trackEvent(CREATE_MY_BUSINESS_WEBSITE, CLICK, NO_EVENT_VALUE)
       apiHitCreateMerchantProfile()
     }
