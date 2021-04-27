@@ -100,7 +100,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
       binding?.btnGoToDashboard?.isEnabled = true
       result?.isItemSelected = true
       businessResult?.forEach { item2 -> if (item2 != result) item2.isItemSelected = false }
-      adapter.notifyItemChanged(position)
+      adapter.notifyDataSetChanged()
     }
   }
 

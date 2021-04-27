@@ -17,7 +17,6 @@ import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.framework.webengageconstant.*
 
-
 class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
   private var floatsRequest: CategoryFloatsRequest? = null
@@ -76,7 +75,6 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
       }
       val whatsAppNoFlag = binding?.checkbox?.isChecked ?: false
 
-      if (floatsRequest?.requestProfile?.ProfileProperties == null) floatsRequest?.requestProfile?.ProfileProperties = BusinessInfoModel()
       floatsRequest?.requestProfile?.ProfileProperties?.userName = name
       floatsRequest?.userBusinessMobile = phone
       if (email.isNullOrEmpty().not()){
