@@ -13,6 +13,7 @@ import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.BaseFragment
+import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.framework.webengageconstant.*
 
@@ -82,12 +83,12 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
         floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
         floatsRequest?.userBusinessEmail = email
       }else{
-        floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
-        floatsRequest?.userBusinessEmail = "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
+        floatsRequest?.requestProfile?.ProfileProperties?.userEmail = "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
+        floatsRequest?.userBusinessEmail = ""
       }
       floatsRequest?.businessName = businessName
       floatsRequest?.requestProfile?.AuthToken = phone
-      floatsRequest?.requestProfile?.ClientId = clientId2
+      floatsRequest?.requestProfile?.ClientId = clientId
       floatsRequest?.requestProfile?.LoginKey = phone
       floatsRequest?.requestProfile?.LoginSecret = ""
       floatsRequest?.requestProfile?.Provider = "EMAIL"

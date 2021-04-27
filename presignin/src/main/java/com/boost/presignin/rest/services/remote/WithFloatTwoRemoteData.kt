@@ -21,7 +21,7 @@ interface WithFloatTwoRemoteData {
   fun createUserProfile(@Body userProfileRequest: CreateProfileRequest?): Observable<Response<BusinessProfileResponse>>
 
   @GET(EndPoints.CHECK_MOBILE_IS_REGISTERED)
-  fun checkIfMobileNumberIsRegistered(@Query(value = "mobileNumber") mobileNumber: Long?, @Query(value = "clientId") clientId: String? = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"): Observable<Response<ResponseMobileIsRegistered>>
+  fun checkIfMobileNumberIsRegistered(@Query(value = "mobileNumber") mobileNumber: Long?, @Query(value = "clientId") clientId: String?): Observable<Response<ResponseMobileIsRegistered>>
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.CONNECT_MERCHANT_AUTH_PROVIDER)
@@ -39,7 +39,7 @@ interface WithFloatTwoRemoteData {
   fun getFpDetailsByPhone(@Query("number") number: Long?, @Query(value = "clientId") clientId: String?): Observable<Response<Any>>
 
   @GET(EndPoints.SEND_OTP_INDIA)
-  fun sendOtpIndia(@Query("mobileNumber") number: Long?, @Query("messageTemplate") messageTemplate: String? = "Your Boost 360 verification code is [OTP] . Code valid for 10 minutes only, one-time use. Please DO NOT share this OTP with anyone to ensure account's security.", @Query(value = "clientId") clientId: String? = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"): Observable<Response<ResponseBody>>
+  fun sendOtpIndia(@Query("mobileNumber") number: Long?, @Query("messageTemplate") messageTemplate: String? = "Your Boost 360 verification code is [OTP] . Code valid for 10 minutes only, one-time use. Please DO NOT share this OTP with anyone to ensure account's security.", @Query(value = "clientId") clientId: String?): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.VERIFY_OTP)
   fun verifyOtp(
