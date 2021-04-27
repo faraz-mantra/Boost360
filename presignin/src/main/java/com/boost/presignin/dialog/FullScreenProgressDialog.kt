@@ -32,7 +32,7 @@ class FullScreenProgressDialog : BaseDialogFragment<FullScreenDialogBinding, Bas
   }
 
   override fun getTheme(): Int {
-    return R.style.MaterialDialogTheme
+    return R.style.MaterialDialogThemeFull
   }
 
   override fun onCreateView() {
