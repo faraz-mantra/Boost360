@@ -95,13 +95,20 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    this.result = item as? ResultItem
+    binding?.btnGoToDashboard?.isEnabled = true
     if (actionType == RecyclerViewActionType.BUSINESS_LIST_ITEM_CLICK.ordinal) {
-      this.result = item as? ResultItem
-      binding?.btnGoToDashboard?.isEnabled = true
       result?.isItemSelected = true
-      businessResult?.forEach { item2 -> if (item2 != result) item2.isItemSelected = false }
+    }
+    businessResult?.forEach { dataItems ->
+      if (dataItems != result) {
+        dataItems.isItemSelected = false
+      }
+    }
+    binding?.rvBusinessList?.post {
       adapter.notifyDataSetChanged()
     }
+
   }
 
   private fun storeFpDetails() {
