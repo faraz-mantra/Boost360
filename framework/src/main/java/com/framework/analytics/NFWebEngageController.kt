@@ -16,6 +16,9 @@ object NFWebEngageController {
         trackEvent["event_name"] = event_name
         trackEvent["fptag/event_value"] = event_value
         trackEvent["event_label"] = event_label
+        if(event_label.equals("rev")){
+            trackEvent["revenue"] = event_value
+        }
         weAnalytics.track(event_name, trackEvent)
         weAnalytics.screenNavigated(event_name)
         //Firebase Analytics Event...
