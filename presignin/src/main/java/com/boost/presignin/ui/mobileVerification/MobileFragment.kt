@@ -15,7 +15,7 @@ import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
-import com.framework.pref.clientId2
+import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.BOOST_360_LOGIN_NUMBER
 import com.framework.webengageconstant.LOGIN_NEXT
@@ -79,7 +79,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
 
   private fun checkIfUserIsRegistered() {
     showProgress(getString(R.string.loading), false)
-    viewModel?.checkMobileIsRegistered(binding?.phoneEt?.text.toString().toLong(), clientId2)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.checkMobileIsRegistered(binding?.phoneEt?.text.toString().toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       if (it.isSuccess()) {
         val data = it as? ResponseMobileIsRegistered

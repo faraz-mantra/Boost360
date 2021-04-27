@@ -126,7 +126,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
   private fun sendOtp(phoneNumber: String?) {
     showProgress(getString(R.string.sending_otp))
-    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId2)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       if (it.status == 200) {
         if (parseResponse(it)) {
