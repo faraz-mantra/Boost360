@@ -19,6 +19,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
     </style>
+    <style name="MaterialDialogThemeFull" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="android:windowBackground">#80000000</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
     <style name="start_guide_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
