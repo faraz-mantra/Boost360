@@ -48,12 +48,20 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.acceptTnc?.makeLinks(
         Pair("terms", View.OnClickListener {
           WebEngageController.trackEvent(BOOST_360_TERMS, CLICKED, NO_EVENT_VALUE)
-          showShortToast("TERMS")
+          openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
         }),
         Pair("conditions", View.OnClickListener {
           WebEngageController.trackEvent(BOOST_360_CONDITIONS, CLICKED, NO_EVENT_VALUE)
-          showShortToast("conditions")
+          openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
         }))
+  }
+
+  private fun openTNCDialog(url: String, title: String) {
+//    WebViewTNCDialog().apply {
+//      setData(false, url, title)
+//      onClickType = { }
+//      show(this@IntroActivity.supportFragmentManager, title)
+//    }
   }
 
   override fun getLayout(): Int {

@@ -6,12 +6,11 @@ import android.widget.ImageView
 import com.boost.presignin.R
 import com.boost.presignin.databinding.FragmentBusinessDetailsBinding
 import com.boost.presignin.extensions.isBusinessNameValid
-import com.boost.presignin.extensions.isEmailValid
 import com.boost.presignin.extensions.isNameValid
 import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
-import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.BaseFragment
 import com.framework.pref.clientId2
@@ -20,14 +19,14 @@ import com.framework.webengageconstant.*
 
 class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
-  private var registerRequest: RequestFloatsModel? = null
+  private var floatsRequest: CategoryFloatsRequest? = null
 
   companion object {
     @JvmStatic
-    fun newInstance(registerRequest: RequestFloatsModel?) =
+    fun newInstance(request: CategoryFloatsRequest?) =
         BusinessDetailsFragment().apply {
           arguments = Bundle().apply {
-            putSerializable("request", registerRequest)
+            putSerializable("request", request)
           }
         }
   }
@@ -47,10 +46,10 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
   override fun onCreateView() {
     WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, PAGE_VIEW, NO_EVENT_VALUE)
     baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
-    registerRequest = requireArguments().getSerializable("request") as? RequestFloatsModel
-    binding?.phoneEt?.setText(registerRequest?.ProfileProperties?.userMobile)
-    val backbutton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
-    backbutton?.setOnClickListener { goBack() }
+    floatsRequest = requireArguments().getSerializable("request") as? CategoryFloatsRequest
+    binding?.phoneEt?.setText(floatsRequest?.userBusinessMobile)
+    val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+    backButton?.setOnClickListener { goBack() }
     binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
       when (hasFocus) {
         true -> binding?.civPhone?.setTintColor(getColor(R.color.orange))
@@ -70,28 +69,30 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
         showShortToast("Enter valid business name")
         return@setOnClickListener
       }
-      if (!email.isEmailValid()) {
-        showShortToast("Enter valid email")
-        return@setOnClickListener
-      }
       if (!phone.isPhoneValid()) {
         showShortToast("Enter valid phone number")
         return@setOnClickListener
       }
       val whatsAppNoFlag = binding?.checkbox?.isChecked ?: false
 
-      if (registerRequest?.ProfileProperties == null) registerRequest?.ProfileProperties = BusinessInfoModel()
-      registerRequest?.ProfileProperties?.userName = name!!
-      registerRequest?.ProfileProperties?.userEmail = email!!
-      registerRequest?.ProfileProperties?.userMobile = phone!!
-      registerRequest?.ProfileProperties?.businessName = businessName!!
-      registerRequest?.AuthToken = phone
-      registerRequest?.ClientId = clientId2
-      registerRequest?.LoginKey = email
-      registerRequest?.LoginSecret = ""
-      registerRequest?.Provider = "EMAIL"
-      registerRequest?.whatsAppFlag = whatsAppNoFlag
-      addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(registerRequest!!), true)
+      if (floatsRequest?.requestProfile?.ProfileProperties == null) floatsRequest?.requestProfile?.ProfileProperties = BusinessInfoModel()
+      floatsRequest?.requestProfile?.ProfileProperties?.userName = name
+      floatsRequest?.userBusinessMobile = phone
+      if (email.isNullOrEmpty().not()){
+        floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
+        floatsRequest?.userBusinessEmail = email
+      }else{
+        floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
+        floatsRequest?.userBusinessEmail = "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
+      }
+      floatsRequest?.businessName = businessName
+      floatsRequest?.requestProfile?.AuthToken = phone
+      floatsRequest?.requestProfile?.ClientId = clientId2
+      floatsRequest?.requestProfile?.LoginKey = phone
+      floatsRequest?.requestProfile?.LoginSecret = ""
+      floatsRequest?.requestProfile?.Provider = "EMAIL"
+      floatsRequest?.whatsAppFlag = whatsAppNoFlag
+      addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(floatsRequest!!), true)
       WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, CLICK, NO_EVENT_VALUE)
     }
   }

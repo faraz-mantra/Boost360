@@ -2,7 +2,7 @@ package com.boost.presignin.rest.repository
 
 import com.boost.presignin.base.rest.AppBaseLocalService
 import com.boost.presignin.base.rest.AppBaseRepository
-import com.boost.presignin.model.RequestFloatsModel
+import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.rest.TaskCode
 import com.boost.presignin.rest.apiClients.WithFloatsApiTwoClient
@@ -18,11 +18,11 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.checkIfMobileNumberIsRegistered(number, clientId = clientId), TaskCode.CHECK_MOBILE_IS_REGISTERED)
   }
 
-  fun connectUserProfile(userProfileRequest: RequestFloatsModel): Observable<BaseResponse> {
+  fun connectUserProfile(userProfileRequest: CreateProfileRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.connectUserProfile(userProfileRequest), TaskCode.CONNECT_USER_PROFILE)
   }
 
-  fun createUserProfile(userProfileRequest: RequestFloatsModel): Observable<BaseResponse> {
+  fun createUserProfile(userProfileRequest: CreateProfileRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.createUserProfile(userProfileRequest), TaskCode.CREATE_USER_PROFILE)
   }
 

@@ -43,6 +43,7 @@ class WebViewTNCDialog : DialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    isCancelable = false
     loadData(domainUrl)
     if (title.isEmpty()) title = resources.getString(R.string.boost360_terms_conditions)
     binding.title.text = title

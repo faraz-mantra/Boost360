@@ -14,12 +14,12 @@ import com.boost.presignin.databinding.FragmentBusinessWebsiteBinding
 import com.boost.presignin.dialog.FullScreenProgressDialog
 import com.boost.presignin.extensions.isWebsiteValid
 import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.RequestFloatsModel
 import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.activatepurchase.ConsumptionConstraint
 import com.boost.presignin.model.activatepurchase.PurchasedExpiry
 import com.boost.presignin.model.activatepurchase.PurchasedWidget
 import com.boost.presignin.model.business.BusinessCreateRequest
+import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.BaseResponse
@@ -32,9 +32,9 @@ import com.framework.webengageconstant.*
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
-  private lateinit var fullScreenProgress: FullScreenProgressDialog
 
-  private var registerRequest: RequestFloatsModel? = null
+  private lateinit var fullScreenProgress: FullScreenProgressDialog
+  private var floatsRequest: CategoryFloatsRequest? = null
   private var isDomain: Boolean = false
   private var domainValue: String? = null
   private var floatingPointId = ""
@@ -43,7 +43,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
 
   companion object {
     @JvmStatic
-    fun newInstance(registerRequest: RequestFloatsModel) = BusinessWebsiteFragment().apply {
+    fun newInstance(registerRequest: CategoryFloatsRequest) = BusinessWebsiteFragment().apply {
       arguments = Bundle().apply {
         putSerializable("request", registerRequest)
       }
@@ -103,7 +103,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       isDomain = true
       binding?.confirmButton?.isEnabled = true
       domainValue = response.stringResponse?.toLowerCase(Locale.ROOT)
-      registerRequest?.ProfileProperties?.domainName = domainValue
+      floatsRequest?.domainName = domainValue
       binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_valid)
       onSuccess()
     } else errorSet()
@@ -112,8 +112,8 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   override fun onCreateView() {
     WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, PAGE_VIEW, NO_EVENT_VALUE)
     fullScreenProgress = FullScreenProgressDialog.newInstance()
-    registerRequest = arguments?.getSerializable("request") as? RequestFloatsModel
-    val websiteHint = registerRequest?.ProfileProperties?.businessName?.trim()?.replace(" ", "")
+    floatsRequest = arguments?.getSerializable("request") as? CategoryFloatsRequest
+    val websiteHint = floatsRequest?.businessName?.trim()?.replace(" ", "")
     val amountSpannableString = SpannableString("'$websiteHint' ").apply {
       setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
     }
@@ -144,7 +144,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         showShortToast("Enter a valid website name")
         return@setOnClickListener
       }
-      registerRequest?.webSiteUrl = "$website.nowfloats.com"
+      floatsRequest?.webSiteUrl = "$website.nowfloats.com"
       WebEngageController.trackEvent(CREATE_MY_BUSINESS_WEBSITE, CLICK, NO_EVENT_VALUE)
       apiHitCreateMerchantProfile()
     }
@@ -155,9 +155,9 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   private fun apiHitCreateMerchantProfile() {
-    showProgress("We're creating your online ${registerRequest?.categoryDataModel?.category_Name}...")
+    showProgress("We're creating your online ${floatsRequest?.categoryDataModel?.category_Name}...")
     if (this.responseCreateProfile == null) {
-      viewModel?.createMerchantProfile(request = registerRequest)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.createMerchantProfile(request = floatsRequest?.requestProfile)?.observeOnce(viewLifecycleOwner, {
         val businessProfileResponse = it as? BusinessProfileResponse
         if (it.isSuccess() && businessProfileResponse != null) {
           apiHitBusiness(businessProfileResponse)
@@ -185,9 +185,9 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
           WebEngageController.setUserContactAttributes(response.result?.profileProperties?.userEmail, response.result?.profileProperties?.userMobile, response.result?.profileProperties?.userName, response.result?.sourceClientId)
           WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
           floatingPointId = it.stringResponse ?: ""
-          registerRequest?.floatingPointId = floatingPointId
-          registerRequest?.fpTag = registerRequest?.ProfileProperties?.domainName
-          registerRequest?.profileId = response.result?.loginId
+          floatsRequest?.floatingPointId = floatingPointId
+          floatsRequest?.fpTag = floatsRequest?.domainName
+          floatsRequest?.requestProfile?.profileId = response.result?.loginId
           apiBusinessActivatePlan(floatingPointId)
         }
       } else {
@@ -204,14 +204,14 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       if (it.isSuccess()) {
         WebEngageController.trackEvent(ACTIVATE_FREE_PURCHASE_PLAN, SIGNUP_SUCCESS, NO_EVENT_VALUE)
       } else showShortToast(getString(R.string.unable_to_activate_business_plan))
-      addFragmentReplace(com.framework.R.id.container, RegistrationSuccessFragment.newInstance(registerRequest!!), true)
+      addFragmentReplace(com.framework.R.id.container, RegistrationSuccessFragment.newInstance(floatsRequest!!), true)
     })
   }
 
 
   private fun getRequestPurchasedOrder(floatingPointId: String): ActivatePurchasedOrderRequest {
     val widList = ArrayList<PurchasedWidget>()
-    registerRequest?.categoryDataModel?.sections?.forEach {
+    floatsRequest?.categoryDataModel?.sections?.forEach {
       it.getWidList().forEach { key ->
         val widget = PurchasedWidget(widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
             isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
@@ -226,22 +226,22 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   private fun getBusinessRequest(): BusinessCreateRequest {
     val createRequest = BusinessCreateRequest()
     createRequest.autoFillSampleWebsiteData = true
-    createRequest.webTemplateId = registerRequest?.categoryDataModel?.webTemplateId
+    createRequest.webTemplateId = floatsRequest?.categoryDataModel?.webTemplateId
     createRequest.clientId = clientId
-    createRequest.tag = registerRequest?.ProfileProperties?.domainName
-    createRequest.name = registerRequest?.ProfileProperties?.businessName
+    createRequest.tag = floatsRequest?.domainName
+    createRequest.name = floatsRequest?.businessName
     createRequest.address = ""
     createRequest.pincode = ""
     createRequest.country = "India"
-    createRequest.primaryNumber = registerRequest?.ProfileProperties?.userMobile
-    createRequest.email = registerRequest?.ProfileProperties?.userEmail
+    createRequest.primaryNumber = floatsRequest?.userBusinessMobile
+    createRequest.email = floatsRequest?.userBusinessEmail
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
-    createRequest.primaryCategory = registerRequest?.categoryDataModel?.category_key
-    createRequest.appExperienceCode = registerRequest?.categoryDataModel?.experience_code
-//        createRequest.whatsAppNumber = registerRequest?.channelActionDatas?.firstOrNull()?.getNumberWithCode()
-//        createRequest.whatsAppNotificationOptIn = registerRequest?.whatsappEntransactional ?: false
-    createRequest.boostXWebsiteUrl = "www.${registerRequest?.ProfileProperties?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+    createRequest.primaryCategory = floatsRequest?.categoryDataModel?.category_key
+    createRequest.appExperienceCode = floatsRequest?.categoryDataModel?.experience_code
+    createRequest.whatsAppNumber = floatsRequest?.userBusinessMobile
+    createRequest.whatsAppNotificationOptIn = floatsRequest?.whatsAppFlag ?: false
+    createRequest.boostXWebsiteUrl = "www.${floatsRequest?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
     return createRequest
   }
 }
