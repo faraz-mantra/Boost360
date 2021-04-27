@@ -62,15 +62,15 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
       val email = binding?.emailEt?.text?.toString()
       val phone = binding?.phoneEt?.text?.toString()
       if (!name.isNameValid()) {
-        showShortToast("Enter valid name")
+        showShortToast(getString(R.string.enter_valid_name))
         return@setOnClickListener
       }
       if (!businessName.isBusinessNameValid()) {
-        showShortToast("Enter valid business name")
+        showShortToast(getString(R.string.enter_valid_business_name))
         return@setOnClickListener
       }
       if (!phone.isPhoneValid()) {
-        showShortToast("Enter valid phone number")
+        showShortToast(getString(R.string.enter_valid_phone_number))
         return@setOnClickListener
       }
       val whatsAppNoFlag = binding?.checkbox?.isChecked ?: false
@@ -82,7 +82,7 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
         floatsRequest?.userBusinessEmail = email
       }else{
         floatsRequest?.requestProfile?.ProfileProperties?.userEmail = "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
-        floatsRequest?.userBusinessEmail = ""
+        floatsRequest?.userBusinessEmail = null
       }
       floatsRequest?.businessName = businessName
       floatsRequest?.requestProfile?.AuthToken = phone

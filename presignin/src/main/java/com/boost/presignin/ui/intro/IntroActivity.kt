@@ -6,6 +6,7 @@ import android.view.View
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroAdapter
 import com.boost.presignin.databinding.ActivityIntroBinding
+import com.boost.presignin.dialog.WebViewDialog
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
@@ -57,11 +58,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
   }
 
   private fun openTNCDialog(url: String, title: String) {
-//    WebViewTNCDialog().apply {
-//      setData(false, url, title)
-//      onClickType = { }
-//      show(this@IntroActivity.supportFragmentManager, title)
-//    }
+    WebViewDialog().apply {
+      setData(false, url, title)
+      onClickType = { }
+      show(this@IntroActivity.supportFragmentManager, title)
+    }
   }
 
   override fun getLayout(): Int {
