@@ -82,7 +82,11 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     isDomain = false
     domainValue = ""
     binding?.confirmButton?.isEnabled = false
-    binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_error)
+    binding?.fragmentStatusIv?.isClickable = true
+    binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_error_business_website)
+    binding?.fragmentStatusIv?.setOnClickListener {
+      binding?.websiteEt?.text?.clear()
+    }
   }
 
   private fun apiCheckDomain(subDomain: String, onSuccess: () -> Unit = {}) {
@@ -104,6 +108,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       binding?.confirmButton?.isEnabled = true
       domainValue = response.stringResponse?.toLowerCase(Locale.ROOT)
       floatsRequest?.domainName = domainValue
+      binding?.fragmentStatusIv?.isClickable = false
       binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_valid)
       onSuccess()
     } else errorSet()
