@@ -76,7 +76,7 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
         storeUserDetail(response)
       } else {
         hideProgress()
-        showShortToast("Ensure that the entered username and password is correct.")
+        showShortToast(getString(R.string.ensure_that_the_entered_username_and_password_))
       }
     })
   }
