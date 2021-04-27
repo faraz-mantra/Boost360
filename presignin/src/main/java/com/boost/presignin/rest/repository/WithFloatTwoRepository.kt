@@ -10,7 +10,11 @@ import com.boost.presignin.rest.services.remote.WithFloatTwoRemoteData
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.http.Body
+import java.util.HashMap
 
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
 
@@ -52,6 +56,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun getFpDetails(fpId: String, map: Map<String, String>): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getFpDetails(fpId, map), TaskCode.GET_FP_USER_DETAILS)
+  }
+  fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<BaseResponse>{
+    return makeRemoteRequest(remoteDataSource.post_RegisterRia(map),TaskCode.REGISTER_RIA);
   }
 
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {

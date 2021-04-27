@@ -23,5 +23,16 @@ object EndPoints {
     const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
     const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
     const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
+    //todo NFX API
+    var NFX_WITH_NOWFLOATS: String = "https://nfx.withfloats.com"
+    //todo webaction boost kit api url
+    const val WEB_ACTION_BOOST_KIT_API_URL = "https://webaction.api.boostkit.dev"
+    const val USER_DETAILS_WITH_FLOAT = "/discover/v9/business/paymentProfile/{fpId}"
+    const val REGISTER_CHANNEL = "/Discover/v1/floatingpoint/notification/registerChannel"
+    const val GET_DATA = "/api/v1/kycdoc/get-data"
+    const val GET_ACCESS_TOKENS = "/dataexchange/v1/getAccessTokens"
+    const val FETCH_DATA_ANALYTICS = "/dataexchange/v1/fetch/analytics"
+
+
 }
 

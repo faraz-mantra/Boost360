@@ -1,17 +1,20 @@
 package com.boost.presignin.rest.services.remote
 
-import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
+import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
+import com.boost.presignin.model.userprofile.BusinessProfileResponse
+import com.boost.presignin.model.userprofile.ConnectUserProfileResponse
+import com.boost.presignin.model.userprofile.ResponseMobileIsRegistered
 import com.boost.presignin.rest.EndPoints
-import com.boost.presignin.model.userprofile.*
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
+import java.util.*
 
 interface WithFloatTwoRemoteData {
 
@@ -43,8 +46,8 @@ interface WithFloatTwoRemoteData {
 
   @GET(EndPoints.VERIFY_OTP)
   fun verifyOtp(
-      @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
-      @Query(value = "clientId") clientId: String?,
+          @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
+          @Query(value = "clientId") clientId: String?,
   ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.FP_LIST_REGISTERED_MOBILE)
@@ -52,7 +55,11 @@ interface WithFloatTwoRemoteData {
 
   @GET(EndPoints.GET_FP_DETAILS)
   fun getFpDetails(
-      @Path("fpid") fpid: String,
-      @QueryMap map: Map<String, String>,
+          @Path("fpid") fpid: String,
+          @QueryMap map: Map<String, String>,
   ): Observable<Response<UserFpDetailsResponse>>
+
+  @Headers("Content-Type: application/json", "Accept: application/json")
+  @POST(EndPoints.REGISTER_CHANNEL)
+  fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<Response<Any>>
 }
