@@ -12,7 +12,7 @@ data class BusinessCreateRequest(
     var name: String? = null,
     var desc: String? = null,
     var address: String? = null,
-    var city: String? = null,
+    var city: String? = "",
     var pincode: String? = null,
     var country: String? = null,
     var primaryNumber: String? = null,

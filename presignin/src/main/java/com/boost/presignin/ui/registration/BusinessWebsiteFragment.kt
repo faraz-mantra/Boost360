@@ -12,7 +12,6 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentBusinessWebsiteBinding
 import com.boost.presignin.dialog.FullScreenProgressDialog
-import com.boost.presignin.extensions.isWebsiteValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.activatepurchase.ConsumptionConstraint
@@ -36,7 +35,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   private lateinit var fullScreenProgress: FullScreenProgressDialog
   private var floatsRequest: CategoryFloatsRequest? = null
   private var isDomain: Boolean = false
-  private var domainValue: String? = null
+  private var domainValue: String = ""
   private var floatingPointId = ""
   private var isSyncCreateFpApi = false
   private var responseCreateProfile: BusinessProfileResponse? = null
@@ -49,6 +48,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       }
     }
   }
+
   override fun showProgress(title: String?, cancelable: Boolean?) {
     title?.let { fullScreenProgress.setTitle(it) }
     cancelable?.let { fullScreenProgress.isCancelable = it }
@@ -99,15 +99,10 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   private fun onPostBusinessDomainCheckResponse(response: BaseResponse, onSuccess: () -> Unit) {
-    if (response.error is NoNetworkException) {
-      errorSet()
-      return
-    }
-    if (response.stringResponse.isNullOrEmpty().not()) {
+    if (response.isSuccess() && response.stringResponse.isNullOrEmpty().not()) {
       isDomain = true
       binding?.confirmButton?.isEnabled = true
-      domainValue = response.stringResponse?.toLowerCase(Locale.ROOT)
-      floatsRequest?.domainName = domainValue
+      domainValue = response.stringResponse?.toLowerCase(Locale.ROOT)?:""
       binding?.fragmentStatusIv?.isClickable = false
       binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_valid)
       onSuccess()
@@ -144,12 +139,12 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       append(getString(R.string.website_available_text))
     }
     binding?.confirmButton?.setOnClickListener {
-      val website = binding?.websiteEt?.text?.toString()
-      if (!website.isWebsiteValid()) {
+      if (domainValue.isEmpty()) {
         showShortToast("Enter a valid website name")
         return@setOnClickListener
       }
-      floatsRequest?.webSiteUrl = "$website.nowfloats.com"
+      floatsRequest?.domainName = domainValue
+      floatsRequest?.webSiteUrl = "$domainValue.nowfloats.com"
       WebEngageController.trackEvent(CREATE_MY_BUSINESS_WEBSITE, CLICK, NO_EVENT_VALUE)
       apiHitCreateMerchantProfile()
     }

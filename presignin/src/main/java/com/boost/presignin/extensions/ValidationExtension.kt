@@ -22,8 +22,3 @@ fun String?.isPhoneValid() : Boolean{
     if (this==null) return false
     return this.trim().length==10
 }
-
-fun String?.isWebsiteValid() : Boolean{
-    if (this==null) return false
-    return this.trim().isNotEmpty()
-}
