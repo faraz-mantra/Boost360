@@ -8,6 +8,7 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseActivity
 import com.boost.presignin.databinding.ActivityWebPreviewBinding
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
+import com.boost.presignin.utils.shareViaAnyApp
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
@@ -28,6 +29,9 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
         binding?.headingTv?.text = floatsRequest?.categoryDataModel?.category_Name
         binding?.ctvUrl?.text = floatsRequest?.webSiteUrl
         binding?.closeIcon?.setOnClickListener { finish() }
+        binding?.shareIcon?.setOnClickListener {
+            shareViaAnyApp(null,"${floatsRequest?.businessName} ${floatsRequest?.categoryDataModel?.category_descriptor} ${floatsRequest?.webSiteUrl}")
+        }
         loadData(floatsRequest?.webSiteUrl!!)
 
     }
