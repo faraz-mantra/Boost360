@@ -14,7 +14,7 @@ import com.framework.utils.convertStringToList
 import java.util.*
 import kotlin.collections.ArrayList
 
-class UserSessionManager(var activity: Activity) {
+class UserSessionManager(var activity: Context) {
 
   // Shared Preferences reference
   private var pref = activity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -77,6 +77,7 @@ class UserSessionManager(var activity: Activity) {
   private val KEY_BUSINESS_HOURS = "BusinessHoursMainKey"
   private val KEY_FP_SHARE_ENABLE = "fbShareEnabled"
   private val KEY_FP_PAGE_SHARE_ENABLE = "fbPageShareEnabled"
+
 
   fun Context.getPreferenceTwitter(): SharedPreferences {
     return getSharedPreferences(Key_Preferences.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
@@ -560,6 +561,10 @@ class UserSessionManager(var activity: Activity) {
 
   fun storeBooleanDetails(key: String, value: Boolean) {
     editor.putBoolean(key.trim { it <= ' ' }, value).apply()
+  }
+
+  fun storeIntDetails(key: String, value: Int) {
+    editor.putInt(key.trim { it <= ' ' }, value).apply()
   }
 
   fun getBooleanDetails(key: String?): Boolean {

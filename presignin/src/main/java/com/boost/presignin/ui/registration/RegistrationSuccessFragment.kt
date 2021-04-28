@@ -14,6 +14,7 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentRegistrationSuccessBinding
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
+import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.WebPreviewActivity
 import com.framework.models.BaseViewModel
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
@@ -91,6 +92,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
                 showProgress()
                 val intent = Intent(baseActivity, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startService()
                 baseActivity.startActivity(intent)
                 baseActivity.finish()
             } catch (e: ClassNotFoundException) {
@@ -98,6 +100,10 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
             }
         }
         onBackPressed()
+    }
+
+    private fun startService() {
+        baseActivity.startService(Intent(activity, APIService::class.java))
     }
 
     private fun onBackPressed() {

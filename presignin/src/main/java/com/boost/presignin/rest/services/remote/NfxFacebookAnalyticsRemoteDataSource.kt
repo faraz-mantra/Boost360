@@ -6,13 +6,15 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
+import io.reactivex.Observable
+import java.util.*
 
 interface NfxFacebookAnalyticsRemoteDataSource {
     @Headers("key:78234i249123102398", "pwd:JYUYTJH*(*&BKJ787686876bbbhl)", "Content-Type:application/json")
     @GET(EndPoints.FETCH_DATA_ANALYTICS)
-    fun nfxFetchFacebookData(@Query("nowfloats_id") id: String?, @Query("identifier") identifier:String?):Response<NfxGetTokensResponse>
+    fun nfxFetchFacebookData(@Query("nowfloats_id") id: String?, @Query("identifier") identifier: String?): Observable<Response<NfxGetTokensResponse>>
 
     @Headers("key:78234i249123102398", "pwd:JYUYTJH*(*&BKJ787686876bbbhl)", "Content-Type:application/json")
     @GET(EndPoints.GET_ACCESS_TOKENS)
-    fun nfxGetSocialTokens(@Query("nowfloats_id") id: String?):Response<NfxGetTokensResponse>
+    fun nfxGetSocialTokens(@Query("nowfloats_id") id: String?): Observable<Response<NfxGetTokensResponse>>
 }
