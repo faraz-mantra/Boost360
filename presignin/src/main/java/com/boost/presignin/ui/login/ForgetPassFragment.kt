@@ -1,5 +1,8 @@
 package com.boost.presignin.ui.login
 
+import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.FragmentManager
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentForgetPassBinding
@@ -42,5 +45,10 @@ class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignU
         } else showShortToast(getString(R.string.please_enter_correct_user))
       })
     }
+    val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
+    backButton?.setOnClickListener {
+      parentFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
   }
+
 }
