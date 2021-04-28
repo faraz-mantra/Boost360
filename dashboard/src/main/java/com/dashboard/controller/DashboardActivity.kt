@@ -273,12 +273,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           toolbarPropertySet(pos)
         }
       }
-      3 -> {
-        val dataAddOns = welcomeData?.get(2)
-        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
-        else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
-
-      }
+//      3 -> {
+//        val dataAddOns = welcomeData?.get(2)
+//        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
+//        else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+//
+//      }
     }
   }
 
@@ -330,8 +330,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
-      3 -> checkWelcomeShowScreen(pos)
-      4 -> {
+//      3 -> checkWelcomeShowScreen(pos)
+      3 -> {
         binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
         WebEngageController.trackEvent(MORE, CLICK, TO_BE_ADDED)
       }

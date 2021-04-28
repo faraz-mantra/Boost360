@@ -482,7 +482,7 @@ class PreSignUpActivity : AppCompatActivity() {
           binding.languageDropdown.visibility = View.GONE
           binding.languageLayout.visibility = View.VISIBLE
         } else if (it.equals(SINGLE_LANGUAGE_BUTTON_VIEW)) {
-          binding.languageDropdown.visibility = View.VISIBLE
+          binding.languageDropdown.visibility = View.GONE
           binding.languageLayout.visibility = View.GONE
           binding.languageView.visibility = View.VISIBLE
           binding.loginButton.visibility = View.VISIBLE

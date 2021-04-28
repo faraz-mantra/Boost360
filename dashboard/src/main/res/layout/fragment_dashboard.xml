@@ -33,12 +33,14 @@
             android:layout_height="@dimen/size_210">
 
             <com.framework.views.customViews.CustomImageView
+              android:id="@+id/view_bg_inner"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:scaleType="centerCrop"
               app:srcCompat="@drawable/ic_bg_dash" />
 
             <com.framework.views.customViews.CustomImageView
+              android:id="@+id/view_bg_outer"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:scaleType="centerCrop"
@@ -488,11 +490,11 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:textAlignment="gravity"
+                    android:textColor="@color/dashboard_business_url"
                     app:autoSizeMaxTextSize="16sp"
                     app:autoSizeMinTextSize="8sp"
                     app:autoSizeStepGranularity="1sp"
                     app:autoSizeTextType="uniform"
-                    android:textColor="@color/dashboard_business_url"
                     tools:text="@string/www_sravansclinic_com" />
                 </FrameLayout>
 
@@ -546,6 +548,7 @@
               android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomTextView
+                android:id="@+id/txt_visiting_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/share_business_card"

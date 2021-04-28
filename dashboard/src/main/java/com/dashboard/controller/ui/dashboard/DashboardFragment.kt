@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Handler
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
@@ -163,18 +164,19 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getPremiumBanner() {
-    setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
-//    setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
-    setDataRiaAcademy(ArrayList())
+    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+      setDataMarketBanner(ArrayList())
+    } else setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
+    setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
     viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
       val response = it as? DashboardPremiumBannerResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val data = response.data?.get(0)
         if (data?.academyBanners.isNullOrEmpty().not()) {
-//          saveDataAcademy(data?.academyBanners!!)
-//          setDataRiaAcademy(data.academyBanners!!)
+          saveDataAcademy(data?.academyBanners!!)
+          setDataRiaAcademy(data.academyBanners!!)
         }
-        if (data?.marketplaceBanners.isNullOrEmpty().not()) {
+        if (data?.marketplaceBanners.isNullOrEmpty().not() && baseActivity.packageName.equals("com.jio.online", ignoreCase = true).not()) {
           val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
           saveDataMarketPlace(marketBannerFilter)
           setDataMarketBanner(marketBannerFilter)
@@ -251,9 +253,29 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
         }
+        setTopBacgroundView(isHighDrScore)
         showSimmerDrScore(false)
       } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
     })
+  }
+
+  private fun setTopBacgroundView(isHigh: Boolean) {
+    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+      val colorD = if (isHigh) R.color.colorPrimary else R.color.white_smoke_1
+      (baseActivity as? DashboardActivity)?.changeTheme(colorD, colorD)
+      binding?.viewBgInner?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, colorD)
+      binding?.viewBgOuter?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimaryDark)
+      binding?.txtBusinessName?.setTextColor(ContextCompat.getColor(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a))
+      binding?.txtDomainName?.apply {
+        setTextColor(ContextCompat.getColor(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a))
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+          compoundDrawableTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a)
+        }
+      }
+      binding?.btnVisitingCard?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimary)
+      binding?.txtVisitingCard?.setTextColor(ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimary))
+      binding?.txtNotification?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimary)
+    }
   }
 
   private fun visibleViewHighLow(isHigh: Boolean) {
