@@ -1,13 +1,13 @@
 package com.boost.presignin.model.other
 
+import com.framework.base.BaseResponse
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 
 
 data class NfxGetTokensResponse(
-        @SerializedName("message")
-        var message: String? = null,
         @SerializedName("nowfloats_id")
         var nowfloatsId: String? = null,
         @SerializedName("callLogTimeInterval")
@@ -17,7 +17,7 @@ data class NfxGetTokensResponse(
         @SerializedName("NFXAccessTokens")
         var nFXAccessTokens: List<NFXAccessToken> = ArrayList(),
 
-        ) {
+        ) :BaseResponse(),Serializable{
 
     data class NFXAccessToken(
             @SerializedName("Type")

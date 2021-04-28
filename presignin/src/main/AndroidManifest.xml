@@ -8,6 +8,8 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.Pre.Signin"
         android:windowSoftInputMode="adjustResize|adjustPan">
+        <service android:name=".service.APIService"
+            android:exported="false"/>
 
         <activity android:name=".ui.WebPreviewActivity"/>
 
