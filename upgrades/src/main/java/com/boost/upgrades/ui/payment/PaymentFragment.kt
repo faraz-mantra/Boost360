@@ -17,6 +17,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CardPaymentAdapter
 import com.boost.upgrades.adapter.UPIAdapter
 import com.boost.upgrades.adapter.WalletAdapter
+import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.datamodule.SingleNetBankData
 import com.boost.upgrades.interfaces.PaymentListener
@@ -242,7 +243,8 @@ class PaymentFragment : BaseFragment(), PaymentListener {
             loadWallet(it)
         })
         viewModel.getPamentUsingExternalLink().observe(this, Observer {
-            if (it != null && it.equals("SUCCESSFULLY ADDED TO QUEUE")) {
+//            if (it != null && it.equals("SUCCESSFULLY ADDED TO QUEUE")) {
+            if (it != null && it.equals("OK")) {
                 val orderConfirmationFragment = OrderConfirmationFragment.newInstance()
                 val args = Bundle()
                 args.putString("payment_type", "External_Link")
@@ -269,13 +271,19 @@ class PaymentFragment : BaseFragment(), PaymentListener {
             emailArrayList.add(paymentData.get("userEmail").toString())
             emailArrayList.add(prefs.getFPEmail())
 
-            viewModel.loadPamentUsingExternalLink((activity as UpgradeActivity).clientid,
+            /*viewModel.loadPamentUsingExternalLink((activity as UpgradeActivity).clientid,
                     PaymentThroughEmailRequestBody((activity as UpgradeActivity).clientid,
                             emailBody,
                             "alerts@nowfloats.com",
                             "\uD83D\uDD50 Payment link for your Boost360 Subscription [Order #" + cartCheckoutData.get("transaction_id") + "]",
                             emailArrayList,
                             0
+                    ))*/
+            viewModel.loadPaymentLinkPriority((activity as UpgradeActivity).clientid,
+                    PaymentPriorityEmailRequestBody((activity as UpgradeActivity).clientid,
+                            emailBody,
+                            "\uD83D\uDD50 Payment link for your Boost360 Subscription [Order #" + cartCheckoutData.get("transaction_id") + "]",
+                            emailArrayList,
                     ))
         } catch (e: Exception) {
             e.printStackTrace()
