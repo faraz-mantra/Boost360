@@ -11,26 +11,36 @@
         <service android:name=".service.APIService"
             android:exported="false"/>
 
-        <activity android:name=".ui.WebPreviewActivity"/>
+        <activity android:name=".ui.WebPreviewActivity"
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name=".ui.registration.RegistrationActivity"
             android:theme="@style/AppTheme.Pre.Signin"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.DesiredLoginMethodActivity" />
+        <activity android:name=".ui.DesiredLoginMethodActivity"
+            android:screenOrientation="portrait"
+            />
 
-        <activity android:name=".ui.AccountNotFoundActivity" />
+        <activity android:name=".ui.AccountNotFoundActivity"
+            android:screenOrientation="portrait"
+            />
 
         <activity
+            android:screenOrientation="portrait"
             android:name=".ui.mobileVerification.MobileVerificationActivity"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.intro.IntroActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Pre.Signin" />
     </application>
 

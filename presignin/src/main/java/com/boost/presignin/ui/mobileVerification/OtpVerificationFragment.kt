@@ -34,7 +34,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
   private val TAG = OtpVerificationFragment::class.java.canonicalName;
 
-  private lateinit var countDown: CountDownTimer;
+  private lateinit var countDown: com.boost.presignin.Timer.CountDownTimer;
 
   companion object {
     private const val PHONE_NUMBER = "phone_number"
@@ -58,14 +58,17 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
     return LoginSignUpViewModel::class.java
   }
 
-
+  override fun onResume() {
+    super.onResume()
+    countDown.resume()
+  }
   override fun onStop() {
     super.onStop()
-    countDown.cancel()
+    countDown.pause()
   }
 
   private fun onCodeSent() {
-    countDown = object : CountDownTimer(50 * 1000, 1000) {
+    countDown = object : com.boost.presignin.Timer.CountDownTimer(50 * 1000, 1000) {
       override fun onTick(p0: Long) {
         val resendIn = getString(R.string.psn_resend_in);
         binding?.resendTv?.text = String.format(resendIn, (p0 / 1000).toInt());
