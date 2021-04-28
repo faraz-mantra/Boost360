@@ -18,6 +18,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.views.customViews.CustomCardView
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.R
@@ -41,6 +42,7 @@ import com.onboarding.nowfloats.utils.viewToBitmap
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
@@ -187,7 +189,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
     }
     val bitmap = binding?.pagerDigitalCard?.getChildAt(0)?.let { viewToBitmap(it) }
     try {
-      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 33, 0, bitmap.width - 66, bitmap.height) }
+      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 40, 0, bitmap.width - 80, bitmap.height) }
       val path = MediaStore.Images.Media.insertImage(baseActivity.contentResolver, cropBitmap, "boost_${Date().time}", null)
       val imageUri: Uri = Uri.parse(path)
       val waIntent = Intent(Intent.ACTION_SEND)
@@ -195,10 +197,10 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       if (isWhatsApp) waIntent.setPackage(getString(R.string.whatsapp_package))
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
-      baseActivity.startActivity(Intent.createChooser(waIntent,resources.getString(R.string.share_your_business_card)))
+      baseActivity.startActivity(Intent.createChooser(waIntent, resources.getString(R.string.share_your_business_card)))
       dismiss()
       savePositionCard(cardPosition)
-      WebEngageController.trackEvent(VISITING_CARD_SHARE, VISITING_CARD, localSessionModel?.fpTag?:"")
+      WebEngageController.trackEvent(VISITING_CARD_SHARE, VISITING_CARD, localSessionModel?.fpTag ?: "")
       onBusinessCardAddedOrUpdated(true)
     } catch (e: Exception) {
       showLongToast(getString(R.string.error_sharing_visiting_card_please_try_again))
@@ -249,7 +251,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
 fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
   try {
-    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE);
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE)
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
