@@ -121,4 +121,6 @@
   <string name="enter_valid_name">Enter valid name</string>
   <string name="enter_valid_business_name">Enter valid business name</string>
   <string name="enter_valid_phone_number">Enter valid phone number</string>
+    <string name="this_number_is_already_in_use">This number is already in use</string>
+  <string name="this_email_is_already_in_use">This email is already in use</string>
 </resources>

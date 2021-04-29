@@ -2,14 +2,17 @@ package com.boost.presignin.viewmodel
 
 import BusinessDomainRequest
 import androidx.lifecycle.LiveData
-import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.login.ForgotPassRequest
+import com.boost.presignin.model.login.UserProfileVerificationRequest
+import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
+import com.boost.presignin.model.verification.RequestValidateEmail
+import com.boost.presignin.model.verification.RequestValidatePhone
 import com.boost.presignin.rest.repository.BusinessCreateRepository
 import com.boost.presignin.rest.repository.BusinessDomainRepository
+import com.boost.presignin.rest.repository.WithFloatRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository
-import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -57,7 +60,16 @@ class LoginSignUpViewModel : BaseViewModel() {
   fun verifyUserProfile(request: UserProfileVerificationRequest): LiveData<BaseResponse> {
     return WithFloatTwoRepository.verifyUserProfile(request).toLiveData()
   }
+
   fun forgotPassword(request: ForgotPassRequest): LiveData<BaseResponse> {
     return WithFloatTwoRepository.forgotPassword(request).toLiveData()
+  }
+
+  fun validateUsersEmail(requestValidateEmail: RequestValidateEmail?): LiveData<BaseResponse> {
+    return WithFloatRepository.validateUsersEmail(requestValidateEmail = requestValidateEmail).toLiveData()
+  }
+
+  fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): LiveData<BaseResponse> {
+    return WithFloatRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
   }
 }

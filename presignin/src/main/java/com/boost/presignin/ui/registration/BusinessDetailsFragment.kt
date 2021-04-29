@@ -4,20 +4,27 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.ImageView
 import com.boost.presignin.R
+import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentBusinessDetailsBinding
 import com.boost.presignin.extensions.isBusinessNameValid
 import com.boost.presignin.extensions.isNameValid
 import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
+import com.boost.presignin.model.verification.RequestValidateEmail
+import com.boost.presignin.model.verification.RequestValidatePhone
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.BaseFragment
+import com.framework.base.BaseResponse
+import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.framework.webengageconstant.*
+import okio.Buffer
+import okio.BufferedSource
+import java.nio.charset.Charset
 
-class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
+class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
   private var floatsRequest: CategoryFloatsRequest? = null
 
@@ -91,8 +98,61 @@ class BusinessDetailsFragment : BaseFragment<FragmentBusinessDetailsBinding, Log
       floatsRequest?.requestProfile?.LoginSecret = ""
       floatsRequest?.requestProfile?.Provider = "EMAIL"
       floatsRequest?.whatsAppFlag = whatsAppNoFlag
-      addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(floatsRequest!!), true)
+      validatePhone()
       WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, CLICK, NO_EVENT_VALUE)
+    }
+  }
+
+  private fun validatePhone() {
+    showProgress()
+    if (floatsRequest?.requestProfile?.ProfileProperties?.userMobile == floatsRequest?.userBusinessMobile){
+      hideProgress()
+      validateEmail()
+    }
+    else {
+      viewModel?.validateUsersPhone(RequestValidatePhone(clientId2, "+91", binding?.phoneEt?.text.toString()))?.observeOnce(viewLifecycleOwner, {
+        hideProgress()
+        if (it.isSuccess()) {
+          if (parseResponse(it)) {
+            showShortToast(getString(R.string.this_number_is_already_in_use))
+          } else {
+            validateEmail()
+          }
+        }
+      })
+
+    }
+  }
+
+  private fun validateEmail() {
+    showProgress()
+    if (binding?.emailEt?.text.isNullOrEmpty()) {
+      hideProgress()
+      addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(floatsRequest!!), true)
+    } else {
+      viewModel?.validateUsersEmail(RequestValidateEmail(clientId2, floatsRequest?.userBusinessEmail))?.observeOnce(viewLifecycleOwner, {
+        hideProgress()
+        if (it.isSuccess()) {
+          if (parseResponse(it)) {
+            showShortToast(getString(R.string.this_email_is_already_in_use))
+          } else {
+            addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(floatsRequest!!), true)
+          }
+        }
+      })
+
+    }
+  }
+
+  private fun parseResponse(it: BaseResponse): Boolean {
+    return try {
+      val source: BufferedSource? = it.responseBody?.source()
+      source?.request(Long.MAX_VALUE)
+      val buffer: Buffer? = source?.buffer
+      val responseBodyString: String? = buffer?.clone()?.readString(Charset.forName("UTF-8"))
+      responseBodyString.toBoolean()
+    } catch (e: Exception) {
+      false
     }
   }
 }
