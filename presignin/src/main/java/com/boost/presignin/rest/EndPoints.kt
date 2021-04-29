@@ -32,6 +32,9 @@ object EndPoints {
     const val GET_DATA = "/api/v1/kycdoc/get-data"
     const val GET_ACCESS_TOKENS = "/dataexchange/v1/getAccessTokens"
     const val FETCH_DATA_ANALYTICS = "/dataexchange/v1/fetch/analytics"
+    //todo validation email phone
+    const val VERIFY_PHONE = "/discover/v1/floatingPoint/verifyPrimaryNumber"
+    const val VERIFY_EMAIL = "/discover/v1/floatingPoint/verifyEmail"
 
 
 }
