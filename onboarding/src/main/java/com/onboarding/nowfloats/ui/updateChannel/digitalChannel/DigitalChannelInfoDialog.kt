@@ -107,7 +107,7 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
   private fun callHelpLineNumber() {
     try {
       val intent = Intent(Intent.ACTION_CALL)
-      intent.data = Uri.parse("tel:18601231233")
+      intent.data = Uri.parse("tel:${resources.getString(R.string.contact_us_number)}")
       if (ContextCompat.checkSelfPermission(baseActivity, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
         baseActivity.startActivity(intent)
       } else requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)

@@ -32,6 +32,8 @@ import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE_CREA
 import static com.framework.webengageconstant.EventLabelKt.START_VIEW;
 import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_SUCCESSFUL;
+import static com.thinksity.Specific.CONTACT_EMAIL_ID;
+import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 
 public class Utils {
@@ -421,12 +423,12 @@ public class Utils {
             if (session.getFPEmail() != null) {
                 intent.putExtra("email", session.getFPEmail());
             } else {
-                intent.putExtra("email", "ria@nowfloats.com");
+                intent.putExtra("email", CONTACT_EMAIL_ID);
             }
             if (session.getFPPrimaryContactNumber() != null) {
                 intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
             } else {
-                intent.putExtra("mobileNo", "9160004303");
+                intent.putExtra("mobileNo", CONTACT_PHONE_ID);
             }
             if (buyItemKey != null /*&& buyItemKey.isNotEmpty()*/) intent.putExtra("buyItemKey", buyItemKey);
             intent.putExtra("profileUrl", session.getFPLogo());

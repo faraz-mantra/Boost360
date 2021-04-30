@@ -865,6 +865,8 @@
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
     <string name="interest">I\'m interested</string>
     <string name="contact_us_number">18601231233</string>
+    <string name="contact_us_number_n">1860-123-1233</string>
+    <string name="riya_boost_360_app">ria@boost360.app</string>
     <string name="message_soon">Start talking about your business, now!</string>
     <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
     <string name="store">Pricing Plans</string>

@@ -68,6 +68,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/size_6"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_alert_18_d" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

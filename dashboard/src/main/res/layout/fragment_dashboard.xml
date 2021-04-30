@@ -415,9 +415,12 @@
 
               <com.framework.views.customViews.CustomCardView
                 android:id="@+id/btn_business_logo"
-                android:layout_width="@dimen/size_67"
-                android:layout_height="@dimen/size_67"
-                android:layout_marginStart="@dimen/size_16"
+                android:layout_width="@dimen/size_68"
+                android:layout_height="@dimen/size_68"
+                android:layout_marginStart="@dimen/size_15"
+                android:layout_marginTop="@dimen/size_1"
+                android:layout_marginEnd="@dimen/size_1"
+                android:layout_marginBottom="@dimen/size_1"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/snow_white"
@@ -928,7 +931,6 @@
                 <com.framework.views.customViews.CustomImageView
                   android:layout_width="@dimen/size_122"
                   android:layout_height="@dimen/size_24"
-                  android:tint="@color/colorLightGrey"
                   app:srcCompat="@drawable/ic_boost_logo_d" />
 
                 <com.framework.views.customViews.CustomTextView

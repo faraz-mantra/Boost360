@@ -82,10 +82,10 @@ class MainFragment : Fragment() {
         //NOTE: Both videoURLs and splashImageResources should always be of the same length.
         //each videoURL has the corresponding SplashImageResource stored in the corresponding index of the other array
         videoURLs = mutableListOf<String>(
-            "https://firebasestorage.googleapis.com/v0/b/nowfloats-boost.appspot.com/o/jioonline%20video%2FJio%20Online%20High%20Resolution.mp4?alt=media&token=4c7d6ee3-431e-468a-8de3-6fb4ffc0bf04",
-            "https://firebasestorage.googleapis.com/v0/b/nowfloats-boost.appspot.com/o/jioonline%20video%2FJio%20Online%20High%20Resolution.mp4?alt=media&token=4c7d6ee3-431e-468a-8de3-6fb4ffc0bf04",
-            "https://firebasestorage.googleapis.com/v0/b/nowfloats-boost.appspot.com/o/jioonline%20video%2FJio%20Online%20High%20Resolution.mp4?alt=media&token=4c7d6ee3-431e-468a-8de3-6fb4ffc0bf04",
-            "https://firebasestorage.googleapis.com/v0/b/nowfloats-boost.appspot.com/o/jioonline%20video%2FJio%20Online%20High%20Resolution.mp4?alt=media&token=4c7d6ee3-431e-468a-8de3-6fb4ffc0bf04",
+            "https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4",
+            "https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4",
+            "https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4",
+            "https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4",
             "https://cdn.withfloats.com/boost/boost_01.mp4",
             "https://cdn.withfloats.com/boost/boost_01.mp4",
             "https://cdn.withfloats.com/boost/boost_01.mp4"

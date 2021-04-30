@@ -23,6 +23,7 @@ public class Specific {
 
     public static String access_level = "20";
     public static final String CONTACT_EMAIL_ID = "ria@nowfloats.com";
+    public static final String CONTACT_PHONE_ID = "9160004303";
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
     public static final String RIA_FIREBASE_COLLECTION_NAME 	= "RIAUserActivityLog";  // Boost
 

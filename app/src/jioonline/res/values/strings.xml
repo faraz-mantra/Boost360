@@ -370,7 +370,6 @@
     <string name="business_hours">5</string>
     <string name="package_name">com.jio.online</string>
     <string name="onboarding_about_product_url">https://www.getboost360.com/how-it-works</string>
-    <string name="support_name">Ria</string>
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
 
     <string name="payment_config_acceptance_message">I agree that JioOnline will charge %s of the total cart value as convenience fee(as part of your current JioOnline plan)</string>
@@ -388,7 +387,7 @@
         <item>My Business KYC</item>
         <item>Self Branded Payment Gateway</item>
         <item>JioOnline Extensions</item>
-        <item>Subscription History</item>
+<!--        <item>Subscription History</item>-->
         <item>Domain and Email</item>
         <item>Change Password</item>
         <item>Log out</item>
@@ -519,7 +518,20 @@
     <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my JioOnline website’s web address/URL.</string>
     <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make JioOnline website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
     <string name="visibility_create_account">gone</string>
+    <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to JioLocal Care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to JioLocal Care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
+
     <string name="package_name_sign_up_visibility" translatable="false">com.jio.online</string>
 
     <string name="ir_actionbarBackground">#0400A6</string>
+
+    <string name="AI_assistant_Ria">AI assistant Joa</string>
+
+    <string name="contact_us_number">18008899444</string>
+    <string name="contact_us_number_n">1800-889-9444</string>
+
+    <string name="settings_feedback_link">businesscare@jio.com</string>
+    <string name="riya_boost_360_app">businesscare@jio.com</string>
+
+    <string name="ria">Joa</string>
+    <string name="support_name">Joa</string>
 </resources>
