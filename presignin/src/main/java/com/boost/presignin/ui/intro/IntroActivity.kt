@@ -108,6 +108,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.introViewpager?.currentItem = binding?.introViewpager?.currentItem ?: 0 + 1
   }
 
+  public fun slideNextPage() {
+    binding?.introViewpager?.currentItem = binding?.introViewpager?.currentItem!! + 1
+
+  }
+
   private fun nextPageTimer() {
 //    handler.postDelayed(nextRunnable, 3000)
   }

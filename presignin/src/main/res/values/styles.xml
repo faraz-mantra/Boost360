@@ -11,6 +11,12 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
+    <style name="AppTheme.WebView" parent="AppTheme.Pre.Signin">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary_grey_dark</item>
+        <item name="colorPrimaryDark">@color/primary_grey</item>
+    </style>
+
     <style name="FullScreenDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -19,7 +25,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
     </style>
-    <style name="MaterialDialogThemeFull" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+    <style name="MaterialThemeSignInFull" parent="MaterialDialogTheme">
         <item name="android:windowBackground">#80000000</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>

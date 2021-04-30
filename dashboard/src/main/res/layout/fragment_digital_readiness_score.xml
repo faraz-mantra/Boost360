@@ -134,7 +134,7 @@
             app:dotsSpacing="@dimen/size_2"
             app:dotsWidthFactor="2.5"
             app:progressMode="false"
-            app:selectedDotColor="@color/black_4a4a4a"/>
+            app:selectedDotColor="@color/black_4a4a4a" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
       </FrameLayout>

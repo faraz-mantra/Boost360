@@ -3,6 +3,7 @@ package com.boost.presignin.ui.registration
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentBusinessDetailsBinding
@@ -56,6 +57,11 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
     binding?.phoneEt?.setText(floatsRequest?.userBusinessMobile)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
+    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+         parentFragmentManager.popBackStack()
+      }
+    })
     binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
       when (hasFocus) {
         true -> binding?.civPhone?.setTintColor(getColor(R.color.orange))
