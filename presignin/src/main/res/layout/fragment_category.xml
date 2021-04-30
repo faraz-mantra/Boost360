@@ -83,7 +83,7 @@
         android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:fontFamily="@font/open_sans"
-        android:text="Let me know, which of the following describes the business you are running?"
+        android:text="@string/let_me_know_which_of_the_following_describes_the_business_you_are_running"
         android:textColor="@color/white"
         android:textSize="@dimen/body_3"
         app:layout_constraintStart_toStartOf="parent"
