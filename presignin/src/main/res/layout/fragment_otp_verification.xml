@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.mobileVerification.MobileFragment"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+        <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+        <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+
+        <com.boost.presignin.views.PsnCustomToolbar
+            style="@style/psn_toolbar_style"
+            android:id="@+id/toolbar"
+            app:rightIcon="@drawable/verification_toolbar_icon" />
+
+        <com.framework.views.customViews.CustomTextView
+            style="@style/psn_heading_style"
+            android:id="@+id/title"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:text="@string/almost_there"/>
+
+        <com.framework.views.customViews.CustomTextView
+            style="@style/psn_subheading_style"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            android:id="@+id/subheading"
+            android:text="@string/code_sent_hint"/>
+
+        <com.boost.presignin.views.otptextview.OtpTextView
+            android:id="@+id/pin_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:height="@dimen/_28sdp"
+            app:width="@dimen/_30sdp"
+            app:bar_enabled="true"
+            app:otp_box_background="@color/transparent"
+            app:bar_height="2dp"
+            app:length="4"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:bar_active_color="@color/colorAccent"
+            app:otp_text_size="@dimen/heading_3"
+            app:layout_constraintStart_toStartOf="@id/startGuide"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            app:layout_constraintTop_toBottomOf="@id/subheading" />
+
+        <com.framework.views.customViews.CustomTextView
+            style="@style/psn_wrong_otp_style"
+            android:id="@+id/wrong_otp_error_tv"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/pin_tv"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            android:text="@string/wrong_otp_tv"/>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/resend_tv"
+            style="@style/psn_subheading_style"
+            android:text="@string/psn_resend_hint"
+            app:layout_constraintBottom_toBottomOf="@+id/verifyButton"
+            app:layout_constraintTop_toTopOf="@+id/verifyButton" />
+
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/verifyButton"
+            style="@style/psn_signin_bt_style"
+            android:enabled="false"
+            android:text="@string/verify"
+            app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+            app:layout_constraintEnd_toEndOf="@id/endGuide" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

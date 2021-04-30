@@ -16,7 +16,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.appservice.model.kycData.PaymentKycDataResponse;
-import com.boost.presignup.PreSignUpActivity;
+import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.PresignupManager;
 import com.boost.upgrades.UpgradeActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
@@ -94,7 +94,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
   }
 
   private void signUpStart() {
-    Intent webIntent = new Intent(this, PreSignUpActivity.class);
+    Intent webIntent = new Intent(this, IntroActivity.class);
     webIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     startActivity(webIntent);
     overridePendingTransition(0, 0);
@@ -202,7 +202,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
       startActivity(i);
       overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     } else {
-      Intent i = new Intent(SplashScreen_Activity.this, com.boost.presignup.PreSignUpActivity.class);
+      Intent i = new Intent(SplashScreen_Activity.this, IntroActivity.class);
       i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
       i.putExtras(getIntent());
       // Staring Login Activity

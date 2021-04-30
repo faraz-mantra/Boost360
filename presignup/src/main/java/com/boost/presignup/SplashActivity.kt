@@ -29,6 +29,7 @@ class SplashActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splash)
+
     if (intent != null) {
       val uri = intent.data ?: null
       if (uri == null) {
@@ -50,7 +51,7 @@ class SplashActivity : AppCompatActivity() {
         }
       }
     }
-    val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", 0)
+    val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", MODE_PRIVATE)
     isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
     isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
 
@@ -83,9 +84,6 @@ class SplashActivity : AppCompatActivity() {
 
       override fun onAnimationEnd(animation: Animator?) {
         animation_view?.cancelAnimation()
-//        val intent = Intent(applicationContext, Class.forName("com.dashboard.controller.DashboardActivity"))
-//        startActivity(intent)
-//        finish()
         when {
           isUserLoggedIn -> {
             val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
@@ -97,9 +95,10 @@ class SplashActivity : AppCompatActivity() {
             finish()
           }
           else -> {
-            val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
-            startActivity(mainIntent)
-            finish()
+            startNewSignIn()
+//            val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
+//            startActivity(mainIntent)
+//            finish()
           }
         }
       }
@@ -112,6 +111,17 @@ class SplashActivity : AppCompatActivity() {
 
     })
     animation_view.playAnimation()
+  }
+
+  private fun startNewSignIn() {
+    try {
+      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+      startActivity(intent)
+      finish()
+    } catch (e: Exception) {
+      e.printStackTrace()
+      finish()
+    }
   }
 
   private fun hashGeneration() { // Add code to print out the key hash

@@ -60,7 +60,6 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -343,23 +342,21 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
 
     CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
+      @Override
+      public void onSuccess(@Nullable ConnectUserProfileResponse response) {
+
+      }
 
       @Override
       public void onSuccess(@Nullable VerificationRequestResult response) {
-        if (response != null && response.getLoginId() != null) {
-          processLoginSuccessRequest(response);
-        } else {
-          if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-          Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
-        }
-      }
-
-      @Override
-      public void onSuccess(@Nullable ConnectUserProfileResponse response) {
         if (progressDialog != null && progressDialog.isShowing()) {
           progressDialog.dismiss();
         }
+        if (response != null && response.getLoginId() != null) processLoginSuccessRequest(response);
+        else
+          Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
       }
+
 
       @Override
       public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
@@ -372,6 +369,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
           Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.error_occured_while_processing_your_login));
         }
       }
+
 
       @Override
       public void onFailure() {
@@ -436,13 +434,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void startDashboard() {
-    runOnUiThread(() -> {
-      dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-      startActivity(dashboardIntent);
-      overridePendingTransition(0, 0);
-      if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-      finish();
-    });
+    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+    dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    startActivity(dashboardIntent);
+    overridePendingTransition(0, 0);
+    finish();
   }
 
   @Override
@@ -611,7 +607,6 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void processLoginSuccessRequest(VerificationRequestResult response) {
-    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
     if (response.getLoginId() != null && !response.getLoginId().isEmpty()) {
       try {
         session.setUserProfileId(response.getLoginId());
@@ -625,8 +620,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
       if (response.getValidFPIds() == null || response.getValidFPIds().length == 0) {
         showBusinessProfileCreationStartScreen(response.getLoginId());
       } else {
-        progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
         session.setUserLogin(true);
+        progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
         session.storeISEnterprise(response.isEnterprise() + "");
         session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
         session.storeFPID(response.getValidFPIds()[0]);
@@ -646,18 +641,23 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     progressDialog = ProgressDialog.show(this, "", "Loading");
 
     customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(this, new CustomFirebaseAuthListeners() {
-      @Override
-      public void onSuccess(@Nullable VerificationRequestResult response) {
-        if (progressDialog != null && progressDialog.isShowing())
-          progressDialog.dismiss();
-        if (response != null) processLoginSuccessRequest(response);
-        else Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.unable_to_validate_your_phone));
-      }
+
 
       @Override
       public void onSuccess(@Nullable ConnectUserProfileResponse response) {
 
       }
+
+
+      @Override
+      public void onSuccess(@Nullable VerificationRequestResult response) {
+        if (progressDialog != null && progressDialog.isShowing())
+          progressDialog.dismiss();
+        if (response != null) processLoginSuccessRequest(response);
+        else
+          Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.unable_to_validate_your_phone));
+      }
+
 
       @Override
       public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
@@ -749,7 +749,6 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void showBusinessProfileCreationStartScreen(String userProfileId) {
-    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
     WebEngageController.initiateUserLogin(userProfileId);
     WebEngageController.setUserContactInfoProperties(session);
 
@@ -776,9 +775,6 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
       response_Data.ValidFPIds = new ArrayList<>();
       session.storeFPID(result.getFpIds()[0]);
       response_Data.ValidFPIds.addAll(Arrays.asList(result.getFpIds()));
-      DataBase dataBase = new DataBase(this);
-      dataBase.insertLoginStatus(response_Data, session.getFPID());
-
       processUserProfile(userProfileResponse);
     }
   }
@@ -796,10 +792,14 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 //            MixPanelController.setProperties("LoggedIn", "True");
       getFPDetails_retrofit(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
     } else {
+      if (progressDialog != null) {
+        progressDialog.dismiss();
+        progressDialog = null;
+      }
       if (value.equals("Partial")) {
         session.setUserLogin(true);
         showBusinessProfileCreationStartScreen(session.getUserProfileId());
-      } else if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+      }
     }
   }
 
@@ -814,9 +814,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 //        businessEnquiries.getMessages();
     //VISITOR and SUBSCRIBER COUNT API
     fetchData();
-    GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
-    visit_subcribersCountAsyncTask.execute();
-    new Handler().postDelayed(this::startDashboard, 5000);
+    new Handler().postDelayed(() -> Login_MainActivity.this.runOnUiThread(() -> {
+      GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
+      visit_subcribersCountAsyncTask.execute();
+      startDashboard();
+    }), 2000);
   }
 
   @Subscribe
@@ -847,17 +849,10 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void checkSelfBrandedKyc() {
-    if (!progressDialog.isShowing())
-      progressDialog.show();
     StoreInterface boostKit = Constants.restAdapterBoostKit.create(StoreInterface.class);
-
     boostKit.getSelfBrandedKyc(getQuery(), new Callback<PaymentKycDataResponse>() {
       @Override
       public void success(PaymentKycDataResponse data, Response response) {
-        if (progressDialog != null) {
-          progressDialog.dismiss();
-          progressDialog = null;
-        }
         if (data.getData() != null && !data.getData().isEmpty()) session.setSelfBrandedKycAdd(true);
         else session.setSelfBrandedKycAdd(false);
       }
@@ -880,18 +875,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void checkUserAccount() {
-    if (!progressDialog.isShowing())
-      progressDialog.show();
     StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
     getAccountDetail.userAccountDetail(session.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
       @Override
       public void success(AccountDetailsResponse data, Response response) {
-        if (progressDialog != null) {
-          progressDialog.dismiss();
-          progressDialog = null;
-        }
-        if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null))
-          session.setAccountSave(false);
+        if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) session.setAccountSave(false);
         else session.setAccountSave(true);
       }
 

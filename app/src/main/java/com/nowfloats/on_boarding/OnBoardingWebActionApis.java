@@ -1,6 +1,6 @@
 package com.nowfloats.on_boarding;
 
-import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
+import com.boost.presignin.model.userprofile.ConnectUserProfileResponse;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.on_boarding.models.OnBoardingAddModel;
 import com.nowfloats.on_boarding.models.OnBoardingDataModel;
