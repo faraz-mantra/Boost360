@@ -166,23 +166,26 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun getPremiumBanner() {
     if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
       setDataMarketBanner(ArrayList())
-    } else setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
-    setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
-    viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
-      val response = it as? DashboardPremiumBannerResponse
-      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val data = response.data?.get(0)
-        if (data?.academyBanners.isNullOrEmpty().not()) {
-          saveDataAcademy(data?.academyBanners!!)
-          setDataRiaAcademy(data.academyBanners!!)
+      setDataRiaAcademy(ArrayList())
+    } else {
+      setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
+      setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
+      viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
+        val response = it as? DashboardPremiumBannerResponse
+        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+          val data = response.data?.get(0)
+          if (data?.academyBanners.isNullOrEmpty().not()) {
+            saveDataAcademy(data?.academyBanners!!)
+            setDataRiaAcademy(data.academyBanners!!)
+          }
+          if (data?.marketplaceBanners.isNullOrEmpty().not()) {
+            val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
+            saveDataMarketPlace(marketBannerFilter)
+            setDataMarketBanner(marketBannerFilter)
+          }
         }
-        if (data?.marketplaceBanners.isNullOrEmpty().not() && baseActivity.packageName.equals("com.jio.online", ignoreCase = true).not()) {
-          val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
-          saveDataMarketPlace(marketBannerFilter)
-          setDataMarketBanner(marketBannerFilter)
-        }
-      }
-    })
+      })
+    }
   }
 
   private fun refreshData() {
@@ -253,18 +256,22 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
         }
-        setTopBacgroundView(isHighDrScore)
+        setTopBackgroundView(isHighDrScore)
         showSimmerDrScore(false)
-      } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
+      } else {
+        if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true))
+          (baseActivity as? DashboardActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimary)
+        showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
+      }
     })
   }
 
-  private fun setTopBacgroundView(isHigh: Boolean) {
+  private fun setTopBackgroundView(isHigh: Boolean) {
     if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
       val colorD = if (isHigh) R.color.colorPrimary else R.color.white_smoke_1
-      (baseActivity as? DashboardActivity)?.changeTheme(colorD, colorD)
-      binding?.viewBgInner?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, colorD)
-      binding?.viewBgOuter?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimaryDark)
+      (baseActivity as? DashboardActivity)?.changeTheme(colorD, colorD, isHigh.not())
+      binding?.viewBgInner?.setTintColor(ContextCompat.getColor(baseActivity, colorD))
+      binding?.viewBgOuter?.setImageResource(if (isHigh) R.drawable.ic_fill_bg else R.drawable.ic_fill_bg_primary)
       binding?.txtBusinessName?.setTextColor(ContextCompat.getColor(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a))
       binding?.txtDomainName?.apply {
         setTextColor(ContextCompat.getColor(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a))
@@ -272,7 +279,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           compoundDrawableTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a)
         }
       }
-      binding?.btnVisitingCard?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimary)
+      binding?.btnVisitingCard?.background = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_btn_round_white_stroke else R.drawable.ic_btn_round_blue_stroke)
       binding?.txtVisitingCard?.setTextColor(ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimary))
       binding?.txtNotification?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimary)
     }

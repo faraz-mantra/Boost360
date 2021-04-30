@@ -23,7 +23,8 @@ public class Specific {
     public static String client_ID_14 = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
 
     public static String access_level = "20";
-    public static final String CONTACT_EMAIL_ID = "ria@nowfloats.com";
+    public static final String CONTACT_EMAIL_ID = "businesscare@jio.com";
+    public static final String CONTACT_PHONE_ID = "18008899444";
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
     public static final String RIA_FIREBASE_COLLECTION_NAME 	= "RIAUserActivityLog";  // Boost
 

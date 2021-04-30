@@ -6,7 +6,6 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -20,7 +19,6 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
-import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
@@ -28,7 +26,6 @@ import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
 import com.dashboard.model.live.welcomeData.WelcomeData
 import com.dashboard.model.live.welcomeData.getIsShowWelcome
-import com.framework.pref.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -39,6 +36,7 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
+import com.framework.pref.*
 import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
@@ -308,14 +306,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       1 -> showToolbar(getString(R.string.my_website))
       2 -> showToolbar(getString(R.string.my_enquiry))
       else -> {
-        changeTheme(R.color.colorPrimary, R.color.colorPrimary)
+        if (packageName.equals("com.jio.online", ignoreCase = true).not()) changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         getToolbar()?.apply { visibility = View.GONE }
       }
     }
   }
 
   private fun showToolbar(title: String) {
-    changeTheme(R.color.black_4a4a4a, R.color.black_4a4a4a)
+    changeTheme(R.color.black_4a4a4a, R.color.black_4a4a4a,false)
     getToolbar()?.apply {
       visibility = View.VISIBLE
       setTitle(title)
