@@ -113,24 +113,10 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnSt
 
   private fun initializePlayer() {
     MediaPlayer.initialize(baseActivity)
-    viewClose = MediaPlayer.exoPlayer?.preparePlayer(binding?.playerView!!, baseActivity, true)
+    viewClose = MediaPlayer.exoPlayer?.preparePlayer(binding?.playerView!!, baseActivity)
     MediaPlayer.exoPlayer?.setSource(playbackPosition, baseActivity, videosItem?.videoUrl.toString())
     MediaPlayer.startPlayer()
   }
-
-//  private fun releasePlayer() {
-//    if (this::simpleExoplayer.isInitialized) {
-//      playbackPosition = simpleExoplayer.currentPosition
-//      binding?.videoView?.player?.stop()
-//      binding?.videoView?.player?.release()
-//      simpleExoplayer.playWhenReady = false
-//      simpleExoplayer.stop()
-//      simpleExoplayer.clearVideoSurface()
-//      simpleExoplayer.seekTo(0)
-//      simpleExoplayer.release()
-//    }
-//  }
-
 }
 
 class TutorialPagerAdapter(fm: FragmentManager, behavior: Int, private var allTutorials: ArrayList<AllTutorialsItem>?) : FragmentStatePagerAdapter(fm, behavior) {

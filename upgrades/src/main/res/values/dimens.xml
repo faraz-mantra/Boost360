@@ -130,6 +130,7 @@
   <dimen name="txt_16sp">16sp</dimen>
   <dimen name="txt_18sp">18sp</dimen>
   <dimen name="txt_20sp">20sp</dimen>
+  <dimen name="txt_22sp">22sp</dimen>
   <dimen name="txt_25sp">25sp</dimen>
   <dimen name="activityPadding">16dp</dimen>
   <dimen name="placeholderImage">60dp</dimen>

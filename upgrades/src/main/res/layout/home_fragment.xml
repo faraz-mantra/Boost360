@@ -82,7 +82,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/lato"
                         android:text="ADD-ONS STORE"
                         android:textAllCaps="true"
                         android:textColor="@color/white"

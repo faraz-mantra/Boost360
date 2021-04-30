@@ -4,19 +4,20 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.appcompat.widget.LinearLayoutCompat
-    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/size_4"
     android:layout_marginBottom="@dimen/size_4"
-    android:clickable="true"
-    android:focusable="true"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <FrameLayout
+      android:id="@+id/main_content"
       android:layout_width="@dimen/size_70"
-      android:layout_height="@dimen/size_70">
+      android:layout_height="@dimen/size_70"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:clickable="true"
+      android:focusable="true">
 
       <com.framework.views.customViews.CustomCardView
         android:layout_width="@dimen/size_56"
@@ -49,11 +50,11 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_3"
-      android:paddingEnd="@dimen/size_6"
       android:ellipsize="end"
       android:gravity="center"
+      android:maxLines="3"
+      android:paddingEnd="@dimen/size_6"
       android:textAlignment="gravity"
-      android:maxLines="2"
       android:textColor="@color/black_4a4a4a"
       app:textType="CAPTION"
       tools:ignore="RtlSymmetry"
