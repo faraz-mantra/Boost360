@@ -103,7 +103,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
     }
 
     private fun startService() {
-        baseActivity.startService(Intent(activity, APIService::class.java))
+        baseActivity.startService(Intent(baseActivity, APIService::class.java))
     }
 
     private fun onBackPressed() {

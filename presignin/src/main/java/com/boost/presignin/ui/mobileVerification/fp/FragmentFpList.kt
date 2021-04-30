@@ -17,6 +17,7 @@ import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
+import com.boost.presignin.service.APIService
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
@@ -125,6 +126,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
         session.userProfileId = response.accountManagerId
+        startService()
         startDashboard()
       } else {
         hideProgress()
@@ -147,5 +149,9 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     } catch (e: Exception) {
       e.printStackTrace()
     }
+  }
+
+  private fun startService() {
+    baseActivity.startService(Intent(baseActivity, APIService::class.java))
   }
 }

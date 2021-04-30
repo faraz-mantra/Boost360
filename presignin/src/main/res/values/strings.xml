@@ -105,7 +105,7 @@
   <string name="unable_to_create_profile">Error creating profile, please try again!</string>
   <string name="error_getting_fp_detail">Error getting user FP detail, please try again!</string>
   <string name="error_create_business_fp">Error creating business FP, please try again!</string>
-  <string name="unable_to_activate_business_plan">Unable to activate business plan, please contact support team!</string>
+  <string name="unable_to_activate_business_plan">Unable to activate free business plan, please contact support team!</string>
   <string name="clinic_website">Clinic Website</string>
   <string name="please_enter_correct_user">Please enter a correct username/ email/ phone number.</string>
   <string name="press_again_exit">Press again to exit</string>

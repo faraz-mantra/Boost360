@@ -68,7 +68,6 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
     }
     binding?.recyclerView?.layoutManager = gridLayoutManager
     binding?.recyclerView?.adapter = baseAdapter
-    baseAdapter.runLayoutAnimation(binding?.recyclerView, R.anim.grid_layout_animation_scale)
 
     viewModel?.getCategories(requireContext())?.observeOnce(viewLifecycleOwner) {
       if (it.error != null) return@observeOnce
@@ -91,7 +90,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
           ), true)
     }
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
-    backButton?.setOnClickListener { requireActivity().finish() }
+    backButton?.setOnClickListener { baseActivity.onNavPressed() }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -108,4 +107,5 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
       }
     }
   }
+
 }

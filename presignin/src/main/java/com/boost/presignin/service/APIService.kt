@@ -1,6 +1,5 @@
 package com.boost.presignin.service
 
-import android.app.Activity
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
@@ -25,7 +24,7 @@ import org.json.JSONObject
 import java.util.*
 
 
-class APIService() : Service() {
+class APIService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
