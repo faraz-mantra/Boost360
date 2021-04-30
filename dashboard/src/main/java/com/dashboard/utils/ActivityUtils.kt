@@ -179,6 +179,7 @@ fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
   }
 }
 
+
 fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: Int?) {
   try {
     WebEngageController.trackEvent(ANALYTICS_PAGE, CLICK, TO_BE_ADDED)
@@ -486,6 +487,10 @@ fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
+}
+
+fun AppCompatActivity.startOrderCreate() {
+  startFragmentOrderActivity(com.inventoryorder.constant.FragmentType.CREATE_NEW_ORDER)
 }
 
 fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, isConsult: Boolean = true) {
