@@ -22,13 +22,14 @@
             android:paddingEnd="@dimen/_16sdp"
             android:background="@color/preview_toolbar_background"
             android:paddingBottom="@dimen/_4sdp"
-            android:paddingTop="@dimen/_4sdp">
+            android:paddingTop="@dimen/_4sdp"
+          tools:ignore="MissingConstraints">
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/heading_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
+                android:fontFamily="@font/semi_bold"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingEnd="5dp"
@@ -38,7 +39,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/share_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:textType="HEADING_5" />
+                app:textType="HEADING_6" />
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
@@ -48,8 +49,7 @@
                 android:id="@+id/ctv_url"
                 android:textColor="@color/black_4a4a4a"
                 app:layout_constraintTop_toBottomOf="@id/heading_tv"
-                app:textType="BODY_3"
-
+                app:textType="CAPTION"
                 android:text="@string/www_sravansclinic_com"/>
 
             <com.framework.views.customViews.CustomImageView
