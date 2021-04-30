@@ -1,6 +1,5 @@
 package com.boost.presignin.ui.intro
 
-import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -11,9 +10,6 @@ import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentPreSigninIntroBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
-import com.boost.presignin.ui.DesiredLoginMethodActivity
-import com.boost.presignin.ui.login.LoginActivity
-import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
@@ -119,12 +115,10 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     binding?.skipVideo?.setOnClickListener {
       WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_SKIP, VIDEO_SKIPPED, NO_EVENT_VALUE)
 //      onSkip?.let { it1 -> it1() }
-      if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
-        startActivity(Intent(baseActivity, LoginActivity::class.java))
-      } else {
-        startActivity(Intent(baseActivity, MobileVerificationActivity::class.java))
-        baseActivity.finish()
-      }
+      binding?.videoView?.suspend()
+      binding?.playPauseLottie?.isVisible = true;
+      timer?.cancel()
+      (requireActivity() as? IntroActivity)?.slideNextPage()
     }
   }
 
