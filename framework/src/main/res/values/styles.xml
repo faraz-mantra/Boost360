@@ -42,11 +42,13 @@
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowIsFloating">false</item>
     <item name="colorAccent">@color/colorAccent</item>
-  </style>
-  <style name="MaterialDialogThemeFullN" parent="MaterialDialogThemeFull">
-    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:windowCloseOnTouchOutside">false</item>
   </style>
 
+  <style name="MaterialDialogThemeFullN" parent="MaterialDialogThemeFull">
+    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:padding">0dp</item>
+  </style>
 
 
   <style name="MaterialProgressBarTheme.Circular" parent="Widget.AppCompat.ProgressBar">
