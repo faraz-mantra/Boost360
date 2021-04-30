@@ -117,8 +117,10 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     binding?.skipVideo?.setOnClickListener {
 //      WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_SKIP, VIDEO_SKIPPED, NO_EVENT_VALUE)
 //      onSkip?.let { it1 -> it1() }
-      startActivity(Intent(baseActivity, MobileVerificationActivity::class.java))
-      baseActivity.finish()
+      binding?.videoView?.suspend()
+      binding?.playPauseLottie?.isVisible = true;
+      timer?.cancel()
+      (requireActivity() as? IntroActivity)?.slideNextPage()
     }
   }
 
