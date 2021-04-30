@@ -13,6 +13,7 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
+import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
@@ -101,6 +102,7 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
       if (it.isSuccess() && response1 != null) {
         ProcessFPDetails(session!!).storeFPDetails(response1)
         session?.userProfileId = response1.accountManagerId
+        startService()
         startDashboard()
       } else {
         hideProgress()
@@ -123,6 +125,10 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     } catch (e: Exception) {
       e.printStackTrace()
     }
+  }
+
+  private fun startService() {
+    baseActivity.startService(Intent(baseActivity, APIService::class.java))
   }
 
   private fun onDataChanged() {

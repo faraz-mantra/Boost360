@@ -14,7 +14,6 @@ import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.verification.RequestValidateEmail
 import com.boost.presignin.model.verification.RequestValidatePhone
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
-import com.framework.base.BaseFragment
 import com.framework.base.BaseResponse
 import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
@@ -108,8 +107,7 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
     if (floatsRequest?.requestProfile?.ProfileProperties?.userMobile == floatsRequest?.userBusinessMobile){
       hideProgress()
       validateEmail()
-    }
-    else {
+    } else {
       viewModel?.validateUsersPhone(RequestValidatePhone(clientId2, "+91", binding?.phoneEt?.text.toString()))?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
@@ -120,7 +118,6 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
           }
         }
       })
-
     }
   }
 

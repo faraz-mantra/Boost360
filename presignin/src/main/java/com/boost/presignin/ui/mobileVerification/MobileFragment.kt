@@ -8,6 +8,7 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentMobileBinding
+import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.userprofile.ResponseMobileIsRegistered
 import com.boost.presignin.ui.AccountNotFoundActivity
@@ -50,7 +51,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
 
   override fun onCreateView() {
     WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER, PAGE_VIEW, NO_EVENT_VALUE)
-    binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = it.length == 10 }
+    binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = (it.isPhoneValid()) }
     activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
         goBack()
