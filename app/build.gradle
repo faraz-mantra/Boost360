@@ -191,8 +191,10 @@ dependencies {
     implementation files('libs/libraries/signpost-core-1.2.1.2.jar')
     implementation files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
     implementation project(':messagelibrary')
-    //presignup library
+    //presignup library old flow
     implementation project(path: ':presignup')
+    //presignup library new flow
+    implementation project(path: ':presignin')
     api project(path: ':dashboard')
 
     //upgrade library
