@@ -489,19 +489,18 @@ fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startOrderCreate() {
-  startFragmentOrderActivity(com.inventoryorder.constant.FragmentType.CREATE_NEW_ORDER)
+fun AppCompatActivity.startOrderCreate(session: UserSessionManager?) {
+  if (getProductType(session?.fP_AppExperienceCode) == "PRODUCTS") {
+    val bundle = getSessionOrder(session)
+    startFragmentOrderActivity(type = com.inventoryorder.constant.FragmentType.CREATE_NEW_ORDER, bundle = bundle, isResult = true)
+  }
 }
 
 fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, isConsult: Boolean = true) {
   try {
     val txt = if (isConsult) CONSULTATION_CREATE_PAGE else APPOINTMENT_CREATE_PAGE
     WebEngageController.trackEvent(txt, CLICK, TO_BE_ADDED)
-    val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
-        session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
-        session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
-    val bundle = Bundle()
-    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+    val bundle = getSessionOrder(session)
     val fragmentType = when {
       (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC") ->
         com.inventoryorder.constant.FragmentType.CREATE_SPA_APPOINTMENT
@@ -510,7 +509,7 @@ fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, 
         com.inventoryorder.constant.FragmentType.CREATE_APPOINTMENT_VIEW
       }
     }
-    this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)
+    this.startFragmentOrderActivity(type = fragmentType, bundle = bundle, isResult = true)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
@@ -520,21 +519,26 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
   try {
     val txt = if (isOrder) ORDER_PAGE else if (isConsult) CONSULTATION_PAGE else APPOINTMENT_PAGE
     WebEngageController.trackEvent(txt, CLICK, TO_BE_ADDED)
-    val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
-        session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
-        session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
-    val bundle = Bundle()
-    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+    val bundle = getSessionOrder(session)
     val fragmentType = when {
       isOrder -> com.inventoryorder.constant.FragmentType.ALL_ORDER_VIEW
       isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
       (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC") -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
       else -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_VIEW
     }
-    this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)
+    this.startFragmentOrderActivity(type = fragmentType, bundle = bundle, isResult = true)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
+}
+
+private fun getSessionOrder(session: UserSessionManager?): Bundle {
+  val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+      session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
+      session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
+  val bundle = Bundle()
+  bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+  return bundle
 }
 
 fun AppCompatActivity.startBusinessLogo(session: UserSessionManager?) {
