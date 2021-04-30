@@ -74,8 +74,12 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
   }
 
   private fun goBack() {
-    startActivity(Intent(requireContext(), IntroActivity::class.java))
-    requireActivity().finish()
+    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+      baseActivity.finish()
+    } else {
+      startActivity(Intent(requireContext(), IntroActivity::class.java))
+      baseActivity.finish()
+    }
   }
 
   private fun checkIfUserIsRegistered() {
@@ -88,8 +92,12 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
           //user is registered generate otp and verify it
           addFragmentReplace(com.framework.R.id.container, OtpVerificationFragment.newInstance(binding!!.phoneEt.text!!.toString()), addToBackStack = true)
         } else {
-          //user is not registered open signup flow
-          navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, binding?.phoneEt?.text.toString()) })
+          if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+            showShortToast(getString(R.string.ensure_that_the_entered_mobile_correct))
+          } else {
+            //user is not registered open signup flow
+            navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, binding?.phoneEt?.text.toString()) })
+          }
         }
       } else {
         showShortToast(getString(R.string.something_doesnt_seem_right))

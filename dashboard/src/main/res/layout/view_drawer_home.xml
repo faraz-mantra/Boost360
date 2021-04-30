@@ -71,7 +71,8 @@
                 app:riv_corner_radius="30dip"
                 app:riv_mutate_background="true"
                 app:riv_oval="true"
-                app:srcCompat="@drawable/business_edit_profile_icon_d" />
+                app:srcCompat="@drawable/business_edit_profile_icon_d"
+                tools:ignore="MissingClass" />
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/txt_business_name"

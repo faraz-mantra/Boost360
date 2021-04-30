@@ -91,4 +91,8 @@
     <color name="red_light_1">#EC008C</color>
     <color name="colorAccent_jio">@color/red_light_1</color>
     <color name="black_4a4a4a_jio">@color/colorPrimary</color>
+
+    <color name="started_button_start">@color/colorPrimary</color>
+    <color name="started_button_end">@color/colorPrimary</color>
+    <color name="back_button_color">@color/colorAccentLight</color>
 </resources>
