@@ -11,6 +11,8 @@ import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentPreSigninIntroBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
+import com.boost.presignin.ui.DesiredLoginMethodActivity
+import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -67,7 +69,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
           mediaPlayer = it
           videoDuration = mediaPlayer?.duration ?: 0
         }
-        binding?.videoView?.setVideoPath("https://cdn.withfloats.com/boost/videos/en/intro.mp4")
+        binding?.videoView?.setVideoPath("https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4")
         binding?.videoView?.start()
         binding?.videoView?.setOnInfoListener { p0, p1, p2 ->
           when (p1) {
@@ -105,8 +107,8 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
       }
       binding?.playPauseLottie?.setOnClickListener {
         binding?.videoView?.start()
-        setVideoTimerCountDown()
         it.isVisible = false
+        setVideoTimerCountDown()
       }
     } else binding?.boostLogo?.gone()
 
@@ -115,10 +117,14 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     }
 
     binding?.skipVideo?.setOnClickListener {
-//      WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_SKIP, VIDEO_SKIPPED, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_SKIP, VIDEO_SKIPPED, NO_EVENT_VALUE)
 //      onSkip?.let { it1 -> it1() }
-      startActivity(Intent(baseActivity, MobileVerificationActivity::class.java))
-      baseActivity.finish()
+      if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+        startActivity(Intent(baseActivity, LoginActivity::class.java))
+      } else {
+        startActivity(Intent(baseActivity, MobileVerificationActivity::class.java))
+        baseActivity.finish()
+      }
     }
   }
 
@@ -139,31 +145,35 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
 
 
   private fun setVideoTimerCountDown() {
-    val duration = mediaPlayer?.duration ?: 0
-    val currentTime = mediaPlayer?.currentPosition ?: 0;
-    timer = object : CountDownTimer((duration - currentTime).toLong(), 1000) {
-      override fun onTick(millisUntilFinished: Long) {
-        val videoDuration = (millisUntilFinished / 1000).toInt()
-        binding?.videoTime?.post {
-          if (videoDuration == 0) {
-            timer?.cancel()
-            binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), "00")
-          } else {
-            binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), videoDuration)
+    try {
+      val duration = mediaPlayer?.duration ?: 0
+      val currentTime = mediaPlayer?.currentPosition ?: 0;
+      timer = object : CountDownTimer((duration - currentTime).toLong(), 1000) {
+        override fun onTick(millisUntilFinished: Long) {
+          val videoDuration = (millisUntilFinished / 1000).toInt()
+          binding?.videoTime?.post {
+            if (videoDuration == 0) {
+              timer?.cancel()
+              binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), "00")
+            } else {
+              binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), videoDuration)
+            }
+          }
+        }
+
+        override fun onFinish() {
+          Log.e("videoCompleted", "&&&&&&&&&&&&&")
+          binding?.introImgContainer?.post {
+            binding?.introImgContainer?.isVisible = true
+            binding?.videoViewContainer?.isVisible = false
+            binding?.progressBar?.isVisible = false
           }
         }
       }
-
-      override fun onFinish() {
-        Log.e("videoCompleted", "&&&&&&&&&&&&&")
-        binding?.introImgContainer?.post {
-          binding?.introImgContainer?.isVisible = true
-          binding?.videoViewContainer?.isVisible = false
-          binding?.progressBar?.isVisible = false
-        }
-      }
+      timer?.start()
+    }catch (e:Exception){
+      e.printStackTrace()
     }
-    timer?.start()
   }
 
 
@@ -178,9 +188,9 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     val volume = if (mute) 0.0f else 1.0f
     mediaPlayer?.setVolume(volume, volume)
     binding?.muteIcon?.setImageResource(if (mute) R.drawable.ic_mute else R.drawable.ic_unmute)
-    if (mute){
+    if (mute) {
       WebEngageController.trackEvent(PS_CLICKED_MUTE_INTRO_VIDEO, VIDEO_MUTED, NO_EVENT_VALUE)
-    }else{
+    } else {
       WebEngageController.trackEvent(PS_CLICKED_UNMUTE_INTRO_VIDEO, VIDEO_UNMUTED, NO_EVENT_VALUE)
     }
   }

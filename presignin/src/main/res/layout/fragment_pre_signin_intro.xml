@@ -60,8 +60,8 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/boost_logo"
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_34sdp"
         android:layout_gravity="center"
         android:src="@drawable/psn_boost_intro_logo"
         app:layout_constraintBottom_toBottomOf="parent"

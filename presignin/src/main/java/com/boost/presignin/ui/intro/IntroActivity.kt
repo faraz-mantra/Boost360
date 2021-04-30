@@ -9,6 +9,7 @@ import com.boost.presignin.databinding.ActivityIntroBinding
 import com.boost.presignin.dialog.WebViewDialog
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
+import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
@@ -94,8 +95,12 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     }
     binding?.btnCreate?.setOnClickListener {
       WebEngageController.trackEvent(INTRO_SCREEN_LOGIN, GET_START_CLICKED, NO_EVENT_VALUE)
-      startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
-      finish()
+      if (packageName.equals("com.jio.online", ignoreCase = true)) {
+        startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
+      } else {
+        startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+        finish()
+      }
     }
   }
 

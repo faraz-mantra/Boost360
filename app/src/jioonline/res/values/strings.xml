@@ -534,4 +534,15 @@
 
     <string name="ria">Joa</string>
     <string name="support_name">Joa</string>
+
+    <string name="ps_accept_tnc">By getting started, you agree to JioOnline <b><u>terms</u></b> and <b><u>conditions</u></b></string>
+    <string name="enter_your_number_hint">Please type your mobile number and get started with JioOnline.</string>
+    <string name="psn_no_account_heading">Bring your business\non JioOnline.</string>
+    <string name="psn_already_have_your_account">Already have your\nbusiness on JioOnline?</string>
+    <string name="psn_retrieve_account_hint">We will help you retrieve your JioOnline account using registered email ID or username</string>
+    <string name="psn_choose_method_to_retrieve_account">You can choose any of the below method to retrieve your business account on JioOnline</string>
+    <string name="psn_login_to_boost_360">Login to JioOnline</string>
+    <string name="website_available_text"> will also work as your username to login to JioOnline app and web.</string>
+    <string name="website_error_text"> username/subdomain not available. Try with something else.</string>
+    <string name="registration_complete_subheading"> business is successfully setup on JioOnline</string>
 </resources>
