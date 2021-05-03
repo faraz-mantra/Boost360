@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<com.framework.views.customViews.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/size_40"
+    app:cardUseCompatPadding="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/blue_4A90E2"
+    app:cardCornerRadius="@dimen/size_4"
+    android:layout_height="40dp">
+    <com.framework.views.customViews.CustomImageView
+        android:layout_width="match_parent"
+        android:src="@drawable/ic_tic"
+        android:padding="@dimen/size_8"
+        android:layout_height="match_parent"/>
+
+</com.framework.views.customViews.CustomCardView>
+</layout>

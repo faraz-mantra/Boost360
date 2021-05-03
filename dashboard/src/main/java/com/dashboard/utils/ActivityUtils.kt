@@ -798,6 +798,14 @@ fun AppCompatActivity.startListTeams(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startWebsiteTheme(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent(SELF_BRANDED_GATEWAY_PAGE, CLICK, TO_BE_ADDED)
+    session?.getBundleDataKyc()?.let { startFragmentDashboardActivity( com.dashboard.constant.FragmentType.FRAGMENT_WEBSITE_THEME, it, false) }
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
 fun AppCompatActivity.startListSeasonalOffer(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(SEASONAL_OFFER_PAGE, CLICK, TO_BE_ADDED)
