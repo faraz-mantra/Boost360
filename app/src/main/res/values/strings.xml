@@ -7,7 +7,8 @@
     <string name="gmb_upload_data" translatable="false">Google My Business Profile updated.</string>
     <string name="twitter_consumer_key" translatable="false">4CiUg5gcIbvYre8XjGd8GsElV</string>
     <string name="twitter_consumer_secret" translatable="false">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
-    <string name="google_map_key" translatable="false">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>
+<!--    <string name="google_map_key" translatable="false">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>-->
+    <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string>
     <string name="app_name">Thinksity</string>
     <string name="action_settings">Settings</string>
     <string name="syncing_with_gmb" translatable="false">Syncing with Google My Business</string>
