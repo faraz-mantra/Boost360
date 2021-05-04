@@ -60,7 +60,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.framework.views.viewgroups.BaseRecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/rv_font"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"

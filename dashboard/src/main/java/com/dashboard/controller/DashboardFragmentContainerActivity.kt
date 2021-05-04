@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +46,12 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     super.onCreate(savedInstanceState)
   }
 
+  override fun getToolbarTitleGravity(): Int {
+   return when(type){
+      FragmentType.FRAGMENT_WEBSITE_THEME->Gravity.START
+      else -> Gravity.CENTER
+    }
+  }
   override fun onCreateView() {
     super.onCreateView()
     setFragment()
@@ -61,7 +68,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardThemeNew
+      FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardTheme
       else -> super.customTheme()
     }
   }
