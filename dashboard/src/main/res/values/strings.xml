@@ -138,4 +138,5 @@
   <string name="save">Save</string>
     <string name="save_changes">Save Changes</string>
     <string name="website_style_customisation">Website Style Customisation</string>
+  <string name="error_while_getting_website_theme">error while getting website theme.</string>
 </resources>
