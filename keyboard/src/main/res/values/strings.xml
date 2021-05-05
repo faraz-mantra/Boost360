@@ -913,4 +913,6 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
         <item>1,AG</item>
         <item>684,AS</item>
     </string-array>
+
+    <string name="boost_360_tag_domain">nowfloats.com</string>
 </resources>

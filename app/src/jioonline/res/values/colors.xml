@@ -95,4 +95,8 @@
     <color name="started_button_start">@color/colorPrimary</color>
     <color name="started_button_end">@color/colorPrimary</color>
     <color name="back_button_color">@color/colorAccentLight</color>
+
+    <color name="black_4a4a4a_n">#918F8F</color>
+    <color name="grey_575757_n">#BDBCBC</color>
+    <color name="grey_333333_n">#515151</color>
 </resources>
