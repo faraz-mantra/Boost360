@@ -8,6 +8,7 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface NowFloatsRemoteData {
@@ -16,7 +17,7 @@ interface NowFloatsRemoteData {
       @Query("floatingPointId") floatingPointId: String,
   ): Observable<Response<WebsiteThemeResponse>>
 
-  @GET(EndPoints.WEBSITE_THEME_UPDATE)
+  @POST(EndPoints.WEBSITE_THEME_UPDATE)
   fun updateWebsiteTheme(
       @Body request: WebsiteThemeUpdateRequest,
   ): Observable<Response<ResponseBody>>

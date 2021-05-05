@@ -31,14 +31,6 @@ data class Fonts(
 		var primary: PrimaryItem? = null,
 )
 
-data class Secondary(
-
-		@field:SerializedName("Description")
-		var description: String? = null,
-
-		@field:SerializedName("Url")
-		var url: String? = null,
-)
 
 data class Colors(
 
