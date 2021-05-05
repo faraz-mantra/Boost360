@@ -101,7 +101,7 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
       val response1 = it as? UserFpDetailsResponse
       if (it.isSuccess() && response1 != null) {
         ProcessFPDetails(session!!).storeFPDetails(response1)
-        session?.userProfileId = response1.accountManagerId
+//        session?.userProfileId = response1.accountManagerId
         startService()
         startDashboard()
       } else {
