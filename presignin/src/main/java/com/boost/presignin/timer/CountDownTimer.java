@@ -1,4 +1,4 @@
-package com.boost.presignin.Timer;
+package com.boost.presignin.timer;
 
 import android.os.Handler;
 import android.os.Message;
