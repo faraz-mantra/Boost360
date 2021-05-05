@@ -10,6 +10,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -33,130 +34,130 @@ import javax.net.ssl.HostnameVerifier;
 
 
 public final class PostImageTweetInBackgroundAsyncTask extends
-        AsyncTask<Void, String, String> {
+    AsyncTask<Void, String, String> {
 
-    private Activity appContext = null;
-    ProgressDialog pd = null;
-    String Username = null, Password = null;
-    private SharedPreferences prefs = null;
-    String responseMessage = "";
-    Boolean success = false;
-    String clientIdConcatedWithQoutes = "\"" + Constants.clientId + "\"";
-    int size = 0;
-    SharedPreferences.Editor prefsEditor;
-    private String token, secretToken;
-    String shareText = "";
-    String id = null;
-    String mesgUrl = null;
-    String mTweetImage = null;
-    UserSessionManager session;
+  private Activity appContext = null;
+  ProgressDialog pd = null;
+  String Username = null, Password = null;
+  private SharedPreferences prefs = null;
+  String responseMessage = "";
+  Boolean success = false;
+  String clientIdConcatedWithQoutes = "\"" + Constants.clientId + "\"";
+  int size = 0;
+  SharedPreferences.Editor prefsEditor;
+  private String token, secretToken;
+  String shareText = "";
+  String id = null;
+  String mesgUrl = null;
+  String mTweetImage = null;
+  UserSessionManager session;
 
-    public PostImageTweetInBackgroundAsyncTask(Activity context, String shareText, String id, String path, UserSessionManager session) {
-        this.appContext = context;
-        this.shareText = shareText;
-        this.id = id;
-        this.mTweetImage = path;
-        this.session = session;
-        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) != null && path != null)
-            mesgUrl = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + ".nowfloats.com/bizFloat/" + id;
-        prefs = appContext.getSharedPreferences(TwitterConnection.PREF_NAME, Activity.MODE_PRIVATE);
+  public PostImageTweetInBackgroundAsyncTask(Activity context, String shareText, String id, String path, UserSessionManager session) {
+    this.appContext = context;
+    this.shareText = shareText;
+    this.id = id;
+    this.mTweetImage = path;
+    this.session = session;
+    if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) != null && path != null)
+      mesgUrl = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + ".nowfloats.com/bizFloat/" + id;
+    prefs = appContext.getSharedPreferences(TwitterConnection.PREF_NAME, Activity.MODE_PRIVATE);
 
+  }
+
+  public PostImageTweetInBackgroundAsyncTask(Activity context, UserSessionManager session) {
+    this.appContext = context;
+    prefs = appContext.getSharedPreferences(TwitterConnection.PREF_NAME, Activity.MODE_PRIVATE);
+    this.session = session;
+  }
+
+  @Override
+  protected void onPreExecute() {
+
+  }
+
+  @Override
+  protected void onPostExecute(String result) {
+
+  }
+
+  @Override
+  protected String doInBackground(Void... params) {
+    String response = "", tweetMessage = "";
+
+    int len = shareText.length(); //text entered
+    int mlen = 140 - (20 + 8);
+    int tlen = Math.min(len, mlen);
+    String separator = " ... ";
+
+    String tag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
+    String rootAliasUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+    String siteUrl = (rootAliasUri != null && rootAliasUri != "" && rootAliasUri.length() > 0) ? rootAliasUri : ("http://" + tag + "." + this.appContext.getResources().getString(R.string.boost_360_tag_domain));
+    String messageUrl = siteUrl + "/bizFloat/" + id;
+    String shortUrl = shortUrl(messageUrl);
+
+    if (shortUrl == null || shortUrl == "" || shortUrl.length() == 0) {
+      shortUrl = messageUrl;
     }
 
-    public PostImageTweetInBackgroundAsyncTask(Activity context, UserSessionManager session) {
-        this.appContext = context;
-        prefs = appContext.getSharedPreferences(TwitterConnection.PREF_NAME, Activity.MODE_PRIVATE);
-        this.session = session;
-    }
+    //tweetMessage = shareText.substring(0, tlen)+separator+shortUrl;
 
-    @Override
-    protected void onPreExecute() {
+    return response;
+  }
 
-    }
+  public String shortUrl(String serverDataFetchUri) {
+    String shortUrl = "";
+    String serverResponse = "";
+    try {
+      // Set connection timeout to 5 secs and socket timeout to 10 secs
+      HttpParams httpParameters = new BasicHttpParams();
+      int timeoutConnection = 5000;
+      HttpConnectionParams.setConnectionTimeout(httpParameters,
+          timeoutConnection);
+      int timeoutSocket = 10000;
+      HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 
-    @Override
-    protected void onPostExecute(String result) {
+      HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+      SchemeRegistry registry = new SchemeRegistry();
+      SSLSocketFactory socketFactory = SSLSocketFactory.getSocketFactory();
+      socketFactory.setHostnameVerifier((X509HostnameVerifier) hostnameVerifier);
+      registry.register(new Scheme("https", socketFactory, 443));
+      SingleClientConnManager mgr = new SingleClientConnManager(httpParameters, registry);
 
-    }
+      HttpClient hc = new DefaultHttpClient(mgr, httpParameters);
 
-    @Override
-    protected String doInBackground(Void... params) {
-        String response = "", tweetMessage = "";
+      HttpPost request = new HttpPost(
+          "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyCo9zb7OlpbObma7PEPwJv189qOtw-FtGM");
+      request.setHeader("Content-type", "application/json");
+      request.setHeader("Accept", "application/json");
 
-        int len = shareText.length(); //text entered
-        int mlen = 140 - (20 + 8);
-        int tlen = Math.min(len, mlen);
-        String separator = " ... ";
+      JSONObject obj = new JSONObject();
+      obj.put("longUrl", serverDataFetchUri);
+      request.setEntity(new StringEntity(obj.toString(), "UTF-8"));
 
-        String tag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
-        String rootAliasUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-        String siteUrl = (rootAliasUri!=null && rootAliasUri!="" && rootAliasUri.length()>0)?rootAliasUri:("http://"+tag+".nowfloats.com");
-        String messageUrl = siteUrl + "/bizFloat/" + id;
-        String shortUrl = shortUrl(messageUrl);
+      HttpResponse response = hc.execute(request);
 
-        if(shortUrl==null || shortUrl=="" || shortUrl.length()==0){
-            shortUrl = messageUrl;
+      if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        response.getEntity().writeTo(out);
+        out.close();
+        serverResponse = out.toString();
+      } else {
+        return null;
+      }
+
+      if (!Util.isNullOrEmpty(serverResponse)) {
+        JSONObject data = new JSONObject(serverResponse);
+        if (data != null) {
+          Constants.shortUrl = shortUrl = data.getString("id");
         }
-
-        //tweetMessage = shareText.substring(0, tlen)+separator+shortUrl;
-
-        return response;
+      } else {
+        Constants.shortUrl = shortUrl = serverDataFetchUri;
+      }
+    } catch (Exception e) {
+      Constants.shortUrl = shortUrl = serverDataFetchUri;
     }
+    return shortUrl;
 
-    public String shortUrl(String serverDataFetchUri) {
-        String shortUrl = "";
-        String serverResponse = "";
-        try {
-            // Set connection timeout to 5 secs and socket timeout to 10 secs
-            HttpParams httpParameters = new BasicHttpParams();
-            int timeoutConnection = 5000;
-            HttpConnectionParams.setConnectionTimeout(httpParameters,
-                    timeoutConnection);
-            int timeoutSocket = 10000;
-            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-
-            HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
-            SchemeRegistry registry = new SchemeRegistry();
-            SSLSocketFactory socketFactory = SSLSocketFactory.getSocketFactory();
-            socketFactory.setHostnameVerifier((X509HostnameVerifier) hostnameVerifier);
-            registry.register(new Scheme("https", socketFactory, 443));
-            SingleClientConnManager mgr = new SingleClientConnManager(httpParameters, registry);
-
-            HttpClient hc = new DefaultHttpClient(mgr, httpParameters);
-
-            HttpPost request = new HttpPost(
-                    "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyCo9zb7OlpbObma7PEPwJv189qOtw-FtGM");
-            request.setHeader("Content-type", "application/json");
-            request.setHeader("Accept", "application/json");
-
-            JSONObject obj = new JSONObject();
-            obj.put("longUrl", serverDataFetchUri);
-            request.setEntity(new StringEntity(obj.toString(), "UTF-8"));
-
-            HttpResponse response = hc.execute(request);
-
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                response.getEntity().writeTo(out);
-                out.close();
-                serverResponse = out.toString();
-            } else {
-                return null;
-            }
-
-            if (!Util.isNullOrEmpty(serverResponse)) {
-                JSONObject data = new JSONObject(serverResponse);
-                if (data != null) {
-                    Constants.shortUrl = shortUrl = data.getString("id");
-                }
-            } else {
-                Constants.shortUrl = shortUrl = serverDataFetchUri;
-            }
-        } catch (Exception e) {
-            Constants.shortUrl = shortUrl = serverDataFetchUri;
-        }
-        return shortUrl;
-
-    }
+  }
 
 }

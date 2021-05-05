@@ -3,6 +3,8 @@ package nfkeyboard.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import io.separ.neural.inputmethod.indic.R;
+
 /**
  * Created by NowFloats on 26-02-2018.
  */
@@ -10,6 +12,7 @@ import android.content.SharedPreferences;
 public class SharedPrefUtil {
 
     private SharedPreferences sBoostPref;
+    private Context context;
     private static SharedPrefUtil sPrefUtil;
 
     private SharedPrefUtil() {
@@ -27,6 +30,7 @@ public class SharedPrefUtil {
 
 //            Context boostContext = context.createPackageContext("com.biz2.nowfloats", 0);
         sBoostPref = context.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
+        this.context = context;
 
         return sPrefUtil;
     }
@@ -112,7 +116,7 @@ public class SharedPrefUtil {
         if (sBoostPref != null) {
             String rootAlisasURI = sBoostPref.getString("GET_FP_DETAILS_ROOTALIASURI", null);
             if (sBoostPref.getString("GET_FP_DETAILS_TAG", null) != null) {
-                String normalURI = "http://" + sBoostPref.getString("GET_FP_DETAILS_TAG", null).toLowerCase() + ".nowfloats.com";
+                String normalURI = "http://" + sBoostPref.getString("GET_FP_DETAILS_TAG", null).toLowerCase() + "."+this.context.getResources().getString(R.string.boost_360_tag_domain);
                 if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
                     return rootAlisasURI;
                 } else {

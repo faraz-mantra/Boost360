@@ -347,8 +347,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       intent.putExtra("fpTag", sessionLocal.fpTag)
       intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
       intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
-      intent.putExtra("email", sessionLocal.fPEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", sessionLocal.fPPrimaryContactNumber ?: "9160004303")
+      intent.putExtra("email", sessionLocal.fPEmail ?: resources.getString(R.string.ria_customer_mail))
+      intent.putExtra("mobileNo", sessionLocal.fPPrimaryContactNumber ?: resources.getString(R.string.ria_customer_number))
       intent.putExtra("profileUrl", sessionLocal.fPLogo)
       intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
       baseActivity.startActivity(intent)

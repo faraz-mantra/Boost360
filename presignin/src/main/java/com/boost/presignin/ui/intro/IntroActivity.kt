@@ -50,11 +50,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.acceptTnc?.makeLinks(
         Pair("terms", View.OnClickListener {
           WebEngageController.trackEvent(BOOST_360_TERMS, CLICKED, NO_EVENT_VALUE)
-          openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+          openTNCDialog(resources.getString(R.string.boost_360_tnc_presignup), resources.getString(R.string.boost360_terms_conditions))
         }),
         Pair("conditions", View.OnClickListener {
           WebEngageController.trackEvent(BOOST_360_CONDITIONS, CLICKED, NO_EVENT_VALUE)
-          openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+          openTNCDialog(resources.getString(R.string.boost_360_tnc_presignup), resources.getString(R.string.boost360_terms_conditions))
         }))
   }
 
