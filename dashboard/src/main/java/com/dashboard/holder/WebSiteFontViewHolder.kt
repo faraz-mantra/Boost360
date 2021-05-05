@@ -1,5 +1,7 @@
 package com.dashboard.holder
 
+import android.content.res.ColorStateList
+import androidx.core.content.res.ResourcesCompat
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
@@ -20,25 +22,34 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) : AppBaseRec
         if (item.isSelected == true) {
           binding.imgSelected.visible()
           binding.imgSelected.setTintColor(getColor(R.color.orange)!!)
+          binding.ctvFontTitle.setTextColor(getColor(R.color.orange)!!)
+          val font = ResourcesCompat.getFont(binding.root.context, R.font.semi_bold)
+          binding.ctvFontTitle.typeface = font
 
         } else {
           binding.imgSelected.gone()
+          val font = ResourcesCompat.getFont(binding.root.context, R.font.regular)
+          binding.ctvFontTitle.typeface = font
+          binding.ctvFontTitle.setTextColor(getColor(R.color.black_2A2A2A)!!)
 
         }
         binding.root.setOnClickListener {
           listener?.onItemClick(position, item, RecyclerViewActionType.PRIMARY_FONT_SELECTED.ordinal)
         }
       }
-    }
-    when (item) {
       is SecondaryItem -> {
         binding.ctvFontTitle.text = item.description
         if (item.isSelected == true) {
           binding.imgSelected.visible()
           binding.imgSelected.setTintColor(getColor(R.color.orange)!!)
+          binding.ctvFontTitle.setTextColor(getColor(R.color.orange)!!)
+          val font = ResourcesCompat.getFont(binding.root.context, R.font.semi_bold)
+          binding.ctvFontTitle.typeface = font
         } else {
           binding.imgSelected.gone()
-
+          val font = ResourcesCompat.getFont(binding.root.context, R.font.regular)
+          binding.ctvFontTitle.typeface = font
+          binding.ctvFontTitle.setTextColor(getColor(R.color.black_2A2A2A)!!)
         }
         binding.root.setOnClickListener {
           listener?.onItemClick(position, item, RecyclerViewActionType.SECONDARY_FONT_SELECTED.ordinal)

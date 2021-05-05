@@ -17,9 +17,15 @@ class WebsiteColorViewHolder(binding: RecyclerItemColorsBinding) : AppBaseRecycl
     when (colorsItem?.isSelected) {
       true -> {
         binding.civCheck.visible()
+        binding.ccvColor.strokeWidth = 5
+        binding.ccvColor.elevation = 2F
+        binding.ccvColor.strokeColor = Color.parseColor(colorsItem?.secondary)
       }
       else -> {
         binding.civCheck.gone()
+        binding.ccvColor.strokeWidth = 0
+        binding.ccvColor.elevation = 0F
+        binding.ccvColor.strokeColor = Color.parseColor(colorsItem?.primary)
       }
     }
     binding.root.setOnClickListener {
