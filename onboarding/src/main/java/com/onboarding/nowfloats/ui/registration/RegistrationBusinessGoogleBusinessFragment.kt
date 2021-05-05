@@ -80,8 +80,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
   }
 
   override fun setSavedData() {
-    val channelAccessToken = requestFloatsModel?.channelAccessTokens
-        ?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
+    val channelAccessToken = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
     setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
     requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
     this.channelAccessToken = channelAccessToken
@@ -98,7 +97,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
     when (v) {
       binding?.skip -> {
         WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_CLICK_TO_SKIP, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
-        gotoNextScreen()
+        gotoNextScreen(true)
       }
       binding?.linkGoogle -> {
         if (channelAccessToken.isLinkedGoogleBusiness()) {
@@ -113,26 +112,14 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
     }
   }
 
-  private fun gotoNextScreen() {
-    if (channelAccessToken.isLinkedGoogleBusiness()) {
-      requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
-    }
+  private fun gotoNextScreen(isSkip: Boolean = false) {
+    if (channelAccessToken.isLinkedGoogleBusiness() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
     when {
-      channels.haveFacebookPage() -> {
-        gotoFacebookPage()
-      }
-      channels.haveFacebookShop() -> {
-        gotoFacebookShop()
-      }
-      channels.haveTwitterChannels() -> {
-        gotoTwitterDetails()
-      }
-      channels.haveWhatsAppChannels() -> {
-        gotoWhatsAppCallDetails()
-      }
-      else -> {
-        gotoBusinessApiCallDetails()
-      }
+      channels.haveFacebookPage() -> gotoFacebookPage()
+      channels.haveFacebookShop() -> gotoFacebookShop()
+      channels.haveTwitterChannels() -> gotoTwitterDetails()
+      channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()
+      else -> gotoBusinessApiCallDetails()
     }
   }
 
@@ -203,7 +190,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
         .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
           dialog.dismiss()
           val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
-          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_AND_GOOGLE_MAPS_CONNECTED , DIGITAL_CHANNELS, it) }
+          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_AND_GOOGLE_MAPS_CONNECTED, DIGITAL_CHANNELS, it) }
           setDataGoogle(result, responseAuth, data)
           setProfileDetails(data?.locationName?.capitalizeWords(), result?.photoUrl?.toString())
         }.setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
