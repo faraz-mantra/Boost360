@@ -147,12 +147,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun updateUiSocialMedia(channels: ArrayList<ChannelStatusData>) {
     binding?.socialMedia?.apply {
-      if (adapterSocialMedia == null) {
-        rvMediaChannel.apply {
-          adapterSocialMedia = AppBaseRecyclerViewAdapter(baseActivity, channels, this@DashboardFragment)
-          adapter = adapterSocialMedia
-        }
-      } else adapterSocialMedia?.notify(channels)
+      if (channels.isNotEmpty()) {
+        mainView.visible()
+        if (adapterSocialMedia == null) {
+          rvMediaChannel.apply {
+            adapterSocialMedia = AppBaseRecyclerViewAdapter(baseActivity, channels, this@DashboardFragment)
+            adapter = adapterSocialMedia
+          }
+        } else adapterSocialMedia?.notify(channels)
+      } else mainView.gone()
     }
   }
 
@@ -253,21 +256,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun visibleViewHighLow(isHigh: Boolean) {
     if (isHigh) {
       binding?.viewBusinessReport?.visible()
-      binding?.socialMedia?.root?.visible()
+//      binding?.socialMedia?.root?.visible()
       binding?.viewWebsiteReport?.visible()
       binding?.viewVersionLow?.gone()
       binding?.viewVersionHigh?.visible()
       binding?.scrollDownBtn?.apply {
-        visible()
+//        visible()
         setNoDoubleClickListener(this@DashboardFragment)
       }
     } else {
       binding?.viewBusinessReport?.gone()
-      binding?.socialMedia?.root?.gone()
+//      binding?.socialMedia?.root?.gone()
       binding?.viewWebsiteReport?.gone()
       binding?.viewVersionLow?.visible()
       binding?.viewVersionHigh?.gone()
-      binding?.scrollDownBtn?.gone()
+//      binding?.scrollDownBtn?.gone()
     }
   }
 
