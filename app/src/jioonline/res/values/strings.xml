@@ -33,6 +33,8 @@
   <string name="ps_sc8_lbl4">Store</string>
   <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233.</string>
 
+  <string name="website_report_description">Learn how to make JioOnline work for you.</string>
+  <string name="learn_how_boost_360_work">Learn how to make JioOnline work for you.</string>
   <string-array name="weeks">
     <item>Week 1</item>
     <item>Week 2</item>
