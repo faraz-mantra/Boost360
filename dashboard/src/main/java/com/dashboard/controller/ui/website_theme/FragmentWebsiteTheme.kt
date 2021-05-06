@@ -1,5 +1,4 @@
 package com.dashboard.controller.ui.website_theme
-
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -98,11 +97,13 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     this.primaryFont = fonts?.primary
     //set secondary font
     this.secondaryFont = fonts?.secondary
-    val primaryFilter = primaryFont?.filter { it?.defaultFont!! }
-    val secondaryFilter = secondaryFont?.filter { it?.defaultFont!! }
-    binding?.ctfPrimaryFont?.setText(primaryFilter?.getOrNull(0)?.description
+    val defaultPrimaryFont = primaryFont?.filter { it?.defaultFont==true }
+    val defaultSecondaryFont = secondaryFont?.filter { it?.defaultFont==true }
+    val primarySelectedFont = primaryFont?.filter { it?.isSelected==true }
+    val secondarySelected = secondaryFont?.filter { it?.isSelected==true }
+    binding?.ctfPrimaryFont?.setText(defaultPrimaryFont?.getOrNull(0)?.description?:primarySelectedFont?.getOrNull(0)?.description
         ?: primaryFont?.get(0)?.description)
-    binding?.ctfSecondaryFont?.setText(secondaryFilter?.getOrNull(0)?.description
+    binding?.ctfSecondaryFont?.setText(defaultSecondaryFont?.getOrNull(0)?.description?:secondarySelected?.getOrNull(0)?.description
         ?: secondaryFont?.get(0)?.description)
     val primary = primaryFont?.filter { it?.defaultFont!! }
     if (primary.isNullOrEmpty()) primaryFont!![0]?.isSelected = true
