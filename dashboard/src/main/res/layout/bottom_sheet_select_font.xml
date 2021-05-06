@@ -49,13 +49,13 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayoutCompat2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_400"
+            app:layout_constraintHeight_percent="0.5"
             android:background="@drawable/bg_rounded_top_white"
             android:orientation="vertical"
-            android:paddingTop="@dimen/size_10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -63,19 +63,29 @@
             <com.framework.views.viewgroups.BaseRecyclerView
                 android:id="@+id/rv_font"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/size_30"
                 android:paddingHorizontal="@dimen/size_16"
+                android:clipToPadding="false"
                 android:paddingBottom="@dimen/size_42"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="6"
-                tools:listitem="@layout/recycler_item_select_font" />
+                tools:listitem="@layout/recycler_item_select_font"
+                tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/size_10"
-                android:paddingEnd="@dimen/size_10">
+                android:layout_marginVertical="@dimen/size_10"
+                android:paddingEnd="@dimen/size_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_done"
@@ -84,8 +94,7 @@
                     android:text="@string/save"
                     android:textColor="@color/white"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                     />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_cancel"
@@ -95,14 +104,13 @@
                     android:text="@string/cancel"
                     android:textColor="@color/pinkish_grey"
                     app:layout_constraintRight_toLeftOf="@id/btn_done"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
