@@ -60,7 +60,6 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
         this.primaryItem = item as? PrimaryItem
         primaryFontList?.forEach {
           it.isSelected = it == item
-          it.defaultFont=it==item
         }
         binding?.rvFont?.post { primaryFontsAdapter?.notifyDataSetChanged() }
       }
@@ -68,7 +67,6 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
         this.secondaryItem = item as? SecondaryItem
         secondaryFontList?.forEach {
           it.isSelected = it == item
-          it.defaultFont=it==item
         }
         binding?.rvFont?.post { secondaryFontAdapter?.notifyDataSetChanged() }
       }
