@@ -97,18 +97,25 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     this.primaryFont = fonts?.primary
     //set secondary font
     this.secondaryFont = fonts?.secondary
+    //if  font is empty disable the view
+    if (primaryFont.isNullOrEmpty())
+      binding?.ctfPrimaryFont?.isEnabled =false
+    if (secondaryFont.isNullOrEmpty())
+      binding?.ctfSecondaryFont?.isEnabled =false
     val defaultPrimaryFont = primaryFont?.filter { it?.defaultFont==true }
     val defaultSecondaryFont = secondaryFont?.filter { it?.defaultFont==true }
     val primarySelectedFont = primaryFont?.filter { it?.isSelected==true }
     val secondarySelected = secondaryFont?.filter { it?.isSelected==true }
-    binding?.ctfPrimaryFont?.setText(defaultPrimaryFont?.getOrNull(0)?.description?:primarySelectedFont?.getOrNull(0)?.description
-        ?: primaryFont?.get(0)?.description)
-    binding?.ctfSecondaryFont?.setText(defaultSecondaryFont?.getOrNull(0)?.description?:secondarySelected?.getOrNull(0)?.description
-        ?: secondaryFont?.get(0)?.description)
-    val primary = primaryFont?.filter { it?.defaultFont!! }
-    if (primary.isNullOrEmpty()) primaryFont!![0]?.isSelected = true
-    val secondary = secondaryFont?.filter { it?.defaultFont!! }
-    if (secondary.isNullOrEmpty()) secondaryFont!![0]?.isSelected = true
+    binding?.ctfPrimaryFont?.setText(primarySelectedFont?.getOrNull(0)?.description?:defaultPrimaryFont?.getOrNull(0)?.description?:
+       primaryFont?.get(0)?.description)
+    binding?.ctfSecondaryFont?.setText(secondarySelected?.getOrNull(0)?.description?:defaultSecondaryFont?.getOrNull(0)?.description
+        ?: secondaryFont?.getOrNull(0)?.description?:"")
+    val primary = primaryFont?.filter { it?.defaultFont==true }
+    if (primary.isNullOrEmpty()) primaryFont?.getOrNull(0)?.isSelected = true
+    val secondary = secondaryFont?.filter { it?.defaultFont==true }
+    if (secondary.isNullOrEmpty()) secondaryFont?.getOrNull(0)?.isSelected =true
+    this.primaryItem = primarySelectedFont?.getOrNull(0)?:defaultPrimaryFont?.getOrNull(0)
+    this.secondaryItem = secondarySelected?.getOrNull(0)?:defaultSecondaryFont?.getOrNull(0)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -183,8 +190,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   private fun updateAPI() {
     showProgress()
     viewModel?.updateWebsiteTheme(WebsiteThemeUpdateRequest(Customization(Colors(colorsItem?.secondary, colorsItem?.tertiary,
-        colorsItem?.primary, colorsItem?.name), Fonts(secondaryItem
-        ?: secondaryFont?.get(0), primaryItem
+        colorsItem?.primary, colorsItem?.name), Fonts(secondaryItem?:secondaryFont?.get(0), primaryItem
         ?: primaryFont?.get(0))), floatingPointId = sessionData?.fpId))?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       if (it.isSuccess()) {
