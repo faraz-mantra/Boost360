@@ -6,7 +6,7 @@ const val STAFF_PROFILE_LIST = "Staff profile list"
 const val STAFF_PROFILE_DETAIL = "Staff profile detail"
 const val ADD_STAFF_PROFILE = "Add staff profile"
 const val STAFF_PROFILE_CREATE= "Staff profile created"
-const val STAFF_PROFILE_UPDATED = "Staff profile created"
+const val STAFF_PROFILE_UPDATED = "Staff profile updated"
 
 const val SERVICE_INFORMATION_CATALOGUE_LOAD = "Service other information catalogue"
 const val SERVICE_INFORMATION_CONFIRM = "Service other information confirm"
