@@ -128,10 +128,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val channelStatusList = getChannelStatus()
     updateUiSocialMedia(channelStatusList)
     viewModel?.getChannelsAccessTokenStatus(session?.fPID)?.observeOnce(viewLifecycleOwner, {
-      val response = it as? ChannelAccessStatusResponse
-      if (response?.isSuccess() == true) {
-        val channels = response.channels?.getChannelStatusList()
-        channels?.forEachIndexed { index, channelStatusData ->
+      if (it.isSuccess() || (it.status == 404 || it.status == 400)) {
+        val response = it as? ChannelAccessStatusResponse
+        val channels = response?.channels.getChannelStatusList()
+        channels.forEachIndexed { index, channelStatusData ->
           viewModel?.getChannelsInsight(session?.fPID, channelStatusData.accountType)?.observeOnce(viewLifecycleOwner, { it2 ->
             val response2 = it2 as? ChannelInsightsResponse
             if (response2?.isSuccess() == true) channelStatusData.insightsData = response2.data
