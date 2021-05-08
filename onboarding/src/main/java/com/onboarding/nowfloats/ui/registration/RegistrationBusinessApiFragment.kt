@@ -35,10 +35,7 @@ import com.onboarding.nowfloats.model.business.purchasedOrder.PurchasedWidget
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.ChannelType
 import com.onboarding.nowfloats.model.channel.getType
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
-import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
-import com.onboarding.nowfloats.model.channel.request.UpdateChannelActionDataRequest
-import com.onboarding.nowfloats.model.channel.request.getType
+import com.onboarding.nowfloats.model.channel.request.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
@@ -78,6 +75,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     apiHitBusiness()
   }
 
+
   private fun apiHitBusiness() {
     getDotProgress()?.let {
       binding?.textBtn?.gone()
@@ -100,7 +98,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
 
   private fun setProcessApiSyncModel() {
     val channels = this.channels
-    val connectedChannelsAccessTokens = requestFloatsModel?.channelAccessTokens?.map { it.getType() }
+    val connectedChannelsAccessTokens = requestFloatsModel?.getConnectedAccessToken()?.map { it.getType() }
     val connectedWhatsApp = requestFloatsModel?.channelActionDatas?.firstOrNull()
 
     for (channel in channels) {
@@ -196,15 +194,15 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   }
 
   private fun apiProcessChannelAccessTokens(dotProgressBar: DotProgressBar, floatingPointId: String) {
-    if (requestFloatsModel?.channelAccessTokens.isNullOrEmpty().not()) {
+    if (requestFloatsModel?.getConnectedAccessToken().isNullOrEmpty().not()) {
       if (clientId != null) {
         var index = 0
-        requestFloatsModel?.channelAccessTokens?.forEach { channelAccessToken ->
+        requestFloatsModel?.getConnectedAccessToken()?.forEach { channelAccessToken ->
           var isBreak = false
           viewModel?.updateChannelAccessToken(UpdateChannelAccessTokenRequest(channelAccessToken, clientId!!, floatingPointId))?.observeOnce(viewLifecycleOwner, Observer {
             index += 1
             if (it.status == 200 || it.status == 201 || it.status == 202) {
-              if (requestFloatsModel?.channelAccessTokens?.size == index) apiBusinessActivatePlan(dotProgressBar, floatingPointId)
+              if (requestFloatsModel?.getConnectedAccessToken()?.size == index) apiBusinessActivatePlan(dotProgressBar, floatingPointId)
             } else {
               isBreak = true
               connectedChannels.forEach { it1 ->
@@ -351,7 +349,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.email = requestFloatsModel?.contactInfo?.getEmailN()
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
-    createRequest.fbPageName = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
+    createRequest.fbPageName = requestFloatsModel?.getConnectedAccessToken()?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
     createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     createRequest.appExperienceCode = requestFloatsModel?.categoryDataModel?.experience_code
     createRequest.whatsAppNumber = requestFloatsModel?.channelActionDatas?.firstOrNull()?.getNumberWithCode()
