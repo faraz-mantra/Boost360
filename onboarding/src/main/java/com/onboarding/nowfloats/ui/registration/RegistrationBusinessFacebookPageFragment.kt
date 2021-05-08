@@ -29,10 +29,7 @@ import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessFacebook
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.*
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
-import com.onboarding.nowfloats.model.channel.request.clear
-import com.onboarding.nowfloats.model.channel.request.getType
-import com.onboarding.nowfloats.model.channel.request.isLinked
+import com.onboarding.nowfloats.model.channel.request.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.InternetErrorDialog
 import com.onboarding.nowfloats.utils.WebEngageController
@@ -77,8 +74,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
       requestFloatsModel?.channelAccessTokens?.forEach {
         if (it.type == ChannelAccessToken.AccessTokenType.facebookpage.name) {
           channelAccessToken = it
-          channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(it.userAccountId
-              ?: "")
+          channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(it.userAccountId ?: "")
           isShowProfile = true
         }
       }
@@ -86,8 +82,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun setSavedData() {
-    val channelAccessToken = requestFloatsModel?.channelAccessTokens
-        ?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
+    val channelAccessToken = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
     setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
     requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
     this.channelAccessToken = channelAccessToken
@@ -105,7 +100,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
       binding?.skip -> {
         //linking facebook profile Skip Event Tracker.
         WebEngageController.trackEvent(LINKING_FACEBOOK_PROFILE, BUTTON, SKIP)
-        gotoNextScreen()
+        gotoNextScreen(true)
       }
       binding?.linkFacebook -> {
         //linking facebook profile Yes Event Tracker.
@@ -130,23 +125,14 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     }
   }
 
-  private fun gotoNextScreen() {
-    if (channelAccessToken.isLinked()) {
-      requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
-    }
+  private fun gotoNextScreen(isSkip:Boolean=false) {
+    if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
+
     when {
-      channels.haveFacebookShop() -> {
-        gotoFacebookShop()
-      }
-      channels.haveTwitterChannels() -> {
-        gotoTwitterDetails()
-      }
-      channels.haveWhatsAppChannels() -> {
-        gotoWhatsAppCallDetails()
-      }
-      else -> {
-        gotoBusinessApiCallDetails()
-      }
+      channels.haveFacebookShop() -> gotoFacebookShop()
+      channels.haveTwitterChannels() -> gotoTwitterDetails()
+      channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()
+      else -> gotoBusinessApiCallDetails()
     }
   }
 

@@ -8,7 +8,7 @@
         <item>@drawable/ic_baseline_verified</item>
         <item>@drawable/ic_baseline_payment</item>
         <item>@drawable/ic_nav_settings</item>
-        <item>@drawable/ic_your_plan</item>
+<!--        <item>@drawable/ic_your_plan</item>-->
         <item>@drawable/ic_domain_email</item>
         <item>@drawable/ic_change_password</item>
         <item>@drawable/ic_logout</item>
