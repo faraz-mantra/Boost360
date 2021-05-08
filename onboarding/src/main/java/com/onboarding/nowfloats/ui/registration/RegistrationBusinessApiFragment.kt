@@ -72,9 +72,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     setOnClickListener(binding?.next, binding?.retry, binding?.supportCustomer)
     binding?.categoryImage?.setImageDrawable(requestFloatsModel?.categoryDataModel?.getImage(baseActivity))
     binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, baseActivity.theme))
-    if ((requestFloatsModel?.isUpdate == true || requestFloatsModel?.isFpCreate == true) && requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) {
-      floatingPointId = requestFloatsModel?.floatingPointId!!
-    }
+    if (requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) floatingPointId = requestFloatsModel?.floatingPointId!!
     setProcessApiSyncModel()
     setApiProcessAdapter(list)
     apiHitBusiness()
@@ -128,22 +126,23 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   }
 
   private fun putCreateBusinessOnboarding(dotProgressBar: DotProgressBar) {
-    if (checkFpCreate(dotProgressBar)) return
-    val request = getBusinessRequest()
-    isSyncCreateFpApi = true
-    viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, {
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        if (it.stringResponse.isNullOrEmpty().not()) {
-          connectedChannels.forEach { it1 ->
-            it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
-          }
-          floatingPointId = it.stringResponse ?: ""
-          setReferralCode(floatingPointId)
-          saveFpCreateData()
-          apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
-        } else updateError("Floating point return null", it.status, "CREATE")
-      } else updateError(it.error?.localizedMessage, it.status, "CREATE")
-    })
+    if (checkFpCreate().not()) {
+      val request = getBusinessRequest()
+      isSyncCreateFpApi = true
+      viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          if (it.stringResponse.isNullOrEmpty().not()) {
+            connectedChannels.forEach { it1 ->
+              it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
+            }
+            floatingPointId = it.stringResponse ?: ""
+            saveFpCreateData()
+            setReferralCode(floatingPointId)
+            apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
+          } else updateError("Floating point return null", it.status, "CREATE")
+        } else updateError(it.error?.localizedMessage, it.status, "CREATE")
+      })
+    } else apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
   }
 
   private fun setReferralCode(floatingPointId: String) {
@@ -164,12 +163,11 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     updateInfo()
   }
 
-  private fun checkFpCreate(dotProgressBar: DotProgressBar): Boolean {
+  private fun checkFpCreate(): Boolean {
     if (floatingPointId.isNotEmpty()) {
       connectedChannels.forEach { it1 ->
         it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
       }
-      apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
       return true
     }
     return false
