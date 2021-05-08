@@ -166,7 +166,7 @@
   <string name="share_on_more">Share on more...</string>
   <string name="my_business_card">My business card</string>
   <string name="share_your_website_address_desc">Share your website address and business contact details on WhatsApp and social media, to attract new customers daily.</string>
-    <string name="xxxxx_xxxxx">XXXXX XXXXX</string>
+  <string name="xxxxx_xxxxx">XXXXX XXXXX</string>
   <string name="_91">+91</string>
   <string name="connection_error_001">Connection error: 001</string>
   <string name="sync">Sync</string>
@@ -203,9 +203,13 @@
   <string name="onboarding_please_wait">Please wait…</string>
   <string name="https_shantisalonspa_com">https://shantisalonspa.com/</string>
   <string name="permission_denied_to_your_external_storage">Permission denied to read your External storage</string>
-    <string name="upto_50_latest_news_updates">Upto 50 Latest News/Updates</string>
+  <string name="upto_50_latest_news_updates">Upto 50 Latest News/Updates</string>
   <string name="business_card">Business Card</string>
   <string name="google_business_url">https://business.google.com/create</string>
+
+  <string name="this_number_is_already_in_use">This number is already in use.</string>
+  <string name="this_email_is_already_in_use">This email is already in use.</string>
+  <string name="validation_error_try_again">Validation error, please try again.</string>
 
 </resources>
 

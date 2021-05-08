@@ -14,6 +14,8 @@ import com.onboarding.nowfloats.model.googleAuth.GoogleAuthTokenRequest
 import com.onboarding.nowfloats.model.riaWhatsapp.RiaWhatsappRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
+import com.onboarding.nowfloats.model.verification.RequestValidateEmail
+import com.onboarding.nowfloats.model.verification.RequestValidatePhone
 import com.onboarding.nowfloats.rest.repositories.*
 import org.json.JSONObject
 
@@ -66,6 +68,15 @@ class BusinessCreateViewModel : BaseViewModel() {
   fun updateRiaWhatsapp(req: RiaWhatsappRequest?): LiveData<BaseResponse> {
     return RiaFloatWhatsappRepository.updateRiaWhatsapp(req).toLiveData()
   }
+
+  fun validateUsersEmail(requestValidateEmail: RequestValidateEmail?): LiveData<BaseResponse> {
+    return BusinessCreateRepository.validateUsersEmail(requestValidateEmail = requestValidateEmail).toLiveData()
+  }
+
+  fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): LiveData<BaseResponse> {
+    return BusinessCreateRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
+  }
+
 }
 
 fun getJsonRequest(fpTag: String?): String {
