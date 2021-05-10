@@ -29,6 +29,7 @@ class DashboardViewModel : BaseViewModel() {
     return CategoryRepository.getCategories(context).toLiveData()
   }
 
+  @Deprecated("NFX token API")
   fun getChannelsAccessToken(nowfloatsId: String?): LiveData<BaseResponse> {
     return ChannelRepository.getChannelsAccessToken(nowfloatsId).toLiveData()
   }
