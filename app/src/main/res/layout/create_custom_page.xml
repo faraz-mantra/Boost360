@@ -47,7 +47,7 @@
             <jp.wasabeef.richeditor.RichEditor
                 android:id="@+id/subtextEdit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="17dp"
                 android:hint="@string/custom_page_details"
