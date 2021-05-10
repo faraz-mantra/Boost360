@@ -13,19 +13,19 @@ class WebsiteColorViewHolder(binding: RecyclerItemColorsBinding) : AppBaseRecycl
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val colorsItem = item as? ColorsItem
-    binding.ccvColor.setCardBackgroundColor(Color.parseColor(colorsItem?.primary))
+    binding.ccvColor.setCardBackgroundColor(Color.parseColor(colorsItem?.primary?.ifBlank { colorsItem.secondary }))
     when (colorsItem?.isSelected) {
       true -> {
         binding.civCheck.visible()
         binding.ccvColor.strokeWidth = 5
         binding.ccvColor.elevation = 2F
-        binding.ccvColor.strokeColor = Color.parseColor(colorsItem?.secondary)
+        binding.ccvColor.strokeColor = Color.parseColor(colorsItem.secondary?.ifBlank { colorsItem.primary})
       }
       else -> {
         binding.civCheck.gone()
         binding.ccvColor.strokeWidth = 0
         binding.ccvColor.elevation = 0F
-        binding.ccvColor.strokeColor = Color.parseColor(colorsItem?.primary)
+        binding.ccvColor.strokeColor = Color.parseColor(colorsItem?.primary?.ifBlank { colorsItem.secondary })
       }
     }
     binding.root.setOnClickListener {
