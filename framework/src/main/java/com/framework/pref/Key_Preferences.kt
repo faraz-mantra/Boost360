@@ -122,4 +122,6 @@ object Key_Preferences {
   const val PREF_KEY_OAUTH_SECRET = "oauth_token_secret"
   const val PREF_USER_NAME = "twitter_user_name"
   const val STORE_WIDGETS = "StoreWidgets"
+
+  const val ACCESS_TOKEN_AUTH = "access_token_auth"
 }

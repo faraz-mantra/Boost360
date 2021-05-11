@@ -1,5 +1,6 @@
 package com.boost.presignin.model.login
 
+import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -8,7 +9,7 @@ data class VerificationRequestResult(
     @SerializedName("accessType")
     var accessType: Int? = null,
     @SerializedName("applicationId")
-    var applicationId: Any? = null,
+    var applicationId: String? = null,
     @SerializedName("channelProfileProperties")
     var channelProfileProperties: ChannelProfileProperties? = null,
     @SerializedName("isEnterprise")
@@ -18,7 +19,7 @@ data class VerificationRequestResult(
     @SerializedName("loginId")
     var loginId: String? = null,
     @SerializedName("profileImage")
-    var profileImage: Any? = null,
+    var profileImage: String? = null,
     @SerializedName("profileProperties")
     var profileProperties: ProfileProperties? = null,
     @SerializedName("socialShareTokens")
@@ -26,5 +27,7 @@ data class VerificationRequestResult(
     @SerializedName("sourceClientId")
     var sourceClientId: String? = null,
     @SerializedName("ValidFPIds")
-    var validFPIds: List<String>? = null
+    var validFPIds: ArrayList<String>? = null,
+    @SerializedName("authTokens")
+    var authTokens: ArrayList<AuthTokenDataItem>? = null,
 ) : BaseResponse(), Serializable

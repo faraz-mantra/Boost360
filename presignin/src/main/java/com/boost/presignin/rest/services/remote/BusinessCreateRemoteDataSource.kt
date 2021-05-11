@@ -13,7 +13,10 @@ import retrofit2.http.Query
 
 interface BusinessCreateRemoteDataSource {
     @PUT(EndPoints.PUT_CREATE_BUSINESS_URL)
-    fun putCreateBusinessOnboarding(@Query("existingProfileId") profileId: String?, @Body request: BusinessCreateRequest): Observable<Response<String>>
+    fun putCreateBusinessV5(@Query("existingProfileId") profileId: String?, @Body request: BusinessCreateRequest): Observable<Response<String>>
+
+    @PUT(EndPoints.PUT_CREATE_BUSINESS_V6_URL)
+    fun putCreateBusinessV6(@Query("existingProfileId") profileId: String?, @Body request: BusinessCreateRequest): Observable<Response<Any>>
 
     @POST(EndPoints.POST_ACTIVATE_PURCHASED_ORDER)
     fun postActivatePurchasedOrder(@Query("clientId") clientId: String?, @Body request: ActivatePurchasedOrderRequest): Observable<Response<ResponseBody>>

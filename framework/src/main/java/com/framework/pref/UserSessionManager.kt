@@ -1,6 +1,5 @@
 package com.framework.pref
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.database.Cursor
@@ -583,6 +582,14 @@ class UserSessionManager(var activity: Context) {
   fun getFPDetails(key: String): String? {
     return pref.getString(key.trim { it <= ' ' }, "")
   }
+
+  fun storeAccessToken(tokenValue: String?) {
+    editor.putString(Key_Preferences.ACCESS_TOKEN_AUTH, tokenValue)
+    editor.apply()
+  }
+
+  val getAccessToken: String?
+    get() = pref.getString(Key_Preferences.ACCESS_TOKEN_AUTH, "")
 
   val isBoostBubbleEnabled: Boolean
     get() = pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false)

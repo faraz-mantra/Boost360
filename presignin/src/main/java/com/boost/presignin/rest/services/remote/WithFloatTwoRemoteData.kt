@@ -6,6 +6,7 @@ import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
+import com.boost.presignin.model.login.VerifyOtpResponse
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.model.userprofile.ConnectUserProfileResponse
@@ -55,7 +56,7 @@ interface WithFloatTwoRemoteData {
   fun verifyLoginOtp(
       @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
       @Query(value = "clientId") clientId: String?,
-  ): Observable<Response<ResponseBody>>
+  ): Observable<Response<VerifyOtpResponse>>
 
   @POST(EndPoints.CREATE_ACCESS_TOKEN)
   fun createAccessToken(
