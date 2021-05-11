@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.viewmodel.business
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -75,6 +76,10 @@ class BusinessCreateViewModel : BaseViewModel() {
 
   fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): LiveData<BaseResponse> {
     return BusinessCreateRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
+  }
+
+  fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
+    return CategoryRepository.getCategoriesPlan(context).toLiveData()
   }
 
 }
