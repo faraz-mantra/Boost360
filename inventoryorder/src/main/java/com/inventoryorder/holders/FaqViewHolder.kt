@@ -7,12 +7,13 @@ import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemFaqBinding
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
-import com.inventoryorder.ui.tutorials.model.ContentsItem
+import com.inventoryorder.ui.tutorials.model.product.Faq
+import com.inventoryorder.ui.tutorials.model.product.TutorialsDataResponse
 
 class FaqViewHolder(binding: ItemFaqBinding) : AppBaseRecyclerViewHolder<ItemFaqBinding>(binding) {
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         super.bind(position, item)
-        val contentsItem = item as ContentsItem
+        val contentsItem = item as Faq
         binding.ctvQuestion.text = contentsItem.question
         binding.ctvAnswer.text = contentsItem.answer
         binding.ctvQuestionNo.text = "Q${position + 1}."

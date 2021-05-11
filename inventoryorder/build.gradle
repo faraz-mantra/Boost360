@@ -37,6 +37,9 @@ android {
 }
 
 dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(path: ':resources')
     api project(path: ':onboarding')
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
 }

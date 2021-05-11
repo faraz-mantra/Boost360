@@ -3,12 +3,14 @@ package com.inventoryorder.ui.tutorials.model
 import com.google.gson.annotations.SerializedName
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
+import com.inventoryorder.ui.tutorials.model.product.Faq
+import com.inventoryorder.ui.tutorials.model.product.TutorialsDataResponse
 import java.io.Serializable
 
-data class AppointmentfaqResponse(
+data class AppointmentFaqResponse(
 
         @field:SerializedName("Contents")
-        var contents: ArrayList<ContentsItem>? = null,
+        var contents: ArrayList<Faq>? = null,
 
         @field:SerializedName("Fragment Data")
         var fragmentData: FragmentData? = null,

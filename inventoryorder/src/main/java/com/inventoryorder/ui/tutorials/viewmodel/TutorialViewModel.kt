@@ -2,14 +2,19 @@ package com.inventoryorder.ui.tutorials.viewmodel
 
 import android.content.res.Resources
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
+import com.framework.models.toLiveData
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.inventoryorder.BaseOrderApplication
 import com.inventoryorder.R
+import com.inventoryorder.rest.repositories.DeveloperBoostKitRepository
+import com.inventoryorder.rest.repositories.WebActionBoostRepository
 import com.inventoryorder.ui.tutorials.model.AllVideoResponse
-import com.inventoryorder.ui.tutorials.model.AppointmentfaqResponse
+import com.inventoryorder.ui.tutorials.model.AppointmentFaqResponse
 import com.inventoryorder.ui.tutorials.model.LearnAboutAppointmentMgmt
 import com.inventoryorder.ui.tutorials.model.VideoDescAppointmentMgmt
 import java.io.*
@@ -22,9 +27,9 @@ class TutorialViewModel : BaseViewModel() {
     return MutableLiveData(jsonObj)
   }
 
-  fun getFaqStaffResponse(): MutableLiveData<AppointmentfaqResponse> {
+  fun getFaqStaffResponse(): MutableLiveData<AppointmentFaqResponse> {
     val jsonResourceReader = JSONResourceReader(BaseOrderApplication.instance.applicationContext.resources, R.raw.faq_staff)
-    val jsonObj = jsonResourceReader.constructUsingGson(AppointmentfaqResponse::class.java)
+    val jsonObj = jsonResourceReader.constructUsingGson(AppointmentFaqResponse::class.java)
     return MutableLiveData(jsonObj)
   }
 
@@ -39,6 +44,11 @@ class TutorialViewModel : BaseViewModel() {
     val jsonObj = jsonResourceReader.constructUsingGson(AllVideoResponse::class.java)
     return MutableLiveData(jsonObj)
   }
+
+    fun getTutorialsData(website: String?,auth:String?): LiveData<BaseResponse> {
+        return DeveloperBoostKitRepository.getTutorialsData(website = website,auth =auth ).toLiveData()
+    }
+
 
 }
 

@@ -29,7 +29,6 @@ object WebActionBoostRepository : AppBaseRepository<WebActionBoostDataSource, Ap
     return makeRemoteRequest(remoteDataSource.getAllAptConsultDoctor(auth, query, sort, limit), TaskCode.GET_DOCTOR_API_DATA)
   }
 
-
   fun addAptConsultData(auth: String?, request: AddAptConsultRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.addAptConsultData(auth, request), TaskCode.ADD_API_CONSULT_DATA)
   }

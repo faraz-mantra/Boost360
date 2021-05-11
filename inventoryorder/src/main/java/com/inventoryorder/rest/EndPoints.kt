@@ -67,5 +67,9 @@ object EndPoints {
   const val API_NOW_FLOATS = "https://api.nowfloats.com/"
   const val GET_SEARCH_LISTING = "Service/v1/GetSearchListings"
   const val GET_BOOKING_SLOTS = "staff/v1/GetBookingSlots"
+
+  // developer boost kit
+  const val API_BASE_DEVELOPER_BOOST = "https://developer.api.boostkit.dev/"
+  const val BOOST_EDUCATION_DATA = "language/v1/boost_education/get-data"
 }
 

@@ -5,6 +5,7 @@ import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
 import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.weeklySchedule.GetDoctorWeeklySchedule
 import com.inventoryorder.rest.EndPoints
+import com.inventoryorder.ui.tutorials.model.product.TutorialsDataResponse
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -27,6 +28,11 @@ interface WebActionBoostDataSource {
       @Query("sort") sort: String?,
       @Query("limit") limit: Int?
   ): Observable<Response<DoctorAppointmentResponse>>
+  @GET(EndPoints.BOOST_EDUCATION_DATA)
+  fun getTutorialsData(
+          @Header("Authorization") auth: String?,
+          @Query("website") website: String?,
+  ): Observable<Response<TutorialsDataResponse>>
 
   @POST(EndPoints.ADD_APT_CONSULT_DATA)
   fun addAptConsultData(
