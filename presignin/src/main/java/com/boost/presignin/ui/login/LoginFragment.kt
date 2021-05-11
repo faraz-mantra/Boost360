@@ -15,6 +15,7 @@ import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.intro.IntroActivity
+import com.boost.presignin.ui.mobileVerification.fp.FragmentFpList
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
@@ -95,6 +96,12 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     session?.storeIsThinksity((response.sourceClientId != null && response.sourceClientId == clientIdThinksity).toString() + "")
     session?.storeFPID(response.validFPIds?.get(0))
     session?.setAccountSave(true)
+    addFragmentReplace(com.framework.R.id.container, FragmentFpList.newInstance(fpListAuth = response.authTokens), false)
+    hideProgress()
+    //loadFpDetails(response)
+  }
+
+  private fun loadFpDetails(response: VerificationRequestResult) {
     val map = HashMap<String, String>()
     map["clientId"] = clientId
     viewModel?.getFpDetails(response.validFPIds?.get(0) ?: "", map)?.observeOnce(viewLifecycleOwner, {

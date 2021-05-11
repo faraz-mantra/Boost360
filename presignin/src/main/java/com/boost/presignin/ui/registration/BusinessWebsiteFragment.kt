@@ -14,11 +14,9 @@ import com.boost.presignin.databinding.FragmentBusinessWebsiteBinding
 import com.boost.presignin.dialog.FullScreenProgressDialog
 import com.boost.presignin.extensions.isWebsiteValid
 import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
-import com.boost.presignin.model.activatepurchase.ConsumptionConstraint
-import com.boost.presignin.model.activatepurchase.PurchasedExpiry
-import com.boost.presignin.model.activatepurchase.PurchasedWidget
+import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.business.BusinessCreateRequest
+import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
@@ -38,6 +36,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   private var isDomain: Boolean = false
   private var domainValue: String? = null
   private var floatingPointId = ""
+  private var authToken: AuthTokenDataItem? = null
   private var isSyncCreateFpApi = false
   private var responseCreateProfile: BusinessProfileResponse? = null
 
@@ -49,6 +48,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       }
     }
   }
+
   override fun showProgress(title: String?, cancelable: Boolean?) {
     title?.let { fullScreenProgress.setTitle(it) }
     cancelable?.let { fullScreenProgress.isCancelable = it }
@@ -185,49 +185,23 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     this.responseCreateProfile = response
     val request = getBusinessRequest()
     isSyncCreateFpApi = true
-    viewModel?.putCreateBusinessOnboarding(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        if (it.stringResponse.isNullOrEmpty().not()) {
-          WebEngageController.initiateUserLogin(response.result?.loginId)
-          WebEngageController.setUserContactAttributes(response.result?.profileProperties?.userEmail, response.result?.profileProperties?.userMobile, response.result?.profileProperties?.userName, response.result?.sourceClientId)
-          WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
-          floatingPointId = it.stringResponse ?: ""
-          floatsRequest?.floatingPointId = floatingPointId
-          floatsRequest?.fpTag = floatsRequest?.domainName
-          floatsRequest?.requestProfile?.profileId = response.result?.loginId
-          apiBusinessActivatePlan(floatingPointId)
-        }
+    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
+      val result = it as? VerificationRequestResult
+      if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
+        WebEngageController.initiateUserLogin(response.result?.loginId)
+        WebEngageController.setUserContactAttributes(response.result?.profileProperties?.userEmail, response.result?.profileProperties?.userMobile, response.result?.profileProperties?.userName, response.result?.sourceClientId)
+        WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
+        authToken = result.authTokens?.get(0)
+        floatingPointId = authToken?.floatingPointId!!
+        floatsRequest?.floatingPointId = floatingPointId
+        floatsRequest?.fpTag = floatsRequest?.domainName
+        floatsRequest?.requestProfile?.profileId = response.result?.loginId
+        addFragmentReplace(com.framework.R.id.container, RegistrationSuccessFragment.newInstance(floatsRequest!!,authToken), true)
       } else {
         hideProgress()
         showShortToast(getString(R.string.error_create_business_fp))
       }
     })
-  }
-
-  private fun apiBusinessActivatePlan(floatingPointId: String) {
-    val request = getRequestPurchasedOrder(floatingPointId)
-    viewModel?.postActivatePurchasedOrder(clientId, request)?.observeOnce(viewLifecycleOwner, {
-      hideProgress()
-      if (it.isSuccess()) {
-        WebEngageController.trackEvent(ACTIVATE_FREE_PURCHASE_PLAN, SIGNUP_SUCCESS, NO_EVENT_VALUE)
-      } else showShortToast(getString(R.string.unable_to_activate_business_plan))
-      addFragmentReplace(com.framework.R.id.container, RegistrationSuccessFragment.newInstance(floatsRequest!!), true)
-    })
-  }
-
-
-  private fun getRequestPurchasedOrder(floatingPointId: String): ActivatePurchasedOrderRequest {
-    val widList = ArrayList<PurchasedWidget>()
-    floatsRequest?.categoryDataModel?.sections?.forEach {
-      it.getWidList().forEach { key ->
-        val widget = PurchasedWidget(widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
-            isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
-            consumptionConstraint = ConsumptionConstraint("DAYS", 30), images = ArrayList(),
-            expiry = PurchasedExpiry("YEARS", 10))
-        widList.add(widget)
-      }
-    }
-    return ActivatePurchasedOrderRequest(clientId, floatingPointId, "EXTENSION", widList)
   }
 
   private fun getBusinessRequest(): BusinessCreateRequest {
@@ -240,7 +214,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     createRequest.address = ""
     createRequest.pincode = ""
     createRequest.country = "India"
-    createRequest.primaryNumber = floatsRequest?.userBusinessMobile
+//    createRequest.primaryNumber = floatsRequest?.userBusinessMobile
     createRequest.email = floatsRequest?.userBusinessEmail
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""

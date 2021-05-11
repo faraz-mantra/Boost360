@@ -117,7 +117,10 @@
             style="@style/psn_login_edittext_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
             android:digits="0123456789"
+            android:enabled="false"
+            android:focusable="false"
             android:hint="@string/your_business_phone"
             android:inputType="phone"
             android:maxLength="10"
@@ -127,7 +130,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/civ_phone"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingClass" />
+            tools:ignore="MissingClass,RtlSymmetry" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

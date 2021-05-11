@@ -30,12 +30,11 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
 
   companion object {
     @JvmStatic
-    fun newInstance(request: CategoryFloatsRequest?) =
-        BusinessDetailsFragment().apply {
-          arguments = Bundle().apply {
-            putSerializable("request", request)
-          }
-        }
+    fun newInstance(request: CategoryFloatsRequest?) = BusinessDetailsFragment().apply {
+      arguments = Bundle().apply {
+        putSerializable("request", request)
+      }
+    }
   }
 
   override fun getLayout(): Int {
@@ -59,7 +58,7 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
     backButton?.setOnClickListener { goBack() }
     activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
-         parentFragmentManager.popBackStack()
+        parentFragmentManager.popBackStack()
       }
     })
     binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
@@ -89,10 +88,10 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
 
       floatsRequest?.requestProfile?.ProfileProperties?.userName = name
       floatsRequest?.userBusinessMobile = phone
-      if (email.isNullOrEmpty().not()){
+      if (email.isNullOrEmpty().not()) {
         floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
         floatsRequest?.userBusinessEmail = email
-      }else{
+      } else {
         floatsRequest?.requestProfile?.ProfileProperties?.userEmail = "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
         floatsRequest?.userBusinessEmail = null
       }
@@ -110,7 +109,7 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
 
   private fun validatePhone() {
     showProgress()
-    if (floatsRequest?.requestProfile?.ProfileProperties?.userMobile == floatsRequest?.userBusinessMobile){
+    if (floatsRequest?.requestProfile?.ProfileProperties?.userMobile == floatsRequest?.userBusinessMobile) {
       hideProgress()
       validateEmail()
     } else {

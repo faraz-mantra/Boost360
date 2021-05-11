@@ -21,7 +21,4 @@ class LoginActivity : FragmentContainerActivity() {
     override fun getFragmentInstance(type: Int?): BaseFragment<*, *> {
         return LoginFragment.newInstance();
     }
-
-
-
 }

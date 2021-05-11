@@ -4,15 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Observer
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.FragmentFpListBinding
 import com.boost.presignin.helper.ProcessFPDetails
 import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.fpList.FPListResponse
-import com.boost.presignin.model.fpList.ResultItem
+import com.boost.presignin.model.accessToken.AccessTokenRequest
+import com.boost.presignin.model.authToken.AccessTokenResponse
+import com.boost.presignin.model.authToken.AuthTokenDataItem
+import com.boost.presignin.model.authToken.saveAccessTokenAuth
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
@@ -22,9 +23,9 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.pref.clientId2
 import com.framework.webengageconstant.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewModel>(), RecyclerItemClickListener {
 
@@ -34,20 +35,21 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
 
   companion object {
     private const val PHONE_NUMBER = "phone_number"
+    private const val FP_LIST_AUTH = "fp_list_auth"
 
     @JvmStatic
-    fun newInstance(phoneNumber: String) = FragmentFpList().apply {
+    fun newInstance(phoneNumber: String? = null, fpListAuth: ArrayList<AuthTokenDataItem>? = null) = FragmentFpList().apply {
       arguments = Bundle().apply {
         putString(PHONE_NUMBER, phoneNumber)
+        putSerializable(FP_LIST_AUTH, fpListAuth)
       }
     }
   }
 
-  private var result: ResultItem? = null
+  private var result: AuthTokenDataItem? = null
   private lateinit var session: UserSessionManager
-  private lateinit var adapter: AppBaseRecyclerViewAdapter<ResultItem>
-  private var businessResult: ArrayList<ResultItem>? = null
-  private val phoneNumber by lazy { requireArguments().getString(PHONE_NUMBER) }
+  private lateinit var adapter: AppBaseRecyclerViewAdapter<AuthTokenDataItem>
+  private val fpListAuth by lazy { requireArguments().getSerializable(FP_LIST_AUTH) as? ArrayList<AuthTokenDataItem> }
 
   override fun getViewModelClass(): Class<LoginSignUpViewModel> {
     return LoginSignUpViewModel::class.java
@@ -58,7 +60,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnGoToDashboard)
     this.session = UserSessionManager(baseActivity)
-    getFpList()
+    setAdapterFPList()
     binding?.backIv?.setOnClickListener { goBack() }
     activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
@@ -67,49 +69,50 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     })
   }
 
+  private fun setAdapterFPList() {
+    if (fpListAuth.isNullOrEmpty().not()) {
+      this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = fpListAuth!!, itemClickListener = this)
+      binding?.rvBusinessList?.adapter = adapter
+    } else {
+      showLongToast(getString(R.string.unable_to_find_business_account_associated))
+    }
+  }
+
   private fun goBack() {
-    parentFragmentManager.popBackStackImmediate()
-    parentFragmentManager.beginTransaction().remove(this@FragmentFpList).commitAllowingStateLoss()
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnGoToDashboard -> storeFpDetails()
+      binding?.btnGoToDashboard -> createAccessTokenAuth()
     }
-  }
-
-  private fun getFpList() {
-    showProgress(getString(R.string.loading))
-    viewModel?.getFpListByMobile(phoneNumber, clientId2)?.observeOnce(viewLifecycleOwner, Observer {
-      hideProgress()
-      val fpListResponse = it as? FPListResponse
-      if (fpListResponse?.isSuccess() == true && fpListResponse.result.isNullOrEmpty().not()) {
-        this.businessResult = fpListResponse.result
-        this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = businessResult!!, itemClickListener = this)
-        binding?.rvBusinessList?.adapter = adapter
-      } else {
-        showLongToast(getString(R.string.unable_to_find_business_account_associated))
-        baseActivity.onNavPressed()
-      }
-    })
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    this.result = item as? ResultItem
-    binding?.btnGoToDashboard?.isEnabled = true
     if (actionType == RecyclerViewActionType.BUSINESS_LIST_ITEM_CLICK.ordinal) {
+      this.result = item as? AuthTokenDataItem
+      binding?.btnGoToDashboard?.isEnabled = true
       result?.isItemSelected = true
-    }
-    businessResult?.forEach { dataItems ->
-      if (dataItems != result) {
-        dataItems.isItemSelected = false
+      fpListAuth?.forEach { dataItems ->
+        if (dataItems != result) {
+          dataItems.isItemSelected = false
+        }
       }
+      binding?.rvBusinessList?.post { adapter.notifyDataSetChanged() }
     }
-    binding?.rvBusinessList?.post {
-      adapter.notifyDataSetChanged()
-    }
+  }
 
+  private fun createAccessTokenAuth() {
+    val request = AccessTokenRequest(authToken = result?.authenticationToken, clientId = clientId, fpId = result?.floatingPointId)
+    viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
+      val result = it as? AccessTokenResponse
+      if (it?.isSuccess() == true && result?.result != null) {
+        this.session.saveAccessTokenAuth(result.result!!)
+        storeFpDetails()
+      } else {
+        showLongToast(getString(R.string.access_token_create_error))
+      }
+    })
   }
 
   private fun storeFpDetails() {
