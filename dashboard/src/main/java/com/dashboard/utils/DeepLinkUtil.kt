@@ -91,6 +91,9 @@ const val deeplink_recommended_add_ons = "recommended_add_ons"
 const val deeplink_item_on_market_place = "ITEM_ONS_MARKETPLACE"
 const val deeplink_REFER_EARN = "refer_and_earn"
 const val deeplink_compare_package = "compare_package_selection"
+const val deeplink_create_order = "create_order"
+const val deeplink_create_appointment = "create_appointment"
+const val deeplink_create_consultation = "create_consultation"
 
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
@@ -109,6 +112,12 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           //pending
         } else if (url.contains(third_party_queries)) {
           baseActivity.startThirdPartyQueries(session)
+        } else if (url.contains(deeplink_create_appointment)) {
+          baseActivity.startBookAppointmentConsult(session, false)
+        } else if (url.contains(deeplink_create_consultation)) {
+          baseActivity.startBookAppointmentConsult(session, true)
+        } else if (url.contains(deeplink_create_order)) {
+          baseActivity.startOrderCreate(session)
         } else if (url.contains(facebook_chat_main)) {
           //pending
         } else if (url.contains(deeplink_manage_customer)) {

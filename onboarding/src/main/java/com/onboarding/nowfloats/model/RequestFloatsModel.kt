@@ -6,6 +6,7 @@ import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
+import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.model.registration.BusinessInfoModel
 
 class RequestFloatsModel(
@@ -28,6 +29,9 @@ class RequestFloatsModel(
     return if (isUpdate == true) fpTag else contactInfo?.domainName
   }
 
+  fun  getConnectedAccessToken():ArrayList<ChannelAccessToken>{
+    return ArrayList(channelAccessTokens?.filter { it.isLinked() })
+  }
 
   constructor(source: Parcel) : this(
       source.readParcelable<CategoryDataModel>(CategoryDataModel::class.java.classLoader),
