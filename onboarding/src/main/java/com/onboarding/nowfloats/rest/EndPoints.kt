@@ -12,6 +12,9 @@ object EndPoints {
   const val PUT_UPLOAD_BUSINESS_LOGO = "discover/v1/floatingpoint/createLogoImage"
   const val PUT_UPLOAD_PROFILE = "user/v9/floatingpoint/createUserProfileImage"
   const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
+  //todo validation email phone
+  const val VERIFY_PHONE = "/discover/v1/floatingPoint/verifyPrimaryNumber"
+  const val VERIFY_EMAIL = "/discover/v1/floatingPoint/verifyEmail"
 
   // Base With Floats APIs
   const val RIA_WITH_FLOATS_BASE_URL = "https://ria.withfloats.com/"

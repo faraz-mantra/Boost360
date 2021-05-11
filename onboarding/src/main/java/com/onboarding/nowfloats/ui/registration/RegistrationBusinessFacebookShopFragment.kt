@@ -101,7 +101,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.skip -> gotoNextScreen()
+      binding?.skip -> gotoNextScreen(true)
       binding?.linkFacebook -> {
         if (channelAccessToken.isLinked()) {
           gotoNextScreen()
@@ -125,20 +125,12 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     }
   }
 
-  private fun gotoNextScreen() {
-    if (channelAccessToken.isLinked()) {
-      requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
-    }
+  private fun gotoNextScreen(isSkip: Boolean = false) {
+    if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
     when {
-      channels.haveTwitterChannels() -> {
-        gotoTwitterDetails()
-      }
-      channels.haveWhatsAppChannels() -> {
-        gotoWhatsAppCallDetails()
-      }
-      else -> {
-        gotoBusinessApiCallDetails()
-      }
+      channels.haveTwitterChannels() -> gotoTwitterDetails()
+      channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()
+      else -> gotoBusinessApiCallDetails()
     }
   }
 

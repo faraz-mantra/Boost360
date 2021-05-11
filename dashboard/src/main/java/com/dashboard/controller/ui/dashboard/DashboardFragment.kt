@@ -128,10 +128,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val channelStatusList = getChannelStatus()
     updateUiSocialMedia(channelStatusList)
     viewModel?.getChannelsAccessTokenStatus(session?.fPID)?.observeOnce(viewLifecycleOwner, {
-      val response = it as? ChannelAccessStatusResponse
-      if (response?.isSuccess() == true) {
-        val channels = response.channels?.getChannelStatusList()
-        channels?.forEachIndexed { index, channelStatusData ->
+      if (it.isSuccess() || (it.status == 404 || it.status == 400)) {
+        val response = it as? ChannelAccessStatusResponse
+        val channels = response?.channels.getChannelStatusList()
+        channels.forEachIndexed { index, channelStatusData ->
           viewModel?.getChannelsInsight(session?.fPID, channelStatusData.accountType)?.observeOnce(viewLifecycleOwner, { it2 ->
             val response2 = it2 as? ChannelInsightsResponse
             if (response2?.isSuccess() == true) channelStatusData.insightsData = response2.data
@@ -147,12 +147,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun updateUiSocialMedia(channels: ArrayList<ChannelStatusData>) {
     binding?.socialMedia?.apply {
-      if (adapterSocialMedia == null) {
-        rvMediaChannel.apply {
-          adapterSocialMedia = AppBaseRecyclerViewAdapter(baseActivity, channels, this@DashboardFragment)
-          adapter = adapterSocialMedia
-        }
-      } else adapterSocialMedia?.notify(channels)
+      if (channels.isNotEmpty()) {
+        mainView.visible()
+        if (adapterSocialMedia == null) {
+          rvMediaChannel.apply {
+            adapterSocialMedia = AppBaseRecyclerViewAdapter(baseActivity, channels, this@DashboardFragment)
+            adapter = adapterSocialMedia
+          }
+        } else adapterSocialMedia?.notify(channels)
+      } else mainView.gone()
     }
   }
 
@@ -253,21 +256,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun visibleViewHighLow(isHigh: Boolean) {
     if (isHigh) {
       binding?.viewBusinessReport?.visible()
-      binding?.socialMedia?.root?.visible()
+//      binding?.socialMedia?.root?.visible()
       binding?.viewWebsiteReport?.visible()
       binding?.viewVersionLow?.gone()
       binding?.viewVersionHigh?.visible()
       binding?.scrollDownBtn?.apply {
-        visible()
+//        visible()
         setNoDoubleClickListener(this@DashboardFragment)
       }
     } else {
       binding?.viewBusinessReport?.gone()
-      binding?.socialMedia?.root?.gone()
+//      binding?.socialMedia?.root?.gone()
       binding?.viewWebsiteReport?.gone()
       binding?.viewVersionLow?.visible()
       binding?.viewVersionHigh?.gone()
-      binding?.scrollDownBtn?.gone()
+//      binding?.scrollDownBtn?.gone()
     }
   }
 
@@ -859,17 +862,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun getChannelAccessToken(isBusinessCardShare: Boolean = false, isEnquiriesShare: Boolean = false, shareType: ShareType? = null) {
     if (isBusinessCardShare || isEnquiriesShare) showProgress()
-    viewModel?.getChannelsAccessToken(session?.fPID)?.observeOnce(this, {
+    viewModel?.getChannelsAccessTokenStatus(session?.fPID)?.observeOnce(this, {
       var urlString = ""
       if (it.isSuccess()) {
-        val channelsAccessToken = (it as? ChannelsAccessTokenResponse)?.NFXAccessTokens
-        channelsAccessToken?.forEach { it1 ->
-          when (it1.type()) {
-            ChannelAccessToken.AccessTokenType.facebookpage.name ->
-              if (it1.UserAccountId.isNullOrEmpty().not()) urlString = "\n⚡ *Facebook: https://www.facebook.com/${it1.UserAccountId}*"
-            ChannelAccessToken.AccessTokenType.twitter.name ->
-              if (it1.UserAccountName.isNullOrEmpty().not()) urlString += "\n⚡ *Twitter: https://twitter.com/${it1.UserAccountName?.trim()}*"
-          }
+        val response = it as? ChannelAccessStatusResponse
+        if (response?.channels?.facebookpage?.account?.accountId.isNullOrEmpty().not()) {
+          urlString = "\n⚡ *Facebook: https://www.facebook.com/${response?.channels?.facebookpage?.account?.accountId}*"
+        }
+        if (response?.channels?.twitter?.account?.accountName.isNullOrEmpty().not()) {
+          urlString += "\n⚡ *Twitter: https://twitter.com/${response?.channels?.twitter?.account?.accountName?.trim()}*"
         }
       }
       getWhatsAppData(urlString, isBusinessCardShare, isEnquiriesShare, shareType)
