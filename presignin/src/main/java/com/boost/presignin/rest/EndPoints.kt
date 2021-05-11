@@ -17,6 +17,8 @@ object EndPoints {
     const val GET_FP_DETAILS_BY_PHONE = "/discover/v1/floatingPoint/getfpdetailsbynumber"
     const val SEND_OTP_INDIA = "/discover/v1/floatingpoint/SendOTPIndia"
     const val VERIFY_OTP = "/discover/v1/floatingpoint/VerifyOTP"
+    const val VERIFY_LOGIN_OTP = "/discover/v1/floatingpoint/VerifyLoginOTP"
+    const val CREATE_ACCESS_TOKEN = "/discover/v1/FloatingPoint/AccessToken/Create"
     const val FP_LIST_REGISTERED_MOBILE = "/discover/v1/floatingpoint/GetFPListforRegisteredMobile"
     const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
     const val POST_BUSINESS_DOMAIN_URL = "discover/v1/floatingPoint/verifyUniqueTag"

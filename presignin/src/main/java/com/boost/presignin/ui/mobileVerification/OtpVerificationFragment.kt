@@ -1,7 +1,6 @@
 package com.boost.presignin.ui.mobileVerification
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
@@ -10,7 +9,6 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
@@ -34,7 +32,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
   private val TAG = OtpVerificationFragment::class.java.canonicalName;
 
-  private lateinit var countDown: com.boost.presignin.Timer.CountDownTimer;
+  private lateinit var countDown: com.boost.presignin.timer.CountDownTimer;
 
   companion object {
     private const val PHONE_NUMBER = "phone_number"
@@ -68,7 +66,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
   }
 
   private fun onCodeSent() {
-    countDown = object : com.boost.presignin.Timer.CountDownTimer(50 * 1000, 1000) {
+    countDown = object : com.boost.presignin.timer.CountDownTimer(50 * 1000, 1000) {
       override fun onTick(p0: Long) {
         val resendIn = getString(R.string.psn_resend_in);
         binding?.resendTv?.text = String.format(resendIn, (p0 / 1000).toInt());
@@ -94,7 +92,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
         val resendString = getString(R.string.psn_resend_hint)
         val resendQuery = getString(R.string.psn_resend)
         val spannable = SpannableString(resendString)
-        val indexStart = resendString.indexOf(resendQuery);
+        val indexStart = resendString.indexOf(resendQuery)
         val indexEnd = resendString.length
         spannable.setSpan(clickableSpan, indexStart, indexEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding?.resendTv?.setText(spannable, TextView.BufferType.SPANNABLE)

@@ -1,5 +1,6 @@
 package com.boost.presignin.rest.services.remote
 
+import com.boost.presignin.model.accessToken.AccessTokenRequest
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.ForgotPassRequest
@@ -48,6 +49,17 @@ interface WithFloatTwoRemoteData {
   fun verifyOtp(
           @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
           @Query(value = "clientId") clientId: String?,
+  ): Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.VERIFY_LOGIN_OTP)
+  fun verifyLoginOtp(
+      @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
+      @Query(value = "clientId") clientId: String?,
+  ): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.CREATE_ACCESS_TOKEN)
+  fun createAccessToken(
+      @Body request: AccessTokenRequest?
   ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.FP_LIST_REGISTERED_MOBILE)
