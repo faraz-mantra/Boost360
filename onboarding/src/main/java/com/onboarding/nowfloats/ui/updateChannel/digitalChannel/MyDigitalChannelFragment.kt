@@ -147,7 +147,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           val response = it1 as? ChannelAccessStatusResponse
           setDataRequestChannels(categoryData, response?.channels, floatingPoint, fpTag)
         }
-        it1.status == 404 -> setDataRequestChannels(categoryData, null, floatingPoint, fpTag)
+        it1.status == 404 || it1.status == 400 -> setDataRequestChannels(categoryData, null, floatingPoint, fpTag)
         else -> errorMessage(it1.message())
       }
     })
@@ -167,9 +167,9 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         var data: ChannelAccessToken? = null
         when {
           it1.getAccessTokenType() == ChannelsType.AccountType.facebookpage.name -> {
-            val fbPage=channelsAccessToken.facebookpage
+            val fbPage = channelsAccessToken.facebookpage
             if (fbPage?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
-              data = ChannelAccessToken(type =ChannelsType.AccountType.facebookpage.name, userAccessTokenKey = null,
+              data = ChannelAccessToken(type = ChannelsType.AccountType.facebookpage.name, userAccessTokenKey = null,
                   userAccountId = fbPage.account?.accountId, userAccountName = fbPage.account?.accountName)
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
@@ -177,7 +177,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
             }
           }
           it1.getAccessTokenType() == ChannelsType.AccountType.facebookshop.name -> {
-            val fpShop=channelsAccessToken.facebookshop
+            val fpShop = channelsAccessToken.facebookshop
             if (channelsAccessToken.facebookshop?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
               data = ChannelAccessToken(type = ChannelsType.AccountType.facebookshop.name, userAccessTokenKey = null,
                   userAccountId = fpShop?.account?.userAccountId, userAccountName = null, pixelId = null,
@@ -188,9 +188,9 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
             }
           }
           it1.getAccessTokenType() == ChannelsType.AccountType.twitter.name -> {
-            val twitter=channelsAccessToken.twitter
+            val twitter = channelsAccessToken.twitter
             if (channelsAccessToken.twitter?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
-              data = ChannelAccessToken(type =ChannelsType.AccountType.twitter.name, userAccessTokenKey = null,
+              data = ChannelAccessToken(type = ChannelsType.AccountType.twitter.name, userAccessTokenKey = null,
                   userAccountId = twitter?.account?.accountId, userAccountName = twitter?.account?.accountName)
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
@@ -198,10 +198,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
             }
           }
           it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
-            val gmb=channelsAccessToken.googlemybusiness
+            val gmb = channelsAccessToken.googlemybusiness
             if (channelsAccessToken.googlemybusiness?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
               data = ChannelAccessToken(type = ChannelsType.AccountType.googlemybusiness.name, token_expiry = null, invalid = null,
-                  token_response = ChannelTokenResponse(), refresh_token =null, userAccountName = gmb?.account?.accountName, userAccountId = gmb?.account?.accountId,
+                  token_response = ChannelTokenResponse(), refresh_token = null, userAccountName = gmb?.account?.accountName, userAccountId = gmb?.account?.accountId,
                   LocationId = gmb?.account?.locationId, LocationName = gmb?.account?.locationName, userAccessTokenKey = null, verified_location = null)
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
@@ -282,7 +282,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
       editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
     }
-    val timeLine=channelsAccessToken?.facebookusertimeline
+    val timeLine = channelsAccessToken?.facebookusertimeline
     if (timeLine != null) {
       editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
 //      editorFp?.putInt("fbStatus", timeLine.Status?.toIntOrNull() ?: 0)

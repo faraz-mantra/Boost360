@@ -7,6 +7,7 @@ object PreferenceConstant {
   const val USER_ID = "user_id"
   const val PERSON_NAME = "person_name"
   const val PERSON_EMAIL = "person_email"
+  const val PERSON_NUMBER = "person_number"
   const val AUTHORIZATION = "Authorization"
   const val KEY_FP_ID = "fpid"
   const val KEY_sourceClientId = "source_clientid"
