@@ -2,6 +2,7 @@ package com.boost.presignin.viewmodel
 
 import BusinessDomainRequest
 import androidx.lifecycle.LiveData
+import com.boost.presignin.model.accessToken.AccessTokenRequest
 import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.login.ForgotPassRequest
@@ -22,9 +23,11 @@ class LoginSignUpViewModel : BaseViewModel() {
   fun checkMobileIsRegistered(number: Long?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.isMobileIsRegistered(number, clientId = clientId).toLiveData()
   }
+
   fun postActivatePurchasedOrder(clientId: String?, request: ActivatePurchasedOrderRequest): LiveData<BaseResponse> {
     return BusinessCreateRepository.postActivatePurchasedOrder(clientId, request).toLiveData()
   }
+
   fun getFpDetailsByPhone(number: Long?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getFpDetailsByPhone(number, clientId).toLiveData()
   }
@@ -47,6 +50,14 @@ class LoginSignUpViewModel : BaseViewModel() {
 
   fun verifyOtp(number: String?, otp: String?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.verifyOtp(number, otp, clientId).toLiveData()
+  }
+
+  fun verifyLoginOtp(number: String?, otp: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.verifyLoginOtp(number, otp, clientId).toLiveData()
+  }
+
+  fun createAccessToken(request: AccessTokenRequest?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.createAccessToken(request).toLiveData()
   }
 
   fun getFpListByMobile(number: String?, clientId: String?): LiveData<BaseResponse> {
