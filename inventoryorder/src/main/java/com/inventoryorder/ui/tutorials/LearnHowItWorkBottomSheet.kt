@@ -155,7 +155,7 @@ class LearnHowItWorkBottomSheet : BaseBottomSheetDialog<BottomSheetLearnHowItWor
                     textToSpeechEngine.stop()
                 } else {
                     binding?.civSpeakHowItWorks?.setTintColor(Color.parseColor("#ffb900"))
-                    speak(binding?.ctvHowItWorksContent.toString())
+                    speak(fromHtml(binding?.ctvHowItWorksContent?.text.toString()).toString())
                 }
             }
             binding?.civSpeakTips -> {
