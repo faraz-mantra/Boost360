@@ -1,6 +1,7 @@
 package com.boost.presignin.rest.services.remote
 
 import com.boost.presignin.model.accessToken.AccessTokenRequest
+import com.boost.presignin.model.authToken.AccessTokenResponse
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.ForgotPassRequest
@@ -61,7 +62,7 @@ interface WithFloatTwoRemoteData {
   @POST(EndPoints.CREATE_ACCESS_TOKEN)
   fun createAccessToken(
       @Body request: AccessTokenRequest?
-  ): Observable<Response<ResponseBody>>
+  ): Observable<Response<AccessTokenResponse>>
 
   @GET(EndPoints.FP_LIST_REGISTERED_MOBILE)
   fun getFpListForRegisteredMobile(@Query("mobileNumber") number: String?, @Query(value = "clientId") clientId: String?): Observable<Response<FPListResponse>>

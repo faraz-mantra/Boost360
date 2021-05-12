@@ -42,8 +42,8 @@ class DashboardViewModel : BaseViewModel() {
     return ChannelRepository.getChannelsInsights(nowfloatsId, identifier).toLiveData()
   }
 
-  fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(getJsonRequest(request), auth).toLiveData()
+  fun getWhatsappBusiness(request: String?): LiveData<BaseResponse> {
+    return WhatsAppRepository.getWhatsappBusiness(getJsonRequest(request)).toLiveData()
   }
 
   fun nfxProcess(request: NFXProcessRequest?): LiveData<BaseResponse> {
@@ -54,8 +54,8 @@ class DashboardViewModel : BaseViewModel() {
     return ApiTwoWithFloatRepository.getBizFloatMessage(request).toLiveData()
   }
 
-  fun fpOnboardingUpdate(auth: String?, request: OnBoardingUpdateModel?): LiveData<BaseResponse> {
-    return KitWebActionRepository.fpOnboardingUpdate(auth, request).toLiveData()
+  fun fpOnboardingUpdate(request: OnBoardingUpdateModel?): LiveData<BaseResponse> {
+    return KitWebActionRepository.fpOnboardingUpdate(request).toLiveData()
   }
 
   fun getNotificationCount(clientId: String?, fpId: String?): LiveData<BaseResponse> {
@@ -66,7 +66,7 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getNavDashboardData(context).toLiveData()
   }
 
-  fun  getSearchAnalytics(fpTag: String?,  startDate: String?, endDate: String?): LiveData<BaseResponse> {
+  fun getSearchAnalytics(fpTag: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
     return DevBoostKitRepository.getSearchAnalytics(fpTag, startDate, endDate).toLiveData()
   }
 
@@ -101,15 +101,16 @@ class DashboardViewModel : BaseViewModel() {
   fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
   }
-  fun getSellerSummaryV2_5(clientId: String?, sellerId: String?,request: SellerSummaryRequest?): LiveData<BaseResponse> {
-    return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId,request).toLiveData()
+
+  fun getSellerSummaryV2_5(clientId: String?, sellerId: String?, request: SellerSummaryRequest?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId, request).toLiveData()
   }
 
   fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
     return ApiWithFloatRepository.getUserSummary(clientId, fpIdParent, scope, startDate, endDate).toLiveData()
   }
 
-  fun  getSubscriberCount(fpTag: String?, clientId: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
+  fun getSubscriberCount(fpTag: String?, clientId: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
     return ApiWithFloatRepository.getSubscriberCount(fpTag, clientId, startDate, endDate).toLiveData()
   }
 

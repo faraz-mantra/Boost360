@@ -20,7 +20,6 @@ interface BoostKitDevRemoteData {
 
   @GET(EndPoints.GET_TESTIMONIAL)
   fun getTestimonialsList(
-      @Header("Authorization") token: String?,
       @Path("testimonials") testimonialType: String?,
       @Query("query") query: JSONObject?,
       @Query("skip") skip: Int,
@@ -43,7 +42,6 @@ interface BoostKitDevRemoteData {
 
   @POST(EndPoints.DELETE_TESTIMONIAL)
   fun deleteTestimonials(
-      @Header("Authorization") token: String?,
       @Path("testimonials") testimonialType: String?,
       @Body body: DeleteTestimonialRequest?,
   ): Observable<Response<Any>>

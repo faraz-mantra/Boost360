@@ -3,6 +3,7 @@ package com.boost.presignin.ui.mobileVerification
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -26,8 +27,11 @@ import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.system.exitProcess
 
 class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewModel>(), RecyclerItemClickListener {
+
+  private var exitToast: Toast? = null
 
   override fun getLayout(): Int {
     return R.layout.fragment_fp_list
@@ -79,6 +83,13 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
   }
 
   private fun goBack() {
+    if (exitToast == null || exitToast?.view == null || exitToast?.view?.windowToken == null) {
+      exitToast = Toast.makeText(baseActivity, resources.getString(R.string.press_again_exit), Toast.LENGTH_SHORT)
+      exitToast?.show()
+    } else {
+      exitToast?.cancel()
+      exitProcess(0)
+    }
   }
 
   override fun onClick(v: View) {
