@@ -23,6 +23,9 @@ open class AppDashboardApplication : BaseApplication() {
     fun initModule(application: MultiDexApplication) {
       BaseApplication.instance = application
       PreferencesUtils.initSharedPreferences(application)
+    }
+
+    private fun apiInitialize() {
       DevBoostKitApiClient.shared.init(DEV_BOOST_KIT_URL)
       DevBoostKitNewApiClient.shared.init(BOOST_KIT_NEW_BASE)
       WithFloatsApiClient.shared.init(WITH_FLOATS_BASE)

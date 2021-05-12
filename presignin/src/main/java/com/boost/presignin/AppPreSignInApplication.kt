@@ -21,11 +21,14 @@ open class AppPreSignInApplication : BaseApplication() {
     fun initModule(application: MultiDexApplication) {
       BaseApplication.instance = application
       PreferencesUtils.initSharedPreferences(application)
+      apiInitialize()
+    }
+
+    private fun apiInitialize() {
       WithFloatsApiTwoClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE)
       NfxFacebookAnalyticsClient.shared.init(EndPoints.NFX_WITH_NOWFLOATS)
       WebActionBoostKitClient.shared.init(EndPoints.WEB_ACTION_BOOST_KIT_API_URL)
-
     }
   }
 }

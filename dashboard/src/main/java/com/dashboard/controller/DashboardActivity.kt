@@ -366,7 +366,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           exitToast?.show()
         } else {
           exitToast?.cancel()
-          exitProcess(0)
+          this.finish()
         }
       }
       else -> openDashboard()

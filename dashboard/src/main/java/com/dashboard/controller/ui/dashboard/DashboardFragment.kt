@@ -248,7 +248,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
         }
-        showSimmerDrScore(false)
+        showSimmerDrScore(isSimmer = false, isRetry = false)
       } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
     })
   }
