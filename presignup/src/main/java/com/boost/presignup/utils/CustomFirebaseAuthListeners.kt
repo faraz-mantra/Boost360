@@ -1,8 +1,8 @@
 package com.boost.presignup.utils
 
+import com.boost.presignup.datamodel.fptag.FpTagLoginResponse
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse
-import com.boost.presignup.datamodel.userprofile.UserProfileVerificationResponse
 import com.boost.presignup.datamodel.userprofile.VerificationRequestResult
 
 interface CustomFirebaseAuthListeners {
@@ -10,4 +10,5 @@ interface CustomFirebaseAuthListeners {
     fun onSuccess(response: ConnectUserProfileResponse?)
     fun onFailure()
     fun onSuccess(response: VerificationRequestResult?)
+    fun onSuccessFpTag(response: FpTagLoginResponse?)
 }

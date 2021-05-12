@@ -80,7 +80,7 @@
               android:focusableInTouchMode="true"
               android:fontFamily="@font/open_sans"
               android:gravity="bottom"
-              android:hint="@string/username"
+              android:hint="Enter user fpTag"
               android:inputType="textEmailAddress"
               android:textColor="@color/text_color_roboto_lt_30_edittext"
               android:textColorHint="@color/hint_color_roboto_lt_30_edittext" />
@@ -101,6 +101,7 @@
         <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
+          android:visibility="gone"
           android:layout_marginTop="@dimen/_10sdp">
 
           <LinearLayout

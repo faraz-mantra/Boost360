@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import com.boost.presignup.R
 import com.boost.presignup.datamodel.Apis
+import com.boost.presignup.datamodel.fptag.FpTagLoginResponse
 import com.boost.presignup.datamodel.userprofile.*
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -206,8 +207,10 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
     }).executeAsync()
   }
 
-  fun requestUserProfileAPI(personIdToken: String, email: String, userPassword: String, userMobile: String, personName: String,
-                            provider: String, loginKey: String) {
+  fun requestUserProfileAPI(
+      personIdToken: String, email: String, userPassword: String, userMobile: String, personName: String,
+      provider: String, loginKey: String,
+  ) {
 
     val userInfo = UserProfileRequest(
         personIdToken,
@@ -248,6 +251,23 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
     }
   }
 
+  fun verifyFpTagAPI(loginKey: String) {
+    ApiService.verifyFpTagLogin(loginKey, "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21").enqueue(object : Callback<FpTagLoginResponse> {
+      override fun onResponse(call: Call<FpTagLoginResponse>, response: Response<FpTagLoginResponse>) {
+        if (response.isSuccessful) {
+          if (response.body() != null) {
+            val data: FpTagLoginResponse = response.body()!!
+            listener.onSuccessFpTag(data)
+          } else listener.onFailure()
+        }
+      }
+
+      override fun onFailure(call: Call<FpTagLoginResponse>, t: Throwable) {
+        listener.onFailure()
+      }
+    })
+  }
+
   fun verifyUserProfileAPI(loginKey: String, loginSecret: String, provider: String) {
     val userInfo = UserProfileVerificationRequest("", provider,
         loginKey, loginSecret, "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
@@ -271,7 +291,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 return
               }
               WebEngageController.initiateUserLogin(response.loginId)
-              WebEngageController.setUserContactAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName,response.sourceClientId)
+              WebEngageController.setUserContactAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName, response.sourceClientId)
               WebEngageController.trackEvent(PS_LOGIN_SUCCESS, LOGIN_SUCCESS, NO_EVENT_VALUE)
 //              SmartLookController.setUserAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName,response.sourceClientId)
               listener.onSuccess(response)
@@ -281,7 +301,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
           } else {
             listener.onSuccess(VerificationRequestResult())
           }
-        }else{
+        } else {
           listener.onFailure()
         }
       }

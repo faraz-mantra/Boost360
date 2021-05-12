@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.boost.presignup.datamodel.fptag.FpTagLoginResponse;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResult;
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
@@ -210,6 +211,11 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
     }
 
     private CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
+        @Override
+        public void onSuccessFpTag(@org.jetbrains.annotations.Nullable FpTagLoginResponse response) {
+
+        }
+
         @Override
         public void onSuccess(@Nullable VerificationRequestResult response) {
             Log.i(OnBoardingActivity.class.getName(), new Gson().toJson(response));

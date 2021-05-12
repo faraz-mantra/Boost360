@@ -38,6 +38,7 @@ import com.android.volley.toolbox.Volley;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.appservice.model.kycData.PaymentKycDataResponse;
 import com.boost.presignup.PreSignUpActivity;
+import com.boost.presignup.datamodel.fptag.FpTagLoginResponse;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
 import com.boost.presignup.datamodel.userprofile.UserResult;
@@ -94,7 +95,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   View line1, line2;
 
   UserSessionManager session;
-  String userNameText, passwordText;
+  String userNameText; //passwordText;
   public static ProgressDialog progressDialog;
   String currentProvider = "";
 
@@ -344,10 +345,12 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
     CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
       @Override
+      public void onSuccessFpTag(@Nullable FpTagLoginResponse response) {
+        processLoginSuccessRequest(response);
+      }
+
+      @Override
       public void onSuccess(@Nullable VerificationRequestResult response) {
-        if (progressDialog != null && progressDialog.isShowing()) {
-          progressDialog.dismiss();
-        }
         if (response != null && response.getLoginId() != null) processLoginSuccessRequest(response);
         else Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
       }
@@ -382,15 +385,16 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     loginButton = findViewById(R.id.loginButton);
     loginButton.setOnClickListener(v -> {
       userNameText = userName.getText().toString().trim();
-      passwordText = password.getText().toString().trim();
-      if (userNameText.length() > 0 && passwordText.length() > 0) {
+//      passwordText = password.getText().toString().trim();
+      if (userNameText.length() > 0) {
         Methods.hideKeyboard(Login_MainActivity.this);
         userName.clearFocus();
         progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.processing_request));
         progressDialog.setCancelable(true);
         currentProvider = "";
         customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
-        customFirebaseAuthHelpers.verifyUserProfileAPI(userNameText, passwordText, "");
+//        customFirebaseAuthHelpers.verifyUserProfileAPI(userNameText, passwordText, "");
+        customFirebaseAuthHelpers.verifyFpTagAPI(userNameText);
       } else {
         YoYo.with(Techniques.Shake).playOn(userName);
         YoYo.with(Techniques.Shake).playOn(password);
@@ -432,11 +436,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void startDashboard() {
-    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
     dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     startActivity(dashboardIntent);
     overridePendingTransition(0, 0);
     finish();
+    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
   }
 
   @Override
@@ -604,6 +608,15 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     }
   }
 
+  private void processLoginSuccessRequest(FpTagLoginResponse response) {
+    session.setUserLogin(true);
+    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
+    session.storeISEnterprise("false");
+//    session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
+    session.storeFPID(response.getId());
+    authenticationStatus("Success");
+  }
+
   private void processLoginSuccessRequest(VerificationRequestResult response) {
     if (response.getLoginId() != null && !response.getLoginId().isEmpty()) {
       try {
@@ -639,6 +652,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     progressDialog = ProgressDialog.show(this, "", "Loading");
 
     customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(this, new CustomFirebaseAuthListeners() {
+      @Override
+      public void onSuccessFpTag(@Nullable FpTagLoginResponse response) {
+
+      }
+
       @Override
       public void onSuccess(@Nullable VerificationRequestResult response) {
         if (progressDialog != null && progressDialog.isShowing())
