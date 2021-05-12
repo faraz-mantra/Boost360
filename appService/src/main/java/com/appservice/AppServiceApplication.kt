@@ -17,6 +17,7 @@ open class AppServiceApplication : BaseApplication() {
     fun initModule(application: MultiDexApplication) {
       BaseApplication.instance = application
       PreferencesUtils.initSharedPreferences(application)
+      apiInitialize()
     }
 
     private fun apiInitialize() {
