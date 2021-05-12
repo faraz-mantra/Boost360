@@ -15,6 +15,7 @@ open class BaseResponse(
     var anyResponse: Any? = null,
     var responseBody: ResponseBody? = null,
 ) : Serializable {
+
   fun message(): String {
     val message = message ?: ""
     return try {

@@ -7,10 +7,14 @@ import android.os.Handler
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.isVisible
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.clientId2
 import com.framework.utils.showKeyBoard
+import com.framework.views.DotProgressBar
 import com.framework.webengageconstant.BUILDING_YOUR_BUSINESS_CONTACT_INFO
 import com.framework.webengageconstant.CLICKED
 import com.framework.webengageconstant.CONFIRM
@@ -20,8 +24,13 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessContactInfoBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.model.registration.BusinessInfoModel
+import com.onboarding.nowfloats.model.verification.RequestValidateEmail
+import com.onboarding.nowfloats.model.verification.RequestValidatePhone
 import com.onboarding.nowfloats.ui.CitySearchDialog
 import com.onboarding.nowfloats.utils.WebEngageController
+import okio.Buffer
+import okio.BufferedSource
+import java.nio.charset.Charset
 
 class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding>() {
 
@@ -48,7 +57,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
             baseActivity.showKeyBoard(binding?.storeName)
           }?.subscribe()
     }
-    setOnClickListener(binding?.next, binding?.address)
+    setOnClickListener(binding?.next, binding?.textBtn, binding?.address)
     binding?.number?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
       if (hasFocus && binding?.countryCode?.visibility == GONE) {
         binding?.countryCode?.visible()
@@ -84,28 +93,62 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.next -> {
+      binding?.next, binding?.textBtn -> {
         requestFloatsModel?.contactInfo = businessInfoModel
         if (binding?.textBtn?.isVisible() == true && isValid()) {
           getDotProgress()?.let {
             binding?.textBtn?.visibility = GONE
             binding?.next?.addView(it)
             it.startAnimation()
-            Handler().postDelayed({
-              it.stopAnimation()
-              it.removeAllViews()
-              binding?.textBtn?.visibility = VISIBLE
-              gotoBusinessWebsite()
-
-              //Business Contact Info Event Tracker.
-              WebEngageController.trackEvent(BUILDING_YOUR_BUSINESS_CONTACT_INFO, CONFIRM, CLICKED)
-
-            }, 300)
+            checkIsValidEmailPhone(it)
           }
         }
       }
       binding?.address -> startAutocompleteActivity()
     }
+  }
+
+  private fun checkIsValidEmailPhone(dotProgressBar: DotProgressBar) {
+    viewModel?.validateUsersPhone(RequestValidatePhone(clientId2, "+91", businessInfoModel.number))?.observeOnce(viewLifecycleOwner, {
+      hideProgress()
+      if (it.isSuccess()) {
+        when {
+          parseResponse(it) -> errorMessageShow(dotProgressBar, getString(R.string.this_number_is_already_in_use))
+          businessInfoModel.email.isNullOrEmpty().not() -> {
+            viewModel?.validateUsersEmail(RequestValidateEmail(clientId2, businessInfoModel.email))?.observeOnce(viewLifecycleOwner, { it1 ->
+              hideProgress()
+              if (it1.isSuccess()) {
+                if (parseResponse(it1)) errorMessageShow(dotProgressBar, getString(R.string.this_email_is_already_in_use))
+                else goNextPageDomain(dotProgressBar)
+              } else errorMessageShow(dotProgressBar, getString(R.string.validation_error_try_again))
+            })
+          }
+          else -> goNextPageDomain(dotProgressBar)
+        }
+      } else errorMessageShow(dotProgressBar, getString(R.string.validation_error_try_again))
+    })
+  }
+
+  private fun errorMessageShow(dotProgressBar: DotProgressBar, error: String) {
+    Handler().postDelayed({
+      showLongToast(error)
+      dotProgressBar.stopAnimation()
+      binding?.next?.removeView(dotProgressBar)
+      dotProgressBar.removeAllViews()
+      binding?.textBtn?.visibility = VISIBLE
+    }, 100)
+  }
+
+  private fun goNextPageDomain(dotProgressBar: DotProgressBar) {
+    Handler().postDelayed({
+      dotProgressBar.stopAnimation()
+      binding?.next?.removeView(dotProgressBar)
+      dotProgressBar.removeAllViews()
+      binding?.textBtn?.visibility = VISIBLE
+      gotoBusinessWebsite()
+      //Business Contact Info Event Tracker.
+      WebEngageController.trackEvent(BUILDING_YOUR_BUSINESS_CONTACT_INFO, CONFIRM, CLICKED)
+    }, 100)
   }
 
   private fun isValid(): Boolean {
@@ -155,6 +198,18 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
       val placeName = String.format("%s", place?.name)
       binding?.address?.setText(placeName)
       val address = String.format("%s", place?.address)
+    }
+  }
+
+  private fun parseResponse(it: BaseResponse): Boolean {
+    return try {
+      val source: BufferedSource? = it.responseBody?.source()
+      source?.request(Long.MAX_VALUE)
+      val buffer: Buffer? = source?.buffer
+      val responseBodyString: String? = buffer?.clone()?.readString(Charset.forName("UTF-8"))
+      responseBodyString.toBoolean()
+    } catch (e: Exception) {
+      false
     }
   }
 }
