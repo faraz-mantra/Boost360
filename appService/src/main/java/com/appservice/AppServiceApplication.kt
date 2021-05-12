@@ -17,6 +17,9 @@ open class AppServiceApplication : BaseApplication() {
     fun initModule(application: MultiDexApplication) {
       BaseApplication.instance = application
       PreferencesUtils.initSharedPreferences(application)
+    }
+
+    private fun apiInitialize() {
       WithFloatsApiTwoClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
       NowfloatsApiClient.shared.init(EndPoints.API_NOWFLOATS_COM_BASE)
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE)

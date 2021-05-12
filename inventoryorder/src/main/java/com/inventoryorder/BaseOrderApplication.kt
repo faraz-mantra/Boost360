@@ -17,6 +17,10 @@ open class BaseOrderApplication : BaseApplication() {
     fun initModule(application: MultiDexApplication) {
       BaseApplication.instance = application
       PreferencesUtils.initSharedPreferences(application)
+      apiInitialize()
+    }
+
+    private fun apiInitialize() {
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE_URL)
       BoostFloatsApiClient.shared.init(EndPoints.BOOST_FLOATS_BASE_URL)
       Api2WithFloatClient.shared.init(EndPoints.BOOST_API2_WITH_FLOAT)
