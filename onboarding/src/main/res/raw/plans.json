@@ -1,8 +1,9 @@
-  [
-   {
-      "planName":"Boost360 Trial Plan",
-      "widgetKeys":[
-         "DOMAINPURCHASE",
+{
+  "data": [
+    {
+      "planName": "Boost360 Trial Plan",
+      "widgetKeys": [
+        "DOMAINPURCHASE",
         "EMAILACCOUNTS3",
         "PRODUCTCATALOGUE",
         "SOCIALSHARE",
@@ -19,18 +20,18 @@
         "PAYMENTGATEWAY",
         "CUSTOMPAGES"
       ],
-      "extraProperties":[
-       {
-            "widget":"EMAILACCOUNTS3",
-            "key":"LIMIT",
-            "value":3
-         },
-         {
-            "widget":"PRODUCTCATALOGUE",
-            "key":"LIMIT",
-            "value":10
-         }
+      "extraProperties": [
+        {
+          "widget": "EMAILACCOUNTS3",
+          "key": "LIMIT",
+          "value": 3
+        },
+        {
+          "widget": "PRODUCTCATALOGUE",
+          "key": "LIMIT",
+          "value": 10
+        }
       ]
-   }
-   
-]
+    }
+  ]
+}
