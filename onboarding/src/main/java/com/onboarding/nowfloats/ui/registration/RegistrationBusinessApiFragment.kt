@@ -177,7 +177,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       val authorization = auth ?: ""
       val dataRequest = UpdateChannelActionDataRequest(requestFloatsModel?.channelActionDatas?.firstOrNull(), requestFloatsModel?.getWebSiteId())
       viewModel?.postUpdateWhatsappRequest(dataRequest, authorization)
-          ?.observeOnce(viewLifecycleOwner, Observer {
+          ?.observeOnce(viewLifecycleOwner, {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(WHATS_APP_CONNECTED, DIGITAL_CHANNELS, it) }
               connectedChannels.forEach { it1 ->

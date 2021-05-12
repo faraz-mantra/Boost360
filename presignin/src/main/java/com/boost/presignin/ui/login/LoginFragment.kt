@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentLoginBinding
@@ -14,8 +13,7 @@ import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.service.APIService
-import com.boost.presignin.ui.intro.IntroActivity
-import com.boost.presignin.ui.mobileVerification.fp.FragmentFpList
+import com.boost.presignin.ui.mobileVerification.FloatingPointAuthFragment
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
@@ -96,7 +94,7 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     session?.storeIsThinksity((response.sourceClientId != null && response.sourceClientId == clientIdThinksity).toString() + "")
     session?.storeFPID(response.validFPIds?.get(0))
     session?.setAccountSave(true)
-    addFragmentReplace(com.framework.R.id.container, FragmentFpList.newInstance(fpListAuth = response.authTokens), false)
+    addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(fpListAuth = response.authTokens), false)
     hideProgress()
     //loadFpDetails(response)
   }

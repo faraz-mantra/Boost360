@@ -1,4 +1,4 @@
-package com.boost.presignin.ui.mobileVerification.fp
+package com.boost.presignin.ui.mobileVerification
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +13,6 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.accessToken.AccessTokenRequest
 import com.boost.presignin.model.authToken.AccessTokenResponse
 import com.boost.presignin.model.authToken.AuthTokenDataItem
-import com.boost.presignin.model.authToken.saveAccessTokenAuth
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
@@ -23,11 +22,12 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewModel>(), RecyclerItemClickListener {
+class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewModel>(), RecyclerItemClickListener {
 
   override fun getLayout(): Int {
     return R.layout.fragment_fp_list
@@ -38,7 +38,7 @@ class FragmentFpList : AppBaseFragment<FragmentFpListBinding, LoginSignUpViewMod
     private const val FP_LIST_AUTH = "fp_list_auth"
 
     @JvmStatic
-    fun newInstance(phoneNumber: String? = null, fpListAuth: ArrayList<AuthTokenDataItem>? = null) = FragmentFpList().apply {
+    fun newInstance(phoneNumber: String? = null, fpListAuth: ArrayList<AuthTokenDataItem>? = null) = FloatingPointAuthFragment().apply {
       arguments = Bundle().apply {
         putString(PHONE_NUMBER, phoneNumber)
         putSerializable(FP_LIST_AUTH, fpListAuth)
