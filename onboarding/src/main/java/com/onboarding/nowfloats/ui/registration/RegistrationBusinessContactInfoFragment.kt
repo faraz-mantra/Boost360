@@ -148,7 +148,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     requestFloatsModel?.contactInfo?.businessName = binding?.storeName?.text?.toString()
     requestFloatsModel?.contactInfo?.addressCity = binding?.address?.text?.toString()
     requestFloatsModel?.contactInfo?.email = binding?.email?.text?.toString()
-    businessInfoModel.number = binding?.number?.text?.toString()
+//    businessInfoModel.number = binding?.number?.text?.toString()
 
     return if (businessInfoModel.businessName.isNullOrBlank()) {
       showShortToast(resources.getString(R.string.business_cant_empty))
@@ -159,13 +159,15 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     } else if (!businessInfoModel.email.isNullOrEmpty() && !businessInfoModel.isEmailValid()) {
       showShortToast(resources.getString(R.string.email_invalid))
       false
-    } else if (businessInfoModel.number.isNullOrEmpty()) {
-      showShortToast(resources.getString(R.string.phone_number_cannot_be_empty))
-      false
-    } else if (!businessInfoModel.isNumberValid()) {
-      showShortToast(resources.getString(R.string.phone_number_invalid))
-      false
-    } else true
+    }
+//    else if (businessInfoModel.number.isNullOrEmpty()) {
+//      showShortToast(resources.getString(R.string.phone_number_cannot_be_empty))
+//      false
+//    } else if (!businessInfoModel.isNumberValid()) {
+//      showShortToast(resources.getString(R.string.phone_number_invalid))
+//      false
+//    }
+    else true
   }
 
   override fun updateInfo() {

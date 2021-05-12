@@ -1,6 +1,7 @@
 package com.onboarding.nowfloats.model.plan
 
+import com.framework.base.BaseResponse
 
-import com.google.gson.annotations.SerializedName
-
-class Plan15DaysResponse : ArrayList<Plan15DaysResponseItem>()
+class Plan15DaysResponse(
+    val data: ArrayList<Plan15DaysResponseItem>? = null
+) : BaseResponse()
