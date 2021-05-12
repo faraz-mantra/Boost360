@@ -8,31 +8,29 @@ import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
 
-abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLocalService> :
-        BaseRepository<RemoteDataSource, LocalDataSource>() {
+abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLocalService> : BaseRepository<RemoteDataSource, LocalDataSource>() {
 
-    protected fun <T> makeRemoteRequest(
-            observable: Observable<Response<T>>, taskCode: Taskcode
-    ): Observable<BaseResponse> {
-        return makeRemoteRequest(observable, taskCode.ordinal)
-    }
+  protected fun <T> makeRemoteRequest(observable: Observable<Response<T>>, taskCode: Taskcode): Observable<BaseResponse> {
+    return makeRemoteRequest(observable, taskCode.ordinal)
+  }
 
-    override fun getApiClient(): Retrofit {
-        return NfxApiClient.shared.retrofit
-    }
+  override fun getApiClient(): Retrofit {
+    return NfxApiClient.shared.retrofit
+  }
 
-    fun makeLocalRequest(observable: Observable<BaseResponse>,
-                         taskCode: Taskcode
-    ): Observable<BaseResponse> {
-        return makeLocalResponse(observable, taskCode.ordinal)
-    }
+  fun makeLocalRequest(
+      observable: Observable<BaseResponse>,
+      taskCode: Taskcode,
+  ): Observable<BaseResponse> {
+    return makeLocalResponse(observable, taskCode.ordinal)
+  }
 
-    protected fun onFailure(response: BaseResponse, taskCode: Taskcode) {
-        super.onFailure(response, taskCode.ordinal)
-    }
+  protected fun onFailure(response: BaseResponse, taskCode: Taskcode) {
+    super.onFailure(response, taskCode.ordinal)
+  }
 
-    protected fun onSuccess(response: BaseResponse, taskCode: Taskcode) {
-        super.onSuccess(response, taskCode.ordinal)
-        localDataSource.saveToLocal(response, taskCode)
-    }
+  protected fun onSuccess(response: BaseResponse, taskCode: Taskcode) {
+    super.onSuccess(response, taskCode.ordinal)
+    localDataSource.saveToLocal(response, taskCode)
+  }
 }

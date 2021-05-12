@@ -10,6 +10,7 @@ import io.reactivex.Observable
 import java.util.*
 
 interface NfxFacebookAnalyticsRemoteDataSource {
+
     @Headers("key:78234i249123102398", "pwd:JYUYTJH*(*&BKJ787686876bbbhl)", "Content-Type:application/json")
     @GET(EndPoints.FETCH_DATA_ANALYTICS)
     fun nfxFetchFacebookData(@Query("nowfloats_id") id: String?, @Query("identifier") identifier: String?): Observable<Response<NfxGetTokensResponse>>

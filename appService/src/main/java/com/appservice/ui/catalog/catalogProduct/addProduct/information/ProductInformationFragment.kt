@@ -414,7 +414,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
           showProgress(resources.getString(R.string.removing_image))
           val request = ProductImageDeleteRequest()
           request.setQueryData(dataImage.id)
-          viewModel?.deleteProductImage(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
+          viewModel?.deleteProductImage(request)?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)

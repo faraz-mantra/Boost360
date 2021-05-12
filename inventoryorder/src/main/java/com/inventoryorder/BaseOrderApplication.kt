@@ -15,6 +15,7 @@ open class BaseOrderApplication : BaseApplication() {
 
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
+      BaseApplication.instance = application
       PreferencesUtils.initSharedPreferences(application)
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE_URL)
       BoostFloatsApiClient.shared.init(EndPoints.BOOST_FLOATS_BASE_URL)
@@ -23,7 +24,6 @@ open class BaseOrderApplication : BaseApplication() {
       AssuredPurchaseClient.shared.init(EndPoints.ASSURED_PURCHASE_BASE_URL)
       WebActionBoostKitApiClient.shared.init(EndPoints.WEB_ACTION_BOOST_KIT_BASE_URL)
       NowFloatClient.shared.init(EndPoints.API_NOW_FLOATS)
-      BaseApplication.instance = application
     }
   }
 }

@@ -33,12 +33,12 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     return makeRemoteRequest(remoteDataSource.getSellerSummaryV2_5(clientId, sellerId, request), TaskCode.GET_SELLER_SUMMARY)
   }
 
-  fun getSellerOrders(auth: String, request: OrderSummaryRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getSellerOrders(auth, request.clientId, request.sellerId, request.orderMode, request.deliveryMode, request.orderStatus, request.paymentStatus, request.skip, request.limit), TaskCode.GET_LIST_ORDER)
+  fun getSellerOrders(request: OrderSummaryRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getSellerOrders(request.clientId, request.sellerId, request.orderMode, request.deliveryMode, request.orderStatus, request.paymentStatus, request.skip, request.limit), TaskCode.GET_LIST_ORDER)
   }
 
-  fun getSellerOrdersFilter(auth: String, request: OrderFilterRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getSellerOrdersFiler(auth, request.clientId, request), TaskCode.GET_LIST_ORDER_FILTER)
+  fun getSellerOrdersFilter(request: OrderFilterRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getSellerOrdersFiler(request.clientId, request), TaskCode.GET_LIST_ORDER_FILTER)
   }
 
   fun getAssurePurchaseOrders(request: OrderSummaryRequest): Observable<BaseResponse> {

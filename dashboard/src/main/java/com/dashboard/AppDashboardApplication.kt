@@ -18,10 +18,11 @@ open class AppDashboardApplication : BaseApplication() {
 
   companion object {
     lateinit var instance: MultiDexApplication
+
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
-      PreferencesUtils.initSharedPreferences(application)
       BaseApplication.instance = application
+      PreferencesUtils.initSharedPreferences(application)
       DevBoostKitApiClient.shared.init(DEV_BOOST_KIT_URL)
       DevBoostKitNewApiClient.shared.init(BOOST_KIT_NEW_BASE)
       WithFloatsApiClient.shared.init(WITH_FLOATS_BASE)

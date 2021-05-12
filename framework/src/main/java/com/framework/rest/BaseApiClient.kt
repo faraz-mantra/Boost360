@@ -17,6 +17,7 @@ open class BaseApiClient protected constructor() {
   lateinit var retrofit: Retrofit
   private var httpClient: OkHttpClient.Builder
   private var gson = GsonBuilder().setLenient().create()
+  private var isAuthRemove = false
 
   companion object {
     val shared = BaseApiClient()
@@ -44,12 +45,13 @@ open class BaseApiClient protected constructor() {
   protected fun getInterceptors(): ArrayList<Interceptor> {
     val session = UserSessionManager(BaseApplication.instance)
     val tokenResult = session.getAccessTokenAuth()
-    return if (tokenResult != null && tokenResult.token.isNullOrEmpty().not()) {
+    return if (isAuthRemove.not() && tokenResult != null && tokenResult.token.isNullOrEmpty().not()) {
       return arrayListOf(OAuthInterceptor("Bearer ", tokenResult.token!!))
     } else ArrayList()
   }
 
-  fun init(baseUrl: String) {
+  fun init(baseUrl: String, isAuthRemove: Boolean = false) {
+    this.isAuthRemove = isAuthRemove
     retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create(gson))
@@ -57,5 +59,4 @@ open class BaseApiClient protected constructor() {
         .client(httpClient.build())
         .build()
   }
-
 }

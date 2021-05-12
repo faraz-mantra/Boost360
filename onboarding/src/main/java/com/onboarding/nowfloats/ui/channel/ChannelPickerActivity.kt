@@ -142,7 +142,7 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
   }
 
   private fun getWhatsAppData(requestFloatsNew: RequestFloatsModel) {
-    viewModel.getWhatsappBusiness(requestFloatsNew.fpTag, auth!!).observeOnce(this, Observer {
+    viewModel.getWhatsappBusiness(requestFloatsNew.fpTag).observeOnce(this, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()

@@ -57,6 +57,7 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
+import kotlin.system.exitProcess
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
@@ -365,7 +366,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           exitToast?.show()
         } else {
           exitToast?.cancel()
-          this.finish()
+          exitProcess(0)
         }
       }
       else -> openDashboard()

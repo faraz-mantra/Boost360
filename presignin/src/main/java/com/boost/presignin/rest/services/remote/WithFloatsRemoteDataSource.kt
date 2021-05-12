@@ -10,6 +10,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface WithFloatsRemoteDataSource {
+
     @GET(EndPoints.USER_DETAILS_WITH_FLOAT)
     fun userAccountDetail(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?):Observable<Response<AccountDetailsResponse>>
     @POST(EndPoints.VERIFY_EMAIL)
