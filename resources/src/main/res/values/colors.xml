@@ -62,6 +62,7 @@
   <color name="black_10">#19000000</color>
   <color name="dimgray">#54617A</color>
   <color name="dusky_blue">#475993</color>
+  <color name="dusky_blue_10">#1A475993</color>
   <color name="dusky_blue_1">#475993</color>
   <color name="french_blue">#4267b2</color>
   <color name="white_two">#efefef</color>
@@ -70,6 +71,8 @@
   <color name="white_five">#FBFBFB</color>
   <color name="light_grey_3">#B5B5B5</color>
   <color name="azure">#1da1f2</color>
+  <color name="azure_10">#1A1DA1F2</color>
+  <color name="blue_light_10">#1A4980E5</color>
   <color name="warm_grey_two">#9b9b9b</color>
   <color name="transparent">#00000000</color>
   <color name="placeholder_bg">#dddddd</color>

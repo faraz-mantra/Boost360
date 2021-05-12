@@ -5,6 +5,8 @@ import com.onboarding.nowfloats.base.rest.AppBaseLocalService
 import com.onboarding.nowfloats.base.rest.AppBaseRepository
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
 import com.onboarding.nowfloats.model.business.purchasedOrder.ActivatePurchasedOrderRequest
+import com.onboarding.nowfloats.model.verification.RequestValidateEmail
+import com.onboarding.nowfloats.model.verification.RequestValidatePhone
 import com.onboarding.nowfloats.rest.Taskcode
 import com.onboarding.nowfloats.rest.apiClients.WithFloatsApiClient
 import com.onboarding.nowfloats.rest.services.remote.business.BusinessCreateRemoteDataSource
@@ -28,6 +30,15 @@ object BusinessCreateRepository : AppBaseRepository<BusinessCreateRemoteDataSour
     fun postActivatePurchasedOrder(clientId: String?, request: ActivatePurchasedOrderRequest): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.postActivatePurchasedOrder(clientId, request), Taskcode.POST_ACTIVATE_PURCHASED_ORDER)
     }
+
+    fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.validateUserPhone(requestValidatePhone), Taskcode.VALIDATE_USERS_PHONE)
+    }
+
+    fun validateUsersEmail(requestValidateEmail: RequestValidateEmail?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.validateUserEmail(requestValidateEmail), Taskcode.VALIDATE_USERS_EMAIL)
+    }
+
     override fun getApiClient(): Retrofit {
         return WithFloatsApiClient.shared.retrofit
     }
