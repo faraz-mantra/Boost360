@@ -114,6 +114,7 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
   }
 
   private fun createAccessTokenAuth() {
+    showProgress()
     val request = AccessTokenRequest(authToken = result?.authenticationToken, clientId = clientId, fpId = result?.floatingPointId)
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
       val result = it as? AccessTokenResponse
@@ -121,6 +122,7 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
         this.session.saveAccessTokenAuth(result.result!!)
         storeFpDetails()
       } else {
+        hideProgress()
         showLongToast(getString(R.string.access_token_create_error))
       }
     })
@@ -128,7 +130,6 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
 
   private fun storeFpDetails() {
     WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, CHOOSE_BUSINESS, result?.floatingPointId ?: "")
-    showProgress()
     session.setUserLogin(true)
     session.setAccountSave(true)
     session.storeFPID(result?.floatingPointId)
@@ -151,7 +152,6 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
 
   private fun startDashboard() {
     try {
-      hideProgress()
       val dashboardIntent = Intent(requireContext(), Class.forName("com.dashboard.controller.DashboardActivity"))
       dashboardIntent.putExtras(requireActivity().intent)
       val bundle = Bundle()
@@ -160,6 +160,7 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
       dashboardIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
       startActivity(dashboardIntent)
       baseActivity.finish()
+      hideProgress()
     } catch (e: Exception) {
       e.printStackTrace()
     }
