@@ -129,6 +129,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     var couponCode: String = ""
 
+    private var cartItems = ArrayList<String>()
+
+    private var cartFullItems = ArrayList<String>()
+
     companion object {
         fun newInstance() = CartFragment()
     }
@@ -1081,6 +1085,15 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 var event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("total amount", grandTotal)
                 event_attributes.put("cart size", it.size.toDouble())
+                it.forEach {
+                    if(it.boost_widget_key != null){
+                        cartFullItems!!.add(it.boost_widget_key!!)
+                    }else{
+                        cartFullItems!!.add(it.item_id)
+                    }
+
+                }
+                event_attributes.put("cart ids", Gson().toJson(cartFullItems))
 //                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
                 WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
 
@@ -1479,6 +1492,19 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     fun proceedToPayment(result: CreatePurchaseOrderResponse) {
+//        var cartItems: ArrayList<String>? =  null
+
+        cartList.forEach {
+//            if(it!!.item_id != null) it!!.item_id!! else it.boost_widget_key?.let { it1 -> cartItems?.add(it1) }
+
+            if(it.boost_widget_key != null){
+                cartItems!!.add(it.boost_widget_key!!)
+            }else{
+                cartItems!!.add(it.item_id)
+            }
+
+//            Log.v("proceedToPayment " , "item_id "+ it.item_id  + " boost "+ it.boost_widget_key + " "+cartItems!!.size)
+        }
         val paymentFragment = PaymentFragment.newInstance()
         val args = Bundle()
         args.putString("customerId", customerId)
@@ -1488,6 +1514,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         args.putString("email", (activity as UpgradeActivity).email)
         args.putString("currency", "INR")
         args.putString("contact", (activity as UpgradeActivity).mobileNo)
+        prefs.storeCardIds(cartItems)
         paymentFragment.arguments = args
         (activity as UpgradeActivity).addFragment(
                 paymentFragment,
