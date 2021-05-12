@@ -20,7 +20,6 @@ import com.boost.presignin.databinding.FragmentOtpVerificationBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.login.VerifyOtpResponse
 import com.boost.presignin.ui.AccountNotFoundActivity
-import com.boost.presignin.ui.mobileVerification.fp.FragmentFpList
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.boost.presignin.views.otptextview.OTPListener
 import com.framework.extensions.observeOnce
@@ -153,7 +152,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
       if (it.isSuccess()) {
         val result = it as? VerifyOtpResponse
         if (result?.Result?.authTokens.isNullOrEmpty().not()) {
-          addFragmentReplace(com.framework.R.id.container, FragmentFpList.newInstance(fpListAuth = result?.Result?.authTokens), false)
+          addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(fpListAuth = result?.Result?.authTokens), false)
         } else {
           navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
         }

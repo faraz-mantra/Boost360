@@ -21,21 +21,20 @@ import com.boost.presignin.model.activatepurchase.PurchasedExpiry
 import com.boost.presignin.model.activatepurchase.PurchasedWidget
 import com.boost.presignin.model.authToken.AccessTokenResponse
 import com.boost.presignin.model.authToken.AuthTokenDataItem
-import com.boost.presignin.model.authToken.saveAccessTokenAuth
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
+import com.boost.presignin.model.plan.Plan15DaysResponse
 import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.WebPreviewActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
-import com.framework.models.BaseViewModel
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.ACTIVATE_FREE_PURCHASE_PLAN
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.SIGNUP_SUCCESS
-import com.onboarding.nowfloats.model.plan.Plan15DaysResponseItem
 import java.util.ArrayList
 
 private const val TIME_INTERVAL = 2000 // # milliseconds, desired time passed between two back presses.
@@ -130,25 +129,28 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
   }
 
   private fun apiBusinessActivatePlan() {
-    val request = getRequestPurchasedOrder(authToken?.floatingPointId!!)
-    viewModel?.postActivatePurchasedOrder(clientId, request)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        WebEngageController.trackEvent(ACTIVATE_FREE_PURCHASE_PLAN, SIGNUP_SUCCESS, NO_EVENT_VALUE)
-      } else showLongToast(getString(R.string.unable_to_activate_business_plan))
-      try {
-        startService()
-        val intent = Intent(baseActivity, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        baseActivity.startActivity(intent)
-        baseActivity.finish()
-      } catch (e: ClassNotFoundException) {
-        e.printStackTrace()
-      }
-      hideProgress()
+    viewModel?.getCategoriesPlan(baseActivity)?.observeOnce(viewLifecycleOwner, { res ->
+      val responsePlan = res as? Plan15DaysResponse
+      val request = getRequestPurchasedOrder(authToken?.floatingPointId!!, responsePlan)
+      viewModel?.postActivatePurchasedOrder(clientId, request)?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          WebEngageController.trackEvent(ACTIVATE_FREE_PURCHASE_PLAN, SIGNUP_SUCCESS, NO_EVENT_VALUE)
+        } else showLongToast(getString(R.string.unable_to_activate_business_plan))
+        try {
+          startService()
+          val intent = Intent(baseActivity, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+          baseActivity.startActivity(intent)
+          baseActivity.finish()
+        } catch (e: ClassNotFoundException) {
+          e.printStackTrace()
+        }
+        hideProgress()
+      })
     })
   }
 
-  private fun getRequestPurchasedOrder(floatingPointId: String): ActivatePurchasedOrderRequest {
+  private fun getRequestPurchasedOrder(floatingPointId: String, responsePlan: Plan15DaysResponse?): ActivatePurchasedOrderRequest {
     val widList = ArrayList<PurchasedWidget>()
     floatsRequest?.categoryDataModel?.sections?.forEach {
       it.getWidList().forEach { key ->
@@ -159,42 +161,39 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         widList.add(widget)
       }
     }
-
-    viewModel?.getCategoriesPlan(baseActivity)?.observeOnce(viewLifecycleOwner, { res ->
-      val response = res as? Plan15DaysResponseItem
-      if (response?.isSuccess() == true) {
-        response.widgetKeys?.forEach { key ->
-          val widgetN = widList.find { it.widgetKey.equals(key) }
-          if (widgetN != null) {
-            widgetN.consumptionConstraint?.metricValue = 15
-            widgetN.expiry?.key = "DAYS"
-            widgetN.expiry?.value = 15
-          } else {
-            widList.add(
-                PurchasedWidget(widgetKey = key, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
-                    isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
-                    consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
-                    expiry = PurchasedExpiry("DAYS", 15))
-            )
-          }
-        }
-        response.extraProperties?.forEach { keyValue ->
-          val widgetN2 = widList.find { it.widgetKey.equals(keyValue.widget) }
-          if (widgetN2 != null) {
-            widgetN2.consumptionConstraint?.metricValue = 15
-            widgetN2.expiry?.key = "DAYS"
-            widgetN2.expiry?.value = keyValue.value
-          } else {
-            widList.add(
-                PurchasedWidget(widgetKey = keyValue.widget, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
-                    isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
-                    consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
-                    expiry = PurchasedExpiry("DAYS", keyValue.value))
-            )
-          }
+    if (responsePlan?.isSuccess() == true && responsePlan.data.isNullOrEmpty().not()) {
+      val response = responsePlan.data?.get(0)!!
+      response.widgetKeys?.forEach { key ->
+        val widgetN = widList.find { it.widgetKey.equals(key) }
+        if (widgetN != null) {
+          widgetN.consumptionConstraint?.metricValue = 15
+          widgetN.expiry?.key = "DAYS"
+          widgetN.expiry?.value = 15
+        } else {
+          widList.add(
+              PurchasedWidget(widgetKey = key, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
+                  isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+                  consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
+                  expiry = PurchasedExpiry("DAYS", 15))
+          )
         }
       }
-    })
+      response.extraProperties?.forEach { keyValue ->
+        val widgetN2 = widList.find { it.widgetKey.equals(keyValue.widget) }
+        if (widgetN2 != null) {
+          widgetN2.consumptionConstraint?.metricValue = 15
+          widgetN2.expiry?.key = "DAYS"
+          widgetN2.expiry?.value = keyValue.value
+        } else {
+          widList.add(
+              PurchasedWidget(widgetKey = keyValue.widget, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
+                  isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+                  consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
+                  expiry = PurchasedExpiry("DAYS", keyValue.value))
+          )
+        }
+      }
+    }
     return ActivatePurchasedOrderRequest(clientId, floatingPointId, "EXTENSION", widList)
   }
 

@@ -1,6 +1,7 @@
 package com.boost.presignin.model.authToken
 
 import com.framework.base.BaseResponse
+import com.framework.pref.TokenResult
 import com.google.gson.annotations.SerializedName
 
 data class AccessTokenResponse(

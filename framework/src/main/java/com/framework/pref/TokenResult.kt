@@ -1,6 +1,5 @@
-package com.boost.presignin.model.authToken
+package com.framework.pref
 
-import com.framework.pref.UserSessionManager
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.convertObjToString

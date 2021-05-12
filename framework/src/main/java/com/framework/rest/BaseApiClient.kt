@@ -1,5 +1,8 @@
 package com.framework.rest
 
+import com.framework.BaseApplication
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -39,7 +42,11 @@ open class BaseApiClient protected constructor() {
   }
 
   protected fun getInterceptors(): ArrayList<Interceptor> {
-    return ArrayList()
+    val session = UserSessionManager(BaseApplication.instance)
+    val tokenResult = session.getAccessTokenAuth()
+    return if (tokenResult != null && tokenResult.token.isNullOrEmpty().not()) {
+      return arrayListOf(OAuthInterceptor("Bearer ", tokenResult.token!!))
+    } else ArrayList()
   }
 
   fun init(baseUrl: String) {
