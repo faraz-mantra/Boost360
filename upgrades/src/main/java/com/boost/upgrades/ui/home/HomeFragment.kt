@@ -969,8 +969,18 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPackageClicked(item: Bundles?) {
-        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, CLICK, item?.name
-                ?: NO_EVENT_VALUE)
+//        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, CLICK, item?.name
+//                ?: NO_EVENT_VALUE)
+
+        val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
+        item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
+        item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
+
+        event_attributes.put("Discount %", item!!.overall_discount_percent)
+        event_attributes.put("Package Identifier", item!!._kid)
+        item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
+        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
+
         val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
