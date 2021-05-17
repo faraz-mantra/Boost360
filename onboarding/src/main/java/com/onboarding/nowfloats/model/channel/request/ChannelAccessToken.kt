@@ -39,9 +39,9 @@ data class ChannelAccessToken(
     var verified_location: Boolean? = null,
 
     //TODO url
-    var profilePicture: String? = null
+    var profilePicture: String? = null,
 
-) : Parcelable {
+    ) : Parcelable {
   constructor(parcel: Parcel) : this(
       parcel.readString(),
       parcel.readString(),
@@ -77,6 +77,10 @@ data class ChannelAccessToken(
     }
   }
 
+}
+
+fun ChannelAccessToken.isConnected(): Boolean {
+  return this.userAccountId.isNullOrEmpty().not()
 }
 
 fun ChannelAccessToken.isLinked(): Boolean {

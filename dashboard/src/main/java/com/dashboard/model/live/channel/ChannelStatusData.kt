@@ -85,19 +85,24 @@ fun saveDataChannelStatus(channelStatus: ArrayList<ChannelStatusData>?) {
 }
 
 
-fun ChannelsType.getChannelStatusList(): ArrayList<ChannelStatusData> {
+fun ChannelsType?.getChannelStatusList(): ArrayList<ChannelStatusData> {
   val list = ArrayList<ChannelStatusData>()
+  if (this != null) {
+    val isConnectedFpPage = this.facebookpage?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
+    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.facebookpage.name, isConnected = isConnectedFpPage))
 
-  val isConnectedFpPage = this.facebookpage?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
-  list.add(ChannelStatusData(accountType = ChannelsType.AccountType.facebookpage.name, isConnected = isConnectedFpPage))
+    val isConnectedFpShop = this.facebookshop?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
+    if (isConnectedFpShop) list.add(ChannelStatusData(accountType = ChannelsType.AccountType.facebookshop.name, isConnected = isConnectedFpShop))
 
-  val isConnectedFpShop = this.facebookshop?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
-  if (isConnectedFpShop) list.add(ChannelStatusData(accountType = ChannelsType.AccountType.facebookshop.name, isConnected = isConnectedFpShop))
+    val isConnectedTwitter = this.twitter?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
+    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.twitter.name, isConnected = isConnectedTwitter))
 
-  val isConnectedTwitter = this.twitter?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
-  list.add(ChannelStatusData(accountType = ChannelsType.AccountType.twitter.name, isConnected = isConnectedTwitter))
-
-  val isConnectedGmb = this.googlemybusiness?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
-  if (isConnectedGmb) list.add(ChannelStatusData(accountType = ChannelsType.AccountType.googlemybusiness.name, isConnected = isConnectedGmb))
+    val isConnectedGmb = this.googlemybusiness?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
+    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.googlemybusiness.name, isConnected = isConnectedGmb))
+  } else {
+    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.facebookpage.name, isConnected = false))
+    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.twitter.name, isConnected = false))
+    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.googlemybusiness.name, isConnected = false))
+  }
   return list
 }
