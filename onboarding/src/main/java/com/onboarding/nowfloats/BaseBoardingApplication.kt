@@ -25,7 +25,8 @@ open class BaseBoardingApplication : BaseApplication() {
       apiInitialize()
     }
 
-    private fun apiInitialize() {
+    @JvmStatic
+    fun apiInitialize() {
       NfxApiClient.shared.init(EndPoints.NFX_BASE_URL)
       GMBApiClient.shared.init(EndPoints.GMB_BASE_URL, isAuthRemove = true)
       GoogleAuthApiClient.shared.init(EndPoints.GOOGLE_BASE_URL)

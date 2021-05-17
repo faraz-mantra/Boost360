@@ -51,4 +51,5 @@ class DesiredLoginMethodActivity : BaseActivity<ActivityDesiredLoginMethodBindin
         }
 
     }
+
 }

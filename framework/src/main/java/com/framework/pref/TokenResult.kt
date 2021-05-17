@@ -9,9 +9,9 @@ import java.util.*
 
 data class TokenResult(
     @SerializedName("RefreshToken")
-    var refreshToken: String? = null,
+    var refreshToken: String? = null, // expire in 30 days
     @SerializedName("Token")
-    var token: String? = null,
+    var token: String? = null, // expire in 1 days
     var createDate: String = "",
 ) {
 
