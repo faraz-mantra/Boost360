@@ -19,6 +19,10 @@ class CategoryViewModel : BaseViewModel() {
     return CategoryRepository.getCategories(context).toLiveData()
   }
 
+  fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
+    return CategoryRepository.getCategoriesPlan(context).toLiveData()
+  }
+
   @Deprecated("NFX token API")
   fun getChannelsAccessToken(nowfloatsId: String?): LiveData<BaseResponse> {
     return ChannelRepository.getChannelsAccessToken(nowfloatsId).toLiveData()
