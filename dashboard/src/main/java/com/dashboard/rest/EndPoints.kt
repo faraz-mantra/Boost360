@@ -23,5 +23,12 @@ object EndPoints {
   const val BOOST_KIT_NEW_BASE = "https://developers.api.boostkit.dev/"
   const val SEARCH_ANALYTICS = "api/webanalytics/GetDetailedSearchAnalyticsForDateRange"
 
+
+  //TODO NOWFLOAT API
+  const val NOW_FLOATS_BASE = "https://api.nowfloats.com/"
+
+  const val WEBSITE_THEME_GET = "/Discover/v1/floatingPoint/getThemeCustomization"
+  const val WEBSITE_THEME_UPDATE = "/Discover/v1/floatingPoint/updateThemeCustomization"
+
 }
 
