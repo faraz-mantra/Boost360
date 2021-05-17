@@ -123,6 +123,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
+      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
     }
   }
 

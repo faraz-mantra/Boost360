@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,8 @@ import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.FragmentType
 import com.dashboard.controller.ui.allAddOns.AllBoostAddonsFragment
 import com.dashboard.controller.ui.drScore.DigitalReadinessScoreFragment
+import com.dashboard.controller.ui.website.WebsiteFragment
+import com.dashboard.controller.ui.website_theme.FragmentWebsiteTheme
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -28,6 +31,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
   private var digitalReadinessScoreFragment: DigitalReadinessScoreFragment? = null
   private var allBoostAddonsFragment: AllBoostAddonsFragment? = null
+  private var websiteThemeFragment: FragmentWebsiteTheme? = null
 
   override fun getLayout(): Int {
     return R.layout.activity_fragment_container
@@ -42,6 +46,12 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     super.onCreate(savedInstanceState)
   }
 
+  override fun getToolbarTitleGravity(): Int {
+   return when(type){
+      FragmentType.FRAGMENT_WEBSITE_THEME->Gravity.START
+      else -> Gravity.CENTER
+    }
+  }
   override fun onCreateView() {
     super.onCreateView()
     setFragment()
@@ -58,20 +68,21 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
+      FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardTheme
       else -> super.customTheme()
     }
   }
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.ALL_BOOST_ADD_ONS ,FragmentType.FRAGMENT_WEBSITE_THEME-> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.ALL_BOOST_ADD_ONS ,FragmentType.FRAGMENT_WEBSITE_THEME-> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
@@ -79,13 +90,14 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> resources.getString(R.string.all_boost_add_ons)
+      FragmentType.FRAGMENT_WEBSITE_THEME -> getString(R.string.website_style_customisation)
       else -> super.getToolbarTitle()
     }
   }
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
+      FragmentType.ALL_BOOST_ADD_ONS , FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
       else -> super.getNavigationIcon()
     }
   }
@@ -132,6 +144,9 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
       FragmentType.ALL_BOOST_ADD_ONS -> {
         allBoostAddonsFragment = AllBoostAddonsFragment.newInstance()
         allBoostAddonsFragment
+      }FragmentType.FRAGMENT_WEBSITE_THEME -> {
+        websiteThemeFragment = FragmentWebsiteTheme.newInstance()
+        websiteThemeFragment
       }
       else -> throw IllegalFragmentTypeException()
     }
