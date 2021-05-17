@@ -407,8 +407,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 event_attributes.put("Feature details", addonDetails!!.description!!)
                 event_attributes.put("Feature Name", addonDetails!!.name!!)
                 event_attributes.put("Feature Key", addonDetails!!.boost_widget_key)
-//                WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED, Feature_Details, addonDetails!!.boost_widget_key)
-                WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_DETAILS + addonDetails!!.boost_widget_key + " Loaded", Feature_Details, event_attributes)
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED, Feature_Details, event_attributes,"")
+//                WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_DETAILS + addonDetails!!.boost_widget_key + " Loaded", Feature_Details, event_attributes)
 
             }
         })
