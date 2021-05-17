@@ -1,5 +1,6 @@
 package com.boost.presignin.ui.mobileVerification
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -120,12 +121,29 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         this.session.saveAccessTokenAuth(result.result!!)
-        storeFpDetails()
+        aliInitializeActivity()
       } else {
         hideProgress()
         showLongToast(getString(R.string.access_token_create_error))
       }
     })
+  }
+
+  private fun aliInitializeActivity() {
+    try {
+      val webIntent = Intent(baseActivity, Class.forName("com.nowfloats.helper.ApiReLoadActivity"))
+      startActivityForResult(webIntent, 101)
+      baseActivity.overridePendingTransition(0, 0)
+    } catch (e: ClassNotFoundException) {
+      storeFpDetails()
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode == Activity.RESULT_OK && requestCode == 101) {
+      storeFpDetails()
+    }
   }
 
   private fun storeFpDetails() {
@@ -152,7 +170,7 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
 
   private fun startDashboard() {
     try {
-      val dashboardIntent = Intent(requireContext(), Class.forName("com.dashboard.controller.DashboardActivity"))
+      val dashboardIntent = Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
       dashboardIntent.putExtras(requireActivity().intent)
       val bundle = Bundle()
       bundle.putParcelableArrayList("message", ArrayList())

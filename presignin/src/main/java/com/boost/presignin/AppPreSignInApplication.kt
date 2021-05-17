@@ -24,7 +24,8 @@ open class AppPreSignInApplication : BaseApplication() {
       apiInitialize()
     }
 
-    private fun apiInitialize() {
+    @JvmStatic
+    fun apiInitialize() {
       WithFloatsApiTwoClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE)
       NfxFacebookAnalyticsClient.shared.init(EndPoints.NFX_WITH_NOWFLOATS)

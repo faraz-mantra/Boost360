@@ -20,7 +20,8 @@ open class BaseOrderApplication : BaseApplication() {
       apiInitialize()
     }
 
-    private fun apiInitialize() {
+    @JvmStatic
+    fun apiInitialize() {
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE_URL)
       BoostFloatsApiClient.shared.init(EndPoints.BOOST_FLOATS_BASE_URL)
       Api2WithFloatClient.shared.init(EndPoints.BOOST_API2_WITH_FLOAT)

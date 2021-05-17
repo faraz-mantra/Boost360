@@ -1,5 +1,6 @@
 package com.boost.presignin.ui.registration
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -120,12 +121,29 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         this.session?.saveAccessTokenAuth(result.result!!)
-        apiBusinessActivatePlan()
+        aliInitializeActivity()
       } else {
         showLongToast(getString(R.string.access_token_create_error))
         hideProgress()
       }
     })
+  }
+
+  private fun aliInitializeActivity() {
+    try {
+      val webIntent = Intent(baseActivity, Class.forName("com.nowfloats.helper.ApiReLoadActivity"))
+      startActivityForResult(webIntent, 101)
+      baseActivity.overridePendingTransition(0, 0)
+    } catch (e: ClassNotFoundException) {
+      apiBusinessActivatePlan()
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode == Activity.RESULT_OK && requestCode == 101) {
+      apiBusinessActivatePlan()
+    }
   }
 
   private fun apiBusinessActivatePlan() {

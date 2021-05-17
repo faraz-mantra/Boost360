@@ -26,7 +26,8 @@ open class AppDashboardApplication : BaseApplication() {
       apiInitialize()
     }
 
-    private fun apiInitialize() {
+    @JvmStatic
+    fun apiInitialize() {
       DevBoostKitApiClient.shared.init(DEV_BOOST_KIT_URL)
       DevBoostKitNewApiClient.shared.init(BOOST_KIT_NEW_BASE)
       WithFloatsApiClient.shared.init(WITH_FLOATS_BASE)
