@@ -1,7 +1,9 @@
 package com.onboarding.nowfloats.base.rest
 
+import android.content.Intent
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
+import com.onboarding.nowfloats.BaseBoardingApplication
 import com.onboarding.nowfloats.rest.apiClients.NfxApiClient
 import com.onboarding.nowfloats.rest.Taskcode
 import io.reactivex.Observable
@@ -18,19 +20,30 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
     return NfxApiClient.shared.retrofit
   }
 
-  fun makeLocalRequest(
-      observable: Observable<BaseResponse>,
-      taskCode: Taskcode,
-  ): Observable<BaseResponse> {
+  fun makeLocalRequest(observable: Observable<BaseResponse>, taskCode: Taskcode): Observable<BaseResponse> {
     return makeLocalResponse(observable, taskCode.ordinal)
   }
 
-  protected fun onFailure(response: BaseResponse, taskCode: Taskcode) {
-    super.onFailure(response, taskCode.ordinal)
+  override fun onFailure(response: BaseResponse, taskcode: Int) {
+    super.onFailure(response, taskcode)
+    unauthorizedUserCheck(taskcode)
   }
 
-  protected fun onSuccess(response: BaseResponse, taskCode: Taskcode) {
-    super.onSuccess(response, taskCode.ordinal)
-    localDataSource.saveToLocal(response, taskCode)
+  override fun onSuccess(response: BaseResponse, taskcode: Int) {
+    super.onSuccess(response, taskcode)
+    unauthorizedUserCheck(taskcode)
+  }
+
+  private fun unauthorizedUserCheck(taskCode: Int) {
+    if (taskCode == 401) {
+      BaseBoardingApplication.instance.apply {
+        try {
+          val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
+          startActivity(i)
+        } catch (e: Exception) {
+          e.printStackTrace()
+        }
+      }
+    }
   }
 }

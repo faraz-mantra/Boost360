@@ -1380,6 +1380,11 @@
       android:screenOrientation="portrait"
       android:theme="@style/Theme.Transparent.AppCompact" />
 
+    <activity
+      android:name="com.nowfloats.helper.LogoutActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/Theme.Transparent.AppCompact" />
+
     <provider
       android:name="androidx.core.content.FileProvider"
       android:authorities="${applicationId}.provider"
