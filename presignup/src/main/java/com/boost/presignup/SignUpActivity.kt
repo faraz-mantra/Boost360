@@ -149,7 +149,7 @@ class SignUpActivity : AppCompatActivity() {
 //              email = "" // Remove previous email data.
               create_account_button.isVisible = true
               Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
-              WebEngageController.trackEvent(PS_ACCOUNT_CREATION_FAILED_IN_FIREBASE + provider, CREATE_USER_FAILED_IN_FIREBASE_WITH+ provider, NO_EVENT_VALUE)
+              WebEngageController.trackEvent(PS_ACCOUNT_CREATION_FAILED_IN_FIREBASE + provider, CREATE_USER_FAILED_IN_FIREBASE_WITH + provider, NO_EVENT_VALUE)
             }
           }
     } else {
@@ -169,6 +169,8 @@ class SignUpActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, SignUpConfirmation::class.java)
             intent.putExtra("profileUrl", profileUrl)
             intent.putExtra("person_name", personName)
+            intent.putExtra("person_number", userMobile)
+            intent.putExtra("person_email", email)
             intent.putExtra("profile_id", responseResult?.Result?.LoginId)
             startActivity(intent)
           } else {
@@ -177,7 +179,7 @@ class SignUpActivity : AppCompatActivity() {
 //                email = "" // Remove previous email data.
             create_account_button.isVisible = true
             Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
-            WebEngageController.trackEvent(PS_ACCOUNT_CREATION_FAILED_IN_FIREBASE + provider, CREATE_USER_FAILED_IN_FIREBASE_WITH+ provider, NO_EVENT_VALUE)
+            WebEngageController.trackEvent(PS_ACCOUNT_CREATION_FAILED_IN_FIREBASE + provider, CREATE_USER_FAILED_IN_FIREBASE_WITH + provider, NO_EVENT_VALUE)
           }
         }
   }
@@ -319,14 +321,15 @@ class SignUpActivity : AppCompatActivity() {
           val responseResult: UserProfileResponse? = response.body()
           if (responseResult?.Result?.LoginId.isNullOrEmpty().not()) {
             WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
-            WebEngageController.setUserContactAttributes(email, userMobile, personName,responseResult?.Result?.ClientId)
+            WebEngageController.setUserContactAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
             WebEngageController.trackEvent(PS_ACCOUNT_CREATION_SUCCESS, ACCOUNT_CREATION_SUCCESS, NO_EVENT_VALUE)
 //            SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
 
             val intent = Intent(applicationContext, SignUpConfirmation::class.java)
             intent.putExtra("profileUrl", profileUrl)
             intent.putExtra("person_name", personName)
-            intent.putExtra("person_email", email )
+            intent.putExtra("person_number", userMobile)
+            intent.putExtra("person_email", email)
             intent.putExtra("profile_id", responseResult?.Result?.LoginId)
             startActivity(intent)
           } else {
