@@ -26,6 +26,7 @@ class SharedPrefs(activity: Activity) {
 
     private val CART_ORDER_INFO = "CART_ORDER_INFO"
     private val CART_IDS = "CART_IDS"
+    private val COUPON_IDS = "COUPON_IDS"
     private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
 
     private val temp_cartAmount = "Cart_Orig_Price"
@@ -136,6 +137,16 @@ class SharedPrefs(activity: Activity) {
     fun getCardIds(): List<String?>? {
         val str = pref!!.getString(CART_IDS, "")
         return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<List<String?>?>() {}.type)
+    }
+
+    fun storeCouponIds(couponCode: String?){
+        val orderInfo = Gson().toJson(couponCode)
+        editor!!.putString(COUPON_IDS, orderInfo).apply()
+    }
+
+    fun getCouponIds(): String? {
+        val str = pref!!.getString(COUPON_IDS, "")
+        return str
     }
 
     fun storeOrderSuccessFlag(value: Boolean){
