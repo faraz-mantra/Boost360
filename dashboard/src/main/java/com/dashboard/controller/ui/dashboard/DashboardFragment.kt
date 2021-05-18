@@ -75,7 +75,10 @@ import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.insights.ChannelInsightsResponse
+import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.saveDataConnectedChannel
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
@@ -92,6 +95,7 @@ const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(),
     RecyclerItemClickListener {
 
+    private var connectedChannels: ArrayList<String>? = arrayListOf()
     private var session: UserSessionManager? = null
     private var adapterBusinessContent: AppBaseRecyclerViewAdapter<DrScoreSetupData>? = null
     private var adapterSocialMedia: AppBaseRecyclerViewAdapter<ChannelStatusData>? = null
@@ -834,7 +838,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             binding?.btnBusinessLogo -> openDialogPicker()
             binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
             binding?.btnVisitingCard -> {
-                if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(
+                if (messageBusiness.isNotEmpty()&&connectedChannels.isNullOrEmpty().not()) businessWebsiteDetailMessage(
                     messageBusiness,
                     isBusinessCardShare = true
                 )
@@ -1336,6 +1340,30 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
                 if (response?.channels?.twitter?.account?.accountName.isNullOrEmpty().not()) {
                     urlString += "\n⚡ *Twitter: https://twitter.com/${response?.channels?.twitter?.account?.accountName?.trim()}*"
                 }
+                // adding connectedChannels
+                if (response?.channels?.googlemybusiness?.status == CHANNEL_STATUS_SUCCESS) {
+                    connectedChannels?.add(ChannelsType.AccountType.googlemybusiness.name)
+
+                }
+                if (response?.channels?.facebookshop?.status == CHANNEL_STATUS_SUCCESS) {
+                    connectedChannels?.add(ChannelsType.AccountType.facebookshop.name)
+
+                }
+                if (response?.channels?.facebookusertimeline?.status == CHANNEL_STATUS_SUCCESS) {
+                    connectedChannels?.add(ChannelsType.AccountType.facebookusertimeline.name)
+
+                }
+                if (response?.channels?.twitter?.status == CHANNEL_STATUS_SUCCESS) {
+                    connectedChannels?.add(ChannelsType.AccountType.twitter.name)
+
+                }
+                if (response?.channels?.facebookpage?.status == CHANNEL_STATUS_SUCCESS) {
+                    connectedChannels?.add(ChannelsType.AccountType.facebookpage.name)
+
+                }
+            }
+            if (connectedChannels.isNullOrEmpty().not()) {
+                saveDataConnectedChannel(connectedChannels)
             }
             getWhatsAppData(urlString, isBusinessCardShare, isEnquiriesShare, shareType)
         })
