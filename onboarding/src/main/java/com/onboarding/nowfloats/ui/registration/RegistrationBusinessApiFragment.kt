@@ -289,7 +289,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
 
   private fun getRequestPurchasedOrder(floatingPointId: String, responsePlan: Plan15DaysResponse?): ActivatePurchasedOrderRequest {
     val widList = java.util.ArrayList<PurchasedWidget>()
-    requestFloatsModel?.categoryDataModel?.sections?.forEach {
+    requestFloatsModel?.categoryDataModel?.getEmptySections()?.forEach {
       it.getWidList().forEach { key ->
         val widget = PurchasedWidget(widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
             isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,

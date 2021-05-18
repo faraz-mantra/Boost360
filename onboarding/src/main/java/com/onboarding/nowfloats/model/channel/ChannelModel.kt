@@ -149,7 +149,7 @@ fun ChannelModel.getAccessTokenType(): String {
     ChannelType.FB_PAGE -> ChannelAccessToken.AccessTokenType.facebookpage.name
     ChannelType.G_MAPS -> ChannelAccessToken.AccessTokenType.googlemap.name
     ChannelType.FB_SHOP -> ChannelAccessToken.AccessTokenType.facebookshop.name
-    ChannelType.WAB -> ""
+    ChannelType.WAB -> ChannelType.WAB.name
     ChannelType.T_FEED -> ChannelAccessToken.AccessTokenType.twitter.name
     ChannelType.G_BUSINESS -> ChannelAccessToken.AccessTokenType.googlemybusiness.name
     null -> ""
