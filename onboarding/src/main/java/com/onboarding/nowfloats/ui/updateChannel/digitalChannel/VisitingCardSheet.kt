@@ -127,7 +127,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
           WebEngageController.trackEvent(MY_BUSINESS_CARD_MENU_DIGITAL_CHANNEL, CLICK, TO_BE_ADDED)
           baseActivity.startDigitalChannel(getBundle())
         }
-        dismiss()
+//        dismiss()
         true
       }
       popup.show()
