@@ -1,6 +1,7 @@
 package com.onboarding.nowfloats.holders.channel
 
 import android.annotation.SuppressLint
+import android.os.Handler
 import android.view.View
 import com.framework.extensions.underlineText
 import com.onboarding.nowfloats.R
@@ -51,7 +52,8 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
       getColor(R.color.greyish_brown)?.let { binding.title.setTextColor(it) }
       binding.check.setImageResource(R.drawable.ic_selected_blue)
     }
+    if (model.isSelectedClick) {
+      Handler().postDelayed({ listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal) }, 1000)
+    }
   }
-
-
 }

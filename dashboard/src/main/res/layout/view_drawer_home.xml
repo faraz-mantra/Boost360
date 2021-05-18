@@ -17,12 +17,12 @@
     <LinearLayout
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_weight="1" />
+      android:layout_weight=".5" />
 
     <LinearLayout
       android:layout_width="0dp"
       android:layout_height="match_parent"
-      android:layout_weight="9"
+      android:layout_weight="9.5"
       android:background="@color/white"
       android:orientation="vertical">
 
@@ -164,7 +164,7 @@
                 android:maxLines="1"
                 android:text="@string/dr_score"
                 android:textAlignment="gravity"
-                android:textColor="@color/accent_dark"
+                android:textColor="@color/light_green_3"
                 app:autoSizeMaxTextSize="12sp"
                 app:autoSizeMinTextSize="8sp"
                 app:autoSizeStepGranularity="1sp"
@@ -176,6 +176,7 @@
               style="@style/CustomProgressBar"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_5"
+              android:progressDrawable="@drawable/ic_progress_bar_high_grey"
               android:layout_marginTop="@dimen/size_6"
               android:max="100"
               tools:progress="50" />

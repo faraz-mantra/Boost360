@@ -1,7 +1,6 @@
 package com.dashboard.controller
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
@@ -21,6 +20,7 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
+import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
@@ -28,7 +28,7 @@ import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
 import com.dashboard.model.live.welcomeData.WelcomeData
 import com.dashboard.model.live.welcomeData.getIsShowWelcome
-import com.dashboard.pref.*
+import com.framework.pref.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -47,7 +47,6 @@ import com.framework.webengageconstant.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
-import com.nowfloats.facebook.managers.FBEventManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
@@ -58,7 +57,6 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
-import kotlin.system.exitProcess
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
@@ -71,6 +69,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isSecondaryImage = false
   var isLoadShimmer = true
+  var count = 0
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -97,7 +96,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     mNavController.graph = graph
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
-    binding?.navView?.setActiveItem(0)
+//    binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
@@ -180,11 +179,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
 
   fun setPercentageData(score: Int) {
-    val isHigh = (score >= 80)
+    val isHigh = (score >= 85)
     binding?.drawerView?.txtPercentage?.text = "$score% "
     binding?.drawerView?.progressBar?.progress = score
-    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+//    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+//    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
   }
 
   private fun setUserData() {
@@ -204,7 +203,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setDrawerHome() {
-    viewModel.getNavDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
+    viewModel.getNavDashboardData(this).observeOnce(this, {
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         binding?.drawerView?.rvLeftDrawer?.apply {

@@ -18,8 +18,8 @@ import com.dashboard.model.live.addOns.AllBoostAddOnsData
 import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.domainDetail.DomainDetailResponse
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.clientId
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -31,6 +31,8 @@ import com.framework.webengageconstant.PAGE_VIEW
 import com.framework.webengageconstant.WEBSITE_REPORT_ALL_VISITS
 import java.util.*
 import kotlin.collections.ArrayList
+
+const val LAST_SEEN_TEXT = "Last Seen"
 
 class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, AddOnsViewModel>(), RecyclerItemClickListener {
 
@@ -75,7 +77,13 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
       if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
         dataAction.actionItem?.forEach { it2 -> it2.manageBusinessList = ArrayList(it2.manageBusinessList?.filter { it3 -> !it3.isHide } ?: ArrayList()) }
-        dataAction.actionItem?.map { it2 -> it2.manageBusinessList?.map { it3 -> if (it3.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it3.premiumCode).not()) it3.isLock = true } }
+        dataAction.actionItem?.map { it2 ->
+          it2.manageBusinessList?.map { it3 ->
+            if (it3.premiumCode.isNullOrEmpty().not()) {
+              it3.isLock = session.checkIsPremiumUnlock(it3.premiumCode).not()
+            }
+          }
+        }
         addOnsList.clear()
         addOnsListFilter.clear()
         val list = setLastSeenData(dataAction.actionItem!!)
@@ -94,7 +102,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
 
   private fun setLastSeenData(data: ArrayList<AllBoostAddOnsData>): ArrayList<AllBoostAddOnsData> {
     val listAddOns = ManageBusinessData().getLastSeenData()
-    if (listAddOns.isNotEmpty()) data.add(0, AllBoostAddOnsData(title = "Last Seen", manageBusinessList = listAddOns, isLastSeen = true))
+    if (listAddOns.isNotEmpty()) data.add(0, AllBoostAddOnsData(title = LAST_SEEN_TEXT, manageBusinessList = listAddOns, isLastSeen = true))
     return data
   }
 
@@ -141,7 +149,8 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
     if (query.isNotEmpty()) {
       val list = ArrayList<ManageBusinessData>()
       addOnsListFilter.forEach { it0 ->
-        it0.manageBusinessList?.forEach { if (it.title?.toLowerCase(Locale.ROOT)?.contains(query) == true) list.add(it) }
+        if (it0.title.equals(LAST_SEEN_TEXT).not())
+          it0.manageBusinessList?.forEach { if (it.title?.toLowerCase(Locale.ROOT)?.contains(query) == true) list.add(it) }
       }
       val listAddOns = ArrayList<AllBoostAddOnsData>()
       if (list.isNotEmpty()) listAddOns.add(AllBoostAddOnsData(title = "Boost Add-ons", manageBusinessList = list))
@@ -195,7 +204,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.newsletter_subscription -> baseActivity.startSubscriber(session)
     ManageBusinessData.BusinessType.picture_gallery,
     ManageBusinessData.BusinessType.client_logos_d,
-    -> baseActivity.startAddImageGallery(session,false)
+    -> baseActivity.startAddImageGallery(session, false)
     ManageBusinessData.BusinessType.ria_digital_assistant -> session?.let { baseActivity.startHelpAndSupportActivity(it) }
     ManageBusinessData.BusinessType.custom_payment_gateway -> baseActivity.startSelfBrandedGateway(session)
     ManageBusinessData.BusinessType.business_kyc_verification -> baseActivity.startBusinessKycBoost(session)
@@ -217,6 +226,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
     ManageBusinessData.BusinessType.sales_analytics -> baseActivity.startAptOrderSummary(session)
     ManageBusinessData.BusinessType.search_analytics -> baseActivity.startSearchQuery(session)
+    ManageBusinessData.BusinessType.ic_staff_profile_d -> baseActivity.startListStaff(session)
 
     ManageBusinessData.BusinessType.room_booking_engine_d,
     ManageBusinessData.BusinessType.ic_ivr_faculty,

@@ -22,6 +22,7 @@ import com.onboarding.nowfloats.ui.CitySearchDialog
 import java.util.regex.Pattern
 import com.framework.webengageconstant.CLICKED_ON_ADD_CUSTOMER
 import com.framework.webengageconstant.ORDERS
+import com.onboarding.nowfloats.extensions.capitalizeWords
 
 class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() {
 
@@ -180,7 +181,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
   }
 
   private fun setCityState(cityDataModel: CityDataModel) {
-    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName())
-    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName())
+    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName().capitalizeWords())
+    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName().capitalizeWords())
   }
 }

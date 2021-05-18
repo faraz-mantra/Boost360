@@ -24,7 +24,7 @@ inline fun <T> Observable<T>.processRequest(
                     },
                     { err ->
                         val message = getMessage(err)
-                        Log.e("RxJavaHelper", err.message)
+                        Log.e("RxJavaHelper", err.message?:"")
                         onError(message)
                     }
             )

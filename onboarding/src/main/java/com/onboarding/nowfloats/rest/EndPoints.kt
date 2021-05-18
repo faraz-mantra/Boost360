@@ -12,6 +12,9 @@ object EndPoints {
   const val PUT_UPLOAD_BUSINESS_LOGO = "discover/v1/floatingpoint/createLogoImage"
   const val PUT_UPLOAD_PROFILE = "user/v9/floatingpoint/createUserProfileImage"
   const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
+  //todo validation email phone
+  const val VERIFY_PHONE = "/discover/v1/floatingPoint/verifyPrimaryNumber"
+  const val VERIFY_EMAIL = "/discover/v1/floatingPoint/verifyEmail"
 
   // Base With Floats APIs
   const val RIA_WITH_FLOATS_BASE_URL = "https://ria.withfloats.com/"
@@ -26,6 +29,8 @@ object EndPoints {
   const val POST_UPDATE_CHANNEL_ACCESS_TOKENS_URL = "dataexchange/v1/updateAccessTokens"
   const val GET_CHANNELS_ACCESS_TOKEN = "dataexchange/v1/getAccessTokens"
   const val NFX_PROCESS_URL = "dataexchange/v1/process"
+  const val NFX_CHANNELS_STATUS = "dataexchange/v2/channelstatus"
+  const val NFX_CHANNELS_INSIGHTS = "dataexchange/v1/account/insights"
 
   // Web Action APIs
   const val WEB_ACTION_BASE_URL = "https://webaction.api.boostkit.dev/"

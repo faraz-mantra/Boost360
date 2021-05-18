@@ -156,7 +156,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
           if ((binding?.textBtn?.visibility == View.VISIBLE)) {
 
             //create my business website Event Tracker.
-            WebEngageController.trackEvent(CREATE_MY_BUSINESS_WEBSITE , BUTTON, CLICKED)
+            WebEngageController.trackEvent(CREATE_MY_BUSINESS_WEBSITE, BUTTON, CLICKED)
 
             getDotProgress()?.let {
               binding?.textBtn?.visibility = View.GONE
@@ -164,6 +164,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
               it.startAnimation()
               Handler().postDelayed({
                 it.stopAnimation()
+                binding?.next?.removeView(it)
                 it.removeAllViews()
                 binding?.textBtn?.visibility = View.VISIBLE
                 when {

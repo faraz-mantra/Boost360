@@ -12,10 +12,8 @@ class AllBoostAddOnsData(
     var isExpend: Boolean = true,
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
-  var recyclerViewItemType: Int = RecyclerViewItemType.ALL_BOOST_ADD_ONS_VIEW.getLayout()
-
   override fun getViewType(): Int {
-    return recyclerViewItemType
+    return RecyclerViewItemType.ALL_BOOST_ADD_ONS_VIEW.getLayout()
   }
 }
 

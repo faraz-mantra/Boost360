@@ -8,9 +8,9 @@ import com.dashboard.controller.ui.dashboard.*
 import com.dashboard.databinding.FragmentPatientsCustomerBinding
 import com.dashboard.model.live.customerItem.BoostCustomerItemResponse
 import com.dashboard.model.live.customerItem.CustomerActionItem
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.clientId
-import com.dashboard.pref.clientId_ORDER
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
+import com.framework.pref.clientId_ORDER
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
