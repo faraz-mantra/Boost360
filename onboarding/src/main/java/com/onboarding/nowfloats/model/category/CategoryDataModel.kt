@@ -27,11 +27,17 @@ class CategoryDataModel(
     var channels: ArrayList<ChannelModel>? = null,
     var sections: ArrayList<SectionsFeature>? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Parcelable {
+
   var sectionType: Boolean = false
   var isSelected = false
 
   fun experienceCode(): String {
     return experience_code ?: ""
+  }
+
+  // widget not add  for 10 years
+  fun getEmptySections(): ArrayList<SectionsFeature> {
+    return arrayListOf()
   }
 
   fun resetIsSelect() {
