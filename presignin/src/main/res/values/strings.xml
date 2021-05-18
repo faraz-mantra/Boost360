@@ -71,9 +71,9 @@
   <string name="confirm_business_category">Confirm business category</string>
   <string name="creating_your_business_profile">Creating your business profile</string>
   <string name="business_details_hint">This information will be used to onboard and sync across all marketing channels.</string>
-  <string name="enter_your_name">Enter your name*</string>
-  <string name="your_business_name_hint">Enter your business name* </string>
-  <string name="your_business_email">Your business email*</string>
+  <string name="enter_your_name">Your name*</string>
+  <string name="your_business_name_hint">Name of your business*</string>
+  <string name="your_business_email_optional">Your business email (optional)</string>
   <string name="your_business_phone">Your your phone*</string>
   <string name="choose_website_address">Choose website address</string>
   <string name="use_this_as_my_whatsapp_contact_number">Use this as my WhatsApp contact number</string>
@@ -126,4 +126,6 @@
   <string name="this_email_is_already_in_use">This email is already in use.</string>
   <string name="let_me_know_which_of_the_following_describes_the_business_you_are_running">Let me know, which of the following describes the business you are running?</string>
   <string name="access_token_create_error">Access token creating error, please try again.</string>
+  <string name="step_2_2">STEP 2/2</string>
+  <string name="signin_nowfloats_com">.nowfloats.com</string>
 </resources>

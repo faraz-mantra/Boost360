@@ -1,5 +1,6 @@
 package com.boost.presignin.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,5 +37,14 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     title?.let { progressView?.setTitle(it) }
     cancelable?.let { progressView?.isCancelable = it }
     activity?.let { progressView?.showProgress(it.supportFragmentManager) }
+  }
+
+ protected fun logout() {
+    try {
+      val i = Intent(baseActivity, Class.forName("com.nowfloats.helper.LogoutActivity"))
+      startActivity(i)
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
   }
 }

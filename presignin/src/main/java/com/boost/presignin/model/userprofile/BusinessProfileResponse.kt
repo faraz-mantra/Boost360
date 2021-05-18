@@ -44,4 +44,4 @@ data class Result(
 
     @field:SerializedName("Provider")
     var provider: String? = null,
-)
+):Serializable
