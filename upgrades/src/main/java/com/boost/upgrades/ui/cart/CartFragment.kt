@@ -1087,9 +1087,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 event_attributes.put("cart size", it.size.toDouble())
                 it.forEach {
                     if(it.boost_widget_key != null){
-                        cartFullItems!!.add(it.boost_widget_key!!)
+                        cartFullItems!!.add(it.item_name!!)
                     }else{
-                        cartFullItems!!.add(it.item_id)
+                        cartFullItems!!.add(it.item_name!!)
                     }
 
                 }
@@ -1498,9 +1498,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //            if(it!!.item_id != null) it!!.item_id!! else it.boost_widget_key?.let { it1 -> cartItems?.add(it1) }
 
             if(it.boost_widget_key != null){
-                cartItems!!.add(it.boost_widget_key!!)
+                cartItems!!.add(it.item_name!!)
             }else{
-                cartItems!!.add(it.item_id)
+                cartItems!!.add(it.item_name!!)
             }
 
 //            Log.v("proceedToPayment " , "item_id "+ it.item_id  + " boost "+ it.boost_widget_key + " "+cartItems!!.size)
@@ -1515,6 +1515,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         args.putString("currency", "INR")
         args.putString("contact", (activity as UpgradeActivity).mobileNo)
         prefs.storeCardIds(cartItems)
+        prefs.storeCouponIds(couponCode)
         paymentFragment.arguments = args
         (activity as UpgradeActivity).addFragment(
                 paymentFragment,

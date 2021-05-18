@@ -223,8 +223,9 @@ class PackageFragment : BaseFragment() {
                     package_use_case.setText(bundleData!!.target_business_usecase)
 
                 }
-
-                WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_BUNDLE_LOADED, PAGE_VIEW, bundleData!!.name!!)
+                var event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
+                event_attributes.put("Package Name", bundleData!!.name!!)
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_BUNDLE_LOADED, PAGE_VIEW, event_attributes,"")
             }
         })
 
