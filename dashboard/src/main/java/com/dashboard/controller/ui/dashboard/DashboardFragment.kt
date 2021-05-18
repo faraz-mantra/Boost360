@@ -838,7 +838,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             binding?.btnBusinessLogo -> openDialogPicker()
             binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
             binding?.btnVisitingCard -> {
-                if (messageBusiness.isNotEmpty()&&connectedChannels.isNullOrEmpty().not()) businessWebsiteDetailMessage(
+                if (messageBusiness.isNotEmpty() && connectedChannels.isNullOrEmpty()
+                        .not()
+                ) businessWebsiteDetailMessage(
                     messageBusiness,
                     isBusinessCardShare = true
                 )
