@@ -1,10 +1,14 @@
 package com.boost.presignin.model.authToken
 
-
 import com.boost.presignin.constant.RecyclerViewItemType
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewItem
+import com.framework.pref.UserSessionManager
+import com.framework.utils.convertObjToString
+import com.framework.utils.convertStringToObj
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+
+const val AUTH_TOKEN_SAVE = "AUTH_TOKEN_SAVE"
 
 data class AuthTokenDataItem(
     @SerializedName("AuthenticationToken")
@@ -26,6 +30,14 @@ data class AuthTokenDataItem(
 
   override fun getViewType(): Int {
     return RecyclerViewItemType.BUSINESS_LIST_ITEM.getLayout()
-
   }
+}
+
+fun UserSessionManager.getAuthTokenData(): AuthTokenDataItem? {
+  return convertStringToObj(pref.getString(AUTH_TOKEN_SAVE, "") ?: "")
+}
+
+fun UserSessionManager.saveAuthTokenData(auth: AuthTokenDataItem) {
+  editor.putString(AUTH_TOKEN_SAVE, convertObjToString(auth) ?: "")
+  editor.apply()
 }

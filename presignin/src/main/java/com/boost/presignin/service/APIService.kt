@@ -45,7 +45,6 @@ class APIService : Service() {
         nfxGetSocialTokens()
         hitSelfBrandedKycAPI()
         checkUserAccountDetails()
-
     }
 
     private fun checkUserAccountDetails() {

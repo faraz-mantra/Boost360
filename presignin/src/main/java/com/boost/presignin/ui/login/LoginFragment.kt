@@ -82,38 +82,8 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
   }
 
   private fun storeUserDetail(response: VerificationRequestResult) {
-    WebEngageController.initiateUserLogin(response.loginId)
-    WebEngageController.setUserContactAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName, response.sourceClientId)
-    WebEngageController.trackEvent(PS_LOGIN_SUCCESS, LOGIN_SUCCESS, NO_EVENT_VALUE)
-    session?.userProfileId = response.loginId
-    session?.userProfileEmail = response.profileProperties?.userEmail
-    session?.userProfileName = response.profileProperties?.userName
-    session?.userProfileMobile = response.profileProperties?.userMobile
-    session?.setUserLogin(true)
-    session?.storeISEnterprise(response.isEnterprise.toString() + "")
-    session?.storeIsThinksity((response.sourceClientId != null && response.sourceClientId == clientIdThinksity).toString() + "")
-    session?.storeFPID(response.validFPIds?.get(0))
-    session?.setAccountSave(true)
-    addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(fpListAuth = response.authTokens), false)
+    addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(response), false)
     hideProgress()
-    //loadFpDetails(response)
-  }
-
-  private fun loadFpDetails(response: VerificationRequestResult) {
-    val map = HashMap<String, String>()
-    map["clientId"] = clientId
-    viewModel?.getFpDetails(response.validFPIds?.get(0) ?: "", map)?.observeOnce(viewLifecycleOwner, {
-      val response1 = it as? UserFpDetailsResponse
-      if (it.isSuccess() && response1 != null) {
-        ProcessFPDetails(session!!).storeFPDetails(response1)
-        session?.userProfileId = response1.accountManagerId
-        startService()
-        startDashboard()
-      } else {
-        hideProgress()
-        showShortToast(getString(R.string.error_getting_fp_detail))
-      }
-    })
   }
 
   private fun startDashboard() {

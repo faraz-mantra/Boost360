@@ -16,6 +16,7 @@ import com.boost.presignin.model.accessToken.AccessTokenRequest
 import com.boost.presignin.model.authToken.AccessTokenResponse
 import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
+import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
@@ -24,6 +25,7 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.pref.clientIdThinksity
 import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.*
 import java.util.*
@@ -39,14 +41,12 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
   }
 
   companion object {
-    private const val PHONE_NUMBER = "phone_number"
     private const val FP_LIST_AUTH = "fp_list_auth"
 
     @JvmStatic
-    fun newInstance(phoneNumber: String? = null, fpListAuth: ArrayList<AuthTokenDataItem>? = null) = FloatingPointAuthFragment().apply {
+    fun newInstance(result: VerificationRequestResult? = null) = FloatingPointAuthFragment().apply {
       arguments = Bundle().apply {
-        putString(PHONE_NUMBER, phoneNumber)
-        putSerializable(FP_LIST_AUTH, fpListAuth)
+        putSerializable(FP_LIST_AUTH, result)
       }
     }
   }
@@ -54,7 +54,12 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
   private var result: AuthTokenDataItem? = null
   private lateinit var session: UserSessionManager
   private lateinit var adapter: AppBaseRecyclerViewAdapter<AuthTokenDataItem>
-  private val fpListAuth by lazy { requireArguments().getSerializable(FP_LIST_AUTH) as? ArrayList<AuthTokenDataItem> }
+  private val resultLogin by lazy { requireArguments().getSerializable(FP_LIST_AUTH) as? VerificationRequestResult }
+
+  private val fpListAuth: ArrayList<AuthTokenDataItem>
+    get() {
+      return resultLogin?.authTokens ?: ArrayList()
+    }
 
   override fun getViewModelClass(): Class<LoginSignUpViewModel> {
     return LoginSignUpViewModel::class.java
@@ -75,7 +80,7 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
   }
 
   private fun setAdapterFPList() {
-    if (fpListAuth.isNullOrEmpty().not()) {
+    if (fpListAuth.isNotEmpty()) {
       this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = fpListAuth!!, itemClickListener = this)
       binding?.rvBusinessList?.adapter = adapter
     } else {
@@ -105,7 +110,7 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
       this.result = item as? AuthTokenDataItem
       binding?.btnGoToDashboard?.isEnabled = true
       result?.isItemSelected = true
-      fpListAuth?.forEach { dataItems ->
+      fpListAuth.forEach { dataItems ->
         if (dataItems != result) {
           dataItems.isItemSelected = false
         }
@@ -116,6 +121,18 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
 
   private fun createAccessTokenAuth() {
     showProgress()
+    WebEngageController.initiateUserLogin(resultLogin?.loginId)
+    WebEngageController.setUserContactAttributes(resultLogin?.profileProperties?.userEmail, resultLogin?.profileProperties?.userMobile, resultLogin?.profileProperties?.userName, resultLogin?.sourceClientId)
+    WebEngageController.trackEvent(PS_LOGIN_SUCCESS, LOGIN_SUCCESS, NO_EVENT_VALUE)
+    session.userProfileId = resultLogin?.loginId
+    session.userProfileEmail = resultLogin?.profileProperties?.userEmail
+    session.userProfileName = resultLogin?.profileProperties?.userName
+    session.userProfileMobile = resultLogin?.profileProperties?.userMobile
+    session.storeISEnterprise(resultLogin?.isEnterprise.toString() + "")
+    session.storeIsThinksity((resultLogin?.sourceClientId != null && resultLogin?.sourceClientId == clientIdThinksity).toString() + "")
+    session.storeFPID(result?.floatingPointId)
+    session.storeFpTag(result?.floatingPointTag)
+    session.setUserLogin(true)
     val request = AccessTokenRequest(authToken = result?.authenticationToken, clientId = clientId, fpId = result?.floatingPointId)
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
       val result = it as? AccessTokenResponse
@@ -148,17 +165,13 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
 
   private fun storeFpDetails() {
     WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, CHOOSE_BUSINESS, result?.floatingPointId ?: "")
-    session.setUserLogin(true)
-    session.setAccountSave(true)
-    session.storeFPID(result?.floatingPointId)
-    session.storeFpTag(result?.floatingPointTag)
     val map = HashMap<String, String>()
     map["clientId"] = clientId
     viewModel?.getFpDetails(this.result?.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
-        session.userProfileId = response.accountManagerId
+        if (response.accountManagerId.isNullOrEmpty().not()) session.userProfileId = response.accountManagerId
         startService()
         startDashboard()
       } else {

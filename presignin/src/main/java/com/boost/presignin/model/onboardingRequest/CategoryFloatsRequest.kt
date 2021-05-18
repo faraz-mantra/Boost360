@@ -1,8 +1,13 @@
 package com.boost.presignin.model.onboardingRequest
 
 import com.boost.presignin.model.category.CategoryDataModel
+import com.framework.pref.UserSessionManager
+import com.framework.utils.convertObjToString
+import com.framework.utils.convertStringToObj
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+
+const val CATEGORY_REQUEST_SAVE = "CATEGORY_REQUEST_SAVE"
 
 data class CategoryFloatsRequest(
     val requestProfile: CreateProfileRequest? = null,
@@ -27,4 +32,13 @@ data class CategoryFloatsRequest(
     return if (isUpdate == true) fpTag else domainName
   }
 
+}
+
+fun UserSessionManager.getCategoryRequest(): CategoryFloatsRequest? {
+  return convertStringToObj(pref.getString(CATEGORY_REQUEST_SAVE, "") ?: "")
+}
+
+fun UserSessionManager.saveCategoryRequest(request: CategoryFloatsRequest) {
+  editor.putString(CATEGORY_REQUEST_SAVE, convertObjToString(request) ?: "")
+  editor.apply()
 }

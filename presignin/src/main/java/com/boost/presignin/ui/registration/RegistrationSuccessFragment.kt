@@ -14,6 +14,7 @@ import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentRegistrationSuccessBinding
+import com.boost.presignin.helper.ProcessFPDetails
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.accessToken.AccessTokenRequest
 import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
@@ -22,21 +23,21 @@ import com.boost.presignin.model.activatepurchase.PurchasedExpiry
 import com.boost.presignin.model.activatepurchase.PurchasedWidget
 import com.boost.presignin.model.authToken.AccessTokenResponse
 import com.boost.presignin.model.authToken.AuthTokenDataItem
+import com.boost.presignin.model.authToken.getAuthTokenData
+import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
+import com.boost.presignin.model.onboardingRequest.getCategoryRequest
 import com.boost.presignin.model.plan.Plan15DaysResponse
 import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.WebPreviewActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
-import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
-import com.framework.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.saveAccessTokenAuth
-import com.framework.webengageconstant.ACTIVATE_FREE_PURCHASE_PLAN
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.SIGNUP_SUCCESS
-import java.util.ArrayList
+import com.framework.webengageconstant.*
+import java.util.*
+import kotlin.system.exitProcess
 
 private const val TIME_INTERVAL = 2000 // # milliseconds, desired time passed between two back presses.
 
@@ -49,16 +50,8 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
   private var session: UserSessionManager? = null
 
   companion object {
-    const val CATEGORY_REQUEST = "CATEGORY_REQUEST"
-    const val AUTH_TOKEN = "AUTH_TOKEN"
-
     @JvmStatic
-    fun newInstance(registerRequest: CategoryFloatsRequest, authToken: AuthTokenDataItem?) = RegistrationSuccessFragment().apply {
-      arguments = Bundle().apply {
-        putSerializable(CATEGORY_REQUEST, registerRequest)
-        putSerializable(AUTH_TOKEN, authToken)
-      }
-    }
+    fun newInstance() = RegistrationSuccessFragment()
   }
 
   override fun getLayout(): Int {
@@ -70,48 +63,48 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
   }
 
   override fun onCreateView() {
-    floatsRequest = arguments?.getSerializable(CATEGORY_REQUEST) as? CategoryFloatsRequest
-    authToken = arguments?.getSerializable(AUTH_TOKEN) as? AuthTokenDataItem
     session = UserSessionManager(baseActivity)
-    val businessName = floatsRequest?.businessName
-    val name = floatsRequest?.requestProfile?.ProfileProperties?.userName
-    val websiteUrl = floatsRequest?.webSiteUrl
+    floatsRequest = session?.getCategoryRequest()
+    authToken = session?.getAuthTokenData()
+    if (floatsRequest != null || authToken != null) {
+      val businessName = floatsRequest?.businessName
+      val name = floatsRequest?.requestProfile?.ProfileProperties?.userName
+      val websiteUrl = floatsRequest?.webSiteUrl
 
-    binding?.headingTv?.text = String.format(getString(R.string.congratulations_n_s), name)
-    binding?.businessNameTv?.text = businessName;
+      binding?.headingTv?.text = String.format(getString(R.string.congratulations_n_s), name)
+      binding?.businessNameTv?.text = businessName;
 
-    saveSessionData()
-    val amountSpannableString = SpannableString(" $businessName ").apply {
-      setSpan(ForegroundColorSpan(Color.rgb(0, 0, 0)), 0, length, 0)
-      setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
-
-    }
-
-
-    val your = getString(R.string.you);
-    binding?.subheading?.text = SpannableStringBuilder().apply {
-      append(your)
-      append(amountSpannableString)
-      append(getString(R.string.registration_complete_subheading))
-    }
+      val amountSpannableString = SpannableString(" $businessName ").apply {
+        setSpan(ForegroundColorSpan(Color.rgb(0, 0, 0)), 0, length, 0)
+        setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
+      }
 
 
-    val underLineSpan = SpannableString(websiteUrl).apply {
-      setSpan(UnderlineSpan(), 0, length, 0)
-    }
-    binding?.websiteTv?.text = SpannableStringBuilder().apply { append(underLineSpan) }
+      val your = getString(R.string.you);
+      binding?.subheading?.text = SpannableStringBuilder().apply {
+        append(your)
+        append(amountSpannableString)
+        append(getString(R.string.registration_complete_subheading))
+      }
 
-    binding?.lottieAnimation?.setAnimation(R.raw.lottie_anim_congratulation)
-    binding?.lottieAnimation?.repeatCount = 0
-    binding?.lottieAnimation?.playAnimation()
 
-    binding?.previewAccountBt?.setOnClickListener {
-      val bundle = Bundle()
-      bundle.putSerializable("request", floatsRequest)
-      navigator?.startActivity(WebPreviewActivity::class.java, bundle)
-    }
-    binding?.dashboardBt?.setOnClickListener { createAccessTokenAuth() }
-    onBackPressed()
+      val underLineSpan = SpannableString(websiteUrl).apply {
+        setSpan(UnderlineSpan(), 0, length, 0)
+      }
+      binding?.websiteTv?.text = SpannableStringBuilder().apply { append(underLineSpan) }
+
+      binding?.lottieAnimation?.setAnimation(R.raw.lottie_anim_congratulation)
+      binding?.lottieAnimation?.repeatCount = 0
+      binding?.lottieAnimation?.playAnimation()
+
+      binding?.previewAccountBt?.setOnClickListener {
+        val bundle = Bundle()
+        bundle.putSerializable("request", floatsRequest)
+        navigator?.startActivity(WebPreviewActivity::class.java, bundle)
+      }
+      binding?.dashboardBt?.setOnClickListener { createAccessTokenAuth() }
+      onBackPressed()
+    } else logout()
   }
 
   private fun createAccessTokenAuth() {
@@ -121,6 +114,8 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         this.session?.saveAccessTokenAuth(result.result!!)
+        this.session?.setUserLogin(true)
+        this.session?.setUserSignUpComplete(false)
         aliInitializeActivity()
       } else {
         showLongToast(getString(R.string.access_token_create_error))
@@ -154,18 +149,42 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         if (it.isSuccess()) {
           WebEngageController.trackEvent(ACTIVATE_FREE_PURCHASE_PLAN, SIGNUP_SUCCESS, NO_EVENT_VALUE)
         } else showLongToast(getString(R.string.unable_to_activate_business_plan))
-        try {
-          startService()
-          val intent = Intent(baseActivity, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
-          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-          baseActivity.startActivity(intent)
-          baseActivity.finish()
-        } catch (e: ClassNotFoundException) {
-          e.printStackTrace()
-        }
-        hideProgress()
+        storeFpDetails()
       })
     })
+  }
+
+  private fun storeFpDetails() {
+    val map = HashMap<String, String>()
+    map["clientId"] = clientId
+    viewModel?.getFpDetails(authToken?.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? UserFpDetailsResponse
+      if (it.isSuccess() && response != null) {
+        ProcessFPDetails(session!!).storeFPDetails(response)
+        if (response.accountManagerId.isNullOrEmpty().not()) session?.userProfileId = response.accountManagerId
+        startService()
+        startDashboard()
+      } else {
+        hideProgress()
+        logout()
+      }
+    })
+  }
+
+  private fun startDashboard() {
+    try {
+      val dashboardIntent = Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
+      dashboardIntent.putExtras(requireActivity().intent)
+      val bundle = Bundle()
+      bundle.putParcelableArrayList("message", ArrayList())
+      dashboardIntent.putExtras(bundle)
+      dashboardIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+      startActivity(dashboardIntent)
+      baseActivity.finish()
+      hideProgress()
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
   }
 
   private fun getRequestPurchasedOrder(floatingPointId: String, responsePlan: Plan15DaysResponse?): ActivatePurchasedOrderRequest {
@@ -223,23 +242,12 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
     activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-          baseActivity.finishAffinity()
-          baseActivity.finish()
+          exitProcess(0)
         } else {
           showShortToast(getString(R.string.press_again_exit))
         }
         mBackPressed = System.currentTimeMillis();
       }
     })
-  }
-
-  private fun saveSessionData() {
-    session?.storeFpTag(floatsRequest?.fpTag)
-    session?.storeFPID(floatsRequest?.floatingPointId)
-    session?.storeFPDetails(GET_FP_DETAILS_TAG, floatsRequest?.getWebSiteId())
-    session?.storeFPDetails(GET_FP_EXPERIENCE_CODE, floatsRequest?.categoryDataModel?.experience_code)
-    session?.userProfileId = floatsRequest?.requestProfile?.profileId
-    session?.setAccountSave(true)
-    session?.setUserLogin(true)
   }
 }

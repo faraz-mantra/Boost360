@@ -135,6 +135,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
   private fun sendOtp(phoneNumber: String?) {
     showProgress(getString(R.string.sending_otp))
+    WebEngageController.trackEvent(BOOST_360_VERIFY_OTP, OTP_RESEND_CLICK, NO_EVENT_VALUE)
     viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.parseResponse()) {
         binding?.wrongOtpErrorTv?.isVisible = false
@@ -152,7 +153,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
       if (it.isSuccess()) {
         val result = it as? VerifyOtpResponse
         if (result?.Result?.authTokens.isNullOrEmpty().not()) {
-          addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(fpListAuth = result?.Result?.authTokens), false)
+          addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(result?.Result), false)
         } else {
           navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
         }

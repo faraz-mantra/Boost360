@@ -67,6 +67,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_18sdp"
+          android:inputType="textCapWords"
           android:drawableStart="@drawable/ic_business_detail_user"
           android:hint="@string/enter_your_name"
           app:layout_constraintTop_toBottomOf="@id/sub_heading_tv" />
@@ -77,9 +78,9 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_16sdp"
+          android:inputType="textCapWords"
           android:drawableStart="@drawable/ic_business_detail_catelog"
           android:hint="@string/your_business_name_hint"
-          android:inputType="text"
           app:layout_constraintEnd_toEndOf="@id/endGuide"
           app:layout_constraintTop_toBottomOf="@id/namet_et" />
 
@@ -90,7 +91,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_16sdp"
           android:drawableStart="@drawable/ic_business_detail_email"
-          android:hint="@string/your_business_email"
+          android:hint="@string/your_business_email_optional"
           android:inputType="textEmailAddress"
           app:layout_constraintEnd_toEndOf="@id/endGuide"
           app:layout_constraintTop_toBottomOf="@id/business_name_et" />
@@ -146,16 +147,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
+            android:textSize="@dimen/body_1"
+            android:text="@string/use_this_as_my_whatsapp_contact_number"
+            android:textColor="@color/psn_sub_heading_color"
             app:buttonTint="@color/checkbox_background"
             app:layout_constraintTop_toBottomOf="@id/phone_et" />
-
-          <com.framework.views.customViews.CustomTextView
-            style="@style/psn_subheading_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/use_this_as_my_whatsapp_contact_number"
-            app:layout_constraintBottom_toBottomOf="@id/checkbox"
-            app:layout_constraintTop_toTopOf="@id/checkbox" />
         </LinearLayout>
 
       </LinearLayout>
