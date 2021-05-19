@@ -14,24 +14,24 @@ import retrofit2.Retrofit
 
 object WebActionBoostKitRepository : AppBaseRepository<WebActionBoostKitRemoteData, AppBaseLocalService>() {
 
-  fun getKycData(query: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getKycData(query), TaskCode.GET_KYC_DATA)
+  fun getKycData(auth: String?, query: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getKycData(auth, query), TaskCode.GET_KYC_DATA)
   }
 
-  fun getKycListData(): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getKycListData(), TaskCode.GET_KYC_LIST_DATA)
+  fun getKycListData(auth: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getKycListData(auth), TaskCode.GET_KYC_LIST_DATA)
   }
 
-  fun addKycData(request: PaymentKycRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.addKycData(request), TaskCode.ADD_KYC_DATA)
+  fun addKycData(auth: String?, request: PaymentKycRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.addKycData(auth, request), TaskCode.ADD_KYC_DATA)
   }
 
-  fun updateKycData(request: UpdatePaymentKycRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.updateKycData(request), TaskCode.UPDATE_KYC_DATA)
+  fun updateKycData(auth: String?, request: UpdatePaymentKycRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateKycData(auth, request), TaskCode.UPDATE_KYC_DATA)
   }
 
-  fun putUploadImageProfile(file: MultipartBody.Part?, assetFileName: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.putUploadImageProfile(file, assetFileName), TaskCode.POST_FILE_UPLOAD)
+  fun putUploadImageProfile(auth: String?, file: MultipartBody.Part?, assetFileName: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.putUploadImageProfile(auth, file, assetFileName), TaskCode.POST_FILE_UPLOAD)
   }
 
   override fun getRemoteDataSourceClass(): Class<WebActionBoostKitRemoteData> {

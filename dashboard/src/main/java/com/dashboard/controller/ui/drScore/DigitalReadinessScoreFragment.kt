@@ -173,7 +173,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 
   private fun getWhatsAppData(urlString: String, isShowLoader: Boolean = false) {
     var urlStringN = urlString
-    viewModel?.getWhatsappBusiness(session?.fpTag)?.observeOnce(this, {
+    viewModel?.getWhatsappBusiness(request = session?.fpTag, auth = WA_KEY)?.observeOnce(this, {
       if (isShowLoader) hideProgress()
       if (it.isSuccess()) {
         val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()

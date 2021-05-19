@@ -879,7 +879,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun getWhatsAppData(urlString: String, isBusinessCardShare: Boolean = false, isEnquiriesShare: Boolean = false, shareType: ShareType? = null) {
     var urlStringN = urlString
-    viewModel?.getWhatsappBusiness(session?.fpTag)?.observeOnce(this, {
+    viewModel?.getWhatsappBusiness(request = session?.fpTag,auth = WA_KEY)?.observeOnce(this, {
       if (isBusinessCardShare || isEnquiriesShare) hideProgress()
       if (it.isSuccess()) {
         val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()

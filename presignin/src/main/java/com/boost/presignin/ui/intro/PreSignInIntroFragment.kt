@@ -67,7 +67,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
           mediaPlayer = it
           videoDuration = mediaPlayer?.duration ?: 0
         }
-        binding?.videoView?.setVideoPath("https://cdn.withfloats.com/boost/videos/en/intro.mp4")
+        binding?.videoView?.setVideoPath("https://cdn.nowfloats.com/manage/assets/Content/videos/MobileIntroVideo.mp4")
         binding?.videoView?.start()
         binding?.videoView?.setOnInfoListener { p0, p1, p2 ->
           when (p1) {

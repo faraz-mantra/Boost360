@@ -8,6 +8,10 @@ object EndPoints {
     const val PUT_CREATE_BUSINESS_V6_URL = "discover/v6/FloatingPoint/create"
     const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
 
+    const val USER_DETAILS_WITH_FLOAT = "/discover/v9/business/paymentProfile/{fpId}"
+    const val VERIFY_PHONE = "/discover/v1/floatingPoint/verifyPrimaryNumber"
+    const val VERIFY_EMAIL = "/discover/v1/floatingPoint/verifyEmail"
+
     //TODO NFX API WITH FLOAT TWO
     const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
     const val CREATE_MERCHANT_PROFILE = "/user/v9/floatingPoint/CreateMerchantProfile"
@@ -27,19 +31,13 @@ object EndPoints {
     const val POST_BUSINESS_DOMAIN_URL = "discover/v1/floatingPoint/verifyUniqueTag"
     const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
 
+    const val REGISTER_CHANNEL = "/Discover/v1/floatingpoint/notification/registerChannel"
+
     //todo NFX API
     var NFX_WITH_NOWFLOATS: String = "https://nfx.withfloats.com"
 
     //todo webaction boost kit api url
     const val WEB_ACTION_BOOST_KIT_API_URL = "https://webaction.api.boostkit.dev"
-    const val USER_DETAILS_WITH_FLOAT = "/discover/v9/business/paymentProfile/{fpId}"
-    const val REGISTER_CHANNEL = "/Discover/v1/floatingpoint/notification/registerChannel"
     const val GET_DATA = "/api/v1/kycdoc/get-data"
-    const val GET_ACCESS_TOKENS = "/dataexchange/v1/getAccessTokens"
-    const val FETCH_DATA_ANALYTICS = "/dataexchange/v1/fetch/analytics"
-    const val VERIFY_PHONE = "/discover/v1/floatingPoint/verifyPrimaryNumber"
-    const val VERIFY_EMAIL = "/discover/v1/floatingPoint/verifyEmail"
-
-
 }
 

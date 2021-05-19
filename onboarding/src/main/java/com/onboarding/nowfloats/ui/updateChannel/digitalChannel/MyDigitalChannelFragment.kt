@@ -215,7 +215,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun getWhatsAppData(requestFloatsNew: RequestFloatsModel, channelsAccessToken: ChannelsType?) {
-    viewModel?.getWhatsappBusiness(requestFloatsNew.fpTag)?.observeOnce(this, {
+    viewModel?.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = auth!!)?.observeOnce(this, {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
@@ -477,7 +477,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     showProgress(context?.getString(R.string.disconnecting_your_channel), false)
     if (channel.isWhatsAppChannel()) {
       val request = UpdateChannelActionDataRequest(ChannelActionData(), requestFloatsModel?.getWebSiteId())
-      viewModel?.postUpdateWhatsappRequest(request)?.observeOnce(viewLifecycleOwner, { responseManage(it) })
+      viewModel?.postUpdateWhatsappRequest(request = request, auth = auth!!)?.observeOnce(viewLifecycleOwner, { responseManage(it) })
     } else {
       val request = UpdateChannelAccessTokenRequest(ChannelAccessToken(type = channel.getAccessTokenType()), clientId, requestFloatsModel?.floatingPointId!!)
       viewModel?.updateChannelAccessToken(request)?.observeOnce(viewLifecycleOwner, { responseManage(it) })

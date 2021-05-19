@@ -42,8 +42,8 @@ class DashboardViewModel : BaseViewModel() {
     return ChannelRepository.getChannelsInsights(nowfloatsId, identifier).toLiveData()
   }
 
-  fun getWhatsappBusiness(request: String?): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(getJsonRequest(request)).toLiveData()
+  fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
+    return WhatsAppRepository.getWhatsappBusiness(request = getJsonRequest(request),auth = auth).toLiveData()
   }
 
   fun nfxProcess(request: NFXProcessRequest?): LiveData<BaseResponse> {

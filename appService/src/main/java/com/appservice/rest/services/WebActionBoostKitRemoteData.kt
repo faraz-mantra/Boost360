@@ -15,20 +15,30 @@ interface WebActionBoostKitRemoteData {
 
   //"query"={"fpTag": "nik(FpTag)"}
   @GET(EndPoints.GET_DATA_KYC)
-  fun getKycData(@Query("query") query: String?): Observable<Response<PaymentKycDataResponse>>
+  fun getKycData(
+      @Header("Authorization") auth: String?,
+      @Query("query") query: String?,
+  ): Observable<Response<PaymentKycDataResponse>>
 
   @GET(EndPoints.GET_ALL_KYC_DATA)
-  fun getKycListData(): Observable<Response<PaymentKycListResponse>>
+  fun getKycListData(@Header("Authorization") auth: String?): Observable<Response<PaymentKycListResponse>>
 
   @POST(EndPoints.ADD_DATA_KYC)
-  fun addKycData(@Body request: PaymentKycRequest?): Observable<Response<ResponseBody>>
+  fun addKycData(
+      @Header("Authorization") auth: String?,
+      @Body request: PaymentKycRequest?,
+  ): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.UPDATE_DATA_KYC)
-  fun updateKycData(@Body request: UpdatePaymentKycRequest): Observable<Response<ResponseBody>>
+  fun updateKycData(
+      @Header("Authorization") auth: String?,
+      @Body request: UpdatePaymentKycRequest,
+  ): Observable<Response<ResponseBody>>
 
   @Multipart
   @POST(EndPoints.UPLOAD_FILE)
   fun putUploadImageProfile(
+      @Header("Authorization") auth: String?,
       @Part file: MultipartBody.Part?,
       @Query("assetFileName") assetFileName: String?,
   ): Observable<Response<ResponseBody>>

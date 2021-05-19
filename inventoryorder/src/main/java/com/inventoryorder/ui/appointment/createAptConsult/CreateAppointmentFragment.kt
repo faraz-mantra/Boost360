@@ -484,7 +484,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     val setField = SetField(bookingRef = orderItem?._id, dateTimeSlot = dateTimeSlot, doctorId = doctorData?.Id, serviceId = serviceData?.id ?: "NO_ITEM")
     setField.setCustomerInfo(CustomerInfo(emailId = updateExtra?.patientEmailId, name = updateExtra?.patientName, mobileNumber = updateExtra?.patientMobileNumber))
     request.setUpdateValueAll(UpdateConsultField(setField))
-    viewModel?.updateAptConsultData(request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateAptConsultData(AUTHORIZATION_3,request)?.observeOnce(viewLifecycleOwner, {
       showLongToast("Your booking is rescheduled successfully.")
       val intent = Intent()
       intent.putExtra(IntentConstant.ORDER_ID.name, orderItem?._id)
@@ -529,7 +529,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
     val request = AddAptConsultRequest(actionData = actionData, websiteId = session?.fpTag)
 
-    viewModel?.addAptConsultData(request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.addAptConsultData(AUTHORIZATION_3,request)?.observeOnce(viewLifecycleOwner, {
       val scheduleDate = item?.scheduledStartDate()
       val dateApt = parseDate(scheduleDate, FORMAT_SERVER_DATE, com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2)
       startSuccessScreen(response, dateApt)
@@ -698,7 +698,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun getWeeklyScheduleList(doctorId: String) {
     val requestQuery = "{\$and:[{WebsiteId: \'${preferenceData?.fpTag}\'}, {doctorId: \'${doctorId}\'}]}"
-    viewModel?.getWeeklyScheduleList( requestQuery)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+    viewModel?.getWeeklyScheduleList(AUTHORIZATION_3, requestQuery)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
       if (it.error is NoNetworkException) {
         errorUi(resources.getString(R.string.internet_connection_not_available))
         return@Observer
@@ -716,7 +716,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private fun getAptConsultDoctor() {
     val dateTimeSlot = orderItem?.firstItemForAptConsult()?.getScheduledDate()
     val requestQuery = "{\$and:[{WebsiteId: \'${preferenceData?.fpTag}\'}, {doctorId: \'${doctorData?.Id}\'}, {status: {\$ne: 'cancelled'}}, {dateTimeSlot: /$dateTimeSlot/}]}"
-    viewModel?.getAllAptConsultDoctor(requestQuery)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+    viewModel?.getAllAptConsultDoctor(AUTHORIZATION_3,requestQuery)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
       if (it.error is NoNetworkException) {
         errorUi(resources.getString(R.string.internet_connection_not_available))
         return@Observer

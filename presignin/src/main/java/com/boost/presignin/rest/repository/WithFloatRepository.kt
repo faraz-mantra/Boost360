@@ -13,10 +13,6 @@ import retrofit2.Retrofit
 
 object WithFloatRepository : AppBaseRepository<WithFloatsRemoteDataSource, AppBaseLocalService>() {
 
-  override fun getApiClient(): Retrofit {
-    return WithFloatsApiClient.shared.retrofit
-  }
-
   override fun getRemoteDataSourceClass(): Class<WithFloatsRemoteDataSource> {
     return WithFloatsRemoteDataSource::class.java
   }
@@ -37,4 +33,7 @@ object WithFloatRepository : AppBaseRepository<WithFloatsRemoteDataSource, AppBa
     return AppBaseLocalService()
   }
 
+  override fun getApiClient(): Retrofit {
+    return WithFloatsApiClient.shared.retrofit
+  }
 }
