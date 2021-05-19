@@ -937,15 +937,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       var urlString = ""
       if (it.isSuccess()) {
         val response = it as? ChannelAccessStatusResponse
-        val otherWebsite = session?.getFPDetails(GET_FP_DETAILS_WEBSITE)
         connectedChannels.clear()
         if (response?.channels?.facebookpage?.status == CHANNEL_STATUS_SUCCESS) {
           urlString = "\n⚡ *Facebook: https://www.facebook.com/${response.channels?.facebookpage?.account?.accountId}*"
-          when {
-            otherWebsite.isNullOrEmpty().not() -> {
-              urlString = "$urlString\n Other Website: $otherWebsite"
-            }
-          }
           connectedChannels.add(ChannelsType.AccountType.facebookpage.name)
         }
         if (response?.channels?.twitter?.status == CHANNEL_STATUS_SUCCESS) {
@@ -964,9 +958,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  private fun getWhatsAppData(urlString: String, isBusinessCardShare: Boolean = false, isEnquiriesShare: Boolean = false, shareType: ShareType? = null, ) {
+  private fun getWhatsAppData(urlString: String, isBusinessCardShare: Boolean = false, isEnquiriesShare: Boolean = false, shareType: ShareType? = null) {
     var urlStringN = urlString
-    viewModel?.getWhatsappBusiness(request = session?.fpTag,auth = WA_KEY)?.observeOnce(this, {
+    viewModel?.getWhatsappBusiness(request = session?.fpTag, auth = WA_KEY)?.observeOnce(this, {
       if (isBusinessCardShare || isEnquiriesShare) hideProgress()
       if (it.isSuccess()) {
         val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
@@ -975,8 +969,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           connectedChannels.add(ChannelsType.AccountType.WAB.name)
         }
       }
+      val otherWebsite = session?.getFPDetails(GET_FP_DETAILS_WEBSITE)
+      if (otherWebsite.isNullOrEmpty().not()) urlStringN += "\n⚡ *Other Website: $otherWebsite*"
       saveDataConnectedChannel(connectedChannels)
-      if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDECall: ${session?.userPrimaryMobile}*"
+      if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDE *Call: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
       if (isBusinessCardShare) businessWebsiteDetailMessage(urlStringN, isBusinessCardShare = true)
       else if (isEnquiriesShare) businessWebsiteDetailMessage(urlStringN, shareType = shareType)
