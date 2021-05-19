@@ -139,7 +139,7 @@
   <string name="save">Save</string>
     <string name="save_changes">Save Changes</string>
     <string name="website_style_customisation">Website Style Customisation</string>
-  <string name="error_while_getting_website_theme">error while getting website theme.</string>
+  <string name="error_while_getting_website_theme">Error while getting website theme.</string>
     <string name="your_theme_update_published">Your changes are saved successfully published and live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="unable_to_get_primary_fonts">Unable to get primary fonts</string>
   <string name="unable_to_get_secondary_fonts">Unable to get Secondary fonts.</string>

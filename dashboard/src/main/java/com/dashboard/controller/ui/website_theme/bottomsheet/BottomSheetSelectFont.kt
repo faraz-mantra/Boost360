@@ -39,13 +39,13 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
     when {
       primaryFontList != null -> {
         isPrimaryFontSelection = true
-        this.primaryFontsAdapter = AppBaseRecyclerViewAdapter(baseActivity, primaryFontList!!, this@BottomSheetSelectFont)
+        this.primaryFontsAdapter = AppBaseRecyclerViewAdapter(baseActivity, primaryFontList?: arrayListOf(), this@BottomSheetSelectFont)
         binding?.rvFont?.adapter = primaryFontsAdapter
         binding?.ctvSubheading?.text = getString(R.string.the_font_you_want_to_change_as_primary)
       }
       else -> {
         isPrimaryFontSelection = false
-        this.secondaryFontAdapter = AppBaseRecyclerViewAdapter(baseActivity, secondaryFontList!!, this@BottomSheetSelectFont)
+        this.secondaryFontAdapter = AppBaseRecyclerViewAdapter(baseActivity, secondaryFontList?: arrayListOf(), this@BottomSheetSelectFont)
         binding?.rvFont?.adapter = secondaryFontAdapter
         binding?.ctvSubheading?.text = getString(R.string.the_font_you_want_to_change_as_secondary)
 
