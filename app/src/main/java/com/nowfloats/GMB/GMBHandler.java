@@ -110,8 +110,8 @@ public class GMBHandler {
 
                         BoostLog.i(Constants.LogTag, response.toString());
 
-                        if (display)
-                            Toast.makeText(context, context.getString(R.string.gmb_upload_data), Toast.LENGTH_LONG).show();
+//                        if (display)
+//                            Toast.makeText(context, context.getString(R.string.gmb_upload_data), Toast.LENGTH_LONG).show();
 
                     }
                 }, new Response.ErrorListener() {
