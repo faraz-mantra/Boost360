@@ -1,6 +1,5 @@
 package com.framework.pref
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.database.Cursor
@@ -17,7 +16,7 @@ import kotlin.collections.ArrayList
 class UserSessionManager(var activity: Context) {
 
   // Shared Preferences reference
-  private var pref = activity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+  var pref = activity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
   // Editor reference for Shared preferences
   var editor: SharedPreferences.Editor = pref.edit()
@@ -584,6 +583,14 @@ class UserSessionManager(var activity: Context) {
     return pref.getString(key.trim { it <= ' ' }, "")
   }
 
+  fun storeAccessToken(tokenValue: String?) {
+    editor.putString(Key_Preferences.ACCESS_TOKEN_AUTH, tokenValue)
+    editor.apply()
+  }
+
+  val getAccessToken: String?
+    get() = pref.getString(Key_Preferences.ACCESS_TOKEN_AUTH, "")
+
   val isBoostBubbleEnabled: Boolean
     get() = pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false)
   val isCustomerAssistantEnabled: Boolean
@@ -739,6 +746,13 @@ class UserSessionManager(var activity: Context) {
   val isUserLoggedIn: Boolean
     get() = pref.getBoolean(IS_USER_LOGIN, false)
 
+  fun setUserSignUpComplete(`val`: Boolean) {
+    editor.putBoolean(IS_SIGN_UP_COMPLETE, `val`).apply()
+  }
+
+  val isUserSignUpComplete: Boolean
+    get() = pref.getBoolean(IS_SIGN_UP_COMPLETE, false)
+
   var siteHealth: Int
     get() = pref.getInt(Key_Preferences.SITE_HEALTH, 0)
     set(siteMeterTotalWeight) {
@@ -763,6 +777,7 @@ class UserSessionManager(var activity: Context) {
   companion object {
     // All Shared Preferences Keys
     private const val IS_USER_LOGIN = "IsUserLoggedIn"
+    private const val IS_SIGN_UP_COMPLETE = "IsSignUpComplete"
 
     // User name (make variable public to access from outside)
     const val KEY_NAME = "name"

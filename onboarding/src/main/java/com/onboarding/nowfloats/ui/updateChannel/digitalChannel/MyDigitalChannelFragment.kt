@@ -69,11 +69,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       return baseActivity.getSharedPreferences(PreferenceConstant.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
     }
 
-  private val auth: String?
-    get() {
-      return pref?.getString(PreferenceConstant.AUTHORIZATION, "")
-    }
-
   private var requestFloatsModel: RequestFloatsModel? = null
   private var adapterConnect: AppBaseRecyclerViewAdapter<ChannelModel>? = null
   private var adapterDisconnect: AppBaseRecyclerViewAdapter<ChannelModel>? = null
@@ -125,7 +120,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         val floatingPoint = bundle.getString(PreferenceConstant.KEY_FP_ID)
         val fpTag = bundle.getString(PreferenceConstant.GET_FP_DETAILS_TAG)
         showProgress(context?.getString(R.string.refreshing_your_channels), false)
-        viewModel?.getCategories(baseActivity)?.observeOnce(this, {
+        viewModel?.getCategories(baseActivity)?.observeOnce(viewLifecycleOwner, {
           if (it?.error != null) errorMessage(it.error?.localizedMessage ?: resources.getString(R.string.error_getting_category_data))
           else {
             val categoryList = (it as? ResponseDataCategory)?.data
@@ -140,7 +135,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun getChannelAccessToken(categoryData: CategoryDataModel?, floatingPoint: String?, fpTag: String?) {
-    viewModel?.getChannelsAccessTokenStatus(floatingPoint)?.observeOnce(this, { it1 ->
+    viewModel?.getChannelsAccessTokenStatus(floatingPoint)?.observeOnce(viewLifecycleOwner, { it1 ->
       when {
         it1.error is NoNetworkException -> errorMessage(resources.getString(R.string.internet_connection_not_available))
         it1.isSuccess() -> {
@@ -215,18 +210,16 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun getWhatsAppData(requestFloatsNew: RequestFloatsModel, channelsAccessToken: ChannelsType?) {
-    viewModel?.getWhatsappBusiness(requestFloatsNew.fpTag, auth!!)?.observeOnce(this, {
-      if ((it.error is NoNetworkException).not()) {
-        if (it.status == 200 || it.status == 201 || it.status == 202) {
-          val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
-          if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
-            val channelActionData = ChannelActionData(response.active_whatsapp_number?.trim())
-            requestFloatsNew.channelActionDatas?.add(channelActionData)
-            requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
-              if (it1.isWhatsAppChannel()) {
-                it1.isSelected = true
-                it1.channelActionData = channelActionData
-              }
+    viewModel?.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = WA_KEY)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
+        if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
+          val channelActionData = ChannelActionData(response.active_whatsapp_number?.trim())
+          requestFloatsNew.channelActionDatas?.add(channelActionData)
+          requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
+            if (it1.isWhatsAppChannel()) {
+              it1.isSelected = true
+              it1.channelActionData = channelActionData
             }
           }
         }
@@ -264,7 +257,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun setSharePrefDataFpPageAndTwitter(channelsAccessToken: ChannelsType?) {
-    val fpPage = listConnect?.firstOrNull { it.isFacebookPage() }
     val editorFp = pref?.edit()
     editorFp?.putBoolean("fbShareEnabled", false)
     editorFp?.putString("fbAccessId", null)
@@ -272,29 +264,29 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, "")
     editorFp?.putString("fbPageAccessId", null)
     editorFp?.putInt("fbStatus", 0)
-    if (fpPage != null) {
-      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.channelAccessToken?.userAccountName)
+    val fpPage = channelsAccessToken?.facebookpage
+    if (fpPage != null && fpPage.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.account?.accountName ?: "")
       editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, true)
       editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 1)
-      editorFp?.putString("fbPageAccessId", fpPage.channelAccessToken?.userAccountId)
+      editorFp?.putString("fbPageAccessId", fpPage.account?.accountId ?: "")
     } else {
       editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, null)
       editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
       editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
     }
     val timeLine = channelsAccessToken?.facebookusertimeline
-    if (timeLine != null) {
+    if (timeLine != null && timeLine.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
       editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
-//      editorFp?.putInt("fbStatus", timeLine.Status?.toIntOrNull() ?: 0)
       if (timeLine.account?.accountName.isNullOrEmpty().not()) editorFp?.putBoolean("fbShareEnabled", true)
       editorFp?.putString("fbAccessId", timeLine.account?.accountId)
     }
     editorFp?.apply()
 
-    val twitter = listConnect?.firstOrNull { it.isTwitterChannel() }
+    val twitter = channelsAccessToken?.twitter
     val editorTwitter = mPrefTwitter?.edit()
-    if (twitter != null) {
-      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.channelAccessToken?.userAccountName)
+    if (twitter != null && twitter.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.account?.accountName)
       editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, true)
     } else {
       editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, null)
@@ -477,7 +469,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     showProgress(context?.getString(R.string.disconnecting_your_channel), false)
     if (channel.isWhatsAppChannel()) {
       val request = UpdateChannelActionDataRequest(ChannelActionData(), requestFloatsModel?.getWebSiteId())
-      viewModel?.postUpdateWhatsappRequest(request, auth!!)?.observeOnce(viewLifecycleOwner, { responseManage(it) })
+      viewModel?.postUpdateWhatsappRequest(request = request, auth = WA_KEY)?.observeOnce(viewLifecycleOwner, { responseManage(it) })
     } else {
       val request = UpdateChannelAccessTokenRequest(ChannelAccessToken(type = channel.getAccessTokenType()), clientId, requestFloatsModel?.floatingPointId!!)
       viewModel?.updateChannelAccessToken(request)?.observeOnce(viewLifecycleOwner, { responseManage(it) })

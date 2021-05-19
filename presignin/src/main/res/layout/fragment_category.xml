@@ -63,17 +63,17 @@
 
 
       <com.framework.views.customViews.CustomTextView
-          android:id="@+id/customTextView"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_16sdp"
-          android:layout_marginTop="@dimen/_16sdp"
-          android:textSize="16sp"
-          android:fontFamily="@font/open_sans_bold"
-          android:text="@string/select_business_category"
-          android:textColor="@color/white"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/back_iv" />
+        android:id="@+id/customTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="@string/select_business_category"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_iv" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/sub_heading_tv"
@@ -82,10 +82,12 @@
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_16sdp"
+        android:ellipsize="end"
         android:fontFamily="@font/open_sans"
+        android:maxLines="2"
         android:text="@string/let_me_know_which_of_the_following_describes_the_business_you_are_running"
         android:textColor="@color/white"
-        android:textSize="@dimen/body_3"
+        app:textType="CAPTION"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/customTextView" />
 
@@ -118,7 +120,8 @@
       android:enabled="true"
       android:text="@string/confirm_business_category"
       android:visibility="invisible"
-      app:layout_constraintBottom_toTopOf="@id/bottomGuide" />
+      app:layout_constraintBottom_toTopOf="@id/bottomGuide"
+      tools:ignore="MissingConstraints,UnknownId" />
 
 
   </androidx.constraintlayout.widget.ConstraintLayout>

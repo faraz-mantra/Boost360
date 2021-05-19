@@ -21,8 +21,8 @@ object DevBoostKitRepository : AppBaseRepository<DevBoostKitRemoteData, AppBaseL
     return makeRemoteRequest(remoteDataSource.getUpgradeDashboardBanner(auth, website_id), TaskCode.GET_UPGRADE_DASHBOARD_BANNER)
   }
 
-  fun getSearchAnalytics(website_id: String?, startDate: String?, endDate: String?,auth: String = DEVELOPER_ID): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getSearchAnalytics(auth,website_id, startDate, endDate), TaskCode.GET_SEARCH_ANALYTICS)
+  fun getSearchAnalytics(website_id: String?, startDate: String?, endDate: String?, auth: String = DEVELOPER_ID): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getSearchAnalytics(auth, website_id, startDate, endDate), TaskCode.GET_SEARCH_ANALYTICS)
   }
 
 

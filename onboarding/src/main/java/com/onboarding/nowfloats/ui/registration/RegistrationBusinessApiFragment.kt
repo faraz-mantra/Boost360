@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.WA_KEY
 import com.framework.utils.NetworkUtils
 import com.framework.views.DotProgressBar
 
@@ -174,11 +175,10 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
 
   private fun apiProcessChannelWhatsApp(dotProgressBar: DotProgressBar, floatingPointId: String) {
     if (requestFloatsModel?.channelActionDatas.isNullOrEmpty().not()) {
-      val authorization = auth ?: ""
       val dataRequest = UpdateChannelActionDataRequest(requestFloatsModel?.channelActionDatas?.firstOrNull(), requestFloatsModel?.getWebSiteId())
-      viewModel?.postUpdateWhatsappRequest(dataRequest, authorization)
-          ?.observeOnce(viewLifecycleOwner, Observer {
-            if (it.status == 200 || it.status == 201 || it.status == 202) {
+      viewModel?.postUpdateWhatsappRequest(dataRequest,WA_KEY)
+          ?.observeOnce(viewLifecycleOwner, {
+            if (it.isSuccess()) {
               requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(WHATS_APP_CONNECTED, DIGITAL_CHANNELS, it) }
               connectedChannels.forEach { it1 ->
                 it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
@@ -289,7 +289,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
 
   private fun getRequestPurchasedOrder(floatingPointId: String, responsePlan: Plan15DaysResponse?): ActivatePurchasedOrderRequest {
     val widList = java.util.ArrayList<PurchasedWidget>()
-    requestFloatsModel?.categoryDataModel?.sections?.forEach {
+    requestFloatsModel?.categoryDataModel?.getEmptySections()?.forEach {
       it.getWidList().forEach { key ->
         val widget = PurchasedWidget(widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
             isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,

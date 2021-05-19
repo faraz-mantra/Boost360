@@ -17,7 +17,16 @@ open class BaseBoardingApplication : BaseApplication() {
 
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
+      BaseApplication.instance = application
       PreferencesUtils.initSharedPreferences(application)
+      TwitterConfigHelper.debug(true)
+      TwitterConfigHelper.initialize(application)
+      NavigatorManager.initialize()
+      apiInitialize()
+    }
+
+    @JvmStatic
+    fun apiInitialize() {
       NfxApiClient.shared.init(EndPoints.NFX_BASE_URL)
       GMBApiClient.shared.init(EndPoints.GMB_BASE_URL)
       GoogleAuthApiClient.shared.init(EndPoints.GOOGLE_BASE_URL)
@@ -25,11 +34,6 @@ open class BaseBoardingApplication : BaseApplication() {
       RiaWithFloatsApiClient.shared.init(EndPoints.RIA_WITH_FLOATS_BASE_URL)
       WebActionsApiClient.shared.init(EndPoints.WEB_ACTION_BASE_URL)
       BoostFloatClient.shared.init(EndPoints.BOOST_FLOATS_BASE_URL)
-      TwitterConfigHelper.debug(true)
-      TwitterConfigHelper.initialize(application)
-      NavigatorManager.initialize()
-      BaseApplication.instance = application
     }
   }
-
 }

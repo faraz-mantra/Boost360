@@ -9,10 +9,13 @@ import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import io.reactivex.Observable
 
-object CategoryRepo :  AppBaseRepository<CategoryRemoteDataSource, CategoryLocalDataSource>() {
+object CategoryRepository :  AppBaseRepository<CategoryRemoteDataSource, CategoryLocalDataSource>() {
 
     fun getCategories(context: Context): Observable<BaseResponse> {
         return makeLocalRequest(CategoryLocalDataSource.getCategory(context), TaskCode.GET_CATEGORIES)
+    }
+    fun getCategoriesPlan(context: Context): Observable<BaseResponse> {
+        return makeLocalRequest(CategoryLocalDataSource.getCategoryPlan(context), TaskCode.GET_CATEGORIES_PLAN)
     }
 
     override fun getRemoteDataSourceClass(): Class<CategoryRemoteDataSource> {

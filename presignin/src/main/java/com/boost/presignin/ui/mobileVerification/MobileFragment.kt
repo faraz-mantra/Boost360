@@ -64,44 +64,22 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     binding?.nextButton?.setOnClickListener {
       WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER, LOGIN_NEXT, NO_EVENT_VALUE)
       activity?.hideKeyBoard()
-      checkIfUserIsRegistered()
-//            parentFragmentManager.beginTransaction()
-//                    .setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left,R.anim.slide_in_left,R.anim.slide_out_right)
-//                    .add(com.framework.R.id.container,OtpVerificationFragment.newInstance(binding!!.phoneEt.text!!.toString()))
-//                    .addToBackStack(null)
-//                    .commit();
+      sendOtp(binding?.phoneEt?.text.toString())
     }
   }
 
   private fun goBack() {
-    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
-      baseActivity.finish()
-    } else {
-      startActivity(Intent(requireContext(), IntroActivity::class.java))
-      baseActivity.finish()
-    }
+    startActivity(Intent(requireContext(), IntroActivity::class.java))
+    requireActivity().finish()
   }
 
-  private fun checkIfUserIsRegistered() {
-    showProgress(getString(R.string.loading), false)
-    viewModel?.checkMobileIsRegistered(binding?.phoneEt?.text.toString().toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
+  private fun sendOtp(phoneNumber: String?) {
+    showProgress(getString(R.string.sending_otp))
+    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess() && it.parseResponse()) {
+        addFragmentReplace(com.framework.R.id.container, OtpVerificationFragment.newInstance(binding?.phoneEt?.text?.toString()!!), addToBackStack = true)
+      } else showShortToast(getString(R.string.otp_not_sent))
       hideProgress()
-      if (it.isSuccess()) {
-        val data = it as? ResponseMobileIsRegistered
-        if (data?.result == true) {
-          //user is registered generate otp and verify it
-          addFragmentReplace(com.framework.R.id.container, OtpVerificationFragment.newInstance(binding!!.phoneEt.text!!.toString()), addToBackStack = true)
-        } else {
-          if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
-            showShortToast(getString(R.string.ensure_that_the_entered_mobile_correct))
-          } else {
-            //user is not registered open signup flow
-            navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, binding?.phoneEt?.text.toString()) })
-          }
-        }
-      } else {
-        showShortToast(getString(R.string.something_doesnt_seem_right))
-      }
     })
   }
 }
