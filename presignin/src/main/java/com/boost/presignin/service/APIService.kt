@@ -1,7 +1,9 @@
 package com.boost.presignin.service
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.IBinder
 import android.text.TextUtils
 import android.util.Log
@@ -17,6 +19,9 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.google.firebase.iid.FirebaseInstanceId
+import com.onboarding.nowfloats.constant.PreferenceConstant
+import com.onboarding.nowfloats.model.channel.isFacebookPage
+import com.onboarding.nowfloats.model.channel.isTwitterChannel
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
@@ -27,6 +32,7 @@ import java.util.*
 
 class APIService : Service() {
 
+  private var mPrefTwitter: SharedPreferences? = null
   override fun onBind(intent: Intent?): IBinder? {
     return null
   }
@@ -36,6 +42,7 @@ class APIService : Service() {
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     userSessionManager = UserSessionManager(this.baseContext)
+    mPrefTwitter = this.baseContext.getSharedPreferences(PreferenceConstant.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
     userId = userSessionManager?.fPID
     hitAPIs()
     return START_STICKY
@@ -84,36 +91,48 @@ class APIService : Service() {
     ChannelRepository.getChannelsStatus(userSessionManager?.fPID).toLiveData().observeForever {
       val nfxGetTokensResponse = it as? ChannelAccessStatusResponse
       if (it.isSuccess() && nfxGetTokensResponse?.channels != null) {
-        storeData(nfxGetTokensResponse.channels!!)
+        setSharePrefDataFpPageAndTwitter(nfxGetTokensResponse.channels!!)
       }
     }
   }
 
-  private fun storeData(channelsType: ChannelsType) {
-    userSessionManager?.storeBooleanDetails("fbShareEnabled", false)
-    userSessionManager?.storeFacebookName(null)
-    userSessionManager?.storeFPDetails("fbAccessId", null)
-    userSessionManager?.storeBooleanDetails("fbPageShareEnabled", false)
-    userSessionManager?.storeFacebookPage(null)
-    userSessionManager?.storeFPDetails("fbPageAccessId", null)
-    userSessionManager?.storeIntDetails("fbStatus", 0)
-    userSessionManager?.storeBooleanDetails(PREF_KEY_TWITTER_LOGIN, false)
-    userSessionManager?.storeFPDetails(PREF_USER_NAME, null)
-    if (channelsType.facebookpage != null && channelsType.facebookpage!!.accountStatus.equals(CHANNEL_STATUS_SUCCESS, true)) {
-      userSessionManager?.storeFacebookPage(channelsType.facebookpage?.account?.accountName ?: "")
-      userSessionManager?.storeBooleanDetails("fbPageShareEnabled", true)
-      userSessionManager?.storeFPDetails("fbPageAccessId", channelsType.facebookpage?.account?.accountId ?: "")
+  private fun setSharePrefDataFpPageAndTwitter(channelsAccessToken: ChannelsType?) {
+    val editorFp = userSessionManager?.pref?.edit()
+    editorFp?.putBoolean("fbShareEnabled", false)
+    editorFp?.putString("fbAccessId", null)
+    editorFp?.putBoolean("fbPageShareEnabled", false)
+    editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, "")
+    editorFp?.putString("fbPageAccessId", null)
+    editorFp?.putInt("fbStatus", 0)
+    val fpPage = channelsAccessToken?.facebookpage
+    if (fpPage != null && fpPage.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.account?.accountName ?: "")
+      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, true)
+      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 1)
+      editorFp?.putString("fbPageAccessId", fpPage.account?.accountId)
+    } else {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, null)
+      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
+      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
     }
-    if (channelsType.facebookusertimeline != null && channelsType.facebookpage!!.accountStatus.equals(CHANNEL_STATUS_SUCCESS, true)) {
-      userSessionManager?.storeFacebookName(channelsType.facebookusertimeline?.account?.accountName ?: "")
-      userSessionManager?.storeFPDetails("fbStatus", channelsType.facebookusertimeline?.status ?: "")
-      userSessionManager?.storeBooleanDetails("fbShareEnabled", true)
-      userSessionManager?.storeFPDetails("fbAccessId", channelsType.facebookusertimeline?.account?.accountId ?: "")
+    val timeLine = channelsAccessToken?.facebookusertimeline
+    if (timeLine != null && timeLine.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
+      if (timeLine.account?.accountName.isNullOrEmpty().not()) editorFp?.putBoolean("fbShareEnabled", true)
+      editorFp?.putString("fbAccessId", timeLine.account?.accountId)
     }
-    if (channelsType.twitter != null && channelsType.facebookpage!!.accountStatus.equals(CHANNEL_STATUS_SUCCESS, true)) {
-      userSessionManager?.storeBooleanDetails(PREF_KEY_TWITTER_LOGIN, true)
-      userSessionManager?.storeFPDetails(PREF_USER_NAME, channelsType.twitter?.account?.accountName ?: "")
+    editorFp?.apply()
+
+    val twitter = channelsAccessToken?.twitter
+    val editorTwitter = mPrefTwitter?.edit()
+    if (twitter != null && twitter.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.account?.accountName)
+      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, true)
+    } else {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, null)
+      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, false)
     }
+    editorTwitter?.apply()
   }
 
   private fun getQuery(): String? {

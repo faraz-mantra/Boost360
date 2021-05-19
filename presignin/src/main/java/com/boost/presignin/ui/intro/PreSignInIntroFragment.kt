@@ -1,6 +1,5 @@
 package com.boost.presignin.ui.intro
 
-import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -11,7 +10,6 @@ import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentPreSigninIntroBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
-import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
@@ -115,10 +113,13 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     }
 
     binding?.skipVideo?.setOnClickListener {
-//      WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_SKIP, VIDEO_SKIPPED, NO_EVENT_VALUE)
-//      onSkip?.let { it1 -> it1() }
-      binding?.videoView?.suspend()
-      binding?.playPauseLottie?.isVisible = true;
+      WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_SKIP, VIDEO_SKIPPED, NO_EVENT_VALUE)
+      binding?.playPauseLottie?.isVisible = true
+      try {
+        binding?.videoView?.suspend()
+      } catch (e: Exception) {
+        Log.e("SKIP_VIDEO_SUSPEND", e.localizedMessage)
+      }
       timer?.cancel()
       (requireActivity() as? IntroActivity)?.slideNextPage()
     }
@@ -180,9 +181,9 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     val volume = if (mute) 0.0f else 1.0f
     mediaPlayer?.setVolume(volume, volume)
     binding?.muteIcon?.setImageResource(if (mute) R.drawable.ic_mute else R.drawable.ic_unmute)
-    if (mute){
+    if (mute) {
       WebEngageController.trackEvent(PS_CLICKED_MUTE_INTRO_VIDEO, VIDEO_MUTED, NO_EVENT_VALUE)
-    }else{
+    } else {
       WebEngageController.trackEvent(PS_CLICKED_UNMUTE_INTRO_VIDEO, VIDEO_UNMUTED, NO_EVENT_VALUE)
     }
   }

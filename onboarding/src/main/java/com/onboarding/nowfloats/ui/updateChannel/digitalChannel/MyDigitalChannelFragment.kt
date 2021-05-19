@@ -264,7 +264,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun setSharePrefDataFpPageAndTwitter(channelsAccessToken: ChannelsType?) {
-    val fpPage = listConnect?.firstOrNull { it.isFacebookPage() }
     val editorFp = pref?.edit()
     editorFp?.putBoolean("fbShareEnabled", false)
     editorFp?.putString("fbAccessId", null)
@@ -272,29 +271,29 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, "")
     editorFp?.putString("fbPageAccessId", null)
     editorFp?.putInt("fbStatus", 0)
-    if (fpPage != null) {
-      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.channelAccessToken?.userAccountName)
+    val fpPage = channelsAccessToken?.facebookpage
+    if (fpPage != null && fpPage.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.account?.accountName ?: "")
       editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, true)
       editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 1)
-      editorFp?.putString("fbPageAccessId", fpPage.channelAccessToken?.userAccountId)
+      editorFp?.putString("fbPageAccessId", fpPage.account?.accountId ?: "")
     } else {
       editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, null)
       editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
       editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
     }
     val timeLine = channelsAccessToken?.facebookusertimeline
-    if (timeLine != null) {
+    if (timeLine != null && timeLine.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
       editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
-//      editorFp?.putInt("fbStatus", timeLine.Status?.toIntOrNull() ?: 0)
       if (timeLine.account?.accountName.isNullOrEmpty().not()) editorFp?.putBoolean("fbShareEnabled", true)
       editorFp?.putString("fbAccessId", timeLine.account?.accountId)
     }
     editorFp?.apply()
 
-    val twitter = listConnect?.firstOrNull { it.isTwitterChannel() }
+    val twitter = channelsAccessToken?.twitter
     val editorTwitter = mPrefTwitter?.edit()
-    if (twitter != null) {
-      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.channelAccessToken?.userAccountName)
+    if (twitter != null && twitter.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.account?.accountName)
       editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, true)
     } else {
       editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, null)
