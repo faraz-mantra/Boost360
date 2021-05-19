@@ -142,39 +142,42 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
 
 
   private fun setVideoTimerCountDown() {
-    val duration = mediaPlayer?.duration ?: 0
-    val currentTime = mediaPlayer?.currentPosition ?: 0;
-    timer = object : CountDownTimer((duration - currentTime).toLong(), 1000) {
-      override fun onTick(millisUntilFinished: Long) {
-        val videoDuration = (millisUntilFinished / 1000).toInt()
-        binding?.videoTime?.post {
-          if (videoDuration == 0) {
-            timer?.cancel()
-            binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), "00")
-          } else {
-            binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), videoDuration)
+    try {
+      val duration = mediaPlayer?.duration ?: 0
+      val currentTime = mediaPlayer?.currentPosition ?: 0;
+      timer = object : CountDownTimer((duration - currentTime).toLong(), 1000) {
+        override fun onTick(millisUntilFinished: Long) {
+          val videoDuration = (millisUntilFinished / 1000).toInt()
+          binding?.videoTime?.post {
+            if (videoDuration == 0) {
+              timer?.cancel()
+              binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), "00")
+            } else {
+              binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), videoDuration)
+            }
+          }
+        }
+
+        override fun onFinish() {
+          Log.e("videoCompleted", "&&&&&&&&&&&&&")
+          binding?.introImgContainer?.post {
+            binding?.introImgContainer?.isVisible = true
+            binding?.videoViewContainer?.isVisible = false
+            binding?.progressBar?.isVisible = false
           }
         }
       }
-
-      override fun onFinish() {
-        Log.e("videoCompleted", "&&&&&&&&&&&&&")
-        binding?.introImgContainer?.post {
-          binding?.introImgContainer?.isVisible = true
-          binding?.videoViewContainer?.isVisible = false
-          binding?.progressBar?.isVisible = false
-        }
-      }
+      timer?.start()
+    } catch (e: Exception) {
+      Log.e("TimerCountDown", e.localizedMessage)
     }
-    timer?.start()
   }
 
 
-  override fun onStop() {
-    super.onStop()
+  override fun onDestroy() {
+    super.onDestroy()
     binding?.videoView?.suspend()
   }
-
 
   private fun muteUnMute() {
     mute = !mute
