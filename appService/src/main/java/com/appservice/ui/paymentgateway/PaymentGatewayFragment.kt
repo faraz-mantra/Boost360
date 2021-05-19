@@ -85,7 +85,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
 
   private fun checkInstaMojo() {
     showProgress()
-    viewModel?.getKycData(getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getKycData(session?.auth_1,getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse
         if ((it.status == 200 || it.status == 201 || it.status == 202) && resp?.data.isNullOrEmpty().not()) {
@@ -159,7 +159,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
   private fun updateKycData() {
     val updateRequest = getUpdateRequest(dataKyc)
     showProgress()
-    viewModel?.updateKycData(updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.updateKycData(session.auth_1,updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {

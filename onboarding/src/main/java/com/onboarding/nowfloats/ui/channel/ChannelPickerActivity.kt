@@ -121,7 +121,8 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
         when (it.type()) {
           ChannelAccessToken.AccessTokenType.facebookpage.name,
           ChannelAccessToken.AccessTokenType.facebookshop.name,
-          ChannelAccessToken.AccessTokenType.twitter.name -> {
+          ChannelAccessToken.AccessTokenType.twitter.name,
+          -> {
             if (it.isValidType()) {
               val data = ChannelAccessToken(type = it.type(), userAccessTokenKey = it.UserAccessTokenKey,
                   userAccountId = it.UserAccountId, userAccountName = it.UserAccountName)
@@ -142,7 +143,7 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
   }
 
   private fun getWhatsAppData(requestFloatsNew: RequestFloatsModel) {
-    viewModel.getWhatsappBusiness(requestFloatsNew.fpTag).observeOnce(this, Observer {
+    viewModel.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = auth!!).observeOnce(this, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()

@@ -32,7 +32,7 @@ open class BaseBoardingApplication : BaseApplication() {
       GoogleAuthApiClient.shared.init(EndPoints.GOOGLE_BASE_URL)
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE_URL)
       RiaWithFloatsApiClient.shared.init(EndPoints.RIA_WITH_FLOATS_BASE_URL)
-      WebActionsApiClient.shared.init(EndPoints.WEB_ACTION_BASE_URL)
+      WebActionsApiClient.shared.init(EndPoints.WEB_ACTION_BASE_URL,true)
       BoostFloatClient.shared.init(EndPoints.BOOST_FLOATS_BASE_URL)
     }
   }

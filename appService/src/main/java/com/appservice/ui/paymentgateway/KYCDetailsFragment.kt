@@ -172,7 +172,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val mimType = panCarImage?.getMimeType() ?: "multipart/form-data"
     val requestBody = panCarImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
     val bodyPanCard = requestBody?.let { MultipartBody.Part.createFormData("file", filePancard, it) }
-    viewModel?.putUploadFile(bodyPanCard, filePancard)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.putUploadFile(session?.auth_1,bodyPanCard, filePancard)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           request?.actionData?.panCardDocument = getResponse(it.responseBody)
@@ -195,7 +195,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val mimType = bankStatementImage?.getMimeType() ?: "multipart/form-data"
     val requestBody = bankStatementImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
     val bodyStatement = requestBody?.let { MultipartBody.Part.createFormData("file", fileStatement, it) }
-    viewModel?.putUploadFile(bodyStatement, fileStatement)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.putUploadFile(session?.auth_1,bodyStatement, fileStatement)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           hideProgress()
@@ -231,7 +231,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
           val mimType = file.getMimeType() ?: "multipart/form-data"
           val requestBody = file.asRequestBody(mimType.toMediaTypeOrNull())
           val bodyAdditional = MultipartBody.Part.createFormData("file", fileAdditional, requestBody)
-          viewModel?.putUploadFile(bodyAdditional, fileAdditional)?.observeOnce(viewLifecycleOwner, Observer {
+          viewModel?.putUploadFile(session?.auth_1,bodyAdditional, fileAdditional)?.observeOnce(viewLifecycleOwner, Observer {
             checkPosition += 1
             if ((it.error is NoNetworkException).not()) {
               if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -254,7 +254,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     request?.actionData?.additionalDocument = convertListObjToString(additionFile)
     if (isEdit.not()) {
       showProgress(resources.getString(R.string.please_wait_))
-      viewModel?.addKycData(request)?.observeOnce(viewLifecycleOwner, Observer {
+      viewModel?.addKycData(session?.auth_1,request)?.observeOnce(viewLifecycleOwner, Observer {
         hideProgress()
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -279,7 +279,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun updateKycInformation(updateRequest: UpdatePaymentKycRequest) {
     showProgress(resources.getString(R.string.please_wait_))
-    viewModel?.updateKycData(updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.updateKycData(session?.auth_1,updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -602,7 +602,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun getKycDetails() {
     showProgress()
-    viewModel?.getKycData(getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getKycData(session?.auth_1,getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse

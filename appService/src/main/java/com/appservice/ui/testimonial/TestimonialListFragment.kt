@@ -55,7 +55,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
         data?.token?.let { headerToken = it }
         val query = JSONObject()
         query.put("WebsiteId", fpTag)
-        hitApi(viewModel?.getTestimonialsList( testimonialType, query, 0, 10000), R.string.error_getting_web_action)
+        hitApi(viewModel?.getTestimonialsList(headerToken, testimonialType, query, 0, 10000), R.string.error_getting_web_action)
       }
       TaskCode.GET_TESTIMONIAL.ordinal -> {
         val response = (it as? TestimonialDataResponse)
