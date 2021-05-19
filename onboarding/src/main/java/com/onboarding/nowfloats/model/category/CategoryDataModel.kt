@@ -28,7 +28,7 @@ class CategoryDataModel(
     var sections: ArrayList<SectionsFeature>? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Parcelable {
 
-  var sectionType: Boolean = false
+  val sectionType: Boolean = false
   var isSelected = false
 
   fun experienceCode(): String {
