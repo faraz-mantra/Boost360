@@ -39,6 +39,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.models.firestore.FirestoreManager;
 import com.framework.views.customViews.CustomButton;
 import com.framework.views.customViews.CustomImageView;
+import com.framework.views.roundedimageview.RoundedImageView;
 import com.nowfloats.BusinessProfile.UI.API.SetBusinessCategoryAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
@@ -97,6 +98,8 @@ public class Edit_Profile_Activity extends BaseActivity {
     String imageUrl = "";
     public static CustomImageView editProfileImageView;
     public static CustomButton select_pic;
+    public static LinearLayout image_add_btn;
+    public static RoundedImageView change_image;
     UserSessionManager session;
 //    TextView yourName_textlineTextView,businessName_textlineTextView,businessDesciption_textlineTextView ;
 
@@ -119,10 +122,11 @@ public class Edit_Profile_Activity extends BaseActivity {
 
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         final PorterDuffColorFilter whitecolorFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
-
+        image_add_btn = findViewById(R.id.ll_image_add);
         session = new UserSessionManager(getApplicationContext(), Edit_Profile_Activity.this);
         editProfileImageView = findViewById(R.id.editbusinessprofileimage);
         select_pic = findViewById(R.id.select_businessprofileimage);
+        change_image = findViewById(R.id.change_image);
         gmbHandler = new GMBHandler(this, session);
         yourname = (EditText) findViewById(R.id.profileName);
         buzzname = (EditText) findViewById(R.id.businessName);
@@ -250,7 +254,7 @@ public class Edit_Profile_Activity extends BaseActivity {
             }
         });*/
         toolbar = (Toolbar) findViewById(R.id.app_bar);
-        ImageView tic = (ImageView)toolbar.findViewById(R.id.saveTextView);
+        ImageView tic = (ImageView) toolbar.findViewById(R.id.saveTextView);
         tic.setVisibility(View.GONE);
         saveButton = findViewById(R.id.btn_save_info);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
@@ -287,7 +291,10 @@ public class Edit_Profile_Activity extends BaseActivity {
 
             }
         });
-
+        change_image.setOnClickListener(v -> {
+            Intent intent = new Intent(Edit_Profile_Activity.this, FeaturedImageActivity.class);
+            startActivity(intent);
+        });
 
         select_pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -743,16 +750,27 @@ public class Edit_Profile_Activity extends BaseActivity {
         yourname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
         category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
         setProductCategory(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+        change_image.setVisibility(View.GONE);
 
         String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
         if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
             String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
             Picasso.get().load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
+            image_add_btn.setVisibility(View.GONE);
+            change_image.setVisibility(View.VISIBLE);
+            editProfileImageView.setVisibility(View.VISIBLE);
         } else {
             if (iconUrl != null && iconUrl.length() > 0) {
                 Picasso.get().load(iconUrl).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
+                image_add_btn.setVisibility(View.GONE);
+                editProfileImageView.setVisibility(View.VISIBLE);
+                change_image.setVisibility(View.VISIBLE);
             } else {
                 Picasso.get().load(R.drawable.featured_photo_default).into(editProfileImageView);
+                change_image.setVisibility(View.GONE);
+                image_add_btn.setVisibility(View.VISIBLE);
+                editProfileImageView.setVisibility(View.GONE);
+
             }
         }
         //}

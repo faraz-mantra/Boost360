@@ -46,7 +46,7 @@
 
 
                         <LinearLayout
-                            android:id="@+id/image_add_btn"
+                            android:id="@+id/ll_image_add"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/size_180"
                             android:background="@color/white_smoke_1"
@@ -68,10 +68,27 @@
                                 android:layout_width="match_parent"
                                 android:gravity="center"
                                 android:layout_marginTop="@dimen/_10sdp"
-                                android:layout_height="@dimen/_36sdp"
+                                android:layout_height="36dp"
                                 android:text="@string/add_featured_image" />
                         </LinearLayout>
-
+                        <com.framework.views.roundedimageview.RoundedImageView
+                            android:id="@+id/change_image"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginTop="5dp"
+                            app:riv_corner_radius="@dimen/_15sdp"
+                            app:riv_mutate_background="true"
+                            android:layout_height="@dimen/_30sdp"
+                            android:padding="8dp"
+                            android:layout_gravity="end"
+                            app:riv_oval="true"
+                            android:background="@color/colorAccent"
+                            android:clickable="true"
+                            android:focusable="true"
+                            tools:visibility="visible"
+                            android:visibility="gone"
+                            app:tint="@color/colorAccent"
+                            app:srcCompat="@drawable/pencil_white" />
                     </FrameLayout>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
