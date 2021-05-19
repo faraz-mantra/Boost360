@@ -25,6 +25,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util
 import com.nowfloats.util.Constants
 import com.nowfloats.util.Methods
 import com.nowfloats.util.MixPanelController
+import com.theartofdev.edmodo.cropper.CropImageView
 import com.thinksity.R
 
 class EditImageActivity : AppCompatActivity() {
@@ -36,6 +37,7 @@ class EditImageActivity : AppCompatActivity() {
     private val media_req_id = 1
     private val GALLERY_PHOTO = 2
     private val CAMERA_PHOTO = 1
+    private  var cropImageView: CropImageView? = null
 
     // Saves the state upon rotating the screen/restarting the activity
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -57,17 +59,17 @@ class EditImageActivity : AppCompatActivity() {
         setContentView(R.layout.edit_image)
         MixPanelController.track("EditPhoto", null)
         // Initialize components of the app
-        val cropImageView =
-            findViewById<View>(R.id.CropImageView) as com.theartofdev.edmodo.cropper.CropImageView
+        this. cropImageView =
+            findViewById<View>(R.id.CropImageView) as CropImageView
         if (intent.hasExtra("image")) {
             try {
-                cropImageView.setImageBitmap(
+                cropImageView!!.setImageBitmap(
                     Util.getBitmap(
                         intent.getStringExtra("image"),
                         this@EditImageActivity
                     )
                 )
-                cropImageView.setFixedAspectRatio(
+                cropImageView!!.setFixedAspectRatio(
                     intent.getBooleanExtra(
                         "isFixedAspectRatio",
                         false
@@ -99,19 +101,19 @@ class EditImageActivity : AppCompatActivity() {
         }
         //Sets the rotate button
         val rotateButton = findViewById<View>(R.id.Button_rotate) as Button
-        rotateButton.setOnClickListener { cropImageView.rotateImage(ROTATE_NINETY_DEGREES) }
+        rotateButton.setOnClickListener { cropImageView!!.rotateImage(ROTATE_NINETY_DEGREES) }
 
         // Sets initial aspect ratio to 10/10, for demonstration purposes
-        cropImageView.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES)
+        cropImageView!!.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES)
         val cropButton = findViewById<View>(R.id.Button_crop) as Button
         cropButton.setOnClickListener {
             try {
-                croppedImage = cropImageView.croppedImage
+                croppedImage = cropImageView!!.croppedImage
                 if (croppedImage != null) {
                     croppedImage?.let {
                         val rect = Rect(0, 0, it.width, it.height)
-                        cropImageView.setImageBitmap(it)
-                        cropImageView.cropRect = rect
+                        cropImageView!!.setImageBitmap(it)
+                        cropImageView!!.cropRect = rect
                     }
                 }
             } catch (e: Exception) {
@@ -122,7 +124,7 @@ class EditImageActivity : AppCompatActivity() {
         val save = findViewById<View>(R.id.Button_save) as Button
         save.setOnClickListener {
             try {
-                croppedImage = cropImageView.croppedImage
+                croppedImage = cropImageView!!.croppedImage
                 if (croppedImage != null) {
                     val `in` = Intent()
                     val path = Util.saveCameraBitmap(
@@ -169,7 +171,12 @@ class EditImageActivity : AppCompatActivity() {
                     // Util.toast("Uh oh. Something went wrong. Please try again", this);
                 }
                 if (!Util.isNullOrEmpty(path)) {
-                    editImage()
+                    cropImageView?.setImageBitmap(
+                        Util.getBitmap(
+                            path,
+                            this@EditImageActivity
+                        )
+                    )
                 } else Methods.showSnackBarNegative(
                     this@EditImageActivity,
                     resources.getString(R.string.select_image_upload)
@@ -185,7 +192,13 @@ class EditImageActivity : AppCompatActivity() {
                             "ImageFloat" + System.currentTimeMillis()
                         )
                         if (!Util.isNullOrEmpty(path)) {
-                            editImage()
+                            cropImageView?.setImageBitmap(
+                                Util.getBitmap(
+                                    path,
+                                    this@EditImageActivity
+                                )
+                            )
+
                         } else Methods.showSnackBarNegative(
                             this@EditImageActivity,
                             resources.getString(R.string.select_image_upload)
@@ -193,10 +206,8 @@ class EditImageActivity : AppCompatActivity() {
                     }
                 }
             } else if (resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT) {
-                var path = data?.getStringExtra("edit_image")
+                val path = data?.getStringExtra("edit_image")?:data?.getStringExtra("")
                 if (!TextUtils.isEmpty(path)) {
-                    path = path
-
                     uploadPrimaryPicture(path)
                 }
             }
@@ -221,16 +232,6 @@ class EditImageActivity : AppCompatActivity() {
 
     private val ACTION_REQUEST_IMAGE_EDIT = 3
     var path: String? = null
-
-    private fun editImage() {
-
-        val intent = Intent(this@EditImageActivity, EditImageActivity::class.java)
-        intent.putExtra("image", path)
-        intent.putExtra("isFixedAspectRatio", true)
-        startActivityForResult(intent, ACTION_REQUEST_IMAGE_EDIT)
-        finish()
-    }
-
 
     fun cameraIntent() {
         try {
