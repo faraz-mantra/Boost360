@@ -30,7 +30,7 @@
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/civ_whatsapp_business"
             android:layout_width="@dimen/size_18"
-            android:tag="whatsappbusiness"
+            android:tag="WAB"
             android:layout_height="@dimen/size_18"
             android:layout_marginStart="@dimen/size_4"
             app:srcCompat="@drawable/ic_whatsapp_business_n" />

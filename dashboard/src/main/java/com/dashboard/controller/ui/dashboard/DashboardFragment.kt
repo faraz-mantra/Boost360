@@ -57,9 +57,11 @@ import com.framework.models.firestore.FirestoreManager.readDrScoreDocument
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_WEBSITE
 import com.framework.utils.*
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
+import com.google.android.gms.common.internal.AccountType
 import com.google.android.material.snackbar.Snackbar
 import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
@@ -1335,9 +1337,16 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             var urlString = ""
             if (it.isSuccess()) {
                 val response = it as? ChannelAccessStatusResponse
+                val otherWebsite = session?.getFPDetails(GET_FP_DETAILS_WEBSITE)
+
                 if (response?.channels?.facebookpage?.account?.accountId.isNullOrEmpty().not()) {
                     urlString =
                         "\n⚡ *Facebook: https://www.facebook.com/${response?.channels?.facebookpage?.account?.accountId}*"
+                    when {
+                        otherWebsite.isNullOrEmpty().not() -> {
+                            urlString = "$urlString\n Other Website: $otherWebsite"
+                        }
+                    }
                 }
                 if (response?.channels?.twitter?.account?.accountName.isNullOrEmpty().not()) {
                     urlString += "\n⚡ *Twitter: https://twitter.com/${response?.channels?.twitter?.account?.accountName?.trim()}*"
@@ -1384,6 +1393,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
                 val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
                 if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
                     urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.getNumberPlus91()}*"
+                    connectedChannels?.add(ChannelsType.AccountType.WAB.name)
+                    saveDataConnectedChannel(connectedChannels)
                 }
             }
             if (session?.userPrimaryMobile.isNullOrEmpty()
