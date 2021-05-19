@@ -49,7 +49,6 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     // TODO to change the event to only one
     WebEngageController.trackEvent(WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
     WebEngageController.trackEvent(MANAGE_CONTENT, PAGE_VIEW, session?.fpTag)
-    WebEngageController.trackEvent(MANAGE_CONTENT, SCREEN_NAME, session?.fpTag)
   }
 
   override fun onResume() {
