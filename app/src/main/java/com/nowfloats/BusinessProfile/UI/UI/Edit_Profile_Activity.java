@@ -736,7 +736,7 @@ public class Edit_Profile_Activity extends BaseActivity {
         buzzdescription.setText(businessDesc);
         String businessName=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
         onBusinessNameAddedOrUpdated(!TextUtils.isEmpty(businessName));
-        buzzname.setText(businessDesc);
+        buzzname.setText(businessName);
         yourname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
         category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
         setProductCategory(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
