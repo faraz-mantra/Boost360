@@ -37,6 +37,8 @@ import androidx.core.content.ContextCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.models.firestore.FirestoreManager;
+import com.framework.views.customViews.CustomButton;
+import com.framework.views.customViews.CustomImageView;
 import com.nowfloats.BusinessProfile.UI.API.SetBusinessCategoryAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
@@ -62,7 +64,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import static com.framework.webengageconstant.EventLabelKt.BUSINESS_DESCRIPTION;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_CATEGORY;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_NAME;
@@ -86,7 +87,7 @@ public class Edit_Profile_Activity extends BaseActivity {
     public static String msgtxt4_name, msgtxt4buzzname, msgtxt4buzzdescriptn, msgtxtcategory;
     String[] profilesattr = new String[20];
     private String[] businessCategoryList;
-    public static ImageView saveTextView;
+    public static CustomButton saveButton;
     ContentValues values;
     Uri imageUri;
     private static final int GALLERY_PHOTO = 2;
@@ -94,7 +95,8 @@ public class Edit_Profile_Activity extends BaseActivity {
     Bitmap CameraBitmap;
     String path = null;
     String imageUrl = "";
-    public static ImageView editProfileImageView, select_pic;
+    public static CustomImageView editProfileImageView;
+    public static CustomButton select_pic;
     UserSessionManager session;
 //    TextView yourName_textlineTextView,businessName_textlineTextView,businessDesciption_textlineTextView ;
 
@@ -119,8 +121,8 @@ public class Edit_Profile_Activity extends BaseActivity {
         final PorterDuffColorFilter whitecolorFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
 
         session = new UserSessionManager(getApplicationContext(), Edit_Profile_Activity.this);
-        editProfileImageView = (ImageView) findViewById(R.id.editbusinessprofileimage);
-        select_pic = (ImageView) findViewById(R.id.select_businessprofileimage);
+        editProfileImageView = findViewById(R.id.editbusinessprofileimage);
+        select_pic = findViewById(R.id.select_businessprofileimage);
         gmbHandler = new GMBHandler(this, session);
         yourname = (EditText) findViewById(R.id.profileName);
         buzzname = (EditText) findViewById(R.id.businessName);
@@ -162,7 +164,7 @@ public class Edit_Profile_Activity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 isChangedProductCategory = true;
-                saveTextView.setVisibility(View.VISIBLE);
+                saveButton.setVisibility(View.VISIBLE);
                 if (checkedId == R.id.rb_custom) {
                     showSoftKeyboard(customProductCategory);
                 } else {
@@ -186,7 +188,7 @@ public class Edit_Profile_Activity extends BaseActivity {
             public void afterTextChanged(Editable editable) {
                 if (!TextUtils.isEmpty(editable.toString())) {
                     isChangedProductCategory = true;
-                    saveTextView.setVisibility(View.VISIBLE);
+                    saveButton.setVisibility(View.VISIBLE);
                     rb_Custom.setChecked(true);
 
                 } else {
@@ -248,8 +250,9 @@ public class Edit_Profile_Activity extends BaseActivity {
             }
         });*/
         toolbar = (Toolbar) findViewById(R.id.app_bar);
-        saveTextView = (ImageView) toolbar.findViewById(R.id.saveTextView);
-        saveTextView.setColorFilter(whitecolorFilter);
+        ImageView tic = (ImageView)toolbar.findViewById(R.id.saveTextView);
+        tic.setVisibility(View.GONE);
+        saveButton = findViewById(R.id.btn_save_info);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.basic_info));
 
@@ -260,7 +263,7 @@ public class Edit_Profile_Activity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        saveTextView.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -353,11 +356,11 @@ public class Edit_Profile_Activity extends BaseActivity {
                     int len = s.length();//msgtxt4_name.length();
                     if (len > 0) {
 //                        yourName_textlineTextView.setVisibility(View.VISIBLE);
-                        saveTextView.setVisibility(View.VISIBLE);
+                        saveButton.setVisibility(View.VISIBLE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.VISIBLE);
                     } else {
 //                        yourName_textlineTextView.setVisibility(View.GONE);
-                        saveTextView.setVisibility(View.GONE);
+                        saveButton.setVisibility(View.GONE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
@@ -386,11 +389,11 @@ public class Edit_Profile_Activity extends BaseActivity {
                     int len = s.length();//msgtxtcategory.length();
                     if (len > 0) {
                         // businessName_textlineTextView.setVisibility(View.VISIBLE);
-                        saveTextView.setVisibility(View.VISIBLE);
+                        saveButton.setVisibility(View.VISIBLE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.VISIBLE);
                     } else {
                         //  businessName_textlineTextView.setVisibility(View.GONE);
-                        saveTextView.setVisibility(View.GONE);
+                        saveButton.setVisibility(View.GONE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
@@ -444,11 +447,11 @@ public class Edit_Profile_Activity extends BaseActivity {
                     int len = s.length();//msgtxt4buzzname.length();
                     if (len > 0) {
 //                        businessName_textlineTextView.setVisibility(View.VISIBLE);
-                        saveTextView.setVisibility(View.VISIBLE);
+                        saveButton.setVisibility(View.VISIBLE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.VISIBLE);
                     } else {
 //                        businessName_textlineTextView.setVisibility(View.GONE);
-                        saveTextView.setVisibility(View.GONE);
+                        saveButton.setVisibility(View.GONE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
@@ -479,11 +482,11 @@ public class Edit_Profile_Activity extends BaseActivity {
                     int len = s.length();//msgtxt4buzzdescriptn.length();
                     if (len > 50) {
 //                        businessDesciption_textlineTextView.setVisibility(View.VISIBLE);
-                        saveTextView.setVisibility(View.VISIBLE);
+                        saveButton.setVisibility(View.VISIBLE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.VISIBLE);
                     } else {
 //                        businessDesciption_textlineTextView.setVisibility(View.GONE);
-                        saveTextView.setVisibility(View.GONE);
+                        saveButton.setVisibility(View.GONE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
@@ -505,16 +508,16 @@ public class Edit_Profile_Activity extends BaseActivity {
         //selectCats();
     }
 
-    private void onBusinessDescAddedOrUpdated(Boolean isAdded){
+    private void onBusinessDescAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if(instance.getDrScoreData().getMetricdetail()==null) return;
+        if (instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_business_description(isAdded);
         instance.updateDocument();
     }
 
-    private void onBusinessNameAddedOrUpdated(Boolean isAdded){
+    private void onBusinessNameAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if(instance.getDrScoreData().getMetricdetail()==null) return;
+        if (instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_business_name(isAdded);
         instance.updateDocument();
     }
@@ -731,10 +734,10 @@ public class Edit_Profile_Activity extends BaseActivity {
     }
 
     private void initData() {
-        String businessDesc=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION);
+        String businessDesc = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION);
         onBusinessDescAddedOrUpdated(!TextUtils.isEmpty(businessDesc));
         buzzdescription.setText(businessDesc);
-        String businessName=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
+        String businessName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
         onBusinessNameAddedOrUpdated(!TextUtils.isEmpty(businessName));
         buzzname.setText(businessName);
         yourname.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
@@ -765,7 +768,7 @@ public class Edit_Profile_Activity extends BaseActivity {
             buzzdescription.setText(session.getFacebookProfileDescription());
         }
 
-        saveTextView.setVisibility(View.GONE);
+        saveButton.setVisibility(View.GONE);
         flag4category = false;
     }
 

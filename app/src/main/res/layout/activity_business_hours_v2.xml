@@ -28,6 +28,16 @@
                     layout="@layout/business_hours_layout" />
 
             </androidx.cardview.widget.CardView>
+            <com.framework.views.customViews.CustomButton
+                style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                android:id="@+id/btn_save_info"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/_60sdp"
+                android:layout_height="@dimen/_36sdp"
+                android:text="@string/save" />
 
         </LinearLayout>
     </ScrollView>
