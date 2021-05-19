@@ -707,27 +707,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     viewModel?.putUploadBusinessLogo(clientId2, fpId = fpId, reqType = "sequential", reqId = s_uuid, totalChunks = "1",
         currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes()))?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        UserSessionManager(requireActivity()).storeFPDetails(GET_FP_DETAILS_LogoUrl, it.stringResponse?.replace("\\", "")?.replace("\"", ""))
+        UserSessionManager(requireActivity()).storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
         showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
       } else showSnackBarNegative(requireActivity(), it.message)
       hideProgress()
     })
   }
 
-  fun showSnackBarNegative(context: Activity, msg: String?) {
-    val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg!!, Snackbar.LENGTH_INDEFINITE)
-    snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
-    snackBar.duration = 4000
-    snackBar.show()
-  }
-
-
-  fun showSnackBarPositive(context: Activity, msg: String?) {
-    val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg!!, Snackbar.LENGTH_INDEFINITE)
-    snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_positive_color))
-    snackBar.duration = 4000
-    snackBar.show()
-  }
 
   private fun businessWebsiteDetailMessage(shareChannelText: String?, isBusinessCardShare: Boolean = false, shareType: ShareType? = null) {
     viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
