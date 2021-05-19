@@ -1,7 +1,6 @@
 package com.dashboard.controller.ui.dashboard
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
@@ -9,10 +8,8 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.bumptech.glide.Glide
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
@@ -61,8 +58,6 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_WEBSITE
 import com.framework.utils.*
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
-import com.google.android.gms.common.internal.AccountType
-import com.google.android.material.snackbar.Snackbar
 import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -932,7 +927,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
             if (mPaths.isNotEmpty()) {
                 val businessLogoImage = File(mPaths[0])
-                Glide.with(this).load(businessLogoImage).into(binding?.imgBusinessLogo!!)
                 uploadBusinessLogo(businessLogoImage)
 
 
@@ -956,56 +950,22 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
         )?.observeOnce(viewLifecycleOwner, {
             hideProgress()
-            when (it.isSuccess()) {
-                true -> {
-                    UserSessionManager(requireActivity()).storeFPDetails(
-                        GET_FP_DETAILS_LogoUrl,
-                        it.stringResponse?.replace("\\", "")?.replace("\"", "")
-                    )
-                    showSnackBarPositive(
-                        requireActivity(),
-                        getString(R.string.business_image_uploaded)
-                    )
+            if (it.isSuccess()) {
+                session?.storeFPDetails(
+                    GET_FP_DETAILS_LogoUrl,
+                    it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
 
-                }
-                else -> {
-                    showSnackBarNegative(requireActivity(), it.message)
-                }
+                )
+                setUserData()
+                showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
+
+            } else {
+                showSnackBarNegative(requireActivity(), it.message)
             }
         })
 
     }
 
-    fun showSnackBarNegative(context: Activity, msg: String?) {
-        val snackBar = Snackbar.make(
-            context.findViewById(android.R.id.content),
-            msg!!, Snackbar.LENGTH_INDEFINITE
-        )
-        snackBar.view.setBackgroundColor(
-            ContextCompat.getColor(
-                context,
-                R.color.snackbar_negative_color
-            )
-        )
-        snackBar.duration = 4000
-        snackBar.show()
-    }
-
-
-    fun showSnackBarPositive(context: Activity, msg: String?) {
-        val snackBar = Snackbar.make(
-            context.findViewById(android.R.id.content),
-            msg!!, Snackbar.LENGTH_INDEFINITE
-        )
-        snackBar.view.setBackgroundColor(
-            ContextCompat.getColor(
-                context,
-                R.color.snackbar_positive_color
-            )
-        )
-        snackBar.duration = 4000
-        snackBar.show()
-    }
 
     private fun businessWebsiteDetailMessage(
         shareChannelText: String?,
