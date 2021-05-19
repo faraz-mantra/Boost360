@@ -2,6 +2,7 @@ package com.boost.presignin.rest.repository
 
 import com.boost.presignin.base.rest.AppBaseLocalService
 import com.boost.presignin.base.rest.AppBaseRepository
+import com.boost.presignin.model.accessToken.AccessTokenRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.rest.TaskCode
@@ -41,6 +42,15 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun verifyOtp(number: String?, otp: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.verifyOtp(number, otp, clientId = clientId), TaskCode.VERIFY_OTP)
   }
+
+  fun verifyLoginOtp(number: String?, otp: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.verifyLoginOtp(number, otp, clientId = clientId), TaskCode.VERIFY_LOGIN_OTP)
+  }
+
+  fun createAccessToken(request: AccessTokenRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.createAccessToken(request), TaskCode.ACCESS_TOKEN_CREATE)
+  }
+
 
   fun getFpListForRegisteredNumber(number: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getFpListForRegisteredMobile(number, clientId = clientId), TaskCode.GET_FP_LIST_FOR_REGISTERED_NUMBER)

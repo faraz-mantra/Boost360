@@ -16,15 +16,20 @@ open class AppPreSignInApplication : BaseApplication() {
 
   companion object {
     lateinit var instance: MultiDexApplication
+
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
-        PreferencesUtils.initSharedPreferences(application)
-        BaseApplication.instance = application
-        WithFloatsApiTwoClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
-        WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE)
-        NfxFacebookAnalyticsClient.shared.init(EndPoints.NFX_WITH_NOWFLOATS)
-        WebActionBoostKitClient.shared.init(EndPoints.WEB_ACTION_BOOST_KIT_API_URL)
+      BaseApplication.instance = application
+      PreferencesUtils.initSharedPreferences(application)
+      apiInitialize()
+    }
 
+    @JvmStatic
+    fun apiInitialize() {
+      WithFloatsApiTwoClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
+      WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE)
+      NfxFacebookAnalyticsClient.shared.init(EndPoints.NFX_WITH_NOWFLOATS)
+      WebActionBoostKitClient.shared.init(EndPoints.WEB_ACTION_BOOST_KIT_API_URL)
     }
   }
 }

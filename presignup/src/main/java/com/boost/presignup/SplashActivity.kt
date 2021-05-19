@@ -55,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
     isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
     isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
 
-    if (isUserLoggedIn) {
+    if (isUserLoggedIn && isSignUpComplete.not()) {
       val profileId = pref.getString("user_profile_id", null)
       isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
     }
@@ -91,8 +91,9 @@ class SplashActivity : AppCompatActivity() {
             finish()
           }
           isSignUpComplete -> {
-            NavigatorManager.startActivities(this@SplashActivity)
-            finish()
+            startNewSignUpSuccess()
+//            NavigatorManager.startActivities(this@SplashActivity)
+//            finish()
           }
           else -> {
             startNewSignIn()
@@ -111,6 +112,18 @@ class SplashActivity : AppCompatActivity() {
 
     })
     animation_view.playAnimation()
+  }
+
+  private fun startNewSignUpSuccess() {
+    try {
+      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.registration.RegistrationActivity"))
+      intent.putExtra("FRAGMENT_TYPE", 101)
+      startActivity(intent)
+      finish()
+    } catch (e: Exception) {
+      e.printStackTrace()
+      finish()
+    }
   }
 
   private fun startNewSignIn() {

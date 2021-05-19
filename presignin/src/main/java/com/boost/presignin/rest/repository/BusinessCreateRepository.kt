@@ -16,6 +16,7 @@ object BusinessCreateRepository : AppBaseRepository<BusinessCreateRemoteDataSour
     override fun getRemoteDataSourceClass(): Class<BusinessCreateRemoteDataSource> {
         return BusinessCreateRemoteDataSource::class.java
     }
+
     fun postActivatePurchasedOrder(clientId: String?, request: ActivatePurchasedOrderRequest): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.postActivatePurchasedOrder(clientId, request), TaskCode.POST_ACTIVATE_PURCHASED_ORDER)
     }
@@ -23,8 +24,12 @@ object BusinessCreateRepository : AppBaseRepository<BusinessCreateRemoteDataSour
         return AppBaseLocalService()
     }
 
-    fun putCreateBusinessOnboarding(profileId: String?, request: BusinessCreateRequest): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.putCreateBusinessOnboarding(profileId, request), TaskCode.POST_CREATE_BUSINESS_ONBOARDING)
+    fun putCreateBusinessV5(profileId: String?, request: BusinessCreateRequest): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.putCreateBusinessV5(profileId, request), TaskCode.POST_CREATE_BUSINESS_V5)
+    }
+
+    fun putCreateBusinessV6(profileId: String?, request: BusinessCreateRequest): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.putCreateBusinessV6(profileId, request), TaskCode.POST_CREATE_BUSINESS_V6)
     }
 
 

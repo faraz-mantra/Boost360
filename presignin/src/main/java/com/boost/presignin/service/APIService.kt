@@ -1,14 +1,14 @@
 package com.boost.presignin.service
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.IBinder
 import android.text.TextUtils
 import android.util.Log
 import com.boost.presignin.model.other.AccountDetailsResponse
-import com.boost.presignin.model.other.NfxGetTokensResponse
 import com.boost.presignin.model.other.PaymentKycDataResponse
-import com.boost.presignin.rest.repository.NfxFacebookAnalyticsRepository
 import com.boost.presignin.rest.repository.WebActionBoostKitRepository
 import com.boost.presignin.rest.repository.WithFloatRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository
@@ -19,144 +19,127 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.google.firebase.iid.FirebaseInstanceId
+import com.onboarding.nowfloats.constant.PreferenceConstant
+import com.onboarding.nowfloats.model.channel.isFacebookPage
+import com.onboarding.nowfloats.model.channel.isTwitterChannel
+import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
+import com.onboarding.nowfloats.rest.repositories.ChannelRepository
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-
 class APIService : Service() {
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
+
+  private var mPrefTwitter: SharedPreferences? = null
+  override fun onBind(intent: Intent?): IBinder? {
+    return null
+  }
+
+  var userId: String? = null
+  var userSessionManager: UserSessionManager? = null
+
+  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    userSessionManager = UserSessionManager(this.baseContext)
+    mPrefTwitter = this.baseContext.getSharedPreferences(PreferenceConstant.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
+    userId = userSessionManager?.fPID
+    hitAPIs()
+    return START_STICKY
+  }
+
+  private fun hitAPIs() {
+    registerRia()
+    nfxGetSocialTokens()
+    hitSelfBrandedKycAPI()
+    checkUserAccountDetails()
+  }
+
+  private fun checkUserAccountDetails() {
+    WithFloatRepository.checkUserAccount(userSessionManager?.fPID, clientId).toLiveData().observeForever {
+      val data = it as? AccountDetailsResponse
+      if (it.isSuccess()) {
+        if (!(data?.result != null && data.result?.bankAccountDetails != null)) userSessionManager?.setAccountSave(false) else userSessionManager?.setAccountSave(true)
+      }
     }
+  }
 
-    var userId: String? = null
-    var userSessionManager: UserSessionManager? = null
-    private val SMS_REGEX = "SMS_REGEX"
-    private val CALL_LOG_TIME_INTERVAL = "CALL_LOG_INTERVAL"
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        userSessionManager = UserSessionManager(this.baseContext)
-        userId = userSessionManager?.userProfileId
-        hitAPIs()
-        return START_STICKY
+  private fun hitSelfBrandedKycAPI() {
+    WebActionBoostKitRepository.getSelfBrandedKyc(getQuery()).toLiveData().observeForever {
+      val paymentKycDataResponse = it as? PaymentKycDataResponse
+      paymentKycDataResponse?.data
+      if (it.isSuccess()) {
+        userSessionManager?.isSelfBrandedKycAdd = paymentKycDataResponse != null || paymentKycDataResponse?.data.isNullOrEmpty().not()
+      }
     }
+  }
 
-    private fun hitAPIs() {
-        registerRia()
-        nfxGetSocialTokens()
-        hitSelfBrandedKycAPI()
-        checkUserAccountDetails()
+  private fun registerRia() {
+    val params = HashMap<String?, String?>()
+    params["Channel"] = FirebaseInstanceId.getInstance().token
+    params["UserId"] = userId
+    params["DeviceType"] = "ANDROID"
+    params["clientId"] = clientId
 
+    WithFloatTwoRepository.post_RegisterRia(params).toLiveData().observeForever {
+      if (it.isSuccess()) Log.d("Register Ria", "registerRia: success")
+      else Log.d("Register Ria", "registerRia: failed")
     }
+  }
 
-    private fun checkUserAccountDetails() {
-        WithFloatRepository.checkUserAccount(userSessionManager?.fPID, clientId2).toLiveData().observeForever {
-            val data = it as? AccountDetailsResponse
-            if (it.isSuccess()) {
-                if (!(data?.result != null && data.result?.bankAccountDetails != null)) userSessionManager?.setAccountSave(false) else userSessionManager?.setAccountSave(true)
-            }
-        }
+  private fun nfxGetSocialTokens() {
+    ChannelRepository.getChannelsStatus(userSessionManager?.fPID).toLiveData().observeForever {
+      val nfxGetTokensResponse = it as? ChannelAccessStatusResponse
+      if (it.isSuccess() && nfxGetTokensResponse?.channels != null) {
+        setSharePrefDataFpPageAndTwitter(nfxGetTokensResponse.channels!!)
+      }
     }
+  }
 
-    private fun hitSelfBrandedKycAPI() {
-        WebActionBoostKitRepository.getSelfBrandedKyc(getQuery()).toLiveData().observeForever {
-            val paymentKycDataResponse = it as? PaymentKycDataResponse
-            paymentKycDataResponse?.data
-            if (it.isSuccess()) {
-                userSessionManager?.isSelfBrandedKycAdd = paymentKycDataResponse != null || paymentKycDataResponse?.data.isNullOrEmpty().not()
-            }
-        }
+  private fun setSharePrefDataFpPageAndTwitter(channelsAccessToken: ChannelsType?) {
+    val editorFp = userSessionManager?.pref?.edit()
+    editorFp?.putBoolean("fbShareEnabled", false)
+    editorFp?.putString("fbAccessId", null)
+    editorFp?.putBoolean("fbPageShareEnabled", false)
+    editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, "")
+    editorFp?.putString("fbPageAccessId", null)
+    editorFp?.putInt("fbStatus", 0)
+    val fpPage = channelsAccessToken?.facebookpage
+    if (fpPage != null && fpPage.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.account?.accountName ?: "")
+      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, true)
+      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 1)
+      editorFp?.putString("fbPageAccessId", fpPage.account?.accountId)
+    } else {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, null)
+      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
+      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
     }
-
-    private fun registerRia() {
-        val params = HashMap<String?, String?>()
-        params["Channel"] = FirebaseInstanceId.getInstance().token
-        params["UserId"] = userId
-        params["DeviceType"] = "ANDROID"
-        params["clientId"] = clientId
-
-        WithFloatTwoRepository.post_RegisterRia(params).toLiveData().observeForever {
-            if (it.isSuccess()) {
-                Log.d("Register Ria", "registerRia: success")
-
-            } else {
-                Log.d("Register Ria", "registerRia: failed")
-
-
-            }
-        }
+    val timeLine = channelsAccessToken?.facebookusertimeline
+    if (timeLine != null && timeLine.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
+      if (timeLine.account?.accountName.isNullOrEmpty().not()) editorFp?.putBoolean("fbShareEnabled", true)
+      editorFp?.putString("fbAccessId", timeLine.account?.accountId)
     }
+    editorFp?.apply()
 
-    private fun nfxGetSocialTokens() {
-        NfxFacebookAnalyticsRepository.getSocialTokens(userSessionManager?.fPID).toLiveData().observeForever {
-            val nfxGetTokensResponse = it as? NfxGetTokensResponse
-            if (it.isSuccess() && nfxGetTokensResponse != null) {
-                val regexList: List<String?> = nfxGetTokensResponse.smsRegex!!
-                if (regexList.isNotEmpty()) {
-                    val s = TextUtils.join(",", regexList)
-                    userSessionManager?.storeFPDetails(SMS_REGEX, s)
-                    userSessionManager?.storeFPDetails(CALL_LOG_TIME_INTERVAL, nfxGetTokensResponse.callLogTimeInterval)
-                }
-                storeData(nfxGetTokensResponse)
-
-            }
-        }
+    val twitter = channelsAccessToken?.twitter
+    val editorTwitter = mPrefTwitter?.edit()
+    if (twitter != null && twitter.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.account?.accountName)
+      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, true)
+    } else {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, null)
+      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, false)
     }
+    editorTwitter?.apply()
+  }
 
-    private fun storeData(nfxGetTokensResponse: NfxGetTokensResponse) {
-        userSessionManager?.storeBooleanDetails("fbShareEnabled", false)
-        userSessionManager?.storeFacebookName(null)
-        userSessionManager?.storeFPDetails("fbAccessId", null)
-        userSessionManager?.storeBooleanDetails("fbPageShareEnabled", false)
-        userSessionManager?.storeFacebookPage(null)
-        userSessionManager?.storeFPDetails("fbPageAccessId", null)
-        userSessionManager?.storeIntDetails("fbStatus", 0)
-        userSessionManager?.storeIntDetails("fbPageStatus", 0)
-        userSessionManager?.storeIntDetails("quikrStatus", -1)
-        userSessionManager?.storeIntDetails("facebookChatStatus", 0)
-        userSessionManager?.storeBooleanDetails("is_twitter_loggedin", false)
-        userSessionManager?.storeFPDetails("twitter_user_name", null)
-        for (model in nfxGetTokensResponse.nFXAccessTokens) {
-            when {
-                model.type.equals("facebookusertimeline", ignoreCase = true) -> {
-                    userSessionManager?.storeFacebookName(model.userAccountName)
-                    userSessionManager?.storeIntDetails("fbStatus", model.status?.toInt()!!)
-                    if (userSessionManager?.facebookName.isNullOrEmpty().not()) {
-                        userSessionManager?.storeBooleanDetails("fbShareEnabled", true)
-                    }
-                    userSessionManager?.storeFPDetails("fbAccessId", model.userAccountId)
-                }
-                model.type.equals("facebookpage", ignoreCase = true) -> {
-                    if (TextUtils.isDigitsOnly(model.status)) userSessionManager?.storeIntDetails("fbPageStatus", model.status?.toInt()!!)
-                    userSessionManager?.storeFacebookPage(model.userAccountName)
-                    if (userSessionManager?.facebookPage.isNullOrEmpty().not()) {
-                        userSessionManager?.storeBooleanDetails("fbPageShareEnabled", true)
-                    }
-                    userSessionManager?.storeFPDetails("fbPageAccessId", model.userAccountId)
-                }
-                model.type.equals("twitter", ignoreCase = true) -> {
-                    if (model.status == "1" || model.status == "3") {
-                        userSessionManager?.storeBooleanDetails(PREF_KEY_TWITTER_LOGIN, true)
-                    }
-                    userSessionManager?.storeFPDetails(PREF_USER_NAME, model.userAccountName)
-                }
-                model.type.equals("quikr", ignoreCase = true) -> {
-                    userSessionManager?.storeIntDetails("quikrStatus", model.status?.toInt()!!)
-                }
-                model.type.equals("facebookchat", ignoreCase = true) -> {
-                    userSessionManager?.storeIntDetails("facebookChatStatus", model.status?.toInt()!!)
-                }
-            }
-        }
-
+  private fun getQuery(): String? {
+    return try {
+      JSONObject().apply { put("fpTag", userSessionManager?.fpTag) }.toString()
+    } catch (e: JSONException) {
+      ""
     }
-
-    private fun getQuery(): String? {
-        return try {
-            val jsonObject = JSONObject()
-            jsonObject.put("fpTag", userSessionManager?.fpTag)
-            jsonObject.toString()
-        } catch (e: JSONException) {
-            ""
-        }
-    }
+  }
 }

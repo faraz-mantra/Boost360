@@ -18,10 +18,9 @@ class ProcessFPDetails(var session: UserSessionManager) {
   fun storeFPDetails(get_fp_details_model: UserFpDetailsResponse) {
     try {
       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY, get_fp_details_model.city)
-      if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).equals(get_fp_details_model.tag)) {
-        val name = if (get_fp_details_model.contactName == null) "" else if (get_fp_details_model.contactName.toLowerCase().equals("null")) "" else get_fp_details_model.contactName
-        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME, name)
-      }
+
+      val name = if (get_fp_details_model.contactName == null) "" else if (get_fp_details_model.contactName.toLowerCase().equals("null")) "" else get_fp_details_model.contactName
+      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME, name)
       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TAG, get_fp_details_model.tag)
       session.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, get_fp_details_model.appExperienceCode)
       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, get_fp_details_model.address)

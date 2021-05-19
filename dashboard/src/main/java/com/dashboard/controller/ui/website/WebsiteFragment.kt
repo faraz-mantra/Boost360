@@ -49,7 +49,6 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     // TODO to change the event to only one
     WebEngageController.trackEvent(WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
     WebEngageController.trackEvent(MANAGE_CONTENT, PAGE_VIEW, session?.fpTag)
-    WebEngageController.trackEvent(MANAGE_CONTENT, SCREEN_NAME, session?.fpTag)
   }
 
   override fun onResume() {
@@ -123,6 +122,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
+      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
     }
   }
 
