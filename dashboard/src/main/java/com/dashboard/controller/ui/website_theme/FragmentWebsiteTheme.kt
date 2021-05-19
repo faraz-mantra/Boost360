@@ -80,7 +80,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
         setFonts()
         setColor()
       } else {
-        error(getString(R.string.error_while_getting_website_theme))
+        showShortToast(getString(R.string.error_while_getting_website_theme))
       }
     })
   }
@@ -197,7 +197,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
       if (it.isSuccess()) {
         openSuccessDialog()
       } else {
-        error(getString(R.string.something_went_wrong))
+        showShortToast(getString(R.string.something_went_wrong))
       }
     })
   }
