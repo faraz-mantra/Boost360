@@ -11,12 +11,11 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-open class BaseApiClient protected constructor() {
+open class BaseApiClient protected constructor(isAuthRemove: Boolean = false) {
 
   lateinit var retrofit: Retrofit
   private var httpClient: OkHttpClient.Builder
   private var gson = GsonBuilder().setLenient().create()
-  private var isAuthRemove = false
 
   companion object {
     val shared = BaseApiClient()
@@ -38,8 +37,7 @@ open class BaseApiClient protected constructor() {
     gson = GsonBuilder().setLenient().create()
   }
 
-  fun init(baseUrl: String, isAuthRemove: Boolean = false) {
-    this.isAuthRemove = isAuthRemove
+  fun init(baseUrl: String) {
     retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create(gson))
