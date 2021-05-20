@@ -21,7 +21,6 @@ import com.dashboard.controller.DashboardActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.dialog.DrScoreDirectionDialog
-import com.dashboard.controller.ui.dialog.DrScoreNewDashboardDialog
 import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.ProgressDashboardDialog
 import com.dashboard.controller.ui.drScore.clickEventUpdateScoreN
