@@ -7,9 +7,7 @@ import android.widget.ImageView
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentLoginBinding
-import com.boost.presignin.helper.ProcessFPDetails
 import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.service.APIService
@@ -19,10 +17,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.pref.clientIdThinksity
 import com.framework.webengageconstant.*
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel>() {
 
@@ -51,7 +47,6 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     backButton?.setOnClickListener {
       goBack()
     }
-    WebEngageController.trackEvent(LOGIN, PAGE_VIEW, NO_EVENT_VALUE)
   }
   private fun goBack() {
     requireActivity().finish()
@@ -60,9 +55,11 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     super.onClick(v)
     when (v) {
       binding?.forgotTv -> {
+        WebEngageController.trackEvent(FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
         addFragmentReplace(com.framework.R.id.container, ForgetPassFragment.newInstance(), true)
       }
       binding?.loginBt -> {
+        WebEngageController.trackEvent(FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
         loginApiVerify(binding?.usernameEt?.text?.toString()?.trim(), binding?.passEt?.text?.toString()?.trim())
       }
     }

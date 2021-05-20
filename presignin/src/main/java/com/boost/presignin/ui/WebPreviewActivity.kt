@@ -15,62 +15,61 @@ import com.framework.models.BaseViewModel
 
 class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewModel>() {
 
+  override fun getLayout(): Int {
+    return R.layout.activity_web_preview
+  }
 
-    override fun getLayout(): Int {
-        return R.layout.activity_web_preview
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    val floatsRequest = intent.extras?.getSerializable("request") as? CategoryFloatsRequest
+    binding?.headingTv?.text = floatsRequest?.categoryDataModel?.category_Name
+    binding?.ctvUrl?.text = floatsRequest?.webSiteUrl
+    binding?.closeIcon?.setOnClickListener { finish() }
+    binding?.shareIcon?.setOnClickListener {
+      shareViaAnyApp(null, "${floatsRequest?.businessName} ${floatsRequest?.categoryDataModel?.category_descriptor} ${floatsRequest?.webSiteUrl}")
     }
+    loadData(floatsRequest?.webSiteUrl!!)
+  }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+  @SuppressLint("SetJavaScriptEnabled")
+  private fun loadData(urlData: String) {
+    binding?.webview?.settings?.javaScriptEnabled = true
+    binding?.webview?.settings?.loadWithOverviewMode = true
+    binding?.webview?.settings?.useWideViewPort = true
+    binding?.webview?.settings?.allowFileAccess = true
+    binding?.webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
+    binding?.webview?.webChromeClient = WebChromeClient()
+    binding?.webview?.webViewClient = object : WebViewClient() {
+      override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+        binding?.progressBar?.visible()
+        view.loadUrl(url)
+        return false
+      }
+
+      override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+        super.onPageStarted(view, url, favicon)
+        url?.let { setToolbarSubTitle(it) }
+        binding?.progressBar?.visible()
+      }
+
+      override fun onPageFinished(view: WebView?, url: String?) {
+        super.onPageFinished(view, url)
+        binding?.progressBar?.gone()
+      }
+
+      override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+        super.onReceivedError(view, request, error)
+        binding?.progressBar?.gone()
+      }
     }
-
-    override fun onCreateView() {
-        val floatsRequest = intent.extras?.getSerializable("request") as? CategoryFloatsRequest
-        binding?.headingTv?.text = floatsRequest?.categoryDataModel?.category_Name
-        binding?.ctvUrl?.text = floatsRequest?.webSiteUrl
-        binding?.closeIcon?.setOnClickListener { finish() }
-        binding?.shareIcon?.setOnClickListener {
-            shareViaAnyApp(null,"${floatsRequest?.businessName} ${floatsRequest?.categoryDataModel?.category_descriptor} ${floatsRequest?.webSiteUrl}")
-        }
-        loadData(floatsRequest?.webSiteUrl!!)
-
-    }
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun loadData(urlData: String) {
-        binding?.webview?.settings?.javaScriptEnabled = true
-        binding?.webview?.settings?.loadWithOverviewMode = true
-        binding?.webview?.settings?.useWideViewPort = true
-        binding?.webview?.settings?.allowFileAccess = true
-        binding?.webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
-        binding?.webview?.webChromeClient = WebChromeClient()
-        binding?.webview?.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                binding?.progressBar?.visible()
-                view.loadUrl(url)
-                return false
-            }
-
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                url?.let { setToolbarSubTitle(it) }
-                binding?.progressBar?.visible()
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                binding?.progressBar?.gone()
-            }
-
-            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-                super.onReceivedError(view, request, error)
-                binding?.progressBar?.gone()
-            }
-        }
-        binding?.webview?.loadUrl(urlData.checkHttp())
-    }
+    binding?.webview?.loadUrl(urlData.checkHttp())
+  }
 }
 
 
 fun String.checkHttp(): String {
-    return if ((this.startsWith("http://") || this.startsWith("https://")).not()) "http://$this" else this
+  return if ((this.startsWith("http://") || this.startsWith("https://")).not()) "http://$this" else this
 }

@@ -1,7 +1,6 @@
 package com.dashboard.controller.ui.dashboard
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
@@ -9,7 +8,6 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide
@@ -23,7 +21,6 @@ import com.dashboard.controller.DashboardActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.dialog.DrScoreDirectionDialog
-import com.dashboard.controller.ui.dialog.DrScoreNewDashboardDialog
 import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.ProgressDashboardDialog
 import com.dashboard.controller.ui.drScore.clickEventUpdateScoreN
@@ -61,8 +58,6 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_WEBSITE
 import com.framework.utils.*
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
-import com.google.android.gms.common.internal.AccountType
-import com.google.android.material.snackbar.Snackbar
 import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -138,7 +133,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
-    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   private fun getSocialMediaChannel() {
@@ -332,13 +326,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           WebEngageController.trackEvent(DASHBOARD_DR_SCORE_HIGH, PAGE_VIEW, session?.fpTag)
           DrScoreDirectionDialog.newInstance().apply {
             onClicked = {
-              DrScoreNewDashboardDialog.newInstance().apply {
-                onClicked = {
-                  WebEngageController.trackEvent(DASHBOARD_COACHMARKS, PAGE_VIEW, session?.fpTag)
-                  PreferencesUtils.instance.saveData(IS_DR_HIGH_DIALOG, true)
-                }
-                showDialog(this@DashboardFragment.childFragmentManager)
-              }
+              WebEngageController.trackEvent(DASHBOARD_COACHMARKS, PAGE_VIEW, session?.fpTag)
+              PreferencesUtils.instance.saveData(IS_DR_HIGH_DIALOG, true)
+//              DrScoreNewDashboardDialog.newInstance().apply {
+//                onClicked = {
+//                  WebEngageController.trackEvent(DASHBOARD_COACHMARKS, PAGE_VIEW, session?.fpTag)
+//                  PreferencesUtils.instance.saveData(IS_DR_HIGH_DIALOG, true)
+//                }
+//                showDialog(this@DashboardFragment.childFragmentManager)
+//              }
             }
             showDialog(this@DashboardFragment.childFragmentManager)
           }
@@ -883,7 +879,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val loader = ProgressDashboardDialog.newInstance()
     when {
       data.ctaFileLink.isNullOrEmpty().not() -> {
-        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, FILE_LINK)
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_FILE_LINK, CLICK, NO_EVENT_VALUE)
         this.ctaFileLink = data.ctaFileLink
         if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
             ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -896,7 +892,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
       }
       data.ctaWebLink.isNullOrEmpty().not() -> {
-        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, WEB_LINK)
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_WEB_LINK, CLICK, NO_EVENT_VALUE)
         loader.setData(R.raw.activity_browser_gif, resources.getString(R.string.opening_browser_banner))
         loader.showProgress(baseActivity.supportFragmentManager)
         Handler().postDelayed({
@@ -905,7 +901,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }, 1000)
       }
       data.ctaYoutubeLink.isNullOrEmpty().not() -> {
-        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER, CLICK, YOUTUBE_LINK)
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_YOUTUBE_LINK, CLICK, NO_EVENT_VALUE)
         loader.setData(R.raw.video_gif, resources.getString(R.string.taking_video_banner))
         loader.showProgress(baseActivity.supportFragmentManager)
         Handler().postDelayed({

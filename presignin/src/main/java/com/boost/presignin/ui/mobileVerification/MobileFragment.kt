@@ -6,22 +6,16 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
-import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentMobileBinding
 import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.userprofile.ResponseMobileIsRegistered
-import com.boost.presignin.ui.AccountNotFoundActivity
 import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
-import com.framework.webengageconstant.BOOST_360_LOGIN_NUMBER
-import com.framework.webengageconstant.LOGIN_NEXT
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.*
 
 class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewModel>() {
 
@@ -31,12 +25,11 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
 
     @JvmStatic
     fun newInstance() = MobileFragment().apply {}
-    fun newInstance(phoneNumber: String) =
-        MobileFragment().apply {
-          arguments = Bundle().apply {
-            putString(PHONE_NUMBER, phoneNumber)
-          }
-        }
+    fun newInstance(phoneNumber: String) = MobileFragment().apply {
+      arguments = Bundle().apply {
+        putString(PHONE_NUMBER, phoneNumber)
+      }
+    }
   }
 
   private val phoneNumber by lazy { requireArguments().getString(PHONE_NUMBER) }
@@ -50,7 +43,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = (it.isPhoneValid()) }
     activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
@@ -62,7 +55,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     backButton?.setOnClickListener { goBack() }
 
     binding?.nextButton?.setOnClickListener {
-      WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER, LOGIN_NEXT, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
       activity?.hideKeyBoard()
       sendOtp(binding?.phoneEt?.text.toString())
     }
