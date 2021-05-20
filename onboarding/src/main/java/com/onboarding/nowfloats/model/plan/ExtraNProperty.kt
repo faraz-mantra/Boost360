@@ -3,7 +3,7 @@ package com.onboarding.nowfloats.model.plan
 
 import com.google.gson.annotations.SerializedName
 
-data class ExtraProperty(
+data class ExtraNProperty(
   @SerializedName("key")
   var key: String? = null,
   @SerializedName("value")
