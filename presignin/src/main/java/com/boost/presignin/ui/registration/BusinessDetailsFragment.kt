@@ -7,9 +7,7 @@ import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentBusinessDetailsBinding
-import com.boost.presignin.extensions.isBusinessNameValid
-import com.boost.presignin.extensions.isNameValid
-import com.boost.presignin.extensions.isPhoneValid
+import com.boost.presignin.extensions.*
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.verification.RequestValidateEmail
@@ -23,6 +21,8 @@ import com.framework.webengageconstant.*
 import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
@@ -72,11 +72,11 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
       val businessName = binding?.businessNameEt?.text?.toString();
       val email = binding?.emailEt?.text?.toString()
       val phone = binding?.phoneEt?.text?.toString()
-      if (!name.isNameValid()) {
+      if (!name.validateLetters()) {
         showShortToast(getString(R.string.enter_valid_name))
         return@setOnClickListener
       }
-      if (!businessName.isBusinessNameValid()) {
+      if (!businessName.validateLetters()) {
         showShortToast(getString(R.string.enter_valid_business_name))
         return@setOnClickListener
       }
@@ -89,8 +89,13 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
       floatsRequest?.requestProfile?.ProfileProperties?.userName = name
       floatsRequest?.userBusinessMobile = phone
       if (email.isNullOrEmpty().not()) {
+        if (email.isEmailValid()){
         floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
-        floatsRequest?.userBusinessEmail = email
+        floatsRequest?.userBusinessEmail = email}
+        else{
+          showLongToast(getString(R.string.email_invalid))
+          return@setOnClickListener
+        }
       } else {
         floatsRequest?.requestProfile?.ProfileProperties?.userEmail = "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
         floatsRequest?.userBusinessEmail = null
@@ -145,7 +150,6 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
 
     }
   }
-
   private fun parseResponse(it: BaseResponse): Boolean {
     return try {
       val source: BufferedSource? = it.responseBody?.source()
