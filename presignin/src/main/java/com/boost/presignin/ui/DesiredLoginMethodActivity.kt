@@ -26,8 +26,9 @@ class DesiredLoginMethodActivity : BaseActivity<ActivityDesiredLoginMethodBindin
     }
 
     override fun onCreateView() {
+        WebEngageController.trackEvent(DESIRED_LOGIN_SCREEN, PAGE_VIEW, NO_EVENT_VALUE)
         binding?.usernameOrEmailBt?.setOnClickListener {
-            WebEngageController.trackEvent(BOOST_LOGIN_EMAIL_PASS, CLICKED, NO_EVENT_VALUE)
+            WebEngageController.trackEvent(DESIRED_LOGIN_SCREEN, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
             startActivity(Intent(this@DesiredLoginMethodActivity, LoginActivity::class.java))
         }
         backPressed()
@@ -39,7 +40,7 @@ class DesiredLoginMethodActivity : BaseActivity<ActivityDesiredLoginMethodBindin
         }
 
         binding?.anotherMethodBt?.setOnClickListener {
-            WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER, CLICKED, NO_EVENT_VALUE)
+            WebEngageController.trackEvent(DESIRED_LOGIN_SCREEN, CLICK_DIFFERENT_NUMBER, NO_EVENT_VALUE)
             navigator?.startActivity(MobileVerificationActivity::class.java)
         }
 

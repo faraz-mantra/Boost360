@@ -155,6 +155,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
         if (result?.Result?.authTokens.isNullOrEmpty().not()) {
           addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(result?.Result), false)
         } else {
+          this.parentFragmentManager.popBackStack()
           navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
         }
       } else {
