@@ -66,6 +66,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
     session = UserSessionManager(baseActivity)
     floatsRequest = session?.getCategoryRequest()
     authToken = session?.getAuthTokenData()
+    WebEngageController.trackEvent(REGISTRATION_SUCCESS_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     if (floatsRequest != null || authToken != null) {
       val businessName = floatsRequest?.businessName
       val name = floatsRequest?.requestProfile?.ProfileProperties?.userName
@@ -98,6 +99,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       binding?.lottieAnimation?.playAnimation()
 
       binding?.previewAccountBt?.setOnClickListener {
+        WebEngageController.trackEvent(REGISTRATION_PREVIEW_CLICK, CLICK, NO_EVENT_VALUE)
         val bundle = Bundle()
         bundle.putSerializable("request", floatsRequest)
         navigator?.startActivity(WebPreviewActivity::class.java, bundle)
@@ -109,6 +111,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
 
   private fun createAccessTokenAuth() {
     showProgress()
+    WebEngageController.trackEvent(REGISTRATION_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
     val request = AccessTokenRequest(authToken = authToken?.authenticationToken, clientId = clientId, fpId = authToken?.floatingPointId)
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
       val result = it as? AccessTokenResponse

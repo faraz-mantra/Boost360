@@ -10,7 +10,6 @@ import android.text.style.StyleSpan
 import android.widget.ImageView
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
-import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentBusinessWebsiteBinding
 import com.boost.presignin.dialog.FullScreenProgressDialog
 import com.boost.presignin.extensions.isWebsiteValid
@@ -18,7 +17,6 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.authToken.saveAuthTokenData
 import com.boost.presignin.model.business.BusinessCreateRequest
-import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
 import com.boost.presignin.model.signup.FloatingPointCreateResponse
@@ -54,7 +52,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(BUSINESS_WEBSITE_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     fullScreenProgress = FullScreenProgressDialog.newInstance()
     this.session = UserSessionManager(baseActivity)
     floatsRequest = arguments?.getSerializable("request") as? CategoryFloatsRequest
@@ -67,8 +65,13 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     backButton?.setOnClickListener { goBack() }
 
     binding?.websiteEt?.afterTextChanged {
-      setSubDomain(binding?.websiteEt?.text.toString())
-      val sp = SpannableString("'${binding?.websiteEt?.text.toString()}' ").apply {
+      val website = binding?.websiteEt?.text.toString()
+      if (website.isBlank() || website.isEmpty()) {
+        errorSet()
+        return@afterTextChanged
+      }
+      setSubDomain(website)
+      val sp = SpannableString("'$website' ").apply {
         setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
       }
       binding?.websiteStatusTv?.text = SpannableStringBuilder().apply {
@@ -159,15 +162,18 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   private fun apiHitCreateMerchantProfile() {
     showProgress("We're creating your online ${floatsRequest?.categoryDataModel?.category_Name}...")
     if (this.responseCreateProfile == null) {
-      viewModel?.createMerchantProfile(request = floatsRequest?.requestProfile)?.observeOnce(viewLifecycleOwner, {
-        val businessProfileResponse = it as? BusinessProfileResponse
-        if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
-          apiHitBusiness(businessProfileResponse)
-        } else {
-          hideProgress()
-          showShortToast(getString(R.string.unable_to_create_profile))
-        }
-      })
+      viewModel?.createMerchantProfile(request = floatsRequest?.requestProfile)
+          ?.observeOnce(viewLifecycleOwner, {
+            val businessProfileResponse = it as? BusinessProfileResponse
+            if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty()
+                    .not()
+            ) {
+              apiHitBusiness(businessProfileResponse)
+            } else {
+              hideProgress()
+              showShortToast(getString(R.string.unable_to_create_profile))
+            }
+          })
     } else apiHitBusiness(this.responseCreateProfile!!)
   }
 
@@ -180,33 +186,48 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     this.responseCreateProfile = response
     val request = getBusinessRequest()
     isSyncCreateFpApi = true
-    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
-      val result = it as? FloatingPointCreateResponse
-      if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
-        WebEngageController.initiateUserLogin(response.result?.loginId)
-        WebEngageController.setUserContactAttributes(response.result?.profileProperties?.userEmail, response.result?.profileProperties?.userMobile, response.result?.profileProperties?.userName, response.result?.sourceClientId)
-        WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
-        session.userProfileId = response.result?.loginId
-        session.userProfileEmail = response.result?.profileProperties?.userEmail
-        session.userProfileName = response.result?.profileProperties?.userName
-        session.userProfileMobile = response.result?.profileProperties?.userMobile
-        session.storeISEnterprise(response.result?.isEnterprise.toString() + "")
-        session.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
-        session.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, floatsRequest?.categoryDataModel?.experience_code)
-        authToken = result.authTokens?.get(0)
-        session.storeFPID(authToken?.floatingPointId)
-        session.storeFpTag(authToken?.floatingPointTag)
+    viewModel?.putCreateBusinessV6(response.result?.loginId, request)
+        ?.observeOnce(viewLifecycleOwner, {
+          val result = it as? FloatingPointCreateResponse
+          if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
+            WebEngageController.initiateUserLogin(response.result?.loginId)
+            WebEngageController.setUserContactAttributes(
+                response.result?.profileProperties?.userEmail,
+                response.result?.profileProperties?.userMobile,
+                response.result?.profileProperties?.userName,
+                response.result?.sourceClientId
+            )
+            WebEngageController.trackEvent(
+                PS_SIGNUP_SUCCESS,
+                SIGNUP_SUCCESS,
+                NO_EVENT_VALUE
+            )
+            session.userProfileId = response.result?.loginId
+            session.userProfileEmail = response.result?.profileProperties?.userEmail
+            session.userProfileName = response.result?.profileProperties?.userName
+            session.userProfileMobile = response.result?.profileProperties?.userMobile
+            session.storeISEnterprise(response.result?.isEnterprise.toString() + "")
+            session.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
+            session.storeFPDetails(
+                Key_Preferences.GET_FP_EXPERIENCE_CODE,
+                floatsRequest?.categoryDataModel?.experience_code
+            )
+            authToken = result.authTokens?.get(0)
+            session.storeFPID(authToken?.floatingPointId)
+            session.storeFpTag(authToken?.floatingPointTag)
 
-        floatsRequest?.floatingPointId = authToken?.floatingPointId!!
-        floatsRequest?.fpTag = authToken?.floatingPointTag
-        floatsRequest?.requestProfile?.profileId = response.result?.loginId
-        session.saveCategoryRequest(floatsRequest!!)
-        session.saveAuthTokenData(authToken!!)
-        session.setUserSignUpComplete(true)
-        navigator?.clearBackStackAndStartNextActivity(RegistrationActivity::class.java, Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
-      } else showShortToast(getString(R.string.error_create_business_fp))
-      hideProgress()
-    })
+            floatsRequest?.floatingPointId = authToken?.floatingPointId!!
+            floatsRequest?.fpTag = authToken?.floatingPointTag
+            floatsRequest?.requestProfile?.profileId = response.result?.loginId
+            session.saveCategoryRequest(floatsRequest!!)
+            session.saveAuthTokenData(authToken!!)
+            session.setUserSignUpComplete(true)
+            navigator?.clearBackStackAndStartNextActivity(
+                RegistrationActivity::class.java,
+                Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
+          } else showShortToast(getString(R.string.error_create_business_fp))
+          hideProgress()
+        })
   }
 
   private fun getBusinessRequest(): BusinessCreateRequest {
@@ -227,7 +248,8 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     createRequest.appExperienceCode = floatsRequest?.categoryDataModel?.experience_code
     createRequest.whatsAppNumber = floatsRequest?.userBusinessMobile
     createRequest.whatsAppNotificationOptIn = floatsRequest?.whatsAppFlag ?: false
-    createRequest.boostXWebsiteUrl = "www.${floatsRequest?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+    createRequest.boostXWebsiteUrl =
+        "www.${floatsRequest?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
     return createRequest
   }
 

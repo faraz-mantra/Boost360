@@ -67,7 +67,7 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(BUSINESS_ACCOUNT, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnGoToDashboard)
     this.session = UserSessionManager(baseActivity)
     setAdapterFPList()
