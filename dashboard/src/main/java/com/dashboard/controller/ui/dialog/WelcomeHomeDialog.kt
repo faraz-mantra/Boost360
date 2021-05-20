@@ -27,7 +27,7 @@ class WelcomeHomeDialog : BaseDialogFragment<DialogWelcomeHomeBinding, BaseViewM
   }
 
   override fun getTheme(): Int {
-    return R.style.MaterialDialogThemeFull
+    return R.style.MaterialThemeSignInFull
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {

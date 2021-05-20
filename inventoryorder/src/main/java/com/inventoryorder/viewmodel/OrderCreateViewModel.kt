@@ -28,12 +28,12 @@ class OrderCreateViewModel : BaseViewModel() {
     return ApiTwoWithFloatRepository.getProductList(fpTag, clientId, skipBy).toLiveData()
   }
 
-  fun getSellerOrders(auth: String, request: OrderSummaryRequest): LiveData<BaseResponse> {
-    return InventoryOrderRepository.getSellerOrders(auth, request).toLiveData()
+  fun getSellerOrders(request: OrderSummaryRequest): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerOrders(request).toLiveData()
   }
 
-  fun getSellerOrdersFilter(auth: String, request: OrderFilterRequest): LiveData<BaseResponse> {
-    return InventoryOrderRepository.getSellerOrdersFilter(auth, request).toLiveData()
+  fun getSellerOrdersFilter(request: OrderFilterRequest): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerOrdersFilter(request).toLiveData()
   }
 
   fun getAssurePurchaseOrder(request: OrderSummaryRequest): LiveData<BaseResponse> {
@@ -63,6 +63,7 @@ class OrderCreateViewModel : BaseViewModel() {
   fun sendReBookingReminder(clientId: String?, orderId: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.sendReBookingReminder(clientId, orderId).toLiveData()
   }
+
   fun sendOrderFeedbackRequest(clientId: String?, request: FeedbackRequest?): LiveData<BaseResponse> {
     return InventoryOrderRepository.sendOrderFeedbackRequest(clientId, request).toLiveData()
   }
@@ -123,20 +124,20 @@ class OrderCreateViewModel : BaseViewModel() {
     return AssuredPurchaseRepository.postOrderUpdate(clientId, request).toLiveData()
   }
 
-  fun getWeeklyScheduleList(auth: String?, query: String?, sort: String? = "{CreatedOn: -1}", limit: Int = 1000): LiveData<BaseResponse> {
-    return WebActionBoostRepository.getWeekSchedule(auth, query, sort, limit).toLiveData()
+  fun getWeeklyScheduleList(auth: String?,query: String?, sort: String? = "{CreatedOn: -1}", limit: Int = 1000): LiveData<BaseResponse> {
+    return WebActionBoostRepository.getWeekSchedule(auth,query, sort, limit).toLiveData()
   }
 
-  fun getAllAptConsultDoctor(auth: String?, query: String?, sort: String? = "{CreatedOn: -1}", limit: Int = 1000): LiveData<BaseResponse> {
-    return WebActionBoostRepository.getAllAptConsultDoctor(auth, query, sort, limit).toLiveData()
+  fun getAllAptConsultDoctor(auth: String?,query: String?, sort: String? = "{CreatedOn: -1}", limit: Int = 1000): LiveData<BaseResponse> {
+    return WebActionBoostRepository.getAllAptConsultDoctor(auth,query, sort, limit).toLiveData()
   }
 
-  fun addAptConsultData(auth: String?, request: AddAptConsultRequest?): LiveData<BaseResponse> {
-    return WebActionBoostRepository.addAptConsultData(auth, request).toLiveData()
+  fun addAptConsultData(auth: String?,request: AddAptConsultRequest?): LiveData<BaseResponse> {
+    return WebActionBoostRepository.addAptConsultData(auth,request).toLiveData()
   }
 
-  fun updateAptConsultData(auth: String?, request: UpdateConsultRequest?): LiveData<BaseResponse> {
-    return WebActionBoostRepository.updateAptConsultData(auth, request).toLiveData()
+  fun updateAptConsultData(auth: String?,request: UpdateConsultRequest?): LiveData<BaseResponse> {
+    return WebActionBoostRepository.updateAptConsultData(auth,request).toLiveData()
   }
 
   fun sendSMS(mobile: String?, message: String?, clientId: String?): LiveData<BaseResponse> {

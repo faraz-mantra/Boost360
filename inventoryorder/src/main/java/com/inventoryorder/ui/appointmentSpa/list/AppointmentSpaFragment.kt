@@ -95,7 +95,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     requestFilter = getRequestFilterData(arrayListOf())
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
-    binding?.swipeRefresh?.setOnRefreshListener {loadNewData()}
+    binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
   }
 
   override fun onClick(v: View) {
@@ -139,8 +139,8 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
     if (isFirst || isSearch) showProgressLoad()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
-     hideProgressLoad()
+    viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
@@ -206,12 +206,8 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   }
 
   private fun emptyView() {
-      binding?.bookingRecycler?.gone()
-      binding?.errorView?.visible()
-      binding?.btnActionTutorials?.setOnClickListener {
-          val sheet = LearnHowItWorkBottomSheet()
-          sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
-      }
+    binding?.bookingRecycler?.gone()
+    binding?.errorView?.visible()
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
@@ -549,7 +545,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
         if (position != null && orderAdapter != null && orderAdapter!!.list().size > position!!) {
-          orderListFinalList= orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
+          orderListFinalList = orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
           response.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout()
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()

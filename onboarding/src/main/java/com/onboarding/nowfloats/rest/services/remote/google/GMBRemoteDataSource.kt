@@ -10,6 +10,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
 
+//google Api not remove Authorization
+
 interface GMBRemoteDataSource {
 
   @GET(EndPoints.GET_GMB_ACCOUNT_LOCATIONS)

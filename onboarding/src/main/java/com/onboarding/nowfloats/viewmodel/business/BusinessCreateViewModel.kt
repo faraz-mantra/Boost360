@@ -35,11 +35,11 @@ class BusinessCreateViewModel : BaseViewModel() {
   }
 
   fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.postUpdateWhatsappRequest(request, auth).toLiveData()
+    return WhatsAppRepository.postUpdateWhatsappRequest(auth = auth, request = request).toLiveData()
   }
 
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(getJsonRequest(request), auth).toLiveData()
+    return WhatsAppRepository.getWhatsappBusiness(auth = auth, request = getJsonRequest(request)).toLiveData()
   }
 
   fun postCheckBusinessDomain(request: BusinessDomainRequest): LiveData<BaseResponse> {
