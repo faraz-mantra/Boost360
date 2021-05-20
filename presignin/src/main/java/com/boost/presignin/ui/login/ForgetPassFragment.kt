@@ -38,7 +38,7 @@ class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignU
       viewModel?.forgotPassword(ForgotPassRequest(clientId, binding?.emailEt?.text?.toString()?.trim()))?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
-          WebEngageController.trackEvent(FORGOT_PASSWORD, RESTE_PASSWORD_LINK_SEND,NO_EVENT_VALUE)
+          WebEngageController.trackEvent(FORGOT_PASSWORD_SEND, RESTE_PASSWORD_LINK_SEND,NO_EVENT_VALUE)
           val sheet = ResetLinkBottomSheet()
           sheet.onClick = { baseActivity.onNavPressed() }
           sheet.show(this@ForgetPassFragment.parentFragmentManager, ForgetPassFragment::class.java.name)
