@@ -34,12 +34,11 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
     private const val PHONE_NUMBER = "phone_number"
 
     @JvmStatic
-    fun newInstance(phoneNumber: String?) =
-        CategoryFragment().apply {
-          arguments = Bundle().apply {
-            putString(PHONE_NUMBER, phoneNumber)
-          }
-        }
+    fun newInstance(phoneNumber: String?) = CategoryFragment().apply {
+      arguments = Bundle().apply {
+        putString(PHONE_NUMBER, phoneNumber)
+      }
+    }
   }
 
   override fun getLayout(): Int {
@@ -82,11 +81,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
       WebEngageController.trackEvent(CHOOSE_BUSINESS_CATEGORY, CATEGORY, NO_EVENT_VALUE)
       addFragmentReplace(com.framework.R.id.container,
           BusinessDetailsFragment.newInstance(
-              CategoryFloatsRequest(
-                  categoryDataModel = category,
-                  requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber)),
-                  userBusinessMobile = phoneNumber
-              )
+              CategoryFloatsRequest(categoryDataModel = category, userBusinessMobile = phoneNumber,
+                  requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber)))
           ), true)
     }
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
@@ -107,5 +103,4 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
       }
     }
   }
-
 }

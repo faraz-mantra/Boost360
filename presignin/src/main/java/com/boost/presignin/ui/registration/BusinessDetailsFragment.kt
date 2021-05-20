@@ -21,8 +21,6 @@ import com.framework.webengageconstant.*
 import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
@@ -108,7 +106,7 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
       floatsRequest?.requestProfile?.Provider = "EMAIL"
       floatsRequest?.whatsAppFlag = whatsAppNoFlag
       validatePhone()
-      WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, CLICK, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(BUSINESS_PROFILE_INFO_CLICK, CLICK, NO_EVENT_VALUE)
     }
   }
 

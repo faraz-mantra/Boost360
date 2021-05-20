@@ -54,7 +54,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(BUSINESS_WEBSITE_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     fullScreenProgress = FullScreenProgressDialog.newInstance()
     this.session = UserSessionManager(baseActivity)
     floatsRequest = arguments?.getSerializable("request") as? CategoryFloatsRequest
