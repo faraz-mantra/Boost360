@@ -108,9 +108,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun initialize() {
     WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
-//    WebEngageController.initiateUserLogin(session?.userProfileId)
-//    WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
-//    WebEngageController.setFPTag(session?.fpTag)
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
       if (token.isNullOrEmpty().not()) {
