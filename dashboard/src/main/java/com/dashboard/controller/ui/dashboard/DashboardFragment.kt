@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
+import android.net.Uri
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -70,6 +71,8 @@ import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.model.summaryCall.CALL_BUSINESS_REPORT
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
+import com.inventoryorder.utils.DynamicLinkParams
+import com.inventoryorder.utils.DynamicLinksManager
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.insights.ChannelInsightsResponse
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
@@ -91,6 +94,7 @@ const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
+  private var deepLinkUtil: DeepLinkUtil? = null
   private var connectedChannels: ArrayList<String> = arrayListOf()
   private var session: UserSessionManager? = null
   private var adapterBusinessContent: AppBaseRecyclerViewAdapter<DrScoreSetupData>? = null
@@ -122,10 +126,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   override fun onCreateView() {
-    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(
-        true
-    )
+    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
+    session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it) }
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
         binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
         binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries, binding?.viewEmptyEnquiries?.btnMessangerEnquiries, binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries)
@@ -605,9 +608,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
         val data = item as? DashboardMarketplaceBanner ?: return
-        if (data.ctaFeatureKey.isNullOrEmpty().not()) {
-          session?.let { baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey) }
-        }
+        marketPlaceBannerClick(data)
       }
       RecyclerViewActionType.PROMO_BOOST_ACADEMY_CLICK.ordinal -> {
         val data = item as? DashboardAcademyBanner ?: return
@@ -616,6 +617,28 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RecyclerViewActionType.CHANNEL_ACTIVATE_CLICK.ordinal -> {
         val data = item as? ChannelStatusData ?: return
         session?.let { baseActivity.startDigitalChannel(it, data.accountType ?: "") }
+      }
+    }
+  }
+
+  private fun marketPlaceBannerClick(data: DashboardMarketplaceBanner) {
+    if (data.ctaWebLink.isNullOrEmpty().not()) {
+      if (data.ctaWebLink!!.contains("com.biz2.nowfloats.keyboard.home")) {
+        WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, DEEP_LINK, NO_EVENT_VALUE)
+        val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
+        if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+          val viewType = deepHashMap[DynamicLinkParams.viewType]
+          val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+          deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+        } else deepLinkUtil?.deepLinkPage(data.ctaWebLink!!, "", false)
+      } else {
+        WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, WEB_LINK, NO_EVENT_VALUE)
+        baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
+      }
+    } else {
+      WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, FEATURE_ITEM_CLICK, NO_EVENT_VALUE)
+      if (data.ctaFeatureKey.isNullOrEmpty().not()) {
+        session?.let { baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey) }
       }
     }
   }
@@ -798,7 +821,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun clickBusinessUpdate(type: BusinessSetupHighData.BusinessClickEvent) {
     when (type) {
-      BusinessSetupHighData.BusinessClickEvent.WEBSITE_VISITOR -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS)
+      BusinessSetupHighData.BusinessClickEvent.WEBSITE_VISITOR -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS_CLICK)
       BusinessSetupHighData.BusinessClickEvent.ENQUIRIES -> baseActivity.startBusinessEnquiry(session)
       BusinessSetupHighData.BusinessClickEvent.ODER_APT -> baseActivity.startAptOrderSummary(session)
     }
@@ -824,9 +847,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun clickGrowthStats(type: GrowthStatsData.GrowthType) {
     when (type) {
-      GrowthStatsData.GrowthType.ALL_VISITS -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS)
-      GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS)
-      GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(session, "MAP_VISITS", WEBSITE_REPORT_ADDRESS_VISITS)
+      GrowthStatsData.GrowthType.ALL_VISITS -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS_CLICK)
+      GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS_CLICK)
+      GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(session, "MAP_VISITS", WEBSITE_REPORT_ADDRESS_VISITS_CLICK)
       GrowthStatsData.GrowthType.NEWSLETTER_SUBSCRIPTION -> baseActivity.startSubscriber(session)
       GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
     }
@@ -852,7 +875,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val loader = ProgressDashboardDialog.newInstance()
     when {
       data.ctaFileLink.isNullOrEmpty().not() -> {
-        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_FILE_LINK, CLICK, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_CLICK, FILE_LINK, NO_EVENT_VALUE)
         this.ctaFileLink = data.ctaFileLink
         if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
             ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -865,7 +888,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
       }
       data.ctaWebLink.isNullOrEmpty().not() -> {
-        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_WEB_LINK, CLICK, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_CLICK, WEB_LINK, NO_EVENT_VALUE)
         loader.setData(R.raw.activity_browser_gif, resources.getString(R.string.opening_browser_banner))
         loader.showProgress(baseActivity.supportFragmentManager)
         Handler().postDelayed({
@@ -874,7 +897,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }, 1000)
       }
       data.ctaYoutubeLink.isNullOrEmpty().not() -> {
-        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_YOUTUBE_LINK, CLICK, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_CLICK, YOUTUBE_LINK, NO_EVENT_VALUE)
         loader.setData(R.raw.video_gif, resources.getString(R.string.taking_video_banner))
         loader.showProgress(baseActivity.supportFragmentManager)
         Handler().postDelayed({
