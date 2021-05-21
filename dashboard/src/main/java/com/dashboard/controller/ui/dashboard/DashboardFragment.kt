@@ -223,6 +223,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val isHighDrScore = drScoreData != null && (drScoreData.getDrsTotal() >= 85)
       val drScoreSetupList = response?.data?.let { it1 -> drScoreData?.getDrScoreData(it1) }
       if (response?.isSuccess() == true && drScoreSetupList.isNullOrEmpty().not()) {
+        showSimmerDrScore(isSimmer = false, isRetry = false)
         if (isHighDrScore.not()) {
           binding?.highReadinessScoreView?.gone()
           binding?.lowReadinessScoreView?.visible()
@@ -266,7 +267,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
         }
-        showSimmerDrScore(isSimmer = false, isRetry = false)
       } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
     })
   }
@@ -926,14 +926,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun showSimmerDrScore(isSimmer: Boolean, isRetry: Boolean = false) {
-    binding?.mainContent?.post {
-      if (isSimmer && isRetry.not()) handler.postDelayed(runnable, 4000)
-      binding?.shimmerLoadDrScoreCard?.visibility = if (isSimmer || isRetry) View.VISIBLE else View.GONE
-      binding?.shimmerLoadDrView?.setBackgroundColor(getColor(if (isSimmer) R.color.placeholder_bg else android.R.color.transparent))
-      binding?.shimmerLoadDrView?.apply { if (isSimmer) startShimmer() else stopShimmer() }
-      binding?.retryDrScore?.visibility = if (isSimmer.not() && isRetry) View.VISIBLE else View.GONE
-      binding?.lowHighViewDrScore?.visibility = if (isSimmer && isRetry) View.GONE else View.VISIBLE
-    }
+    if (isSimmer && isRetry.not()) handler.postDelayed(runnable, 4000)
+    binding?.retryDrScore?.visibility = if (isSimmer.not() && isRetry) View.VISIBLE else View.GONE
+    binding?.shimmerLoadDrScoreCard?.visibility = if (isSimmer || isRetry) View.VISIBLE else View.GONE
+    binding?.shimmerLoadDrView?.setBackgroundColor(getColor(if (isSimmer) R.color.placeholder_bg else android.R.color.transparent))
+    binding?.shimmerLoadDrView?.apply { if (isSimmer) startShimmer() else stopShimmer() }
+    binding?.lowHighViewDrScore?.visibility = if (isSimmer && isRetry) View.GONE else View.VISIBLE
   }
 
   private fun showSimmer(isSimmer: Boolean) {
