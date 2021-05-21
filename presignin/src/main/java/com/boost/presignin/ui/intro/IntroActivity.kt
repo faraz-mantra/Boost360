@@ -48,11 +48,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
   private fun initTncString() {
     binding?.acceptTnc?.makeLinks(
         Pair("terms", View.OnClickListener {
-          WebEngageController.trackEvent(BOOST_360_TERMS, CLICKED, NO_EVENT_VALUE)
+          WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
           openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
         }),
         Pair("conditions", View.OnClickListener {
-          WebEngageController.trackEvent(BOOST_360_CONDITIONS, CLICKED, NO_EVENT_VALUE)
+          WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
           openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
         }))
   }
@@ -94,7 +94,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     }
     binding?.btnCreate?.setOnClickListener {
 //      navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8059798376") })
-      WebEngageController.trackEvent(INTRO_SCREEN_LOGIN, GET_START_CLICKED, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
       startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
       finish()
     }

@@ -184,7 +184,7 @@ const val CHOOSE_BUSINESS = "Choose business"
 const val CLICK = "Click"
 const val ADDED = "Added"
 const val DELETE = "Delete"
-const val RESTE_PASSWORD_LINK_SEND= "Reset password link send"
+const val LINK_SEND= "Link send"
 const val CLICK_DIFFERENT_NUMBER= "Click different number"
 const val CLICK_LOGIN_USERNAME= "Click login username"
 

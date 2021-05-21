@@ -33,9 +33,9 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
     }
 
     override fun onCreateView() {
-        WebEngageController.trackEvent(CREATE_ACCOUNT_LOGIN_ACCOUNT, PAGE_VIEW, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(PS_CREATE_LOGIN_OTHER_WAY, PAGE_VIEW, NO_EVENT_VALUE)
         binding?.retrieveAccountBt?.setOnClickListener {
-            WebEngageController.trackEvent(RETRY_ACCOUNT_ACCOUNT, CLICKED, NO_EVENT_VALUE)
+            WebEngageController.trackEvent(PS_RETRY_ACCOUNT_ACCOUNT_CLICK, CLICKED, NO_EVENT_VALUE)
             startActivity(Intent(this@AccountNotFoundActivity, DesiredLoginMethodActivity::class.java))
         }
         binding?.backIv?.setOnClickListener {
@@ -52,7 +52,7 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
         }
         binding?.subheading?.text = spannable
         binding?.createAccountBt?.setOnClickListener {
-            WebEngageController.trackEvent(CREATE_BUSINESS_PROFILE, CLICKED, NO_EVENT_VALUE)
+            WebEngageController.trackEvent(PS_CREATE_BUSINESS_PROFILE_CLICK, CLICKED, NO_EVENT_VALUE)
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
             navigator?.startActivity(RegistrationActivity::class.java,bundle)
