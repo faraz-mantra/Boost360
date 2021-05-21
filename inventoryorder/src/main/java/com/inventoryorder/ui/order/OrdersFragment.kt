@@ -14,6 +14,9 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.ORDER_PAGE_LOAD
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -88,7 +91,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
+     WebEngageController.trackEvent(ORDER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
