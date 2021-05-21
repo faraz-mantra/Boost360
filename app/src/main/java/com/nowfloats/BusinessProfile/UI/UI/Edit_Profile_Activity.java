@@ -66,7 +66,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
-import static com.framework.webengageconstant.EventNameKt.BUSINESS_CATEGORY;
+import static com.framework.webengageconstant.EventNameKt.PS_BUSINESS_CATEGORY_LOAD;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_NAME;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_DESCRIPTION;
 import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATEGORY;
@@ -431,7 +431,7 @@ public class Edit_Profile_Activity extends BaseActivity {
 
         category.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent(BUSINESS_CATEGORY, EVENT_LABEL_NULL, session.getFpTag());
+            WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, EVENT_LABEL_NULL, session.getFpTag());
 
         });
         productCategory.setOnCheckedChangeListener((group, checkedId) -> {

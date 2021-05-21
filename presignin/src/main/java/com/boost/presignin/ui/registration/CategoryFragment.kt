@@ -54,7 +54,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BUSINESS_CATEGORY, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     baseAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
     val gridLayoutManager = GridLayoutManager(baseActivity, 2)
     gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -78,7 +78,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
     }
 
     binding?.confirmButton?.setOnClickListener {
-      WebEngageController.trackEvent(CHOOSE_BUSINESS_CATEGORY, CATEGORY, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, NO_EVENT_VALUE)
       addFragmentReplace(com.framework.R.id.container,
           BusinessDetailsFragment.newInstance(
               CategoryFloatsRequest(categoryDataModel = category, userBusinessMobile = phoneNumber,

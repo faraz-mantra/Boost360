@@ -52,7 +52,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BUSINESS_WEBSITE_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     fullScreenProgress = FullScreenProgressDialog.newInstance()
     this.session = UserSessionManager(baseActivity)
     floatsRequest = arguments?.getSerializable("request") as? CategoryFloatsRequest
@@ -93,7 +93,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         return@setOnClickListener
       }
       floatsRequest?.webSiteUrl = "$website.nowfloats.com"
-      WebEngageController.trackEvent(CREATE_MY_BUSINESS_WEBSITE, CLICK, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)
       apiHitCreateMerchantProfile()
     }
   }
@@ -191,27 +191,16 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
           val result = it as? FloatingPointCreateResponse
           if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
             WebEngageController.initiateUserLogin(response.result?.loginId)
-            WebEngageController.setUserContactAttributes(
-                response.result?.profileProperties?.userEmail,
-                response.result?.profileProperties?.userMobile,
-                response.result?.profileProperties?.userName,
-                response.result?.sourceClientId
-            )
-            WebEngageController.trackEvent(
-                PS_SIGNUP_SUCCESS,
-                SIGNUP_SUCCESS,
-                NO_EVENT_VALUE
-            )
+            WebEngageController.setUserContactAttributes(response.result?.profileProperties?.userEmail, response.result?.profileProperties?.userMobile,
+                response.result?.profileProperties?.userName, response.result?.sourceClientId)
+            WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
             session.userProfileId = response.result?.loginId
             session.userProfileEmail = response.result?.profileProperties?.userEmail
             session.userProfileName = response.result?.profileProperties?.userName
             session.userProfileMobile = response.result?.profileProperties?.userMobile
             session.storeISEnterprise(response.result?.isEnterprise.toString() + "")
             session.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
-            session.storeFPDetails(
-                Key_Preferences.GET_FP_EXPERIENCE_CODE,
-                floatsRequest?.categoryDataModel?.experience_code
-            )
+            session.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, floatsRequest?.categoryDataModel?.experience_code)
             authToken = result.authTokens?.get(0)
             session.storeFPID(authToken?.floatingPointId)
             session.storeFpTag(authToken?.floatingPointTag)
@@ -222,9 +211,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
             session.saveCategoryRequest(floatsRequest!!)
             session.saveAuthTokenData(authToken!!)
             session.setUserSignUpComplete(true)
-            navigator?.clearBackStackAndStartNextActivity(
-                RegistrationActivity::class.java,
-                Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
+            navigator?.clearBackStackAndStartNextActivity(RegistrationActivity::class.java, Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
           } else showShortToast(getString(R.string.error_create_business_fp))
           hideProgress()
         })
