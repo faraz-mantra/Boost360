@@ -24,6 +24,7 @@ interface MarketOfferDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllMarketOffers(data: List<MarketOfferModel>)
 
-
+    @Query("SELECT EXISTS(SELECT * FROM MarketOffers WHERE coupon_code=:couponCode )")
+    fun checkOffersTableKeyExist(couponCode: String): Single<Int>
 
 }

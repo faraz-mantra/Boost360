@@ -329,6 +329,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     PackageFragment.newInstance(),
                     PACKAGE_FRAGMENT, args
             )*/
+        }else if (arguments?.getString("screenType") == "promoBanner") {
+            if (progressDialog.isShowing) {
+                progressDialog.hide()
+            }
+
+            getItemPromoBanner(arguments?.getString("buyItemKey"))
         }
 
         //chat bot view button clicked
@@ -1814,6 +1820,164 @@ Log.v("getPackageItem1", " "+ it.bundle_id)
                                     )
                                 } else {
                                     Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
+                                }
+                            }, {
+                                it.printStackTrace()
+                            })
+            )
+        }
+    }
+
+    fun getItemPromoBanner(item: String?){
+        if (item.isNullOrEmpty().not()) {
+            CompositeDisposable().add(
+                    AppDatabase.getInstance(requireActivity().application)!!
+                            .bundlesDao()
+                            .checkBundleKeyExist(item!!)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                if (it == 1) {
+                                    CompositeDisposable().add(
+                                            AppDatabase.getInstance(requireActivity().application)!!
+                                                    .bundlesDao()
+                                                    .getBundleItemById(item)
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe({
+
+
+                                                        Log.v("getPackageItem1", " "+ it.bundle_id)
+
+                                                        var selectedBundle: Bundles? = null
+                                                        var item = it
+
+                                                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                                                        selectedBundle = Bundles(
+                                                                item.bundle_id,
+                                                                temp,
+                                                                item.min_purchase_months,
+                                                                item.name,
+                                                                item.overall_discount_percent,
+                                                                PrimaryImage(item.primary_image),
+                                                                item.target_business_usecase,
+                                                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                                                null,
+                                                                item.desc)
+
+                                                        val packageFragment = PackageFragment.newInstance()
+                                                        val args = Bundle()
+                                                        args.putString("bundleData", Gson().toJson(selectedBundle))
+                                                        args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+                                                        packageFragment.arguments = args
+//                                                        (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
+
+                                                        (activity as UpgradeActivity).addFragmentHome(
+                                                                PackageFragment.newInstance(),
+                                                                PACKAGE_FRAGMENT, args
+                                                        )
+//                                                        bundleData = Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type)
+//                                                        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type))
+
+                                                    }, {
+                                                        it.printStackTrace()
+                                                    })
+                                    )
+                                } else {
+                                    CompositeDisposable().add(
+                                            AppDatabase.getInstance(requireActivity().application)!!
+                                                    .featuresDao()
+                                                    .checkFeatureTableKeyExist(item!!)
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe({
+                                                        if (it == 1) {
+                                                            CompositeDisposable().add(
+                                                                    AppDatabase.getInstance(requireActivity().application)!!
+                                                                            .featuresDao()
+                                                                            .getFeaturesItemByFeatureCode(item)
+                                                                            .subscribeOn(Schedulers.io())
+                                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                                            .subscribe({
+
+                                                                                val details = DetailsFragment.newInstance()
+                                                                                val args = Bundle()
+                                                                                args.putString("itemId", it.feature_code)
+                                                                                details.arguments = args
+                                                                                (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
+//
+
+                                                                            }, {
+                                                                                it.printStackTrace()
+                                                                            })
+                                                            )
+                                                        } else {
+                                                            CompositeDisposable().add(
+                                                                    AppDatabase.getInstance(requireActivity().application)!!
+                                                                            .marketOffersDao()
+                                                                            .checkOffersTableKeyExist(item!!)
+                                                                            .subscribeOn(Schedulers.io())
+                                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                                            .subscribe({
+                                                                                if (it == 1) {
+                                                                                    CompositeDisposable().add(
+                                                                                            AppDatabase.getInstance(requireActivity().application)!!
+                                                                                                    .marketOffersDao()
+                                                                                                    .getMarketOffersById(item)
+                                                                                                    .subscribeOn(Schedulers.io())
+                                                                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                                                                    .subscribe({
+
+
+                                                                                                        var selectedMarketOfferModel: MarketPlaceOffers? = null
+                                                                                                        var item = it
+
+                                                                                                        selectedMarketOfferModel = MarketPlaceOffers( coupon_code = item.coupon_code,
+                                                                                                                extra_information = item.extra_information!!,
+                                                                                                                createdon = item.createdon!!,
+                                                                                                                updatedon = item.updatedon!!,
+                                                                                                                _kid = item._kid!!,
+                                                                                                                websiteid = item.websiteid!!,
+                                                                                                                isarchived = item.isarchived!!,
+                                                                                                                expiry_date = item.expiry_date!!,
+                                                                                                                title = item.title!!,
+                                                                                                                exclusive_to_categories = Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                                                                                                image = PrimaryImage(item.image),
+                                                                                                        )
+                                                                                                        val marketPlaceOfferFragment = MarketPlaceOfferFragment.newInstance()
+                                                                                                        val args = Bundle()
+                                                                                                        args.putString("marketOffersData", Gson().toJson(selectedMarketOfferModel))
+                                                                                                        marketPlaceOfferFragment.arguments = args
+                                                                                                        (activity as UpgradeActivity).addFragment(marketPlaceOfferFragment, MARKET_OFFER_FRAGMENT)
+
+
+                                                                                                    }, {
+                                                                                                        it.printStackTrace()
+                                                                                                    })
+                                                                                    )
+                                                                                } else {
+                                                                                    if(item.contains("http")){
+                                                                                        val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
+                                                                                        val args = Bundle()
+                                                                                        args.putString("title", "Browser")
+                                                                                        args.putString("link", item)
+                                                                                        webViewFragment.arguments = args
+                                                                                        (activity as UpgradeActivity).addFragment(
+                                                                                                webViewFragment,
+                                                                                                Constants.WEB_VIEW_FRAGMENT
+                                                                                        )
+                                                                                    }
+
+                                                                                }
+                                                                            }, {
+                                                                                it.printStackTrace()
+                                                                            })
+                                                            )
+                                                        }
+                                                    }, {
+                                                        it.printStackTrace()
+                                                    })
+                                    )
                                 }
                             }, {
                                 it.printStackTrace()

@@ -93,6 +93,7 @@ const val deeplink_item_on_market_place = "ITEM_ONS_MARKETPLACE"
 const val deeplink_REFER_EARN = "refer_and_earn"
 const val deeplink_compare_package = "compare_package_selection"
 const val deeplink_package_bundle = "package_bundle"
+const val deeplink_promo_banner = "promo_banner"
 const val deeplink_create_order = "create_order"
 const val deeplink_create_appointment = "create_appointment"
 const val deeplink_create_consultation = "create_consultation"
@@ -264,6 +265,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
 //          baseActivity.initiateAddonMarketplace(session, false, "packageBundle", "")
           baseActivity.initiateAddonMarketplace(session, false, "packageBundle", buyItemKey)
 
+        }else if (url.contains(deeplink_promo_banner)) {
+          baseActivity.initiateAddonMarketplace(session, false, "promoBanner", buyItemKey)
         }else if (url.contains(deeplink_REFER_EARN)) {
           baseActivity.startReferralView(session)
         }
