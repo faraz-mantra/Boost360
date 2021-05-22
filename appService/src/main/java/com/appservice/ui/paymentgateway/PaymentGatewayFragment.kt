@@ -85,7 +85,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
 
   private fun checkInstaMojo() {
     showProgress()
-    viewModel?.getKycData(session.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getKycData(session?.auth_1,getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse
         if ((it.status == 200 || it.status == 201 || it.status == 202) && resp?.data.isNullOrEmpty().not()) {
@@ -159,7 +159,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
   private fun updateKycData() {
     val updateRequest = getUpdateRequest(dataKyc)
     showProgress()
-    viewModel?.updateKycData(session.auth_1, updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.updateKycData(session.auth_1,updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -225,7 +225,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
       intent.putExtra("fpid", session.fpId)
       intent.putExtra("fpTag", session.fpTag)
       intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets()?:ArrayList()))
+      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
       intent.putExtra("email", session.fpEmail ?: "ria@nowfloats.com")
       intent.putExtra("mobileNo", session.fpNumber ?: "9160004303")
       intent.putExtra("profileUrl", session.fpLogo)

@@ -16,6 +16,10 @@ class BusinessInfoModel(
     var domainName: String? = null
 ) : Parcelable {
 
+  fun getNumberN(): String? {
+    return if (number.isNullOrEmpty().not()) number else null
+  }
+
   fun getEmailN(): String? {
     return if (email.isNullOrEmpty().not()) email else null
   }

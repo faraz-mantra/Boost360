@@ -22,7 +22,6 @@ class DrScoreDirectionDialog : BaseDialogFragment<DialogDrScoreDirectionBinding,
     }
   }
 
-
   override fun getTheme(): Int {
     return R.style.MaterialDialogThemeFullN
   }

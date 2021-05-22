@@ -110,7 +110,7 @@ class UpgradeActivity : AppCompatActivity() {
     progressDialog = ProgressDialog(this)
 
     prefs = SharedPrefs(this)
-    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
+//    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
     initView()
     initRazorPay()
   }

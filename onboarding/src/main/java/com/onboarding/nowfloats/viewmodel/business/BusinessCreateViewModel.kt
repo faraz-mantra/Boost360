@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.viewmodel.business
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -34,11 +35,11 @@ class BusinessCreateViewModel : BaseViewModel() {
   }
 
   fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.postUpdateWhatsappRequest(request, auth).toLiveData()
+    return WhatsAppRepository.postUpdateWhatsappRequest(auth = auth, request = request).toLiveData()
   }
 
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(getJsonRequest(request), auth).toLiveData()
+    return WhatsAppRepository.getWhatsappBusiness(auth = auth, request = getJsonRequest(request)).toLiveData()
   }
 
   fun postCheckBusinessDomain(request: BusinessDomainRequest): LiveData<BaseResponse> {
@@ -75,6 +76,10 @@ class BusinessCreateViewModel : BaseViewModel() {
 
   fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): LiveData<BaseResponse> {
     return BusinessCreateRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
+  }
+
+  fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
+    return CategoryRepository.getCategoriesPlan(context).toLiveData()
   }
 
 }

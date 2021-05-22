@@ -19,6 +19,10 @@ class CategoryViewModel : BaseViewModel() {
     return CategoryRepository.getCategories(context).toLiveData()
   }
 
+  fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
+    return CategoryRepository.getCategoriesPlan(context).toLiveData()
+  }
+
   @Deprecated("NFX token API")
   fun getChannelsAccessToken(nowfloatsId: String?): LiveData<BaseResponse> {
     return ChannelRepository.getChannelsAccessToken(nowfloatsId).toLiveData()
@@ -33,11 +37,11 @@ class CategoryViewModel : BaseViewModel() {
   }
 
   fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.postUpdateWhatsappRequest(request, auth).toLiveData()
+    return WhatsAppRepository.postUpdateWhatsappRequest(auth = auth, request = request).toLiveData()
   }
 
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(getJsonRequest(request), auth).toLiveData()
+    return WhatsAppRepository.getWhatsappBusiness(auth = auth, request = getJsonRequest(request)).toLiveData()
   }
 
   fun nfxProcess(request: NFXProcessRequest?): LiveData<BaseResponse> {

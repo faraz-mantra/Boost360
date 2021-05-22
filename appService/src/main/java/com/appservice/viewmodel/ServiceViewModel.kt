@@ -30,38 +30,40 @@ class ServiceViewModel : BaseViewModel() {
     return WithFloatTwoRepository.deleteService(request).toLiveData()
   }
 
-  fun addUpdateImageProductService(clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-                                   productId: String?, requestBody: RequestBody?): LiveData<BaseResponse> {
+  fun addUpdateImageProductService(
+      clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
+      productId: String?, requestBody: RequestBody?,
+  ): LiveData<BaseResponse> {
     return WithFloatTwoRepository.addUpdateImageProductService(clientId, requestType, requestId, totalChunks,
         currentChunkNumber, productId, requestBody).toLiveData()
   }
 
-  fun addProductGstDetail(auth: String?, request: ProductGstDetailRequest?): LiveData<BaseResponse> {
-    return KitWebActionRepository.addProductGstDetail(auth, request).toLiveData()
+  fun addProductGstDetail(request: ProductGstDetailRequest?): LiveData<BaseResponse> {
+    return KitWebActionRepository.addProductGstDetail(request).toLiveData()
   }
 
-  fun updateProductGstDetail(auth: String?, request: ProductUpdateRequest?): LiveData<BaseResponse> {
-    return KitWebActionRepository.updateProductGstDetail(auth, request).toLiveData()
+  fun updateProductGstDetail(request: ProductUpdateRequest?): LiveData<BaseResponse> {
+    return KitWebActionRepository.updateProductGstDetail(request).toLiveData()
   }
 
-  fun getProductGstDetail(auth: String?, query: String?): LiveData<BaseResponse> {
-    return KitWebActionRepository.getProductGstDetail(auth, query).toLiveData()
+  fun getProductGstDetail(query: String?): LiveData<BaseResponse> {
+    return KitWebActionRepository.getProductGstDetail(query).toLiveData()
   }
 
-  fun uploadImageProfile(auth: String?, assetFileName: String?, file: MultipartBody.Part?): LiveData<BaseResponse> {
-    return KitWebActionRepository.uploadImageProfile(auth, assetFileName, file).toLiveData()
+  fun uploadImageProfile(assetFileName: String?, file: MultipartBody.Part?): LiveData<BaseResponse> {
+    return KitWebActionRepository.uploadImageProfile(assetFileName, file).toLiveData()
   }
 
-  fun addProductImage(auth: String?, request: ProductImageRequest?): LiveData<BaseResponse> {
-    return KitWebActionRepository.addProductImage(auth, request).toLiveData()
+  fun addProductImage(request: ProductImageRequest?): LiveData<BaseResponse> {
+    return KitWebActionRepository.addProductImage(request).toLiveData()
   }
 
-  fun deleteProductImage(auth: String?, request: ProductImageDeleteRequest?): LiveData<BaseResponse> {
-    return KitWebActionRepository.deleteProductImage(auth, request).toLiveData()
+  fun deleteProductImage(request: ProductImageDeleteRequest?): LiveData<BaseResponse> {
+    return KitWebActionRepository.deleteProductImage(request).toLiveData()
   }
 
-  fun getProductImage(auth: String?, query: String?): LiveData<BaseResponse> {
-    return KitWebActionRepository.getProductImage(auth, query).toLiveData()
+  fun getProductImage(query: String?): LiveData<BaseResponse> {
+    return KitWebActionRepository.getProductImage(query).toLiveData()
   }
 
   fun getPickUpAddress(fpId: String?): LiveData<BaseResponse> {
@@ -76,7 +78,7 @@ class ServiceViewModel : BaseViewModel() {
     return NowfloatsApiRepository.getServiceListing(request).toLiveData()
   }
 
-  fun getSearchListings(fpTag: String?, fpId: String?, searchString: String?="", offset: Int?=0, limit: Int?=0):LiveData<BaseResponse>{
+  fun getSearchListings(fpTag: String?, fpId: String?, searchString: String? = "", offset: Int? = 0, limit: Int? = 0): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
   }
 }

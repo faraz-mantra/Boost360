@@ -14,6 +14,9 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.ORDER_PAGE_LOAD
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -88,8 +91,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
-    setOnClickListener(binding?.btnAdd,binding?.buttonAddApt)
+     WebEngageController.trackEvent(ORDER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
@@ -102,7 +105,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd ,binding?.buttonAddApt-> {
+      binding?.btnAdd, binding?.buttonAddApt -> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         if (!PreferencesUtils.instance.getData(PreferenceConstant.SHOW_CREATE_ORDER_WELCOME, false)) {
@@ -143,7 +146,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
     if (isFirst || isSearch) showProgressLoad()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, {
       hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
