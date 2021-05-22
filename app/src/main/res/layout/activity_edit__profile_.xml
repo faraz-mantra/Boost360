@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     android:orientation="vertical">
 
@@ -17,291 +17,302 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-            android:layout_marginStart="2dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@color/screen_bg"
                 android:orientation="vertical">
-                <!--<com.makeramen.RoundedImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/editbusinessprofileimage"
-                    android:src="@drawable/business_edit_profile_icon"
-                    android:layout_width="105dp"
-                    android:layout_height="105dp"
-                    android:layout_gravity="center"
-                    android:scaleType="fitXY"
-                    app:riv_corner_radius="30dip"
-                    app:riv_border_width="0dip"
-                    app:riv_oval="true"
-                    />-->
-                <ImageView
-                    android:id="@+id/editbusinessprofileimage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/featured_photo_default" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="15dp"
-                android:paddingStart="16dp">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/editbusinessprofileimage"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_180"
+                            android:layout_marginTop="@dimen/size_1"
+                            android:layout_marginBottom="@dimen/size_1"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone"
+                            app:srcCompat="@color/placeholder_bg" />
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_image_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_180"
+                            android:background="@color/white_smoke_1"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                app:srcCompat="@drawable/ic_store" />
+
+
+                            <com.framework.views.customViews.CustomButton
+                                style="@style/ButtonStyle.Outline"
+                                android:id="@+id/select_businessprofileimage"
+                                android:layout_width="match_parent"
+                                android:gravity="center"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_height="36dp"
+                                android:text="@string/add_featured_image" />
+                        </LinearLayout>
+                        <com.framework.views.roundedimageview.RoundedImageView
+                            android:id="@+id/change_image"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginTop="5dp"
+                            app:riv_corner_radius="@dimen/_15sdp"
+                            app:riv_mutate_background="true"
+                            android:layout_height="@dimen/_30sdp"
+                            android:padding="8dp"
+                            android:layout_gravity="end"
+                            app:riv_oval="true"
+                            android:background="@color/colorAccent"
+                            android:clickable="true"
+                            android:focusable="true"
+                            tools:visibility="visible"
+                            android:visibility="gone"
+                            app:tint="@color/colorAccent"
+                            app:srcCompat="@drawable/pencil_white" />
+                    </FrameLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
 
                 <LinearLayout
-                    android:id="@+id/businessNameLayout"
-                    android:layout_height="58dp"
-                    style="@style/SignUp_LinearLayout_Style">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_20"
+                    android:orientation="vertical"
+                    android:paddingTop="15dp">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginBottom="4dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/name_icon" />
-                    <!--<TextView
-                        android:id="@+id/yourName_textline"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_profile_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5">
+
+                        <EditText
+                            android:id="@+id/profileName"
+                            style="@style/CustomEditTextStyle"
+                            fontPath="Roboto-Light.ttf"
+                            android:hint="@string/your_name"
+                            android:inputType="textCapWords"
+                            android:minLines="1"
+                            tools:ignore="MissingPrefix" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_business_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="40">
+
+                        <EditText
+                            android:id="@+id/businessName"
+                            style="@style/CustomEditTextStyle"
+                            fontPath="Roboto-Light.ttf"
+                            android:hint="@string/business_name"
+                            android:inputType="textCapWords"
+                            android:maxLength="40"
+                            android:minLines="1"
+                            tools:ignore="MissingPrefix" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/businessName_textline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Your Name"
-                        android:textSize="10sp"
-                        android:paddingStart="5dp"
+                        android:layout_marginStart="3dp"
+                        android:text="@string/business_category"
                         android:textColor="#BDBDBD"
-                        android:visibility="visible"/>
-    -->
-                    <EditText
-                        android:id="@+id/profileName"
-                        style="@style/SignUp_EditText_Style"
-                        fontPath="Roboto-Light.ttf"
-                        android:hint="@string/your_name"
-                        android:inputType="textCapWords"
-                        android:minLines="1"
-                        tools:ignore="MissingPrefix" />
-                    <!--<EditText
-                        android:id="@+id/profileName"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="bottom"
-                        android:hint="Your Name"
-                        android:minLines="1"
-                        android:text=""
-                        android:textSize="14sp"
-                        android:textColor="#575757"/>-->
-                </LinearLayout>
+                        android:textSize="12sp" />
 
-                <LinearLayout
-                    android:layout_height="58dp"
-                    style="@style/SignUp_LinearLayout_Style">
+                    <LinearLayout
+                        style="@style/SignUp_LinearLayout_Style"
+                        android:layout_height="58dp">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginBottom="4dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/bzname_icon" />
+                        <EditText
+                            android:id="@+id/businessCategory"
+                            style="@style/CustomEditTextStyle"
+                            fontPath="Roboto-Light.ttf"
+                            android:clickable="true"
+                            android:editable="true"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/business_category"
+                            android:imeOptions="flagNoExtractUi"
+                            android:inputType="textCapWords"
+                            android:textColor="#BDBDBD"
+                            tools:ignore="MissingPrefix" />
 
-                    <EditText
-                        android:id="@+id/businessName"
-                        style="@style/SignUp_EditText_Style"
-                        fontPath="Roboto-Light.ttf"
-                        android:hint="@string/business_name"
-                        android:inputType="textCapWords"
-                        android:minLines="1"
-                        tools:ignore="MissingPrefix" />
-                    <!-- <TextView
-                         android:id="@+id/businessName_textline"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="Business Name"
-                         android:textSize="10sp"
-                         android:paddingStart="5dp"
-                         android:textColor="#BDBDBD"
-                         android:visibility="gone"/>-->
-                    <!-- <EditText
-                         android:id="@+id/businessName"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:hint="Business Name"
-                         android:minLines="1"
-                         android:textSize="14sp"
-                         android:gravity="bottom"
-                         android:textColor="#575757"
-                         />-->
-                </LinearLayout>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_height="58dp"
-                    style="@style/SignUp_LinearLayout_Style">
+                    <TextView
+                        android:id="@+id/business_category_change_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:text="@string/if_you_wish_to_change_business_category_please_contact_ria_nowfloats_com"
+                        android:textColor="#828282"
+                        android:textSize="12sp"
+                        android:textStyle="italic"
+                        android:visibility="gone" />
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginBottom="4dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/category_icon" />
-
-                    <EditText
-                        android:id="@+id/businessCategory"
-                        style="@style/SignUp_EditText_Style"
-                        fontPath="Roboto-Light.ttf"
-                        android:drawableEnd="@drawable/dropselect"
-                        android:editable="false"
-                        android:clickable="false"
-                        android:focusableInTouchMode="false"
-                        android:focusable="false"
-                        android:imeOptions="flagNoExtractUi"
-                        android:hint="@string/business_category"
-                        android:inputType="textCapWords"
-                        tools:ignore="MissingPrefix" />
-                    <!--<EditText
-                        android:id="@+id/businessCategory"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:hint="Business Category"
-                        android:gravity="bottom"
-                        android:editable="false"
-                        android:drawableRight="@drawable/dropselect"
-                        android:textColor="#575757"
-                        android:textSize="14sp"/>
-        -->
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_height="58dp"
-                    style="@style/SignUp_LinearLayout_Style"
-                    android:layout_marginTop="10dp">
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:scaleType="fitXY"
-                        android:layout_gravity="top"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/category_icon" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="17sp"
-                            android:textColor="#383838"
-                            android:text="@string/product_category"/>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                        <RadioGroup
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:orientation="horizontal">
 
-                            android:id="@+id/rbgroup"
+                        <TextView
+                            android:id="@+id/productCategory_textline"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:layout_weight="1"
+                            android:text="@string/product_category"
+                            android:textColor="#BDBDBD"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:id="@+id/ib_product_category_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:orientation="horizontal">
+                            android:gravity="end"
+                            android:onClick="onProductCategoryEdit"
+                            android:src="@drawable/ic_lead_pencil_grey600_18dp" />
 
-                            <RadioButton
-
-                                android:id="@+id/rb_products"
-                                android:layout_width="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="@color/light_gray"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:text="@string/products_" />
-
-                            <RadioButton
-                                android:layout_marginEnd="10dp"
-                                android:id="@+id/rb_services"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="@color/light_gray"
-                                android:text="@string/services" />
-
-                            <RadioButton
-                                android:layout_marginStart="10dp"
-                                android:id="@+id/rb_custom"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="@color/light_gray"
-                                />
-                        </RadioGroup>
-                            <EditText
-                                android:background="@android:color/transparent"
-                                android:hint="@string/custom"
-                                android:gravity="bottom"
-                                android:id="@+id/et_customCategory"
-                                android:textSize="15sp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
                     </LinearLayout>
 
-                </LinearLayout>
-                <LinearLayout android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:gravity="bottom"
-                    android:paddingTop="15dp"
-                    android:orientation="horizontal">
+                    <LinearLayout
+                        style="@style/SignUp_LinearLayout_Style"
+                        android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginBottom="4dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/desc_icon" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/businessDesciption"
-                        style="@style/SignUp_EditText_Style"
+                            <LinearLayout
+                                android:id="@+id/linear_product_category"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RadioGroup
+                                    android:id="@+id/rbgroup"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp">
+
+                                    <RadioButton
+                                        android:id="@+id/rb_products"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/light_gray"
+                                        android:text="@string/products_" />
+
+                                    <RadioButton
+                                        android:id="@+id/rb_services"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/light_gray"
+                                        android:text="@string/services_" />
+
+                                    <RadioButton
+                                        android:id="@+id/rb_custom"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/light_gray" />
+
+                                </RadioGroup>
+
+                                <EditText
+                                    android:id="@+id/et_customCategory"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:gravity="bottom"
+                                    android:hint="@string/custom_"
+                                    android:maxLength="15"
+                                    android:textSize="15dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_business_description"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        fontPath="Roboto-Light.ttf"
-                        android:hint="@string/business_description"
-                        android:inputType="textCapSentences|textMultiLine"
-                        android:maxLines="4"
-                        tools:ignore="MissingPrefix" />
+                        android:layout_marginTop="@dimen/margin_10">
 
+                        <EditText
+                            android:id="@+id/businessDesciption"
+                            style="@style/CustomEditTextStyle"
+                            fontPath="Roboto-Light.ttf"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/business_description"
+                            android:inputType="textCapSentences|textMultiLine"
+                            android:maxLines="4"
+                            tools:ignore="MissingPrefix" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.framework.views.customViews.CustomButton
+                        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                        android:id="@+id/btn_save_info"
+                        android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="@dimen/_60sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:text="@string/save" />
                 </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="155dp"
-            android:layout_marginEnd="10dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:tint="@color/primaryColor"
-            android:src="@drawable/circle_bakground" />
-        <ImageView
-            android:id="@+id/select_businessprofileimage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="155dp"
-            android:layout_marginEnd="10dp"
-            android:layout_alignParentTop="true"
-            android:padding="12dp"
-            android:layout_alignParentEnd="true"
-            app:srcCompat="@drawable/ic_camera" />
-    </RelativeLayout>
 
-</FrameLayout>
+            </LinearLayout>
+
+
+        </FrameLayout>
+
     </ScrollView>
 
 </LinearLayout>

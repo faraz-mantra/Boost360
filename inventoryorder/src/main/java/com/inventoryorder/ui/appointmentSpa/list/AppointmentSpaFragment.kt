@@ -13,6 +13,9 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.webengageconstant.APPOINTMENT_PAGE_LOAD
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -87,7 +90,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on appointments", "APPOINTMENTS", it) }
+    WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
     layoutManager = LinearLayoutManager(baseActivity)
@@ -95,7 +98,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     requestFilter = getRequestFilterData(arrayListOf())
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
-    binding?.swipeRefresh?.setOnRefreshListener {loadNewData()}
+    binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
   }
 
   override fun onClick(v: View) {
@@ -139,8 +142,8 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
     if (isFirst || isSearch) showProgressLoad()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
-     hideProgressLoad()
+    viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
@@ -206,12 +209,8 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   }
 
   private fun emptyView() {
-      binding?.bookingRecycler?.gone()
-      binding?.errorView?.visible()
-      binding?.btnActionTutorials?.setOnClickListener {
-          val sheet = LearnHowItWorkBottomSheet()
-          sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
-      }
+    binding?.bookingRecycler?.gone()
+    binding?.errorView?.visible()
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
@@ -549,7 +548,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
         if (position != null && orderAdapter != null && orderAdapter!!.list().size > position!!) {
-          orderListFinalList= orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
+          orderListFinalList = orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
           response.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout()
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()

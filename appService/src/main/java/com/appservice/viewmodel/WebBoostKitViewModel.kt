@@ -13,24 +13,24 @@ import okhttp3.MultipartBody
 
 class WebBoostKitViewModel : BaseViewModel() {
 
-  fun getKycData(auth: String?, query: String?): LiveData<BaseResponse> {
-    return WebActionBoostKitRepository.getKycData(auth, query).toLiveData()
+  fun getKycData(auth: String?,query: String?): LiveData<BaseResponse> {
+    return WebActionBoostKitRepository.getKycData(auth,query).toLiveData()
   }
 
-  fun getKycListData(auth: String?): LiveData<BaseResponse> {
+  fun getKycListData(auth: String?,): LiveData<BaseResponse> {
     return WebActionBoostKitRepository.getKycListData(auth).toLiveData()
   }
 
-  fun addKycData(auth: String?, request: PaymentKycRequest?): LiveData<BaseResponse> {
-    return WebActionBoostKitRepository.addKycData(auth, request).toLiveData()
+  fun addKycData(auth: String?,request: PaymentKycRequest?): LiveData<BaseResponse> {
+    return WebActionBoostKitRepository.addKycData(auth,request).toLiveData()
   }
 
-  fun updateKycData(auth: String?, request: UpdatePaymentKycRequest): LiveData<BaseResponse> {
-    return WebActionBoostKitRepository.updateKycData(auth, request).toLiveData()
+  fun updateKycData(auth: String?,request: UpdatePaymentKycRequest): LiveData<BaseResponse> {
+    return WebActionBoostKitRepository.updateKycData(auth,request).toLiveData()
   }
 
-  fun putUploadFile(auth: String?, file: MultipartBody.Part?, assetFileName: String?): LiveData<BaseResponse> {
-    return WebActionBoostKitRepository.putUploadImageProfile(auth, file, assetFileName).toLiveData()
+  fun putUploadFile(auth: String?,file: MultipartBody.Part?, assetFileName: String?): LiveData<BaseResponse> {
+    return WebActionBoostKitRepository.putUploadImageProfile(auth,file, assetFileName).toLiveData()
   }
 
   fun userAccountDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {

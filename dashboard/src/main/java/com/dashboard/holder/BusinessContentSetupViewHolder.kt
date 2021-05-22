@@ -1,7 +1,6 @@
 package com.dashboard.holder
 
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import com.dashboard.R
 import com.dashboard.databinding.ItemBusinessContentSetupBinding
 import com.dashboard.model.live.drScore.DrScoreItem

@@ -16,9 +16,12 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.appservice.model.kycData.PaymentKycDataResponse;
-import com.boost.presignup.PreSignUpActivity;
+import com.boost.presignin.model.accessToken.AccessTokenRequest;
+import com.boost.presignin.model.authToken.AccessTokenResponse;
+import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.PresignupManager;
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.pref.TokenResult;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Login_MainActivity;
@@ -38,6 +41,7 @@ import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -52,12 +56,16 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.pref.TokenResultKt.getAccessTokenAuth1;
+import static com.framework.pref.TokenResultKt.saveAccessTokenAuth1;
+import static com.nowfloats.util.Constants.clientId;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 import static java.lang.String.format;
 
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface, PresignupManager.SignUpLoginHandler {
   public static ProgressDialog pd;
-  UserSessionManager session;
+  private UserSessionManager session;
+  private com.framework.pref.UserSessionManager sessionMain;
   Bus bus;
   LottieAnimationView animationView;
   private String loginCheck = null, deepLink;
@@ -70,6 +78,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     setContentView(R.layout.activity_splash_screen_);
     Methods.isOnline(this);
     session = new UserSessionManager(this, SplashScreen_Activity.this);
+    sessionMain = new com.framework.pref.UserSessionManager(this);
     if (!session.isLoginCheck()) {
       signUpStart();
     } else {
@@ -86,13 +95,19 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
       }
       bus = BusProvider.getInstance().getBus();
       initLottieAnimation();
-      if (mThread == null) mThread = new Thread(new DataRunnable());
-      mThread.start();
+
+      TokenResult tokenResult = getAccessTokenAuth1(sessionMain);
+      if (tokenResult != null && tokenResult.isExpiredToken()) {
+        createAccessToken(tokenResult.getRefreshToken(), clientId, sessionMain.getFPID());
+      } else {
+        if (mThread == null) mThread = new Thread(new DataRunnable());
+        mThread.start();
+      }
     }
   }
 
   private void signUpStart() {
-    Intent webIntent = new Intent(this, PreSignUpActivity.class);
+    Intent webIntent = new Intent(this, IntroActivity.class);
     webIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     startActivity(webIntent);
     overridePendingTransition(0, 0);
@@ -123,7 +138,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
       checkSelfBrandedKyc();
       checkUserAccount();
       getNfxTokenData();
-      getFPDetails_retrofit(SplashScreen_Activity.this, session.getFPID(), Constants.clientId, bus);
+      getFPDetails_retrofit(SplashScreen_Activity.this, session.getFPID(), clientId, bus);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -148,7 +163,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
   private void checkUserAccount() {
     StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
-    getAccountDetail.userAccountDetail(session.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
+    getAccountDetail.userAccountDetail(session.getFPID(), clientId, new Callback<AccountDetailsResponse>() {
       @Override
       public void success(AccountDetailsResponse data, Response response) {
         if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) session.setAccountSave(false);
@@ -178,6 +193,29 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     });
   }
 
+  private void createAccessToken(String refreshToken, String clientID, String fpId) {
+    StoreInterface restWithFloat = Constants.restAdapterDev.create(StoreInterface.class);
+    AccessTokenRequest request = new AccessTokenRequest();
+    request.setAuthToken(refreshToken);
+    request.setClientId(clientID);
+    request.setFpId(fpId);
+    restWithFloat.createAccessToken(request, new Callback<AccessTokenResponse>() {
+      @Override
+      public void success(AccessTokenResponse data, Response response) {
+        if ((response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) && data != null && data.getResult() != null) {
+          saveAccessTokenAuth1(sessionMain, data.getResult());
+          if (mThread == null) mThread = new Thread(new DataRunnable());
+          mThread.start();
+        } else session.logoutUser();
+      }
+
+      @Override
+      public void failure(RetrofitError error) {
+        session.logoutUser();
+      }
+    });
+  }
+
   private String getQuery() {
     try {
       JSONObject jsonObject = new JSONObject();
@@ -200,7 +238,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
       startActivity(i);
       overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     } else {
-      Intent i = new Intent(SplashScreen_Activity.this, com.boost.presignup.PreSignUpActivity.class);
+      Intent i = new Intent(SplashScreen_Activity.this, IntroActivity.class);
       i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
       i.putExtras(getIntent());
       // Staring Login Activity
@@ -250,6 +288,9 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
   private void goHomePage() {
     try {
+      WebEngageController.initiateUserLogin(session.getUserProfileId());
+      WebEngageController.setUserContactInfoProperties(session);
+      WebEngageController.setFPTag(session.getFpTag());
       Intent i = new Intent(SplashScreen_Activity.this, Class.forName("com.dashboard.controller.DashboardActivity"));
       i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
       if (deepLink != null) {
@@ -265,7 +306,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         finish();
       }
     } catch (ClassNotFoundException e) {
-      Log.e("Home Page",e.getLocalizedMessage());
+      Log.e("Home Page", e.getLocalizedMessage());
       session.logoutUser();
     }
   }

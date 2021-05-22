@@ -123,7 +123,7 @@ object NFWebEngageController {
             FirebaseAnalyticsUtilsHelper.identifyUser(userId)
 
             //AppsFlyer Analytics User Session Event
-            if (weAnalytics!=null && weAnalytics.activity!=null) {
+            if (weAnalytics.activity!=null) {
                 AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
             }
             AppsFlyerLib.getInstance().setCustomerUserId(userId)

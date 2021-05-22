@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.registration.RegistrationSuccessFragment">
+
+
+    <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:fillViewport="true"
+      android:scrollbars="none"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="@id/endGuide"
+      app:layout_constraintStart_toStartOf="@id/startGuide"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:ignore="NotSibling,UnknownId">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/sucess_iv"
+          android:layout_width="@dimen/_40sdp"
+          android:layout_height="@dimen/_40sdp"
+          android:layout_marginTop="@dimen/_18sdp"
+          android:src="@drawable/ic_registration_success" />
+
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/heading_tv"
+          style="@style/psn_heading_style"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text="@string/congratulations_n_s"
+          android:textSize="26sp" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/subheading"
+          style="@style/psn_heading_style"
+          android:layout_marginStart="@dimen/_24sdp"
+          android:layout_marginTop="@dimen/_14sdp"
+          android:layout_marginEnd="@dimen/_24sdp"
+          android:gravity="center"
+          android:text="@string/registration_complete_subheading"
+          app:layout_constraintTop_toBottomOf="@id/heading_tv"
+          app:textType="BODY_1" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/icon_iv"
+          android:layout_width="@dimen/_120sdp"
+          android:layout_height="@dimen/_120sdp"
+          android:src="@drawable/business_registed_icon"
+          android:visibility="gone"
+          tools:visibility="visible" />
+
+        <com.framework.views.GifView
+          android:layout_width="@dimen/_120sdp"
+          android:layout_height="@dimen/_120sdp"
+          android:layout_marginTop="@dimen/size_8"
+          android:layout_marginBottom="@dimen/size_8"
+          app:gif="@raw/building_success"
+          app:paused="false"
+          tools:visibility="gone" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/business_name_tv"
+          style="@style/psn_heading_style"
+          android:layout_width="wrap_content"
+          android:layout_marginTop="0dp"
+          android:fontFamily="@font/open_sans"
+          android:gravity="center"
+          android:text="@string/downtown_nspa_salon"
+          app:textType="HEADING_2" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/website_tv"
+          style="@style/psn_subheading_style"
+          android:layout_width="wrap_content"
+          android:layout_marginTop="@dimen/_4sdp"
+          android:fontFamily="@font/open_sans"
+          android:text="@string/downtownspa_nowfloats_com"
+          android:textColor="@color/link_color"
+          app:textType="BODY_2" />
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/preview_account_bt"
+          style="@style/psn_stroke_button_style"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/_10sdp"
+          android:layout_marginBottom="@dimen/_12sdp"
+          android:drawableEnd="@null"
+          android:text="@string/preview_your_website" />
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/dashboard_bt"
+          style="@style/psn_button_style"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/_10sdp"
+          android:layout_marginBottom="@dimen/_16sdp"
+          android:drawableEnd="@null"
+          android:text="@string/go_to_business_dashboard"
+          app:layout_constraintBottom_toTopOf="@id/bottomGuide" />
+      </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/lottie_animation"
+      android:layout_width="match_parent"
+      android:layout_height="500dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

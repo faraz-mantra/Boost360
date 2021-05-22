@@ -40,4 +40,5 @@ dependencies {
   api project(path: ':onboarding')
   api project(path: ':inventoryorder')
   api project(path: ':appService')
+  api project(path: ':presignin')
 }

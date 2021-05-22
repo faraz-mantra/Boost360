@@ -96,7 +96,8 @@
             <androidx.recyclerview.widget.RecyclerView
               android:id="@+id/recycler_staff"
               style="@style/match_wrap"
-              android:layout_marginTop="@dimen/size_10" />
+              android:layout_marginTop="@dimen/size_10"
+              android:orientation="horizontal" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_select_date_time"
@@ -107,8 +108,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
               android:id="@+id/lyt_shipping_address"
               style="@style/match_wrap"
-              android:layout_marginTop="@dimen/size_10"
               android:layout_height="@dimen/size_42"
+              android:layout_marginTop="@dimen/size_10"
               android:background="@drawable/ic_rectangle_light_black_outline"
               android:orientation="horizontal">
 
@@ -120,11 +121,15 @@
                 android:layout_marginTop="@dimen/size_1"
                 android:layout_marginBottom="@dimen/size_1"
                 android:background="@drawable/bg_rounded_grey"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:paddingStart="@dimen/size_5"
                 android:paddingEnd="@dimen/size_5"
                 android:textColor="@color/black_4a4a4a"
-                app:srcCompat="@drawable/ic_filled_arrow_left" />
+                app:srcCompat="@drawable/ic_filled_arrow_left"
+                tools:ignore="UnusedAttribute" />
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/text_selected_date"
@@ -142,11 +147,15 @@
                 android:layout_marginTop="@dimen/size_1"
                 android:layout_marginBottom="@dimen/size_1"
                 android:background="@drawable/bg_rounded_grey_right"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:paddingStart="@dimen/size_5"
                 android:paddingEnd="@dimen/size_5"
                 android:textColor="@color/black_4a4a4a"
-                app:srcCompat="@drawable/ic_filled_arrow_right" />
+                app:srcCompat="@drawable/ic_filled_arrow_right"
+                tools:ignore="UnusedAttribute" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.framework.views.customViews.CustomTextView

@@ -126,4 +126,22 @@
   <string name="share_on_telegram">Share on Telegram</string>
   <string name="share_on_email">Share on Email</string>
   <string name="share_on_others">Share on others</string>
+  <string name="preview_your_website_by_clicking_the_link_below">Preview your website by clicking the link below.</string>
+  <string name="customise_font">Customise font</string>
+  <string name="primary_font">Primary font</string>
+  <string name="secondary_font">Secondary font</string>
+  <string name="default_theme_shade">Default theme shade</string>
+  <string name="optional_shades_to_choose_from">Optional shades to choose from</string>
+  <string name="open_sans">Open Sans</string>
+  <string name="change_font_type">Change font type</string>
+  <string name="the_font_you_want_to_change_as_primary">The font you want to change as primary.</string>
+  <string name="the_font_you_want_to_change_as_secondary">The font you want to change as secondary.</string>
+  <string name="save">Save</string>
+  <string name="save_changes">Save Changes</string>
+  <string name="website_style_customisation">Website Style Customisation</string>
+  <string name="error_while_getting_website_theme">Error while getting website theme.</string>
+  <string name="your_theme_update_published">Your changes are saved successfully published and live on your website. Click on below button to see it live or share with in your connections.</string>
+  <string name="unable_to_get_primary_fonts">Unable to get primary fonts</string>
+  <string name="unable_to_get_secondary_fonts">Unable to get Secondary fonts.</string>
+  <string name="business_logo_updated">Business logo updated successfully</string>
 </resources>

@@ -5,14 +5,12 @@ import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,8 +18,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -1754,7 +1750,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     fun startReferralView() {
         try {
-            WebEngageController.trackEvent(REFER_A_FRIEND, CLICK, TO_BE_ADDED)
+            WebEngageController.trackEvent(REFER_A_FRIEND_CLICK, CLICK, TO_BE_ADDED)
             val webIntent = Intent(activity, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
             startActivity(webIntent)
 //            overridePendingTransition(0, 0)
