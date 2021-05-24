@@ -25,7 +25,7 @@ interface DevBoostKitRemoteData {
 
   @GET(EndPoints.SEARCH_ANALYTICS)
   fun getSearchAnalytics(
-      @Header("Authorization") auth: String?,
+      @Header("Authorization") auth: String,
       @Query("websiteId") website_id: String?,
       @Query("startDate") startDate: String?,
       @Query("endDate") endDate: String?,

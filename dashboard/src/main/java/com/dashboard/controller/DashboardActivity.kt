@@ -6,7 +6,6 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -20,7 +19,6 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
-import com.dashboard.controller.ui.dialog.DrScoreWelcomeDialog
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
@@ -57,6 +55,7 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
+import kotlin.system.exitProcess
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
@@ -96,7 +95,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     mNavController.graph = graph
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
-//    binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
@@ -105,26 +103,20 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     getWelcomeData()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
-
   }
 
   private fun initialize() {
-    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-    StrictMode.setThreadPolicy(policy)
-    WebEngageController.initiateUserLogin(session?.userProfileId)
-    WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
-    WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent(HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
-      WebEngage.get().setRegistrationID(token)
+      if (token.isNullOrEmpty().not()) {
+        WebEngage.get().setRegistrationID(token)
+        AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
+        AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
+      }
     }
     initialiseZendeskSupportSdk()
-    if (FirebaseInstanceId.getInstance().token != null) {
-      AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
-      AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
-    }
-    //checkCustomerAssistantService()
   }
 
   private fun intentDataCheckAndDeepLink() {
@@ -136,7 +128,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val action = intent.action
       val data = intent.dataString
       val uri = intent.data
-      Log.d("Data: ", "$data  $action")
+      Log.d("Data: ", "$data  $action $uri")
       if (session?.isLoginCheck == true) {
         if (uri != null && uri.toString().contains("onelink", true)) {
           isAppFlyerLink()
@@ -150,7 +142,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
         }
       } else {
-        this.startPreSignUp(session,true)
+        this.startPreSignUp(session, true)
         finish()
       }
     } else isAppFlyerLink()
@@ -161,7 +153,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
       val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
-      AppsFlyerUtils.sAttributionData= mapOf()
+      AppsFlyerUtils.sAttributionData = mapOf()
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
     }
@@ -241,10 +233,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onItemSelect(pos: Int) {
     when (pos) {
-      0 -> {
-        mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-        toolbarPropertySet(pos)
-      }
+      0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
       else -> {
@@ -342,10 +331,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     return NavOptions.Builder().setExitAnim(R.anim.slide_out_left).setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
   }
 
-  private fun openDashboard() {
+  private fun openDashboard(isSet: Boolean = true) {
     mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-    binding?.navView?.setActiveItem(0)
+    if (isSet) binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

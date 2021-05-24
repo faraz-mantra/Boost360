@@ -68,6 +68,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/size_6"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_alert_18_d" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -133,7 +134,7 @@
             app:dotsSpacing="@dimen/size_2"
             app:dotsWidthFactor="2.5"
             app:progressMode="false"
-            app:selectedDotColor="@color/black_4a4a4a"/>
+            app:selectedDotColor="@color/black_4a4a4a" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
       </FrameLayout>

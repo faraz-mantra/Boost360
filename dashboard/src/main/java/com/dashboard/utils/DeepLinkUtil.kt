@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.framework.pref.FACEBOOK_PAGE_WITH_ID
@@ -91,6 +92,8 @@ const val deeplink_recommended_add_ons = "recommended_add_ons"
 const val deeplink_item_on_market_place = "ITEM_ONS_MARKETPLACE"
 const val deeplink_REFER_EARN = "refer_and_earn"
 const val deeplink_compare_package = "compare_package_selection"
+const val deeplink_package_bundle = "package_bundle"
+const val deeplink_promo_banner = "promo_banner"
 const val deeplink_create_order = "create_order"
 const val deeplink_create_appointment = "create_appointment"
 const val deeplink_create_consultation = "create_consultation"
@@ -256,7 +259,15 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "", buyItemKey)
         } else if (url.contains(deeplink_compare_package)) {
           baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
-        } else if (url.contains(deeplink_REFER_EARN)) {
+        } else if (url.contains(deeplink_package_bundle)) {
+//          println("deeplink_package_bundle ${url}  ${buyItemKey}")
+          Log.v("deeplink_package_bundle", " "+ url + " "+ buyItemKey)
+//          baseActivity.initiateAddonMarketplace(session, false, "packageBundle", "")
+          baseActivity.initiateAddonMarketplace(session, false, "packageBundle", buyItemKey)
+
+        }else if (url.contains(deeplink_promo_banner)) {
+          baseActivity.initiateAddonMarketplace(session, false, "promoBanner", buyItemKey)
+        }else if (url.contains(deeplink_REFER_EARN)) {
           baseActivity.startReferralView(session)
         }
       }

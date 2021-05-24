@@ -77,7 +77,7 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
             appContext.runOnUiThread(() -> {
                 try {
                     listener.onSuccess(true);
-                    Methods.showSnackBarPositive(appContext, appContext.getString(R.string.image_updated_successfully));
+                    Methods.showSnackBarPositive(appContext, appContext.getString(R.string.logo_updated_successfully));
                     Constants.LOGOUPLOADED = true ;
                     Bitmap bmp = Methods.decodeSampledBitmap(path, 720,720);
                     bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);

@@ -38,7 +38,7 @@
                 android:id="@+id/mute_icon"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
-                android:src="@drawable/ic_unmute"/>
+                android:src="@drawable/ic_mute"/>
 
             <TextView
                 android:id="@+id/mute_text"

@@ -51,6 +51,28 @@ object NFWebEngageController {
         }
     }
 
+    fun trackEventLoad(event_name: String, event_label: String, event_value: HashMap<String, Any>, value:String) {
+        if (event_value.size > 0) {
+            event_value["event_name"] = event_name
+            event_value["event_label"] = event_label
+            weAnalytics.track(event_name, event_value)
+            weAnalytics.screenNavigated(event_name)
+
+            //Firebase Analytics Event...
+            FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
+
+            //AppsFlyerEvent...
+            try {
+                AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext,
+                        event_name, event_value.toMap())
+            } catch (e: Exception) {
+            }
+        } else {
+            weAnalytics.track(event_name)
+            weAnalytics.screenNavigated(event_name)
+        }
+    }
+
     fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
         if (isUserLoggedIn) {
             if (!email.isNullOrEmpty()) {
@@ -101,7 +123,7 @@ object NFWebEngageController {
             FirebaseAnalyticsUtilsHelper.identifyUser(userId)
 
             //AppsFlyer Analytics User Session Event
-            if (weAnalytics!=null && weAnalytics.activity!=null) {
+            if (weAnalytics.activity!=null) {
                 AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
             }
             AppsFlyerLib.getInstance().setCustomerUserId(userId)

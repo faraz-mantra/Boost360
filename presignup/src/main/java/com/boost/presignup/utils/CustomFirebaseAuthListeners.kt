@@ -2,7 +2,6 @@ package com.boost.presignup.utils
 
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse
-import com.boost.presignup.datamodel.userprofile.UserProfileVerificationResponse
 import com.boost.presignup.datamodel.userprofile.VerificationRequestResult
 
 interface CustomFirebaseAuthListeners {

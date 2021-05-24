@@ -36,7 +36,6 @@ interface InventoryOrderRemoteDataSource {
 
   @GET(EndPoints.GET_LIST_ORDER_URL)
   fun getSellerOrders(
-      @Header("Authorization") auth: String,
       @Query("clientId") clientId: String?,
       @Query("sellerId") sellerId: String?,
       @Query("orderMode") orderMode: String?,
@@ -49,7 +48,6 @@ interface InventoryOrderRemoteDataSource {
 
   @POST(EndPoints.GET_LIST_ORDER_FILTER_URL)
   fun getSellerOrdersFiler(
-      @Header("Authorization") auth: String,
       @Query("clientId") clientId: String?,
       @Body request: OrderFilterRequest,
   ): Observable<Response<InventoryOrderListResponse>>

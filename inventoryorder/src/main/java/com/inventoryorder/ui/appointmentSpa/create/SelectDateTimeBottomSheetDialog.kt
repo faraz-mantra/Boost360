@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
-import com.framework.pref.UserSessionManager
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
@@ -35,7 +34,6 @@ class SelectDateTimeBottomSheetDialog(
   private var selectedStaffPosition = 0
   private var dateChangedListener: DateChangedListener? = null
   private var selectedTimeSlot: Slots? = null
-  private var session: UserSessionManager? = null
 
   var onClicked: (appointmentRequestModel: AppointmentRequestModel, dateCounter: Int) -> Unit = { _: AppointmentRequestModel, _: Int -> }
 
@@ -49,12 +47,12 @@ class SelectDateTimeBottomSheetDialog(
 
 
   override fun onCreateView() {
-    session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.buttonDone, binding?.tvCancel, binding?.imageNext, binding?.imagePrev)
     binding?.textServiceName?.text = selectedService.Name
     binding?.textDuration?.text = "${selectedService.Duration} min"
     binding?.textSelectedDate?.text = getDisplayDate(getDateTime())
     dateChangedListener = dateChange
+
     setStaffAdapter()
   }
 
@@ -80,13 +78,17 @@ class SelectDateTimeBottomSheetDialog(
         }
       }
 
-      binding?.tvCancel -> dismiss()
+      binding?.tvCancel -> {
+        dismiss()
+      }
 
       binding?.buttonDone -> {
+
         if (selectedTimeSlot == null) {
           showShortToast(getString(R.string.please_select_time_slot))
           return
         }
+
         dismiss()
         prepareModelAndClose()
       }
@@ -112,7 +114,10 @@ class SelectDateTimeBottomSheetDialog(
     return BookingSlotsRequest(BatchType = "DAILY", ServiceId = selectedService._id ?: "", DateRange = DateRange(StartDate = getDateTime(), EndDate = getDateTime()))
   }
 
-  fun setData(bookingSlotResp: BookingSlotResponse, selected: ServiceItem) {
+  fun setData(
+      bookingSlotResp: BookingSlotResponse,
+      selected: ServiceItem,
+  ) {
     bookingSlotResponse = bookingSlotResp
     selectedService = selected
     setStaffAdapter()
@@ -139,26 +144,32 @@ class SelectDateTimeBottomSheetDialog(
   }
 
   private fun setStaffAdapter() {
-    if (bookingSlotResponse.Result?.get(0)?.Staff.isNullOrEmpty().not()) {
+
+    if (bookingSlotResponse.Result?.get(0)?.Staff != null && bookingSlotResponse.Result?.get(0)?.Staff?.size!! > 0) {
+
       var isPopulated = false
       binding?.textNoStaffAvailable?.visibility = View.GONE
       binding?.recyclerStaff?.visibility = View.VISIBLE
+
       staffAdapter = AppBaseRecyclerViewAdapter(baseActivity, bookingSlotResponse.Result?.get(0)?.Staff!!, this)
       binding?.recyclerStaff?.layoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
       binding?.recyclerStaff?.adapter = staffAdapter
       binding?.recyclerStaff?.let { staffAdapter?.runLayoutAnimation(it) }
+
       /*for ((index, value) in bookingSlotResponse?.Result?.get(0)?.Staff?.withIndex()!!) {
         value.isSelected = selectedStaffPosition == index
       }*/
-      staffAdapter?.notifyDataSetChanged()
 
-      for ((index, value) in bookingSlotResponse.Result?.get(0)?.Staff?.withIndex()!!) {
+      staffAdapter?.notifyDataSetChanged()
+      for ((index, value) in bookingSlotResponse.Result?.get(0)?.Staff!!.withIndex()) {
         if (value.isSelected) {
           isPopulated = true
           setTimeSlotsAdapter(index)
         }
       }
+
       if (!isPopulated) setTimeSlotsAdapter(0)
+
     } else {
       binding?.textNoStaffAvailable?.visibility = View.VISIBLE
       binding?.recyclerStaff?.visibility = View.GONE
@@ -166,8 +177,8 @@ class SelectDateTimeBottomSheetDialog(
   }
 
   private fun setTimeSlotsAdapter(position: Int) {
-//    getBusinessTimings()
-    if (bookingSlotResponse.Result?.get(0)?.Staff?.get(position)?.AppointmentSlots?.get(0)?.Slots.isNullOrEmpty().not()) {
+    if (bookingSlotResponse.Result?.get(0)?.Staff?.get(position)?.AppointmentSlots?.get(0)?.Slots != null &&
+        bookingSlotResponse.Result?.get(0)?.Staff?.get(position)?.AppointmentSlots?.get(0)?.Slots?.size!! > 0) {
       binding?.textNoSlotsAvailable?.visibility = View.GONE
       binding?.recyclerTimeSlots?.visibility = View.VISIBLE
 
@@ -184,58 +195,6 @@ class SelectDateTimeBottomSheetDialog(
       binding?.recyclerTimeSlots?.visibility = View.GONE
     }
   }
-
-//  private fun getBusinessTimings() {
-//    var startTime = ""
-//    var endTime = ""
-//    when (Calendar.getInstance()[Calendar.DAY_OF_WEEK]) {
-//      Calendar.SUNDAY -> {
-//        startTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//        endTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//      }
-//      Calendar.MONDAY -> {
-//        startTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//        endTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//      }
-//      Calendar.TUESDAY -> {
-//        startTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//        endTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//      }
-//      Calendar.WEDNESDAY -> {
-//        startTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//        endTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//      }
-//      Calendar.THURSDAY -> {
-//        startTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//        endTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//      }
-//      Calendar.FRIDAY -> {
-//        startTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//        endTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//      }
-//      Calendar.SATURDAY -> {
-//        startTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//        endTime = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME)?.toLowerCase(Locale.ROOT) ?: ""
-//      }
-//    }
-//    Log.d("", startTime)
-//    getTimeSlotList(startTime, endTime)
-//  }
-
-//  private fun getTimeSlotList(startTime: String, endTime: String) {
-//    val listSlot = arrayListOf<Slots>()
-//    val currentDate = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY)
-//    val dateObj1 = "$currentDate $startTime".parseDate(FORMAT_SERVER_TO_LOCAL)
-//    val dateObj2 = "$currentDate $endTime".parseDate(FORMAT_SERVER_TO_LOCAL)
-//    if (dateObj1 != null && dateObj2 != null) {
-//      var dif = dateObj1.time
-//      while (dif < dateObj2.time) {
-//        val slot = Date(dif)
-//        println("Hour Slot --->$slot")
-//        dif += 3600000
-//      }
-//    }
-//  }
 
   private fun getDateTime(): String {
     val cal = Calendar.getInstance()

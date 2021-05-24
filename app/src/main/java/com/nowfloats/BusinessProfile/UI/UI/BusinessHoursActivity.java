@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.models.firestore.FirestoreManager;
+import com.framework.views.customViews.CustomButton;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
@@ -78,7 +79,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     EditText etSunOpen, etSunClose, etMonOpen, etTueOpen, etWedOpen, etThuOpen, etFriOpen, etSatOpen, etSatClose, etFriClose, etMonClose, etThuClose, etTueClose, etWedClose;
     int currentId = NO_ID;
     Toolbar toolbar;
-    TextView titleTextView, saveTextView;
+    TextView titleTextView;
+    CustomButton saveButton;
     LinearLayout linearLayoutAllTime;
     private UserSessionManager session;
     CheckBox checkBoxAllTime;
@@ -99,8 +101,10 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        saveTextView = (TextView) toolbar.findViewById(R.id.saveTextView);
-        saveTextView.setOnClickListener(new View.OnClickListener() {
+        TextView saveText = (TextView) toolbar.findViewById(R.id.saveTextView);
+        saveText.setVisibility(View.GONE);
+        saveButton = findViewById(R.id.btn_save_info);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

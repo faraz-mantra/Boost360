@@ -19,6 +19,6 @@ data class ChannelsType(
 ) : Serializable {
 
   enum class AccountType {
-    facebookusertimeline, facebookpage, facebookshop, twitter, googlemybusiness;
+    facebookusertimeline, facebookpage, facebookshop, twitter, googlemybusiness ,WAB;
   }
 }
