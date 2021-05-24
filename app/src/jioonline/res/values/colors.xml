@@ -86,6 +86,7 @@
 
     <color name="ir_statusBarColor">@color/colorPrimaryDark</color>
     <color name="ir_actionbarBackground">@color/colorPrimary</color>
+    <color name="colorLightGrey_jio">#4a4a4a</color>
 
     <color name="accent_30">#4D0400A6</color>
     <color name="red_light_1">#EC008C</color>
