@@ -72,16 +72,17 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
 
     var isQuickActionsVisible: Boolean = false
         set(v) {
-            binding.quickActionToggle.rotation = if (v) 180.0f else 0.0f
+//            binding.quickActionToggle.rotation = if (v) 180.0f else 0.0f
             field = v
         }
     var isBusinessFeatureVisible: Boolean = false
         set(v) {
-            binding.businessFeatureToggleAction.rotation = if (v) {
+            if (v) {
+                binding.businessFeatureTabLayout.setScrollPosition(0,0f,true)
                 binding.businessFeatureTabLayout.getTabAt(0)?.select()
-                180.0f
+                binding.businessFeatureToggleAction.setImageResource(R.drawable.ic_boost_keyboard)
             } else {
-                0.0f
+                binding.businessFeatureToggleAction.setImageResource(R.drawable.business_feature_quick_actions)
             }
             field = v
         }
@@ -125,7 +126,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
         candidateViewList.add(binding.candidate1)
         candidateViewList.add(binding.candidate2)
 
-        binding.backButton.setOnClickListener { eventListener?.get()?.onSmartbarBackButtonPressed() }
+//        binding.backButton.setOnClickListener { eventListener?.get()?.onSmartbarBackButtonPressed() }
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
@@ -189,10 +190,10 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
             }
         }
 
-        binding.quickActionToggle.setOnClickListener {
-            isQuickActionsVisible = !isQuickActionsVisible
-            updateSmartbarState()
-        }
+//        binding.quickActionToggle.setOnClickListener {
+//            isQuickActionsVisible = !isQuickActionsVisible
+//            updateSmartbarState()
+//        }
 
         binding.businessFeatureToggleAction.setOnClickListener {
             isBusinessFeatureVisible = !isBusinessFeatureVisible
@@ -256,13 +257,13 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
         if (actionStartAreaId != null) {
             when (florisboard?.textInputManager?.getActiveKeyboardMode()) {
                 KeyboardMode.EDITING -> {
-                    binding.quickActionToggle.visibility = View.GONE
+//                    binding.quickActionToggle.visibility = View.GONE
                     binding.businessFeatureToggleAction.visibility = View.GONE
-                    binding.backButton.visibility = View.VISIBLE
+//                    binding.backButton.visibility = View.VISIBLE
                 }
                 else -> {
-                    binding.backButton.visibility = View.GONE
-                    binding.quickActionToggle.visibility = View.VISIBLE
+//                    binding.backButton.visibility = View.GONE
+//                    binding.quickActionToggle.visibility = View.VISIBLE
                     binding.businessFeatureToggleAction.visibility = View.VISIBLE
                 }
             }
@@ -308,8 +309,9 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
                         else -> true
                     },
                     actionStartAreaId = when (florisboard.textInputManager.getActiveKeyboardMode()) {
-                        KeyboardMode.EDITING -> intArrayOf(R.id.back_button)
-                        else -> intArrayOf(R.id.quick_action_toggle, R.id.business_feature_toggle_action)
+//                        KeyboardMode.EDITING -> intArrayOf(R.id.back_button)
+                        else -> intArrayOf( R.id.business_feature_toggle_action)
+//                        else -> intArrayOf(R.id.quick_action_toggle, R.id.business_feature_toggle_action)
                     },
                     mainAreaId = when (florisboard.textInputManager.keyVariation) {
                         KeyVariation.PASSWORD -> R.id.number_row

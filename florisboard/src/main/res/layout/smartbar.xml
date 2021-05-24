@@ -29,18 +29,19 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/business_feature_quick_actions" />
 
-            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
-                android:id="@+id/quick_action_toggle"
-                style="@style/SmartbarQuickAction.Toggle"
-                android:contentDescription="@string/smartbar__quick_action_toggle__alt"
-                android:src="@drawable/ic_keyboard_arrow_right" />
+<!--            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton-->
+<!--                android:id="@+id/quick_action_toggle"-->
+<!--                android:visibility="gone"-->
+<!--                style="@style/SmartbarQuickAction.Toggle"-->
+<!--                android:contentDescription="@string/smartbar__quick_action_toggle__alt"-->
+<!--                android:src="@drawable/ic_keyboard_arrow_right" />-->
 
-            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
-                android:id="@+id/back_button"
-                style="@style/SmartbarQuickAction"
-                android:contentDescription="@string/smartbar__quick_action__exit_editing"
-                android:src="@drawable/ic_arrow_back"
-                android:visibility="gone" />
+<!--            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton-->
+<!--                android:id="@+id/back_button"-->
+<!--                style="@style/SmartbarQuickAction"-->
+<!--                android:contentDescription="@string/smartbar__quick_action__exit_editing"-->
+<!--                android:src="@drawable/ic_arrow_back"-->
+<!--                android:visibility="gone" />-->
 
         </LinearLayout>
 
@@ -60,22 +61,24 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextColor="@color/white">
+            app:tabIndicatorColor="@color/accent_blue"
+            app:tabSelectedTextColor="@color/accent_blue"
+            app:tabTextColor="@color/black_4a4a4a">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Updates" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Inventory" />
+                android:text="Services" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Updates" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
