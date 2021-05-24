@@ -1,5 +1,6 @@
 package com.framework.analytics
 
+import android.util.Log
 import com.appsflyer.AppsFlyerLib
 import com.framework.BaseApplication
 import com.webengage.sdk.android.Analytics
@@ -10,6 +11,7 @@ object NFWebEngageController {
   private var weAnalytics: Analytics = WebEngage.get().analytics()
   private var weUser: User = WebEngage.get().user()
   private var isUserLoggedIn = false
+  private val TAG = "NFController"
 
 
   fun trackEvent(event_name: String, event_label: String, event_value: String) {
@@ -45,8 +47,10 @@ object NFWebEngageController {
 
         //AppsFlyerEvent...
         try {
-          AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext,
-              event_name, event_value.toMap())
+          AppsFlyerLib.getInstance().logEvent(
+            weAnalytics.activity.get()?.applicationContext,
+            event_name, event_value.toMap()
+          )
         } catch (e: Exception) {
         }
       } else {
@@ -69,8 +73,10 @@ object NFWebEngageController {
 
         //AppsFlyerEvent...
         try {
-          AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext,
-              event_name, event_value.toMap())
+          AppsFlyerLib.getInstance().logEvent(
+            weAnalytics.activity.get()?.applicationContext,
+            event_name, event_value.toMap()
+          )
         } catch (e: Exception) {
         }
       } else {
@@ -127,6 +133,7 @@ object NFWebEngageController {
   fun initiateUserLogin(userId: String?) {
     if (BaseApplication.instance.packageName != "com.jio.online") {
       if (!userId.isNullOrEmpty()) {
+        Log.d(TAG, "Initiating User login" + userId)
         weUser.login(userId)
 
         //Firebase Analytics User Session Event.
@@ -164,6 +171,7 @@ object NFWebEngageController {
   fun setFPTag(fpTag: String) {
     if (BaseApplication.instance.packageName != "com.jio.online") {
       try {
+        Log.d(TAG, "Setting FP Tag" + fpTag)
         weUser.setAttribute("fpTag", fpTag)
 
         //Firebase Analytics User Property.
@@ -180,6 +188,7 @@ object NFWebEngageController {
 
   fun logout() {
     if (BaseApplication.instance.packageName != "com.jio.online") {
+      Log.d(TAG, "Loggind user out from analytics")
       weUser.logout()
 
       //Reset Firebase Analytics User Session Event.

@@ -44,6 +44,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     session = UserSessionManager(baseActivity)
     getWebsiteData()
     setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.businessAddress, binding?.contactDetail, binding?.businessTiming)
+
     WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
