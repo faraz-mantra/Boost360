@@ -127,6 +127,7 @@ class UpgradeActivity : AppCompatActivity() {
       bundle.putString("screenType", intent.getStringExtra("screenType"))
       bundle.putStringArrayList("userPurchsedWidgets", intent.getStringArrayListExtra("userPurchsedWidgets"))
       bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+      bundle.putString("buyItemKey", intent.getStringExtra("buyItemKey"))
 //      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
       addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT, bundle)
       //update userdetails and buyitem
@@ -348,7 +349,7 @@ class UpgradeActivity : AppCompatActivity() {
                                               details.arguments = args
                                               addFragment(details, Constants.DETAILS_FRAGMENT)
                                             } else {
-                                              Toasty.error(this, "This Add-ons Not Available to Your Account.", Toast.LENGTH_LONG).show()
+//                                              Toasty.error(this, "This Add-ons Not Available to Your Account.", Toast.LENGTH_LONG).show()
                                             }
                                           }, {
                                             Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()

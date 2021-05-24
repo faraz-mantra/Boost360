@@ -128,7 +128,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val action = intent.action
       val data = intent.dataString
       val uri = intent.data
-      Log.d("Data: ", "$data  $action")
+      Log.d("Data: ", "$data  $action $uri")
       if (session?.isLoginCheck == true) {
         if (uri != null && uri.toString().contains("onelink", true)) {
           isAppFlyerLink()

@@ -296,7 +296,6 @@ class PaymentFragment : BaseFragment(), PaymentListener {
                     paymentData.put(key, cartCheckoutData.get(key))
                 }
             }
-
             var firebaseAnalytics = Firebase.analytics
             firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO, null)
 
