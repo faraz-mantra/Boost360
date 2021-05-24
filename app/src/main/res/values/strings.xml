@@ -3045,8 +3045,11 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="package_pickup_address">Package pickup address</string>
     <string name="unable_to_open_facebook">unable to open facebook</string>
     <string name="enter_valid_open_close_timing"><![CDATA[Please enter valid open & close time!]]></string>
+    <string name="choose_image">Choose Image</string>
+    <string name="add_featured_image">ADD FEATURED IMAGE</string>
+    <string name="logo_updated_successfully">Logo uploaded successfully.</string>
 
-<!--    <string name="ir_actionbarBackground">#ffb900</string>-->
+    <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
 <!--    <string name="ir_statusBarColor">#ffb900</string>-->
 
 </resources>

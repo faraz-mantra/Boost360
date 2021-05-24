@@ -18,14 +18,13 @@ import com.framework.views.DotProgressBar
 import com.framework.webengageconstant.BUILDING_YOUR_BUSINESS_CONTACT_INFO
 import com.framework.webengageconstant.CLICKED
 import com.framework.webengageconstant.CONFIRM
-import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.widget.Autocomplete
 import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessContactInfoBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.model.registration.BusinessInfoModel
 import com.onboarding.nowfloats.model.verification.RequestValidateEmail
-import com.onboarding.nowfloats.model.verification.RequestValidatePhone
 import com.onboarding.nowfloats.ui.CitySearchDialog
 import com.onboarding.nowfloats.utils.WebEngageController
 import okio.Buffer
@@ -36,6 +35,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
 
   private var businessInfoModel = BusinessInfoModel()
   private val PLACE_SEARCH_REQUEST = 1000
+  private var personNumber = ""
 
   companion object {
     @JvmStatic
@@ -48,7 +48,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
 
   override fun onCreateView() {
     super.onCreateView()
-    placePickerApi()
+    personNumber = (pref?.getString(PreferenceConstant.PERSON_NUMBER, "") ?: "")
     binding?.viewImage?.post {
       (binding?.viewImage?.fadeIn(200L)?.mergeWith(binding?.viewBusiness?.fadeIn(100L))
           ?.mergeWith(binding?.viewForm?.fadeIn(100L)))?.andThen(binding?.title?.fadeIn(100L)
@@ -72,23 +72,25 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     setSavedData()
   }
 
-  private fun placePickerApi() {
-    val apiKey = getString(R.string.places_api_key)
-    if (apiKey.isEmpty()) return
-    if (!Places.isInitialized()) Places.initialize(baseActivity, apiKey)
-  }
-
   override fun setSavedData() {
-    val contactInfo = this.requestFloatsModel?.contactInfo ?: return
-    businessInfoModel = contactInfo
-    binding?.storeName?.setText(contactInfo.businessName)
-    binding?.address?.setText(contactInfo.addressCity)
-    binding?.email?.setText(contactInfo.email)
-    val number = contactInfo.number ?: return
-    binding?.number?.setText(number)
-    binding?.countryCode?.visible()
-    binding?.number?.hint = ""
-    binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_36)
+    val contactInfo = this.requestFloatsModel?.contactInfo
+    if (contactInfo != null) {
+      businessInfoModel = contactInfo
+      binding?.storeName?.setText(contactInfo.businessName)
+      binding?.address?.setText(contactInfo.addressCity)
+      binding?.email?.setText(contactInfo.email)
+      val number = contactInfo.number ?: return
+      binding?.number?.setText(number)
+      binding?.countryCode?.visible()
+      binding?.number?.hint = ""
+      binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_36)
+    }
+    if (personNumber.isNotEmpty()) {
+      binding?.number?.setText(personNumber)
+      binding?.countryCode?.visible()
+      binding?.number?.hint = ""
+      binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_36)
+    }
   }
 
   override fun onClick(v: View) {
@@ -100,7 +102,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
             binding?.textBtn?.visibility = GONE
             binding?.next?.addView(it)
             it.startAnimation()
-            checkIsValidEmailPhone(it)
+            checkIsValidEmail(it)
           }
         }
       }
@@ -108,25 +110,16 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     }
   }
 
-  private fun checkIsValidEmailPhone(dotProgressBar: DotProgressBar) {
-    viewModel?.validateUsersPhone(RequestValidatePhone(clientId2, "+91", businessInfoModel.number))?.observeOnce(viewLifecycleOwner, {
-      hideProgress()
-      if (it.isSuccess()) {
-        when {
-          parseResponse(it) -> errorMessageShow(dotProgressBar, getString(R.string.this_number_is_already_in_use))
-          businessInfoModel.email.isNullOrEmpty().not() -> {
-            viewModel?.validateUsersEmail(RequestValidateEmail(clientId2, businessInfoModel.email))?.observeOnce(viewLifecycleOwner, { it1 ->
-              hideProgress()
-              if (it1.isSuccess()) {
-                if (parseResponse(it1)) errorMessageShow(dotProgressBar, getString(R.string.this_email_is_already_in_use))
-                else goNextPageDomain(dotProgressBar)
-              } else errorMessageShow(dotProgressBar, getString(R.string.validation_error_try_again))
-            })
-          }
-          else -> goNextPageDomain(dotProgressBar)
-        }
-      } else errorMessageShow(dotProgressBar, getString(R.string.validation_error_try_again))
-    })
+  private fun checkIsValidEmail(dotProgressBar: DotProgressBar) {
+    if (businessInfoModel.email.isNullOrEmpty().not()) {
+      viewModel?.validateUsersEmail(RequestValidateEmail(clientId2, businessInfoModel.email))?.observeOnce(viewLifecycleOwner, { it1 ->
+        hideProgress()
+        if (it1.isSuccess()) {
+          if (parseResponse(it1)) errorMessageShow(dotProgressBar, getString(R.string.this_email_is_already_in_use))
+          else goNextPageDomain(dotProgressBar)
+        } else errorMessageShow(dotProgressBar, getString(R.string.validation_error_try_again))
+      })
+    } else goNextPageDomain(dotProgressBar)
   }
 
   private fun errorMessageShow(dotProgressBar: DotProgressBar, error: String) {
@@ -155,7 +148,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     requestFloatsModel?.contactInfo?.businessName = binding?.storeName?.text?.toString()
     requestFloatsModel?.contactInfo?.addressCity = binding?.address?.text?.toString()
     requestFloatsModel?.contactInfo?.email = binding?.email?.text?.toString()
-    businessInfoModel.number = binding?.number?.text?.toString()
+//    businessInfoModel.number = binding?.number?.text?.toString()
 
     return if (businessInfoModel.businessName.isNullOrBlank()) {
       showShortToast(resources.getString(R.string.business_cant_empty))
@@ -166,13 +159,15 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     } else if (!businessInfoModel.email.isNullOrEmpty() && !businessInfoModel.isEmailValid()) {
       showShortToast(resources.getString(R.string.email_invalid))
       false
-    } else if (businessInfoModel.number.isNullOrEmpty()) {
-      showShortToast(resources.getString(R.string.phone_number_cannot_be_empty))
-      false
-    } else if (!businessInfoModel.isNumberValid()) {
-      showShortToast(resources.getString(R.string.phone_number_invalid))
-      false
-    } else true
+    }
+//    else if (businessInfoModel.number.isNullOrEmpty()) {
+//      showShortToast(resources.getString(R.string.phone_number_cannot_be_empty))
+//      false
+//    } else if (!businessInfoModel.isNumberValid()) {
+//      showShortToast(resources.getString(R.string.phone_number_invalid))
+//      false
+//    }
+    else true
   }
 
   override fun updateInfo() {

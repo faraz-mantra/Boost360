@@ -15,7 +15,13 @@ open class AppServiceApplication : BaseApplication() {
 
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
+      BaseApplication.instance = application
       PreferencesUtils.initSharedPreferences(application)
+      apiInitialize()
+    }
+
+    @JvmStatic
+    fun apiInitialize() {
       WithFloatsApiTwoClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
       NowfloatsApiClient.shared.init(EndPoints.API_NOWFLOATS_COM_BASE)
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE)
@@ -25,7 +31,6 @@ open class AppServiceApplication : BaseApplication() {
       AssuredWithFloatsApiClient.shared.init(EndPoints.ASSURED_WITH_FLOATS_BASE_URL)
       StaffNowFloatsApiClient.shared.init(EndPoints.STAFF_BASE_URL)
       KitWebActionApiClient.shared.init(EndPoints.KIT_WEB_ACTION_WITH_FLOATS_BASE_URL)
-      BaseApplication.instance = application
     }
   }
 }

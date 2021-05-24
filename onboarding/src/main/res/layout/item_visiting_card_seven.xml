@@ -178,7 +178,8 @@
         android:layout_margin="@dimen/size_10"
         android:orientation="vertical">
 
-        <include layout="@layout/item_card_channel" />
+        <include layout="@layout/item_card_channel"
+            android:id="@+id/item_channels_group"/>
       </LinearLayout>
     </FrameLayout>
 

@@ -77,7 +77,7 @@ class OrderConfirmationFragment : BaseFragment() {
             Toasty.info(requireContext(),"In case of any concerns, you can write to ria@nowfloats.com. Boost Care Team is available during business hours.").show()
         }
 
-        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, ADDONS_MARKETPLACE_ORDER_CONFIRMATION)
+        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM, PAGE_VIEW, ADDONS_MARKETPLACE_ORDER_CONFIRMATION)
 
     }
 

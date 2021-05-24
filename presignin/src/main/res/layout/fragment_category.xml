@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.registration.CategoryFragment">
+
+    <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layoutDescription="@xml/fragment_category_xml_toolbar_scene"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <View
+        android:id="@+id/background_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_190sdp"
+        android:background="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <ImageView
+        android:id="@+id/back_iv"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/_11sdp"
+        android:background="@drawable/psn_back_shape"
+        android:padding="@dimen/_8sdp"
+        android:src="@drawable/psn_back_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <View
+        android:id="@+id/negative_margin"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:src="@drawable/ic_category_toolbar_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/customTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="@string/select_business_category"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_iv" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/sub_heading_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/open_sans"
+        android:maxLines="2"
+        android:text="@string/let_me_know_which_of_the_following_describes_the_business_you_are_running"
+        android:textColor="@color/white"
+        app:textType="CAPTION"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/customTextView" />
+
+      <com.framework.views.GridRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:paddingStart="@dimen/size_12"
+        android:paddingTop="@dimen/size_12"
+        android:paddingEnd="@dimen/size_12"
+        android:paddingBottom="@dimen/_120sdp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/background_view"
+        app:layout_constraintVertical_chainStyle="spread"
+        tools:itemCount="15"
+        tools:listitem="@layout/item_category_layout"
+        tools:spanCount="2" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/confirm_button"
+      style="@style/psn_button_style"
+      android:enabled="true"
+      android:text="@string/confirm_business_category"
+      android:visibility="invisible"
+      app:layout_constraintBottom_toTopOf="@id/bottomGuide"
+      tools:ignore="MissingConstraints,UnknownId" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -591,7 +591,6 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
   @Override
   public void onResume() {
-    // TODO Auto-generated method stub
     super.onResume();
     this.setTitle(getResources().getString(R.string.business__address));
 

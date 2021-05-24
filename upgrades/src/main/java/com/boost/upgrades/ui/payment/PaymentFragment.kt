@@ -18,7 +18,6 @@ import com.boost.upgrades.adapter.CardPaymentAdapter
 import com.boost.upgrades.adapter.UPIAdapter
 import com.boost.upgrades.adapter.WalletAdapter
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
-import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.datamodule.SingleNetBankData
 import com.boost.upgrades.interfaces.PaymentListener
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
@@ -136,7 +135,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         initializeWalletRecycler()
         updateSubscriptionDetails()
 
-        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, ADDONS_MARKETPLACE_PAYMENT_SCREEN)
+        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_PAYMENT_LOAD, PAGE_VIEW, ADDONS_MARKETPLACE_PAYMENT_SCREEN)
 
         var firebaseAnalytics = Firebase.analytics
         val revenue = cartCheckoutData.getDouble("amount")
@@ -297,7 +296,6 @@ class PaymentFragment : BaseFragment(), PaymentListener {
                     paymentData.put(key, cartCheckoutData.get(key))
                 }
             }
-
             var firebaseAnalytics = Firebase.analytics
             firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO, null)
 

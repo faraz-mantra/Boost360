@@ -262,6 +262,10 @@
     <item name="android:layout_height">wrap_content</item>
     <item name="android:paddingEnd">@dimen/size_30</item>
   </style>
+  <style name="ButtonStyle.Outline" parent="ButtonStyle.Rounded.Outlined">
+    <item name="android:background">@drawable/bg_corners_stroke</item>
+
+  </style>
 
   <style name="ButtonStyle.Rounded.Solid.BottomSheet">
     <item name="android:textSize">14sp</item>

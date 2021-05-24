@@ -8,6 +8,7 @@ import android.os.Parcelable
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.framework.base.BaseActivity
+import java.io.Serializable
 
 class Navigator(private val activity: BaseActivity<*, *>) {
 
@@ -37,6 +38,8 @@ class Navigator(private val activity: BaseActivity<*, *>) {
     if (args != null) intent.putExtra(EXTRA_ARGS, args)
     activity.startActivity(intent)
   }
+
+
 
   fun getExtrasBundle(intent: Intent): Bundle? {
     return if (intent.hasExtra(EXTRA_ARGS)) intent.getBundleExtra(EXTRA_ARGS) else Bundle()

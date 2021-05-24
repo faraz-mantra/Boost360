@@ -22,10 +22,8 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.utils.fromHtml
-import com.framework.webengageconstant.MANAGE_CONTENT
 import com.framework.webengageconstant.PAGE_VIEW
-import com.framework.webengageconstant.SCREEN_NAME
-import com.framework.webengageconstant.WEBSITE_PAGE
+import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import java.util.*
 
 class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(), RecyclerItemClickListener {
@@ -46,9 +44,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     session = UserSessionManager(baseActivity)
     getWebsiteData()
     setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.businessAddress, binding?.contactDetail, binding?.businessTiming)
-    // TODO to change the event to only one
-    WebEngageController.trackEvent(WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
-    WebEngageController.trackEvent(MANAGE_CONTENT, PAGE_VIEW, session?.fpTag)
+
+    WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   override fun onResume() {
@@ -122,6 +119,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
+      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
     }
   }
 

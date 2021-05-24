@@ -11,8 +11,8 @@ import retrofit2.Retrofit
 
 object DevBoostKitNewRepository : AppBaseRepository<DevBoostKitRemoteData, AppBaseLocalService>() {
 
-  fun getSearchAnalytics(website_id: String?, startDate: String?, endDate: String?, auth: String = DEVELOPER_ID): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getSearchAnalytics(auth, website_id, startDate, endDate), TaskCode.GET_SEARCH_ANALYTICS)
+  fun getSearchAnalytics(website_id: String?, startDate: String?, endDate: String?,auth: String = DEVELOPER_ID): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getSearchAnalytics(auth,website_id, startDate, endDate), TaskCode.GET_SEARCH_ANALYTICS)
   }
 
   override fun getRemoteDataSourceClass(): Class<DevBoostKitRemoteData> {

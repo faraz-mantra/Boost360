@@ -38,7 +38,8 @@ data class WebsiteActionItem(
     faculty_management(R.drawable.ic_upcoming_batch_d),
     places_look_around(R.drawable.places_look_around_d),
     trip_adviser_ratings(R.drawable.trip_advisor_reviews_d),
-    seasonal_offers(R.drawable.ic_offer_d);
+    seasonal_offers(R.drawable.ic_offer_d),
+    website_theme(R.drawable.ic_website_theme);
 
     companion object {
       fun fromName(name: String?): IconType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }

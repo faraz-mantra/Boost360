@@ -76,11 +76,11 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
     }
   }
 
-  protected fun onFailure(response: BaseResponse, taskcode: Int) {
+  open fun onFailure(response: BaseResponse, taskcode: Int) {
     if (response.error == null) response.error = Exception()
   }
 
-  protected fun onSuccess(response: BaseResponse, taskcode: Int) {
+  open fun onSuccess(response: BaseResponse, taskcode: Int) {
 
   }
 }

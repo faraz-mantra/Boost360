@@ -279,8 +279,9 @@ public class Methods {
     }
 
     public static void showSnackBar(View view, String message, int color) {
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
         snackbar.getView().setBackgroundColor(color);
+        snackbar.setDuration(4000);
         snackbar.show();
     }
 
@@ -289,8 +290,9 @@ public class Methods {
     }
 
     public static void showSnackBar(Activity context, String msg) {
-        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(Color.GRAY);
+        snackBar.setDuration(4000);
         snackBar.show();
         /*SnackbarManager.show(
                 Snackbar.with(context) // context
@@ -301,8 +303,9 @@ public class Methods {
     }
 
     public static void showSnackBarPositive(Activity context, String msg) {
-        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_positive_color));
+        snackBar.setDuration(4000);
         snackBar.show();
         /*SnackbarManager.show(
                 Snackbar.with(context) // context
@@ -354,8 +357,9 @@ public class Methods {
     }
 
     public static void showSnackBarNegative(Activity context, String msg) {
-        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color));
+        snackBar.setDuration(4000);
         snackBar.show();
     }
 
@@ -383,14 +387,16 @@ public class Methods {
     }
 
     public static void showSnackBarNegative(View mView, String msg) {
-        Snackbar snackBar = Snackbar.make(mView, msg, Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(mView, msg, Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.getContext(), R.color.snackbar_negative_color));
+        snackBar.setDuration(4000);
         snackBar.show();
     }
 
     public static void snackbarNoInternet(Activity context) {
-        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color));
+        snackBar.setDuration(4000);
         snackBar.show();
     }
 
