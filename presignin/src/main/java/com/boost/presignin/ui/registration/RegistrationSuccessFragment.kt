@@ -63,10 +63,10 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
   }
 
   override fun onCreateView() {
+    WebEngageController.trackEvent(PS_REGISTRATION_SUCCESS_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     session = UserSessionManager(baseActivity)
     floatsRequest = session?.getCategoryRequest()
     authToken = session?.getAuthTokenData()
-    WebEngageController.trackEvent(REGISTRATION_SUCCESS_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     if (floatsRequest != null || authToken != null) {
       val businessName = floatsRequest?.businessName
       val name = floatsRequest?.requestProfile?.ProfileProperties?.userName
@@ -99,7 +99,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       binding?.lottieAnimation?.playAnimation()
 
       binding?.previewAccountBt?.setOnClickListener {
-        WebEngageController.trackEvent(REGISTRATION_PREVIEW_CLICK, CLICK, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(PS_REGISTRATION_PREVIEW_CLICK, CLICK, NO_EVENT_VALUE)
         val bundle = Bundle()
         bundle.putSerializable("request", floatsRequest)
         navigator?.startActivity(WebPreviewActivity::class.java, bundle)
@@ -111,7 +111,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
 
   private fun createAccessTokenAuth() {
     showProgress()
-    WebEngageController.trackEvent(REGISTRATION_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_REGISTRATION_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
     val request = AccessTokenRequest(authToken = authToken?.authenticationToken, clientId = clientId, fpId = authToken?.floatingPointId)
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
       val result = it as? AccessTokenResponse
@@ -150,7 +150,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       val request = getRequestPurchasedOrder(authToken?.floatingPointId!!, responsePlan)
       viewModel?.postActivatePurchasedOrder(clientId, request)?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
-          WebEngageController.trackEvent(ACTIVATE_FREE_PURCHASE_PLAN, SIGNUP_SUCCESS, NO_EVENT_VALUE)
+          WebEngageController.trackEvent(PS_ACTIVATE_FREE_PURCHASE_PLAN, SIGNUP_SUCCESS, NO_EVENT_VALUE)
         } else showLongToast(getString(R.string.unable_to_activate_business_plan))
         storeFpDetails()
       })

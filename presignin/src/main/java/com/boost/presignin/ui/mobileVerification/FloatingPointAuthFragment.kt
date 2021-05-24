@@ -67,7 +67,7 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent(BUSINESS_ACCOUNT, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnGoToDashboard)
     this.session = UserSessionManager(baseActivity)
     setAdapterFPList()
@@ -164,7 +164,7 @@ class FloatingPointAuthFragment : AppBaseFragment<FragmentFpListBinding, LoginSi
   }
 
   private fun storeFpDetails() {
-    WebEngageController.trackEvent(CHOOSE_BUSINESS_ACCOUNT, CHOOSE_BUSINESS, result?.floatingPointId ?: "")
+    WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_CHOOSE, CHOOSE_BUSINESS, result?.floatingPointId ?: "")
     val map = HashMap<String, String>()
     map["clientId"] = clientId
     viewModel?.getFpDetails(this.result?.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {

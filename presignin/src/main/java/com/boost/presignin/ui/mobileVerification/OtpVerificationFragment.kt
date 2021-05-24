@@ -56,7 +56,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BOOST_360_VERIFY_OTP_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_VERIFY_OTP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.subheading?.text = String.format(getString(R.string.code_sent_hint, phoneNumber))
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener {
@@ -135,7 +135,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
   private fun sendOtp(phoneNumber: String?) {
     showProgress(getString(R.string.sending_otp))
-    WebEngageController.trackEvent(BOOST_360_VERIFY_OTP_SEND, OTP_RESEND_CLICK, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_VERIFY_OTP_RESEND, OTP_RESEND_CLICK, NO_EVENT_VALUE)
     viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.parseResponse()) {
         binding?.wrongOtpErrorTv?.isVisible = false
@@ -147,7 +147,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
   fun verify() {
     showProgress(getString(R.string.verify_otp))
-    WebEngageController.trackEvent(BOOST_360_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
     val otp = binding?.pinTv?.otp
     viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId2)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {

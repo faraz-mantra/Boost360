@@ -113,7 +113,7 @@ class UpgradeActivity : AppCompatActivity() {
       progressDialog = ProgressDialog(this)
 
       prefs = SharedPrefs(this)
-      WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
+//    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
       initView()
       initRazorPay()
     }
@@ -131,6 +131,7 @@ class UpgradeActivity : AppCompatActivity() {
       bundle.putString("screenType", intent.getStringExtra("screenType"))
       bundle.putStringArrayList("userPurchsedWidgets", intent.getStringArrayListExtra("userPurchsedWidgets"))
       bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+      bundle.putString("buyItemKey", intent.getStringExtra("buyItemKey"))
 //      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
       addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT, bundle)
       //update userdetails and buyitem
@@ -156,9 +157,7 @@ class UpgradeActivity : AppCompatActivity() {
   private fun initRazorPay() {
     try {
       razorpay = Razorpay(this, RAZORPAY_KEY)
-    } catch (e: Exception) {
-      e.printStackTrace()
-    }
+    }catch (e: Exception){e.printStackTrace()}
   }
 
 //  public fun initYoutube(){
@@ -331,63 +330,63 @@ class UpgradeActivity : AppCompatActivity() {
       loaderStatus(true)
     }
     CompositeDisposable().add(
-        AppDatabase.getInstance(application)!!
-            .featuresDao()
-            .checkEmptyFeatureTable()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-              if (it == 1) {
-                loaderStatus(false)
-                if (widgetFeatureCode != null) {
-                  CompositeDisposable().add(
-                      AppDatabase.getInstance(application)!!
-                          .featuresDao()
-                          .checkFeatureTableKeyExist(widgetFeatureCode!!)
-                          .subscribeOn(Schedulers.io())
-                          .observeOn(AndroidSchedulers.mainThread())
-                          .subscribe({
-                            if (it == 1) {
-                              val details = DetailsFragment.newInstance()
-                              val args = Bundle()
-                              args.putString("itemId", widgetFeatureCode)
-                              details.arguments = args
-                              addFragment(details, Constants.DETAILS_FRAGMENT)
-                            } else {
-                              Toasty.error(this, "This Add-ons Not Available to Your Account.", Toast.LENGTH_LONG).show()
-                            }
-                          }, {
-                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
-                          })
-                  )
-                }
-                //turn this on when you want to show Welcome Market Screen all the time
-                //prefs.storeInitialLoadMarketPlace(true)
-                else if (prefs.getInitialLoadMarketPlace()) {
-                  Log.v("getInitialLoadM", " getInitialLoadM")
+            AppDatabase.getInstance(application)!!
+                    .featuresDao()
+                    .checkEmptyFeatureTable()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                      if (it == 1) {
+                        loaderStatus(false)
+                        if (widgetFeatureCode != null) {
+                          CompositeDisposable().add(
+                                  AppDatabase.getInstance(application)!!
+                                          .featuresDao()
+                                          .checkFeatureTableKeyExist(widgetFeatureCode!!)
+                                          .subscribeOn(Schedulers.io())
+                                          .observeOn(AndroidSchedulers.mainThread())
+                                          .subscribe({
+                                            if (it == 1) {
+                                              val details = DetailsFragment.newInstance()
+                                              val args = Bundle()
+                                              args.putString("itemId", widgetFeatureCode)
+                                              details.arguments = args
+                                              addFragment(details, Constants.DETAILS_FRAGMENT)
+                                            } else {
+//                                              Toasty.error(this, "This Add-ons Not Available to Your Account.", Toast.LENGTH_LONG).show()
+                                            }
+                                          }, {
+                                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                                          })
+                          )
+                        }
+                        //turn this on when you want to show Welcome Market Screen all the time
+                        //prefs.storeInitialLoadMarketPlace(true)
+                        else if (prefs.getInitialLoadMarketPlace()) {
+                          Log.v("getInitialLoadM", " getInitialLoadM")
 //                Handler().postDelayed({
-                  /*splashFragment.show(
-              supportFragmentManager,
-              SPLASH_FRAGMENT
-          )*/
+                          /*splashFragment.show(
+                      supportFragmentManager,
+                      SPLASH_FRAGMENT
+                  )*/
 //                }, 1000)
-                }
-              } else {
-                //recall after 1 second
-                Handler().postDelayed({
-                  if (initialLoadUpgradeActivity < 3) {
-                    initialLoadUpgradeActivity += 1
-                    showingPopUp(checkNetworkType(applicationContext))
-                  } else {
-                    loaderStatus(false)
-                    Toasty.error(this, "Critical error occurred while loading the Addon Marketplace. Please close the app and try again.\n\nIf the issue persists, please get in touch with the Support Team.", Toast.LENGTH_LONG).show()
-                  }
-                }, networkRecallTimer) // networkRecallTimer works based on the network speed
-              }
-            }, {
-              loaderStatus(false)
-              Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
-            })
+                        }
+                      } else {
+                        //recall after 1 second
+                        Handler().postDelayed({
+                          if (initialLoadUpgradeActivity < 3) {
+                            initialLoadUpgradeActivity += 1
+                            showingPopUp(checkNetworkType(applicationContext))
+                          } else {
+                            loaderStatus(false)
+                            Toasty.error(this, "Critical error occurred while loading the Addon Marketplace. Please close the app and try again.\n\nIf the issue persists, please get in touch with the Support Team.", Toast.LENGTH_LONG).show()
+                          }
+                        }, networkRecallTimer) // networkRecallTimer works based on the network speed
+                      }
+                    }, {
+                      loaderStatus(false)
+                      Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                    })
     )
 
   }

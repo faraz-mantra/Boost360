@@ -13,6 +13,9 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.webengageconstant.APPOINTMENT_PAGE_LOAD
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -87,7 +90,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on appointments", "APPOINTMENTS", it) }
+    WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
     layoutManager = LinearLayoutManager(baseActivity)
