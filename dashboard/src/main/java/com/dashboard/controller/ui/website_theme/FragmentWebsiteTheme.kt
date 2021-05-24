@@ -30,6 +30,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     return R.layout.fragment_website_theme
   }
 
+  private  var domainName: String? = null
   private var sessionData: SessionData? = null
   private var primaryItem: PrimaryItem? = null
   private var secondaryItem: SecondaryItem? = null
@@ -55,7 +56,8 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
   override fun onCreateView() {
     super.onCreateView()
-    setOnClickListener(binding?.ctfPrimaryFont, binding?.ctfSecondaryFont, binding?.btnDone, binding?.btnCancel)
+    this.domainName = UserSessionManager(requireActivity()).getDomainName()!!
+    setOnClickListener(binding?.ctfPrimaryFont, binding?.ctfSecondaryFont, binding?.btnDone, binding?.btnCancel,binding?.ctvWebsite)
     this.sessionData = arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
     getWebsiteTheme(sessionData)
     setWebsiteData()
@@ -184,6 +186,9 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
       binding?.btnDone -> {
         updateAPI()
       }
+      binding?.ctvWebsite->{
+        openWebViewDialog(domainName?:"", domainName?:"")
+      }
     }
   }
 
@@ -206,8 +211,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     websiteThemeUpdatedSuccessfullyBottomsheet.onClicked = {
       when (it) {
         TypeSuccess.VISIT_WEBSITE.name -> {
-          val domainName = UserSessionManager(requireActivity()).getDomainName()!!
-          openWebViewDialog(domainName, domainName)
+          openWebViewDialog(domainName?:"", domainName?:"")
         }
         TypeSuccess.CLOSE.name -> {
           goBack()
