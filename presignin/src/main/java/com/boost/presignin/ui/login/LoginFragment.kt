@@ -38,28 +38,28 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
   }
 
   override fun onCreateView() {
-    session = UserSessionManager(baseActivity);
+    WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    session = UserSessionManager(baseActivity)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
     setOnClickListener(binding?.forgotTv, binding?.loginBt)
-    WebEngageController.trackEvent(LOGIN, PAGE_VIEW, NO_EVENT_VALUE)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
-    backButton?.setOnClickListener {
-      goBack()
-    }
+    backButton?.setOnClickListener { goBack() }
   }
+
   private fun goBack() {
     requireActivity().finish()
   }
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.forgotTv -> {
-        WebEngageController.trackEvent(FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
         addFragmentReplace(com.framework.R.id.container, ForgetPassFragment.newInstance(), true)
       }
       binding?.loginBt -> {
-        WebEngageController.trackEvent(FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
         loginApiVerify(binding?.usernameEt?.text?.toString()?.trim(), binding?.passEt?.text?.toString()?.trim())
       }
     }

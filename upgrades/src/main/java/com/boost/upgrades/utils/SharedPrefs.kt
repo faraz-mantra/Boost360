@@ -3,6 +3,7 @@ package com.boost.upgrades.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.SharedPreferences
+import android.text.TextUtils
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.model.CouponsModel
 import com.google.gson.Gson
@@ -24,6 +25,8 @@ class SharedPrefs(activity: Activity) {
     private val fp_email = "GET_FP_DETAILS_EMAIL"
 
     private val CART_ORDER_INFO = "CART_ORDER_INFO"
+    private val CART_IDS = "CART_IDS"
+    private val COUPON_IDS = "COUPON_IDS"
     private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
 
     private val temp_cartAmount = "Cart_Orig_Price"
@@ -36,7 +39,7 @@ class SharedPrefs(activity: Activity) {
     var pref: SharedPreferences? = null
 
      init {
-        pref  = activity.getSharedPreferences( "nowfloatsPrefs", 0)
+        pref  = activity.getSharedPreferences("nowfloatsPrefs", 0)
         editor = pref!!.edit()
     }
 
@@ -124,6 +127,26 @@ class SharedPrefs(activity: Activity) {
         }else{
             return null
         }
+    }
+
+    fun storeCardIds(orderDetails: List<String?>?){
+        val orderInfo = Gson().toJson(orderDetails)
+        editor!!.putString(CART_IDS, orderInfo).apply()
+    }
+
+    fun getCardIds(): List<String?>? {
+        val str = pref!!.getString(CART_IDS, "")
+        return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<List<String?>?>() {}.type)
+    }
+
+    fun storeCouponIds(couponCode: String?){
+        val orderInfo = Gson().toJson(couponCode)
+        editor!!.putString(COUPON_IDS, orderInfo).apply()
+    }
+
+    fun getCouponIds(): String? {
+        val str = pref!!.getString(COUPON_IDS, "")
+        return str
     }
 
     fun storeOrderSuccessFlag(value: Boolean){

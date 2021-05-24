@@ -260,7 +260,7 @@ open class VisitingCardSheet :
 
 fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
   try {
-    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE_CLICK, START_VIEW, NO_EVENT_VALUE)
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()

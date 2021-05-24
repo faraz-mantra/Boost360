@@ -43,7 +43,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = (it.isPhoneValid()) }
     activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
@@ -55,7 +55,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     backButton?.setOnClickListener { goBack() }
 
     binding?.nextButton?.setOnClickListener {
-      WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
       activity?.hideKeyBoard()
       sendOtp(binding?.phoneEt?.text.toString())
     }

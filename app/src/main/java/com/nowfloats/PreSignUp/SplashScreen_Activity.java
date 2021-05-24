@@ -41,6 +41,7 @@ import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -98,7 +99,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
       initLottieAnimation();
 
       TokenResult tokenResult = getAccessTokenAuth1(sessionMain);
-      if (tokenResult!=null && tokenResult.isExpiredToken()) {
+      if (tokenResult != null && tokenResult.isExpiredToken()) {
         createAccessToken(tokenResult.getRefreshToken(), clientId, sessionMain.getFPID());
       } else {
         if (mThread == null) mThread = new Thread(new DataRunnable());
@@ -289,6 +290,9 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
   private void goHomePage() {
     try {
+      WebEngageController.initiateUserLogin(session.getUserProfileId());
+      WebEngageController.setUserContactInfoProperties(session);
+      WebEngageController.setFPTag(session.getFpTag());
       Intent i = new Intent(SplashScreen_Activity.this, Class.forName("com.dashboard.controller.DashboardActivity"));
       i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
       if (deepLink != null) {
