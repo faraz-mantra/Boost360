@@ -164,7 +164,6 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session!!).storeFPDetails(response)
-        if (response.accountManagerId.isNullOrEmpty().not()) session?.userProfileId = response.accountManagerId
         startService()
         startDashboard()
       } else {
