@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,6 +56,7 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -107,7 +109,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         homeViewModelFactory = HomeViewModelFactory(requireNotNull(requireActivity().application))
 
         viewModel = ViewModelProviders.of(requireActivity(), homeViewModelFactory).get(HomeViewModel::class.java)
-
         upgradeAdapter = UpgradeAdapter((activity as UpgradeActivity), ArrayList())
         addonsCategoryAdapter = AddonsCategoryAdapter((activity as UpgradeActivity), ArrayList(), this)
         videosListAdapter = VideosListAdapter(ArrayList(), this)
@@ -1066,6 +1067,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             } else {
                 if (!item!!.cta_web_link.isNullOrBlank()) {
                     if (item!!.cta_web_link != null) {
+
                         val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
                         val args = Bundle()
                         args.putString("title", "Browser")
@@ -1843,7 +1845,7 @@ Log.v("getPackageItem1", " "+ it.bundle_id)
                                                     .subscribe({
 
 
-                                                        Log.v("getPackageItem1", " "+ it.bundle_id)
+                                                        Log.v("getItemPromoBanner1", " "+ item)
 
                                                         var selectedBundle: Bundles? = null
                                                         var item = it
@@ -1888,6 +1890,7 @@ Log.v("getPackageItem1", " "+ it.bundle_id)
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .subscribe({
                                                         if (it == 1) {
+                                                            Log.v("getItemPromoBanner2", " "+ item)
                                                             CompositeDisposable().add(
                                                                     AppDatabase.getInstance(requireActivity().application)!!
                                                                             .featuresDao()
@@ -1908,6 +1911,7 @@ Log.v("getPackageItem1", " "+ it.bundle_id)
                                                                             })
                                                             )
                                                         } else {
+                                                            Log.v("getItemPromoBanner3", " "+ item)
                                                             CompositeDisposable().add(
                                                                     AppDatabase.getInstance(requireActivity().application)!!
                                                                             .marketOffersDao()
@@ -1952,6 +1956,7 @@ Log.v("getPackageItem1", " "+ it.bundle_id)
                                                                                                     })
                                                                                     )
                                                                                 } else {
+                                                                                    Log.v("getItemPromoBanner3", " "+ item)
                                                                                     if(item.contains("http")){
                                                                                         val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
                                                                                         val args = Bundle()
