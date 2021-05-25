@@ -308,7 +308,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     /**
      * Sets [activeKeyboardMode] and updates the [SmartbarView.isQuickActionsVisible] state.
      */
-    private fun setActiveKeyboardMode(mode: KeyboardMode) {
+    fun setActiveKeyboardMode(mode: KeyboardMode) {
         textViewFlipper?.displayedChild = textViewFlipper?.indexOfChild(when (mode) {
             KeyboardMode.EDITING -> editingKeyboardView
             KeyboardMode.BUSINESS_FEATURES -> businessFeaturesManager.getBindingRoot()
@@ -322,8 +322,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
         smartbarView?.isQuickActionsVisible = false
-        if (mode != KeyboardMode.BUSINESS_FEATURES)
-            smartbarView?.isBusinessFeatureVisible = false
+//        if (mode != KeyboardMode.BUSINESS_FEATURES)
+//            smartbarView?.isBusinessFeatureVisible = false
         smartbarView?.updateSmartbarState()
     }
 

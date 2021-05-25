@@ -30,6 +30,7 @@ import dev.patrickgold.florisboard.databinding.SmartbarBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -50,7 +51,8 @@ import kotlin.math.roundToInt
  * of FlorisBoard. The view automatically tries to get the current FlorisBoard instance, which it
  * needs to decide when a specific feature component is shown.
  */
-class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabLayout.OnTabSelectedListener {
+class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener,
+    TabLayout.OnTabSelectedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager = ThemeManager.default()
@@ -71,16 +73,15 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
     private var cachedActionEndAreaId: Int? = null
 
     var isQuickActionsVisible: Boolean = false
-        set(v) {
-//            binding.quickActionToggle.rotation = if (v) 180.0f else 0.0f
-            field = v
-        }
     var isBusinessFeatureVisible: Boolean = false
         set(v) {
             if (v) {
-                binding.businessFeatureTabLayout.setScrollPosition(0,0f,true)
-                binding.businessFeatureTabLayout.getTabAt(0)?.select()
+                binding.businessFeatureTabLayout.setScrollPosition(1, 0f, true)
+                binding.businessFeatureTabLayout.getTabAt(1)?.select()
                 binding.businessFeatureToggleAction.setImageResource(R.drawable.ic_boost_keyboard)
+                TextInputManager.getInstance().onTabSelected(binding.businessFeatureTabLayout.getTabAt(1))
+                TextInputManager.getInstance().setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES)
+
             } else {
                 binding.businessFeatureToggleAction.setImageResource(R.drawable.business_feature_quick_actions)
             }
@@ -97,7 +98,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     /**
      * Called by Android when this view has been attached to a window. At this point we can be
@@ -131,9 +136,9 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
                 val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
-                        KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW,
-                        Subtype.DEFAULT,
-                        prefs
+                    KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW,
+                    Subtype.DEFAULT,
+                    prefs
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.clipboardCursorRow.computedLayout = layout
@@ -167,9 +172,9 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
                 val layout = it.textInputManager.layoutManager.fetchComputedLayoutAsync(
-                        KeyboardMode.SMARTBAR_NUMBER_ROW,
-                        Subtype.DEFAULT,
-                        prefs
+                    KeyboardMode.SMARTBAR_NUMBER_ROW,
+                    Subtype.DEFAULT,
+                    prefs
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.numberRow.computedLayout = layout
@@ -185,7 +190,9 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
         for (quickAction in binding.quickActions.children) {
             if (quickAction is SmartbarQuickActionButton) {
                 quickAction.id.let { quickActionId ->
-                    quickAction.setOnClickListener { eventListener?.get()?.onSmartbarQuickActionPressed(quickActionId) }
+                    quickAction.setOnClickListener {
+                        eventListener?.get()?.onSmartbarQuickActionPressed(quickActionId)
+                    }
                 }
             }
         }
@@ -197,17 +204,18 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
 
         binding.businessFeatureToggleAction.setOnClickListener {
             isBusinessFeatureVisible = !isBusinessFeatureVisible
-            eventListener?.get()?.onSmartbarQuickActionPressed(binding.businessFeatureToggleAction.id)
+            eventListener?.get()
+                ?.onSmartbarQuickActionPressed(binding.businessFeatureToggleAction.id)
         }
 
         setupTabLayout()
 
         configureFeatureVisibility(
-                actionStartAreaVisible = false,
-                actionStartAreaId = null,
-                mainAreaId = null,
-                actionEndAreaVisible = false,
-                actionEndAreaId = null
+            actionStartAreaVisible = false,
+            actionStartAreaId = null,
+            mainAreaId = null,
+            actionEndAreaVisible = false,
+            actionEndAreaId = null
         )
 
         themeManager.registerOnThemeUpdatedListener(this)
@@ -217,7 +225,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
 
     private fun setupTabLayout() {
         (binding.businessFeatureTabLayout.getChildAt(0) as ViewGroup)
-                .getChildAt(0).visibility = GONE
+            .getChildAt(0).visibility = GONE
 
         binding.businessFeatureTabLayout.addOnTabSelectedListener(this)
     }
@@ -243,11 +251,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
      *  to leave this area blank.
      */
     private fun configureFeatureVisibility(
-            actionStartAreaVisible: Boolean = cachedActionStartAreaVisible,
-            @IdRes actionStartAreaId: IntArray? = cachedActionStartAreaId,
-            @IdRes mainAreaId: Int? = cachedMainAreaId,
-            actionEndAreaVisible: Boolean = cachedActionEndAreaVisible,
-            @IdRes actionEndAreaId: Int? = cachedActionEndAreaId
+        actionStartAreaVisible: Boolean = cachedActionStartAreaVisible,
+        @IdRes actionStartAreaId: IntArray? = cachedActionStartAreaId,
+        @IdRes mainAreaId: Int? = cachedMainAreaId,
+        actionEndAreaVisible: Boolean = cachedActionEndAreaVisible,
+        @IdRes actionEndAreaId: Int? = cachedActionEndAreaId
     ) {
         binding.actionStartArea.visibility = when {
             actionStartAreaVisible && actionStartAreaId != null -> View.VISIBLE
@@ -268,7 +276,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
                 }
             }
             binding.actionStartArea.displayedChild =
-                    indexedActionStartArea.indexOf(actionStartAreaId).coerceAtLeast(0)
+                indexedActionStartArea.indexOf(actionStartAreaId).coerceAtLeast(0)
         }
         binding.mainArea.visibility = when (mainAreaId) {
             null -> View.INVISIBLE
@@ -276,7 +284,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
         }
         if (mainAreaId != null) {
             binding.mainArea.displayedChild =
-                    indexedMainArea.indexOf(mainAreaId).coerceAtLeast(0)
+                indexedMainArea.indexOf(mainAreaId).coerceAtLeast(0)
         }
         binding.actionEndArea.visibility = when {
             actionEndAreaVisible && actionEndAreaId != null -> View.VISIBLE
@@ -285,7 +293,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
         }
         if (actionEndAreaId != null) {
             binding.actionEndArea.displayedChild =
-                    indexedActionEndArea.indexOf(actionEndAreaId).coerceAtLeast(0)
+                indexedActionEndArea.indexOf(actionEndAreaId).coerceAtLeast(0)
         }
     }
 
@@ -297,68 +305,69 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
         binding.clipboardCursorRow.updateVisibility()
         when (florisboard) {
             null -> configureFeatureVisibility(
-                    actionStartAreaVisible = false,
-                    actionStartAreaId = null,
-                    mainAreaId = null,
-                    actionEndAreaVisible = false,
-                    actionEndAreaId = null
+                actionStartAreaVisible = false,
+                actionStartAreaId = null,
+                mainAreaId = null,
+                actionEndAreaVisible = false,
+                actionEndAreaId = null
             )
             else -> configureFeatureVisibility(
-                    actionStartAreaVisible = when (florisboard.textInputManager.keyVariation) {
-                        KeyVariation.PASSWORD -> false
-                        else -> true
-                    },
-                    actionStartAreaId = when (florisboard.textInputManager.getActiveKeyboardMode()) {
+                actionStartAreaVisible = when (florisboard.textInputManager.keyVariation) {
+                    KeyVariation.PASSWORD -> false
+                    else -> true
+                },
+                actionStartAreaId = when (florisboard.textInputManager.getActiveKeyboardMode()) {
 //                        KeyboardMode.EDITING -> intArrayOf(R.id.back_button)
-                        else -> intArrayOf( R.id.business_feature_toggle_action)
+                    else -> intArrayOf(R.id.business_feature_toggle_action)
 //                        else -> intArrayOf(R.id.quick_action_toggle, R.id.business_feature_toggle_action)
-                    },
-                    mainAreaId = when (florisboard.textInputManager.keyVariation) {
-                        KeyVariation.PASSWORD -> R.id.number_row
-                        else -> {
-                            when {
-                                isQuickActionsVisible -> {
-                                    R.id.quick_actions
-                                }
-                                isBusinessFeatureVisible -> {
-                                    R.id.business_feature_tab_layout
-                                }
-                                else -> {
-                                    when (florisboard.textInputManager.getActiveKeyboardMode()) {
-                                        KeyboardMode.EDITING,
-                                        KeyboardMode.NUMERIC,
-                                        KeyboardMode.PHONE,
-                                        KeyboardMode.PHONE2 -> null
-                                        else -> when {
-                                            florisboard.activeEditorInstance.isComposingEnabled &&
-                                                    shouldSuggestClipboardContents &&
-                                                    florisboard.activeEditorInstance.selection.isCursorMode
-                                            -> R.id.clipboard_suggestion_row
-                                            florisboard.activeEditorInstance.isComposingEnabled &&
-                                                    florisboard.activeEditorInstance.selection.isCursorMode
-                                            -> R.id.candidates
-                                            else -> R.id.clipboard_cursor_row
-                                        }
+                },
+                mainAreaId = when (florisboard.textInputManager.keyVariation) {
+                    KeyVariation.PASSWORD -> R.id.number_row
+                    else -> {
+                        when {
+                            isQuickActionsVisible -> {
+                                R.id.quick_actions
+                            }
+                            isBusinessFeatureVisible -> {
+                                R.id.business_feature_tab_layout
+                            }
+                            else -> {
+                                when (florisboard.textInputManager.getActiveKeyboardMode()) {
+                                    KeyboardMode.EDITING,
+                                    KeyboardMode.NUMERIC,
+                                    KeyboardMode.PHONE,
+                                    KeyboardMode.PHONE2 -> null
+                                    else -> when {
+                                        florisboard.activeEditorInstance.isComposingEnabled &&
+                                                shouldSuggestClipboardContents &&
+                                                florisboard.activeEditorInstance.selection.isCursorMode
+                                        -> R.id.clipboard_suggestion_row
+                                        florisboard.activeEditorInstance.isComposingEnabled &&
+                                                florisboard.activeEditorInstance.selection.isCursorMode
+                                        -> R.id.candidates
+                                        else -> R.id.clipboard_cursor_row
                                     }
                                 }
                             }
                         }
-                    },
-                    actionEndAreaVisible = when (florisboard.textInputManager.keyVariation) {
-                        KeyVariation.PASSWORD -> false
-                        else -> false // to be changed when need to add actions at the end.
-                    },
-                    actionEndAreaId = when {
-                        florisboard.activeEditorInstance.isPrivateMode -> R.id.private_mode_button
-                        else -> null
                     }
+                },
+                actionEndAreaVisible = when (florisboard.textInputManager.keyVariation) {
+                    KeyVariation.PASSWORD -> false
+                    else -> false // to be changed when need to add actions at the end.
+                },
+                actionEndAreaId = when {
+                    florisboard.activeEditorInstance.isPrivateMode -> R.id.private_mode_button
+                    else -> null
+                }
             )
         }
     }
 
     fun onPrimaryClipChanged() {
         if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent &&
-                florisboard?.activeEditorInstance?.isPrivateMode == false) {
+            florisboard?.activeEditorInstance?.isPrivateMode == false
+        ) {
             shouldSuggestClipboardContents = true
             val item = florisboard.clipboardManager?.primaryClip?.getItemAt(0)
             when {
@@ -370,7 +379,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
                 }
                 else -> {
                     binding.clipboardSuggestion.text = item?.text
-                            ?: "(Error while retrieving clipboard data)"
+                        ?: "(Error while retrieving clipboard data)"
                 }
             }
             updateSmartbarState()
@@ -394,13 +403,19 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
     fun updateCandidateSuggestionCapsState() {
         val tim = florisboard?.textInputManager ?: return
         if (tim.capsLock) {
-            binding.candidate0.text = binding.candidate0.text.toString().toUpperCase(florisboard.activeSubtype.locale)
-            binding.candidate1.text = binding.candidate1.text.toString().toUpperCase(florisboard.activeSubtype.locale)
-            binding.candidate2.text = binding.candidate2.text.toString().toUpperCase(florisboard.activeSubtype.locale)
+            binding.candidate0.text =
+                binding.candidate0.text.toString().toUpperCase(florisboard.activeSubtype.locale)
+            binding.candidate1.text =
+                binding.candidate1.text.toString().toUpperCase(florisboard.activeSubtype.locale)
+            binding.candidate2.text =
+                binding.candidate2.text.toString().toUpperCase(florisboard.activeSubtype.locale)
         } else {
-            binding.candidate0.text = binding.candidate0.text.toString().toLowerCase(florisboard.activeSubtype.locale)
-            binding.candidate1.text = binding.candidate1.text.toString().toLowerCase(florisboard.activeSubtype.locale)
-            binding.candidate2.text = binding.candidate2.text.toString().toLowerCase(florisboard.activeSubtype.locale)
+            binding.candidate0.text =
+                binding.candidate0.text.toString().toLowerCase(florisboard.activeSubtype.locale)
+            binding.candidate1.text =
+                binding.candidate1.text.toString().toLowerCase(florisboard.activeSubtype.locale)
+            binding.candidate2.text =
+                binding.candidate2.text.toString().toLowerCase(florisboard.activeSubtype.locale)
         }
     }
 
@@ -415,23 +430,34 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
             MeasureSpec.AT_MOST -> {
                 // Can't be bigger than...
                 (florisboard?.inputView?.desiredSmartbarHeight
-                        ?: resources.getDimension(R.dimen.smartbar_baseHeight)).coerceAtMost(heightSize)
+                    ?: resources.getDimension(R.dimen.smartbar_baseHeight)).coerceAtMost(heightSize)
             }
             else -> {
                 // Be whatever you want
                 florisboard?.inputView?.desiredSmartbarHeight
-                        ?: resources.getDimension(R.dimen.smartbar_baseHeight)
+                    ?: resources.getDimension(R.dimen.smartbar_baseHeight)
             }
         }
 
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY))
+        super.onMeasure(
+            widthMeasureSpec,
+            MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY)
+        )
     }
 
     override fun onThemeUpdated(theme: Theme) {
         setBackgroundColor(theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND).toSolidColor().color)
-        setBackgroundTintColor2(binding.clipboardSuggestion, theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color)
-        setDrawableTintColor2(binding.clipboardSuggestion, theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color)
-        binding.clipboardSuggestion.setTextColor(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color)
+        setBackgroundTintColor2(
+            binding.clipboardSuggestion,
+            theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color
+        )
+        setDrawableTintColor2(
+            binding.clipboardSuggestion,
+            theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color
+        )
+        binding.clipboardSuggestion.setTextColor(
+            theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color
+        )
         for (view in candidateViewList) {
             view.setTextColor(theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND).toSolidColor().color)
         }
