@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="6dp"
@@ -19,14 +18,24 @@
         android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomImageView
-            android:layout_width="wrap_content"
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_time"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/image_update"
+            android:drawableStart="@drawable/ic_clock" />
+
+        <com.framework.views.roundedimageview.RoundedImageView
+            android:id="@+id/image_update"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:padding="10dip"
-            android:id="@+id/image_"
-            android:src="@drawable/ic_timer" />
+            android:src="@drawable/ic_timer"
+            app:riv_corner_radius="@dimen/_6dp"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
 
     </uk.co.deanwild.flowtextview.FlowTextView>
 
