@@ -16,7 +16,7 @@ data class SectionsFeature(
 ) : Serializable {
 
     fun getWidList(): List<String> {
-        return if (boost_widget_key.isNullOrEmpty()) arrayListOf() else boost_widget_key.split(",")
+        return arrayListOf()//if (boost_widget_key.isNullOrEmpty()) arrayListOf() else boost_widget_key.split(",")
     }
 
 

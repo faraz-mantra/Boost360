@@ -11,7 +11,7 @@ enum class TypeSuccess {
   CLOSE, VISIT_WEBSITE
 }
 
-class WebsiteThemeUpdatedSuccessfullyBottomsheet : BaseBottomSheetDialog<BottomSheetThemeUpdatedSuccessfullyBinding, BaseViewModel>() {
+class WebsiteThemeUpdatedSuccessfullySheet : BaseBottomSheetDialog<BottomSheetThemeUpdatedSuccessfullyBinding, BaseViewModel>() {
 
   var onClicked: (value: String) -> Unit = { }
   override fun getLayout(): Int {

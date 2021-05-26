@@ -1,36 +1,35 @@
-  [
-   {
-      "planName":"Boost360 Trial Plan",
-      "widgetKeys":[
-         "DOMAINPURCHASE",
-        "EMAILACCOUNTS3",
-        "PRODUCTCATALOGUE",
-        "SOCIALSHARE",
-        "CUSTOMERSUPPORT",
-        "SUBSCRIBERCOUNT100",
-        "BOOSTKEYBOARD",
-        "CALLTRACKER",
-        "CONTACTDETAILS",
-        "IMAGEGALLERY",
-        "ANALYTICS",
-        "TESTIMONIALS",
-        "RIASUPPORTTEAM",
-        "TOB",
-        "PAYMENTGATEWAY",
-        "CUSTOMPAGES"
-      ],
-      "extraProperties":[
-       {
-            "widget":"EMAILACCOUNTS3",
-            "key":"LIMIT",
-            "value":3
-         },
-         {
-            "widget":"PRODUCTCATALOGUE",
-            "key":"LIMIT",
-            "value":10
-         }
-      ]
-   }
-   
-]
+{
+  "data": {
+    "planName": "Boost360 Trial Plan",
+    "widgetKeys": [
+      "DOMAINPURCHASE",
+      "EMAILACCOUNTS3",
+      "PRODUCTCATALOGUE",
+      "SOCIALSHARE",
+      "CUSTOMERSUPPORT",
+      "SUBSCRIBERCOUNT100",
+      "BOOSTKEYBOARD",
+      "CALLTRACKER",
+      "CONTACTDETAILS",
+      "IMAGEGALLERY",
+      "ANALYTICS",
+      "TESTIMONIALS",
+      "RIASUPPORTTEAM",
+      "TOB",
+      "PAYMENTGATEWAY",
+      "CUSTOMPAGES"
+    ],
+    "extraProperties": [
+      {
+        "widget": "EMAILACCOUNTS3",
+        "key": "LIMIT",
+        "value": 3
+      },
+      {
+        "widget": "PRODUCTCATALOGUE",
+        "key": "LIMIT",
+        "value": 10
+      }
+    ]
+  }
+}
