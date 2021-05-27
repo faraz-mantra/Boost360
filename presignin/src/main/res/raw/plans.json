@@ -2,8 +2,6 @@
   "data": {
     "planName": "Boost360 Trial Plan",
     "widgetKeys": [
-      "DOMAINPURCHASE",
-      "EMAILACCOUNTS3",
       "PRODUCTCATALOGUE",
       "SOCIALSHARE",
       "CUSTOMERSUPPORT",
@@ -33,3 +31,6 @@
     ]
   }
 }
+
+//      "DOMAINPURCHASE",
+//      "EMAILACCOUNTS3",
