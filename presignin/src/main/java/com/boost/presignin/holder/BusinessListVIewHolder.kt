@@ -22,6 +22,7 @@ class BusinessListViewHolder(binding: RecyclerItemFpInfoBinding) : AppBaseRecycl
     binding.ctvBusinessName.text = data.name.toString()
     binding.ctvWebLink.text = data.rootAliasUri
     apply { activity?.glideLoad(binding.imageIcon, data.logoUrl, R.drawable.placeholder_image_n) }
+    binding.customRadioButton.setOnCheckedChangeListener(null)
     if (data.isItemSelected == true) {
       binding.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_selected)
       binding.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.orange)!!)
