@@ -92,7 +92,9 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   private fun setColor() {
     this.colorsItem = colors?.firstOrNull { it.isSelected == true } ?: colors?.firstOrNull { it.defaultColor == true }
     val defaultColorCode = colors?.firstOrNull { it.defaultColor == true }?.primary
-    binding?.rivDefaultColor?.setBackgroundColor(Color.parseColor(defaultColorCode))
+    if(defaultColorCode != null){
+      binding?.rivDefaultColor?.setBackgroundColor(Color.parseColor(defaultColorCode))
+    }
     binding?.rvColors?.setHasFixedSize(true)
     this.adapter = AppBaseRecyclerViewAdapter(baseActivity, colors ?: arrayListOf(), this@FragmentWebsiteTheme)
     binding?.rvColors?.adapter = adapter
