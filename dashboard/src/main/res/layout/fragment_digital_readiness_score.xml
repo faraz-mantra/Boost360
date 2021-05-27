@@ -86,7 +86,7 @@
             android:includeFontPadding="false"
             android:textColor="@color/white"
             app:fontFamily="@font/barlow_regular"
-            app:textType="HEADING_TEXT_3"
+            app:textType="HEADING_TEXT_2"
             tools:text="26%" />
 
           <com.framework.views.customViews.CustomTextView
