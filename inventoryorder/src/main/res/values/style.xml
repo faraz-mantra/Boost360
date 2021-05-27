@@ -277,6 +277,6 @@
     <item name="paddingEnd">@dimen/size_28</item>
     <item name="android:textColor">@color/pinkish_grey</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">@dimen/size_36</item>
+    <item name="android:layout_height">@dimen/size_38</item>
   </style>
 </resources>
