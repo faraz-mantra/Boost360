@@ -21,72 +21,75 @@ import dev.patrickgold.florisboard.customization.util.PaginationScrollListener.C
 import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
 import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
 import dev.patrickgold.florisboard.ime.core.InputView
+import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import timber.log.Timber
 
 class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
 
-  init {
-    onRegisterInputView(inputView)
-  }
-
-  private lateinit var mContext: Context
-  private lateinit var currentSelectedFeature: BusinessFeatureEnum
-  private lateinit var binding: BusinessFeaturesLayoutBinding
-  private lateinit var recyclerViewPost: RecyclerView
-  private lateinit var recyclerViewPhotos: RecyclerView
-  private lateinit var businessFeatureProgressBar: ProgressBar
-  private lateinit var viewModel: BusinessFeaturesViewModel
-  private lateinit var adapter: SharedAdapter<BaseRecyclerItem?>
-  private lateinit var linearLayoutManager: LinearLayoutManager
-  private lateinit var pagerSnapHelper: PagerSnapHelper
-
-  var isLoading = false
-  /* Paging */
-  private var isLoadingD = false
-  private var TOTAL_ELEMENTS = 0
-  private var offSet: Int = PAGE_START
-  private var limit: Int = PAGE_SIZE
-  private var isLastPageD = false
-
-  private fun onRegisterInputView(inputView: InputView) {
-    mContext = inputView.context
-
-    viewModel = BusinessFeaturesViewModel()
-    adapter = SharedAdapter(arrayListOf(), this)
-    pagerSnapHelper = PagerSnapHelper()
-
-    // initialize business features views
-    binding = BusinessFeaturesLayoutBinding.bind(inputView.findViewById(R.id.business_features))
-
-    businessFeatureProgressBar = binding.businessFeatureProgress
-
-    linearLayoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-
-    recyclerViewPost = binding.productShareRvList.also {
-      it.layoutManager = linearLayoutManager
-      it.adapter = adapter
-    }
-    pagerSnapHelper.attachToRecyclerView(recyclerViewPost)
-    recyclerViewPhotos = binding.rvListPhotos.also {
-      it.layoutManager = GridLayoutManager(mContext, 2, GridLayoutManager.HORIZONTAL, false)
-      it.adapter = adapter
+    init {
+        onRegisterInputView(inputView)
     }
 
-    recyclerViewPost.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        super.onScrolled(recyclerView, dx, dy)
-        if (!isLoading) {
-          if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == adapter.itemCount - 1) {
-            //bottom of list!
-            loadMoreItems(currentSelectedFeature)
-            isLoading = true
-          }
+    private lateinit var mContext: Context
+    private lateinit var currentSelectedFeature: BusinessFeatureEnum
+    private lateinit var binding: BusinessFeaturesLayoutBinding
+    private lateinit var recyclerViewPost: RecyclerView
+    private lateinit var recyclerViewPhotos: RecyclerView
+    private lateinit var businessFeatureProgressBar: ProgressBar
+    private lateinit var viewModel: BusinessFeaturesViewModel
+    private lateinit var adapter: SharedAdapter<BaseRecyclerItem?>
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var pagerSnapHelper: PagerSnapHelper
+
+    var isLoading = false
+
+    /* Paging */
+    private var isLoadingD = false
+    private var TOTAL_ELEMENTS = 0
+    private var offSet: Int = PAGE_START
+    private var limit: Int = PAGE_SIZE
+    private var isLastPageD = false
+
+    private fun onRegisterInputView(inputView: InputView) {
+        mContext = inputView.context
+
+        viewModel = BusinessFeaturesViewModel()
+        adapter = SharedAdapter(arrayListOf(), this)
+        pagerSnapHelper = PagerSnapHelper()
+
+        // initialize business features views
+        binding = BusinessFeaturesLayoutBinding.bind(inputView.findViewById(R.id.business_features))
+
+        businessFeatureProgressBar = binding.businessFeatureProgress
+
+        linearLayoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+
+        recyclerViewPost = binding.productShareRvList.also {
+            it.layoutManager = linearLayoutManager
+            it.adapter = adapter
         }
-      }
-    })
-  }
+        pagerSnapHelper.attachToRecyclerView(recyclerViewPost)
+        recyclerViewPhotos = binding.rvListPhotos.also {
+            it.layoutManager = GridLayoutManager(mContext, 2, GridLayoutManager.HORIZONTAL, false)
+            it.adapter = adapter
+        }
 
-  private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
+        recyclerViewPost.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!isLoading) {
+                    if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == adapter.itemCount - 1) {
+                        //bottom of list!
+                        loadMoreItems(currentSelectedFeature)
+                        isLoading = true
+                    }
+                }
+            }
+        })
+    }
+
+    private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
 //    recyclerViewPost.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
 //      override fun loadMoreItems() {
 //        if (!isLastPageD) {
@@ -105,173 +108,198 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
 //      override val isLoading: Boolean
 //        get() = isLoadingD
 //    })
-  }
-
-
-  fun showSelectedBusinessFeature(businessFeatureEnum: BusinessFeatureEnum) {
-    currentSelectedFeature = businessFeatureEnum
-    when (businessFeatureEnum) {
-      BusinessFeatureEnum.UPDATES, BusinessFeatureEnum.INVENTORY, BusinessFeatureEnum.DETAILS -> {
-        binding.clSelectionLayout.gone()
-        binding.rvListPhotos.gone()
-        binding.productShareRvList.visible()
-      }
-
-      BusinessFeatureEnum.PHOTOS -> {
-        binding.productShareRvList.gone()
-        binding.clSelectionLayout.visible()
-        binding.rvListPhotos.visible()
-      }
     }
 
-    initializeAdapters(businessFeatureEnum)
-  }
 
-  private fun initializeAdapters(businessFeatureEnum: BusinessFeatureEnum) {
-    //clear adapter dataset
-    adapter.clearList()
-    if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
-      Timber.i("Please do login")
-      // show login UI
-      binding.pleaseLoginCard.visible()
-      binding.pleaseLoginCard.setOnClickListener {
-        MethodUtils.startBoostActivity(mContext)
-      }
-    } else {
-      binding.pleaseLoginCard.gone()
-      if (MethodUtils.isOnline(mContext)) {
-        businessFeatureProgressBar.visible()
-        viewModel.error.observeForever {
-          businessFeatureProgressBar.gone()
-          Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
-        }
+    fun showSelectedBusinessFeature(businessFeatureEnum: BusinessFeatureEnum) {
+        currentSelectedFeature = businessFeatureEnum
         when (businessFeatureEnum) {
-          BusinessFeatureEnum.UPDATES -> {
-            viewModel.getUpdates(
-                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId,
-                mContext.getString(R.string.client_id),
-                0, 10
-            )
-            viewModel.updates.observeForever {
-              Timber.i("updates - $it.")
-              businessFeatureProgressBar.gone()
-
-              adapter.removeLoader()
-
-              if (it.floats?.isNotEmpty() == true) {
-                it.floats?.let { list -> adapter.submitList(list, hasMoreItems = true) }
-              } else {
-                adapter.removeLoader()
-                Timber.i("List from api came empty")
-              }
-              isLoading = false
+            BusinessFeatureEnum.UPDATES, BusinessFeatureEnum.INVENTORY, BusinessFeatureEnum.DETAILS -> {
+                binding.clSelectionLayout.gone()
+                binding.rvListPhotos.gone()
+                binding.productShareRvList.visible()
             }
-          }
-          BusinessFeatureEnum.INVENTORY -> {
-            viewModel.getProducts(
-                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
-                mContext.getString(R.string.client_id),
-                0, "SINGLE"
-            )
-            viewModel.products.observeForever {
-              Timber.i("products - $it.")
-              businessFeatureProgressBar.gone()
 
-              adapter.removeLoader()
-
-              if (it.isNotEmpty()) {
-                it.let { list -> adapter.submitList(list, hasMoreItems = true) }
-              } else {
-                adapter.removeLoader()
-                Timber.i("List from api came empty")
-              }
-              isLoading = false
+            BusinessFeatureEnum.PHOTOS -> {
+                binding.productShareRvList.gone()
+                binding.clSelectionLayout.visible()
+                binding.rvListPhotos.visible()
             }
-          }
-          BusinessFeatureEnum.DETAILS -> {
-            viewModel.getDetails(
-                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
-                mContext.getString(R.string.client_id)
-            )
-            viewModel.details.observeForever {
-              Timber.e("details - $it.")
-              businessFeatureProgressBar.gone()
-              adapter.submitList(listOf(it))
-            }
-          }
-          BusinessFeatureEnum.PHOTOS -> {
-            viewModel.getPhotos(
-                SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId
-            )
-            viewModel.photos.observeForever {
-              Timber.e("photos - $it.")
-              businessFeatureProgressBar.gone()
-
-              adapter.removeLoader()
-
-              if (it.isNotEmpty()) {
-                it.let { list -> adapter.submitList(list, hasMoreItems = true) }
-              } else {
-                adapter.removeLoader()
-                Timber.i("List from api came empty")
-              }
-              isLoading = false
-            }
-          }
         }
-      } else {
-        Toast.makeText(mContext, "Check your Network Connection", Toast.LENGTH_SHORT).show()
-        businessFeatureProgressBar.gone()
-      }
+
+        initializeAdapters(businessFeatureEnum)
     }
-  }
 
-  override fun onItemClick(pos: Int, item: BaseRecyclerItem) {
-    handleListItemClick(currentSelectedFeature, pos, item)
-  }
+    private fun initializeAdapters(businessFeatureEnum: BusinessFeatureEnum) {
+        //clear adapter dataset
+        adapter.clearList()
+        if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
+            Timber.i("Please do login")
+            // show login UI
+            binding.pleaseLoginCard.visible()
+            binding.pleaseLoginCard.setOnClickListener {
+                MethodUtils.startBoostActivity(mContext)
+            }
+        } else {
+            binding.pleaseLoginCard.gone()
+            if (MethodUtils.isOnline(mContext)) {
+                businessFeatureProgressBar.visible()
+                viewModel.error.observeForever {
+                    businessFeatureProgressBar.gone()
+                    Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
+                }
+                when (businessFeatureEnum) {
+                    BusinessFeatureEnum.UPDATES -> {
+                        viewModel.getUpdates(
+                            SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId,
+                            mContext.getString(R.string.client_id),
+                            0, 10
+                        )
+                        viewModel.updates.observeForever {
+                            Timber.i("updates - $it.")
+                            businessFeatureProgressBar.gone()
 
-  private fun handleListItemClick(businessFeatureEnum: BusinessFeatureEnum, pos: Int, item: BaseRecyclerItem) {
-    when (businessFeatureEnum) {
-      BusinessFeatureEnum.UPDATES -> {
-        Timber.i("pos - $pos item = $item")
-      }
-      BusinessFeatureEnum.INVENTORY -> {
-        Timber.i("pos - $pos item = $item")
-      }
-      BusinessFeatureEnum.PHOTOS -> {
-        Timber.i("pos - $pos item = $item")
-      }
-      BusinessFeatureEnum.DETAILS -> {
-        Timber.i("pos - $pos item = $item")
-      }
+                            adapter.removeLoader()
+
+                            if (it.floats?.isNotEmpty() == true) {
+                                it.floats?.let { list ->
+                                    adapter.submitList(
+                                        list,
+                                        hasMoreItems = true
+                                    )
+                                }
+                                updatesCount += it?.floats?.size?:0
+                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text ="UPDATES (${updatesCount})"
+                            } else {
+                                adapter.removeLoader()
+                                Timber.i("List from api came empty")
+                            }
+                            isLoading = false
+                        }
+                    }
+                    BusinessFeatureEnum.INVENTORY -> {
+                        viewModel.getProducts(
+                            SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
+                            mContext.getString(R.string.client_id),
+                            0, "SINGLE"
+                        )
+                        viewModel.products.observeForever {
+                            Timber.i("products - $it.")
+                            businessFeatureProgressBar.gone()
+
+                            adapter.removeLoader()
+
+                            if (it.isNotEmpty()) {
+                                it.let { list -> adapter.submitList(list, hasMoreItems = true) }
+                                serviceCount += it.size
+                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text ="SERVICES (${serviceCount})"
+
+                            } else {
+                                adapter.removeLoader()
+                                Timber.i("List from api came empty")
+                            }
+                            isLoading = false
+                        }
+                    }
+                    BusinessFeatureEnum.DETAILS -> {
+                        viewModel.getDetails(
+                            SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
+                            mContext.getString(R.string.client_id)
+                        )
+                        viewModel.details.observeForever {
+                            Timber.e("details - $it.")
+                            businessFeatureProgressBar.gone()
+                            adapter.submitList(listOf(it))
+                            detailsCount+= listOf(it).size
+                            SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text ="DETAILS (${detailsCount})"
+
+                        }
+                    }
+                    BusinessFeatureEnum.PHOTOS -> {
+                        viewModel.getPhotos(
+                            SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId
+                        )
+                        viewModel.photos.observeForever {
+                            Timber.e("photos - $it.")
+                            businessFeatureProgressBar.gone()
+                            adapter.removeLoader()
+
+                            if (it.isNotEmpty()) {
+                                it.let { list -> adapter.submitList(list, hasMoreItems = true) }
+                                photosCount += it.size
+                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text ="PHOTOS (${photosCount})"
+
+                            } else {
+                                adapter.removeLoader()
+                                Timber.i("List from api came empty")
+                            }
+                            isLoading = false
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(mContext, "Check your Network Connection", Toast.LENGTH_SHORT).show()
+                businessFeatureProgressBar.gone()
+            }
+        }
     }
-  }
 
-  private fun loadMoreItems(businessFeatureEnum: BusinessFeatureEnum) {
-    when (businessFeatureEnum) {
-      BusinessFeatureEnum.UPDATES -> {
-        viewModel.getUpdates(
-            SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId,
-            mContext.getString(R.string.client_id), adapter.list.size, 10
-        )
-      }
-      BusinessFeatureEnum.INVENTORY -> {
-        viewModel.getProducts(
-            SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
-            mContext.getString(R.string.client_id), adapter.list.size, "SINGLE"
-        )
-      }
+    override fun onItemClick(pos: Int, item: BaseRecyclerItem) {
+        handleListItemClick(currentSelectedFeature, pos, item)
     }
-  }
 
-  fun clearObservers() {
-    viewModel.updates.removeObserver {}
-    viewModel.details.removeObserver {}
-    viewModel.photos.removeObserver {}
-    viewModel.products.removeObserver {}
-  }
+    private fun handleListItemClick(
+        businessFeatureEnum: BusinessFeatureEnum,
+        pos: Int,
+        item: BaseRecyclerItem
+    ) {
+        when (businessFeatureEnum) {
+            BusinessFeatureEnum.UPDATES -> {
+                Timber.i("pos - $pos item = $item")
+            }
+            BusinessFeatureEnum.INVENTORY -> {
+                Timber.i("pos - $pos item = $item")
+            }
+            BusinessFeatureEnum.PHOTOS -> {
+                Timber.i("pos - $pos item = $item")
+            }
+            BusinessFeatureEnum.DETAILS -> {
+                Timber.i("pos - $pos item = $item")
+            }
+        }
+    }
+    companion object{
+        var serviceCount = 0
+        var photosCount = 0
+        var detailsCount = 0
+        var updatesCount = 0
+    }
 
-  fun getBindingRoot(): View {
-    return binding.root
-  }
+    private fun loadMoreItems(businessFeatureEnum: BusinessFeatureEnum) {
+        when (businessFeatureEnum) {
+            BusinessFeatureEnum.UPDATES -> {
+                viewModel.getUpdates(
+                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId,
+                    mContext.getString(R.string.client_id), adapter.list.size, 10
+                )
+            }
+            BusinessFeatureEnum.INVENTORY -> {
+                viewModel.getProducts(
+                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
+                    mContext.getString(R.string.client_id), adapter.list.size, "SINGLE"
+                )
+            }
+        }
+    }
+
+    fun clearObservers() {
+        viewModel.updates.removeObserver {}
+        viewModel.details.removeObserver {}
+        viewModel.photos.removeObserver {}
+        viewModel.products.removeObserver {}
+    }
+
+    fun getBindingRoot(): View {
+        return binding.root
+    }
 }

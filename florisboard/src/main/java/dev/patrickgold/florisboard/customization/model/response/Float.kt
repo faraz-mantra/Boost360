@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
-import java.util.*
 
 data class Float(
         @SerializedName("_id")
@@ -13,7 +12,7 @@ data class Float(
 
         @SerializedName("createdOn")
         @Expose
-        var createdOn: Date? = null,
+        var createdOn: String? = null,
 
         @SerializedName("htmlString")
         @Expose
@@ -53,7 +52,3 @@ data class Float(
 
         override fun getViewType(): Int = FeaturesEnum.UPDATES.ordinal
 }
-data class dateFloat(
-        @SerializedName("Date")
-        var date:Long?=null
-)

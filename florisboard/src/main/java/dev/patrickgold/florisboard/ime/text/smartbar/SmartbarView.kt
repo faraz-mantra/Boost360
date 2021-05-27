@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -89,13 +90,18 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener,
         }
     private var shouldSuggestClipboardContents: Boolean = false
 
-    private lateinit var binding: SmartbarBinding
     private var indexedActionStartArea: MutableList<Int> = mutableListOf()
     private var indexedMainArea: MutableList<Int> = mutableListOf()
     private var indexedActionEndArea: MutableList<Int> = mutableListOf()
 
     private var candidateViewList: MutableList<Button> = mutableListOf()
+companion object{
+    private lateinit var binding: SmartbarBinding
 
+    fun getSmartViewBinding(): SmartbarBinding {
+        return binding
+    }
+}
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -446,10 +452,12 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener,
     }
 
     override fun onThemeUpdated(theme: Theme) {
-        setBackgroundColor(theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND).toSolidColor().color)
+//        setBackgroundColor(theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND).toSolidColor().color)
+        setBackgroundColor(Color.parseColor("#FFFFFF"))
         setBackgroundTintColor2(
             binding.clipboardSuggestion,
-            theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color
+//            theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color
+            Color.parseColor("#FFFFFF")
         )
         setDrawableTintColor2(
             binding.clipboardSuggestion,
