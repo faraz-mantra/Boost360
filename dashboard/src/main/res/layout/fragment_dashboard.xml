@@ -89,7 +89,7 @@
                       android:includeFontPadding="false"
                       android:lineSpacingExtra="0dp"
                       android:textColor="@color/white"
-                      app:fontFamily="@font/barlow_light"
+                      app:fontFamily="@font/barlow_regular"
                       app:textType="HEADING_TEXT_2"
                       tools:text="26" />
 
