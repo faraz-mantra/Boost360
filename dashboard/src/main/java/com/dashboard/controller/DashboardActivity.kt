@@ -55,7 +55,6 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
-import kotlin.system.exitProcess
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
@@ -128,7 +127,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val action = intent.action
       val data = intent.dataString
       val uri = intent.data
-      Log.d("Data: ", "$data  $action")
+      Log.d("Data: ", "$data  $action $uri")
       if (session?.isLoginCheck == true) {
         if (uri != null && uri.toString().contains("onelink", true)) {
           isAppFlyerLink()
@@ -322,7 +321,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       3 -> checkWelcomeShowScreen(pos)
       4 -> {
         binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-        WebEngageController.trackEvent(MORE, CLICK, TO_BE_ADDED)
+        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
       }
     }
   }

@@ -102,7 +102,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
         binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "85%")
 //        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-        binding?.txtPercentage?.text = "${drScoreData?.getDrsTotal()}%"
+        binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal()}"
         binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
 //        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
 
