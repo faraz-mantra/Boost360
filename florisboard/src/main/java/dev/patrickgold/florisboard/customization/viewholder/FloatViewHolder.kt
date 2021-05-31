@@ -5,6 +5,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.framework.utils.DateUtils.KEYBOARD_DISPLAY_DATE
+import com.framework.utils.DateUtils.getDate
+import com.framework.utils.DateUtils.parseDate
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.customViews.CustomTextView
 import com.framework.views.roundedimageview.RoundedImageView
@@ -20,9 +23,9 @@ import java.util.*
 class FloatViewHolder(itemView: View, val listener: OnItemClickListener?) :
     BaseRecyclerViewHolder(itemView) {
 
-    private val desc: FlowTextView = itemView.findViewById(R.id.flowing_text_view)
-    private val image: RoundedImageView = itemView.findViewById(R.id.image_update)
-    private val time: CustomTextView = itemView.findViewById(R.id.ctv_time)
+    private val desc: CustomTextView = itemView.findViewById(R.id.tv_description)
+    private val image: CustomImageView = itemView.findViewById(R.id.imageView)
+    private val time: CustomTextView = itemView.findViewById(R.id.ctv_date_time)
     private val itemCardView = itemView
 
     override fun bindTo(position: Int, item: BaseRecyclerItem?) {
@@ -35,16 +38,9 @@ class FloatViewHolder(itemView: View, val listener: OnItemClickListener?) :
             image.visibility = View.GONE
         }
         desc.text = float.message
-        time.text = "${float.createdOn}"
+        val timeString = (float.createdOn?.subSequence(float.createdOn?.indexOf("(")!!+1,float.createdOn?.length!!-2) as String).toLong()
+        time.text = getDate(timeString, KEYBOARD_DISPLAY_DATE)
         itemCardView.setOnClickListener { listener?.onItemClick(position, float) }
     }
 }
 
-fun getDate(milliSeconds: Long, dateFormat: String): String {
-    // Create a DateFormatter object for displaying date in specified format.
-    val formatter = SimpleDateFormat(dateFormat)
-    // Create a calendar object that will convert the date and time value in milliseconds to date.
-    val calendar = Calendar.getInstance()
-    calendar.timeInMillis = milliSeconds
-    return formatter.format(calendar.time)
-}

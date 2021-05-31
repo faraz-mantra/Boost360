@@ -44,26 +44,19 @@
 
         <View
             android:id="@+id/overlay"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/gray_40"/>
 
-        <View
-            android:id="@+id/view_background_checked"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:background="@drawable/round_background_checked" />
 
         <ImageView
             android:id="@+id/iv_checked"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_gravity="center"
-            android:src="@drawable/thick_checkmark_png" />
+            android:src="@drawable/ic_tick_success" />
 
     </FrameLayout>
 

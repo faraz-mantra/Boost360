@@ -31,6 +31,7 @@ object DateUtils {
   const val FORMAT_HH_MMA = "hh:mma"
   const val FORMAT_H_MM_A = "h:mm a"
   const val SPA_DISPLAY_DATE = "EEE',' dd MMMM yyyy"
+  const val KEYBOARD_DISPLAY_DATE = "EEE, MMMM dd, yyyy. hh:mm a"
   const val SPA_REVIEW_DATE_FORMAT = "EEE',' MMM dd, yyyy"
   private val dateFormater = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
   private val dateFormaterToday = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -44,7 +45,12 @@ object DateUtils {
     }
     return ""
   }
-
+  fun getDate(milliSeconds: Long, dateFormat: String): String {
+    val formatter = SimpleDateFormat(dateFormat)
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = milliSeconds
+    return formatter.format(calendar.time)
+  }
   fun parseDate(time: String?, format: String?, required: String?, locale: Locale = Locale.getDefault(), timeZone: TimeZone? = null): String? {
     try {
       val timeFormat: DateFormat = SimpleDateFormat(format, locale)

@@ -97,7 +97,6 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener,
     private var candidateViewList: MutableList<Button> = mutableListOf()
 companion object{
     private lateinit var binding: SmartbarBinding
-
     fun getSmartViewBinding(): SmartbarBinding {
         return binding
     }

@@ -18,15 +18,12 @@ import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
 import dev.patrickgold.florisboard.customization.model.response.Float
 import dev.patrickgold.florisboard.customization.model.response.Photo
 import dev.patrickgold.florisboard.customization.model.response.Product
-import dev.patrickgold.florisboard.customization.model.response.Updates
 import dev.patrickgold.florisboard.customization.util.MethodUtils
-import dev.patrickgold.florisboard.customization.util.PaginationScrollListener
 import dev.patrickgold.florisboard.customization.util.PaginationScrollListener.Companion.PAGE_SIZE
 import dev.patrickgold.florisboard.customization.util.PaginationScrollListener.Companion.PAGE_START
 import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
 import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
 import dev.patrickgold.florisboard.ime.core.InputView
-import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import timber.log.Timber
 
@@ -119,7 +116,7 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
     fun showSelectedBusinessFeature(businessFeatureEnum: BusinessFeatureEnum) {
         currentSelectedFeature = businessFeatureEnum
         when (businessFeatureEnum) {
-            BusinessFeatureEnum.UPDATES, BusinessFeatureEnum.INVENTORY, BusinessFeatureEnum.DETAILS -> {
+            BusinessFeatureEnum.UPDATES, BusinessFeatureEnum.INVENTORY, BusinessFeatureEnum.BUSINESS_CARD -> {
                 binding.clSelectionLayout.gone()
                 binding.rvListPhotos.gone()
                 binding.productShareRvList.visible()
@@ -206,7 +203,7 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                             isLoading = false
                         }
                     }
-                    BusinessFeatureEnum.DETAILS -> {
+                    BusinessFeatureEnum.BUSINESS_CARD -> {
                         viewModel.getDetails(
                             SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag,
                             mContext.getString(R.string.client_id)
@@ -266,9 +263,18 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                 Timber.i("pos - $pos item = $item")
             }
             BusinessFeatureEnum.PHOTOS -> {
-                Timber.i("pos - $pos item = $item")
+                photosSet.forEach {
+                if (item== it){
+                    it.selected= (item as? Photo)?.selected == true
+                }else{
+                    it.selected=false
+                }
+                }
+                adapter.clearList()
+                adapter.submitList(photosSet.toList())
+                adapter.notifyDataSetChanged()
             }
-            BusinessFeatureEnum.DETAILS -> {
+            BusinessFeatureEnum.BUSINESS_CARD -> {
                 Timber.i("pos - $pos item = $item")
             }
         }
