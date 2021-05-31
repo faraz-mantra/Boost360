@@ -389,8 +389,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         //promobanner
                                         if (it.Data[0].promo_banners != null && it.Data[0].promo_banners.size > 0) {
 //                                            promoBanners.value = it.Data[0].promo_banners.filter {  it1 -> it1.exclusive_to_categories.toString() == expCode }
-                                            val promoBannerFilter = (it.Data[0].promo_banners
-                                                    ?: ArrayList()).promoBannerFilter(expCode, fpTag)
+                                            val promoBannerFilter = (it.Data[0].promo_banners ?: ArrayList()).promoBannerFilter(expCode, fpTag)
                                             promoBanners.postValue(promoBannerFilter)
 
                                             promoList.addAll(promoBannerFilter)
@@ -455,6 +454,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                     },
                                     {
                                         Log.e("GetAllFeatures", "error" + it.message)
+                                        Log.e("GetAllFeatures", "error" + it.localizedMessage)
                                         updatesLoader.postValue(false)
                                     }
                             )
