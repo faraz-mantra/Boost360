@@ -1070,7 +1070,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
-            args.putString("title", "Browser")
+            args.putString("title", "")
             args.putString("link", item!!.cta_web_link)
             webViewFragment.arguments = args
             (activity as UpgradeActivity).addFragment(
@@ -1232,7 +1232,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
       val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
       val args = Bundle()
-      args.putString("title", "Browser")
+      args.putString("title", "")
       args.putString("link", item!!.cta_web_link)
       webViewFragment.arguments = args
       (activity as UpgradeActivity).addFragment(
@@ -1960,7 +1960,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                                                   if(item.contains("http")){
                                                                     val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
                                                                     val args = Bundle()
-                                                                    args.putString("title", "Browser")
+                                                                    args.putString("title", "")
                                                                     args.putString("link", item)
                                                                     webViewFragment.arguments = args
                                                                     (activity as UpgradeActivity).addFragment(
