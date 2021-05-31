@@ -1,14 +1,17 @@
 package com.boost.presignin.ui.intro
 
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroAdapter
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.ActivityIntroBinding
 import com.boost.presignin.dialog.WebViewDialog
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
+import com.boost.presignin.ui.AccountNotFoundActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
@@ -34,27 +37,28 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
 
   private fun initItems() {
     items = listOf(
-        IntroItem(getString(R.string.intro_title_0), getString(R.string.intro_sub_title_0), R.drawable.psn_intro_asset_1),
-        IntroItem(getString(R.string.intro_title_1), getString(R.string.intro_sub_title_1), R.drawable.psn_intro_asset_2),
-        IntroItem(getString(R.string.intro_title_2), getString(R.string.intro_sub_title_2), R.drawable.psn_intro_asset_3),
-        IntroItem(getString(R.string.intro_title_3), getString(R.string.intro_sub_title_3), R.drawable.psn_intro_asset_4),
-        IntroItem(getString(R.string.intro_title_4), getString(R.string.intro_sub_title_4), R.drawable.psn_intro_asset_5),
-        IntroItem(getString(R.string.intro_title_5), getString(R.string.intro_sub_title_5), R.drawable.psn_intro_asset_6),
-        IntroItem(getString(R.string.intro_title_6), getString(R.string.intro_sub_title_6), R.drawable.psn_intro_asset_7),
-        IntroItem(getString(R.string.intro_title_7), getString(R.string.intro_sub_title_7), R.drawable.psn_intro_asset_8),
+      IntroItem(getString(R.string.intro_title_0), getString(R.string.intro_sub_title_0), R.drawable.psn_intro_asset_1),
+      IntroItem(getString(R.string.intro_title_1), getString(R.string.intro_sub_title_1), R.drawable.psn_intro_asset_2),
+      IntroItem(getString(R.string.intro_title_2), getString(R.string.intro_sub_title_2), R.drawable.psn_intro_asset_3),
+      IntroItem(getString(R.string.intro_title_3), getString(R.string.intro_sub_title_3), R.drawable.psn_intro_asset_4),
+      IntroItem(getString(R.string.intro_title_4), getString(R.string.intro_sub_title_4), R.drawable.psn_intro_asset_5),
+      IntroItem(getString(R.string.intro_title_5), getString(R.string.intro_sub_title_5), R.drawable.psn_intro_asset_6),
+      IntroItem(getString(R.string.intro_title_6), getString(R.string.intro_sub_title_6), R.drawable.psn_intro_asset_7),
+      IntroItem(getString(R.string.intro_title_7), getString(R.string.intro_sub_title_7), R.drawable.psn_intro_asset_8),
     )
   }
 
   private fun initTncString() {
     binding?.acceptTnc?.makeLinks(
-        Pair("terms", View.OnClickListener {
-          WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-          openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
-        }),
-        Pair("conditions", View.OnClickListener {
-          WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-          openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
-        }))
+      Pair("terms", View.OnClickListener {
+        WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
+        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+      }),
+      Pair("conditions", View.OnClickListener {
+        WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
+        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+      })
+    )
   }
 
   private fun openTNCDialog(url: String, title: String) {
@@ -93,10 +97,9 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
       }
     }
     binding?.btnCreate?.setOnClickListener {
-//      navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8059798376") })
+//      navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789346") })
       WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
       startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
-      finish()
     }
   }
 
