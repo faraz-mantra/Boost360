@@ -14,6 +14,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.adapter.SharedAdapter
+import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
+import dev.patrickgold.florisboard.customization.model.response.Float
+import dev.patrickgold.florisboard.customization.model.response.Photo
+import dev.patrickgold.florisboard.customization.model.response.Product
+import dev.patrickgold.florisboard.customization.model.response.Updates
 import dev.patrickgold.florisboard.customization.util.MethodUtils
 import dev.patrickgold.florisboard.customization.util.PaginationScrollListener
 import dev.patrickgold.florisboard.customization.util.PaginationScrollListener.Companion.PAGE_SIZE
@@ -168,8 +173,8 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                                         hasMoreItems = true
                                     )
                                 }
-                                updatesCount += it?.floats?.size?:0
-                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text ="UPDATES (${updatesCount})"
+                                updatesSet.addAll(it.floats!!)
+                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text ="UPDATES (${updatesSet.size})"
                             } else {
                                 adapter.removeLoader()
                                 Timber.i("List from api came empty")
@@ -191,8 +196,8 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
 
                             if (it.isNotEmpty()) {
                                 it.let { list -> adapter.submitList(list, hasMoreItems = true) }
-                                serviceCount += it.size
-                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text ="SERVICES (${serviceCount})"
+                                serviceSet.addAll(it)
+                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text ="SERVICES (${serviceSet.size})"
 
                             } else {
                                 adapter.removeLoader()
@@ -210,8 +215,8 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                             Timber.e("details - $it.")
                             businessFeatureProgressBar.gone()
                             adapter.submitList(listOf(it))
-                            detailsCount+= listOf(it).size
-                            SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text ="DETAILS (${detailsCount})"
+                            detailsSet.add(it)
+                            SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text ="DETAILS (${detailsSet.size})"
 
                         }
                     }
@@ -226,8 +231,8 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
 
                             if (it.isNotEmpty()) {
                                 it.let { list -> adapter.submitList(list, hasMoreItems = true) }
-                                photosCount += it.size
-                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text ="PHOTOS (${photosCount})"
+                                photosSet.addAll(it)
+                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text ="PHOTOS (${photosSet.size})"
 
                             } else {
                                 adapter.removeLoader()
@@ -269,10 +274,11 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
         }
     }
     companion object{
-        var serviceCount = 0
-        var photosCount = 0
-        var detailsCount = 0
-        var updatesCount = 0
+        val serviceSet = mutableSetOf<Product>()
+        val photosSet = mutableSetOf<Photo>()
+        val detailsSet = mutableSetOf<CustomerDetails>()
+        val updatesSet = mutableSetOf<Float?>()
+
     }
 
     private fun loadMoreItems(businessFeatureEnum: BusinessFeatureEnum) {
