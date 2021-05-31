@@ -396,10 +396,10 @@ fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boole
 fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   try {
     if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
-      WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
+      WebEngageController.trackEvent(SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
       session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_LISTING, bundle = getBundleData(it)) }
     } else {
-      WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
+      WebEngageController.trackEvent(PRODUCT_INVENTORY, CLICK, TO_BE_ADDED)
       val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
       startActivity(webIntent)
       overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -475,10 +475,10 @@ fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: 
 fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
   try {
     if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
-      WebEngageController.trackEvent(ADD_SERVICE_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
+      WebEngageController.trackEvent(ADD_SERVICE_PAGE, CLICK, TO_BE_ADDED)
       session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_DETAIL_VIEW, bundle = getBundleData(it)) }
     } else {
-      WebEngageController.trackEvent(ADD_SERVICE_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
+      WebEngageController.trackEvent(ADD_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
       val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
       webIntent.putExtra("IS_ADD", true)
       startActivity(webIntent)
@@ -533,9 +533,11 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
 }
 
 private fun getSessionOrder(session: UserSessionManager?): Bundle {
-  val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
-      session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
-      session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
+  val data = PreferenceData(
+    clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+    session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
+    session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode
+  )
   val bundle = Bundle()
   bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
   return bundle
@@ -800,11 +802,13 @@ fun AppCompatActivity.startListTeams(session: UserSessionManager?) {
 
 fun AppCompatActivity.startWebsiteTheme(session: UserSessionManager?) {
   try {
-    session?.getBundleDataKyc()?.let { startFragmentDashboardActivity( com.dashboard.constant.FragmentType.FRAGMENT_WEBSITE_THEME, it, false) }
+    WebEngageController.trackEvent(WEBSITE_STYLE, CLICK, TO_BE_ADDED)
+    session?.getBundleDataKyc()?.let { startFragmentDashboardActivity(com.dashboard.constant.FragmentType.FRAGMENT_WEBSITE_THEME, it, false) }
   } catch (e: Exception) {
     e.printStackTrace()
   }
 }
+
 fun AppCompatActivity.startListSeasonalOffer(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(SEASONAL_OFFER_PAGE, CLICK, TO_BE_ADDED)

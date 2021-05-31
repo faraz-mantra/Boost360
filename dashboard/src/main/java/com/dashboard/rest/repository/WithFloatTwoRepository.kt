@@ -12,41 +12,29 @@ import okhttp3.RequestBody
 import retrofit2.Retrofit
 import java.io.File
 
+object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, DashboardLocalDataSource>() {
 
-object WithFloatTwoRepository :
-    AppBaseRepository<WithFloatTwoRemoteData, DashboardLocalDataSource>() {
+  fun uploadBusinessLogo(
+    clientId: String?, fpId: String?, reqType: String?, reqId: String?,
+    totalChunks: String?, currentChunkNumber: String?, file: RequestBody?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.uploadBusinessImage(
+        clientId = clientId, fpId = fpId, reqType = reqType,
+        reqtId = reqId, totalChunks = totalChunks, currentChunkNumber = currentChunkNumber, file = file
+      ), TaskCode.UPLOAD_BUSINESS_IMAGE
+    )
+  }
 
-    fun uploadBusinessLogo(
-        clientId: String?,
-        fpId: String?,
-        reqType: String?,
-        reqId: String?,
-        totalChunks: String?,
-        currentChunkNumber: String?,
-        file: RequestBody?
-    ): Observable<BaseResponse> {
-        return makeRemoteRequest(
-            observable = remoteDataSource.uploadBusinessImage(
-                clientId = clientId,
-                fpId = fpId,
-                reqType = reqType,
-                reqtId = reqId,
-                totalChunks = totalChunks,
-                currentChunkNumber = currentChunkNumber,
-                file = file
-            ), taskCode = TaskCode.UPLOAD_BUSINESS_IMAGE
-        )
-    }
+  override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
+    return WithFloatTwoRemoteData::class.java
+  }
 
-    override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
-        return WithFloatTwoRemoteData::class.java
-    }
+  override fun getLocalDataSourceInstance(): DashboardLocalDataSource {
+    return DashboardLocalDataSource
+  }
 
-    override fun getLocalDataSourceInstance(): DashboardLocalDataSource {
-        return DashboardLocalDataSource
-    }
-
-    override fun getApiClient(): Retrofit {
-        return WithFloatsTwoApiClient.shared.retrofit
-    }
+  override fun getApiClient(): Retrofit {
+    return WithFloatsTwoApiClient.shared.retrofit
+  }
 }
