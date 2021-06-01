@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -403,7 +404,7 @@ share(float)
         uri?.let { share.putExtra(Intent.EXTRA_STREAM, uri) }
         share.type = if (uri != null) "image/*" else "text/plain"
         if (share.resolveActivity(mContext.packageManager) != null) {
-            share.setPackage(mContext.getString(R.string.whats_app_package))
+//            share.setPackage(mContext.getString(R.string.whats_app_package))
             mContext.startActivity(Intent.createChooser(share, "share product"))
         }
     }
@@ -418,7 +419,76 @@ share(float)
         adapter.clearList()
         adapter.submitList(photosSet.toList())
         adapter.notifyDataSetChanged()
+     updateLayout()
+    }
 
+    private fun updateLayout() {
+        binding.btnImageShare.setOnClickListener { shareImages() }
+        binding.btnCancel.setOnClickListener { removeSelected() }
+        if (photosSet.any { it.selected }) {
+            binding.tvPhotos.gone()
+            binding.btnLink.gone()
+            binding.btnShare.gone()
+            binding.containerShareImage.visible()
+        }else{
+            binding.tvPhotos.visible()
+            binding.btnLink.visible()
+            binding.btnShare.visible()
+            binding.containerShareImage.gone()
+        }
+    }
+
+    private fun removeSelected() {
+        photosSet.forEach { it.selected=false }
+        adapter.clearList()
+        adapter.submitList(photosSet.toList())
+        adapter.notifyDataSetChanged()
+        updateLayout()
+    }
+
+    private fun shareImages() {
+        val imageUriArray = ArrayList<Uri>()
+        val target: Target = object : Target {
+            override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+                targetMap = null
+                try {
+                    val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                    val view = View(mContext)
+                    view.draw(Canvas(mutableBitmap))
+                    val path = MediaStore.Images.Media.insertImage(
+                        mContext.contentResolver,
+                        mutableBitmap,
+                        "boost_360",
+                        ""
+                    )
+                    val uri = Uri.parse(path)
+                   imageUriArray.add(uri)
+                } catch (e: OutOfMemoryError) {
+                } catch (e: Exception) {
+                }
+            }
+
+            override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
+                targetMap = null
+            }
+
+            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+            }
+        }
+       photosSet.filter { it.selected }.forEach {
+           if (it.imageUri.isNullOrEmpty().not()) {
+               targetMap = target
+               Picasso.get().load(it.imageUri ?: "").into(target)
+           }
+       }
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_TEXT, "Text caption message!!")
+        intent.type = "text/plain"
+        intent.type = "image/jpeg"
+        intent.setPackage(mContext.getString(R.string.whats_app_package))
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUriArray)
+       mContext. startActivity(intent)
     }
 
 

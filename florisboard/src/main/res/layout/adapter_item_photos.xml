@@ -56,7 +56,7 @@
             android:layout_height="16dp"
             android:visibility="visible"
             android:layout_gravity="center"
-            android:src="@drawable/ic_tick_success" />
+            android:src="@drawable/ic_overlay_check" />
 
     </FrameLayout>
 
