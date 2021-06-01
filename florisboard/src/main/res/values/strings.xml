@@ -400,6 +400,8 @@
     <string name="please_login">Please Login</string>
     <string name="_90_min">90 min</string>
     <string name="view_details">View Details</string>
+    <string name="tap_on_photos_to_select">Tap on photos to select...</string>
+    <string name="whats_app_package">com.whatsapp</string>
 
 
 </resources>

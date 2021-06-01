@@ -5,135 +5,128 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-  <androidx.cardview.widget.CardView
-    android:id="@+id/please_login_card"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="gone"
-    app:cardBackgroundColor="@color/white"
-    app:cardElevation="2dp"
-    app:contentPadding="12dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/please_login_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="2dp"
+        app:contentPadding="12dp">
 
-    <TextView
-      android:id="@+id/textView"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_gravity="center"
-      android:background="@drawable/yellow_button_bg"
-      android:ellipsize="end"
-      android:gravity="center"
-      android:maxLines="10"
-      android:text="@string/please_login"
-      android:textAllCaps="true"
-      android:textColor="@color/white"
-      android:textSize="16sp" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/yellow_button_bg"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="10"
+            android:text="@string/please_login"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-  </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/cl_selection_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#2f2f2f"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    android:visibility="visible"
-    app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_selection_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f5f5f5"
+        android:paddingVertical="@dimen/_6dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-      android:id="@+id/tv_total"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/_0"
-      android:textColor="@color/white_70"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-      android:id="@+id/tv_photos"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:paddingStart="4dp"
-      android:paddingEnd="4dp"
-      android:text="@string/tv_photos"
-      android:textColor="@color/white_70"
-      app:layout_constraintBottom_toBottomOf="@id/tv_total"
-      app:layout_constraintStart_toEndOf="@id/tv_total"
-      app:layout_constraintTop_toTopOf="@id/tv_total" />
+        <TextView
+            android:id="@+id/tv_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:text="@string/tap_on_photos_to_select"
+            android:textColor="@color/black_4a4a4a"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-      android:id="@+id/btn_share"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:background="@drawable/rounded_button_stroke"
-      android:enabled="false"
-      android:gravity="center"
-      android:minWidth="0dp"
-      android:minHeight="0dp"
-      android:paddingStart="8dp"
-      android:paddingTop="4dp"
-      android:paddingEnd="8dp"
-      android:paddingBottom="4dp"
-      android:text="@string/share"
-      android:textColor="@color/white"
-      android:textSize="12sp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+        <com.framework.views.customViews.CustomCardView
+            android:id="@+id/btn_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/size_10"
+            app:cardElevation="1dp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_share"
+            android:layout_marginEnd="@dimen/size_10"
+            app:layout_constraintEnd_toStartOf="@id/btn_share"
+            app:layout_constraintTop_toTopOf="@id/btn_share">
 
-    <Button
-      android:id="@+id/btn_deselect_all"
-      style="@style/Base.Widget.AppCompat.Button.Borderless"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:minWidth="0dp"
-      android:minHeight="0dp"
-      android:text="@string/deselect_all"
-      android:textColor="@color/white"
-      android:textSize="12sp"
-      app:layout_constraintBottom_toBottomOf="@id/btn_share"
-      app:layout_constraintEnd_toStartOf="@id/btn_share"
-      app:layout_constraintTop_toTopOf="@id/btn_share" />
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:layout_marginVertical="4dp"
+                android:src="@drawable/ic_squaresfour" />
+        </com.framework.views.customViews.CustomCardView>
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.framework.views.roundedimageview.RoundedImageView
+            android:id="@+id/btn_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:src="@drawable/ic_linksimple"
+            android:text="@string/deselect_all"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="@dimen/size_20"
+            app:riv_mutate_background="true" />
 
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/product_share_rv_list"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:orientation="horizontal"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:visibility="gone"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rv_list_photos"
-    android:layout_width="wrap_content"
-    android:layout_height="0dp"
-      android:overScrollMode="never"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/cl_selection_layout" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/product_share_rv_list"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-  <ProgressBar
-    android:id="@+id/business_feature_progress"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-      android:indeterminate="true"
-    android:indeterminateTint="@color/accent_blue"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list_photos"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_selection_layout" />
+
+    <ProgressBar
+        android:id="@+id/business_feature_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/accent_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

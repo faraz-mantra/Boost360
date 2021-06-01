@@ -23,7 +23,7 @@ class ProductViewHolder(itemView: View, val listener: OnItemClickListener?) :
     private val productPrice: CustomTextView = itemView.findViewById(R.id.tv_price)
     private val productDiscount: CustomTextView = itemView.findViewById(R.id.tv_discount)
     private val productDescription: CustomTextView = itemView.findViewById(R.id.tv_description)
-    private val btnCopy: Button = itemView.findViewById(R.id.buttonCopy)
+    private val btnShare: Button = itemView.findViewById(R.id.btn_share)
     private val ctvDuration: CustomTextView = itemView.findViewById(R.id.ctv_duration)
     private val ctvOffPercentage: CustomTextView = itemView.findViewById(R.id.tv_off_percent)
 
@@ -54,6 +54,6 @@ class ProductViewHolder(itemView: View, val listener: OnItemClickListener?) :
         productDiscount.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         productDiscount.text = product.getProductDiscountPrice()
         productDescription.text = product.description
-        btnCopy.setOnClickListener { listener?.onItemClick(position, product) }
+        btnShare.setOnClickListener { listener?.onItemClick(position, product) }
     }
 }

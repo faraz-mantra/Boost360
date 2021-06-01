@@ -1,6 +1,12 @@
 package dev.patrickgold.florisboard.customization
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -10,6 +16,9 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.utils.NetworkUtils
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
@@ -33,6 +42,11 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
         onRegisterInputView(inputView)
     }
 
+    private  val serviceSet = mutableSetOf<Product>()
+    private val photosSet = mutableSetOf<Photo>()
+    private  val detailsSet = mutableSetOf<CustomerDetails>()
+    private  val updatesSet = mutableSetOf<Float?>()
+    private var targetMap: Target? = null
     private lateinit var mContext: Context
     private lateinit var currentSelectedFeature: BusinessFeatureEnum
     private lateinit var binding: BusinessFeaturesLayoutBinding
@@ -76,7 +90,6 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
             it.layoutManager = GridLayoutManager(mContext, 2, GridLayoutManager.HORIZONTAL, false)
             it.adapter = adapter
         }
-
         recyclerViewPost.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -134,6 +147,7 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
 
     private fun initializeAdapters(businessFeatureEnum: BusinessFeatureEnum) {
         //clear adapter dataset
+        clearSets()
         adapter.clearList()
         if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
             Timber.i("Please do login")
@@ -171,7 +185,9 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                                     )
                                 }
                                 updatesSet.addAll(it.floats!!)
-                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text ="UPDATES (${updatesSet.size})"
+                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(
+                                    2
+                                )?.text = "UPDATES (${updatesSet.size})"
                             } else {
                                 adapter.removeLoader()
                                 Timber.i("List from api came empty")
@@ -194,7 +210,9 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                             if (it.isNotEmpty()) {
                                 it.let { list -> adapter.submitList(list, hasMoreItems = true) }
                                 serviceSet.addAll(it)
-                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text ="SERVICES (${serviceSet.size})"
+                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(
+                                    1
+                                )?.text = "SERVICES (${serviceSet.size})"
 
                             } else {
                                 adapter.removeLoader()
@@ -213,7 +231,8 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                             businessFeatureProgressBar.gone()
                             adapter.submitList(listOf(it))
                             detailsSet.add(it)
-                            SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text ="DETAILS (${detailsSet.size})"
+                            SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text =
+                                "DETAILS (${detailsSet.size})"
 
                         }
                     }
@@ -229,7 +248,9 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
                             if (it.isNotEmpty()) {
                                 it.let { list -> adapter.submitList(list, hasMoreItems = true) }
                                 photosSet.addAll(it)
-                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text ="PHOTOS (${photosSet.size})"
+                                SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(
+                                    3
+                                )?.text = "PHOTOS (${photosSet.size})"
 
                             } else {
                                 adapter.removeLoader()
@@ -246,6 +267,13 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
         }
     }
 
+    private fun clearSets() {
+        serviceSet.clear()
+        photosSet.clear()
+        updatesSet.clear()
+        detailsSet.clear()
+    }
+
     override fun onItemClick(pos: Int, item: BaseRecyclerItem) {
         handleListItemClick(currentSelectedFeature, pos, item)
     }
@@ -257,35 +285,142 @@ class BusinessFeaturesManager(inputView: InputView) : OnItemClickListener {
     ) {
         when (businessFeatureEnum) {
             BusinessFeatureEnum.UPDATES -> {
-                Timber.i("pos - $pos item = $item")
+              shareUpdates(item)
             }
             BusinessFeatureEnum.INVENTORY -> {
-                Timber.i("pos - $pos item = $item")
+                onClickedShareInventory(item)
             }
             BusinessFeatureEnum.PHOTOS -> {
-                photosSet.forEach {
-                if (item== it){
-                    it.selected= (item as? Photo)?.selected == true
-                }else{
-                    it.selected=false
-                }
-                }
-                adapter.clearList()
-                adapter.submitList(photosSet.toList())
-                adapter.notifyDataSetChanged()
+                onPhotoSelected(item)
             }
             BusinessFeatureEnum.BUSINESS_CARD -> {
                 Timber.i("pos - $pos item = $item")
             }
         }
     }
-    companion object{
-        val serviceSet = mutableSetOf<Product>()
-        val photosSet = mutableSetOf<Photo>()
-        val detailsSet = mutableSetOf<CustomerDetails>()
-        val updatesSet = mutableSetOf<Float?>()
+
+    private fun shareUpdates(item: BaseRecyclerItem) {
+        val float = item as? Float
+share(float)
+    }
+
+    private fun share(float: Float?) {
+        if (NetworkUtils.isNetworkConnected()) {
+            val shareText =
+                String.format("*%s*",
+                    float?.message)
+            val target: Target = object : Target {
+                override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+                    targetMap = null
+                    try {
+                        val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                        val view = View(mContext)
+                        view.draw(Canvas(mutableBitmap))
+                        val path = MediaStore.Images.Media.insertImage(
+                            mContext.contentResolver,
+                            mutableBitmap,
+                            "boost_360",
+                            ""
+                        )
+                        val uri = Uri.parse(path)
+                        shareTextService(uri, shareText)
+                    } catch (e: OutOfMemoryError) {
+                    } catch (e: Exception) {
+                    }
+                }
+
+                override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
+                    targetMap = null
+                }
+
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                }
+            }
+            if (float?.imageUri.isNullOrEmpty().not()) {
+                targetMap = target
+                Picasso.get().load(float?.imageUri ?: "").into(target)
+            } else {
+                shareTextService(null, shareText)
+            }
+        }
 
     }
+
+    private fun onClickedShareInventory(item: BaseRecyclerItem) {
+        val product = item as? Product
+        share(product)
+    }
+
+    fun share(product: Product?) {
+        if (NetworkUtils.isNetworkConnected()) {
+            val shareText =
+                String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n",
+                    product?.name?.trim { it <= ' ' },
+                    product?.description,
+                    "${product?.getCurrencySymbol()} ${product?.discountAmount}",
+                    "${product?.getCurrencySymbol()} ${product?.price}",
+                    product?.description?.trim { it <= ' ' })
+            val target: Target = object : Target {
+                override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+                    targetMap = null
+                    try {
+                        val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                        val view = View(mContext)
+                        view.draw(Canvas(mutableBitmap))
+                        val path = MediaStore.Images.Media.insertImage(
+                            mContext.contentResolver,
+                            mutableBitmap,
+                            "boost_360",
+                            ""
+                        )
+                        val uri = Uri.parse(path)
+                        shareTextService(uri, shareText)
+                    } catch (e: OutOfMemoryError) {
+                    } catch (e: Exception) {
+                    }
+                }
+
+                override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
+                    targetMap = null
+                }
+
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                }
+            }
+            if (product?.imageUri.isNullOrEmpty().not()) {
+                targetMap = target
+                Picasso.get().load(product?.imageUri ?: "").into(target)
+            } else {
+                shareTextService(null, shareText)
+            }
+        }
+    }
+
+    private fun shareTextService(uri: Uri?, shareText: String) {
+        val share = Intent(Intent.ACTION_SEND)
+        share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        share.putExtra(Intent.EXTRA_TEXT, shareText)
+        uri?.let { share.putExtra(Intent.EXTRA_STREAM, uri) }
+        share.type = if (uri != null) "image/*" else "text/plain"
+        if (share.resolveActivity(mContext.packageManager) != null) {
+            share.setPackage(mContext.getString(R.string.whats_app_package))
+            mContext.startActivity(Intent.createChooser(share, "share product"))
+        }
+    }
+
+
+    private fun onPhotoSelected(item: BaseRecyclerItem) {
+        photosSet.forEach {
+            if (item == it) {
+                it.selected = (item as? Photo)?.selected == true
+            }
+        }
+        adapter.clearList()
+        adapter.submitList(photosSet.toList())
+        adapter.notifyDataSetChanged()
+
+    }
+
 
     private fun loadMoreItems(businessFeatureEnum: BusinessFeatureEnum) {
         when (businessFeatureEnum) {

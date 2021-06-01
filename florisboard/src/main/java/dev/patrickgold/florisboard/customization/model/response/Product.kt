@@ -157,4 +157,10 @@ data class Product(
             }
         }
     }
+    fun getCurrencySymbol(): String? {
+        if(currencyCode=="INR"||currencyCode==""||currencyCode==null){
+            currencyCode = "₹"
+        }
+        return currencyCode
+    }
 }
