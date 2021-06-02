@@ -33,7 +33,7 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.btnCancel, binding?.btnDone)
+    setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnDone)
     this.primaryFontList = arguments?.get(IntentConstant.FONT_LIST_PRIMARY.name) as? ArrayList<PrimaryItem>
     this.secondaryFontList = arguments?.get(IntentConstant.FONT_LIST_SECONDARY.name) as? ArrayList<SecondaryItem>
     when {
@@ -78,7 +78,7 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnCancel -> {
+      binding?.rivCloseBottomSheet -> {
         dismiss()
       }
       binding?.btnDone -> {

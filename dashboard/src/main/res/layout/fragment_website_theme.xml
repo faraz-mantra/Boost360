@@ -11,10 +11,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.framework.views.customViews.CustomCardView
+            <FrameLayout
                 android:id="@+id/customCardView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/gray_4e4e4e"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -25,36 +26,43 @@
                     android:orientation="vertical"
                     android:padding="@dimen/size_16">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.framework.views.customViews.CustomImageView
-                            android:id="@+id/customImageView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_info_black" />
-
                         <com.framework.views.customViews.CustomTextView
                             android:id="@+id/customTextView4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:layout_marginStart="@dimen/size_5"
                             android:fontFamily="@font/regular"
-                            android:text="@string/preview_your_website_by_clicking_the_link_below" />
-                    </LinearLayout>
+                            android:text="@string/current_website_style" />
+<com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    app:cardCornerRadius="@dimen/size_4"
+    app:cardUseCompatPadding="true"
+    app:contentPaddingTop="@dimen/size_8"
+    app:contentPaddingBottom="@dimen/size_8"
+    app:cardBackgroundColor="@color/gray_828282"
+    android:layout_height="wrap_content">
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_website"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/white"
+        tools:text="dasdadsadsadsasasdsadassda" />
+    <com.framework.views.customViews.CustomImageView
+        android:id="@+id/civ_open_website"
+        android:layout_gravity="end|center_vertical"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_arrowsquareupright"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_16"
+        />
+</com.framework.views.customViews.CustomCardView>
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/ctv_website"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/size_25"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/blue_4A90E2"
-                        tools:text="dasdadsadsadsasasdsadassda" />
                 </LinearLayout>
-            </com.framework.views.customViews.CustomCardView>
+            </FrameLayout>
 
             <com.framework.views.customViews.CustomCardView
                 android:id="@+id/customCardView4"
