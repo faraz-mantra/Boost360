@@ -81,6 +81,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     var bundles_in_cart = false
     var default_validity_months = 1
+    var package_validity_months = 1
 
     var total = 0.0
 
@@ -403,7 +404,15 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         months_validity_edit_inc.setOnClickListener {
             if (!bundles_in_cart) {
 //                if (default_validity_months < 12){
-                    default_validity_months++
+//                    default_validity_months++
+                if(default_validity_months == 1){
+                    default_validity_months = default_validity_months+ 2
+                }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
+                    default_validity_months = default_validity_months+ 12
+                }else{
+                    if(default_validity_months < 60)
+                        default_validity_months = default_validity_months+ 3
+                }
                 months_validity.text = default_validity_months.toString() + " months"
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
@@ -417,13 +426,47 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                   totalCalculationAfterCoupon()
                 Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
 //            }
-            }
+            } else if (bundles_in_cart) {
+//                if (default_validity_months < 12){
+    if(default_validity_months == 1){
+        default_validity_months = default_validity_months+ 2
+    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
+        default_validity_months = default_validity_months+ 12
+    }else{
+        if(default_validity_months < 60)
+          default_validity_months = default_validity_months+ 3
+    }
+
+//            default_validity_months++
+            months_validity.text = default_validity_months.toString() + " months"
+            totalValidityDays = 30 * default_validity_months
+            prefs.storeMonthsValidity(totalValidityDays)
+            prefs.storeCartOrderInfo(null)
+//                totalCalculation()
+            totalCalculationAfterCoupon()
+            Log.v("cart_amount_value1"," "+ total)
+            if(couponCode.isNotEmpty())
+                viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+            else
+                totalCalculationAfterCoupon()
+            Toasty.success(requireContext(), "Validity increased by 3 month(s).", Toast.LENGTH_SHORT, true).show()
+//            }
+        }
         }
 
         months_validity_edit_dsc.setOnClickListener {
             if (!bundles_in_cart) {
                 if (default_validity_months > 1) {
-                    default_validity_months--
+//                    default_validity_months--
+                    if(default_validity_months > 12 && default_validity_months % 12 == 0){
+                        default_validity_months = default_validity_months - 12
+                    }else{
+                        default_validity_months = default_validity_months - 3
+                    }
+                    if(default_validity_months < 1){
+                        default_validity_months = 1
+                    }
+
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
@@ -437,7 +480,32 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     months_validity.text = default_validity_months.toString() + " months"
                 else
                     months_validity.text = default_validity_months.toString() + " month"
+            }else if (bundles_in_cart) {
+            if (default_validity_months > package_validity_months) {
+                if(default_validity_months > 12 && default_validity_months % 12 == 0){
+                    default_validity_months = default_validity_months - 12
+                }else{
+                    default_validity_months = default_validity_months - 3
+                }
+
+                if(default_validity_months < 1){
+                    default_validity_months = 1
+                }
+//                default_validity_months--
+                totalValidityDays = 30 * default_validity_months
+                prefs.storeMonthsValidity(totalValidityDays)
+                prefs.storeCartOrderInfo(null)
+//                    totalCalculation()
+                totalCalculationAfterCoupon()
+                if(couponCode.isNotEmpty())
+                    viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+                Toasty.warning(requireContext(), "Validity reduced by 3 month(s).", Toast.LENGTH_SHORT, true).show()
             }
+            if (default_validity_months > 1)
+                months_validity.text = default_validity_months.toString() + " months"
+            else
+                months_validity.text = default_validity_months.toString() + " month"
+        }
         }
 
     }
@@ -1096,15 +1164,19 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     bundles_in_cart = true
                     updatePackage(bundles)
                     for (bundle in bundles) {
-                        if (bundle.min_purchase_months > default_validity_months)
+                        package_validity_months = bundle.min_purchase_months
+                        if (bundle.min_purchase_months > default_validity_months){
                             default_validity_months = bundle.min_purchase_months
+                        }
+//                        if (bundle.min_purchase_months < default_validity_months)
+//                            default_validity_months = default_validity_months
                     }
                     if (default_validity_months > 0)
                         months_validity.text = default_validity_months.toString() + " months"
                     else
                         months_validity.text = default_validity_months.toString() + " month"
-                    months_validity_edit_inc.visibility = View.GONE
-                    months_validity_edit_dsc.visibility = View.GONE
+//                    months_validity_edit_inc.visibility = View.GONE
+//                    months_validity_edit_dsc.visibility = View.GONE
                     package_layout.visibility = View.VISIBLE
                 } else {
                     bundles_in_cart = false
@@ -1455,7 +1527,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     if (!bundles_in_cart && item.item_type.equals("features"))
                         total += (item.price * default_validity_months)
                     else
-                        total += item.price
+                        total += ((item.price / package_validity_months) * default_validity_months)
                 }
                 cart_amount_title.text = "Cart total ("+ cartList.size + " items)"
                 cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
