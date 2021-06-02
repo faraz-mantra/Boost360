@@ -38,11 +38,11 @@
   <string name="psn_resend_hint">Didn’t get the code? Resend</string>
   <string name="psn_resend">Resend</string>
   <string name="psn_resend_in">Resend in %d s</string>
-  <string name="psn_no_account_hint_before">We did not find any business registered with</string>
+  <string name="psn_no_account_hint_before">We see that you could not complete your business account using</string>
   <string name="psn_no_account_hint_after">. Add business details to start now.</string>
-  <string name="psn_no_account_heading">Bring your business\non Boost 360.</string>
+  <string name="psn_no_account_heading">Continue creating your business account on Boost 360.</string>
   <string name="psn_create_your_business_profile">Create your business profile</string>
-  <string name="psn_already_have_your_account">Already have your\nbusiness on Boost 360?</string>
+  <string name="psn_already_have_your_account">Already registered your business on Boost 360?</string>
   <string name="psn_retrieve_account_hint">We will help you retrieve your Boost account using registered email ID or username</string>
   <string name="psn_choose_desired_login_method">Choose your desired \nlogin method</string>
   <string name="psn_choose_method_to_retrieve_account">You can choose any of the below method to retrieve your business account on Boost 360</string>
@@ -128,4 +128,8 @@
   <string name="access_token_create_error">Access token creating error, please try again.</string>
   <string name="step_2_2">STEP 2/2</string>
   <string name="signin_nowfloats_com">.nowfloats.com</string>
+  <string name="login_with_username_or_email">Login with username or email</string>
+  <string name="need_help"><u>Need help?</u></string>
+  <string name="try_a_different_number">Try a different number</string>
+  <string name="no_business_account_available_with">No business account available with</string>
 </resources>
