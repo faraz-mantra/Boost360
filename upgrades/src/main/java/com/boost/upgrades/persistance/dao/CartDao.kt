@@ -36,4 +36,7 @@ interface CartDao {
 
   @Query("SELECT * FROM Cart WHERE feature_code IN (:list)")
   fun getAllCartItemsInList(list: List<String>): Single<List<CartModel>>
+
+  @Query("SELECT EXISTS(SELECT * FROM Cart WHERE boost_widget_key IS NULL )")
+  fun checkCartFeatureTableKeyExist(): Single<Int>
 }

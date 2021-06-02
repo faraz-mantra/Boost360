@@ -34,6 +34,9 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.HttpException
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
 
 class CartViewModel(application: Application) : BaseViewModel(application) {
 
@@ -194,13 +197,25 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun redeemCouponResult(): LiveData<CouponServiceModel>{
         return redeemCouponResult
     }
+    fun writeStringAsFile(fileContents: String?, fileName: String?) {
+        val context: Context = getApplication()
+        try {
+            val out = FileWriter(File(context.filesDir, fileName))
+            out.write(fileContents)
+            out.close()
+        } catch (e: IOException) {
+            println("sasasasasasa  $e")
+        }
+    }
 
     fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
         Log.d("InitiatePurchaseOld", " " + createPurchaseOrderV2)
         if (Utils.isConnectedToInternet(getApplication())) {
+            var sample = Gson().toJson(createPurchaseOrderV2)
+            writeStringAsFile(sample, "booststring2.txt")
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
-            compositeDisposable.add(
+            /*compositeDisposable.add(
                     ApiService.CreatePurchaseOrder(createPurchaseOrderV2)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -216,7 +231,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                         updatesLoader.postValue(false)
                                     }
                             )
-            )
+            )*/
         }
     }
 
