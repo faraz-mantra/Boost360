@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="accent_dark">#F2994A</color>
+  <color name="accent_30">#4DFFB900</color>
   <color name="greyish_brown">#4A4A4A</color>
   <color name="greyish_brown_1">#25252F</color>
   <color name="greyish_brown_light">#898A8D</color>

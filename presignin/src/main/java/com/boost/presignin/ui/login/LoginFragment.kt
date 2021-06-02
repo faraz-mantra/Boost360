@@ -42,13 +42,13 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     session = UserSessionManager(baseActivity)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
-    setOnClickListener(binding?.forgotTv, binding?.loginBt)
+    setOnClickListener(binding?.forgotTv, binding?.loginBt, binding?.loginWithNumberBtn, binding?.helpTv)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
   }
 
   private fun goBack() {
-    requireActivity().finish()
+    baseActivity.finish()
   }
 
   override fun onClick(v: View) {
@@ -61,6 +61,9 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
       binding?.loginBt -> {
         WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
         loginApiVerify(binding?.usernameEt?.text?.toString()?.trim(), binding?.passEt?.text?.toString()?.trim())
+      }
+      binding?.loginWithNumberBtn -> goBack()
+      binding?.helpTv -> {
       }
     }
   }
