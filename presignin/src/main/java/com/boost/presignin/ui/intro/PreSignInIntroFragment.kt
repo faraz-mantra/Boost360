@@ -49,7 +49,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
   override fun onCreateView() {
     super.onCreateView()
     binding?.introItem = introItem;
-    binding?.presiginIntroImg?.setImageResource(introItem.imageResource)
+    introItem.imageResource?.let { binding?.presiginIntroImg?.setImageResource(it) }
 
     if (position == 0) {
       binding?.boostLogo?.visible()

@@ -154,9 +154,10 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
         val result = it as? VerifyOtpResponse
         if (result?.Result?.authTokens.isNullOrEmpty().not()) {
           addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(result?.Result), false)
+          baseActivity.finish()
         } else {
           this.parentFragmentManager.popBackStack()
-          navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
+          navigator?.startActivityFinish(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
         }
       } else {
         binding?.wrongOtpErrorTv?.isVisible = true;

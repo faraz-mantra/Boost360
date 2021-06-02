@@ -1,6 +1,5 @@
 package com.boost.presignin.ui.mobileVerification
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
@@ -10,6 +9,7 @@ import com.boost.presignin.databinding.FragmentMobileBinding
 import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.ui.intro.IntroActivity
+import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
@@ -45,7 +45,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
   override fun onCreateView() {
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = (it.isPhoneValid()) }
-    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+    baseActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
         goBack()
       }
@@ -56,14 +56,17 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
 
     binding?.nextButton?.setOnClickListener {
       WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
-      activity?.hideKeyBoard()
+      baseActivity.hideKeyBoard()
       sendOtp(binding?.phoneEt?.text.toString())
+    }
+    binding?.loginUsername?.setOnClickListener {
+      WebEngageController.trackEvent(PS_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
+      navigator?.startActivity(LoginActivity::class.java)
     }
   }
 
   private fun goBack() {
-    startActivity(Intent(requireContext(), IntroActivity::class.java))
-    requireActivity().finish()
+    navigator?.startActivityFinish(IntroActivity::class.java)
   }
 
   private fun sendOtp(phoneNumber: String?) {
