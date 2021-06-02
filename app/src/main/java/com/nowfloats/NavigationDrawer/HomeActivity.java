@@ -52,6 +52,7 @@ import com.anachat.chatsdk.AnaCore;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.android.inputmethod.latin.utils.JniUtils;
 import com.appservice.ui.bankaccount.BankAccountFragment;
+import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.DynamicLinkParams;
 import com.boost.presignup.utils.FirebaseDynamicLinksManager;
 import com.boost.upgrades.UpgradeActivity;
@@ -423,7 +424,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
       }
     });
 
-        WebEngageController.trackEvent(HOME, PAGE_VIEW, EVENT_VALUE_HOME_PAGE);
+    WebEngageController.trackEvent(HOME, PAGE_VIEW, EVENT_VALUE_HOME_PAGE);
 
     Bundle bundle = getIntent().getExtras();
     if (bundle != null) {
@@ -442,12 +443,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
   }
 
   private void startPreSignUpActivity() {
-    try {
-      Intent intent = new Intent(HomeActivity.this, Class.forName("com.boost.presignup.PreSignUpActivity"));
-      startActivity(intent);
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
+    Intent intent = new Intent(HomeActivity.this, IntroActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    startActivity(intent);
     finish();
   }
 
@@ -468,177 +466,177 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         startActivity(intent);
       } else if (url.contains(getString(R.string.facebook_chat_main))) {
 
-            } else if (url.contains(getString(R.string.deeplink_manage_customer))) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, getString(R.string.managecustomers))
-                        .commit();
-            } else if (url.contains(getString(R.string.feedback_chat))) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
-            } else if (url.contains(getString(R.string.facebookpage))) {
-                Methods.likeUsFacebook(this, "/reviews/");
-            } else if (url.contains(getResources().getString(R.string.deeplink_update))) {
+      } else if (url.contains(getString(R.string.deeplink_manage_customer))) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, getString(R.string.managecustomers))
+            .commit();
+      } else if (url.contains(getString(R.string.feedback_chat))) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+      } else if (url.contains(getString(R.string.facebookpage))) {
+        Methods.likeUsFacebook(this, "/reviews/");
+      } else if (url.contains(getResources().getString(R.string.deeplink_update))) {
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //                ft.replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
 
-                Intent createUpdate = new Intent(HomeActivity.this, Create_Message_Activity.class);
-                if (isFromRia && mRiaNodeDataModel != null) {
-                    createUpdate.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
-                }
-                startActivity(createUpdate);
-            } else if (url.contains(getResources().getString(R.string.deeplink_featuredimage))) {
-                Intent featureImage = new Intent(HomeActivity.this, Edit_Profile_Activity.class);
-                if (isFromRia && mRiaNodeDataModel != null) {
-                    featureImage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
-                }
-                startActivity(featureImage);
-            } else if (url.contains(getString(R.string.addProduct))) {
-                Intent productActivity = new Intent(HomeActivity.this, Product_Detail_Activity_V45.class);
-                productActivity.putExtra("new", "");
-                if (isFromRia && mRiaNodeDataModel != null) {
-                    productActivity.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
-                }
-                startActivity(productActivity);
-            } else if (url.contains(getString(R.string.keyboardSettings))) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, getString(R.string.keyboard))
-                        .commit();
-                //navigationView.getMenu().getItem(1).setChecked(true);
-            } else if (url.contains(getString(R.string.addCustomPage))) {
-                Intent createCustomPage = new Intent(HomeActivity.this, CreateCustomPageActivity.class);
-                if (isFromRia && mRiaNodeDataModel != null) {
-                    createCustomPage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
-                }
-                startActivity(createCustomPage);
-            } else if (url.contains(getString(R.string.myorders))) {
-                Intent listOrder = new Intent(HomeActivity.this, SellerAnalyticsActivity.class);
-                startActivity(listOrder);
-            } else if (url.contains(getString(R.string.myorderdetail))) {
-                Bundle bundle = getBundleData();
-                int experienceType = getExperienceType(session.getFP_AppExperienceCode());
-                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
-                else if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ALL_ORDER_VIEW, bundle, false);
-            } else if (url.contains(getString(R.string.appointment_fragment))) {
-                Bundle bundle = getBundleData();
-                int experienceType = getExperienceType(session.getFP_AppExperienceCode());
-                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
-            } else if (url.contains(getString(R.string.order_fragment))) {
-                Bundle bundle = getBundleData();
-                int experienceType = getExperienceType(session.getFP_AppExperienceCode());
-                if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ALL_ORDER_VIEW, bundle, false);
-            } else if (url.contains(getString(R.string.consultation_fragment))) {
-                Bundle bundle = getBundleData();
-                int experienceType = getExperienceType(session.getFP_AppExperienceCode());
-                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
-            } else if (url.contains(getResources().getString(R.string.deeplink_upgrade))) {
-                final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
-                try {
-                    HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                } catch (android.content.ActivityNotFoundException anfe) {
-                    HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                }
-            } else if (url.contains(getResources().getString(R.string.deeplink_analytics))) {
-                headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, homeFragment)
-                        .commit();
-                getSupportFragmentManager().executePendingTransactions();
-                Constants.deepLinkAnalytics = true;
-                homeFragment.setFragmentTab(1);
-            } else if (url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains(getString(R.string.enquiries))) {
-                Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
-                startActivity(queries);
-            } else if (url.contains(getString(R.string.deep_link_call_tracker))) {
-                Intent callLogs = new Intent(HomeActivity.this, ShowVmnCallActivity.class);
-                startActivity(callLogs);
-            } else if (url.contains(getString(R.string.store_url)) || url.contains(getResources().getString(R.string.deeplink_store)) ||
-                    url.contains(getResources().getString(R.string.deeplink_propack)) ||
-                    url.contains(getResources().getString(R.string.deeplink_nfstoreseo)) ||
-                    url.contains(getResources().getString(R.string.deeplink_nfstorettb)) ||
-                    url.contains(getResources().getString(R.string.deeplink_nfstorebiztiming)) ||
-                    url.contains(getResources().getString(R.string.deeplink_nfstoreimage)) ||
-                    url.contains(getResources().getString(R.string.deeplink_nfstoreimage))) {
-                Intent i = new Intent(this, NewPricingPlansActivity.class);
-                startActivity(i);
-            } else if (url.contains(getResources().getString(R.string.deeplink_searchqueries))) {
-                Intent queries = new Intent(HomeActivity.this, SearchQueriesActivity.class);
-                startActivity(queries);
-            } else if (url.contains(getString(R.string.blog))) {
+        Intent createUpdate = new Intent(HomeActivity.this, Create_Message_Activity.class);
+        if (isFromRia && mRiaNodeDataModel != null) {
+          createUpdate.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+        }
+        startActivity(createUpdate);
+      } else if (url.contains(getResources().getString(R.string.deeplink_featuredimage))) {
+        Intent featureImage = new Intent(HomeActivity.this, Edit_Profile_Activity.class);
+        if (isFromRia && mRiaNodeDataModel != null) {
+          featureImage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+        }
+        startActivity(featureImage);
+      } else if (url.contains(getString(R.string.addProduct))) {
+        Intent productActivity = new Intent(HomeActivity.this, Product_Detail_Activity_V45.class);
+        productActivity.putExtra("new", "");
+        if (isFromRia && mRiaNodeDataModel != null) {
+          productActivity.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+        }
+        startActivity(productActivity);
+      } else if (url.contains(getString(R.string.keyboardSettings))) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, getString(R.string.keyboard))
+            .commit();
+        //navigationView.getMenu().getItem(1).setChecked(true);
+      } else if (url.contains(getString(R.string.addCustomPage))) {
+        Intent createCustomPage = new Intent(HomeActivity.this, CreateCustomPageActivity.class);
+        if (isFromRia && mRiaNodeDataModel != null) {
+          createCustomPage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+        }
+        startActivity(createCustomPage);
+      } else if (url.contains(getString(R.string.myorders))) {
+        Intent listOrder = new Intent(HomeActivity.this, SellerAnalyticsActivity.class);
+        startActivity(listOrder);
+      } else if (url.contains(getString(R.string.myorderdetail))) {
+        Bundle bundle = getBundleData();
+        int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+        if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
+        else if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ALL_ORDER_VIEW, bundle, false);
+      } else if (url.contains(getString(R.string.appointment_fragment))) {
+        Bundle bundle = getBundleData();
+        int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+        if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
+      } else if (url.contains(getString(R.string.order_fragment))) {
+        Bundle bundle = getBundleData();
+        int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+        if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ALL_ORDER_VIEW, bundle, false);
+      } else if (url.contains(getString(R.string.consultation_fragment))) {
+        Bundle bundle = getBundleData();
+        int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+        if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
+      } else if (url.contains(getResources().getString(R.string.deeplink_upgrade))) {
+        final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
+        try {
+          HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+          HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+      } else if (url.contains(getResources().getString(R.string.deeplink_analytics))) {
+        headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, homeFragment)
+            .commit();
+        getSupportFragmentManager().executePendingTransactions();
+        Constants.deepLinkAnalytics = true;
+        homeFragment.setFragmentTab(1);
+      } else if (url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains(getString(R.string.enquiries))) {
+        Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
+        startActivity(queries);
+      } else if (url.contains(getString(R.string.deep_link_call_tracker))) {
+        Intent callLogs = new Intent(HomeActivity.this, ShowVmnCallActivity.class);
+        startActivity(callLogs);
+      } else if (url.contains(getString(R.string.store_url)) || url.contains(getResources().getString(R.string.deeplink_store)) ||
+          url.contains(getResources().getString(R.string.deeplink_propack)) ||
+          url.contains(getResources().getString(R.string.deeplink_nfstoreseo)) ||
+          url.contains(getResources().getString(R.string.deeplink_nfstorettb)) ||
+          url.contains(getResources().getString(R.string.deeplink_nfstorebiztiming)) ||
+          url.contains(getResources().getString(R.string.deeplink_nfstoreimage)) ||
+          url.contains(getResources().getString(R.string.deeplink_nfstoreimage))) {
+        Intent i = new Intent(this, NewPricingPlansActivity.class);
+        startActivity(i);
+      } else if (url.contains(getResources().getString(R.string.deeplink_searchqueries))) {
+        Intent queries = new Intent(HomeActivity.this, SearchQueriesActivity.class);
+        startActivity(queries);
+      } else if (url.contains(getString(R.string.blog))) {
 
-                if (!Util.isNullOrEmpty(url)) {
-                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                } else {
-                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                            + getResources().getString(R.string.tag_for_partners);
-                }
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            } else if (url.contains(getString(R.string.subscribers)) || url.contains(getString(R.string.new_subscribers))) {
-                Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
-                startActivity(subscribers);
-            } else if (url.contains(getString(R.string.share_lower_case))) {
-                shareWebsite();
-            } else if (url.contains(getString(R.string.visits)) || url.contains(getString(R.string.viewgraph))) {
-                Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
-                accountInfo.putExtra("table_name", Constants.VISITS_TABLE);
-                startActivity(accountInfo);
-            } else if (url.contains(getResources().getString(R.string.deeplink_business_app))) {
-                startBusinessApp();
-            } else if (url.contains(getResources().getString(R.string.deeplink_socailsharing))) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, socialSharingFragment, getString(R.string.socialsharingfragment)).commit();
+        if (!Util.isNullOrEmpty(url)) {
+          url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        } else {
+          url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+              + getResources().getString(R.string.tag_for_partners);
+        }
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+      } else if (url.contains(getString(R.string.subscribers)) || url.contains(getString(R.string.new_subscribers))) {
+        Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
+        startActivity(subscribers);
+      } else if (url.contains(getString(R.string.share_lower_case))) {
+        shareWebsite();
+      } else if (url.contains(getString(R.string.visits)) || url.contains(getString(R.string.viewgraph))) {
+        Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
+        accountInfo.putExtra("table_name", Constants.VISITS_TABLE);
+        startActivity(accountInfo);
+      } else if (url.contains(getResources().getString(R.string.deeplink_business_app))) {
+        startBusinessApp();
+      } else if (url.contains(getResources().getString(R.string.deeplink_socailsharing))) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, socialSharingFragment, getString(R.string.socialsharingfragment)).commit();
 //                startActivity(new Intent(activity, Social_Sharing_Activity.class));
-            } else if (url.contains(getResources().getString(R.string.deeplink_notification))) {
-                homeFragment.setFragmentTab(2);
-            } else if (url.contains(getResources().getString(R.string.deeplink_profile))) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, businessFragment, "Profile").commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_contact))) {
-                Intent queries = new Intent(HomeActivity.this, ContactInformationActivity.class);
-                startActivity(queries);
-            } else if (url.contains(getResources().getString(R.string.deeplink_bizaddress))) {
-                Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
-                startActivity(queries);
-            } else if (url.contains(getResources().getString(R.string.deeplink_bizhours))) {
-                Intent queries = new Intent(HomeActivity.this, BusinessHoursActivity.class);
-                startActivity(queries);
-            } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo))) {
-                Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
-                startActivity(queries);
-            } else if (url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo))) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, businessFragment)
-                        .commit();
-            } else if (url.contains(getString(R.string.deeplink_sitemeter))) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, siteMeterFragment)
-                        .commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_imageGallery))) {
-                Intent i = new Intent(this, ImageGalleryActivity.class);
-                startActivity(i);
-            } else if (url.contains(getResources().getString(R.string.deeplink_ProductGallery))) {
-                Intent i = new Intent(this, ProductGalleryActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else if (url.contains(getResources().getString(R.string.deeplink_assuredPurchase))) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, getString(R.string.manageinventory))
-                        .commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {
-                //TODO
-            } else if (url.contains(getResources().getString(R.string.deeplink_accSettings))) {
-                MixPanelController.track(EventKeysWL.SIDE_PANEL_ACCOUNT_SETTINGS, null);
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, getString(R.string.accountsettingsfragment))
-                        .commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_uniqueVisitor))) {
-                Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
-                accountInfo.putExtra("table_name", Constants.VISITORS_TABLE);
-                startActivity(accountInfo);
-            } else if (url.contains(getResources().getString(R.string.addon_marketplace)) || url.contains(getResources().getString(R.string.deeplink_add_ons_marketplace))) {
-                initiateAddonMarketplace(false, "", "");
-            } else if (url.contains(getResources().getString(R.string.deeplink_cart_fragment))) {
-                initiateAddonMarketplace(true, "", "");
-            } else if (url.contains(getResources().getString(R.string.deeplink_manage_content))) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, manageContentFragment).commit();
+      } else if (url.contains(getResources().getString(R.string.deeplink_notification))) {
+        homeFragment.setFragmentTab(2);
+      } else if (url.contains(getResources().getString(R.string.deeplink_profile))) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, businessFragment, "Profile").commit();
+      } else if (url.contains(getResources().getString(R.string.deeplink_contact))) {
+        Intent queries = new Intent(HomeActivity.this, ContactInformationActivity.class);
+        startActivity(queries);
+      } else if (url.contains(getResources().getString(R.string.deeplink_bizaddress))) {
+        Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
+        startActivity(queries);
+      } else if (url.contains(getResources().getString(R.string.deeplink_bizhours))) {
+        Intent queries = new Intent(HomeActivity.this, BusinessHoursActivity.class);
+        startActivity(queries);
+      } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo))) {
+        Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
+        startActivity(queries);
+      } else if (url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo))) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, businessFragment)
+            .commit();
+      } else if (url.contains(getString(R.string.deeplink_sitemeter))) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, siteMeterFragment)
+            .commit();
+      } else if (url.contains(getResources().getString(R.string.deeplink_imageGallery))) {
+        Intent i = new Intent(this, ImageGalleryActivity.class);
+        startActivity(i);
+      } else if (url.contains(getResources().getString(R.string.deeplink_ProductGallery))) {
+        Intent i = new Intent(this, ProductGalleryActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+      } else if (url.contains(getResources().getString(R.string.deeplink_assuredPurchase))) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, getString(R.string.manageinventory))
+            .commit();
+      } else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {
+        //TODO
+      } else if (url.contains(getResources().getString(R.string.deeplink_accSettings))) {
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_ACCOUNT_SETTINGS, null);
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, getString(R.string.accountsettingsfragment))
+            .commit();
+      } else if (url.contains(getResources().getString(R.string.deeplink_uniqueVisitor))) {
+        Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
+        accountInfo.putExtra("table_name", Constants.VISITORS_TABLE);
+        startActivity(accountInfo);
+      } else if (url.contains(getResources().getString(R.string.addon_marketplace)) || url.contains(getResources().getString(R.string.deeplink_add_ons_marketplace))) {
+        initiateAddonMarketplace(false, "", "");
+      } else if (url.contains(getResources().getString(R.string.deeplink_cart_fragment))) {
+        initiateAddonMarketplace(true, "", "");
+      } else if (url.contains(getResources().getString(R.string.deeplink_manage_content))) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, manageContentFragment).commit();
 
       } else if (url.contains(getResources().getString(R.string.deeplink_my_bank_account))) {
         Bundle bundle = getBundleData();
@@ -655,55 +653,55 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         DigitalChannelUtil.startDigitalChannel(HomeActivity.this, session);
       } else if (url.contains(getResources().getString(R.string.deeplink_call_tracker_add_on))) {
 //                WebEngageController.trackEvent("NAV - CALLS", "CALLS", null);
-                Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
-                startActivity(i);
-            } else if (url.contains(getResources().getString(R.string.deeplink_service_catalogue))) {
-                Intent serviceCatalogue = new Intent(HomeActivity.this, ProductCatalogActivity.class);
-                startActivity(serviceCatalogue);
-            } else if (url.contains(getResources().getString(R.string.deeplink_all_custom_pages))) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, customPageFragment)
-                        .commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_analytics_website_visits))) {
+        Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
+        startActivity(i);
+      } else if (url.contains(getResources().getString(R.string.deeplink_service_catalogue))) {
+        Intent serviceCatalogue = new Intent(HomeActivity.this, ProductCatalogActivity.class);
+        startActivity(serviceCatalogue);
+      } else if (url.contains(getResources().getString(R.string.deeplink_all_custom_pages))) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, customPageFragment)
+            .commit();
+      } else if (url.contains(getResources().getString(R.string.deeplink_analytics_website_visits))) {
 //                WebEngageController.trackEvent(WEBSITE_VISITS_CHART_DURATION_CHANGED, EVENT_LABEL_NULL, session.getFpTag());
-                MixPanelController.track("OverallVisitsDetailedView", null);
-                Intent q = new Intent(HomeActivity.this, SiteViewsAnalytics.class);
-                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
-                startActivity(q);
-                HomeActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else if (url.contains(getResources().getString(R.string.deeplink_analytics_website_visitors))) {
-                MixPanelController.track("UniqueVisitsDetailedView", null);
-                Intent q = new Intent(HomeActivity.this, SiteViewsAnalytics.class);
-                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.UNIQUE);
-                startActivity(q);
-                HomeActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else if (url.contains(getResources().getString(R.string.deeplink_background_images))) {
-                Intent i = new Intent(this, BackgroundImageGalleryActivity.class);
-                startActivity(i);
-            } else if (url.contains(getResources().getString(R.string.deeplink_favicon))) {
-                Intent i = new Intent(this, FaviconImageActivity.class);
-                startActivity(i);
-            } else if (url.contains(getResources().getString(R.string.deeplink_appointment_summary))) {
-                Intent i = new Intent(this, OrderSummaryActivity.class);
-                startActivity(i);
-                this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else if (url.contains(getResources().getString(R.string.deeplink_book_table))) {
-                Intent i = new Intent(this, BookATableActivity.class);
-                startActivity(i);
-                this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else if (url.contains(getResources().getString(R.string.deeplink_my_add_ons))) {
-                String screenType = "myAddOns";
-                initiateAddonMarketplace(false, screenType, "");
-            } else if (url.contains(getResources().getString(R.string.deeplink_recommended_add_ons))) {
-                String screenType = "recommendedAddOns";
-                initiateAddonMarketplace(false, screenType, "");
-            } else if (!buyItemKey.isEmpty() && url.contains(getResources().getString(R.string.deeplink_item_on_market_place))) {
-                BuyItemKey buyItemKey1 = BuyItemKey.by(buyItemKey);
-                if (buyItemKey1 != null) initiateAddonMarketplace(false, "", buyItemKey1.getItemValue());
-            }
-        }
-        mDeepLinkUrl = null;
+        MixPanelController.track("OverallVisitsDetailedView", null);
+        Intent q = new Intent(HomeActivity.this, SiteViewsAnalytics.class);
+        q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
+        startActivity(q);
+        HomeActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+      } else if (url.contains(getResources().getString(R.string.deeplink_analytics_website_visitors))) {
+        MixPanelController.track("UniqueVisitsDetailedView", null);
+        Intent q = new Intent(HomeActivity.this, SiteViewsAnalytics.class);
+        q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.UNIQUE);
+        startActivity(q);
+        HomeActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+      } else if (url.contains(getResources().getString(R.string.deeplink_background_images))) {
+        Intent i = new Intent(this, BackgroundImageGalleryActivity.class);
+        startActivity(i);
+      } else if (url.contains(getResources().getString(R.string.deeplink_favicon))) {
+        Intent i = new Intent(this, FaviconImageActivity.class);
+        startActivity(i);
+      } else if (url.contains(getResources().getString(R.string.deeplink_appointment_summary))) {
+        Intent i = new Intent(this, OrderSummaryActivity.class);
+        startActivity(i);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+      } else if (url.contains(getResources().getString(R.string.deeplink_book_table))) {
+        Intent i = new Intent(this, BookATableActivity.class);
+        startActivity(i);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+      } else if (url.contains(getResources().getString(R.string.deeplink_my_add_ons))) {
+        String screenType = "myAddOns";
+        initiateAddonMarketplace(false, screenType, "");
+      } else if (url.contains(getResources().getString(R.string.deeplink_recommended_add_ons))) {
+        String screenType = "recommendedAddOns";
+        initiateAddonMarketplace(false, screenType, "");
+      } else if (!buyItemKey.isEmpty() && url.contains(getResources().getString(R.string.deeplink_item_on_market_place))) {
+        BuyItemKey buyItemKey1 = BuyItemKey.by(buyItemKey);
+        if (buyItemKey1 != null) initiateAddonMarketplace(false, "", buyItemKey1.getItemValue());
+      }
     }
+    mDeepLinkUrl = null;
+  }
 
   private Bundle getBundleData() {
     Bundle bundle = new Bundle();
@@ -978,21 +976,21 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
       prefsEditor = pref.edit();
     }
 
-        Boolean isPaymentSuccess = pref.getBoolean(getString(R.string.last_payment_status), false);
-        Set<String> keys = pref.getStringSet(getString(R.string.last_purchase_order_feature_keys), null);
-        if (keys != null && isPaymentSuccess) {
-            ArrayList<String> keys2 = new ArrayList<>();
-            keys2.addAll(keys);
-            Toast.makeText(HomeActivity.this,getString( R.string.refreshing_your_business_dashboard), Toast.LENGTH_LONG).show();
-            for (int i = 0; i < keys2.size(); i++) {
-                if (!Constants.StoreWidgets.contains(keys2.get(i))) {
-                    Constants.StoreWidgets.add(keys2.get(i));
-                }
-            }
+    Boolean isPaymentSuccess = pref.getBoolean(getString(R.string.last_payment_status), false);
+    Set<String> keys = pref.getStringSet(getString(R.string.last_purchase_order_feature_keys), null);
+    if (keys != null && isPaymentSuccess) {
+      ArrayList<String> keys2 = new ArrayList<>();
+      keys2.addAll(keys);
+      Toast.makeText(HomeActivity.this, getString(R.string.refreshing_your_business_dashboard), Toast.LENGTH_LONG).show();
+      for (int i = 0; i < keys2.size(); i++) {
+        if (!Constants.StoreWidgets.contains(keys2.get(i))) {
+          Constants.StoreWidgets.add(keys2.get(i));
         }
-        prefsEditor.remove("Last_Purchase_Order_Feature_Keys");
-        prefsEditor.remove("Last_payment_status");
-        prefsEditor.apply();
+      }
+    }
+    prefsEditor.remove("Last_Purchase_Order_Feature_Keys");
+    prefsEditor.remove("Last_payment_status");
+    prefsEditor.apply();
 
     if (!isCalled) {
       navigateView();
@@ -1298,67 +1296,67 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     message.setText(Methods.fromHtml(dialogMessage));
   }
 
-    @Override
-    public void onClick(final String nextScreen) {
-        Methods.isOnline(HomeActivity.this);
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        shareButton.setVisibility(View.GONE);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (nextScreen.equals(getString(R.string.keyboard))) {
-                    WebEngageController.trackEvent(NAV_BIZ_KEYBOARD, BIZ_KEYBOARD, session.getFpTag());
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
-                            .commit();
-                } else if (nextScreen.equals(getString(R.string.facebook_leads))) {
-                    WebEngageController.trackEvent(NAV_ONLINE_ADVERTISING, ONLINE_ADVERTISING, session.getFpTag());
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, facebookLeadsFragment, "FacebookLeadAds")
-                            .commit();
-                } else if (nextScreen.equals(getString(R.string.business_profile))) {
-                    shareButton.setVisibility(View.VISIBLE);
-                    plusAddButton.setVisibility(View.GONE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessFragment, "Profile")
-                            .commit();
-                } else if (nextScreen.equals(getString(R.string.manage_customers))) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
-                            .commit();
-                } else if (nextScreen.equals("wildfire")) {
-                    FragmentManager manager = getSupportFragmentManager();
-                    Fragment frag = manager.findFragmentByTag("wildfireFrag");
-                    if (frag == null) {
-                        frag = new WildFireFragment();
-                    }
-                    manager.beginTransaction().replace(R.id.mainFrame, frag, "wildfireFrag")
-                            .commit();
-                } else if (nextScreen.equals("dictate")) {
-                    FragmentManager manager = getSupportFragmentManager();
-                    Fragment frag = manager.findFragmentByTag("DictateFrag");
-                    if (frag == null) {
-                        frag = new DictateFragment();
-                    }
-                    manager.beginTransaction().replace(R.id.mainFrame, frag, "DictateFrag")
-                            .commit();
-                } else if (nextScreen.equals(getResources().getString(R.string.my_business_apps))) {
-                    startBusinessApp();
-                } else if (nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))) {
-                    Intent i = new Intent(HomeActivity.this, SiteAppearanceActivity.class);
-                    startActivity(i);
-                } else if (nextScreen.equals(getString(R.string.image_gallery))) {
-                    // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
-                    // startActivity(imageGalleryIntent);
-                    Intent i = new Intent(HomeActivity.this, ImageGalleryActivity.class);
-                    startActivity(i);
-                } else if (nextScreen.equals(getString(R.string.product_gallery))) {
+  @Override
+  public void onClick(final String nextScreen) {
+    Methods.isOnline(HomeActivity.this);
+    mDrawerLayout.closeDrawer(GravityCompat.START);
+    shareButton.setVisibility(View.GONE);
+    new Handler().postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        if (nextScreen.equals(getString(R.string.keyboard))) {
+          WebEngageController.trackEvent(NAV_BIZ_KEYBOARD, BIZ_KEYBOARD, session.getFpTag());
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+              .commit();
+        } else if (nextScreen.equals(getString(R.string.facebook_leads))) {
+          WebEngageController.trackEvent(NAV_ONLINE_ADVERTISING, ONLINE_ADVERTISING, session.getFpTag());
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, facebookLeadsFragment, "FacebookLeadAds")
+              .commit();
+        } else if (nextScreen.equals(getString(R.string.business_profile))) {
+          shareButton.setVisibility(View.VISIBLE);
+          plusAddButton.setVisibility(View.GONE);
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessFragment, "Profile")
+              .commit();
+        } else if (nextScreen.equals(getString(R.string.manage_customers))) {
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
+              .commit();
+        } else if (nextScreen.equals("wildfire")) {
+          FragmentManager manager = getSupportFragmentManager();
+          Fragment frag = manager.findFragmentByTag("wildfireFrag");
+          if (frag == null) {
+            frag = new WildFireFragment();
+          }
+          manager.beginTransaction().replace(R.id.mainFrame, frag, "wildfireFrag")
+              .commit();
+        } else if (nextScreen.equals("dictate")) {
+          FragmentManager manager = getSupportFragmentManager();
+          Fragment frag = manager.findFragmentByTag("DictateFrag");
+          if (frag == null) {
+            frag = new DictateFragment();
+          }
+          manager.beginTransaction().replace(R.id.mainFrame, frag, "DictateFrag")
+              .commit();
+        } else if (nextScreen.equals(getResources().getString(R.string.my_business_apps))) {
+          startBusinessApp();
+        } else if (nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))) {
+          Intent i = new Intent(HomeActivity.this, SiteAppearanceActivity.class);
+          startActivity(i);
+        } else if (nextScreen.equals(getString(R.string.image_gallery))) {
+          // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
+          // startActivity(imageGalleryIntent);
+          Intent i = new Intent(HomeActivity.this, ImageGalleryActivity.class);
+          startActivity(i);
+        } else if (nextScreen.equals(getString(R.string.product_gallery))) {
 
           Intent i = new Intent(HomeActivity.this, ProductGalleryActivity.class);
           startActivity(i);
 
-                } else if (nextScreen.equals(getString(R.string.site__meter))) {
-                    WebEngageController.trackEvent(NAV_SITE_HEALTH, SITE_HEALTH, NULL);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
-                } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
-                    DeepLinkPage(getString(R.string.deeplink_analytics), "", false);
-                } else if (nextScreen.equals(getString(R.string.home)) || nextScreen.equals(getString(R.string.update))) {
+        } else if (nextScreen.equals(getString(R.string.site__meter))) {
+          WebEngageController.trackEvent(NAV_SITE_HEALTH, SITE_HEALTH, NULL);
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
+        } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
+          DeepLinkPage(getString(R.string.deeplink_analytics), "", false);
+        } else if (nextScreen.equals(getString(R.string.home)) || nextScreen.equals(getString(R.string.update))) {
 
           headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
           setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -1383,12 +1381,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
                         homeFragment.checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
                     }*/
-                    //   getSupportFragmentManager().beginTransaction().
-                    //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
-                } else if (nextScreen.equals(getString(R.string.chat))) {
-                    if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
-                        MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT, null);
-                        WebEngageController.trackEvent(CONTACT_NF, EVENT_LABEL_NULL, session.getFpTag());
+          //   getSupportFragmentManager().beginTransaction().
+          //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
+        } else if (nextScreen.equals(getString(R.string.chat))) {
+          if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
+            MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT, null);
+            WebEngageController.trackEvent(CONTACT_NF, EVENT_LABEL_NULL, session.getFpTag());
 
             PreferencesManager.getsInstance(HomeActivity.this).setUserName(session.getFpTag());
 
@@ -1405,8 +1403,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         } else if (nextScreen.equals(getString(R.string.call)) || nextScreen.equals(getString(R.string.help_and_support))) {
 
-                    WebEngageController.trackEvent(NAV_SUPPORT, SUPPORT, NULL);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+          WebEngageController.trackEvent(NAV_SUPPORT, SUPPORT, NULL);
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
 
         } else if (nextScreen.equals(getString(R.string.share))) {
           shareWebsite();
@@ -1421,85 +1419,85 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
           startActivity(i);
 //            Intent in = new Intent(HomeActivity.this, CustomPageFragment.class);
 //            startActivity(in);
-                } else if (nextScreen.equals(getString(R.string.contact__info))) {
-                    Intent contactIntent = new Intent(HomeActivity.this, ContactInformationActivity.class);
-                    startActivity(contactIntent);
-                } else if (nextScreen.equals(getString(R.string.basic_info))) {
-                    Intent basicInfoIntent = new Intent(HomeActivity.this, Edit_Profile_Activity.class);
-                    startActivity(basicInfoIntent);
-                } else if (nextScreen.equals(getString(R.string.business__address))) {
-                    Intent businessAddressIntent = new Intent(HomeActivity.this, Business_Address_Activity.class);
-                    startActivity(businessAddressIntent);
-                } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_)) || nextScreen.equals(getString(R.string.content_sharing_settings))) {
-                    WebEngageController.trackEvent(NAV_SOCIAL_SHARING_MY_DIGITAL_CHANNELS_CLICK, CONTENT_SHARING_SETTINGS, NULL);
+        } else if (nextScreen.equals(getString(R.string.contact__info))) {
+          Intent contactIntent = new Intent(HomeActivity.this, ContactInformationActivity.class);
+          startActivity(contactIntent);
+        } else if (nextScreen.equals(getString(R.string.basic_info))) {
+          Intent basicInfoIntent = new Intent(HomeActivity.this, Edit_Profile_Activity.class);
+          startActivity(basicInfoIntent);
+        } else if (nextScreen.equals(getString(R.string.business__address))) {
+          Intent businessAddressIntent = new Intent(HomeActivity.this, Business_Address_Activity.class);
+          startActivity(businessAddressIntent);
+        } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_)) || nextScreen.equals(getString(R.string.content_sharing_settings))) {
+          WebEngageController.trackEvent(NAV_SOCIAL_SHARING_MY_DIGITAL_CHANNELS_CLICK, CONTENT_SHARING_SETTINGS, NULL);
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
-                    DigitalChannelUtil.startDigitalChannel(HomeActivity.this,session);
-                } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
-                    WebEngageController.trackEvent(NAV_ORDERS, ORDERS, NULL);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
-                            .commit();
+          DigitalChannelUtil.startDigitalChannel(HomeActivity.this, session);
+        } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
+          WebEngageController.trackEvent(NAV_ORDERS, ORDERS, NULL);
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
+              .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);
-                } else if (nextScreen.equals(getString(R.string.manage_inbox))) {
-                    WebEngageController.trackEvent(NAV_ENQUIRIES, ENQUIRIES, NULL);
+        } else if (nextScreen.equals(getString(R.string.manage_inbox))) {
+          WebEngageController.trackEvent(NAV_ENQUIRIES, ENQUIRIES, NULL);
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInboxFragment, "ManageInbox")
 //                            .commit();
-                    Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
-                    startActivity(queries);
-                } else if (nextScreen.equals(getString(R.string.manage_customer_calls))) {
-                    WebEngageController.trackEvent(NAV_CALLS, CALLS, NULL);
-                    Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                } else if (nextScreen.equals(getString(R.string.upgrades))) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_UPGRADE, null);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, upgradesFragment, "upgradesFragment")
-                            .commit();
-                } else if (nextScreen.equals(getString(R.string.add_ons))) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_ADD_ONS, null);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, addOnFragment, "addOnFragment")
-                            .commit();
-                } else if (nextScreen.equals(getString(R.string.about))) {
-                    WebEngageController.trackEvent(NAV_ABOUT_BOOST, ABOUT_BOOST, NULL);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, aboutFragment, "aboutFragment")
-                            .commit();
-                } else if (nextScreen.equals(getString(R.string.manage_content))) {
-                    WebEngageController.trackEvent(NAV_MANAGE_CONTENT, MANAGE_CONTENT, NULL);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageContentFragment, "manageContentFragment")
-                            .commit();
-                } else if (nextScreen.equals(getString(R.string.account_settings))) {
-                    WebEngageController.trackEvent(NAV_ACCOUNT_SETTINGS, ACCOUNT_SETTINGS, NULL);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
-                            .commit();
-                } else if (nextScreen.equals(getString(R.string.addon_marketplace))) {
-                    WebEngageController.trackEvent(NAV_ADDONS_MARKETPLACE, ADDONS_MARKETPLACE, NULL);
-                    initiateAddonMarketplace(false, "", "");
-                } else if (nextScreen.equals(getString(R.string.subscriptions))) {
-                    WebEngageController.trackEvent(NAV_SUBSCRIPTIONS, SUBSCRIPTIONS, NULL);
-                    Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
-                    startActivity(subscribers);
-                } else if (nextScreen.equals(getString(R.string.referrals_button))) {
-                    if (!TextUtils.isEmpty(session.getFPEmail())) {
-                        InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
-                                session.getUserProfileName(),
-                                session.getFPEmail(),
-                                session.getUserPrimaryMobile(),
-                                REFERRAL_CAMPAIGN_CODE, null, null
-                        );
-                        inviteReferralLogin();
-                    } else if (!TextUtils.isEmpty(session.getUserProfileEmail())) {
-                        InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
-                                session.getUserProfileName(),
-                                session.getUserProfileEmail(),
-                                session.getUserPrimaryMobile(),
-                                REFERRAL_CAMPAIGN_CODE, null, null
-                        );
-                        inviteReferralLogin();
-                    } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.an_unexpacted_error_occured), Toast.LENGTH_LONG).show();
-                    }
+          Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
+          startActivity(queries);
+        } else if (nextScreen.equals(getString(R.string.manage_customer_calls))) {
+          WebEngageController.trackEvent(NAV_CALLS, CALLS, NULL);
+          Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
+          startActivity(i);
+          overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else if (nextScreen.equals(getString(R.string.upgrades))) {
+          MixPanelController.track(EventKeysWL.SIDE_PANEL_UPGRADE, null);
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, upgradesFragment, "upgradesFragment")
+              .commit();
+        } else if (nextScreen.equals(getString(R.string.add_ons))) {
+          MixPanelController.track(EventKeysWL.SIDE_PANEL_ADD_ONS, null);
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, addOnFragment, "addOnFragment")
+              .commit();
+        } else if (nextScreen.equals(getString(R.string.about))) {
+          WebEngageController.trackEvent(NAV_ABOUT_BOOST, ABOUT_BOOST, NULL);
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, aboutFragment, "aboutFragment")
+              .commit();
+        } else if (nextScreen.equals(getString(R.string.manage_content))) {
+          WebEngageController.trackEvent(NAV_MANAGE_CONTENT, MANAGE_CONTENT, NULL);
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageContentFragment, "manageContentFragment")
+              .commit();
+        } else if (nextScreen.equals(getString(R.string.account_settings))) {
+          WebEngageController.trackEvent(NAV_ACCOUNT_SETTINGS, ACCOUNT_SETTINGS, NULL);
+          getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
+              .commit();
+        } else if (nextScreen.equals(getString(R.string.addon_marketplace))) {
+          WebEngageController.trackEvent(NAV_ADDONS_MARKETPLACE, ADDONS_MARKETPLACE, NULL);
+          initiateAddonMarketplace(false, "", "");
+        } else if (nextScreen.equals(getString(R.string.subscriptions))) {
+          WebEngageController.trackEvent(NAV_SUBSCRIPTIONS, SUBSCRIPTIONS, NULL);
+          Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
+          startActivity(subscribers);
+        } else if (nextScreen.equals(getString(R.string.referrals_button))) {
+          if (!TextUtils.isEmpty(session.getFPEmail())) {
+            InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
+                session.getUserProfileName(),
+                session.getFPEmail(),
+                session.getUserPrimaryMobile(),
+                REFERRAL_CAMPAIGN_CODE, null, null
+            );
+            inviteReferralLogin();
+          } else if (!TextUtils.isEmpty(session.getUserProfileEmail())) {
+            InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
+                session.getUserProfileName(),
+                session.getUserProfileEmail(),
+                session.getUserPrimaryMobile(),
+                REFERRAL_CAMPAIGN_CODE, null, null
+            );
+            inviteReferralLogin();
+          } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.an_unexpacted_error_occured), Toast.LENGTH_LONG).show();
+          }
 //                    InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
 //                            session.getUserProfileName(),
 //                            session.getUserProfileEmail(),
@@ -1513,25 +1511,25 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
   }
 
-    private void inviteReferralLogin() {
-        InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(new UserDetailsCallback() {
-            @Override
-            public void userDetails(JSONObject jsonObject) {
-                Log.d("Referral Details", jsonObject.toString());
-                try {
-                    String status = jsonObject.get("Authentication").toString();
-                    if (status.toLowerCase().equals("success")) {
-                        InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
-                    } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
+  private void inviteReferralLogin() {
+    InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(new UserDetailsCallback() {
+      @Override
+      public void userDetails(JSONObject jsonObject) {
+        Log.d("Referral Details", jsonObject.toString());
+        try {
+          String status = jsonObject.get("Authentication").toString();
+          if (status.toLowerCase().equals("success")) {
+            InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
+          } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
+          }
+        } catch (JSONException e) {
 //                                e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),  getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+          Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
+        }
+      }
+    });
+  }
 
   private void startBusinessApp() {
     int businessAppStatus = pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO);

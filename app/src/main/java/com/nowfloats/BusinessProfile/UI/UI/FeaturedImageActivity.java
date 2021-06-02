@@ -119,6 +119,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
     Log.d("FP_ID", session.getFPID());
 
     try {
+      uploadButton.setText(getResources().getString(R.string.change));
       String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
       if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
         String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
@@ -131,6 +132,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
         } else {
           Picasso.get().load(R.drawable.featured_photo_default).into(logoimageView);
           onFeatureLogoAddedOrUpdated(false);
+          uploadButton.setText(getResources().getString(R.string.add_logo));
         }
       }
 
@@ -407,7 +409,6 @@ public class FeaturedImageActivity extends AppCompatActivity {
     super.onActivityResult(requestCode, resultCode, data);
     try {
       if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
-
         try {
           CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
           imageUrl = Methods.getRealPathFromURI(this, imageUri);
@@ -471,13 +472,13 @@ public class FeaturedImageActivity extends AppCompatActivity {
 
 
   public void uploadPrimaryPicture(String path) {
+    uploadButton.setText(getResources().getString(R.string.change));
     new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
     // Upload_Logo upload_logo = new Upload_Logo(FeaturedImageActivity.this,path,session.getFPID(), session);
     // upload_logo.execute();
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());
 //        upa.execute();
-
     new uploadIMAGEURI(FeaturedImageActivity.this, path, session.getFPID(), this::imageUploaded).execute();
   }
 

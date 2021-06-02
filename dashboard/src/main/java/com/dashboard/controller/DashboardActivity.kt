@@ -56,7 +56,6 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
-import kotlin.system.exitProcess
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
@@ -323,7 +322,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 //      3 -> checkWelcomeShowScreen(pos)
       3 -> {
         binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-        WebEngageController.trackEvent(MORE, CLICK, TO_BE_ADDED)
+        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
       }
     }
   }
