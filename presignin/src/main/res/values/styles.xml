@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-  <style name="AppTheme.Pre.Signin" parent="Theme.MaterialComponents.Light.NoActionBar">
+  <style name="AppTheme.Pre.Signin" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
@@ -85,12 +85,12 @@
 
 
   <style name="psn_heading_style">
-    <item name="android:textSize">@dimen/heading_5</item>
+    <item name="textType">HEADING_7</item>
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="textColor">@color/black_4a4a4a</item>
     <item name="android:layout_marginStart">@dimen/_16sdp</item>
-    <item name="android:fontFamily">@font/open_sans_semibold</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
     <item name="android:layout_marginEnd">@dimen/_16sdp</item>
     <item name="android:layout_marginTop">@dimen/_14sdp</item>
     <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
@@ -102,13 +102,13 @@
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:textColor">@color/colorAccent</item>
-    <item name="android:fontFamily">@font/open_sans_semibold</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
     <item name="android:layout_marginTop">@dimen/_22sdp</item>
     <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
   </style>
 
   <style name="psn_subheading_style">
-    <item name="android:textSize">@dimen/caption</item>
+    <item name="textType">CAPTION</item>
     <item name="android:layout_width">0dp</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="textColor">@color/psn_sub_heading_color</item>
@@ -231,7 +231,7 @@
     <item name="android:textSize">@dimen/subheading_2</item>
     <item name="textType">SUBHEADING_2</item>
     <item name="textColor">@color/black_4a4a4a</item>
-    <item name="android:fontFamily">@font/open_sans_semibold</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
     <item name="android:gravity">center</item>
   </style>
 

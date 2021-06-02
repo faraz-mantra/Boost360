@@ -72,13 +72,25 @@
       tools:ignore="MissingConstraints" />
 
     <com.framework.views.customViews.CustomTextView
+      android:id="@+id/login_with_number_btn"
+      style="@style/psn_subheading_style"
+      android:layout_width="wrap_content"
+      android:layout_marginTop="@dimen/_20sdp"
+      android:fontFamily="@font/semi_bold"
+      android:text="@string/login_with_mobile_number"
+      android:textColor="@color/colorPrimary"
+      app:layout_constraintTop_toBottomOf="@id/login_bt"
+      app:textType="BODY_1"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomTextView
       android:id="@+id/help_tv"
       style="@style/psn_subheading_style"
       android:layout_width="wrap_content"
       android:layout_marginTop="@dimen/_20sdp"
-      android:fontFamily="@font/open_sans_semibold"
-      android:text="@string/psn_need_help_in_login"
-      app:layout_constraintTop_toBottomOf="@id/login_bt"
-      tools:ignore="MissingConstraints" />
+      android:fontFamily="@font/semi_bold"
+      android:text="@string/need_help"
+      app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+      tools:ignore="MissingConstraints,UnknownId" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

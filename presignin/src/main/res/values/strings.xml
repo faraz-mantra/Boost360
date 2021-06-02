@@ -132,4 +132,9 @@
   <string name="need_help"><u>Need help?</u></string>
   <string name="try_a_different_number">Try a different number</string>
   <string name="no_business_account_available_with">No business account available with</string>
+  <string name="step_1_2">STEP 1/2</string>
+  <string name="user_not_available">username/subdomain not available. Try with something else</string>
+  <string name="go_back">Go Back</string>
+  <string name="i_agree_n">I agree</string>
+  <string name="login_with_mobile_number">Login with Mobile number</string>
 </resources>

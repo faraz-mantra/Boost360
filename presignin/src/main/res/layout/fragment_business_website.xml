@@ -40,7 +40,8 @@
           android:id="@+id/step_counter"
           style="@style/step_counter_style"
           android:layout_width="wrap_content"
-          android:text="STEP 2/2" />
+          android:layout_marginTop="0dp"
+          android:text="@string/step_2_2" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/heading_tv"

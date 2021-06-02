@@ -29,6 +29,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.observeOnce
 import com.framework.pref.*
 import com.framework.webengageconstant.*
+import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
@@ -92,9 +93,15 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         showShortToast(getString(R.string.enter_a_valid_website_name))
         return@setOnClickListener
       }
-      floatsRequest?.webSiteUrl = "$website.nowfloats.com"
-      WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)
-      apiHitCreateMerchantProfile()
+      WebPreSignInBottomDialog().apply {
+        setData("https://www.getboost360.com/tnc?src=android&stage=user_account_create")
+        onClicked = {
+          floatsRequest?.webSiteUrl = "$website.nowfloats.com"
+          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)
+          apiHitCreateMerchantProfile()
+        }
+        show(this@BusinessWebsiteFragment.parentFragmentManager, WebPreSignInBottomDialog::class.java.name)
+      }
     }
   }
 
@@ -123,10 +130,9 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     binding?.confirmButton?.isEnabled = false
     binding?.fragmentStatusIv?.isClickable = true
     binding?.websiteStatusTv?.setTextColor(getColor(R.color.red_error_e3954))
+    binding?.websiteStatusTv?.text = "'${binding?.websiteEt?.text?.toString()?.trim()}' ${getString(R.string.user_not_available)}"
     binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_error_business_website)
-    binding?.fragmentStatusIv?.setOnClickListener {
-      binding?.websiteEt?.text?.clear()
-    }
+    binding?.fragmentStatusIv?.setOnClickListener { binding?.websiteEt?.text?.clear() }
   }
 
   private fun apiCheckDomain(subDomain: String, onSuccess: () -> Unit = {}) {

@@ -73,10 +73,10 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
     binding?.introViewpager?.setPageTransformer(ViewPager2Transformation())
     binding?.btnCreate?.setOnClickListener {
-      navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789346") })
+//      navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789346") })
       WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
-//      startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
-//      finish()
+      startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+      finish()
     }
   }
 
