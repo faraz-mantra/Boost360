@@ -1,10 +1,8 @@
 package com.dashboard.holder
 
-import android.content.res.ColorStateList
 import androidx.core.content.res.ResourcesCompat
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
-import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.databinding.RecyclerItemSelectFontBinding
 import com.dashboard.model.websitetheme.PrimaryItem
 import com.dashboard.model.websitetheme.SecondaryItem
@@ -18,7 +16,7 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) : AppBaseRec
     super.bind(position, item)
     when (item) {
       is PrimaryItem -> {
-        binding.ctvFontTitle.text = item.description
+        binding.ctvFontTitle.text = if (item.description.isNullOrEmpty().not()) item.description else "Empty Name $position"
         if (item.isSelected == true) {
           binding.imgSelected.visible()
           binding.imgSelected.setTintColor(getColor(R.color.orange)!!)
@@ -38,7 +36,7 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) : AppBaseRec
         }
       }
       is SecondaryItem -> {
-        binding.ctvFontTitle.text = item.description
+        binding.ctvFontTitle.text = if (item.description.isNullOrEmpty().not()) item.description else "Empty Name $position"
         if (item.isSelected == true) {
           binding.imgSelected.visible()
           binding.imgSelected.setTintColor(getColor(R.color.orange)!!)
@@ -55,9 +53,6 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) : AppBaseRec
           listener?.onItemClick(position, item, RecyclerViewActionType.SECONDARY_FONT_SELECTED.ordinal)
         }
       }
-
     }
-
-
   }
 }

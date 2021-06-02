@@ -2418,7 +2418,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="days">Days</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="open_">open</string>
+    <string name="open_">Open</string>
     <string name="_00_00" translatable="false">00:00</string>
     <string name="use_same_time_for_whole_week">Use same time for whole week</string>
     <string name="expiry_in_3_days">Expiry in 3 days</string>
@@ -3055,6 +3055,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="enter_the_domain_you_own_and_select_an_option_to_let_us_know_how_you_want_you_your_domain_to_be_mapped_to_this_boost_website">Enter the domain you own and select an option to let us know how you want you your domain to be mapped to this Boost website.</string>
     <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my Boost website’s web address/URL.</string>
     <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make Boost website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
+    <string name="add_logo">Add Logo</string>
 
     <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
 <!--    <string name="ir_statusBarColor">#ffb900</string>-->

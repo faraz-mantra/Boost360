@@ -19,7 +19,9 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.fromHtml
 import com.framework.webengageconstant.PAGE_VIEW
@@ -44,7 +46,6 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     session = UserSessionManager(baseActivity)
     getWebsiteData()
     setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.businessAddress, binding?.contactDetail, binding?.businessTiming)
-
     WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
@@ -55,7 +56,10 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
 
   private fun setUserData() {
     val desc = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
-    binding?.txtDesc?.text = if (desc.isNullOrEmpty().not()) desc else ""
+    binding?.txtDesc?.apply {
+      if (desc.isNullOrEmpty().not()) visible() else gone()
+      text = desc
+    }
     binding?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName()}</u>")
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
