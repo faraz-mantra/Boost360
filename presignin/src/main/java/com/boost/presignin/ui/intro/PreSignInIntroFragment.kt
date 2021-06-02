@@ -52,7 +52,6 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     binding?.presiginIntroImg?.setImageResource(introItem.imageResource)
 
     if (position == 0) {
-      binding?.boostLogo?.visible()
       binding?.presiginIntroImg?.setOnClickListener {
         WebEngageController.trackEvent(PS_INTRO_VIDEO_SPLASH_CLICKED, START_INTRO_VIDEO, NO_EVENT_VALUE)
         playPause?.let { it5 -> it5(true) }
@@ -105,7 +104,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         timer?.resume()
         it.isVisible = false
       }
-    } else binding?.boostLogo?.gone()
+    }
 
     binding?.muteVideo?.setOnClickListener {
       muteUnMute()

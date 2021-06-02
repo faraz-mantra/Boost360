@@ -46,27 +46,17 @@
       </LinearLayout>
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/presigin_intro_img"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        app:layout_constraintBottom_toTopOf="@+id/boost_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/intro_text_container"
-        tools:srcCompat="@string/intro_sub_title_0" />
-
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/boost_logo"
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/psn_boost_intro_logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+          android:id="@+id/presigin_intro_img"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_marginStart="@dimen/_16sdp"
+          android:layout_marginTop="16dp"
+          android:layout_marginEnd="@dimen/_16sdp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/intro_text_container"
+          tools:srcCompat="@string/intro_sub_title_0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
