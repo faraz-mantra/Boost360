@@ -16,19 +16,16 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) : AppBaseRec
     super.bind(position, item)
     when (item) {
       is PrimaryItem -> {
-        binding.ctvFontTitle.text = if (item.description.isNullOrEmpty().not()) item.description else "Empty Name $position"
+        binding.ctvFontRadio.text = if (item.description.isNullOrEmpty().not()) item.description else "Empty Name $position"
         if (item.isSelected == true) {
-          binding.imgSelected.visible()
-          binding.imgSelected.setTintColor(getColor(R.color.orange)!!)
-          binding.ctvFontTitle.setTextColor(getColor(R.color.orange)!!)
+          binding.ctvFontCurrent.visible()
           val font = ResourcesCompat.getFont(binding.root.context, R.font.semi_bold)
-          binding.ctvFontTitle.typeface = font
+          binding.ctvFontRadio.typeface = font
 
         } else {
-          binding.imgSelected.gone()
+          binding.ctvFontCurrent.gone()
           val font = ResourcesCompat.getFont(binding.root.context, R.font.regular)
-          binding.ctvFontTitle.typeface = font
-          binding.ctvFontTitle.setTextColor(getColor(R.color.black_2A2A2A)!!)
+          binding.ctvFontRadio.typeface = font
 
         }
         binding.root.setOnClickListener {
@@ -36,18 +33,17 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) : AppBaseRec
         }
       }
       is SecondaryItem -> {
-        binding.ctvFontTitle.text = if (item.description.isNullOrEmpty().not()) item.description else "Empty Name $position"
+        binding.ctvFontRadio.text = if (item.description.isNullOrEmpty().not()) item.description else "Empty Name $position"
         if (item.isSelected == true) {
-          binding.imgSelected.visible()
-          binding.imgSelected.setTintColor(getColor(R.color.orange)!!)
-          binding.ctvFontTitle.setTextColor(getColor(R.color.orange)!!)
+          binding.ctvFontCurrent.visible()
           val font = ResourcesCompat.getFont(binding.root.context, R.font.semi_bold)
-          binding.ctvFontTitle.typeface = font
+          binding.ctvFontRadio.typeface = font
+
         } else {
-          binding.imgSelected.gone()
+          binding.ctvFontCurrent.gone()
           val font = ResourcesCompat.getFont(binding.root.context, R.font.regular)
-          binding.ctvFontTitle.typeface = font
-          binding.ctvFontTitle.setTextColor(getColor(R.color.black_2A2A2A)!!)
+          binding.ctvFontRadio.typeface = font
+
         }
         binding.root.setOnClickListener {
           listener?.onItemClick(position, item, RecyclerViewActionType.SECONDARY_FONT_SELECTED.ordinal)

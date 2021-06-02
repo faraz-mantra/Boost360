@@ -75,7 +75,7 @@
   <string name="perform_online_business">How your business has performed online.</string>
   <string name="website_report_description">Learn how to make Boost 360 work for you.</string>
   <string name="share_business_card">Share Business card</string>
-  <string name="website_pages_and_widgets">Other website content and pages</string>
+  <string name="website_pages_and_widgets">Website pages and widgets</string>
   <string name="for_better_engagement_and_traffic_desc">Update regularly for better engagement and traffic.</string>
   <string name="press_again_exit">Press again to exit</string>
   <string name="download_file_banner">Downloading the file...</string>
@@ -138,10 +138,16 @@
   <string name="the_font_you_want_to_change_as_secondary">The font you want to change as secondary.</string>
   <string name="save">Save</string>
   <string name="save_changes">Save Changes</string>
-  <string name="website_style_customisation">Website Style Customisation</string>
+  <string name="website_style_customisation">Website customisation</string>
   <string name="error_while_getting_website_theme">Error while getting website theme.</string>
   <string name="your_theme_update_published">Your changes are saved successfully published and live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="unable_to_get_primary_fonts">Unable to get primary fonts</string>
   <string name="unable_to_get_secondary_fonts">Unable to get Secondary fonts.</string>
   <string name="business_logo_updated">Business logo updated successfully</string>
+    <string name="business_profile">Business Profile</string>
+  <string name="keep_updating_these_regularly_for_better_engagement_and_traffic">Keep updating these regularly for better engagement and traffic.</string>
+  <string name="website_customisation">website Customisation</string>
+    <string name="new_">new</string>
+  <string name="current_website_style">Current website style</string>
+    <string name="select_font">Select Font</string>
 </resources>
