@@ -29,7 +29,7 @@
       android:name=".ui.login.LoginActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Pre.Signin"
-      android:windowSoftInputMode="adjustPan" />
+      android:windowSoftInputMode="adjustPan|stateVisible" />
 
     <activity
       android:name=".ui.DesiredLoginMethodActivity"
@@ -43,7 +43,7 @@
       android:name=".ui.mobileVerification.MobileVerificationActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Pre.Signin"
-      android:windowSoftInputMode="adjustPan|stateVisible" />
+      android:windowSoftInputMode="adjustPan" />
 
     <activity
       android:name=".ui.intro.IntroActivity"

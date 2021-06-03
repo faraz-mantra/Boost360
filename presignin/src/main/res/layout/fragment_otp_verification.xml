@@ -24,7 +24,6 @@
       android:id="@+id/toolbar"
       style="@style/psn_toolbar_style"
       tools:ignore="MissingConstraints" />
-<!--    app:rightIcon="@drawable/verification_toolbar_icon"-->
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/title"

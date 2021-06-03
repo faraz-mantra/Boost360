@@ -5,16 +5,21 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentMobileBinding
 import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.ui.login.LoginActivity
+import com.boost.presignin.ui.registration.RegistrationActivity
+import com.boost.presignin.ui.registration.SUCCESS_FRAGMENT
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
+import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
 class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewModel>() {
@@ -65,6 +70,11 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     }
   }
 
+  override fun onResume() {
+    super.onResume()
+    baseActivity.showKeyBoard(binding?.phoneEt)
+  }
+
   private fun goBack() {
     navigator?.startActivityFinish(IntroActivity::class.java)
   }
@@ -73,7 +83,9 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     showProgress(getString(R.string.sending_otp))
     viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.parseResponse()) {
-        addFragmentReplace(com.framework.R.id.container, OtpVerificationFragment.newInstance(binding?.phoneEt?.text?.toString()!!), addToBackStack = true)
+        navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+          putInt(FRAGMENT_TYPE, OTP_FRAGMENT) ;putString(IntentConstant.EXTRA_PHONE_NUMBER.name,binding?.phoneEt?.text?.toString())
+        })
       } else showShortToast(getString(R.string.otp_not_sent))
       hideProgress()
     })

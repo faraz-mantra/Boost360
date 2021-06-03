@@ -31,13 +31,10 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
   private var categoryList = ArrayList<CategoryDataModel>()
 
   companion object {
-    private const val PHONE_NUMBER = "phone_number"
 
     @JvmStatic
-    fun newInstance(phoneNumber: String?) = CategoryFragment().apply {
-      arguments = Bundle().apply {
-        putString(PHONE_NUMBER, phoneNumber)
-      }
+    fun newInstance(bundle: Bundle?) = CategoryFragment().apply {
+      arguments = bundle
     }
   }
 

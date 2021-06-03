@@ -16,7 +16,6 @@
       android:id="@+id/toolbar"
       style="@style/psn_toolbar_style"
       tools:ignore="MissingConstraints" />
-    <!--app:rightIcon="@drawable/psn_phone_icon"-->
 
     <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
 
@@ -119,31 +118,21 @@
       android:gravity="center"
       android:text="@string/login_with_username_or_email"
       android:textAllCaps="true"
+      android:fontFamily="@font/semi_bold"
       android:textColor="@color/colorPrimary"
-      android:textFontWeight="600"
       app:layout_constraintTop_toBottomOf="@id/next_button"
       app:textType="BODY_1"
       tools:ignore="MissingConstraints"
       tools:targetApi="p" />
 
     <com.framework.views.customViews.CustomTextView
+      android:id="@+id/help_tv"
       style="@style/psn_subheading_style"
-      android:layout_marginTop="@dimen/_16sdp"
-      android:layout_marginBottom="@dimen/_20sdp"
-      android:gravity="center"
+      android:layout_width="wrap_content"
+      android:layout_marginTop="@dimen/_20sdp"
+      android:fontFamily="@font/semi_bold"
       android:text="@string/need_help"
-      android:textColor="@color/black_4a4a4a"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:textType="BODY_1"
-      tools:ignore="MissingConstraints" />
-
-    <!--    <com.framework.views.customViews.CustomButton-->
-    <!--      android:id="@+id/next_button"-->
-    <!--      style="@style/psn_signin_bt_style"-->
-    <!--      android:enabled="false"-->
-    <!--      android:text="@string/next"-->
-    <!--      app:layout_constraintBottom_toBottomOf="@id/bottomGuide"-->
-    <!--      app:layout_constraintEnd_toEndOf="@id/endGuide"-->
-    <!--      tools:ignore="UnknownId" />-->
+      app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+      tools:ignore="MissingConstraints,UnknownId" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,5 +1,6 @@
 package com.boost.presignin.ui
 
+import android.content.Intent
 import android.os.Bundle
 import com.boost.presignin.R
 import com.boost.presignin.constant.IntentConstant
@@ -29,20 +30,25 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
     WebEngageController.trackEvent(PS_CREATE_LOGIN_OTHER_WAY, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.usernameAccountBt?.setOnClickListener {
       WebEngageController.trackEvent(PS_RETRY_ACCOUNT_ACCOUNT_CLICK, CLICKED, NO_EVENT_VALUE)
-      navigator?.startActivity(LoginActivity::class.java)
+      navigator?.startActivityForResult(LoginActivity::class.java, 300)
     }
     binding?.tryDifferentNumberBtn?.setOnClickListener {
       WebEngageController.trackEvent(PS_TRY_DIFFERENT_NUMBER_CLICK, CLICKED, NO_EVENT_VALUE)
-      onNavPressed()
+      finish()
     }
     binding?.backIv?.setOnClickListener { onNavPressed() }
 
     binding?.heading?.text = "${getString(R.string.no_business_account_available_with)} +91-$phoneNumber"
-        binding?.createAccountBt?.setOnClickListener {
-          WebEngageController.trackEvent(PS_CREATE_BUSINESS_PROFILE_CLICK, CLICKED, NO_EVENT_VALUE)
-          val bundle = Bundle()
-          bundle.putSerializable(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-          navigator?.startActivity(RegistrationActivity::class.java, bundle)
-        }
+    binding?.createAccountBt?.setOnClickListener {
+      WebEngageController.trackEvent(PS_CREATE_BUSINESS_PROFILE_CLICK, CLICKED, NO_EVENT_VALUE)
+      val bundle = Bundle()
+      bundle.putSerializable(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+      navigator?.startActivity(RegistrationActivity::class.java, bundle)
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 300 && resultCode == RESULT_OK) finish()
   }
 }

@@ -6,7 +6,7 @@ import android.app.ProgressDialog
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 
-class ProgressAsyncTask(var activity: AppCompatActivity) : AsyncTask<Void?, Void?, Void?>() {
+class ProgressAsyncTask(activity: AppCompatActivity) : AsyncTask<Void?, Void?, Void?>() {
 
   var progressDialog = ProgressDialog(activity)
 
