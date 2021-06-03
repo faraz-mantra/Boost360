@@ -1,5 +1,6 @@
 package com.boost.presignin.ui.login
 
+import android.os.Bundle
 import android.widget.ImageView
 import androidx.fragment.app.FragmentManager
 import com.boost.presignin.R
@@ -18,7 +19,9 @@ class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignU
 
   companion object {
     @JvmStatic
-    fun newInstance() = ForgetPassFragment()
+    fun newInstance(bundle: Bundle?) = ForgetPassFragment().apply {
+      arguments = bundle
+    }
   }
 
   override fun getLayout(): Int {
@@ -45,9 +48,6 @@ class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignU
       })
     }
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
-    backButton?.setOnClickListener {
-      parentFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
+    backButton?.setOnClickListener { baseActivity.finish() }
   }
-
 }
