@@ -325,6 +325,11 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     /**
      * If not new pricing plan
      */
+    // for testing:
+    openAddProductActivity(new Product());
+    if(true){
+      return;
+    }
     if (!WidgetKey.isNewPricingPlan) {
       if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
         Methods.showFeatureNotAvailDialog(this);
