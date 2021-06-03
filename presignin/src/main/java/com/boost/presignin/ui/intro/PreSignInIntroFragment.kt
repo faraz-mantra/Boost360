@@ -127,33 +127,6 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     return BaseViewModel::class.java
   }
 
-  override fun onStart() {
-    super.onStart()
-  }
-
-  override fun onResume() {
-    super.onResume()
-
-  }
-
-  override fun onPause() {
-    super.onPause()
-    if (position == 0) {
-      if (binding?.videoView?.isPlaying == true) {
-        binding?.videoView?.pause()
-        binding?.playPauseLottie?.isVisible = true;
-      }
-    }
-    timer?.cancel()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    timer?.cancel()
-    binding?.videoView?.suspend()
-  }
-
-
   private fun setVideoTimerCountDown() {
     try {
       val duration = mediaPlayer?.duration ?: 0
@@ -189,6 +162,22 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     }
   }
 
+  override fun onPause() {
+    super.onPause()
+    if (position == 0) {
+      if (binding?.videoView?.isPlaying == true) {
+        binding?.videoView?.pause()
+        binding?.playPauseLottie?.isVisible = true;
+      }
+    }
+    timer?.cancel()
+  }
+
+  override fun onStop() {
+    super.onStop()
+    timer?.cancel()
+    binding?.videoView?.suspend()
+  }
 
   override fun onDestroy() {
     super.onDestroy()

@@ -14,6 +14,7 @@ import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
+import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.framework.webengageconstant.PS_BUSINESS_ACCOUNT_PAGE_LOAD
@@ -64,6 +65,7 @@ class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), Rec
 
   override fun onCreateView() {
     super.onCreateView()
+    baseActivity.hideKeyBoard()
     WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnGoToDashboard)
     setAdapterFPList()

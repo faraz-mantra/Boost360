@@ -1,15 +1,18 @@
 package com.boost.presignin.ui.intro
 
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroAdapter
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.ActivityIntroBinding
 import com.boost.presignin.dialog.WebViewDialog
 import com.boost.presignin.helper.ViewPager2Transformation
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
+import com.boost.presignin.ui.AccountNotFoundActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
@@ -70,10 +73,9 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
     binding?.introViewpager?.setPageTransformer(ViewPager2Transformation())
     binding?.btnCreate?.setOnClickListener {
-//      navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789346") })
+//      navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789896") })
       WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
       startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
-      finish()
     }
   }
 

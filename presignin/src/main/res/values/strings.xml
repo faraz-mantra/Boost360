@@ -82,7 +82,7 @@
   <string name="create_my_business_website">Create my business website</string>
   <string name="website_available_text"> will also work as your username to login to Boost 360 app and web.</string>
   <string name="website_error_text"> username/subdomain not available. Try with something else.</string>
-  <string name="registration_complete_subheading"> business is successfully setup on Boost</string>
+  <string name="registration_complete_subheading"> business is successfully setup on Boost 360.</string>
   <string name="your">Your</string>
   <string name="you">Your</string>
   <string name="preview_your_website">Preview your website</string>
@@ -137,4 +137,8 @@
   <string name="go_back">Go Back</string>
   <string name="i_agree_n">I agree</string>
   <string name="login_with_mobile_number">Login with Mobile number</string>
+  <string name="business_setup_process">Business setup process, please wait...</string>
+  <string name="this_is_your_registered_mobile_number">This is your registered mobile number</string>
+  <string name="number_to_login_via_otp_change_tap_on_change_number">You can also use above number to login via OTP verification. In case you want to change this number, tap on ‘Change number ’.</string>
+  <string name="change_number">Change number</string>
 </resources>

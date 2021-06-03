@@ -1,12 +1,16 @@
 package com.boost.presignin.ui.login
 
 import android.content.Intent
+import com.boost.presignin.ui.mobileVerification.*
 import com.boost.presignin.ui.registration.CategoryFragment
 import com.boost.presignin.ui.registration.RegistrationSuccessFragment
 import com.boost.presignin.ui.registration.SUCCESS_FRAGMENT
 import com.framework.base.BaseFragment
 import com.framework.base.FragmentContainerActivity
 import com.framework.models.BaseViewModel
+
+const val FORGOT_FRAGMENT = 104
+const val LOGIN_SUCCESS_FRAGMENT = 105
 
 class LoginActivity : FragmentContainerActivity() {
 
@@ -23,7 +27,11 @@ class LoginActivity : FragmentContainerActivity() {
   }
 
   override fun getFragmentInstance(type: Int?): BaseFragment<*, *> {
-    return LoginFragment.newInstance()
+    return when (type) {
+      OTP_FRAGMENT -> ForgetPassFragment.newInstance(intent.extras)
+      FP_LIST_FRAGMENT -> SuccessLoginNumberFragment.newInstance(intent.extras)
+      else -> LoginFragment.newInstance()
+    }
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
