@@ -5,19 +5,19 @@
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <com.framework.views.customViews.CustomImageView
+    <ImageView
       android:id="@+id/back_iv"
-      android:layout_width="@dimen/_32sdp"
-      android:layout_height="@dimen/_32sdp"
+      android:layout_width="@dimen/_26sdp"
+      android:layout_height="@dimen/_26sdp"
       android:layout_gravity="center_vertical"
       android:layout_marginStart="@dimen/_12sdp"
       android:layout_marginTop="@dimen/_12sdp"
       android:background="@drawable/psn_back_shape"
-      android:backgroundTint="@color/psn_back_button_color"
       android:padding="@dimen/_8sdp"
-      android:src="@drawable/psn_back_icon"
+      android:src="@drawable/ic_back_arrow_left"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,11 +58,11 @@
       android:clipToPadding="false"
       android:orientation="vertical"
       android:paddingBottom="@dimen/size_70"
-      tools:itemCount="3"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/customTextView2"
+      tools:itemCount="3"
       tools:listitem="@layout/recycler_item_fp_info" />
 
     <com.google.android.material.button.MaterialButton
@@ -72,10 +72,12 @@
       android:layout_marginBottom="@dimen/_12sdp"
       android:enabled="false"
       android:text="@string/go_to_dashboard"
+      android:textAllCaps="true"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       tools:ignore="MissingConstraints" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

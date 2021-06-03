@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1"
         app:textType="HEADING_5"
-        tools:text="dsajdasndjsandaskjdnsakjsjbjbj" />
+        tools:text="Test" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_web_link"
@@ -70,8 +70,8 @@
 
       <com.framework.views.customViews.CustomRadioButton
         android:id="@+id/customRadioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -83,7 +83,7 @@
       android:layout_marginHorizontal="@dimen/size_10"
       android:layout_marginBottom="@dimen/size_10"
       android:ellipsize="end"
-      android:maxLines="3"
+      android:maxLines="2"
       android:textColor="@color/black_4a4a4a"
       app:textType="BODY_2"
       tools:text="Very happy with the treatment of Dr Lohia. Getting treatment under him from last one month there is tremendous relief. Thank you doctor and thanks hospital for the good services" />
