@@ -12,6 +12,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       tools:context=".ui.AccountNotFoundActivity">
+
       <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
 
       <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
@@ -75,11 +76,11 @@
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/retrieve_heading_tv"
         style="@style/psn_heading_style"
-        android:gravity="center"
-        android:textColor="@color/black_4a4a4a"
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_22sdp"
+        android:gravity="center"
         android:text="@string/psn_already_have_your_account"
+        android:textColor="@color/black_4a4a4a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -88,12 +89,12 @@
         android:id="@+id/username_account_bt"
         style="@style/psn_stroke_button_style"
         android:layout_marginHorizontal="@dimen/_20sdp"
-        android:drawableEnd="@null"
-        android:textColor="@color/warm_grey"
-        android:textAllCaps="true"
         android:layout_marginTop="@dimen/_18sdp"
         android:background="@drawable/ic_stroke_button_round"
+        android:drawableEnd="@null"
         android:text="@string/login_with_username_or_email"
+        android:textAllCaps="true"
+        android:textColor="@color/warm_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/retrieve_heading_tv" />
@@ -103,27 +104,26 @@
         style="@style/psn_subheading_style"
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_18sdp"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:text="@string/try_a_different_number"
         android:textAllCaps="true"
-        android:textFontWeight="700"
-        android:fontFamily="@font/semi_bold"
         android:textColor="@color/grey_dark_2"
+        android:textFontWeight="700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/username_account_bt"
         tools:targetApi="p" />
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/help_tv"
         style="@style/psn_subheading_style"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/semi_bold"
         android:text="@string/need_help"
-        android:textColor="@color/black_4a4a4a"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:textType="BODY_1"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+        tools:ignore="MissingConstraints,UnknownId" />
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.core.widget.NestedScrollView>
 </layout>

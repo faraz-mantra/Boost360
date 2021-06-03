@@ -91,7 +91,6 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
   override fun onResume() {
     super.onResume()
     if (this::countDown.isInitialized) countDown.resume()
-    baseActivity.showKeyBoard(binding?.pinTv)
   }
 
   private fun onCodeSent() {
