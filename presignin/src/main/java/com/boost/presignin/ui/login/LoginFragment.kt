@@ -20,6 +20,7 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId
+import com.framework.utils.ValidationUtils
 import com.framework.webengageconstant.*
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
@@ -66,7 +67,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
     when (v) {
       binding?.forgotTv -> {
         WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
-        addFragmentReplace(com.framework.R.id.container, ForgetPassFragment.newInstance(), true)
+        navigator?.startActivity(LoginActivity::class.java, Bundle().apply { putInt(FRAGMENT_TYPE, FORGOT_FRAGMENT) })
       }
       binding?.loginBt -> {
         WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
@@ -96,13 +97,19 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   private fun storeUserDetail(response: VerificationRequestResult) {
     hideProgress()
-    if (response.authTokens!!.size == 1) {
-      this.resultLogin = response
-      authTokenData()?.createAccessTokenAuth()
-    } else {
-      navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-        putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+    if (response.profileProperties?.userMobile.isNullOrEmpty().not() && ValidationUtils.isMobileNumberValid(response.profileProperties?.userMobile!!)) {
+      navigator?.startActivity(LoginActivity::class.java, Bundle().apply {
+        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
       })
+    } else {
+      if (response.authTokens!!.size == 1) {
+        this.resultLogin = response
+        authTokenData()?.createAccessTokenAuth()
+      } else {
+        navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+        })
+      }
     }
   }
 

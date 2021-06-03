@@ -70,13 +70,9 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     }
   }
 
-  override fun onResume() {
-    super.onResume()
-    baseActivity.showKeyBoard(binding?.phoneEt)
-  }
 
   private fun goBack() {
-    navigator?.startActivityFinish(IntroActivity::class.java)
+    baseActivity.finish()
   }
 
   private fun sendOtp(phoneNumber: String?) {

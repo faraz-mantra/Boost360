@@ -31,5 +31,4 @@ class MobileVerificationActivity : FragmentContainerActivity() {
       fragment.onActivityResult(requestCode, resultCode, data)
     }
   }
-
 }
