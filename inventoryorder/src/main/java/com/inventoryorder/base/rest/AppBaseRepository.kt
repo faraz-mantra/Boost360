@@ -24,14 +24,14 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
     return WithFloatsApiClient.shared.retrofit
   }
 
-  override fun onFailure(response: BaseResponse, taskcode: Int) {
-    super.onFailure(response, taskcode)
-    unauthorizedUserCheck(taskcode)
+  override fun onFailure(response: BaseResponse, taskCode: Int) {
+    super.onFailure(response, taskCode)
+    unauthorizedUserCheck(taskCode)
   }
 
-  override fun onSuccess(response: BaseResponse, taskcode: Int) {
-    super.onSuccess(response, taskcode)
-    unauthorizedUserCheck(taskcode)
+  override fun onSuccess(response: BaseResponse, taskCode: Int) {
+    super.onSuccess(response, taskCode)
+    unauthorizedUserCheck(taskCode)
   }
 
   private fun unauthorizedUserCheck(taskCode: Int) {
