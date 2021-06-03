@@ -19,21 +19,26 @@
             android:paddingEnd="@dimen/size_22"
             android:paddingBottom="@dimen/size_16">
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_font_title"
+            <com.framework.views.customViews.CustomRadioButton
+                android:id="@+id/ctv_font_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/colorAccent"
                 android:layout_weight="1"
                 android:text="@string/open_sans"
                 android:textColor="@color/black_4a4a4a"
                 app:fontFamily="@font/regular"
                 app:textType="BODY_3" />
-
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/imgSelected"
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_font_current"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_ok_filter" />
+                android:layout_weight="0.2"
+                android:text="@string/open_sans"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/regular"
+                app:textType="BODY_3" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
