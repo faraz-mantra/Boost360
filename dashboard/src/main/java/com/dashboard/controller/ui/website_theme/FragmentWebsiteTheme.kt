@@ -59,7 +59,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(WEBSITE_STYLE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.ctfPrimaryFont, binding?.ctfSecondaryFont, binding?.btnDone, binding?.btnCancel)
+    setOnClickListener(binding?.ctfPrimaryFont, binding?.ctfSecondaryFont, binding?.btnDone, binding?.btnCancel,binding?.civOpenWebsite)
     this.sessionData = arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
     getWebsiteTheme(sessionData)
     setWebsiteData()
@@ -194,6 +194,9 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
       binding?.btnDone -> {
         WebEngageController.trackEvent(WEBSITE_STYLE_SAVE, CLICK, NO_EVENT_VALUE)
         updateAPI()
+      } binding?.civOpenWebsite-> {
+      val website = binding?.ctvWebsite?.text.toString()
+      openWebViewDialog(url =  website,website)
       }
     }
   }
