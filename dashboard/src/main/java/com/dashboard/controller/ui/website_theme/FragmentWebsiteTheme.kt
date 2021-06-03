@@ -108,8 +108,10 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     //if  font is empty disable the view
     if (primaryFont.isNullOrEmpty())
       binding?.ctfPrimaryFont?.isEnabled = false
-    if (secondaryFont.isNullOrEmpty())
-      binding?.ctfSecondaryFont?.isEnabled = false
+    if (secondaryFont.isNullOrEmpty()){
+      binding?.ctfSecondaryFont?.gone()
+      binding?.ctvSecondaryFont?.gone()
+    }
     val defaultPrimaryFont = primaryFont?.filter { it?.defaultFont == true }
     val defaultSecondaryFont = secondaryFont?.filter { it?.defaultFont == true }
     val primarySelectedFont = primaryFont?.filter { it?.isSelected == true }
