@@ -115,6 +115,7 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/primary_font_h"
                             android:text="@string/primary_font" />
 
                         <com.framework.views.customViews.CustomTextField
