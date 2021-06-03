@@ -40,19 +40,14 @@ class Navigator(private val activity: BaseActivity<*, *>) {
   }
 
 
-
   fun getExtrasBundle(intent: Intent): Bundle? {
     return if (intent.hasExtra(EXTRA_ARGS)) intent.getBundleExtra(EXTRA_ARGS) else Bundle()
   }
 
-  fun startActivityForResult(intent: Intent?, requestCode: Int) {
-    activity.startActivityForResult(intent, requestCode)
-  }
-
-  fun startActivityForResult(activityClass: Class<out Activity?>, requestCode: Int, flags: Int) {
+  fun startActivityForResult(activityClass: Class<out Activity?>, requestCode: Int, flags: Int? = null) {
     val intent = Intent(activity, activityClass)
-    intent.flags = flags
-    startActivityForResult(intent, requestCode)
+    flags?.let { intent.flags = it }
+    activity.startActivityForResult(intent, requestCode)
   }
 
   fun replaceFragment(@IdRes containerId: Int, fragment: Fragment, args: Bundle?) {

@@ -23,7 +23,6 @@
     <com.boost.presignin.views.PsnCustomToolbar
       android:id="@+id/toolbar"
       style="@style/psn_toolbar_style"
-      app:rightIcon="@drawable/verification_toolbar_icon"
       tools:ignore="MissingConstraints" />
 
     <com.framework.views.customViews.CustomTextView

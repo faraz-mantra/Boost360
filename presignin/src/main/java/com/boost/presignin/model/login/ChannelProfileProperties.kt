@@ -1,6 +1,7 @@
 package com.boost.presignin.model.login
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 class ChannelProfileProperties(
@@ -12,4 +13,4 @@ class ChannelProfileProperties(
     val userName: String,
     @SerializedName("userPassword")
     val userPassword: String
-)
+):Serializable

@@ -51,6 +51,7 @@ open class BaseResponse(
       val buffer: Buffer? = source?.buffer
       buffer?.clone()?.readString(Charset.forName("UTF-8"))
     } catch (e: Exception) {
+      e.printStackTrace()
       ""
     }
   }
@@ -63,6 +64,7 @@ open class BaseResponse(
       val responseBodyString: String? = buffer?.clone()?.readString(Charset.forName("UTF-8"))
       responseBodyString.toBoolean()
     } catch (e: Exception) {
+      e.printStackTrace()
       false
     }
   }
