@@ -1,5 +1,6 @@
 package com.dashboard.holder
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.core.content.res.ResourcesCompat
 import com.dashboard.R
@@ -24,49 +25,89 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) : AppBaseRec
           binding.ctvFontRadio.isChecked=false
           binding.ctvFontCurrent.text = "CURRENT"
           binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.black_4a4a4a)!!)
+          binding.ctvFontRadio.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.black_4a4a4a)!!)
 
         }
         else {
           binding.ctvFontCurrent.gone()
           binding.ctvFontRadio.isChecked = false
+          binding.ctvFontRadio.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.black_4a4a4a)!!)
         }
         if (item.isNewSelected == true) {
           binding.ctvFontCurrent.visible()
           binding.ctvFontRadio.isChecked=true
           binding.ctvFontCurrent.text = "NEW"
           binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.colorAccent)!!)
+          binding.ctvFontRadio.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.colorAccent)!!)
+
         }
         if (item.isNewSelected == true&&item.isSelected==true) {
           binding.ctvFontCurrent.visible()
           binding.ctvFontRadio.isChecked=true
           binding.ctvFontCurrent.text = "CURRENT"
           binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.black_4a4a4a)!!)
+          binding.ctvFontRadio.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.colorAccent)!!)
+
         }
-        binding.ctvFontRadio.setOnClickListener {
-          item.isNewSelected=true
-          listener?.onItemClick(position, item, PRIMARY_FONT_SELECTED.ordinal)
-        }
+        binding.ctvFontRadio.setOnClickListener {   primaryItemClick(item, position) }
+        binding.root.setOnClickListener { primaryItemClick(item, position) }
       }
       is SecondaryItem -> {
         binding.ctvFontRadio.text = if (item.description.isNullOrEmpty().not()) item.description else "Empty Name $position"
         if (item.isSelected == true) {
           binding.ctvFontCurrent.visible()
-          binding.ctvFontRadio.isChecked=true
-          val font = ResourcesCompat.getFont(binding.root.context, R.font.semi_bold)
-          binding.ctvFontRadio.typeface = font
+          binding.ctvFontRadio.isChecked=false
+          binding.ctvFontCurrent.text = "CURRENT"
+          binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.black_4a4a4a)!!)
+          binding.ctvFontRadio.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.black_4a4a4a)!!)
 
-        } else {
+        }
+        else {
           binding.ctvFontCurrent.gone()
           binding.ctvFontRadio.isChecked = false
-          val font = ResourcesCompat.getFont(binding.root.context, R.font.regular)
-          binding.ctvFontRadio.typeface = font
+          binding.ctvFontRadio.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.black_4a4a4a)!!)
+        }
+        if (item.isNewSelected == true) {
+          binding.ctvFontCurrent.visible()
+          binding.ctvFontRadio.isChecked=true
+          binding.ctvFontCurrent.text = "NEW"
+          binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.colorAccent)!!)
+          binding.ctvFontRadio.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.colorAccent)!!)
+
+        }
+        if (item.isNewSelected == true&&item.isSelected==true) {
+          binding.ctvFontCurrent.visible()
+          binding.ctvFontRadio.isChecked=true
+          binding.ctvFontCurrent.text = "CURRENT"
+          binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.black_4a4a4a)!!)
+          binding.ctvFontRadio.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.colorAccent)!!)
 
         }
         binding.ctvFontRadio.setOnClickListener {
-          item.isSelected=true
-          listener?.onItemClick(position, item, RecyclerViewActionType.SECONDARY_FONT_SELECTED.ordinal)
+          secondaryItemClick(item, position)
+        }
+        binding.root.setOnClickListener {
+          secondaryItemClick(item, position)
         }
       }
     }
+  }
+
+  private fun primaryItemClick(
+      item: PrimaryItem,
+      position: Int
+  ) {
+    item.isNewSelected = true
+    binding?.ctvFontRadio.isChecked = true
+    listener?.onItemClick(position, item, PRIMARY_FONT_SELECTED.ordinal)
+  }
+
+  private fun secondaryItemClick(
+      item: SecondaryItem,
+      position: Int
+  ) {
+    item.isNewSelected = true
+    binding.ctvFontRadio.isChecked = true
+    listener?.onItemClick(position, item, RecyclerViewActionType.SECONDARY_FONT_SELECTED.ordinal)
   }
 }

@@ -1,13 +1,16 @@
 package com.framework.utils
 
-import android.content.Intent
+import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import com.framework.BaseApplication
+import com.framework.R
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 
@@ -17,11 +20,11 @@ class ContentSharing {
         // product, service
         var targetMap: Target? = null
         fun shareProduct(
-            name: String?= null,
-            price: String?= null,
-            link: String?= null,
-            vmn: String?= null,
-            imageUri: String?= null,
+            name: String? = null,
+            price: String? = null,
+            link: String? = null,
+            vmn: String? = null,
+            imageUri: String? = null,
             isWhatsApp: Boolean? = false
         ) {
             val productTemplate =
@@ -34,20 +37,50 @@ class ContentSharing {
         }
 
 
-        private fun shareTextService(uri: Uri?, shareText: String,isWhatsApp: Boolean?) {
+        private fun shareTextService(
+            uri: Uri?,
+            shareText: String,
+            isWhatsApp: Boolean?,
+            isFb: Boolean?,
+            isLinkedin: Boolean?,
+            isTwitter: Boolean?,
+            intentChooserTitle: String? = BaseApplication.instance.getString(R.string.app_name)
+        ) {
+            val context = BaseApplication.instance
             val share = Intent(Intent.ACTION_SEND)
             share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             share.putExtra(Intent.EXTRA_TEXT, shareText)
             uri?.let { share.putExtra(Intent.EXTRA_STREAM, uri) }
             share.type = if (uri != null) "image/*" else "text/plain"
-            if (share.resolveActivity(BaseApplication.instance.packageManager!!) != null) {
-                if (isWhatsApp==true)
-                share.setPackage("com.whatsapp")
-                BaseApplication.instance.startActivity(Intent.createChooser(share, "share product"))
+            if (share.resolveActivity(context.packageManager!!) != null) {
+                try {
+                    if (isWhatsApp == true)
+                        share.setPackage(context.getString(R.string.whatsapp_package))
+                    if (isFb == true)
+                        share.setPackage(context.getString(R.string.facebook_package))
+                    if (isLinkedin == true)
+                        share.setClassName(
+                            "com.linkedin.android",
+                            "com.linkedin.android.home.UpdateStatusActivity"
+                        );
+                    if (isTwitter == true)
+                        share.setPackage(context.getString(R.string.twitter_package))
+                    context.startActivity(Intent.createChooser(share, intentChooserTitle))
+                } catch (e: ActivityNotFoundException) {
+                    context.startActivity(Intent.createChooser(share, intentChooserTitle))
+                }
+
             }
         }
 
-        fun share(shareText: String, imageUri: String? = null, isWhatsApp: Boolean? = false) {
+        fun share(
+            shareText: String,
+            imageUri: String? = null,
+            isWhatsApp: Boolean? = false,
+            isFb: Boolean? = false,
+            isTwitter: Boolean? = false,
+            isLinkedin: Boolean? = false
+        ) {
             if (NetworkUtils.isNetworkConnected()) {
 
                 val target: Target = object : Target {
@@ -64,7 +97,14 @@ class ContentSharing {
                                 ""
                             )
                             val uri = Uri.parse(path)
-                            shareTextService(uri, shareText,isWhatsApp)
+                            shareTextService(
+                                uri,
+                                shareText,
+                                isWhatsApp,
+                                isFb,
+                                isLinkedin,
+                                isTwitter
+                            )
                         } catch (e: OutOfMemoryError) {
                         } catch (e: Exception) {
                         }
@@ -81,7 +121,7 @@ class ContentSharing {
                     targetMap = target
                     Picasso.get().load(imageUri ?: "").into(target)
                 } else {
-                    shareTextService(null, shareText,isWhatsApp)
+                    shareTextService(null, shareText, isWhatsApp, isFb, isLinkedin, isTwitter)
                 }
             }
         }
@@ -141,5 +181,37 @@ ${truncateString(updateContent, 100)}: Read more $link
             share(testimonialTemplate, isWhatsApp = isWhatsApp)
         }
 
+        fun shareWebsiteTheme(
+            businessName: String,
+            websiteLink: String,
+            vmn: String,
+            isWhatsApp: Boolean? = false,
+            isFb: Boolean? = false,
+            isTwitter: Boolean? = false,
+            isLinkedin: Boolean? = false,
+            isCopy: Boolean? = false
+        ) {
+            val webSiteThemeTemplate = "Greetings from $businessName.\n" +
+                    "\uD83C\uDF10 Check our website for the latest updates and offers $websiteLink.\n" +
+                    "\uD83D\uDCDE For any query, call: $vmn"
+            if (isCopy == true) {
+                setClipboard(context = BaseApplication.instance.baseContext, webSiteThemeTemplate)
+                return
+            }
+            share(
+                webSiteThemeTemplate, isWhatsApp = isWhatsApp,
+                isFb = isFb, isTwitter = isTwitter, isLinkedin = isLinkedin
+            )
+        }
+
+        private fun setClipboard(context: Context, text: String) {
+            Toast.makeText(context,"Copied!",Toast.LENGTH_LONG).show()
+            val clipboard =
+                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Copied Text", text)
+            clipboard.setPrimaryClip(clip)
+        }
     }
+
+
 }
