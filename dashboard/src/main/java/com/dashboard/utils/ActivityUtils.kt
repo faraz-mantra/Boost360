@@ -302,7 +302,7 @@ fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
 fun AppCompatActivity.startThirdPartyQueries(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(THIRD_PARTY_QUERIES_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("om.nowfloats.customerassistant.ThirdPartyQueriesActivity"))
+    val webIntent = Intent(this, Class.forName("com.nowfloats.customerassistant.ThirdPartyQueriesActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -348,6 +348,7 @@ fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?, isCreat
   try {
     WebEngageController.trackEvent(IMAGE_GALLERY, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.Image_Gallery.ImageGalleryActivity"))
+    webIntent.putStringArrayListExtra("userPurchsedWidgets", session?.getStoreWidgets() as ArrayList<String>)
     webIntent.putExtra("create_image", isCreate)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
