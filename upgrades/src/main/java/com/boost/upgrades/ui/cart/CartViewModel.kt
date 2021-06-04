@@ -211,11 +211,11 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
         Log.d("InitiatePurchaseOld", " " + createPurchaseOrderV2)
         if (Utils.isConnectedToInternet(getApplication())) {
-            var sample = Gson().toJson(createPurchaseOrderV2)
-            writeStringAsFile(sample, "booststring2.txt")
+//            var sample = Gson().toJson(createPurchaseOrderV2)
+//            writeStringAsFile(sample, "booststring2.txt")
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
-            /*compositeDisposable.add(
+            compositeDisposable.add(
                     ApiService.CreatePurchaseOrder(createPurchaseOrderV2)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -231,7 +231,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                         updatesLoader.postValue(false)
                                     }
                             )
-            )*/
+            )
         }
     }
 
