@@ -44,6 +44,7 @@ import com.appservice.constant.IntentConstant;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.framework.models.firestore.FirestoreManager;
+import com.framework.utils.ContentSharing;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
@@ -371,7 +372,6 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     recyclerView.setHasFixedSize(true);
 
     cAdapter = new CardAdapter_V3(getActivity(), session, this::shareContent);
-
 
     recyclerView.setAdapter(cAdapter);
     boolean isSynced = mPref.getBoolean(Constants.SYNCED, false);

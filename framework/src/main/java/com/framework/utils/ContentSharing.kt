@@ -25,15 +25,18 @@ class ContentSharing {
             link: String? = null,
             vmn: String? = null,
             imageUri: String? = null,
-            isWhatsApp: Boolean? = false
+            isWhatsApp: Boolean? = false,
+            isService: Boolean? = false,
+            isFb:Boolean?=false
         ) {
+            val orderAppointment = if (isService==true) "appointment" else "order"
             val productTemplate =
                 """🆕 *Item name:* $name
 🏷️ *Price:* Rs.$price
-👉🏼 *Place your order/appointment here:* $link
+👉🏼 *Place your $orderAppointment here:* $link
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(productTemplate, imageUri, isWhatsApp)
+            share(shareText = productTemplate, imageUri = imageUri, isWhatsApp = isWhatsApp, isFb = isFb)
         }
 
 
@@ -211,6 +214,7 @@ ${truncateString(updateContent, 100)}: Read more $link
             val clip = ClipData.newPlainText("Copied Text", text)
             clipboard.setPrimaryClip(clip)
         }
+
     }
 
 
