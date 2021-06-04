@@ -17,8 +17,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.utils.ValidationUtils
-import com.framework.webengageconstant.CLICKED_ON_VIDEO_CONSULTATIONS
-import com.framework.webengageconstant.CONSULTATIONS
+import com.framework.webengageconstant.*
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -77,7 +76,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent(CLICKED_ON_VIDEO_CONSULTATIONS, CONSULTATIONS, it) }
+    WebEngageController.trackEvent(CONSULTATION_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)

@@ -16,47 +16,59 @@ import androidx.fragment.app.FragmentManager
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
+import com.boost.presignin.databinding.FragmentFpListBinding
 import com.boost.presignin.databinding.FragmentOtpVerificationBinding
 import com.boost.presignin.helper.WebEngageController
+import com.boost.presignin.model.authToken.AuthTokenDataItem
+import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.model.login.VerifyOtpResponse
 import com.boost.presignin.ui.AccountNotFoundActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.boost.presignin.views.otptextview.OTPListener
+import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
+import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
-class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, LoginSignUpViewModel>() {
+class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>() {
 
   private val TAG = OtpVerificationFragment::class.java.canonicalName;
   private var isCounterRunning = false
 
   private lateinit var countDown: com.boost.presignin.timer.CountDownTimer
 
+  private var resultLogin: VerificationRequestResult? = null
+
   companion object {
-    private const val PHONE_NUMBER = "phone_number"
 
     @JvmStatic
-    fun newInstance(phoneNumber: String) = OtpVerificationFragment().apply {
-      arguments = Bundle().apply {
-        putString(PHONE_NUMBER, phoneNumber)
-      }
+    fun newInstance(bundle: Bundle?) = OtpVerificationFragment().apply {
+      arguments = bundle
     }
   }
 
-  private val phoneNumber by lazy { requireArguments().getString(PHONE_NUMBER) }
+  private val phoneNumber by lazy {
+    arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
+  }
 
   override fun getLayout(): Int {
     return R.layout.fragment_otp_verification
   }
 
-  override fun getViewModelClass(): Class<LoginSignUpViewModel> {
-    return LoginSignUpViewModel::class.java
+
+  override fun resultLogin(): VerificationRequestResult? {
+    return resultLogin
+  }
+
+  override fun authTokenData(): AuthTokenDataItem? {
+    return if (resultLogin()?.authTokens.isNullOrEmpty().not()) resultLogin()?.authTokens!![0] else null
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BOOST_360_VERIFY_OTP, PAGE_VIEW, NO_EVENT_VALUE)
+    super.onCreateView()
+    WebEngageController.trackEvent(PS_VERIFY_OTP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.subheading?.text = String.format(getString(R.string.code_sent_hint, phoneNumber))
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener {
@@ -74,6 +86,11 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
     }
     binding?.verifyButton?.setOnClickListener { verify() }
     Handler().postDelayed({ onCodeSent() }, 500)
+  }
+
+  override fun onResume() {
+    super.onResume()
+    if (this::countDown.isInitialized) countDown.resume()
   }
 
   private fun onCodeSent() {
@@ -123,11 +140,6 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
     }
   }
 
-  override fun onResume() {
-    super.onResume()
-    if (this::countDown.isInitialized) countDown.resume()
-  }
-
   override fun onStop() {
     super.onStop()
     if (this::countDown.isInitialized) countDown.pause()
@@ -135,7 +147,7 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
   private fun sendOtp(phoneNumber: String?) {
     showProgress(getString(R.string.sending_otp))
-    WebEngageController.trackEvent(BOOST_360_VERIFY_OTP, OTP_RESEND_CLICK, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_VERIFY_OTP_RESEND, OTP_RESEND_CLICK, NO_EVENT_VALUE)
     viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.parseResponse()) {
         binding?.wrongOtpErrorTv?.isVisible = false
@@ -147,21 +159,27 @@ class OtpVerificationFragment : AppBaseFragment<FragmentOtpVerificationBinding, 
 
   fun verify() {
     showProgress(getString(R.string.verify_otp))
-    WebEngageController.trackEvent(BOOST_360_VERIFY_OTP, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
     val otp = binding?.pinTv?.otp
     viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId2)?.observeOnce(viewLifecycleOwner, {
+      hideProgress()
       if (it.isSuccess()) {
         val result = it as? VerifyOtpResponse
         if (result?.Result?.authTokens.isNullOrEmpty().not()) {
-          addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(result?.Result), false)
+          if (result?.Result?.authTokens!!.size == 1) {
+            this.resultLogin = result.Result
+            authTokenData()?.createAccessTokenAuth()
+          } else {
+            navigator?.startActivityFinish(MobileVerificationActivity::class.java, Bundle().apply {
+              putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, result?.Result)
+            })
+          }
         } else {
-          this.parentFragmentManager.popBackStack()
-          navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
+          navigator?.startActivityFinish(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
         }
       } else {
         binding?.wrongOtpErrorTv?.isVisible = true;
       }
-      hideProgress()
     })
   }
 }

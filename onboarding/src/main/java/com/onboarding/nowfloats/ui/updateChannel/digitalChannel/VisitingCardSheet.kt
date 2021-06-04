@@ -44,9 +44,7 @@ import kotlin.collections.ArrayList
 
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
-open class VisitingCardSheet :
-    BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(),
-    RecyclerItemClickListener {
+open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
   private var shareChannelText: String? = null
   private var isWhatsApp: Boolean? = null
@@ -260,7 +258,7 @@ open class VisitingCardSheet :
 
 fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
   try {
-    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE_CLICK, START_VIEW, NO_EVENT_VALUE)
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()

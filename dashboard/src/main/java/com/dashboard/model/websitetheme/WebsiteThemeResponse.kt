@@ -8,101 +8,116 @@ import java.io.Serializable
 
 data class WebsiteThemeResponse(
 
-		@field:SerializedName("StatusCode")
-		var statusCode: Int? = null,
+    @field:SerializedName("StatusCode")
+    var statusCode: Int? = null,
 
-		@field:SerializedName("Result")
-		var result: Result? = null,
+    @field:SerializedName("Result")
+    var result: Result? = null,
 ) : BaseResponse(), Serializable
 
 data class Result(
 
-		@field:SerializedName("ThemeId")
-		var themeId: String? = null,
+    @field:SerializedName("ThemeId")
+    var themeId: String? = null,
 
-		@field:SerializedName("Colors")
-		var colors: ArrayList<ColorsItem>? = null,
+    @field:SerializedName("Colors")
+    var colors: ArrayList<ColorsItem>? = null,
 
-		@field:SerializedName("Fonts")
-		var fonts: FontsList? = null,
+    @field:SerializedName("Fonts")
+    var fonts: FontsList? = null,
 ) : Serializable
 
 data class PrimaryItem(
 
-		@field:SerializedName("Description")
-		var description: String? = null,
+    @field:SerializedName("Description")
+    var description: String? = null,
 
-		@field:SerializedName("DefaultFont")
-		var defaultFont: Boolean? = null,
+    @field:SerializedName("DefaultFont")
+    var defaultFont: Boolean? = false,
 
-		@field:SerializedName("IsSelected")
-		var isSelected: Boolean? = null,
+    @field:SerializedName("IsSelected")
+    var isSelected: Boolean? = false,
+    var isNewSelected: Boolean? = false,
+    @field:SerializedName("Url")
+    var url: String? = null,
+    var recyclerViewItemType: Int = RecyclerViewItemType.WEBSITE_FONT_VIEW.getLayout(),
 
-		@field:SerializedName("Url")
-		var url: String? = null,
-		var recyclerViewItemType: Int = RecyclerViewItemType.WEBSITE_FONT_VIEW.getLayout(),
+    ) : Serializable, AppBaseRecyclerViewItem {
+    override fun getViewType(): Int {
+        return recyclerViewItemType
+    }
 
-		) : Serializable, AppBaseRecyclerViewItem {
-	override fun getViewType(): Int {
-		return recyclerViewItemType
-	}
 }
 
 data class FontsList(
 
-		@field:SerializedName("Secondary")
-		var secondary: List<SecondaryItem?>? = null,
+    @field:SerializedName("Secondary")
+    var secondary: List<SecondaryItem?>? = null,
 
-		@field:SerializedName("Primary")
-		var primary: List<PrimaryItem?>? = null,
-) : Serializable
+    @field:SerializedName("Primary")
+    var primary: List<PrimaryItem?>? = null,
+) : Serializable {
+
+    fun getCurrentSelectionPrimary(): PrimaryItem? {
+        return primary?.first { it?.isSelected == true }
+            ?: primary?.first { it?.defaultFont == true }
+    }
+
+    fun getCurrentSelectionSecondary(): SecondaryItem? {
+        return secondary?.first { it?.isSelected == true }
+            ?: secondary?.first { it?.defaultFont == true }
+
+    }
+}
 
 data class ColorsItem(
 
-		@field:SerializedName("Secondary")
-		var secondary: String? = null,
+    @field:SerializedName("Secondary")
+    var secondary: String? = null,
 
-		@field:SerializedName("Tertiary")
-		var tertiary: String? = null,
+    @field:SerializedName("Tertiary")
+    var tertiary: String? = null,
 
-		@field:SerializedName("Primary")
-		var primary: String? = null,
+    @field:SerializedName("Primary")
+    var primary: String? = null,
 
-		@field:SerializedName("IsSelected")
-		var isSelected: Boolean? = null,
+    @field:SerializedName("IsSelected")
+    var isSelected: Boolean? = null,
 
-		@field:SerializedName("DefaultColor")
-		var defaultColor: Boolean? = null,
+    @field:SerializedName("DefaultColor")
+    var defaultColor: Boolean? = null,
 
-		@field:SerializedName("Name")
-		var name: String? = null,
-		var recyclerViewItemType: Int = RecyclerViewItemType.WEBSITE_COLOR_VIEW.getLayout(),
+    @field:SerializedName("Name")
+    var name: String? = null,
+    var recyclerViewItemType: Int = RecyclerViewItemType.WEBSITE_COLOR_VIEW.getLayout(),
 
-		) : Serializable, AppBaseRecyclerViewItem {
-	override fun getViewType(): Int {
-		return recyclerViewItemType
-	}
+    ) : Serializable, AppBaseRecyclerViewItem {
+    override fun getViewType(): Int {
+        return recyclerViewItemType
+    }
 }
 
 data class SecondaryItem(
 
-		@field:SerializedName("Description")
-		var description: String? = null,
+    @field:SerializedName("Description")
+    var description: String? = null,
 
-		@field:SerializedName("DefaultFont")
-		var defaultFont: Boolean? = null,
+    @field:SerializedName("DefaultFont")
+    var defaultFont: Boolean? = null,
 
-		@field:SerializedName("IsSelected")
-		var isSelected: Boolean? = null,
+    @field:SerializedName("IsSelected")
+    var isSelected: Boolean? = null,
+    var isNewSelected: Boolean? = false,
+    @field:SerializedName("Url")
+    var url: String? = null,
 
-		@field:SerializedName("Url")
-		var url: String? = null,
-		var recyclerViewItemType: Int = RecyclerViewItemType.WEBSITE_FONT_VIEW.getLayout(),
+    var recyclerViewItemType: Int = RecyclerViewItemType.WEBSITE_FONT_VIEW.getLayout()
 
+) : Serializable, AppBaseRecyclerViewItem {
 
-		) : Serializable, AppBaseRecyclerViewItem {
-	override fun getViewType(): Int {
-		return recyclerViewItemType
-	}
+    override fun getViewType(): Int {
+        return recyclerViewItemType
+    }
+
 }
 

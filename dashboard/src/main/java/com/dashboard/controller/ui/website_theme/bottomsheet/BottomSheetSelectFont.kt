@@ -33,7 +33,8 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.btnCancel, binding?.btnDone)
+    setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnDone)
+    binding?.btnDone?.isEnabled = false
     this.primaryFontList = arguments?.get(IntentConstant.FONT_LIST_PRIMARY.name) as? ArrayList<PrimaryItem>
     this.secondaryFontList = arguments?.get(IntentConstant.FONT_LIST_SECONDARY.name) as? ArrayList<SecondaryItem>
     when {
@@ -58,15 +59,17 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
     when (actionType) {
       RecyclerViewActionType.PRIMARY_FONT_SELECTED.ordinal -> {
         this.primaryItem = item as? PrimaryItem
+        binding?.btnDone?.isEnabled = !(primaryItem?.isSelected==true&&primaryItem?.isNewSelected==true)
         primaryFontList?.forEach {
-          it.isSelected = it == item
+          if (item!=it) it.isNewSelected=false
         }
         binding?.rvFont?.post { primaryFontsAdapter?.notifyDataSetChanged() }
       }
       RecyclerViewActionType.SECONDARY_FONT_SELECTED.ordinal -> {
         this.secondaryItem = item as? SecondaryItem
+        binding?.btnDone?.isEnabled = !(secondaryItem?.isSelected==true&&secondaryItem?.isNewSelected==true)
         secondaryFontList?.forEach {
-          it.isSelected = it == item
+          if (item!=it) it.isNewSelected=false
         }
         binding?.rvFont?.post { secondaryFontAdapter?.notifyDataSetChanged() }
       }
@@ -78,7 +81,7 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnCancel -> {
+      binding?.rivCloseBottomSheet -> {
         dismiss()
       }
       binding?.btnDone -> {

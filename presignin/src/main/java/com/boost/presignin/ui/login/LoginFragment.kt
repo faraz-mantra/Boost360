@@ -4,29 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignin.R
-import com.boost.presignin.base.AppBaseFragment
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentLoginBinding
-import com.boost.presignin.helper.ProcessFPDetails
 import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
+import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
-import com.boost.presignin.service.APIService
-import com.boost.presignin.ui.mobileVerification.FloatingPointAuthFragment
+import com.boost.presignin.ui.mobileVerification.AuthBaseFragment
+import com.boost.presignin.ui.mobileVerification.FP_LIST_FRAGMENT
+import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
-import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.pref.clientIdThinksity
+import com.framework.utils.ValidationUtils
 import com.framework.webengageconstant.*
-import java.util.ArrayList
-import java.util.HashMap
 
-class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel>() {
+class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
-  private var session: UserSessionManager? = null
+  private var resultLogin: VerificationRequestResult? = null
 
   companion object {
     @JvmStatic
@@ -41,29 +40,44 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     return LoginSignUpViewModel::class.java
   }
 
+  override fun resultLogin(): VerificationRequestResult? {
+    return resultLogin
+  }
+
+  override fun authTokenData(): AuthTokenDataItem? {
+    return if (resultLogin()?.authTokens.isNullOrEmpty().not()) resultLogin()?.authTokens!![0] else null
+  }
+
   override fun onCreateView() {
-    session = UserSessionManager(baseActivity);
+    super.onCreateView()
+    WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
-    setOnClickListener(binding?.forgotTv, binding?.loginBt)
-    WebEngageController.trackEvent(LOGIN, PAGE_VIEW, NO_EVENT_VALUE)
+    setOnClickListener(binding?.forgotTv, binding?.loginBt, binding?.loginWithNumberBtn, binding?.helpTv)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
-    backButton?.setOnClickListener {
-      goBack()
-    }
-    WebEngageController.trackEvent(LOGIN, PAGE_VIEW, NO_EVENT_VALUE)
+    backButton?.setOnClickListener { goBack() }
   }
+
   private fun goBack() {
-    requireActivity().finish()
+    baseActivity.finish()
   }
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.forgotTv -> {
-        addFragmentReplace(com.framework.R.id.container, ForgetPassFragment.newInstance(), true)
+        WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
+        navigator?.startActivity(LoginActivity::class.java, Bundle().apply { putInt(FRAGMENT_TYPE, FORGOT_FRAGMENT) })
       }
       binding?.loginBt -> {
+        WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
         loginApiVerify(binding?.usernameEt?.text?.toString()?.trim(), binding?.passEt?.text?.toString()?.trim())
+      }
+      binding?.loginWithNumberBtn -> {
+        baseActivity.setResult(AppCompatActivity.RESULT_OK, Intent())
+        baseActivity.finish()
+      }
+      binding?.helpTv -> {
       }
     }
   }
@@ -72,7 +86,7 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
     showProgress()
     viewModel?.verifyUserProfile(UserProfileVerificationRequest(loginKey = userName, loginSecret = password, clientId = clientId))?.observeOnce(viewLifecycleOwner, {
       val response = it as? VerificationRequestResult
-      if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.validFPIds.isNullOrEmpty().not()) {
+      if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
         storeUserDetail(response)
       } else {
         hideProgress()
@@ -82,28 +96,21 @@ class LoginFragment : AppBaseFragment<FragmentLoginBinding, LoginSignUpViewModel
   }
 
   private fun storeUserDetail(response: VerificationRequestResult) {
-    addFragmentReplace(com.framework.R.id.container, FloatingPointAuthFragment.newInstance(response), false)
     hideProgress()
-  }
-
-  private fun startDashboard() {
-    try {
-      hideProgress()
-      val dashboardIntent = Intent(requireContext(), Class.forName("com.dashboard.controller.DashboardActivity"))
-      dashboardIntent.putExtras(requireActivity().intent)
-      val bundle = Bundle()
-      bundle.putParcelableArrayList("message", ArrayList())
-      dashboardIntent.putExtras(bundle)
-      dashboardIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-      startActivity(dashboardIntent)
-      baseActivity.finish()
-    } catch (e: Exception) {
-      e.printStackTrace()
+    if (response.profileProperties?.userMobile.isNullOrEmpty().not() && ValidationUtils.isMobileNumberValid(response.profileProperties?.userMobile!!)) {
+      navigator?.startActivity(LoginActivity::class.java, Bundle().apply {
+        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+      })
+    } else {
+      if (response.authTokens!!.size == 1) {
+        this.resultLogin = response
+        authTokenData()?.createAccessTokenAuth()
+      } else {
+        navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+        })
+      }
     }
-  }
-
-  private fun startService() {
-    baseActivity.startService(Intent(baseActivity, APIService::class.java))
   }
 
   private fun onDataChanged() {

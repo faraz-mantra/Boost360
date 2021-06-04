@@ -2,6 +2,7 @@
 <resources>
   <color name="colorAccent">#ffb900</color>
   <color name="colorPrimary">#ffb900</color>
+  <color name="colorAccent_jio">#ffb900</color>
   <color name="colorPrimaryDark">#d99d00</color>
   <color name="colorPrimaryVariant">#5092F5</color>
   <color name="statusBarColor">@color/colorPrimaryVariant</color>

@@ -676,7 +676,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
 
   private void hideLoader() {
 
-    if (progressDialog != null && progressDialog.isShowing()) {
+    if (progressDialog != null && progressDialog.isShowing() && !progressDialog.isIndeterminate()) {
       progressDialog.dismiss();
     }
   }

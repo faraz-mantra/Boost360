@@ -1,5 +1,8 @@
 package com.dashboard.controller.ui.website
 
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat.getColor
 import com.dashboard.R
@@ -19,13 +22,13 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.fromHtml
-import com.framework.webengageconstant.MANAGE_CONTENT
 import com.framework.webengageconstant.PAGE_VIEW
-import com.framework.webengageconstant.SCREEN_NAME
-import com.framework.webengageconstant.WEBSITE_PAGE
+import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import java.util.*
 
 class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(), RecyclerItemClickListener {
@@ -45,10 +48,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     getWebsiteData()
-    setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.businessAddress, binding?.contactDetail, binding?.businessTiming)
-    // TODO to change the event to only one
-    WebEngageController.trackEvent(WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
-    WebEngageController.trackEvent(MANAGE_CONTENT, PAGE_VIEW, session?.fpTag)
+    setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.websiteThemeCustomization, binding?.businessTiming)
+    WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   override fun onResume() {
@@ -58,7 +59,10 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
 
   private fun setUserData() {
     val desc = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
-    binding?.txtDesc?.text = if (desc.isNullOrEmpty().not()) desc else ""
+    binding?.txtDesc?.apply {
+      if (desc.isNullOrEmpty().not()) visible() else gone()
+      text = desc
+    }
     binding?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName()}</u>")
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
@@ -170,9 +174,23 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.btnProfileLogo -> baseActivity.startFeatureLogo(session)
       binding?.editProfile -> baseActivity.startBusinessProfileDetailEdit(session)
-      binding?.businessAddress -> baseActivity.startBusinessAddress(session)
-      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
+      binding?.websiteThemeCustomization -> baseActivity.startWebsiteTheme(session)
+//      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
       binding?.businessTiming -> baseActivity.startBusinessHours(session)
     }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.menu_website_theme,menu)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when(item.itemId){
+      R.id.menu_more->{}
+      R.id.menu_whatsapp_share->{}
+    }
+    return super.onOptionsItemSelected(item)
+
   }
 }

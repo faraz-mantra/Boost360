@@ -9,7 +9,7 @@ import com.framework.base.BaseResponse
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.webengageconstant.CATEGORY
-import com.framework.webengageconstant.CHOOSE_BUSINESS_CATEGORY
+import com.framework.webengageconstant.PS_BUSINESS_CATEGORY_CLICK
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
@@ -99,7 +99,7 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
 
         //Business Category Event Tracker.
         category?.category_Name?.let {
-          WebEngageController.trackEvent(CHOOSE_BUSINESS_CATEGORY, CATEGORY, it) }
+          WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, it) }
 
         binding?.next?.visible()
         baseAdapter?.notifyDataSetChanged()

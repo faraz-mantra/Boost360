@@ -31,15 +31,11 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
   private var categoryList = ArrayList<CategoryDataModel>()
 
   companion object {
-    private const val PHONE_NUMBER = "phone_number"
 
     @JvmStatic
-    fun newInstance(phoneNumber: String?) =
-        CategoryFragment().apply {
-          arguments = Bundle().apply {
-            putString(PHONE_NUMBER, phoneNumber)
-          }
-        }
+    fun newInstance(bundle: Bundle?) = CategoryFragment().apply {
+      arguments = bundle
+    }
   }
 
   override fun getLayout(): Int {
@@ -55,7 +51,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BUSINESS_CATEGORY, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     baseAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
     val gridLayoutManager = GridLayoutManager(baseActivity, 2)
     gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -79,14 +75,11 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
     }
 
     binding?.confirmButton?.setOnClickListener {
-      WebEngageController.trackEvent(CHOOSE_BUSINESS_CATEGORY, CATEGORY, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, NO_EVENT_VALUE)
       addFragmentReplace(com.framework.R.id.container,
           BusinessDetailsFragment.newInstance(
-              CategoryFloatsRequest(
-                  categoryDataModel = category,
-                  requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber)),
-                  userBusinessMobile = phoneNumber
-              )
+              CategoryFloatsRequest(categoryDataModel = category, userBusinessMobile = phoneNumber,
+                  requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber)))
           ), true)
     }
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
@@ -107,5 +100,4 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
       }
     }
   }
-
 }

@@ -1,6 +1,5 @@
 package com.boost.presignin.ui.mobileVerification
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
@@ -10,18 +9,18 @@ import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentMobileBinding
 import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.userprofile.ResponseMobileIsRegistered
-import com.boost.presignin.ui.AccountNotFoundActivity
 import com.boost.presignin.ui.intro.IntroActivity
+import com.boost.presignin.ui.login.LoginActivity
+import com.boost.presignin.ui.registration.RegistrationActivity
+import com.boost.presignin.ui.registration.SUCCESS_FRAGMENT
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
-import com.framework.webengageconstant.BOOST_360_LOGIN_NUMBER
-import com.framework.webengageconstant.LOGIN_NEXT
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.utils.showKeyBoard
+import com.framework.webengageconstant.*
 
 class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewModel>() {
 
@@ -31,12 +30,11 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
 
     @JvmStatic
     fun newInstance() = MobileFragment().apply {}
-    fun newInstance(phoneNumber: String) =
-        MobileFragment().apply {
-          arguments = Bundle().apply {
-            putString(PHONE_NUMBER, phoneNumber)
-          }
-        }
+    fun newInstance(phoneNumber: String) = MobileFragment().apply {
+      arguments = Bundle().apply {
+        putString(PHONE_NUMBER, phoneNumber)
+      }
+    }
   }
 
   private val phoneNumber by lazy { requireArguments().getString(PHONE_NUMBER) }
@@ -50,9 +48,9 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = (it.isPhoneValid()) }
-    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+    baseActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
         goBack()
       }
@@ -62,22 +60,28 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     backButton?.setOnClickListener { goBack() }
 
     binding?.nextButton?.setOnClickListener {
-      WebEngageController.trackEvent(BOOST_360_LOGIN_NUMBER, LOGIN_NEXT, NO_EVENT_VALUE)
-      activity?.hideKeyBoard()
+      WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
+      baseActivity.hideKeyBoard()
       sendOtp(binding?.phoneEt?.text.toString())
+    }
+    binding?.loginUsername?.setOnClickListener {
+      WebEngageController.trackEvent(PS_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
+      navigator?.startActivity(LoginActivity::class.java)
     }
   }
 
+
   private fun goBack() {
-    startActivity(Intent(requireContext(), IntroActivity::class.java))
-    requireActivity().finish()
+    baseActivity.finish()
   }
 
   private fun sendOtp(phoneNumber: String?) {
     showProgress(getString(R.string.sending_otp))
     viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.parseResponse()) {
-        addFragmentReplace(com.framework.R.id.container, OtpVerificationFragment.newInstance(binding?.phoneEt?.text?.toString()!!), addToBackStack = true)
+        navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+          putInt(FRAGMENT_TYPE, OTP_FRAGMENT) ;putString(IntentConstant.EXTRA_PHONE_NUMBER.name,binding?.phoneEt?.text?.toString())
+        })
       } else showShortToast(getString(R.string.otp_not_sent))
       hideProgress()
     })

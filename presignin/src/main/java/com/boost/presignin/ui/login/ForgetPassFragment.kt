@@ -1,7 +1,7 @@
 package com.boost.presignin.ui.login
 
+import android.os.Bundle
 import android.widget.ImageView
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentManager
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -19,7 +19,9 @@ class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignU
 
   companion object {
     @JvmStatic
-    fun newInstance() = ForgetPassFragment()
+    fun newInstance(bundle: Bundle?) = ForgetPassFragment().apply {
+      arguments = bundle
+    }
   }
 
   override fun getLayout(): Int {
@@ -31,14 +33,14 @@ class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignU
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(FORGOT_PASSWORD, PAGE_VIEW,NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_FORGOT_PASSWORD_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.emailEt?.onTextChanged { binding?.getLinkBt?.isEnabled = it.isNotEmpty() }
     binding?.getLinkBt?.setOnClickListener {
       showProgress()
       viewModel?.forgotPassword(ForgotPassRequest(clientId, binding?.emailEt?.text?.toString()?.trim()))?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
-          WebEngageController.trackEvent(FORGOT_PASSWORD, RESTE_PASSWORD_LINK_SEND,NO_EVENT_VALUE)
+          WebEngageController.trackEvent(PS_FORGOT_PASSWORD_SEND, LINK_SEND, NO_EVENT_VALUE)
           val sheet = ResetLinkBottomSheet()
           sheet.onClick = { baseActivity.onNavPressed() }
           sheet.show(this@ForgetPassFragment.parentFragmentManager, ForgetPassFragment::class.java.name)
@@ -46,9 +48,6 @@ class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignU
       })
     }
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
-    backButton?.setOnClickListener {
-      parentFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
+    backButton?.setOnClickListener { baseActivity.finish() }
   }
-
 }

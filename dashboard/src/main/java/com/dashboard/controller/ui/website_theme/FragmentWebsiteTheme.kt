@@ -8,25 +8,27 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
-import com.dashboard.controller.DashboardFragmentContainerActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.website_theme.bottomsheet.BottomSheetSelectFont
 import com.dashboard.controller.ui.website_theme.bottomsheet.TypeSuccess
-import com.dashboard.controller.ui.website_theme.bottomsheet.WebsiteThemeUpdatedSuccessfullyBottomsheet
+import com.dashboard.controller.ui.website_theme.bottomsheet.WebsiteThemeUpdatedSuccessfullySheet
 import com.dashboard.controller.ui.website_theme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentWebsiteThemeBinding
 import com.dashboard.model.websitetheme.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
+import com.dashboard.utils.WebEngageController
 import com.dashboard.viewmodel.WebsiteThemeViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.utils.fromHtml
+import com.framework.webengageconstant.*
 
 class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, WebsiteThemeViewModel>(), RecyclerItemClickListener {
+
   override fun getLayout(): Int {
     return R.layout.fragment_website_theme
   }
@@ -56,7 +58,8 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
   override fun onCreateView() {
     super.onCreateView()
-    setOnClickListener(binding?.ctfPrimaryFont, binding?.ctfSecondaryFont, binding?.btnDone, binding?.btnCancel)
+    WebEngageController.trackEvent(WEBSITE_STYLE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    setOnClickListener(binding?.ctfPrimaryFont, binding?.ctfSecondaryFont, binding?.btnDone, binding?.btnCancel,binding?.civOpenWebsite)
     this.sessionData = arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
     getWebsiteTheme(sessionData)
     setWebsiteData()
@@ -65,8 +68,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun setWebsiteData() {
-    binding?.ctvWebsite?.text = fromHtml("<u>${UserSessionManager(requireActivity()).getDomainName()}</u>")
-
+    binding?.ctvWebsite?.text = fromHtml("<u>${UserSessionManager(baseActivity).getDomainName()}</u>")
   }
 
   private fun getWebsiteTheme(sessionData: SessionData?) {
@@ -88,11 +90,13 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun setColor() {
-    this.colorsItem = colors?.firstOrNull { it.isSelected == true } ?: colors?.firstOrNull{ it.defaultColor == true }
+    this.colorsItem = colors?.firstOrNull { it.isSelected == true } ?: colors?.firstOrNull { it.defaultColor == true }
     val defaultColorCode = colors?.firstOrNull { it.defaultColor == true }?.primary
-    binding?.rivDefaultColor?.setBackgroundColor(Color.parseColor(defaultColorCode))
+    if(defaultColorCode != null){
+      binding?.rivDefaultColor?.setBackgroundColor(Color.parseColor(defaultColorCode))
+    }
     binding?.rvColors?.setHasFixedSize(true)
-    this.adapter = AppBaseRecyclerViewAdapter(baseActivity, colors?: arrayListOf(), this@FragmentWebsiteTheme)
+    this.adapter = AppBaseRecyclerViewAdapter(baseActivity, colors ?: arrayListOf(), this@FragmentWebsiteTheme)
     binding?.rvColors?.adapter = adapter
   }
 
@@ -103,23 +107,27 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     this.secondaryFont = fonts?.secondary
     //if  font is empty disable the view
     if (primaryFont.isNullOrEmpty())
-      binding?.ctfPrimaryFont?.isEnabled =false
-    if (secondaryFont.isNullOrEmpty())
-      binding?.ctfSecondaryFont?.isEnabled =false
-    val defaultPrimaryFont = primaryFont?.filter { it?.defaultFont==true }
-    val defaultSecondaryFont = secondaryFont?.filter { it?.defaultFont==true }
-    val primarySelectedFont = primaryFont?.filter { it?.isSelected==true }
-    val secondarySelected = secondaryFont?.filter { it?.isSelected==true }
-    binding?.ctfPrimaryFont?.setText(primarySelectedFont?.firstOrNull()?.description?:defaultPrimaryFont?.firstOrNull()?.description?:
-       primaryFont?.first()?.description)
-    binding?.ctfSecondaryFont?.setText(secondarySelected?.firstOrNull()?.description?:defaultSecondaryFont?.firstOrNull()?.description
-        ?: secondaryFont?.firstOrNull()?.description?:"")
-    val primary = primaryFont?.filter { it?.defaultFont==true }
+      binding?.ctfPrimaryFont?.isEnabled = false
+    if (secondaryFont.isNullOrEmpty()){
+      binding?.ctfSecondaryFont?.gone()
+      binding?.primaryFontH?.gone()
+      binding?.ctvSecondaryFont?.gone()
+    }
+    val defaultPrimaryFont = primaryFont?.filter { it?.defaultFont == true }
+    val defaultSecondaryFont = secondaryFont?.filter { it?.defaultFont == true }
+    val primarySelectedFont = primaryFont?.filter { it?.isSelected == true }
+    val secondarySelected = secondaryFont?.filter { it?.isSelected == true }
+    binding?.ctfPrimaryFont?.setText("${primarySelectedFont?.firstOrNull()?.description ?: defaultPrimaryFont?.firstOrNull()?.description ?: primaryFont?.first()?.description} (default)")
+    binding?.ctfSecondaryFont?.setText(
+      secondarySelected?.firstOrNull()?.description ?: defaultSecondaryFont?.firstOrNull()?.description
+      ?: secondaryFont?.firstOrNull()?.description ?: ""
+    )
+    val primary = primaryFont?.filter { it?.defaultFont == true }
     if (primary.isNullOrEmpty()) primaryFont?.firstOrNull()?.isSelected = true
-    val secondary = secondaryFont?.filter { it?.defaultFont==true }
-    if (secondary.isNullOrEmpty()) secondaryFont?.firstOrNull()?.isSelected =true
-    this.primaryItem = primarySelectedFont?.firstOrNull()?:defaultPrimaryFont?.firstOrNull()
-    this.secondaryItem = secondarySelected?.firstOrNull()?:defaultSecondaryFont?.firstOrNull()
+    val secondary = secondaryFont?.filter { it?.defaultFont == true }
+    if (secondary.isNullOrEmpty()) secondaryFont?.firstOrNull()?.isSelected = true
+    this.primaryItem = primarySelectedFont?.firstOrNull() ?: defaultPrimaryFont?.firstOrNull()
+    this.secondaryItem = secondarySelected?.firstOrNull() ?: defaultSecondaryFont?.firstOrNull()
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -140,10 +148,8 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun showPrimaryFontsBottomSheet(fontsList: ArrayList<PrimaryItem?>?) {
-    val bundle = Bundle()
-    bundle.putSerializable(IntentConstant.FONT_LIST_PRIMARY.name, fontsList)
     val bottomSheetSelectFont = BottomSheetSelectFont()
-    bottomSheetSelectFont.arguments = bundle
+    bottomSheetSelectFont.arguments = Bundle().apply { putSerializable(IntentConstant.FONT_LIST_PRIMARY.name, fontsList) }
     bottomSheetSelectFont.onPrimaryClicked = {
       this.primaryItem = it
       binding?.ctfPrimaryFont?.setText(it.description)
@@ -151,20 +157,20 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     }
     bottomSheetSelectFont.show(parentFragmentManager, BottomSheetSelectFont::javaClass.name)
   }
-  private fun showActionButtons(){
+
+  private fun showActionButtons() {
     binding?.btnCancel?.visible()
     binding?.btnDone?.visible()
   }
-  private fun hideActionButtons(){
+
+  private fun hideActionButtons() {
     binding?.btnCancel?.gone()
     binding?.btnDone?.gone()
   }
 
   private fun showSecondaryFontsBottomSheet(fontsList: ArrayList<SecondaryItem?>?) {
-    val bundle = Bundle()
     val bottomSheetSelectFont = BottomSheetSelectFont()
-    bundle.putSerializable(IntentConstant.FONT_LIST_SECONDARY.name, fontsList)
-    bottomSheetSelectFont.arguments = bundle
+    bottomSheetSelectFont.arguments = Bundle().apply { putSerializable(IntentConstant.FONT_LIST_SECONDARY.name, fontsList) }
     bottomSheetSelectFont.onSecondaryClicked = {
       this.secondaryItem = it
       binding?.ctfSecondaryFont?.setText(it.description)
@@ -183,46 +189,52 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
         showSecondaryFontsBottomSheet(secondaryFont as? ArrayList<SecondaryItem?>?)
       }
       binding?.btnCancel -> {
+        WebEngageController.trackEvent(WEBSITE_STYLE_CANCEL, CLICK, NO_EVENT_VALUE)
         goBack()
       }
       binding?.btnDone -> {
+        WebEngageController.trackEvent(WEBSITE_STYLE_SAVE, CLICK, NO_EVENT_VALUE)
         updateAPI()
+      } binding?.civOpenWebsite-> {
+      val website = binding?.ctvWebsite?.text.toString()
+      openWebViewDialog(url =  website,website)
       }
     }
   }
 
   private fun updateAPI() {
     showProgress()
-    viewModel?.updateWebsiteTheme(WebsiteThemeUpdateRequest(Customization(Colors(colorsItem?.secondary, colorsItem?.tertiary,
-        colorsItem?.primary, colorsItem?.name), Fonts(secondaryItem?:secondaryFont?.firstOrNull(), primaryItem
-        ?: primaryFont?.firstOrNull())), floatingPointId = sessionData?.fpId))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateWebsiteTheme(
+      WebsiteThemeUpdateRequest(
+        Customization(
+          Colors(colorsItem?.secondary, colorsItem?.tertiary, colorsItem?.primary, colorsItem?.name),
+          Fonts(secondaryItem ?: secondaryFont?.firstOrNull(), primaryItem ?: primaryFont?.firstOrNull())
+        ),
+        floatingPointId = sessionData?.fpId
+      )
+    )?.observeOnce(viewLifecycleOwner, {
       hideProgress()
-      if (it.isSuccess()) {
-        openSuccessDialog()
-      } else {
-        showShortToast(getString(R.string.something_went_wrong))
-      }
+      if (it.isSuccess()) openSuccessDialog()
+      else showShortToast(getString(R.string.something_went_wrong))
     })
   }
 
   private fun openSuccessDialog() {
-    val websiteThemeUpdatedSuccessfullyBottomsheet = WebsiteThemeUpdatedSuccessfullyBottomsheet()
-    websiteThemeUpdatedSuccessfullyBottomsheet.onClicked = {
+    val websiteUpdateSheet = WebsiteThemeUpdatedSuccessfullySheet()
+    websiteUpdateSheet.onClicked = {
       when (it) {
         TypeSuccess.VISIT_WEBSITE.name -> {
           val domainName = UserSessionManager(requireActivity()).getDomainName()!!
           openWebViewDialog(domainName, domainName)
         }
-        TypeSuccess.CLOSE.name -> {
-          goBack()
-        }
+        TypeSuccess.CLOSE.name -> goBack()
       }
     }
-    websiteThemeUpdatedSuccessfullyBottomsheet.show(parentFragmentManager, WebsiteThemeUpdatedSuccessfullyBottomsheet::javaClass.name)
+    websiteUpdateSheet.show(parentFragmentManager, WebsiteThemeUpdatedSuccessfullySheet::javaClass.name)
   }
 
   private fun goBack() {
-    (requireActivity() as DashboardFragmentContainerActivity).onNavPressed()
+    baseActivity.onNavPressed()
   }
 
   private fun openWebViewDialog(url: String, title: String) {

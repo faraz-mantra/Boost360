@@ -17,8 +17,6 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,8 +31,8 @@ import java.util.Date;
 import jp.wasabeef.richeditor.RichEditor;
 
 import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE_CREATION_SUCCESS;
-import static com.framework.webengageconstant.EventLabelKt.START_VIEW;
-import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE;
+import static com.framework.webengageconstant.EventLabelKt.CLICK;
+import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE_CLICK;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_SUCCESSFUL;
 
 
@@ -407,11 +405,10 @@ public class Utils {
     return "com.android.providers.media.documents".equals(uri.getAuthority());
   }
 
-  public static void initiateAddonMarketplace(Context context,
-                                              UserSessionManager session, boolean isOpenCardFragment, String screenType, String buyItemKey, Boolean isLoadingShow) {
+  public static void initiateAddonMarketplace(Context context, UserSessionManager session, boolean isOpenCardFragment, String screenType, String buyItemKey, Boolean isLoadingShow) {
     try {
 //            if (isLoadingShow) delayProgressShow()
-      WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE, START_VIEW, session.getFpTag());
+      WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, session.getFpTag());
       Intent intent = new Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"));
       intent.putExtra("expCode", session.getFP_AppExperienceCode());
       intent.putExtra("fpName", session.getFPName());

@@ -21,8 +21,6 @@ import com.framework.webengageconstant.*
 import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
@@ -50,7 +48,7 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_BUSINESS_PROFILE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
     floatsRequest = requireArguments().getSerializable("request") as? CategoryFloatsRequest
     binding?.phoneEt?.setText(floatsRequest?.userBusinessMobile)
@@ -108,7 +106,7 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
       floatsRequest?.requestProfile?.Provider = "EMAIL"
       floatsRequest?.whatsAppFlag = whatsAppNoFlag
       validatePhone()
-      WebEngageController.trackEvent(BUSINESS_PROFILE_INFO, CLICK, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(PS_BUSINESS_PROFILE_CLICK, CLICK, NO_EVENT_VALUE)
     }
   }
 
