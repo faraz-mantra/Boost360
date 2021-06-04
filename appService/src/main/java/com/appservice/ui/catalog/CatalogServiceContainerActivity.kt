@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
+import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.ui.catalog.catalogProduct.addProduct.ProductDetailFragment
 import com.appservice.ui.catalog.catalogProduct.addProduct.information.ProductInformationFragment
@@ -30,6 +31,7 @@ import com.framework.views.customViews.CustomToolbar
 open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
+  private var fragment: AppBaseFragment<*, *>? = null
   private var serviceDetailFragment: ServiceDetailFragment? = null
   private var serviceInformationFragment: ServiceInformationFragment? = null
   private var productDetailFragment: ProductDetailFragment? = null
