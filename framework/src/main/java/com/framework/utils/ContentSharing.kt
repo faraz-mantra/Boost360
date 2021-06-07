@@ -62,10 +62,7 @@ class ContentSharing {
                     if (isFb == true)
                         share.setPackage(context.getString(R.string.facebook_package))
                     if (isLinkedin == true)
-                        share.setClassName(
-                            "com.linkedin.android",
-                            "com.linkedin.android.home.UpdateStatusActivity"
-                        );
+                        share.setPackage("com.linkedin.android")
                     if (isTwitter == true)
                         share.setPackage(context.getString(R.string.twitter_package))
                     context.startActivity(Intent.createChooser(share, intentChooserTitle))
@@ -157,17 +154,18 @@ ${truncateString(updateContent, 100)}: Read more $link
 
         //todo customPages
         fun shareCustomPages(
-            pageName: String,
-            link: String?,
-            vmn: String?,
-            catalogLink: String,
-            isWhatsApp: Boolean?
+            pageName: String?="",
+            link: String? ="",
+            vmn: String?="",
+            catalogLink: String?="",
+            isWhatsApp: Boolean?,
+            isFb: Boolean?
         ) {
             val customPagesTemplate = """🆕 Read about $pageName. $link
 🏷️ Check our online catalogue, $catalogLink
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(customPagesTemplate, isWhatsApp = isWhatsApp)
+            share(customPagesTemplate, isWhatsApp = isWhatsApp,isFb = isFb)
         }
 
         fun shareTestimonial(

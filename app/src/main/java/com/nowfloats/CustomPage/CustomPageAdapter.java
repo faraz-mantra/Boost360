@@ -16,6 +16,9 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dashboard.utils.CodeUtilsKt;
+import com.framework.BaseApplication;
+import com.framework.utils.ContentSharing;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.CustomPage.Model.ItemsItem;
@@ -38,15 +41,15 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     Activity appContext;
     View displayView;
     ArrayList<CustomPageModel> storeData;
-    private LayoutInflater mInflater;
-    private SimpleDateFormat format;
+    private final LayoutInflater mInflater;
+    private final SimpleDateFormat format;
     public UserSessionManager session;
     public CustomPageInterface pageInterface;
     //    public CustomPageDeleteInterface pageDeleteInterface;
-    private View prev_view = null;
+    private final View prev_view = null;
     public static boolean deleteCheck = false;
     public Bus bus;
-    private CustomPageLink customPageLink;
+    private final CustomPageLink customPageLink;
 
     //    Drawable drawableFromTheme;
     //PorterDuffColorFilter primary;
@@ -70,22 +73,22 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        ImageView imageView, stencil, share, share_whatsapp, share_facebook;
+        ImageView imageView, stencil, share;
         TextView titleText, dateText;
         CardView cardView;
         LinearLayout fullLayout;
 
         public ViewHolder(View v) {
             super(v);
-            stencil = (ImageView) itemView.findViewById(R.id.page_stencil_icon);
-            imageView = (ImageView) itemView.findViewById(R.id.page_menu);
-            titleText = (TextView) itemView.findViewById(R.id.page_name);
-            dateText = (TextView) itemView.findViewById(R.id.page_date);
-            fullLayout = (LinearLayout) itemView.findViewById(R.id.full_layout_card);
-           /* share = (ImageView) itemView.findViewById(R.id.shareData);
-            share_facebook = (ImageView) itemView.findViewById(R.id.share_facebook);
-            share_whatsapp = (ImageView) itemView.findViewById(R.id.share_whatsapp);*/
-            cardView = (CardView) itemView.findViewById(R.id.cardView);
+            stencil = itemView.findViewById(R.id.page_stencil_icon);
+            imageView = itemView.findViewById(R.id.page_menu);
+            titleText = itemView.findViewById(R.id.page_name);
+            dateText = itemView.findViewById(R.id.page_date);
+            fullLayout = itemView.findViewById(R.id.full_layout_card);
+            share = itemView.findViewById(R.id.shareData);
+//            share_facebook = (ImageView) itemView.findViewById(R.id.share_facebook);
+//            share_whatsapp = (ImageView) itemView.findViewById(R.id.share_whatsapp);
+            cardView = itemView.findViewById(R.id.cardView);
 
 
         }
@@ -145,51 +148,8 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                     }
                 });*/
 
-/*
-                holder.share.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-
-                            shareLink(storeData.get(position).PageId,"default");
-
-
-
-                    }
-                });
-
-                holder.share_whatsapp.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-
-
-                        shareLink(storeData.get(position).PageId,"whatsapp");
-
-
-
-
-                    }
-                });
-
-                holder.share_facebook.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-
-
-                        shareLink(storeData.get(position).PageId,"facebook");
-
-
-
-
-                    }
-                });*/
-
-                holder.fullLayout.setOnClickListener(new View.OnClickListener() {
+                holder.share.setOnClickListener(v -> shareLink(storeData.get(position),"default"));
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int POs = Integer.parseInt(v.getTag().toString());
@@ -292,56 +252,40 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
         }
     }
 
-    public void shareLink(String id, String type) {
+    public void shareLink(CustomPageModel customPageModel, String type) {
+        String productType = CodeUtilsKt.getProductType(session.getFP_AppExperienceCode());
+        String subDomain = "";
+        if (productType.equals("PRODUCTS")) {
+            subDomain = "all-products";
+        } else {
+            subDomain = "all-services";
+        }
         String url = null;
         Iterator<ItemsItem> it = customPageLink.getItems().iterator();
         while (it.hasNext()) {
-            if (it.next().getId().equals(id)) {
+            try{
+            if (it.next().getId().equals(customPageModel.PageId)) {
                 url = it.next().getUrl().getUrl();
                 break;
+            }}catch (Exception ignored){
+          url = session.getRootAliasURI();
             }
         }
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, url);
-        sendIntent.setType("text/plain");
-
+        if (url==null){
+            url = session.getRootAliasURI();
+        }
         switch (type) {
             case "facebook":
-                sendIntent.setPackage(appContext.getString(R.string.facebook_package));
+                ContentSharing.Companion.shareCustomPages(customPageModel.DisplayName,url,session.getUserPrimaryMobile(),session.getRootAliasURI() + "/"+subDomain,false,true);
                 break;
             case "whatsapp":
-                sendIntent.setPackage(appContext.getString(R.string.whatsapp_package));
+                ContentSharing.Companion.shareCustomPages(customPageModel.DisplayName,url,session.getUserPrimaryMobile(),session.getRootAliasURI() + "/"+subDomain,true,false);
                 break;
+            default:ContentSharing.Companion.shareCustomPages(customPageModel.DisplayName,url,session.getUserPrimaryMobile(),session.getRootAliasURI() + "/"+subDomain,false,false);
+
         }
-        appContext.startActivity(sendIntent);
 
     }
-
-//    private void showPopup(final int pOs) {
-//        final MaterialDialog dialog = new MaterialDialog.Builder(appContext)
-//                .customView(R.layout.page_edit_popup,true)
-//                .show();
-//        View view = dialog.getCustomView();
-//        TextView title = (TextView) view.findViewById(R.id.title);
-//        TextView edit = (TextView) view.findViewById(R.id.edit);
-//        TextView delete = (TextView) view.findViewById(R.id.delete);
-//        title.setText(storeData.get(pOs).DisplayName);
-//        edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//                editPage(storeData.get(pOs).PageId,pOs);
-//            }
-//        });
-//
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                deletePage(storeData.get(pOs).PageId,dialog,pOs);
-//            }
-//        });
-//    }
 
     private void editPage(String pageId, final int position) {
 
@@ -385,4 +329,5 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     public int getItemCount() {
         return storeData.size();
     }
+
 }
