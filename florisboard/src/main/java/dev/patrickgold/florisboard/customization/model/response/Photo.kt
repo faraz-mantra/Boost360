@@ -6,13 +6,12 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
 
 data class Photo(
-        @SerializedName("ImageURL")
-        @Expose
-        var imageUri: String? = null,
-
-        @SerializedName("selected")
-        @Expose
-        var selected: Boolean = false
-) : BaseRecyclerItem(){
-        override fun getViewType(): Int = FeaturesEnum.PHOTOS.ordinal
+  @SerializedName("ImageURL")
+  @Expose
+  var imageUri: String? = null,
+  @SerializedName("selected")
+  @Expose
+  var selected: Boolean = false
+) : BaseRecyclerItem() {
+  override fun getViewType(): Int = FeaturesEnum.PHOTOS.ordinal
 }

@@ -15,8 +15,7 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.Product
 
-class ProductViewHolder(itemView: View, val listener: OnItemClickListener?) :
-    BaseRecyclerViewHolder(itemView) {
+class ProductViewHolder(itemView: View, val listener: OnItemClickListener?) : BaseRecyclerViewHolder(itemView) {
 
     private val productImage: ImageView = itemView.findViewById(R.id.imageView)
     private val productName: CustomTextView = itemView.findViewById(R.id.tv_name)
@@ -30,8 +29,7 @@ class ProductViewHolder(itemView: View, val listener: OnItemClickListener?) :
     override fun bindTo(position: Int, item: BaseRecyclerItem?) {
         val product = item as Product
         // bind views with data
-        Glide.with(productImage).load(product.imageUri)
-            .placeholder(R.drawable.default_product_image).into(productImage)
+        Glide.with(productImage).load(product.imageUri).placeholder(R.drawable.placeholder_image_n).into(productImage)
         if (product.price?.toDouble() ?: 0.0 <= 0) {
             productPrice.gone()
         } else {
@@ -54,6 +52,8 @@ class ProductViewHolder(itemView: View, val listener: OnItemClickListener?) :
         productDiscount.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         productDiscount.text = product.getProductDiscountPrice()
         productDescription.text = product.description
-        btnShare.setOnClickListener { listener?.onItemClick(position, product) }
+        btnShare.setOnClickListener {
+            listener?.onItemClick(position, product)
+        }
     }
 }

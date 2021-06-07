@@ -402,6 +402,8 @@
     <string name="view_details">View Details</string>
     <string name="tap_on_photos_to_select">Tap on photos to select...</string>
     <string name="whats_app_package">com.whatsapp</string>
+  <string name="check_internet_connection">Please check your internet connect!</string>
+    <string name="image_not_suopported">Image not supported!</string>
 
 
 </resources>

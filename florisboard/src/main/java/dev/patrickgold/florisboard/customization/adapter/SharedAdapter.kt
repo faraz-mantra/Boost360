@@ -16,7 +16,7 @@ class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T?>, val listener
     val view = inflater.inflate(itemType.getLayout(), parent, false)
     return when (itemType) {
       FeaturesEnum.LOADER -> LoaderViewHolder(view, listener)
-      FeaturesEnum.UPDATES -> FloatViewHolder(view, listener)
+      FeaturesEnum.UPDATES -> FloatUpdateViewHolder(view, listener)
       FeaturesEnum.PRODUCTS -> ProductViewHolder(view, listener)
       FeaturesEnum.PHOTOS -> PhotoViewHolder(view, listener)
       FeaturesEnum.DETAILS -> DetailsViewHolder(view, listener)

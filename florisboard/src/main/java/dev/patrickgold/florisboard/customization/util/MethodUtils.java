@@ -37,7 +37,7 @@ public class MethodUtils {
     public static Uri getImageUri(Context mContext, Bitmap inImage, String imageId) {
         try {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            inImage.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
             String path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(), inImage, imageId + ".png", "drawing");
             if (TextUtils.isEmpty(path)) return null;
             return Uri.parse(path);
