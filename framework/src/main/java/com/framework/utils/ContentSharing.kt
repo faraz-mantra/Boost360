@@ -135,14 +135,16 @@ class ContentSharing {
             link: String?,
             catalogLink: String,
             vmn: String?,
-            isWhatsApp: Boolean?
-        ) {
+            isWhatsApp: Boolean?,
+            isFb: Boolean?,
+            imageUri: String? = null
+            ) {
             val updateTemplate = """👋🏼 Hey there!
 ${truncateString(updateContent, 100)}: Read more $link
 🏷️ Check our online catalogue, $catalogLink
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(updateTemplate, isWhatsApp = isWhatsApp)
+            share(updateTemplate, isWhatsApp = isWhatsApp,isFb = isFb,imageUri = imageUri)
         }
 
         fun truncateString(string: String, maxChar: Int): String {

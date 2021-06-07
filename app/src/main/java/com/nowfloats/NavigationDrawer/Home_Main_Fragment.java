@@ -43,6 +43,7 @@ import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.dashboard.utils.CodeUtilsKt;
 import com.framework.models.firestore.FirestoreManager;
 import com.framework.utils.ContentSharing;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -926,82 +927,37 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     this.type = type;
     this.imageShare = imageShare;
     this.position = position;
+    FloatsMessageModel floatsMessageModel = Home_Main_Fragment.getMessageList(current_Activity).get(position);
     if (ActivityCompat.checkSelfPermission(current_Activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
       Methods.showDialog(current_Activity, "Storage Permission", "To share service image, we need storage permission.",
           (dialog, which) -> requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
       return;
     }
     ProgressDialog pd = ProgressDialog.show(current_Activity, "", "Sharing . . .");
-    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+    String productType = CodeUtilsKt.getProductType(session.getFP_AppExperienceCode());
+    String subDomain = "";
+    if (productType.equals("PRODUCTS")) {
+      subDomain = "all-products";
+    } else {
+      subDomain = "all-services";
+    }
+//    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+    String message = floatsMessageModel.message;
+    String url = floatsMessageModel.url;
+    String rootAliasURI = session.getRootAliasURI();
+    String imageUri = floatsMessageModel.imageUri;
     switch (type) {
       case "whatsapp":
-        shareIntent.setPackage("com.whatsapp");
+        ContentSharing.Companion.shareUpdates(message,url, rootAliasURI + "/"+subDomain,session.getUserPrimaryMobile(),true,false,imageUri);
         break;
       case "facebook":
-        shareIntent.setPackage("com.facebook.katana");
+        ContentSharing.Companion.shareUpdates(message,url, rootAliasURI + "/"+subDomain,session.getUserPrimaryMobile(),false,true,imageUri);
         break;
+      default:ContentSharing.Companion.shareUpdates(message,url, rootAliasURI + "/"+subDomain,session.getUserPrimaryMobile(),false,false,imageUri);
+
+
     }
-    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
-      if (Methods.isOnline(current_Activity)) {
-        String url;
-        if (imageShare.contains("BizImages")) {
-          url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
-        } else {
-          url = imageShare;
-        }
-        Target target = new Target() {
-          @Override
-          public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-            try {
-              Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-              View view = new View(current_Activity);
-              view.draw(new Canvas(mutableBitmap));
-              String path = MediaStore.Images.Media.insertImage(current_Activity.getContentResolver(), mutableBitmap, "Nur", null);
-              BoostLog.d("Path is:", path);
-              Uri uri = Uri.parse(path);
-              shareIntent.putExtra(Intent.EXTRA_TEXT, Home_Main_Fragment.getMessageList(current_Activity).get(position).message + " View more at: " +
-                  Home_Main_Fragment.getMessageList(current_Activity).get(position).url);
-              shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-              shareIntent.setType("image/*");
-              if (shareIntent.resolveActivity(current_Activity.getPackageManager()) != null) {
-                current_Activity.startActivityForResult(Intent.createChooser(shareIntent, current_Activity.getString(R.string.share_updates)), 1);
-              } else {
-                Methods.showSnackBarNegative(current_Activity, current_Activity.getString(R.string.no_app_available_for_action));
-              }
-            } catch (OutOfMemoryError e) {
-              Toast.makeText(current_Activity, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-              Toast.makeText(current_Activity, "Image not able to share", Toast.LENGTH_SHORT).show();
-            }
-            pd.dismiss();
-          }
-
-          @Override
-          public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-            pd.dismiss();
-            Methods.showSnackBarNegative(current_Activity, current_Activity.getString(R.string.failed_to_download_image));
-          }
-
-          @Override
-          public void onPrepareLoad(Drawable placeHolderDrawable) {
-          }
-        };
-        Picasso.get().load(url).into(target);
-      } else {
-        pd.dismiss();
-        Methods.showSnackBarNegative(current_Activity, current_Activity.getString(R.string.can_not_share_image_offline_mode));
-      }
-    } else {
-      shareIntent.setType("text/plain");
-      shareIntent.putExtra(Intent.EXTRA_TEXT, Home_Main_Fragment.getMessageList(current_Activity).get(position).message + " View more at: " + Home_Main_Fragment.getMessageList(current_Activity).get(position).url);
-      if (shareIntent.resolveActivity(current_Activity.getPackageManager()) != null) {
-        current_Activity.startActivityForResult(Intent.createChooser(shareIntent, current_Activity.getString(R.string.share_updates)), 1);
-      } else {
-        Methods.showSnackBarNegative(current_Activity, current_Activity.getString(R.string.no_app_available_for_action));
-      }
       pd.dismiss();
-    }
   }
 
   @Override
