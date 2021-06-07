@@ -109,18 +109,6 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content">
 
-                                       <!-- <android.support.constraint.ConstraintLayout
-                                            android:id="@+id/share_layout"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_alignParentTop="true"
-                                            android:layout_alignParentEnd="true"
-                                            android:layout_marginStart="0dp"
-                                            android:layout_marginTop="0dp"
-                                            android:layout_marginEnd="0dp"
-                                            android:layout_marginEnd="0dp"
-                                            android:padding="5dp">
-
                                             <ImageView
                                                 android:id="@+id/shareData"
                                                 android:layout_width="30dp"
@@ -130,43 +118,38 @@
                                                 android:layout_marginBottom="8dp"
                                                 android:src="@drawable/share_icon_normal"
                                                 android:visibility="visible"
-                                                card_view:layout_constraintBottom_toBottomOf="parent"
-                                                card_view:layout_constraintEnd_toStartOf="@+id/share_facebook"
-                                                card_view:layout_constraintHorizontal_bias="0.5"
-                                                card_view:layout_constraintStart_toStartOf="parent"
-                                                card_view:layout_constraintTop_toTopOf="parent" />
+                                               android:layout_alignParentEnd="true" />
 
-                                            <ImageView
-                                                android:id="@+id/share_facebook"
-                                                android:layout_width="30dp"
-                                                android:layout_height="30dp"
-                                                 android:layout_marginStart="8dp"
-                                                android:layout_marginEnd="8dp"
-                                                android:layout_marginBottom="8dp"
-                                                android:src="@drawable/facebook_icon_share"
-                                                android:visibility="visible"
-                                                card_view:layout_constraintBottom_toBottomOf="parent"
-                                                card_view:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
-                                                card_view:layout_constraintHorizontal_bias="0.5"
-                                                card_view:layout_constraintStart_toEndOf="@+id/shareData"
-                                                card_view:layout_constraintTop_toTopOf="parent" />
+<!--                                            <ImageView-->
+<!--                                                android:id="@+id/share_facebook"-->
+<!--                                                android:layout_width="30dp"-->
+<!--                                                android:layout_height="30dp"-->
+<!--                                                 android:layout_marginStart="8dp"-->
+<!--                                                android:layout_marginEnd="8dp"-->
+<!--                                                android:layout_marginBottom="8dp"-->
+<!--                                                android:src="@drawable/facebook_icon_share"-->
+<!--                                                android:visibility="visible"-->
+<!--                                                card_view:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                                card_view:layout_constraintEnd_toStartOf="@+id/share_whatsapp"-->
+<!--                                                card_view:layout_constraintHorizontal_bias="0.5"-->
+<!--                                                card_view:layout_constraintStart_toEndOf="@+id/shareData"-->
+<!--                                                card_view:layout_constraintTop_toTopOf="parent" />-->
 
-                                            <ImageView
-                                                android:id="@+id/share_whatsapp"
-                                                android:layout_width="75dp"
-                                                android:layout_height="30dp"
-                                                android:layout_marginStart="8dp"
-                                                 android:layout_marginEnd="10dp"
-                                                android:layout_marginBottom="8dp"
-                                                android:src="@drawable/share_whatsapp"
-                                                android:visibility="visible"
-                                                card_view:layout_constraintBottom_toBottomOf="parent"
-                                                card_view:layout_constraintEnd_toEndOf="parent"
-                                                card_view:layout_constraintHorizontal_bias="0.5"
-                                                card_view:layout_constraintStart_toEndOf="@+id/share_facebook"
-                                                card_view:layout_constraintTop_toTopOf="parent" />
+<!--                                            <ImageView-->
+<!--                                                android:id="@+id/share_whatsapp"-->
+<!--                                                android:layout_width="75dp"-->
+<!--                                                android:layout_height="30dp"-->
+<!--                                                android:layout_marginStart="8dp"-->
+<!--                                                 android:layout_marginEnd="10dp"-->
+<!--                                                android:layout_marginBottom="8dp"-->
+<!--                                                android:src="@drawable/share_whatsapp"-->
+<!--                                                android:visibility="visible"-->
+<!--                                                card_view:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                                card_view:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                card_view:layout_constraintHorizontal_bias="0.5"-->
+<!--                                                card_view:layout_constraintStart_toEndOf="@+id/share_facebook"-->
+<!--                                                card_view:layout_constraintTop_toTopOf="parent" />-->
 
-                                        </android.support.constraint.ConstraintLayout>-->
 
                                         <com.nowfloats.CustomWidget.roboto_lt_10_8c8c8c
                                             android:id="@+id/page_date"

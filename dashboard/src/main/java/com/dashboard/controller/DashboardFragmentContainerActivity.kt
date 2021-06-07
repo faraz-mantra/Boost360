@@ -61,6 +61,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     return binding?.appBarLayout?.toolbar
   }
 
+
   override fun getToolbarTitleSize(): Float? {
     return resources.getDimension(R.dimen.heading_7)
   }
@@ -105,7 +106,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
   override fun isHideToolbar(): Boolean {
     return when (type) {
-      FragmentType.DIGITAL_READINESS_SCORE -> true
+      FragmentType.DIGITAL_READINESS_SCORE,FragmentType.FRAGMENT_WEBSITE_THEME -> true
       else -> super.isHideToolbar()
     }
   }
