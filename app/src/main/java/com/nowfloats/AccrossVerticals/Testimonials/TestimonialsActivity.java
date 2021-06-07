@@ -250,9 +250,9 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         String productType = CodeUtilsKt.getProductType(session.getFP_AppExperienceCode());
         String subDomain = "";
         if (productType.equals("PRODUCTS")) {
-            subDomain = "all-services";
-        } else {
             subDomain = "all-products";
+        } else {
+            subDomain = "all-services";
         }
         ContentSharing.Companion.shareTestimonial(data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/"+subDomain, session.getFPPrimaryContactNumber(), false);
     }
