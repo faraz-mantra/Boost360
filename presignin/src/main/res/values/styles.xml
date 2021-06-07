@@ -88,7 +88,7 @@
     <item name="textType">HEADING_5</item>
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="textColor">@color/black_4a4a4a</item>
+    <item name="android:text">@color/black_4a4a4a</item>
     <item name="android:layout_marginStart">@dimen/_16sdp</item>
     <item name="android:fontFamily">@font/semi_bold</item>
     <item name="android:layout_marginEnd">@dimen/_16sdp</item>

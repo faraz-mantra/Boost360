@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="please_wait">Please wait...</string>
-  <string name="ps_accept_tnc">By getting started, you agree to Boost 360 <b><u>terms</u></b> and <b><u>conditions</u></b></string>
+  <string name="ps_accept_tnc">By continuing , you agree to Boost 360 <b><u>terms</u></b> and <b><u>conditions</u></b></string>
   <string name="psn_get_started">GET STARTED</string>
 
 
@@ -141,4 +141,5 @@
   <string name="this_is_your_registered_mobile_number">This is your registered mobile number</string>
   <string name="number_to_login_via_otp_change_tap_on_change_number">You can also use above number to login via OTP verification. In case you want to change this number, tap on ‘Change number ’.</string>
   <string name="change_number">Change number</string>
+  <string name="psn_login_now">LOGIN NOW</string>
 </resources>
