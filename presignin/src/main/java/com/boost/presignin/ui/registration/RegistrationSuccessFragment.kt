@@ -110,7 +110,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
   }
 
   private fun createAccessTokenAuth() {
-    showProgress()
+    showProgress(getString(R.string.business_setup_process))
     WebEngageController.trackEvent(PS_REGISTRATION_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
     val request = AccessTokenRequest(authToken = authToken?.authenticationToken, clientId = clientId, fpId = authToken?.floatingPointId)
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {

@@ -141,7 +141,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         root = inflater.inflate(R.layout.cart_fragment, container, false)
-        localStorage = LocalStorage.getInstance(context!!)!!
+        localStorage = LocalStorage.getInstance(requireContext())!!
 
         progressDialog = ProgressDialog(requireContext())
 
@@ -180,6 +180,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         initializeErrorObserver()
         initMvvM()
         checkRenewalItemDeepLinkClick()
+        gst_layout.visibility = View.GONE
         //show applyed coupon code
         if (prefs.getApplyedCouponDetails() != null) {
             validCouponCode = prefs.getApplyedCouponDetails()
@@ -220,10 +221,22 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                         CHECKOUT_KYC_FRAGMENT
                 )
             }else{
-                    renewPopUpFragment.show(
+             /*       renewPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     RENEW_POPUP_FRAGEMENT
-            )
+            )*/
+
+                    if (prefs.getCartOrderInfo() != null) {
+                        proceedToPayment(prefs.getCartOrderInfo()!!)
+                    } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
+                        val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
+                        if (renewalItems.isNullOrEmpty().not()) {
+                            createCartStateRenewal(renewalItems)
+                        } else createPurchaseOrder(null)
+                    } else {
+                        Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
+                    }
+
             }
 
 /*            renewPopUpFragment.show(
@@ -336,6 +349,29 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     (activity as UpgradeActivity).supportFragmentManager,
                     GSTIN_POPUP_FRAGEMENT
             )
+        }
+
+        enter_gstin_number.setOnClickListener {
+            gstinPopUpFragment.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    GSTIN_POPUP_FRAGEMENT
+            )
+        }
+
+        gstin_remove.setOnClickListener {
+            GSTINNumber = null
+            gstin_title.text = "GSTIN (optional)"
+            entered_gstin_number.visibility = View.GONE
+            gstin_remove.visibility = View.GONE
+            enter_gstin_number.visibility = View.VISIBLE
+        }
+
+        tan_remove.setOnClickListener {
+            TANNumber = null
+            tan_title.text = "TAN (optional)"
+            entered_tan_number.visibility = View.GONE
+            tan_remove.visibility = View.GONE
+            enter_tan_number.visibility = View.VISIBLE
         }
 
         remove_gstin_number.setOnClickListener {
@@ -1175,6 +1211,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 gstin_layout1.visibility = View.GONE
                 gstin_layout2.visibility = View.VISIBLE
                 fill_in_gstin_value.text = it
+
+                gstin_remove.visibility = View.VISIBLE
+                gstin_title.text = "GSTIN"
+                entered_gstin_number.visibility = View.VISIBLE
+                enter_gstin_number.visibility = View.GONE
+                entered_gstin_number.text = it
             }
         })
 
@@ -1243,6 +1285,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 enter_tan_number.visibility = View.GONE
                 entered_tan_number.visibility = View.VISIBLE
                 entered_tan_number.text = it
+
+                tan_remove.visibility = View.VISIBLE
+                tan_title.text = "TAN"
             }
         })
 
@@ -1368,9 +1413,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             var couponDisount = 0
             if (validCouponCode != null) {
                 couponDisount = validCouponCode!!.discount_percent
-                coupon_discount_title.text = "Coupon discount(" + couponDisount.toString() + "%)"
+                coupon_discount_title.text = "Discount(" + couponDisount.toString() + "%)"
             } else {
-                coupon_discount_title.text = "Coupon discount"
+                coupon_discount_title.text = "Discount"
             }
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
@@ -1379,6 +1424,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     else
                         total += item.price
                 }
+                cart_amount_title.text = "Cart total ("+ cartList.size + " items)"
                 cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
                 couponDiscountAmount = total * couponDisount / 100
                 coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
@@ -1387,7 +1433,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 taxValue = Math.round(temp * 100) / 100.0
                 grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
                 igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
-                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+//                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
                 cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
                 footer_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
             }
@@ -1400,9 +1446,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             var couponDisount = 0
             if (validCouponCode != null) {
                 couponDisount = validCouponCode!!.discount_percent
-                coupon_discount_title.text = "Coupon discount(" + couponDisount.toString() + "%)"
+                coupon_discount_title.text = "Discount(" + couponDisount.toString() + "%)"
             } else {
-                coupon_discount_title.text = "Coupon discount"
+                coupon_discount_title.text = "Discount"
             }
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
@@ -1411,6 +1457,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     else
                         total += item.price
                 }
+                cart_amount_title.text = "Cart total ("+ cartList.size + " items)"
                 cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
                 coupontotal = total
 
@@ -1427,7 +1474,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 taxValue = Math.round(temp * 100) / 100.0
                 grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
                 igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
-                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+//                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
                 cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
                 footer_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
             }

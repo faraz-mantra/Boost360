@@ -67,6 +67,7 @@
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="android:editTextColor">@color/black</item>
   </style>
+
   <style name="SpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">match_parent</item>
@@ -139,7 +140,7 @@
     <item name="android:inputType">text</item>
     <item name="android:drawablePadding">@dimen/size_8</item>
   </style>
-  
+
   <style name="MaterialAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
     <item name="android:colorPrimary">@color/white</item>
     <item name="colorAccent">@color/colorAccent</item>
@@ -153,7 +154,7 @@
 
   <style name="MaterialAlertTitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
     <item name="android:textColor">@color/black_2A2A2A</item>
-<!--    <item name="android:textStyle">bold</item>-->
+    <!--    <item name="android:textStyle">bold</item>-->
     <item name="android:textSize">20sp</item>
   </style>
 
@@ -230,7 +231,6 @@
   </style>
 
 
-
   <style name="ll_match_wrap_vertical" parent="match_wrap">
     <item name="android:orientation">vertical</item>
   </style>
@@ -279,6 +279,7 @@
     <item name="android:textAlignment">center</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
+
   <style name="TextStaffHeading">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
@@ -290,6 +291,7 @@
     <item name="android:textAlignment">center</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
+
   <style name="TextStaffProfileHeadings">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
@@ -300,13 +302,15 @@
     <item name="android:textAlignment">center</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
+
   <style name="StaffProfileTextContent" parent="TextStaffProfileHeadings">
     <item name="android:textColor">@color/gray_4e4e4e</item>
     <item name="android:textStyle">normal</item>
-<!--    <item name="android:textFontWeight">0</item>-->
+    <!--    <item name="android:textFontWeight">0</item>-->
     <item name="android:textAlignment">viewStart</item>
   </style>
-  <style name="StaffProfileEditText" >
+
+  <style name="StaffProfileEditText">
     <item name="android:text">@string/edit</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
@@ -333,6 +337,36 @@
     <item name="android:fontFamily">@font/regular</item>
     <item name="android:textColor">@color/greyish_brown</item>
     <item name="android:background">@drawable/bg_button_rounded_greyish_brown_outlined</item>
+  </style>
+
+  <style name="ButtonStyle.Outlined.Green" parent="ButtonStyle.Rounded.Outlined">
+    <item name="height">@dimen/size_36</item>
+    <item name="textSize">14sp</item>
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:layout_marginStart">@dimen/size_16</item>
+    <item name="android:layout_marginBottom">@dimen/size_16</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:textColor">@color/green_6bc95c</item>
+    <item name="android:background">@drawable/rounded_stroke_grey_4_solid_green</item>
+  </style>
+
+  <style name="ButtonStyle.Red">
+    <item name="android:textSize">14sp</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="paddingStart">@dimen/size_28</item>
+    <item name="paddingEnd">@dimen/size_28</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">@dimen/size_38</item>
+    <item name="height">@dimen/size_36</item>
+    <item name="textSize">14sp</item>
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:textColor">@color/error_red</item>
+    <item name="android:background">@drawable/rounded_stroke_grey_4_solid_error</item>
   </style>
 
   <!-- media picker -->

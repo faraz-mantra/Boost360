@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
 import com.framework.models.firestore.FirestoreManager;
+import com.framework.utils.ContentSharing;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.ProductGallery.Model.ImageListModel;
@@ -186,9 +187,9 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
   private void onProductServiceAddedOrUpdated(int count) {
     FirestoreManager instance = FirestoreManager.INSTANCE;
     String type = Utils.getProductType(session.getFP_AppExperienceCode());
-    if(instance.getDrScoreData().getMetricdetail()==null) return;
+    if (instance.getDrScoreData().getMetricdetail() == null) return;
     if (type.toUpperCase().equals("SERVICES")) {
-       instance.getDrScoreData().getMetricdetail().setNumber_services_added(count);
+      instance.getDrScoreData().getMetricdetail().setNumber_services_added(count);
     } else instance.getDrScoreData().getMetricdetail().setNumber_products_added(count);
     instance.updateDocument();
   }
@@ -325,6 +326,11 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     /**
      * If not new pricing plan
      */
+    // for testing:
+    openAddProductActivity(new Product());
+    if (true) {
+      return;
+    }
     if (!WidgetKey.isNewPricingPlan) {
       if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
         Methods.showFeatureNotAvailDialog(this);
@@ -451,67 +457,22 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
   }
 
   public void share(boolean defaultShare, int type, Product product) {
-    pd = ProgressDialog.show(this, "", "Sharing . . .");
-
-    Intent share = new Intent(Intent.ACTION_SEND);
-    share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
     if (Methods.isOnline(this)) {
-      String shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n\nfor more details visit: %s",
-              product.Name.trim(), product.getVariantDetail(), product.getFinalPriceWithCurrency(),
-              product.getActualPriceWithCurrency(), product.Description.trim(), product.ProductUrl.trim());
-
-      Target target = new Target() {
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-          pd.dismiss();
-          targetMap = null;
-          try {
-            Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-            View view = new View(getApplicationContext());
-            view.draw(new Canvas(mutableBitmap));
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), mutableBitmap, "boost_360", null);
-            BoostLog.d("Path is:", path);
-            Uri uri = Uri.parse(path);
-            share.putExtra(Intent.EXTRA_TEXT, shareText);
-            share.putExtra(Intent.EXTRA_STREAM, uri);
-            share.setType("image/*");
-            if (share.resolveActivity(getApplicationContext().getPackageManager()) != null) {
-              if (!defaultShare) {
-                if (type == 0) {
-                  share.setPackage(getString(R.string.facebook_package));
-                } else if (type == 1) {
-                  share.setPackage(getString(R.string.whatsapp_package));
-                }
-              }
-              startActivityForResult(Intent.createChooser(share, getApplicationContext().getString(R.string.share_updates)), 1);
-            }
-          } catch (OutOfMemoryError e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.image_size_is_large), Toast.LENGTH_SHORT).show();
-          } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Image not able to share", Toast.LENGTH_SHORT).show();
-          }
+      if (!defaultShare) {
+        if (type == 0) {
+          //fb
+          ContentSharing.Companion.shareProduct(product.Name,String.valueOf(product.Price),product.ProductUrl,session.getUserPrimaryMobile(),product.ImageUri,false,false,true);
+        } else if (type == 1) {
+          ContentSharing.Companion.shareProduct(product.Name,String.valueOf(product.Price),product.ProductUrl,session.getUserPrimaryMobile(),product.ImageUri,true,false,false);
         }
+      }else
+      ContentSharing.Companion.shareProduct(product.Name,String.valueOf(product.Price),product.ProductUrl,session.getUserPrimaryMobile(),product.ImageUri,false,false,false);
 
-        @Override
-        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-          pd.dismiss();
-          targetMap = null;
-          Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.failed_to_download_image), Toast.LENGTH_SHORT).show();
-//                    Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.failed_to_download_image));
-        }
 
-        @Override
-        public void onPrepareLoad(Drawable placeHolderDrawable) {
 
-        }
-      };
-      targetMap = target;
-      Picasso.get().load(product.ImageUri).into(target);
-    } else {
-      pd.dismiss();
-      Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.can_not_share_image_offline_mode), Toast.LENGTH_SHORT).show();
-//            Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.can_not_share_image_offline_mode));
     }
   }
+
+
 }

@@ -61,6 +61,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     return binding?.appBarLayout?.toolbar
   }
 
+
   override fun getToolbarTitleSize(): Float? {
     return resources.getDimension(R.dimen.heading_7)
   }
@@ -68,21 +69,22 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardTheme
+      FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardThemeNew
       else -> super.customTheme()
     }
   }
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS ,FragmentType.FRAGMENT_WEBSITE_THEME-> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.FRAGMENT_WEBSITE_THEME->ContextCompat.getColor(this, R.color.gray_4e4e4e)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS ,FragmentType.FRAGMENT_WEBSITE_THEME-> ContextCompat.getColor(this, R.color.white)
+      FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
@@ -104,7 +106,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
   override fun isHideToolbar(): Boolean {
     return when (type) {
-      FragmentType.DIGITAL_READINESS_SCORE -> true
+      FragmentType.DIGITAL_READINESS_SCORE,FragmentType.FRAGMENT_WEBSITE_THEME -> true
       else -> super.isHideToolbar()
     }
   }
