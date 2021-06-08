@@ -129,7 +129,7 @@
   <string name="customise_font">Customise font</string>
   <string name="primary_font">Primary font</string>
   <string name="secondary_font">Secondary font</string>
-  <string name="default_theme_shade">Default theme shade</string>
+  <string name="default_theme_shade">Default</string>
   <string name="optional_shades_to_choose_from">Optional shades to choose from</string>
   <string name="open_sans">Open Sans</string>
   <string name="change_font_type">Change font type</string>
@@ -167,4 +167,10 @@
     <string name="reset_to_default">Reset to default</string>
   <string name="need_help">need help?</string>
     <string name="share_on_others">Share on others</string>
+    <string name="add_featured_image">Add Featured Image</string>
+    <string name="what_this">What’ this?</string>
+  <string name="business_name">Business Name</string>
+    <string name="business_category">Business Category</string>
+  <string name="services_business">Services business</string>
+  <string name="customise_colour">Customise colour</string>
 </resources>
