@@ -29,6 +29,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.observeOnce
 import com.framework.pref.*
 import com.framework.webengageconstant.*
+import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
@@ -43,10 +44,11 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   private var responseCreateProfile: BusinessProfileResponse? = null
 
   companion object {
+    const val CATEGORY_DATA = "category_data"
     @JvmStatic
     fun newInstance(registerRequest: CategoryFloatsRequest) = BusinessWebsiteFragment().apply {
       arguments = Bundle().apply {
-        putSerializable("request", registerRequest)
+        putSerializable(CATEGORY_DATA, registerRequest)
       }
     }
   }
@@ -55,7 +57,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     fullScreenProgress = FullScreenProgressDialog.newInstance()
     this.session = UserSessionManager(baseActivity)
-    floatsRequest = arguments?.getSerializable("request") as? CategoryFloatsRequest
+    floatsRequest = arguments?.getSerializable(CATEGORY_DATA) as? CategoryFloatsRequest
     val websiteHint = floatsRequest?.businessName?.trim()?.replace(" ", "")
     val websiteHintSpannable = SpannableString("'$websiteHint' ").apply {
       setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
@@ -92,9 +94,15 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         showShortToast(getString(R.string.enter_a_valid_website_name))
         return@setOnClickListener
       }
-      floatsRequest?.webSiteUrl = "$website.nowfloats.com"
-      WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)
-      apiHitCreateMerchantProfile()
+      WebPreSignInBottomDialog().apply {
+        setData("https://www.getboost360.com/tnc?src=android&stage=user_account_create")
+        onClicked = {
+          floatsRequest?.webSiteUrl = "$website.nowfloats.com"
+          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)
+          apiHitCreateMerchantProfile()
+        }
+        show(this@BusinessWebsiteFragment.parentFragmentManager, WebPreSignInBottomDialog::class.java.name)
+      }
     }
   }
 
@@ -123,10 +131,9 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     binding?.confirmButton?.isEnabled = false
     binding?.fragmentStatusIv?.isClickable = true
     binding?.websiteStatusTv?.setTextColor(getColor(R.color.red_error_e3954))
+    binding?.websiteStatusTv?.text = "'${binding?.websiteEt?.text?.toString()?.trim()}' ${getString(R.string.user_not_available)}"
     binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_error_business_website)
-    binding?.fragmentStatusIv?.setOnClickListener {
-      binding?.websiteEt?.text?.clear()
-    }
+    binding?.fragmentStatusIv?.setOnClickListener { binding?.websiteEt?.text?.clear() }
   }
 
   private fun apiCheckDomain(subDomain: String, onSuccess: () -> Unit = {}) {
@@ -139,11 +146,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   private fun onPostBusinessDomainCheckResponse(response: BaseResponse, onSuccess: () -> Unit) {
-    if (response.error is NoNetworkException) {
-      errorSet()
-      return
-    }
-    if (response.stringResponse.isNullOrEmpty().not()) {
+    if (response.isSuccess() && response.stringResponse.isNullOrEmpty().not()) {
       isDomain = true
       binding?.confirmButton?.isEnabled = true
       domainValue = response.stringResponse?.toLowerCase(Locale.ROOT)
@@ -162,18 +165,16 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   private fun apiHitCreateMerchantProfile() {
     showProgress("We're creating your online ${floatsRequest?.categoryDataModel?.category_Name}...")
     if (this.responseCreateProfile == null) {
-      viewModel?.createMerchantProfile(request = floatsRequest?.requestProfile)
-        ?.observeOnce(viewLifecycleOwner, {
-          val businessProfileResponse = it as? BusinessProfileResponse
-          if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty()
-              .not()
-          ) {
-            apiHitBusiness(businessProfileResponse)
-          } else {
-            hideProgress()
-            showShortToast(getString(R.string.unable_to_create_profile))
-          }
-        })
+      viewModel?.createMerchantProfile(request = floatsRequest?.requestProfile)?.observeOnce(viewLifecycleOwner, {
+        val businessProfileResponse = it as? BusinessProfileResponse
+        if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
+          apiHitBusiness(businessProfileResponse)
+        } else {
+          hideProgress()
+          val msg = businessProfileResponse?.Error?.ErrorList?.eXCEPTION
+          showShortToast(if (msg.isNullOrEmpty().not()) msg else getString(R.string.unable_to_create_profile))
+        }
+      })
     } else apiHitBusiness(this.responseCreateProfile!!)
   }
 
@@ -229,7 +230,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     createRequest.address = ""
     createRequest.pincode = ""
     createRequest.country = "India"
-//    createRequest.primaryNumber = floatsRequest?.userBusinessMobile
+    createRequest.primaryNumber = floatsRequest?.userBusinessMobile
     createRequest.email = floatsRequest?.userBusinessEmail
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
@@ -237,8 +238,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     createRequest.appExperienceCode = floatsRequest?.categoryDataModel?.experience_code
     createRequest.whatsAppNumber = floatsRequest?.userBusinessMobile
     createRequest.whatsAppNotificationOptIn = floatsRequest?.whatsAppFlag ?: false
-    createRequest.boostXWebsiteUrl =
-      "www.${floatsRequest?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+    createRequest.boostXWebsiteUrl = "www.${floatsRequest?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
     return createRequest
   }
 

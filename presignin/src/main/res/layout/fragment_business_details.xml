@@ -37,7 +37,8 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/step_counter"
           style="@style/step_counter_style"
-          android:text="STEP 1/2" />
+          android:layout_marginTop="0dp"
+          android:text="@string/step_1_2" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/heading_tv"

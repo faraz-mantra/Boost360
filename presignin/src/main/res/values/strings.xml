@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="please_wait">Please wait...</string>
-  <string name="ps_accept_tnc">By getting started, you agree to Boost 360 <b><u>terms</u></b> and <b><u>conditions</u></b></string>
+  <string name="ps_accept_tnc">By continuing , you agree to Boost 360 <b><u>terms</u></b> and <b><u>conditions</u></b></string>
   <string name="psn_get_started">GET STARTED</string>
 
 
@@ -38,11 +38,11 @@
   <string name="psn_resend_hint">Didn’t get the code? Resend</string>
   <string name="psn_resend">Resend</string>
   <string name="psn_resend_in">Resend in %d s</string>
-  <string name="psn_no_account_hint_before">We did not find any business registered with</string>
+  <string name="psn_no_account_hint_before">We see that you could not complete your business account using</string>
   <string name="psn_no_account_hint_after">. Add business details to start now.</string>
-  <string name="psn_no_account_heading">Bring your business\non Boost 360.</string>
+  <string name="psn_no_account_heading">Continue creating your business account on Boost 360.</string>
   <string name="psn_create_your_business_profile">Create your business profile</string>
-  <string name="psn_already_have_your_account">Already have your\nbusiness on Boost 360?</string>
+  <string name="psn_already_have_your_account">Already registered your business on Boost 360?</string>
   <string name="psn_retrieve_account_hint">We will help you retrieve your Boost account using registered email ID or username</string>
   <string name="psn_choose_desired_login_method">Choose your desired \nlogin method</string>
   <string name="psn_choose_method_to_retrieve_account">You can choose any of the below method to retrieve your business account on Boost 360</string>
@@ -82,7 +82,7 @@
   <string name="create_my_business_website">Create my business website</string>
   <string name="website_available_text"> will also work as your username to login to Boost 360 app and web.</string>
   <string name="website_error_text"> username/subdomain not available. Try with something else.</string>
-  <string name="registration_complete_subheading"> business is successfully setup on Boost</string>
+  <string name="registration_complete_subheading"> business is successfully setup on Boost 360.</string>
   <string name="your">Your</string>
   <string name="you">Your</string>
   <string name="preview_your_website">Preview your website</string>
@@ -129,4 +129,18 @@
   <string name="access_token_create_error">Access token creating error, please try again.</string>
   <string name="step_2_2">STEP 2/2</string>
   <string name="signin_nowfloats_com">.nowfloats.com</string>
+  <string name="login_with_username_or_email">Login with username or email</string>
+  <string name="need_help"><u>Need help?</u></string>
+  <string name="try_a_different_number">Try a different number</string>
+  <string name="no_business_account_available_with">No business account available with</string>
+  <string name="step_1_2">STEP 1/2</string>
+  <string name="user_not_available">username/subdomain not available. Try with something else</string>
+  <string name="go_back">Go Back</string>
+  <string name="i_agree_n">I agree</string>
+  <string name="login_with_mobile_number">Login with Mobile number</string>
+  <string name="business_setup_process">Business setup process, please wait...</string>
+  <string name="this_is_your_registered_mobile_number">This is your registered mobile number</string>
+  <string name="number_to_login_via_otp_change_tap_on_change_number">You can also use above number to login via OTP verification. In case you want to change this number, tap on ‘Change number ’.</string>
+  <string name="change_number">Change number</string>
+  <string name="psn_login_now">LOGIN NOW</string>
 </resources>

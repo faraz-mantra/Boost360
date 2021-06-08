@@ -1,5 +1,8 @@
 package com.dashboard.controller.ui.website
 
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat.getColor
 import com.dashboard.R
@@ -45,7 +48,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     getWebsiteData()
-    setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.businessAddress, binding?.contactDetail, binding?.businessTiming)
+    setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.websiteThemeCustomization, binding?.businessTiming)
     WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
@@ -171,9 +174,23 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.btnProfileLogo -> baseActivity.startFeatureLogo(session)
       binding?.editProfile -> baseActivity.startBusinessProfileDetailEdit(session)
-      binding?.businessAddress -> baseActivity.startBusinessAddress(session)
-      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
+      binding?.websiteThemeCustomization -> baseActivity.startWebsiteTheme(session)
+//      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
       binding?.businessTiming -> baseActivity.startBusinessHours(session)
     }
   }
+
+//  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//    super.onCreateOptionsMenu(menu, inflater)
+//    inflater.inflate(R.menu.menu_website_theme,menu)
+//  }
+//
+//  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//    when(item.itemId){
+//      R.id.menu_more->{}
+//      R.id.menu_whatsapp_share->{}
+//    }
+//    return super.onOptionsItemSelected(item)
+//
+//  }
 }
