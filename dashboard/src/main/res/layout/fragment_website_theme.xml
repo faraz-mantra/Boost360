@@ -245,7 +245,7 @@
                             android:drawablePadding="8dp"
                             android:fontFamily="@font/semi_bold"
                             android:padding="@dimen/size_16"
-                            android:text="Customize Colour"
+                            android:text="@string/customise_colour"
                             android:textColor="@color/black_4a4a4a"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
