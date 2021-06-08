@@ -138,12 +138,12 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
         if(primarySelectedFont?.firstOrNull()?.description.isNullOrEmpty()) {
             binding?.ctfPrimaryFont?.setText("${primarySelectedFont?.firstOrNull()?.description}")
         }else{
-            binding?.ctfPrimaryFont?.setText("${defaultPrimaryFont?.firstOrNull()?.description} (default font)")
+            binding?.ctfPrimaryFont?.setText("${defaultPrimaryFont?.firstOrNull()?.description} (default)")
         }
         if(secondarySelected?.firstOrNull()?.description.isNullOrEmpty()) {
             binding?.ctfSecondaryFont?.setText("${secondarySelected?.firstOrNull()?.description}")
         }else{
-            binding?.ctvSecondaryFont?.setText("${defaultSecondaryFont?.firstOrNull()?.description} (default font)")
+            binding?.ctfSecondaryFont?.setText("${defaultSecondaryFont?.firstOrNull()?.description} (default)")
         }
         val primary = primaryFont?.filter { it?.defaultFont == true }
         if (primary.isNullOrEmpty()) primaryFont?.firstOrNull()?.isSelected = true
