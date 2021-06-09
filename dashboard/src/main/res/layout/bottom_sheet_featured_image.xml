@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.framework.views.roundedimageview.RoundedImageView
+            android:layout_width="39dp"
+            android:layout_height="39dp"
+            app:riv_mutate_background="true"
+            android:padding="@dimen/size_8"
+            android:id="@+id/riv_close_bottomSheet"
+            android:src="@drawable/ic_cross_grey"
+            android:background="#E9E9E9"
+            app:riv_corner_radius="@dimen/size_24"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_top_grey_lite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/size_10"
+            android:paddingTop="@dimen/size_15"
+            android:paddingBottom="@dimen/size_30"
+            android:translationY="@dimen/size_20"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat2">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_10"
+                android:layout_marginBottom="@dimen/size_6"
+                android:orientation="horizontal">
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:src="@drawable/ic_storefront"
+                    android:text="@string/the_font_you_want_to_change_as_primary"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/regular"
+                    android:textColor="@color/warm_grey" />
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:id="@+id/ctv_subheading"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:text="@string/what_is_a_business_featured_image"
+                    app:fontFamily="@font/regular"
+                    app:textType="HEADING_4"
+                    android:textColor="@color/black_4a4a4a" />
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayoutCompat2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_400"
+            android:background="@drawable/bg_rounded_top_white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="0dp"
+                android:layout_margin="@dimen/size_16"
+                android:layout_height="0dp"
+                android:padding="@dimen/size_16"
+                android:textColor="@color/black_4a4a4a"
+                android:text="This image appears with your ‘business description’ on your website. It works as the second most important key visual after your business logo which can improve your brand’s recall among your customers.  Picture you can upload: Your office/storefront photo from outside. Your one key product or service that your business is famous for. For services business - a formal picture of your happy staff in full work attire. For services business - A happy customer being served at the premise. For an established business - the business owner’s photo sitting confidently in his office, or while receiving any award.  Supported formats: JPEG, PNG Min. dimension: 600x600 px (square)"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.95"
+
+                app:layout_constraintVertical_bias="0" />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/size_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_understood"
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                    android:layout_width="match_parent"
+                    android:text="@string/understood"
+                    android:enabled="true"
+                    android:layout_marginHorizontal="@dimen/size_30"
+                    android:textColor="@color/white" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
