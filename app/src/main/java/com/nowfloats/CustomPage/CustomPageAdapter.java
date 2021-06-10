@@ -276,12 +276,12 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
         }
         switch (type) {
             case "facebook":
-                ContentSharing.Companion.shareCustomPages(customPageModel.DisplayName,url,session.getUserPrimaryMobile(),session.getRootAliasURI() + "/"+subDomain,false,true);
+                ContentSharing.Companion.shareCustomPages(appContext,customPageModel.DisplayName,url,session.getUserPrimaryMobile(),session.getRootAliasURI() + "/"+subDomain,false,true);
                 break;
             case "whatsapp":
-                ContentSharing.Companion.shareCustomPages(customPageModel.DisplayName,url,session.getUserPrimaryMobile(),session.getRootAliasURI() + "/"+subDomain,true,false);
+                ContentSharing.Companion.shareCustomPages(appContext,customPageModel.DisplayName,url,session.getUserPrimaryMobile(),session.getRootAliasURI() + "/"+subDomain,true,false);
                 break;
-            default:ContentSharing.Companion.shareCustomPages(customPageModel.DisplayName,url,session.getUserPrimaryMobile(),session.getRootAliasURI() + "/"+subDomain,false,false);
+            default:ContentSharing.Companion.shareCustomPages(appContext,customPageModel.DisplayName,url,session.getUserPrimaryMobile(),session.getRootAliasURI() + "/"+subDomain,false,false);
 
         }
 
