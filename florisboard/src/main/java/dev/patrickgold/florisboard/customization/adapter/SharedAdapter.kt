@@ -2,28 +2,43 @@ package dev.patrickgold.florisboard.customization.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.onboarding.nowfloats.databinding.*
 import dev.patrickgold.florisboard.customization.viewholder.*
+import dev.patrickgold.florisboard.customization.viewholder.visitingCard.*
+import dev.patrickgold.florisboard.databinding.*
 import timber.log.Timber
 import java.util.*
 
 
-class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T?>, val listener: OnItemClickListener? = null) : RecyclerView.Adapter<BaseRecyclerViewHolder>() {
+class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T?>, val listener: OnItemClickListener? = null) : RecyclerView.Adapter<BaseRecyclerViewHolder<*>>() {
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder {
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
     val inflater = LayoutInflater.from(parent.context)
     val itemType = FeaturesEnum.values()[viewType]
-    val view = inflater.inflate(itemType.getLayout(), parent, false)
+    val view = getViewDataBinding(inflater, itemType, parent)
     return when (itemType) {
-      FeaturesEnum.LOADER -> LoaderViewHolder(view, listener)
-      FeaturesEnum.UPDATES -> FloatUpdateViewHolder(view, listener)
-      FeaturesEnum.PRODUCTS -> ProductViewHolder(view, listener)
-      FeaturesEnum.PHOTOS -> PhotoViewHolder(view, listener)
-      FeaturesEnum.DETAILS -> DetailsViewHolder(view, listener)
+      FeaturesEnum.LOADER -> LoaderViewHolder(view as PaginationLoaderKeyboardBinding, listener)
+      FeaturesEnum.UPDATES -> FloatUpdateViewHolder(view as AdapterItemUpdateBinding, listener)
+      FeaturesEnum.PRODUCTS -> ProductViewHolder(view as AdapterItemProductNewBinding, listener)
+      FeaturesEnum.PHOTOS -> PhotoViewHolder(view as AdapterItemPhotosBinding, listener)
+      FeaturesEnum.DETAILS -> DetailsViewHolder(view as AdapterItemDetailsBinding, listener)
+      FeaturesEnum.VISITING_CARD_ONE_ITEM -> VisitingCardOneViewHolder(view as ItemVisitingCardOneBinding, listener)
+      FeaturesEnum.VISITING_CARD_TWO_ITEM -> VisitingCardTwoViewHolder(view as ItemVisitingCardTwoBinding, listener)
+      FeaturesEnum.VISITING_CARD_THREE_ITEM -> VisitingCardThreeViewHolder(view as ItemVisitingCardThreeBinding, listener)
+      FeaturesEnum.VISITING_CARD_FOUR_ITEM -> VisitingCardFourViewHolder(view as ItemVisitingCardFourBinding, listener)
+      FeaturesEnum.VISITING_CARD_FIVE_ITEM -> VisitingCardFiveViewHolder(view as ItemVisitingCardFiveBinding, listener)
+      FeaturesEnum.VISITING_CARD_SIX_ITEM -> VisitingCardSixViewHolder(view as ItemVisitingCardSixBinding, listener)
+      FeaturesEnum.VISITING_CARD_SEVEN_ITEM -> VisitingCardSevenViewHolder(view as ItemVisitingCardSevenBinding, listener)
+      FeaturesEnum.VISITING_CARD_EIGHT_ITEM -> VisitingCardEightViewHolder(view as ItemVisitingCardEightBinding, listener)
+      FeaturesEnum.VISITING_CARD_NINE_ITEM -> VisitingCardNineViewHolder(view as ItemVisitingCardNineBinding, listener)
+      FeaturesEnum.VISITING_CARD_TEN_ITEM -> VisitingCardTenViewHolder(view as ItemVisitingCardTenBinding, listener)
     }
   }
 
-  override fun onBindViewHolder(holder: BaseRecyclerViewHolder, position: Int) {
+  override fun onBindViewHolder(holder: BaseRecyclerViewHolder<*>, position: Int) {
     holder.bindTo(position, list[position])
   }
 
@@ -68,4 +83,8 @@ class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T?>, val listener
     list.clear()
     notifyDataSetChanged()
   }
+}
+
+fun getViewDataBinding(inflater: LayoutInflater, recyclerViewItemType: FeaturesEnum, parent: ViewGroup): ViewDataBinding {
+  return DataBindingUtil.inflate(inflater, recyclerViewItemType.getLayout(), parent, false)
 }

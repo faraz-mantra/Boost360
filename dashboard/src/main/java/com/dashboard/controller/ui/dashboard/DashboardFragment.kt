@@ -77,6 +77,7 @@ import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.insights.ChannelInsightsResponse
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.getConnectedChannel
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.saveDataConnectedChannel
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
@@ -112,6 +113,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private val messageBusiness: String
     get() {
       return PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "") ?: ""
+    }
+
+  private val _connectedChannels: ArrayList<String>
+    get() {
+      return getConnectedChannel()
     }
 
   private var handler = Handler()
@@ -657,7 +663,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)//openDialogPicker()
       binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
       binding?.btnVisitingCard -> {
-        if (messageBusiness.isNotEmpty() || connectedChannels.isNullOrEmpty().not()) businessWebsiteDetailMessage(messageBusiness, isBusinessCardShare = true)
+        if (messageBusiness.isNotEmpty() || _connectedChannels.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, isBusinessCardShare = true)
         else getChannelAccessToken(true)
       }
       binding?.retryDrScore -> setSummaryAndDrScore(true)

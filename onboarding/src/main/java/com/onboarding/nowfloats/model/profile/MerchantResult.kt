@@ -13,6 +13,7 @@ data class MerchantResult(
     @SerializedName("LoginId")
     var loginId: String? = null,
 ) : Serializable{
+
     fun getUserDetail():ProfileProperties?{
        return channelProfileProperties?.firstOrNull()?.profileProperties
     }

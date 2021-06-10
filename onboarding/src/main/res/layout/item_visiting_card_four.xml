@@ -109,7 +109,7 @@
             android:id="@+id/img_logo"
             android:layout_width="@dimen/size_80"
             android:layout_height="@dimen/size_74"
-            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_14"
             android:layout_marginStart="@dimen/size_10"
             app:srcCompat="@drawable/ic_business_card_spa_n" />
 
@@ -147,7 +147,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
-          android:layout_marginBottom="@dimen/size_14"
+          android:layout_marginBottom="@dimen/size_12"
           android:ellipsize="end"
           android:gravity="end"
           android:maxLines="1"

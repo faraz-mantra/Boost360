@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.customization.network
+package dev.patrickgold.florisboard.customization.network.service
 
 import dev.patrickgold.florisboard.customization.model.request.CreateOrderRequest
 import dev.patrickgold.florisboard.customization.model.response.*
@@ -13,7 +13,7 @@ interface BusinessFeaturesRemoteData {
     suspend fun getAllProducts(@QueryMap queries: Map<String, String>): Response<List<Product>>
 
     @GET("/discover/v2/floatingPoint/nf-web/{fpTag}")
-    suspend fun getAllDetails(@Path("fpTag") fpTag: String, @QueryMap queries: Map<String, String>): Response<CustomerDetails>
+    suspend fun getAllDetails(@Path("fpTag") fpTag: String?, @QueryMap queries: Map<String, String>): Response<CustomerDetails>
 
     @POST("/api/Offers/CreateOffer")
     suspend fun createProductOffers(@Body request: CreateOrderRequest): Response<CreatedOffer>

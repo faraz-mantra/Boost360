@@ -11,8 +11,7 @@ import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class CategoryRecyclerViewHolder constructor(binding: ItemCategoryBinding) :
-    AppBaseRecyclerViewHolder<ItemCategoryBinding>(binding) {
+class CategoryRecyclerViewHolder constructor(binding: ItemCategoryBinding) : AppBaseRecyclerViewHolder<ItemCategoryBinding>(binding) {
 
   private var model: CategoryDataModel? = null
 
@@ -58,6 +57,4 @@ class CategoryRecyclerViewHolder constructor(binding: ItemCategoryBinding) :
     setClickListeners(binding.card)
     setCardSelection(model.isSelected)
   }
-
-
 }

@@ -1,8 +1,8 @@
 package dev.patrickgold.florisboard.customization.adapter
 
-import android.view.View
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseRecyclerViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView) {
+abstract class BaseRecyclerViewHolder<Binding : ViewDataBinding> constructor(var binding: Binding) : RecyclerView.ViewHolder(binding.root) {
     abstract fun bindTo(position: Int, item: BaseRecyclerItem?)
 }

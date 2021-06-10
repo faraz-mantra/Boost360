@@ -12,6 +12,8 @@ import com.dashboard.AppDashboardApplication;
 import com.inventoryorder.BaseOrderApplication;
 import com.onboarding.nowfloats.BaseBoardingApplication;
 
+import dev.patrickgold.florisboard.ime.core.FlorisApplication;
+
 public class ApiReLoadActivity extends AppCompatActivity {
 
   @Override
@@ -22,6 +24,7 @@ public class ApiReLoadActivity extends AppCompatActivity {
     AppServiceApplication.apiInitialize();
     AppDashboardApplication.apiInitialize();
     AppPreSignInApplication.apiInitialize();
+    FlorisApplication.apiInitialize();
     onBackPressed();
   }
 

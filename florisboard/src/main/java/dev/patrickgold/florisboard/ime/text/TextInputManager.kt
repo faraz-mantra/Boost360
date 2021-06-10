@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.BusinessFeatureEnum
 import dev.patrickgold.florisboard.customization.BusinessFeaturesManager
+import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -279,9 +280,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     if (!florisboard.prefs.correction.rememberCapsLockState) {
       capsLock = false
     }
-    if (activeKeyboardMode != null && activeKeyboardMode == KeyboardMode.BUSINESS_FEATURES) {
-      keyboardMode = KeyboardMode.BUSINESS_FEATURES
-    }
+    if (activeKeyboardMode != null && activeKeyboardMode == KeyboardMode.BUSINESS_FEATURES) keyboardMode = KeyboardMode.BUSINESS_FEATURES
     updateCapsState()
     setActiveKeyboardMode(keyboardMode)
     smartbarView?.updateSmartbarState()

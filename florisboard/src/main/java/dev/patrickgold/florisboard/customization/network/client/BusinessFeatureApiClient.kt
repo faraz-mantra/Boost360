@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.customization.network
+package dev.patrickgold.florisboard.customization.network.client
 
 import com.framework.rest.BaseApiClient
 

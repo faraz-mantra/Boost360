@@ -404,6 +404,8 @@
     <string name="whats_app_package">com.whatsapp</string>
   <string name="check_internet_connection">Please check your internet connect!</string>
     <string name="image_not_suopported">Image not supported!</string>
+  <string name="share_only_image">Share only Image</string>
+    <string name="share_with_text">Share with text</string>
 
 
 </resources>

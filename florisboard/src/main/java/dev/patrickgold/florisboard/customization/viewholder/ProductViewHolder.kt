@@ -14,45 +14,37 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.Product
+import dev.patrickgold.florisboard.databinding.AdapterItemProductNewBinding
 
-class ProductViewHolder(itemView: View, val listener: OnItemClickListener?) : BaseRecyclerViewHolder(itemView) {
-
-    private val productImage: ImageView = itemView.findViewById(R.id.imageView)
-    private val productName: CustomTextView = itemView.findViewById(R.id.tv_name)
-    private val productPrice: CustomTextView = itemView.findViewById(R.id.tv_price)
-    private val productDiscount: CustomTextView = itemView.findViewById(R.id.tv_discount)
-    private val productDescription: CustomTextView = itemView.findViewById(R.id.tv_description)
-    private val btnShare: Button = itemView.findViewById(R.id.btn_share)
-    private val ctvDuration: CustomTextView = itemView.findViewById(R.id.ctv_duration)
-    private val ctvOffPercentage: CustomTextView = itemView.findViewById(R.id.tv_off_percent)
+class ProductViewHolder(binding: AdapterItemProductNewBinding, val listener: OnItemClickListener?) : BaseRecyclerViewHolder<AdapterItemProductNewBinding>(binding) {
 
     override fun bindTo(position: Int, item: BaseRecyclerItem?) {
         val product = item as Product
         // bind views with data
-        Glide.with(productImage).load(product.imageUri).placeholder(R.drawable.placeholder_image_n).into(productImage)
+        Glide.with(binding.imageView).load(product.imageUri).placeholder(R.drawable.placeholder_image_n).into(binding.imageView)
         if (product.price?.toDouble() ?: 0.0 <= 0) {
-            productPrice.gone()
+            binding.tvPrice.gone()
         } else {
-            productPrice.visible()
+            binding.tvPrice.visible()
         }
         if (product.discountAmount?.toDouble() ?: 0.0 <= 0) {
-            productDiscount.gone()
+            binding.tvDiscount.gone()
         } else {
-            productDiscount.visible()
+            binding.tvDiscount.visible()
         }
         if (product.shipmentDuration ?: 0 <= 0) {
-            ctvDuration.gone()
+            binding.ctvDuration.gone()
         } else {
-            ctvDuration.visible()
+            binding.ctvDuration.visible()
         }
-        ctvDuration.text = "${product.shipmentDuration} min"
-        ctvOffPercentage.text = product.getProductOffPrice()
-        productName.text = product.name
-        productPrice.text = product.getProductPrice()
-        productDiscount.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-        productDiscount.text = product.getProductDiscountPrice()
-        productDescription.text = product.description
-        btnShare.setOnClickListener {
+        binding.ctvDuration.text = "${product.shipmentDuration} min"
+        binding.tvOffPercent.text = product.getProductOffPrice()
+        binding.tvName.text = product.name
+        binding.tvPrice.text = product.getProductPrice()
+        binding.tvDiscount.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        binding.tvDiscount.text = product.getProductDiscountPrice()
+        binding.tvDescription.text = product.description
+        binding.btnShare.setOnClickListener {
             listener?.onItemClick(position, product)
         }
     }

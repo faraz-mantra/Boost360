@@ -12,27 +12,23 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.FloatUpdate
+import dev.patrickgold.florisboard.databinding.AdapterItemUpdateBinding
+import dev.patrickgold.florisboard.databinding.PaginationLoaderKeyboardBinding
 
-class FloatUpdateViewHolder(itemView: View, val listener: OnItemClickListener?) : BaseRecyclerViewHolder(itemView) {
-
-  private val desc: CustomTextView = itemView.findViewById(R.id.tv_description)
-  private val image: CustomImageView = itemView.findViewById(R.id.imageView)
-  private val time: CustomTextView = itemView.findViewById(R.id.ctv_date_time)
-  private val shareBtn: CustomButton = itemView.findViewById(R.id.btn_share)
-  private val itemCardView = itemView
+class FloatUpdateViewHolder(binding: AdapterItemUpdateBinding, val listener: OnItemClickListener?) : BaseRecyclerViewHolder<AdapterItemUpdateBinding>(binding) {
 
   override fun bindTo(position: Int, item: BaseRecyclerItem?) {
     val float = item as FloatUpdate
     if (float.imageUri?.isNotEmpty() == true) {
-      image.visibility = View.VISIBLE
-      Glide.with(image).load(float.imageUri).placeholder(R.drawable.placeholder_image_n).into(image)
+      binding.imageView.visibility = View.VISIBLE
+      Glide.with(binding.imageView).load(float.imageUri).placeholder(R.drawable.placeholder_image_n).into(binding.imageView)
     } else {
-      image.visibility = View.GONE
+      binding.imageView.visibility = View.GONE
     }
-    desc.text = float.message
+    binding.tvDescription.text = float.message
     val timeString = (float.createdOn?.subSequence(float.createdOn?.indexOf("(")!! + 1, float.createdOn?.length!! - 2) as String).toLong()
-    time.text = getDate(timeString, KEYBOARD_DISPLAY_DATE)
-    shareBtn.setOnClickListener { listener?.onItemClick(position, float) }
+    binding.ctvDateTime.text = getDate(timeString, KEYBOARD_DISPLAY_DATE)
+    binding.btnShare.setOnClickListener { listener?.onItemClick(position, float) }
   }
 }
 
