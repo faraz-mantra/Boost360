@@ -85,27 +85,26 @@
                         </LinearLayout>
 
 
-
                     </FrameLayout>
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_change_image"
                     style="@style/ButtonStyle.Red"
                     android:layout_width="match_parent"
-                    android:background="@null"
                     android:layout_gravity="center"
-                    android:textColor="@color/colorAccent"
-                    android:text="@string/change_featured_image"
+                    android:background="@null"
                     android:enabled="true"
                     android:gravity="center"
-                    />
+                    android:text="@string/change_featured_image"
+                    android:textColor="@color/colorAccent" />
+
                 <View
                     android:id="@+id/divider2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#E2E2E2" />
             </androidx.appcompat.widget.LinearLayoutCompat>
-
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -182,11 +181,11 @@
                             android:drawableStart="@drawable/ic_globehemispherewest"
                             android:drawableEnd="@drawable/ic_arrow_right_accent"
                             android:drawablePadding="@dimen/size_8"
+                            android:fontFamily="@font/open_sans_semibold"
                             android:paddingVertical="@dimen/size_4"
                             android:text="@string/website_address"
                             android:textColor="@color/black_4f4f4f"
                             android:textSize="14sp"
-                            android:fontFamily="@font/open_sans_semibold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -212,9 +211,9 @@
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_business_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cl_business_desc"
                         android:background="@drawable/bg_rect_edit_txt_white"
                         android:padding="@dimen/size_10">
 
@@ -265,11 +264,11 @@
                             android:drawableStart="@drawable/ic_phoneincoming"
                             android:drawableEnd="@drawable/ic_arrow_right_accent"
                             android:drawablePadding="@dimen/size_8"
+                            android:fontFamily="@font/open_sans_semibold"
                             android:paddingVertical="@dimen/size_4"
                             android:text="@string/contact_details"
                             android:textColor="@color/black_4f4f4f"
                             android:textSize="14sp"
-                            android:fontFamily="@font/open_sans_semibold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -277,13 +276,27 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/ctv_business_contacts"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/size_10"
-                        android:textColor="@color/black_4a4a4a"
-                        tools:text="+91 8242558406\n (VMN)+91 7042490968\nbrajmadhav@gmail.com\nhttp://brajmadhav.com" />
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/ctv_business_contacts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/size_10"
+                            android:textColor="@color/black_4a4a4a"
+                            tools:text="+91 8242558406\n (VMN)+91 7042490968\nbrajmadhav@gmail.com\nhttp://brajmadhav.com" />
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:text="@string/active"
+                            android:textAllCaps="true"
+                            android:layout_gravity="end"
+                            android:padding="@dimen/size_10"
+                            android:textColor="#1DBE73"
+                            android:layout_height="wrap_content"/>
+                    </FrameLayout>
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -305,11 +318,12 @@
                             android:drawableStart="@drawable/ic_mappin"
                             android:drawableEnd="@drawable/ic_arrow_right_accent"
                             android:drawablePadding="@dimen/size_8"
+                            android:fontFamily="@font/open_sans_semibold"
                             android:paddingVertical="@dimen/size_4"
                             android:text="@string/business_address"
                             android:textColor="@color/black_4f4f4f"
                             android:textSize="14sp"
-                            android:fontFamily="@font/open_sans_semibold"                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -366,11 +380,12 @@
                             android:drawableStart="@drawable/ic_circlesthree"
                             android:drawableEnd="@drawable/ic_arrow_right_accent"
                             android:drawablePadding="@dimen/size_8"
+                            android:fontFamily="@font/open_sans_semibold"
                             android:paddingVertical="@dimen/size_4"
                             android:text="@string/digital_channels"
                             android:textColor="@color/black_4f4f4f"
                             android:textSize="14sp"
-                            android:fontFamily="@font/open_sans_semibold"                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -479,18 +494,18 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_save_publish"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_44"
-                    android:id="@+id/btn_save_publish"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginVertical="@dimen/size_16"
                     android:background="@drawable/bg_button_proceed"
                     android:backgroundTint="@color/button_selector_enabled"
                     android:clickable="false"
                     android:drawablePadding="@dimen/size_4"
+                    android:enabled="false"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
-                    android:enabled="false"
                     android:stateListAnimator="@null"
                     android:text="@string/save_amp_publish"
                     android:textAllCaps="true"

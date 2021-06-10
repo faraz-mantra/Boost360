@@ -192,4 +192,5 @@
   <string name="please_enter_valid_business_description">please enter valid business description</string>
     <string name="business_name_published_successfully">Business name published successfully</string>
   <string name="business_description_published_successfully">Business description published successfully</string>
+    <string name="active">active</string>
 </resources>
