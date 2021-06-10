@@ -325,13 +325,15 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
             shareProduct = item as? ItemsItem
             shareType = true
             if (checkStoragePermission()) ContentSharing.shareProduct(
+
                 shareProduct?.name,
                 shareProduct?.price.toString(),
                 "${domainName}/all-services",
                 session?.fPPrimaryContactNumber,
                 shareProduct?.image,
                 true,
-                isService = true
+                isService = true,
+               activity = requireActivity()
             )
         }
         if (actionType == RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) {
@@ -343,7 +345,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
                 "${domainName}/all-services",
                 session?.fPPrimaryContactNumber,
                 shareProduct?.image,
-                isService = true
+                isService = true,
+                activity = requireActivity()
+
             )
         }
     }
@@ -397,7 +401,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
                 shareProduct?.name,
                 shareProduct?.price.toString(),
                 imageUri = shareProduct?.image,
-                isWhatsApp = shareType
+                isWhatsApp = shareType,
+                activity = requireActivity()
+
             )
         }
     }
