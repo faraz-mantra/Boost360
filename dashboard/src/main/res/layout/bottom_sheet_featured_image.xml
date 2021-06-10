@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -78,20 +77,24 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.framework.views.customViews.CustomTextView
+            <ScrollView
                 android:layout_width="0dp"
-                android:layout_margin="@dimen/size_16"
                 android:layout_height="0dp"
+                android:layout_margin="@dimen/size_16"
                 android:padding="@dimen/size_16"
-                android:textColor="@color/black_4a4a4a"
-                android:text="This image appears with your ‘business description’ on your website. It works as the second most important key visual after your business logo which can improve your brand’s recall among your customers.  Picture you can upload: Your office/storefront photo from outside. Your one key product or service that your business is famous for. For services business - a formal picture of your happy staff in full work attire. For services business - A happy customer being served at the premise. For an established business - the business owner’s photo sitting confidently in his office, or while receiving any award.  Supported formats: JPEG, PNG Min. dimension: 600x600 px (square)"
                 app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.95"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintWidth_percent="0.95">
 
-                app:layout_constraintVertical_bias="0" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_whats_this"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_4a4a4a" />
+            </ScrollView>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
@@ -105,9 +108,9 @@
                     android:id="@+id/btn_understood"
                     style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                     android:layout_width="match_parent"
-                    android:text="@string/understood"
-                    android:enabled="true"
                     android:layout_marginHorizontal="@dimen/size_30"
+                    android:enabled="true"
+                    android:text="@string/understood"
                     android:textColor="@color/white" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -188,4 +188,8 @@
   <string name="what_is_a_business_featured_image">What is a business featured image?</string>
   <string name="this_image_appears_with_your_business_description_on_your"><b>This image appears with your ‘business description’ on your website.</b>It works as the second most important key visual after your business logo which can improve your brand’s recall among your customers.\n\n <b>Picture you can upload:</b> Your office/storefront photo from outside. Your one key product or service that your business is famous for. For services business - a formal picture of your happy staff in full work attire. For services business - A happy customer being served at the premise. For an established business - the business owner’s photo sitting confidently in his office, or while receiving any award. Supported formats: JPEG, PNG Min. dimension: 600x600 px (square)</string>
     <string name="change_featured_image">change featured image</string>
+    <string name="please_enter_valid_business_name">please enter valid business name</string>
+  <string name="please_enter_valid_business_description">please enter valid business description</string>
+    <string name="business_name_published_successfully">Business name published successfully</string>
+  <string name="business_description_published_successfully">Business description published successfully</string>
 </resources>
