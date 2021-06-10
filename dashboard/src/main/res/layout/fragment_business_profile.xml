@@ -185,7 +185,8 @@
                             android:paddingVertical="@dimen/size_4"
                             android:text="@string/website_address"
                             android:textColor="@color/black_4f4f4f"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/open_sans_semibold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -220,13 +221,15 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
                             android:drawableStart="@drawable/ic_article"
                             android:drawableEnd="@drawable/ic_edit_business"
                             android:drawablePadding="@dimen/size_8"
+                            android:fontFamily="@font/open_sans_semibold"
                             android:paddingVertical="@dimen/size_4"
                             android:text="@string/business_description"
                             android:textColor="@color/black_4f4f4f"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -265,7 +268,8 @@
                             android:paddingVertical="@dimen/size_4"
                             android:text="@string/contact_details"
                             android:textColor="@color/black_4f4f4f"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/open_sans_semibold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -304,8 +308,8 @@
                             android:paddingVertical="@dimen/size_4"
                             android:text="@string/business_address"
                             android:textColor="@color/black_4f4f4f"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/open_sans_semibold"                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -365,8 +369,8 @@
                             android:paddingVertical="@dimen/size_4"
                             android:text="@string/digital_channels"
                             android:textColor="@color/black_4f4f4f"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/open_sans_semibold"                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -411,7 +415,7 @@
                                 android:layout_width="@dimen/size_36"
                                 android:layout_height="@dimen/size_36"
                                 android:layout_marginStart="@dimen/size_8"
-                                android:tag="whatsappbusiness"
+                                android:tag="WAB"
                                 app:srcCompat="@drawable/ic_whatsapp_business_n" />
 
                             <com.framework.views.customViews.CustomImageView
@@ -457,7 +461,7 @@
                                 android:layout_width="@dimen/size_36"
                                 android:layout_height="@dimen/size_36"
                                 android:layout_marginStart="@dimen/size_8"
-                                android:tag="whatsappbusiness"
+                                android:tag="WAB"
                                 app:srcCompat="@drawable/ic_whatsapp_business_n" />
 
                             <com.framework.views.customViews.CustomImageView
@@ -477,13 +481,16 @@
                 <com.framework.views.customViews.CustomButton
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_44"
+                    android:id="@+id/btn_save_publish"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginVertical="@dimen/size_16"
                     android:background="@drawable/bg_button_proceed"
+                    android:backgroundTint="@color/button_selector_enabled"
                     android:clickable="false"
                     android:drawablePadding="@dimen/size_4"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
+                    android:enabled="false"
                     android:stateListAnimator="@null"
                     android:text="@string/save_amp_publish"
                     android:textAllCaps="true"

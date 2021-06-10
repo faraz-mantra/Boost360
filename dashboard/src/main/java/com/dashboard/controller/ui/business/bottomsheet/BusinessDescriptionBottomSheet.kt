@@ -24,6 +24,7 @@ class BusinessDescriptionBottomSheet :
 
     override fun onCreateView() {
         dialog.behavior.isDraggable = false
+        binding?.btnSaveDesc?.isEnabled = false
         setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnSaveDesc)
         this.businessProfileModel =
             arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
