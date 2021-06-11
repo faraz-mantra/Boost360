@@ -375,7 +375,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.imgBusinessLogo -> {
-        this.startBusinessLogo(session)
+        this.startFeatureLogo(session)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.txtDomainName -> {
