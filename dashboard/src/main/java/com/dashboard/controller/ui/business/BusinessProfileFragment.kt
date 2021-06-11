@@ -126,6 +126,8 @@ class BusinessProfileFragment :
             binding?.openBusinessContact,
             binding?.openBusinessWebsite,
         )
+        sessionManager = UserSessionManager(requireContext())
+        setImage(sessionManager?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
         setData()
 
     }
@@ -137,7 +139,6 @@ class BusinessProfileFragment :
 
     private fun setData() {
         binding?.btnSavePublish?.isEnabled = false
-        sessionManager = UserSessionManager(requireContext())
         binding?.ctvBusinessName?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
         binding?.ctvBusinessNameCount?.text = "${sessionManager?.fPName?.length}/40"
         binding?.ctvWebsite?.text = "${sessionManager?.rootAliasURI}"
@@ -153,7 +154,6 @@ class BusinessProfileFragment :
                 |• +91 ${sessionManager?.userPrimaryMobile} 
                 |• ${sessionManager?.userProfileEmail ?: sessionManager?.fPEmail} 
                 |• ${sessionManager?.rootAliasURI}""".trimMargin()
-        setImage(sessionManager?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
         setDataToModel()
         setImageGrayScale()
         setConnectedChannels()
