@@ -193,4 +193,5 @@
     <string name="business_name_published_successfully">Business name published successfully</string>
   <string name="business_description_published_successfully">Business description published successfully</string>
     <string name="active">active</string>
+    <string name="add_business_image">add business image</string>
 </resources>
