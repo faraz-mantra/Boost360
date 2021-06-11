@@ -94,6 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center"
                     android:background="@null"
+                    android:visibility="gone"
                     android:enabled="true"
                     android:gravity="center"
                     android:text="@string/change_featured_image"
@@ -291,6 +292,7 @@
                             android:layout_width="wrap_content"
                             android:text="@string/active"
                             android:textAllCaps="true"
+                            style="@style/TextSemiBoldStyle"
                             android:layout_gravity="end"
                             android:padding="@dimen/size_10"
                             android:textColor="#1DBE73"
@@ -303,12 +305,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_16"
+                    android:id="@+id/container_business_address"
                     android:background="@drawable/bg_rect_edit_txt_gray"
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:background="@drawable/bg_rect_edit_txt_white"
                         android:padding="@dimen/size_10">
 
@@ -401,6 +405,7 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/ctv_connected"
                             android:text="@string/connected" />
 
                         <LinearLayout
@@ -447,6 +452,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_6dp"
+                            android:id="@+id/ctv_not_connected"
                             android:text="@string/not_connected" />
 
                         <LinearLayout
