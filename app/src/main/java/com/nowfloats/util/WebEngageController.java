@@ -24,7 +24,8 @@ public class WebEngageController {
                 session.getUserProfileEmail(),
                 session.getUserPrimaryMobile(),
                 session.getUserProfileName(),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
+                session.getFpTag()
         );
     }
 

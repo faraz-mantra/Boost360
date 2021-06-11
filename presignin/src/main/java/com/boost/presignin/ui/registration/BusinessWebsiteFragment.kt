@@ -229,7 +229,7 @@ open class BusinessWebsiteFragment :
                         response.result?.profileProperties?.userEmail,
                         response.result?.profileProperties?.userMobile,
                         response.result?.profileProperties?.userName,
-                        response.result?.sourceClientId
+                        response.result?.sourceClientId, ""
                     )
                     setReferralCode(floatingPointId = result.authTokens?.first()?.floatingPointId!!)
                     WebEngageController.trackEvent(
@@ -260,9 +260,22 @@ open class BusinessWebsiteFragment :
                     navigator?.clearBackStackAndStartNextActivity(
                         RegistrationActivity::class.java,
                         Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
+                    setReferralCode(floatsRequest?.floatingPointId, floatsRequest?.userBusinessEmail)
                 } else showShortToast(getString(R.string.error_create_business_fp))
                 hideProgress()
             })
+    }
+
+    private fun setReferralCode(floatingPointId: String?, emailId: String? = "") {
+        if (prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, "").isNullOrEmpty().not()) {
+            var email = pref?.getString(PreferenceConstant.PERSON_EMAIL, "")
+            if (email.isNullOrEmpty().not()) email = emailId
+            InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, ""), floatingPointId)
+            prefReferral?.edit()?.apply {
+                putString(PreferenceConstant.REFER_CODE_APP, "")
+                apply()
+            }
+        }
     }
 
     private fun getBusinessRequest(): BusinessCreateRequest {
