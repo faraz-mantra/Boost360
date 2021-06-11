@@ -173,7 +173,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
             url.contains(deeplink_nfstoreimage) || url.contains(deeplink_nfstoreimage)) {
           baseActivity.startPricingPlan(session)
         } else if (url.contains(deeplink_searchqueries)) {
-          baseActivity.startSearchQuery(session)
+//          baseActivity.startSearchQuery(session)
         } else if (url.contains(blog)) {
           baseActivity.startBlog(url, session)
         } else if (url.contains(subscribers) || url.contains(new_subscribers)) {
