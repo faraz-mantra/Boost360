@@ -56,396 +56,396 @@ import java.util.*
 
 
 class BusinessProfileFragment :
-    AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
-    override fun getLayout(): Int {
-        return R.layout.fragment_business_profile
+  AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
+  override fun getLayout(): Int {
+    return R.layout.fragment_business_profile
+  }
+
+  private var businessImage: File? = null
+  var targetMap: Target? = null
+  var businessProfileModel = BusinessProfileModel();
+  var businessProfileUpdateRequest: BusinessProfileUpdateRequest? = null
+
+
+  var sessionManager: UserSessionManager? = null
+
+  companion object {
+    @JvmStatic
+    fun newInstance(bundle: Bundle? = null): BusinessProfileFragment {
+      val fragment = BusinessProfileFragment()
+      fragment.arguments = bundle
+      return fragment
     }
+  }
 
-    private var businessImage: File? = null
-    var targetMap: Target? = null
-    var businessProfileModel = BusinessProfileModel();
-    var businessProfileUpdateRequest: BusinessProfileUpdateRequest? = null
+  override fun getViewModelClass(): Class<BusinessProfileViewModel> {
+    return BusinessProfileViewModel::class.java
+  }
 
-
-    var sessionManager: UserSessionManager? = null
-
-    companion object {
-        @JvmStatic
-        fun newInstance(bundle: Bundle? = null): BusinessProfileFragment {
-            val fragment = BusinessProfileFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-
-    override fun getViewModelClass(): Class<BusinessProfileViewModel> {
-        return BusinessProfileViewModel::class.java
-    }
-
-    private fun uploadBusinessLogo(businessLogoImage: File) {
-        WebEngageController.trackEvent(BUSINESS_LOGO_IMAGE_CLICK, FILE_LINK, NO_EVENT_VALUE)
-        showProgress(getString(R.string.uploading_image))
-        val uuid: UUID = UUID.randomUUID()
-        var s_uuid = uuid.toString()
-        s_uuid = s_uuid.replace("-", "")
-        viewModel?.putUploadBusinessLogo(
-            clientId2,
-            fpId = FirestoreManager.fpId,
-            reqType = "sequential",
-            reqId = s_uuid,
-            totalChunks = "1",
-            currentChunkNumber = "1",
-            file = RequestBody.create(
-                "image/png".toMediaTypeOrNull(),
-                businessLogoImage.readBytes()
-            )
-        )?.observeOnce(viewLifecycleOwner, {
-            if (it.isSuccess()) {
-                sessionManager?.storeFPDetails(
-                    GET_FP_DETAILS_LogoUrl,
-                    it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
-                )
-                showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
-            } else showSnackBarNegative(requireActivity(), it.message)
-            hideProgress()
-        })
-    }
-
-    override fun onCreateView() {
-        super.onCreateView()
-        setOnClickListener(
-            binding?.ctvWhatsThis,
-            binding?.ctvBusinessName,
-            binding?.ctvBusinessCategory,
-            binding?.clBusinessDesc,
-            binding?.imageAddBtn,
-            binding?.btnChangeImage,
-            binding?.btnSavePublish,
-            binding?.openBusinessAddress,
-            binding?.openBusinessChannels,
-            binding?.openBusinessContact,
-            binding?.openBusinessWebsite,
+  private fun uploadBusinessLogo(businessLogoImage: File) {
+    WebEngageController.trackEvent(BUSINESS_LOGO_IMAGE_CLICK, FILE_LINK, NO_EVENT_VALUE)
+    showProgress(getString(R.string.uploading_image))
+    val uuid: UUID = UUID.randomUUID()
+    var s_uuid = uuid.toString()
+    s_uuid = s_uuid.replace("-", "")
+    viewModel?.putUploadBusinessLogo(
+      clientId2,
+      fpId = FirestoreManager.fpId,
+      reqType = "sequential",
+      reqId = s_uuid,
+      totalChunks = "1",
+      currentChunkNumber = "1",
+      file = RequestBody.create(
+        "image/png".toMediaTypeOrNull(),
+        businessLogoImage.readBytes()
+      )
+    )?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        sessionManager?.storeFPDetails(
+          GET_FP_DETAILS_LogoUrl,
+          it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
         )
-        sessionManager = UserSessionManager(requireContext())
-        setImage(sessionManager?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
-        setData()
+        showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
+      } else showSnackBarNegative(requireActivity(), it.message)
+      hideProgress()
+    })
+  }
 
+  override fun onCreateView() {
+    super.onCreateView()
+    setOnClickListener(
+      binding?.ctvWhatsThis,
+      binding?.ctvBusinessName,
+      binding?.ctvBusinessCategory,
+      binding?.clBusinessDesc,
+      binding?.imageAddBtn,
+      binding?.btnChangeImage,
+      binding?.btnSavePublish,
+      binding?.openBusinessAddress,
+      binding?.openBusinessChannels,
+      binding?.openBusinessContact,
+      binding?.openBusinessWebsite,
+    )
+    sessionManager = UserSessionManager(requireContext())
+    setImage(sessionManager?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
+    setData()
+
+  }
+
+  override fun onResume() {
+    super.onResume()
+    setData()
+  }
+
+  private fun setData() {
+    binding?.btnSavePublish?.isEnabled = false
+    binding?.ctvBusinessName?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
+    binding?.ctvBusinessNameCount?.text = "${sessionManager?.fPName?.length}/40"
+    binding?.ctvWebsite?.text = "${sessionManager?.rootAliasURI}"
+    binding?.ctvBusinessDesc?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
+    binding?.ctvBusinessAddress?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS)
+    if (sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS).isNullOrEmpty()) {
+      binding?.containerBusinessAddress?.gone()
+    } else {
+      binding?.containerBusinessAddress?.visible()
     }
-
-    override fun onResume() {
-        super.onResume()
-        setData()
-    }
-
-    private fun setData() {
-        binding?.btnSavePublish?.isEnabled = false
-        binding?.ctvBusinessName?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
-        binding?.ctvBusinessNameCount?.text = "${sessionManager?.fPName?.length}/40"
-        binding?.ctvWebsite?.text = "${sessionManager?.rootAliasURI}"
-        binding?.ctvBusinessDesc?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
-        binding?.ctvBusinessAddress?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS)
-        if (sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS).isNullOrEmpty()) {
-            binding?.containerBusinessAddress?.gone()
-        } else {
-            binding?.containerBusinessAddress?.visible()
-        }
-        binding?.ctvBusinessContacts?.text =
-            """• +91 ${sessionManager?.fPPrimaryContactNumber} (VMN) 
+    binding?.ctvBusinessContacts?.text =
+      """• +91 ${sessionManager?.fPPrimaryContactNumber} (VMN) 
                 |• +91 ${sessionManager?.userPrimaryMobile} 
                 |• ${sessionManager?.userProfileEmail ?: sessionManager?.fPEmail} 
                 |• ${sessionManager?.rootAliasURI}""".trimMargin()
-        setDataToModel()
-        setImageGrayScale()
-        setConnectedChannels()
+    setDataToModel()
+    setImageGrayScale()
+    setConnectedChannels()
+  }
+
+  private fun setConnectedChannels() {
+    visibleChannels(binding?.containerChannels!!)
+    if (getConnectedChannel().isEmpty()) binding?.ctvConnected?.gone() else binding?.ctvConnected?.visible()
+    grayScaleDisabledChannels(binding?.containerChannelsDisabled!!)
+
+  }
+
+  private fun grayScaleDisabledChannels(containerChannels: LinearLayout) {
+    for (it in containerChannels.children) {
+      val customImageView = it as? CustomImageView
+      val tag = customImageView?.tag
+      if (getConnectedChannel().contains(tag)) {
+        customImageView?.gone()
+      } else {
+        customImageView?.visible()
+      }
     }
+    if (containerChannels.childCount == 0) binding?.ctvNotConnected?.gone() else binding?.ctvNotConnected?.visible()
+  }
 
-    private fun setConnectedChannels() {
-        visibleChannels(binding?.containerChannels!!)
-        if (getConnectedChannel().isEmpty()) binding?.ctvConnected?.gone() else binding?.ctvConnected?.visible()
-        grayScaleDisabledChannels(binding?.containerChannelsDisabled!!)
+  private fun setDataToModel() {
+    val businessDesc = binding?.ctvBusinessDesc?.text.toString()
+    val businessName = binding?.ctvBusinessName?.text.toString()
+    businessProfileModel.businessDesc = businessDesc
+    businessProfileModel.businessName = businessName
+
+  }
+
+  private fun setImageGrayScale() {
+    val matrix = ColorMatrix()
+    matrix.setSaturation(0f)
+    val filter = ColorMatrixColorFilter(matrix)
+    binding?.civFbPageDisabled?.colorFilter = filter
+    binding?.civWhatsappBusinessDisabled?.colorFilter = filter
+    binding?.civTwitterDisabled?.colorFilter = filter
+    binding?.civGooogleBusinessDisabled?.colorFilter = filter
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.ctvWhatsThis -> {
+        openDialogForInformation()
+      }
+      binding?.ctvBusinessName -> {
+        WebEngageController.trackEvent(EDIT_BUSINESS_NAME_CLICK, CLICK, NO_EVENT_VALUE)
+        openBusinessNameDialog()
+      }
+      binding?.ctvBusinessCategory -> {
+        WebEngageController.trackEvent(BUSINESS_CATEGORY_CLICK, CLICK, NO_EVENT_VALUE)
+
+        openBusinessCategoryBottomSheet()
+      }
+      binding?.clBusinessDesc -> {
+        WebEngageController.trackEvent(
+          EDIT_BUSINESS_DESCRIPTION_CLICK,
+          CLICK,
+          NO_EVENT_VALUE
+        )
+        showBusinessDescDialog()
+      }
+      binding?.imageAddBtn, binding?.btnChangeImage -> openImagePicker()
+      binding?.imageAddBtn, binding?.btnSavePublish -> if (isValid()) {
+        updateFpDetails()
+      }
+      binding?.openBusinessAddress -> {
+        WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, NO_EVENT_VALUE)
+        baseActivity.startBusinessAddress(sessionManager)
+      }
+      binding?.openBusinessChannels -> {
+        WebEngageController.trackEvent(CONNECTED_CHANNELS_PAGE_CLICK, CLICK, NO_EVENT_VALUE)
+        baseActivity.startDigitalChannel(sessionManager!!)
+      }
+      binding?.openBusinessContact -> {
+        WebEngageController.trackEvent(BUSINESS_CONTACTS_PAGE_CLICK, CLICK, NO_EVENT_VALUE)
+        baseActivity.startBusinessContactInfo(sessionManager)
+      }
+      binding?.openBusinessWebsite -> {
+        WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, NO_EVENT_VALUE)
+        openWebViewDialog(sessionManager?.rootAliasURI!!, sessionManager?.fpTag!!)
+      }
 
     }
+  }
 
-    private fun grayScaleDisabledChannels(containerChannels: LinearLayout) {
-        for (it in containerChannels.children) {
-            val customImageView = it as? CustomImageView
-            val tag = customImageView?.tag
-            if (getConnectedChannel().contains(tag)) {
-                customImageView?.gone()
-            } else {
-                customImageView?.visible()
-            }
-        }
-        if (containerChannels.childCount == 0) binding?.ctvNotConnected?.gone() else binding?.ctvNotConnected?.visible()
+  private fun openWebViewDialog(url: String, title: String) {
+    WebViewDialog().apply {
+      setData(url, title)
+      show(this@BusinessProfileFragment.parentFragmentManager, WebViewDialog::javaClass.name)
     }
+  }
 
-    private fun setDataToModel() {
-        val businessDesc = binding?.ctvBusinessDesc?.text.toString()
-        val businessName = binding?.ctvBusinessName?.text.toString()
-        businessProfileModel.businessDesc = businessDesc
-        businessProfileModel.businessName = businessName
-
+  fun isValid(): Boolean {
+    if (businessProfileModel.businessName.isNullOrEmpty() || businessProfileModel.businessName?.length ?: 0 <= 2) {
+      showLongToast(getString(R.string.please_enter_valid_business_name))
+      return false
+    } else if (businessProfileModel.businessDesc.isNullOrEmpty()) {
+      showLongToast(getString(R.string.please_enter_valid_business_description))
+      return false
     }
+    return true
+  }
 
-    private fun setImageGrayScale() {
-        val matrix = ColorMatrix()
-        matrix.setSaturation(0f)
-        val filter = ColorMatrixColorFilter(matrix)
-        binding?.civFbPageDisabled?.colorFilter = filter
-        binding?.civWhatsappBusinessDisabled?.colorFilter = filter
-        binding?.civTwitterDisabled?.colorFilter = filter
-        binding?.civGooogleBusinessDisabled?.colorFilter = filter
+  private fun updateFpDetails() {
+    WebEngageController.trackEvent(BUSINESS_PROFILE_UPDATE, CLICK, NO_EVENT_VALUE)
+    showProgress()
+    val updateItemList = arrayListOf<UpdatesItem>()
+    if (sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) != binding?.ctvBusinessName?.text.toString()) {
+      updateItemList.add(UpdatesItem(key = "NAME", value = businessProfileModel.businessName))
     }
-
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when (v) {
-            binding?.ctvWhatsThis -> {
-                openDialogForInformation()
-            }
-            binding?.ctvBusinessName -> {
-                WebEngageController.trackEvent(EDIT_BUSINESS_NAME_CLICK, CLICK, NO_EVENT_VALUE)
-                openBusinessNameDialog()
-            }
-            binding?.ctvBusinessCategory -> {
-                WebEngageController.trackEvent(BUSINESS_CATEGORY_CLICK, CLICK, NO_EVENT_VALUE)
-
-                openBusinessCategoryBottomSheet()
-            }
-            binding?.clBusinessDesc -> {
-                WebEngageController.trackEvent(
-                    EDIT_BUSINESS_DESCRIPTION_CLICK,
-                    CLICK,
-                    NO_EVENT_VALUE
+    if (sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION) != binding?.ctvBusinessDesc?.text.toString()) {
+      updateItemList.add(
+        UpdatesItem(
+          key = "DESCRIPTION",
+          value = businessProfileModel.businessDesc
+        )
+      )
+    }
+    businessProfileUpdateRequest =
+      BusinessProfileUpdateRequest(
+        sessionManager?.fpTag,
+        clientId2, updateItemList
+      )
+    viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)
+      ?.observeOnce(viewLifecycleOwner, {
+        hideProgress()
+        when (it.isSuccess()) {
+          true -> {
+            binding?.btnSavePublish?.isEnabled = false
+            val response = it?.parseStringResponse()
+            when (response?.contains("NAME")) {
+              true -> {
+                showSnackBarPositive(
+                  requireActivity(),
+                  getString(R.string.business_name_published_successfully)
                 )
-                showBusinessDescDialog()
+              }
             }
-            binding?.imageAddBtn, binding?.btnChangeImage -> openImagePicker()
-            binding?.imageAddBtn, binding?.btnSavePublish -> if (isValid()) {
-                updateFpDetails()
-            }
-            binding?.openBusinessAddress -> {
-                WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, NO_EVENT_VALUE)
-                baseActivity.startBusinessAddress(sessionManager)
-            }
-            binding?.openBusinessChannels -> {
-                WebEngageController.trackEvent(CONNECTED_CHANNELS_PAGE_CLICK, CLICK, NO_EVENT_VALUE)
-                baseActivity.startDigitalChannel(sessionManager!!)
-            }
-            binding?.openBusinessContact -> {
-                WebEngageController.trackEvent(BUSINESS_CONTACTS_PAGE_CLICK, CLICK, NO_EVENT_VALUE)
-                baseActivity.startBusinessContactInfo(sessionManager)
-            }
-            binding?.openBusinessWebsite -> {
-                WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, NO_EVENT_VALUE)
-                openWebViewDialog(sessionManager?.rootAliasURI!!, sessionManager?.fpTag!!)
-            }
-
-        }
-    }
-
-    private fun openWebViewDialog(url: String, title: String) {
-        WebViewDialog().apply {
-            setData(url, title)
-            show(this@BusinessProfileFragment.parentFragmentManager, WebViewDialog::javaClass.name)
-        }
-    }
-
-    fun isValid(): Boolean {
-        if (businessProfileModel.businessName.isNullOrEmpty() || businessProfileModel.businessName?.length ?: 0 <= 2) {
-            showLongToast(getString(R.string.please_enter_valid_business_name))
-            return false
-        } else if (businessProfileModel.businessDesc.isNullOrEmpty()) {
-            showLongToast(getString(R.string.please_enter_valid_business_description))
-            return false
-        }
-        return true
-    }
-
-    private fun updateFpDetails() {
-        WebEngageController.trackEvent(BUSINESS_PROFILE_UPDATE, CLICK, NO_EVENT_VALUE)
-        showProgress()
-        val updateItemList = arrayListOf<UpdatesItem>()
-        if (sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) != binding?.ctvBusinessName?.text.toString()) {
-            updateItemList.add(UpdatesItem(key = "NAME", value = businessProfileModel.businessName))
-        }
-        if (sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION) != binding?.ctvBusinessDesc?.text.toString()) {
-            updateItemList.add(
-                UpdatesItem(
-                    key = "DESCRIPTION",
-                    value = businessProfileModel.businessDesc
+            when (response?.contains("DESCRIPTION")) {
+              true -> {
+                showSnackBarPositive(
+                  requireActivity(),
+                  getString(R.string.business_description_published_successfully)
                 )
+              }
+            }
+            sessionManager?.storeFPDetails(
+              GET_FP_DETAILS_DESCRIPTION,
+              binding?.ctvBusinessDesc?.text.toString()
             )
-        }
-        businessProfileUpdateRequest =
-            BusinessProfileUpdateRequest(
-                sessionManager?.fpTag,
-                clientId2, updateItemList
+            sessionManager?.storeFPDetails(
+              GET_FP_DETAILS_BUSINESS_NAME,
+              binding?.ctvBusinessName?.text.toString()
+
             )
-        viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)
-            ?.observeOnce(viewLifecycleOwner, {
-                hideProgress()
-                when (it.isSuccess()) {
-                    true -> {
-                        binding?.btnSavePublish?.isEnabled = false
-                        val response = it?.parseStringResponse()
-                        when (response?.contains("NAME")) {
-                            true -> {
-                                showSnackBarPositive(
-                                    requireActivity(),
-                                    getString(R.string.business_name_published_successfully)
-                                )
-                            }
-                        }
-                        when (response?.contains("DESCRIPTION")) {
-                            true -> {
-                                showSnackBarPositive(
-                                    requireActivity(),
-                                    getString(R.string.business_description_published_successfully)
-                                )
-                            }
-                        }
-                        sessionManager?.storeFPDetails(
-                            GET_FP_DETAILS_DESCRIPTION,
-                            binding?.ctvBusinessDesc?.text.toString()
-                        )
-                        sessionManager?.storeFPDetails(
-                            GET_FP_DETAILS_BUSINESS_NAME,
-                            binding?.ctvBusinessName?.text.toString()
-
-                        )
-                    }
-                    else -> {
-                    }
-                }
-
-            })
-    }
-
-    private fun openImagePicker() {
-        val filterSheet = ImagePickerBottomSheet()
-        filterSheet.isHidePdf(true)
-        filterSheet.onClicked = { openImagePicker(it) }
-        filterSheet.show(
-            this@BusinessProfileFragment.parentFragmentManager,
-            ImagePickerBottomSheet::class.java.name
-        )
-    }
-
-    private fun openImagePicker(it: ClickType) {
-        val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
-        ImagePicker.Builder(baseActivity)
-            .mode(type)
-            .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-            .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
-            .scale(800, 800)
-            .enableDebuggingMode(true).build()
-    }
-
-    private fun showBusinessDescDialog() {
-        val businessDescDialog = BusinessDescriptionBottomSheet()
-        val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.BUSINESS_DETAILS.name, businessProfileModel)
-        businessDescDialog.arguments = bundle
-        businessDescDialog.onClicked = {
-            binding?.btnSavePublish?.isEnabled = true
-            binding?.ctvBusinessDesc?.text = it.businessDesc
+          }
+          else -> {
+          }
         }
-        businessDescDialog.show(
-            parentFragmentManager,
-            BusinessDescriptionBottomSheet::javaClass.name
-        )
-    }
 
-    private fun openBusinessCategoryBottomSheet() {
-        val businessCategoryBottomSheet = BusinessCategoryBottomSheet()
-        businessCategoryBottomSheet.show(
-            parentFragmentManager,
-            BusinessCategoryBottomSheet::javaClass.name
-        )
-    }
+      })
+  }
 
-    private fun openBusinessNameDialog() {
-        val businessNameBottomSheet = BusinessNameBottomSheet()
-        val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.BUSINESS_DETAILS.name, businessProfileModel)
-        businessNameBottomSheet.arguments = bundle
-        businessNameBottomSheet.onClicked = {
-            binding?.btnSavePublish?.isEnabled = true
-            binding?.ctvBusinessName?.text = it
-            binding?.ctvBusinessNameCount?.text = "${it.length}/40"
+  private fun openImagePicker() {
+    val filterSheet = ImagePickerBottomSheet()
+    filterSheet.isHidePdf(true)
+    filterSheet.onClicked = { openImagePicker(it) }
+    filterSheet.show(
+      this@BusinessProfileFragment.parentFragmentManager,
+      ImagePickerBottomSheet::class.java.name
+    )
+  }
+
+  private fun openImagePicker(it: ClickType) {
+    val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
+    ImagePicker.Builder(baseActivity)
+      .mode(type)
+      .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+      .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
+      .scale(800, 800)
+      .enableDebuggingMode(true).build()
+  }
+
+  private fun showBusinessDescDialog() {
+    val businessDescDialog = BusinessDescriptionBottomSheet()
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.BUSINESS_DETAILS.name, businessProfileModel)
+    businessDescDialog.arguments = bundle
+    businessDescDialog.onClicked = {
+      binding?.btnSavePublish?.isEnabled = true
+      binding?.ctvBusinessDesc?.text = it.businessDesc
+    }
+    businessDescDialog.show(
+      parentFragmentManager,
+      BusinessDescriptionBottomSheet::javaClass.name
+    )
+  }
+
+  private fun openBusinessCategoryBottomSheet() {
+    val businessCategoryBottomSheet = BusinessCategoryBottomSheet()
+    businessCategoryBottomSheet.show(
+      parentFragmentManager,
+      BusinessCategoryBottomSheet::javaClass.name
+    )
+  }
+
+  private fun openBusinessNameDialog() {
+    val businessNameBottomSheet = BusinessNameBottomSheet()
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.BUSINESS_DETAILS.name, businessProfileModel)
+    businessNameBottomSheet.arguments = bundle
+    businessNameBottomSheet.onClicked = {
+      binding?.btnSavePublish?.isEnabled = true
+      binding?.ctvBusinessName?.text = it
+      binding?.ctvBusinessNameCount?.text = "${it.length}/40"
+    }
+    businessNameBottomSheet.show(parentFragmentManager, BusinessNameBottomSheet::javaClass.name)
+  }
+
+  private fun openDialogForInformation() {
+    val businessFeaturedBottomSheet = BusinessFeaturedBottomSheet()
+    businessFeaturedBottomSheet.show(
+      parentFragmentManager,
+      BusinessFeaturedBottomSheet::javaClass.name
+    )
+  }
+
+  private fun setImage(imageUri: String) {
+    val target: Target = object : Target {
+      override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+        targetMap = null
+        try {
+          val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+          bindImage(mutableBitmap)
+        } catch (e: OutOfMemoryError) {
+        } catch (e: Exception) {
         }
-        businessNameBottomSheet.show(parentFragmentManager, BusinessNameBottomSheet::javaClass.name)
+      }
+
+      override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
+        binding?.imageAddBtn?.visible()
+        binding?.businessImage?.gone()
+        businessImage = null
+        binding?.ctvWhatsThis?.compoundDrawables?.get(0)
+          ?.setTint(getColor(R.color.blue_4A90E2))
+        binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
+        targetMap = null
+      }
+
+      override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+      }
     }
-
-    private fun openDialogForInformation() {
-        val businessFeaturedBottomSheet = BusinessFeaturedBottomSheet()
-        businessFeaturedBottomSheet.show(
-            parentFragmentManager,
-            BusinessFeaturedBottomSheet::javaClass.name
-        )
+    if (imageUri.isEmpty().not()) {
+      targetMap = target
+      Picasso.get().load(imageUri ?: "").into(target)
+      binding?.btnChangeImage?.visible()
+    } else {
+      binding?.imageAddBtn?.visible()
+      binding?.businessImage?.gone()
+      businessImage = null
+      binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
+      binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
     }
+  }
 
-    private fun setImage(imageUri: String) {
-        val target: Target = object : Target {
-            override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-                targetMap = null
-                try {
-                    val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
-                    bindImage(mutableBitmap)
-                } catch (e: OutOfMemoryError) {
-                } catch (e: Exception) {
-                }
-            }
+  private fun bindImage(mutableBitmap: Bitmap?) {
+    binding?.businessImage?.setImageBitmap(mutableBitmap)
+    binding?.imageAddBtn?.gone()
+    binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.white))
+    binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.white)))
+    binding?.businessImage?.visible()
+  }
 
-            override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
-                binding?.imageAddBtn?.visible()
-                binding?.businessImage?.gone()
-                businessImage = null
-                binding?.ctvWhatsThis?.compoundDrawables?.get(0)
-                    ?.setTint(getColor(R.color.blue_4A90E2))
-                binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
-                targetMap = null
-            }
-
-            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-            }
-        }
-        if (imageUri.isEmpty().not()) {
-            targetMap = target
-            Picasso.get().load(imageUri ?: "").into(target)
-            binding?.btnChangeImage?.visible()
-        } else {
-            binding?.imageAddBtn?.visible()
-            binding?.businessImage?.gone()
-            businessImage = null
-            binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
-            binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
-        }
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+      val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
+      if (mPaths.isNotEmpty()) {
+        this.businessImage = File(mPaths[0])
+        bindImage(businessImage?.getBitmap())
+        uploadBusinessLogo(businessImage!!)
+      }
     }
+  }
 
-    private fun bindImage(mutableBitmap: Bitmap?) {
-        binding?.businessImage?.setImageBitmap(mutableBitmap)
-        binding?.imageAddBtn?.gone()
-        binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.white))
-        binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.white)))
-        binding?.businessImage?.visible()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-            val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
-            if (mPaths.isNotEmpty()) {
-                this.businessImage = File(mPaths[0])
-                bindImage(businessImage?.getBitmap())
-                uploadBusinessLogo(businessImage!!)
-            }
-        }
-    }
-
-    fun File.getBitmap(): Bitmap? {
-        return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 800, 800)
-    }
+  fun File.getBitmap(): Bitmap? {
+    return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 800, 800)
+  }
 }
 
