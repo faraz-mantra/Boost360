@@ -602,8 +602,7 @@ fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
 fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BUSINESS_PROFILE_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"))
-    startActivity(webIntent)
+    startFragmentDashboardActivity(com.dashboard.constant.FragmentType.FRAGMENT_BUSINESS_PROFILE)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()

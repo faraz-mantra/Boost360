@@ -35,7 +35,6 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     override fun getLayout(): Int {
         return R.layout.fragment_website_theme
     }
-
     private var popupWindow: PopupWindow? = null
     private var sessionData: SessionData? = null
     private var primaryItem: PrimaryItem? = null
