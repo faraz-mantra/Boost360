@@ -66,8 +66,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     }
     binding?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName()}</u>")
-    var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
-    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri!!.contains("http").not()) {
+    var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
+    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
     binding?.imgProfileLogo?.apply {
@@ -173,7 +173,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     super.onClick(v)
     when (v) {
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
-      binding?.btnProfileLogo -> baseActivity.startFeatureLogo(session)
+      binding?.btnProfileLogo -> baseActivity.startBusinessLogo(session)
       binding?.editProfile -> baseActivity.startBusinessProfileDetailEdit(session)
       binding?.websiteThemeCustomization -> baseActivity.startWebsiteTheme(session)
 //      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)

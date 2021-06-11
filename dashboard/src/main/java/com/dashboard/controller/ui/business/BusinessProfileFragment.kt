@@ -25,27 +25,28 @@ import com.dashboard.controller.ui.business.bottomsheet.BusinessNameBottomSheet
 import com.dashboard.controller.ui.business.model.BusinessProfileModel
 import com.dashboard.controller.ui.business.model.BusinessProfileUpdateRequest
 import com.dashboard.controller.ui.business.model.UpdatesItem
+import com.dashboard.controller.ui.website_theme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentBusinessProfileBinding
+import com.dashboard.utils.WebEngageController
+import com.dashboard.utils.startBusinessAddress
+import com.dashboard.utils.startBusinessContactInfo
+import com.dashboard.utils.startDigitalChannel
 import com.dashboard.viewmodel.BusinessProfileViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
-import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_ADDRESS
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
-import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId2
 import com.framework.views.customViews.CustomImageView
-import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
-import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.CONNECTED_CHANNELS
+import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.getConnectedChannel
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.visibleChannels
-import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -82,6 +83,7 @@ class BusinessProfileFragment :
     }
 
     private fun uploadBusinessLogo(businessLogoImage: File) {
+        WebEngageController.trackEvent(BUSINESS_LOGO_IMAGE_CLICK, FILE_LINK, NO_EVENT_VALUE)
         showProgress(getString(R.string.uploading_image))
         val uuid: UUID = UUID.randomUUID()
         var s_uuid = uuid.toString()
@@ -100,7 +102,7 @@ class BusinessProfileFragment :
         )?.observeOnce(viewLifecycleOwner, {
             if (it.isSuccess()) {
                 sessionManager?.storeFPDetails(
-                    Key_Preferences.GET_FP_DETAILS_LogoUrl,
+                    GET_FP_DETAILS_LogoUrl,
                     it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
                 )
                 showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
@@ -118,29 +120,43 @@ class BusinessProfileFragment :
             binding?.clBusinessDesc,
             binding?.imageAddBtn,
             binding?.btnChangeImage,
-            binding?.btnSavePublish
+            binding?.btnSavePublish,
+            binding?.openBusinessAddress,
+            binding?.openBusinessChannels,
+            binding?.openBusinessContact,
+            binding?.openBusinessWebsite,
         )
-        binding?.btnSavePublish?.isEnabled=false
+        setData()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setData()
+    }
+
+    private fun setData() {
+        binding?.btnSavePublish?.isEnabled = false
         sessionManager = UserSessionManager(requireContext())
         binding?.ctvBusinessName?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
         binding?.ctvBusinessNameCount?.text = "${sessionManager?.fPName?.length}/40"
         binding?.ctvWebsite?.text = "${sessionManager?.rootAliasURI}"
         binding?.ctvBusinessDesc?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
         binding?.ctvBusinessAddress?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS)
-       if ( sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS).isNullOrEmpty()){
-           binding?.containerBusinessAddress?.gone()
-       }else{
-           binding?.containerBusinessAddress?.visible()
-       }
-        binding?.ctvBusinessContacts?.text = """• +91 ${sessionManager?.fPPrimaryContactNumber} (VMN) 
-            |• +91 ${sessionManager?.userPrimaryMobile} 
-            |• ${sessionManager?.userProfileEmail?:sessionManager?.fPEmail} 
-            |• ${sessionManager?.rootAliasURI}""".trimMargin()
+        if (sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS).isNullOrEmpty()) {
+            binding?.containerBusinessAddress?.gone()
+        } else {
+            binding?.containerBusinessAddress?.visible()
+        }
+        binding?.ctvBusinessContacts?.text =
+            """• +91 ${sessionManager?.fPPrimaryContactNumber} (VMN) 
+                |• +91 ${sessionManager?.userPrimaryMobile} 
+                |• ${sessionManager?.userProfileEmail ?: sessionManager?.fPEmail} 
+                |• ${sessionManager?.rootAliasURI}""".trimMargin()
         setImage(sessionManager?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
         setDataToModel()
         setImageGrayScale()
         setConnectedChannels()
-
     }
 
     private fun setConnectedChannels() {
@@ -160,8 +176,9 @@ class BusinessProfileFragment :
                 customImageView?.visible()
             }
         }
-        if (containerChannels.childCount==0)binding?.ctvNotConnected?.gone()else binding?.ctvNotConnected?.visible()
+        if (containerChannels.childCount == 0) binding?.ctvNotConnected?.gone() else binding?.ctvNotConnected?.visible()
     }
+
     private fun setDataToModel() {
         val businessDesc = binding?.ctvBusinessDesc?.text.toString()
         val businessName = binding?.ctvBusinessName?.text.toString()
@@ -187,19 +204,50 @@ class BusinessProfileFragment :
                 openDialogForInformation()
             }
             binding?.ctvBusinessName -> {
+                WebEngageController.trackEvent(EDIT_BUSINESS_NAME_CLICK, CLICK, NO_EVENT_VALUE)
                 openBusinessNameDialog()
             }
             binding?.ctvBusinessCategory -> {
+                WebEngageController.trackEvent(BUSINESS_CATEGORY_CLICK, CLICK, NO_EVENT_VALUE)
+
                 openBusinessCategoryBottomSheet()
             }
             binding?.clBusinessDesc -> {
+                WebEngageController.trackEvent(
+                    EDIT_BUSINESS_DESCRIPTION_CLICK,
+                    CLICK,
+                    NO_EVENT_VALUE
+                )
                 showBusinessDescDialog()
             }
             binding?.imageAddBtn, binding?.btnChangeImage -> openImagePicker()
             binding?.imageAddBtn, binding?.btnSavePublish -> if (isValid()) {
                 updateFpDetails()
             }
+            binding?.openBusinessAddress -> {
+                WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, NO_EVENT_VALUE)
+                baseActivity.startBusinessAddress(sessionManager)
+            }
+            binding?.openBusinessChannels -> {
+                WebEngageController.trackEvent(CONNECTED_CHANNELS_PAGE_CLICK, CLICK, NO_EVENT_VALUE)
+                baseActivity.startDigitalChannel(sessionManager!!)
+            }
+            binding?.openBusinessContact -> {
+                WebEngageController.trackEvent(BUSINESS_CONTACTS_PAGE_CLICK, CLICK, NO_EVENT_VALUE)
+                baseActivity.startBusinessContactInfo(sessionManager)
+            }
+            binding?.openBusinessWebsite -> {
+                WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, NO_EVENT_VALUE)
+                openWebViewDialog(sessionManager?.rootAliasURI!!, sessionManager?.fpTag!!)
+            }
 
+        }
+    }
+
+    private fun openWebViewDialog(url: String, title: String) {
+        WebViewDialog().apply {
+            setData(url, title)
+            show(this@BusinessProfileFragment.parentFragmentManager, WebViewDialog::javaClass.name)
         }
     }
 
@@ -215,15 +263,21 @@ class BusinessProfileFragment :
     }
 
     private fun updateFpDetails() {
+        WebEngageController.trackEvent(BUSINESS_PROFILE_UPDATE, CLICK, NO_EVENT_VALUE)
         showProgress()
         val updateItemList = arrayListOf<UpdatesItem>()
-        if (sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)!=binding?.ctvBusinessName?.text.toString()){
-            updateItemList.add(UpdatesItem(key = "NAME",value = businessProfileModel.businessName))
+        if (sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) != binding?.ctvBusinessName?.text.toString()) {
+            updateItemList.add(UpdatesItem(key = "NAME", value = businessProfileModel.businessName))
         }
-        if (sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)!=binding?.ctvBusinessDesc?.text.toString()){
-            updateItemList.add(UpdatesItem(key = "DESCRIPTION",value = businessProfileModel.businessDesc))
+        if (sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION) != binding?.ctvBusinessDesc?.text.toString()) {
+            updateItemList.add(
+                UpdatesItem(
+                    key = "DESCRIPTION",
+                    value = businessProfileModel.businessDesc
+                )
+            )
         }
-            businessProfileUpdateRequest =
+        businessProfileUpdateRequest =
             BusinessProfileUpdateRequest(
                 sessionManager?.fpTag,
                 clientId2, updateItemList
@@ -235,8 +289,22 @@ class BusinessProfileFragment :
                     true -> {
                         binding?.btnSavePublish?.isEnabled = false
                         val response = it?.parseStringResponse()
-                        when (response?.contains("NAME")) {true -> { showSnackBarPositive(requireActivity(),getString(R.string.business_name_published_successfully)) } }
-                        when (response?.contains("DESCRIPTION")) {true -> { showSnackBarPositive(requireActivity(),getString(R.string.business_description_published_successfully)) } }
+                        when (response?.contains("NAME")) {
+                            true -> {
+                                showSnackBarPositive(
+                                    requireActivity(),
+                                    getString(R.string.business_name_published_successfully)
+                                )
+                            }
+                        }
+                        when (response?.contains("DESCRIPTION")) {
+                            true -> {
+                                showSnackBarPositive(
+                                    requireActivity(),
+                                    getString(R.string.business_description_published_successfully)
+                                )
+                            }
+                        }
                         sessionManager?.storeFPDetails(
                             GET_FP_DETAILS_DESCRIPTION,
                             binding?.ctvBusinessDesc?.text.toString()
@@ -280,7 +348,7 @@ class BusinessProfileFragment :
         bundle.putSerializable(IntentConstant.BUSINESS_DETAILS.name, businessProfileModel)
         businessDescDialog.arguments = bundle
         businessDescDialog.onClicked = {
-            binding?.btnSavePublish?.isEnabled=true
+            binding?.btnSavePublish?.isEnabled = true
             binding?.ctvBusinessDesc?.text = it.businessDesc
         }
         businessDescDialog.show(
@@ -303,7 +371,7 @@ class BusinessProfileFragment :
         bundle.putSerializable(IntentConstant.BUSINESS_DETAILS.name, businessProfileModel)
         businessNameBottomSheet.arguments = bundle
         businessNameBottomSheet.onClicked = {
-            binding?.btnSavePublish?.isEnabled=true
+            binding?.btnSavePublish?.isEnabled = true
             binding?.ctvBusinessName?.text = it
             binding?.ctvBusinessNameCount?.text = "${it.length}/40"
         }
@@ -334,7 +402,8 @@ class BusinessProfileFragment :
                 binding?.imageAddBtn?.visible()
                 binding?.businessImage?.gone()
                 businessImage = null
-                binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
+                binding?.ctvWhatsThis?.compoundDrawables?.get(0)
+                    ?.setTint(getColor(R.color.blue_4A90E2))
                 binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
                 targetMap = null
             }
@@ -345,6 +414,7 @@ class BusinessProfileFragment :
         if (imageUri.isEmpty().not()) {
             targetMap = target
             Picasso.get().load(imageUri ?: "").into(target)
+            binding?.btnChangeImage?.visible()
         } else {
             binding?.imageAddBtn?.visible()
             binding?.businessImage?.gone()
