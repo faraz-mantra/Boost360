@@ -49,10 +49,9 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
   override fun onCreateView() {
     super.onCreateView()
     binding?.introItem = introItem;
-    binding?.presiginIntroImg?.setImageResource(introItem.imageResource)
+    introItem.imageResource?.let { binding?.presiginIntroImg?.setImageResource(it) }
 
     if (position == 0) {
-      binding?.boostLogo?.visible()
       binding?.presiginIntroImg?.setOnClickListener {
         WebEngageController.trackEvent(PS_INTRO_VIDEO_SPLASH_CLICKED, START_INTRO_VIDEO, NO_EVENT_VALUE)
         playPause?.let { it5 -> it5(true) }
@@ -105,7 +104,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         timer?.resume()
         it.isVisible = false
       }
-    } else binding?.boostLogo?.gone()
+    }
 
     binding?.muteVideo?.setOnClickListener {
       muteUnMute()
@@ -127,33 +126,6 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
   }
-
-  override fun onStart() {
-    super.onStart()
-  }
-
-  override fun onResume() {
-    super.onResume()
-
-  }
-
-  override fun onPause() {
-    super.onPause()
-    if (position == 0) {
-      if (binding?.videoView?.isPlaying == true) {
-        binding?.videoView?.pause()
-        binding?.playPauseLottie?.isVisible = true;
-      }
-    }
-    timer?.cancel()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    timer?.cancel()
-    binding?.videoView?.suspend()
-  }
-
 
   private fun setVideoTimerCountDown() {
     try {
@@ -190,6 +162,22 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     }
   }
 
+  override fun onPause() {
+    super.onPause()
+    if (position == 0) {
+      if (binding?.videoView?.isPlaying == true) {
+        binding?.videoView?.pause()
+        binding?.playPauseLottie?.isVisible = true;
+      }
+    }
+    timer?.cancel()
+  }
+
+  override fun onStop() {
+    super.onStop()
+    timer?.cancel()
+    binding?.videoView?.suspend()
+  }
 
   override fun onDestroy() {
     super.onDestroy()
