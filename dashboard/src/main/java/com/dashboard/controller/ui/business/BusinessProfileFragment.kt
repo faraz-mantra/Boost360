@@ -55,19 +55,17 @@ import java.io.File
 import java.util.*
 
 
-class BusinessProfileFragment :
-  AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
+class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
+
+  private var businessImage: File? = null
+  private var targetMap: Target? = null
+  private var businessProfileModel = BusinessProfileModel();
+  private var businessProfileUpdateRequest: BusinessProfileUpdateRequest? = null
+  private var sessionManager: UserSessionManager? = null
+
   override fun getLayout(): Int {
     return R.layout.fragment_business_profile
   }
-
-  private var businessImage: File? = null
-  var targetMap: Target? = null
-  var businessProfileModel = BusinessProfileModel();
-  var businessProfileUpdateRequest: BusinessProfileUpdateRequest? = null
-
-
-  var sessionManager: UserSessionManager? = null
 
   companion object {
     @JvmStatic
@@ -82,59 +80,37 @@ class BusinessProfileFragment :
     return BusinessProfileViewModel::class.java
   }
 
-  private fun uploadBusinessLogo(businessLogoImage: File) {
-    WebEngageController.trackEvent(BUSINESS_LOGO_IMAGE_CLICK, FILE_LINK, NO_EVENT_VALUE)
-    showProgress(getString(R.string.uploading_image))
-    val uuid: UUID = UUID.randomUUID()
-    var s_uuid = uuid.toString()
-    s_uuid = s_uuid.replace("-", "")
-    viewModel?.putUploadBusinessLogo(
-      clientId2,
-      fpId = FirestoreManager.fpId,
-      reqType = "sequential",
-      reqId = s_uuid,
-      totalChunks = "1",
-      currentChunkNumber = "1",
-      file = RequestBody.create(
-        "image/png".toMediaTypeOrNull(),
-        businessLogoImage.readBytes()
-      )
-    )?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        sessionManager?.storeFPDetails(
-          GET_FP_DETAILS_LogoUrl,
-          it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
-        )
-        showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
-      } else showSnackBarNegative(requireActivity(), it.message)
-      hideProgress()
-    })
-  }
-
   override fun onCreateView() {
     super.onCreateView()
-    setOnClickListener(
-      binding?.ctvWhatsThis,
-      binding?.ctvBusinessName,
-      binding?.ctvBusinessCategory,
-      binding?.clBusinessDesc,
-      binding?.imageAddBtn,
-      binding?.btnChangeImage,
-      binding?.btnSavePublish,
-      binding?.openBusinessAddress,
-      binding?.openBusinessChannels,
-      binding?.openBusinessContact,
-      binding?.openBusinessWebsite,
-    )
     sessionManager = UserSessionManager(requireContext())
+    setOnClickListener(
+      binding?.ctvWhatsThis, binding?.ctvBusinessName, binding?.ctvBusinessCategory, binding?.clBusinessDesc,
+      binding?.imageAddBtn, binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
+      binding?.openBusinessChannels, binding?.openBusinessContact, binding?.openBusinessWebsite,
+    )
     setImage(sessionManager?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
-    setData()
-
   }
 
   override fun onResume() {
     super.onResume()
     setData()
+  }
+
+  private fun uploadBusinessLogo(businessLogoImage: File) {
+    WebEngageController.trackEvent(BUSINESS_LOGO_IMAGE_CLICK, FILE_LINK, NO_EVENT_VALUE)
+    showProgress(getString(R.string.uploading_image))
+    var s_uuid = UUID.randomUUID().toString()
+    s_uuid = s_uuid.replace("-", "")
+    viewModel?.putUploadBusinessLogo(
+      clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid,
+      totalChunks = "1", currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
+    )?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        sessionManager?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
+        showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
+      } else showSnackBarNegative(requireActivity(), it.message)
+      hideProgress()
+    })
   }
 
   private fun setData() {
@@ -149,8 +125,7 @@ class BusinessProfileFragment :
     } else {
       binding?.containerBusinessAddress?.visible()
     }
-    binding?.ctvBusinessContacts?.text =
-      """• +91 ${sessionManager?.fPPrimaryContactNumber} (VMN) 
+    binding?.ctvBusinessContacts?.text = """• +91 ${sessionManager?.fPPrimaryContactNumber} (VMN) 
                 |• +91 ${sessionManager?.userPrimaryMobile} 
                 |• ${sessionManager?.userProfileEmail ?: sessionManager?.fPEmail} 
                 |• ${sessionManager?.rootAliasURI}""".trimMargin()
@@ -213,11 +188,7 @@ class BusinessProfileFragment :
         openBusinessCategoryBottomSheet()
       }
       binding?.clBusinessDesc -> {
-        WebEngageController.trackEvent(
-          EDIT_BUSINESS_DESCRIPTION_CLICK,
-          CLICK,
-          NO_EVENT_VALUE
-        )
+        WebEngageController.trackEvent(EDIT_BUSINESS_DESCRIPTION_CLICK, CLICK, NO_EVENT_VALUE)
         showBusinessDescDialog()
       }
       binding?.imageAddBtn, binding?.btnChangeImage -> openImagePicker()
@@ -270,18 +241,10 @@ class BusinessProfileFragment :
       updateItemList.add(UpdatesItem(key = "NAME", value = businessProfileModel.businessName))
     }
     if (sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION) != binding?.ctvBusinessDesc?.text.toString()) {
-      updateItemList.add(
-        UpdatesItem(
-          key = "DESCRIPTION",
-          value = businessProfileModel.businessDesc
-        )
-      )
+      updateItemList.add(UpdatesItem(key = "DESCRIPTION", value = businessProfileModel.businessDesc))
     }
     businessProfileUpdateRequest =
-      BusinessProfileUpdateRequest(
-        sessionManager?.fpTag,
-        clientId2, updateItemList
-      )
+      BusinessProfileUpdateRequest(sessionManager?.fpTag, clientId2, updateItemList)
     viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)
       ?.observeOnce(viewLifecycleOwner, {
         hideProgress()
@@ -291,18 +254,12 @@ class BusinessProfileFragment :
             val response = it?.parseStringResponse()
             when (response?.contains("NAME")) {
               true -> {
-                showSnackBarPositive(
-                  requireActivity(),
-                  getString(R.string.business_name_published_successfully)
-                )
+                showSnackBarPositive(requireActivity(), getString(R.string.business_name_published_successfully))
               }
             }
             when (response?.contains("DESCRIPTION")) {
               true -> {
-                showSnackBarPositive(
-                  requireActivity(),
-                  getString(R.string.business_description_published_successfully)
-                )
+                showSnackBarPositive(requireActivity(), getString(R.string.business_description_published_successfully))
               }
             }
             sessionManager?.storeFPDetails(
@@ -312,13 +269,11 @@ class BusinessProfileFragment :
             sessionManager?.storeFPDetails(
               GET_FP_DETAILS_BUSINESS_NAME,
               binding?.ctvBusinessName?.text.toString()
-
             )
           }
           else -> {
           }
         }
-
       })
   }
 
@@ -326,10 +281,7 @@ class BusinessProfileFragment :
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(
-      this@BusinessProfileFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
+    filterSheet.show(this@BusinessProfileFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun openImagePicker(it: ClickType) {
@@ -351,18 +303,12 @@ class BusinessProfileFragment :
       binding?.btnSavePublish?.isEnabled = true
       binding?.ctvBusinessDesc?.text = it.businessDesc
     }
-    businessDescDialog.show(
-      parentFragmentManager,
-      BusinessDescriptionBottomSheet::javaClass.name
-    )
+    businessDescDialog.show(parentFragmentManager, BusinessDescriptionBottomSheet::javaClass.name)
   }
 
   private fun openBusinessCategoryBottomSheet() {
     val businessCategoryBottomSheet = BusinessCategoryBottomSheet()
-    businessCategoryBottomSheet.show(
-      parentFragmentManager,
-      BusinessCategoryBottomSheet::javaClass.name
-    )
+    businessCategoryBottomSheet.show(parentFragmentManager, BusinessCategoryBottomSheet::javaClass.name)
   }
 
   private fun openBusinessNameDialog() {
@@ -380,10 +326,7 @@ class BusinessProfileFragment :
 
   private fun openDialogForInformation() {
     val businessFeaturedBottomSheet = BusinessFeaturedBottomSheet()
-    businessFeaturedBottomSheet.show(
-      parentFragmentManager,
-      BusinessFeaturedBottomSheet::javaClass.name
-    )
+    businessFeaturedBottomSheet.show(parentFragmentManager, BusinessFeaturedBottomSheet::javaClass.name)
   }
 
   private fun setImage(imageUri: String) {
@@ -402,8 +345,7 @@ class BusinessProfileFragment :
         binding?.imageAddBtn?.visible()
         binding?.businessImage?.gone()
         businessImage = null
-        binding?.ctvWhatsThis?.compoundDrawables?.get(0)
-          ?.setTint(getColor(R.color.blue_4A90E2))
+        binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
         binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
         targetMap = null
       }
