@@ -40,6 +40,8 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId2
 import com.framework.views.customViews.CustomImageView
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.CONNECTED_CHANNELS
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.getConnectedChannel
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.visibleChannels
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.squareup.picasso.Picasso
@@ -123,6 +125,11 @@ class BusinessProfileFragment :
         binding?.ctvWebsite?.text = "${sessionManager?.rootAliasURI}"
         binding?.ctvBusinessDesc?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
         binding?.ctvBusinessAddress?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS)
+       if ( sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS).isNullOrEmpty()){
+           binding?.containerBusinessAddress?.gone()
+       }else{
+           binding?.containerBusinessAddress?.visible()
+       }
         binding?.ctvBusinessContacts?.text = """• +91 ${sessionManager?.fPPrimaryContactNumber} (VMN) 
             |• +91 ${sessionManager?.userPrimaryMobile} 
             |• ${sessionManager?.userProfileEmail?:sessionManager?.fPEmail} 
@@ -136,6 +143,7 @@ class BusinessProfileFragment :
 
     private fun setConnectedChannels() {
         visibleChannels(binding?.containerChannels!!)
+        if (getConnectedChannel().isEmpty()) binding?.ctvConnected?.gone() else binding?.ctvConnected?.visible()
         grayScaleDisabledChannels(binding?.containerChannelsDisabled!!)
 
     }
@@ -144,12 +152,13 @@ class BusinessProfileFragment :
         for (it in containerChannels.children) {
             val customImageView = it as? CustomImageView
             val tag = customImageView?.tag
-            if (ChannelAccessStatusResponse.getConnectedChannel().contains(tag)) {
+            if (getConnectedChannel().contains(tag)) {
                 customImageView?.gone()
             } else {
                 customImageView?.visible()
             }
         }
+        if (containerChannels.childCount==0)binding?.ctvNotConnected?.gone()else binding?.ctvNotConnected?.visible()
     }
     private fun setDataToModel() {
         val businessDesc = binding?.ctvBusinessDesc?.text.toString()
@@ -318,6 +327,11 @@ class BusinessProfileFragment :
             }
 
             override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
+                binding?.imageAddBtn?.visible()
+                binding?.businessImage?.gone()
+                businessImage = null
+                binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
+                binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
                 targetMap = null
             }
 
