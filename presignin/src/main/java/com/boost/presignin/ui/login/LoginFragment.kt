@@ -97,11 +97,11 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   private fun storeUserDetail(response: VerificationRequestResult) {
     hideProgress()
-    if (response.profileProperties?.userMobile.isNullOrEmpty().not() && ValidationUtils.isMobileNumberValid(response.profileProperties?.userMobile!!)) {
-      navigator?.startActivity(LoginActivity::class.java, Bundle().apply {
-        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
-      })
-    } else {
+//    if (response.profileProperties?.userMobile.isNullOrEmpty().not() && ValidationUtils.isMobileNumberValid(response.profileProperties?.userMobile!!)) {
+//      navigator?.startActivity(LoginActivity::class.java, Bundle().apply {
+//        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+//      })
+//    } else {
       if (response.authTokens!!.size == 1) {
         this.resultLogin = response
         authTokenData()?.createAccessTokenAuth()
@@ -110,7 +110,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
           putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
         })
       }
-    }
+//    }
   }
 
   private fun onDataChanged() {
