@@ -18,14 +18,10 @@ class RegistrationActivity : FragmentContainerActivity() {
     return false
   }
 
-  private val phoneNumber by lazy {
-    intent.getStringExtra(IntentConstant.EXTRA_PHONE_NUMBER.name)
-  }
-
   override fun getFragmentInstance(type: Int?): BaseFragment<*, *> {
     return when (type) {
       SUCCESS_FRAGMENT -> RegistrationSuccessFragment.newInstance()
-      else -> CategoryFragment.newInstance(phoneNumber)
+      else -> CategoryFragment.newInstance(intent.extras)
     }
   }
 

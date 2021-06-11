@@ -39,6 +39,7 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.ui.catalog.catalogService.listing.ServiceListingFragment.Companion.shareType
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.model.*
@@ -48,6 +49,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.utils.ContentSharing
 import com.framework.utils.NetworkUtils.isNetworkConnected
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
@@ -87,7 +89,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
 
     private const val STORAGE_CODE = 120
-    var shareType = 0
+    var shareType = false
     var shareProduct: ItemsItem? = null
   }
 
@@ -273,13 +275,15 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
     if (actionType == RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal) {
       shareProduct = item as? ItemsItem
-      shareType = 1
-      if (checkStoragePermission()) share(shareType, shareProduct)
+      shareType = true
+      if (checkStoragePermission()) ContentSharing.shareProduct(shareProduct?.name,
+        shareProduct?.price.toString(),"google.com","9792445096", shareProduct?.image,true)
     }
     if (actionType == RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) {
       shareProduct = item as? ItemsItem
-      shareType = 0
-      if (checkStoragePermission()) share(shareType, shareProduct)
+      shareType = false
+      if (checkStoragePermission()) ContentSharing.shareProduct(shareProduct?.name,
+        shareProduct?.price.toString(),"google.com","9792445096", shareProduct?.image)
     }
   }
 
@@ -309,7 +313,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     if (requestCode == STORAGE_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-      if (shareProduct != null) share(shareType, shareProduct)
+      if (shareProduct != null) ContentSharing.shareProduct(shareProduct?.name, shareProduct?.price.toString(),imageUri = shareProduct?.image,isWhatsApp = shareType)
     }
   }
 
@@ -322,63 +326,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     builder.create().show()
   }
 
-  fun share(type: Int, product: ItemsItem?) {
-    showProgress("Sharing...")
-    if (isNetworkConnected()) {
-      val shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n\nfor more details visit: %s",
-          product?.name?.trim { it <= ' ' }, product?.description, "${product?.currency}${product?.discountedPrice}",
-          "${product?.currency}${product?.price}", product?.description?.trim { it <= ' ' }, product?.category?.trim { it <= ' ' })
-      val target: Target = object : Target {
-        override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-          targetMap = null
-          try {
-            val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
-            val view = View(activity)
-            view.draw(Canvas(mutableBitmap))
-            val path = MediaStore.Images.Media.insertImage(requireActivity().contentResolver, mutableBitmap, "boost_360", "")
-            val uri = Uri.parse(path)
-            shareTextService(type, uri, shareText)
-          } catch (e: OutOfMemoryError) {
-            showShortToast(getString(R.string.image_size_is_large))
-          } catch (e: Exception) {
-            showShortToast(getString(R.string.image_not_able_to_share))
-          }
-          hideProgress()
-        }
-
-        override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
-          hideProgress()
-          targetMap = null
-          showShortToast(getString(R.string.failed_to_download_image))
-        }
-
-        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-        }
-      }
-      if (product?.image.isNullOrEmpty().not()) {
-        targetMap = target
-        Picasso.get().load(product?.image ?: "").into(target)
-      } else {
-        shareTextService(type, null, shareText)
-        hideProgress()
-      }
-    } else {
-      hideProgress()
-      showShortToast(getString(R.string.can_not_share_image_offline))
-    }
-  }
-
-  private fun shareTextService(type: Int, uri: Uri?, shareText: String) {
-    val share = Intent(Intent.ACTION_SEND)
-    share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    share.putExtra(Intent.EXTRA_TEXT, shareText)
-    uri?.let { share.putExtra(Intent.EXTRA_STREAM, uri) }
-    share.type = if (uri != null) "image/*" else "text/plain"
-    if (share.resolveActivity(requireActivity().packageManager) != null) {
-      if (type == 1) share.setPackage(getString(R.string.whats_app_package))
-      startActivityForResult(Intent.createChooser(share, resources.getString(R.string.share_updates)), 1)
-    }
-  }
 
   override fun onClick(v: View) {
     super.onClick(v)
