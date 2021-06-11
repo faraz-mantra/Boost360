@@ -58,6 +58,7 @@ import com.boost.presignup.utils.FirebaseDynamicLinksManager;
 import com.boost.upgrades.UpgradeActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.dashboard.controller.DashboardFragmentContainerActivityKt;
 import com.framework.utils.AppsFlyerUtils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -234,6 +235,7 @@ import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.B
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
 import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
 import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
+import static com.nowfloats.util.Constants.facebookPageDescription;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 //import com.nfx.leadmessages.ReadMessages;
@@ -485,7 +487,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (isFromRia && mRiaNodeDataModel != null) {
           featureImage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
         }
-        startActivity(featureImage);
+        DashboardFragmentContainerActivityKt.startFragmentDashboardActivity(this,com.dashboard.constant.FragmentType.FRAGMENT_BUSINESS_PROFILE,new Bundle(),false);
       } else if (url.contains(getString(R.string.addProduct))) {
         Intent productActivity = new Intent(HomeActivity.this, Product_Detail_Activity_V45.class);
         productActivity.putExtra("new", "");

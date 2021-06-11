@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black_4a4a4a" />
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/ctv_whats_this"
+                    android:id="@+id/ctv_whats_this_footer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black_4a4a4a" />
