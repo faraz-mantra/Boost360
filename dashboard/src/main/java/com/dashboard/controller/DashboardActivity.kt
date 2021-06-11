@@ -100,14 +100,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
     intentDataCheckAndDeepLink()
     getWelcomeData()
-    initializeWebEngageLogin()
+    session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
   }
 
-  private fun initializeWebEngageLogin() {
-    WebEngageController.setUserContactInfoProperties(session)
-    WebEngageController.setFPTag(session.getFpTag())
+  private fun UserSessionManager.initializeWebEngageLogin() {
+    WebEngageController.setUserContactInfoProperties(this)
+    WebEngageController.setFPTag(this.fpTag)
   }
 
   private fun initialize() {

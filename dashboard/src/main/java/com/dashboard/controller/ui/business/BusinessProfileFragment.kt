@@ -18,6 +18,7 @@ import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
+import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.business.bottomsheet.BusinessCategoryBottomSheet
 import com.dashboard.controller.ui.business.bottomsheet.BusinessDescriptionBottomSheet
 import com.dashboard.controller.ui.business.bottomsheet.BusinessFeaturedBottomSheet
@@ -61,7 +62,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
   private var targetMap: Target? = null
   private var businessProfileModel = BusinessProfileModel();
   private var businessProfileUpdateRequest: BusinessProfileUpdateRequest? = null
-  private var sessionManager: UserSessionManager? = null
+  private var session: UserSessionManager? = null
 
   override fun getLayout(): Int {
     return R.layout.fragment_business_profile
@@ -82,13 +83,13 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
 
   override fun onCreateView() {
     super.onCreateView()
-    sessionManager = UserSessionManager(requireContext())
+    session = UserSessionManager(requireContext())
     setOnClickListener(
       binding?.ctvWhatsThis, binding?.ctvBusinessName, binding?.ctvBusinessCategory, binding?.clBusinessDesc,
       binding?.imageAddBtn, binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
       binding?.openBusinessChannels, binding?.openBusinessContact, binding?.openBusinessWebsite,
     )
-    setImage(sessionManager?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
+    setImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
   }
 
   override fun onResume() {
@@ -106,7 +107,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       totalChunks = "1", currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
     )?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        sessionManager?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
+        session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
         showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
       } else showSnackBarNegative(requireActivity(), it.message)
       hideProgress()
@@ -115,20 +116,23 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
 
   private fun setData() {
     binding?.btnSavePublish?.isEnabled = false
-    binding?.ctvBusinessName?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
-    binding?.ctvBusinessNameCount?.text = "${sessionManager?.fPName?.length}/40"
-    binding?.ctvWebsite?.text = "${sessionManager?.rootAliasURI}"
-    binding?.ctvBusinessDesc?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
-    binding?.ctvBusinessAddress?.text = sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS)
-    if (sessionManager?.getFPDetails(GET_FP_DETAILS_ADDRESS).isNullOrEmpty()) {
+    binding?.ctvBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
+    binding?.ctvBusinessNameCount?.text = "${session?.fPName?.length}/40"
+    binding?.ctvWebsite?.text = "${session?.rootAliasURI}"
+    binding?.ctvBusinessDesc?.text = session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
+    binding?.ctvBusinessAddress?.text = session?.getFPDetails(GET_FP_DETAILS_ADDRESS)
+    if (session?.getFPDetails(GET_FP_DETAILS_ADDRESS).isNullOrEmpty()) {
       binding?.containerBusinessAddress?.gone()
     } else {
       binding?.containerBusinessAddress?.visible()
     }
-    binding?.ctvBusinessContacts?.text = """• +91 ${sessionManager?.fPPrimaryContactNumber} (VMN) 
-                |• +91 ${sessionManager?.userPrimaryMobile} 
-                |• ${sessionManager?.userProfileEmail ?: sessionManager?.fPEmail} 
-                |• ${sessionManager?.rootAliasURI}""".trimMargin()
+    var str = ""
+    if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "• +91 ${session?.userPrimaryMobile} (VMN)"
+    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "\n• +91 ${session?.fPPrimaryContactNumber}"
+    if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty().not()) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
+    str += "\n• ${session?.getDomainName() ?: ""}"
+    binding?.ctvBusinessContacts?.text = str.trimMargin()
+
     setDataToModel()
     setImageGrayScale()
     setConnectedChannels()
@@ -136,9 +140,26 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
 
   private fun setConnectedChannels() {
     visibleChannels(binding?.containerChannels!!)
-    if (getConnectedChannel().isEmpty()) binding?.ctvConnected?.gone() else binding?.ctvConnected?.visible()
-    grayScaleDisabledChannels(binding?.containerChannelsDisabled!!)
+    getConnectedChannel().apply {
+      if (this.isEmpty()) {
+        binding?.ctvConnected?.gone()
+        binding?.containerChannels?.gone()
+      } else {
+        binding?.ctvConnected?.visible()
+        binding?.containerChannels?.visible()
+      }
 
+      if (this.size == 5) {
+        binding?.ctvNotConnected?.gone()
+        binding?.containerChannelsDisabled?.gone()
+      } else {
+        binding?.ctvNotConnected?.visible()
+        binding?.containerChannelsDisabled?.apply {
+          visible()
+          grayScaleDisabledChannels(this)
+        }
+      }
+    }
   }
 
   private fun grayScaleDisabledChannels(containerChannels: LinearLayout) {
@@ -167,6 +188,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     matrix.setSaturation(0f)
     val filter = ColorMatrixColorFilter(matrix)
     binding?.civFbPageDisabled?.colorFilter = filter
+    binding?.civFbShopDisabled?.colorFilter = filter
     binding?.civWhatsappBusinessDisabled?.colorFilter = filter
     binding?.civTwitterDisabled?.colorFilter = filter
     binding?.civGooogleBusinessDisabled?.colorFilter = filter
@@ -197,19 +219,19 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       }
       binding?.openBusinessAddress -> {
         WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, NO_EVENT_VALUE)
-        baseActivity.startBusinessAddress(sessionManager)
+        baseActivity.startBusinessAddress(session)
       }
       binding?.openBusinessChannels -> {
         WebEngageController.trackEvent(CONNECTED_CHANNELS_PAGE_CLICK, CLICK, NO_EVENT_VALUE)
-        baseActivity.startDigitalChannel(sessionManager!!)
+        baseActivity.startDigitalChannel(session!!)
       }
       binding?.openBusinessContact -> {
         WebEngageController.trackEvent(BUSINESS_CONTACTS_PAGE_CLICK, CLICK, NO_EVENT_VALUE)
-        baseActivity.startBusinessContactInfo(sessionManager)
+        baseActivity.startBusinessContactInfo(session)
       }
       binding?.openBusinessWebsite -> {
         WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, NO_EVENT_VALUE)
-        openWebViewDialog(sessionManager?.rootAliasURI!!, sessionManager?.fpTag!!)
+        openWebViewDialog(session?.rootAliasURI!!, session?.fpTag!!)
       }
 
     }
@@ -237,14 +259,14 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     WebEngageController.trackEvent(BUSINESS_PROFILE_UPDATE, CLICK, NO_EVENT_VALUE)
     showProgress()
     val updateItemList = arrayListOf<UpdatesItem>()
-    if (sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) != binding?.ctvBusinessName?.text.toString()) {
+    if (session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) != binding?.ctvBusinessName?.text.toString()) {
       updateItemList.add(UpdatesItem(key = "NAME", value = businessProfileModel.businessName))
     }
-    if (sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION) != binding?.ctvBusinessDesc?.text.toString()) {
+    if (session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION) != binding?.ctvBusinessDesc?.text.toString()) {
       updateItemList.add(UpdatesItem(key = "DESCRIPTION", value = businessProfileModel.businessDesc))
     }
     businessProfileUpdateRequest =
-      BusinessProfileUpdateRequest(sessionManager?.fpTag, clientId2, updateItemList)
+      BusinessProfileUpdateRequest(session?.fpTag, clientId2, updateItemList)
     viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)
       ?.observeOnce(viewLifecycleOwner, {
         hideProgress()
@@ -262,11 +284,11 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
                 showSnackBarPositive(requireActivity(), getString(R.string.business_description_published_successfully))
               }
             }
-            sessionManager?.storeFPDetails(
+            session?.storeFPDetails(
               GET_FP_DETAILS_DESCRIPTION,
               binding?.ctvBusinessDesc?.text.toString()
             )
-            sessionManager?.storeFPDetails(
+            session?.storeFPDetails(
               GET_FP_DETAILS_BUSINESS_NAME,
               binding?.ctvBusinessName?.text.toString()
             )
@@ -342,8 +364,9 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       }
 
       override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
-        binding?.imageAddBtn?.visible()
         binding?.businessImage?.gone()
+        binding?.btnChangeImage?.gone()
+        binding?.imageAddBtn?.visible()
         businessImage = null
         binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
         binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
@@ -355,11 +378,14 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     }
     if (imageUri.isEmpty().not()) {
       targetMap = target
-      Picasso.get().load(imageUri ?: "").into(target)
+      Picasso.get().load(imageUri).placeholder(R.drawable.placeholder_image_n).into(target)
+      binding?.imageAddBtn?.gone()
       binding?.btnChangeImage?.visible()
+      binding?.businessImage?.visible()
     } else {
-      binding?.imageAddBtn?.visible()
       binding?.businessImage?.gone()
+      binding?.btnChangeImage?.gone()
+      binding?.imageAddBtn?.visible()
       businessImage = null
       binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
       binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
@@ -368,18 +394,16 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
 
   private fun bindImage(mutableBitmap: Bitmap?) {
     binding?.businessImage?.setImageBitmap(mutableBitmap)
-    binding?.imageAddBtn?.gone()
     binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.white))
     binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.white)))
-    binding?.businessImage?.visible()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-      val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
-      if (mPaths.isNotEmpty()) {
-        this.businessImage = File(mPaths[0])
+      val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>
+      if (mPaths.isNullOrEmpty().not()) {
+        this.businessImage = File(mPaths!![0])
         bindImage(businessImage?.getBitmap())
         uploadBusinessLogo(businessImage!!)
       }
