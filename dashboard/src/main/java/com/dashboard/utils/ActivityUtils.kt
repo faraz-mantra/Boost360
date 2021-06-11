@@ -89,6 +89,7 @@ fun AppCompatActivity.startBusinessEnquiry(session: UserSessionManager?) {
   }
 }
 
+@Deprecated("startSearchQuery")
 fun AppCompatActivity.startSearchQuery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(SEARCH_QUERIES_PAGE_CLICK, CLICK, TO_BE_ADDED)

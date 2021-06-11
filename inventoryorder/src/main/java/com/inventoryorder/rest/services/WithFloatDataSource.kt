@@ -16,11 +16,12 @@ interface WithFloatDataSource {
 
   @GET(EndPoints.GET_USER_SUMMARY_FILTER)
   fun getUserSummary(
-      @Query("clientId") clientId: String?,
-      @Query("fpId") fpIdParent: String?,
-      @Query("scope") scope: String? = "0", //enterprise for 1
-      @Query("startDate") startDate:String?,
-      @Query("endDate") endDate:String?
+    @Path("fpTag") fpTag: String?,
+    @Query("clientId") clientId: String?,
+    @Query("fpId") fpIdParent: String?,
+    @Query("scope") scope: String? = "0", //enterprise for 1
+    @Query("startDate") startDate:String?,
+    @Query("endDate") endDate:String?
   ): Observable<Response<UserSummaryResponse>>
 
   @GET(EndPoints.GET_USER_MESSAGE_COUNT_FILTER)
