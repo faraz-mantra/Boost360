@@ -76,7 +76,7 @@ object NFWebEngageController {
         }
     }
 
-    fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
+    fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "", fpTag: String?) {
         if (isUserLoggedIn) {
             if (!email.isNullOrEmpty()) {
                 weUser.setEmail(email)
@@ -111,6 +111,13 @@ object NFWebEngageController {
                 //Firebase Analytics User Property.
                 FirebaseAnalyticsUtilsHelper.setUserProperty("clientId", clientId)
                 params["clientId"] = clientId
+            }
+            if (!fpTag.isNullOrEmpty()) {
+                weUser.setAttribute("fpTag", fpTag)
+
+                //Firebase Analytics User Property.
+                FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag)
+                params["fpTag"] = fpTag
             }
             if (params.isNotEmpty())
                 AppsFlyerLib.getInstance().setAdditionalData(params)
@@ -155,6 +162,7 @@ object NFWebEngageController {
     fun setFPTag(fpTag: String) {
         try {
             Log.d(TAG, "Setting FP Tag" + fpTag)
+            if(fpTag != null && !fpTag.isNullOrEmpty())
             weUser.setAttribute("fpTag", fpTag)
 
             //Firebase Analytics User Property.
