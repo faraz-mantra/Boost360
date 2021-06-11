@@ -25,15 +25,14 @@ class BusinessFeaturedBottomSheet :
             "Your office/storefront photo from outside.",
             "Your one key product or service that your business is famous for.",
             "For services business - a formal picture of your happy staff in full work attire.",
-            " For services business - A happy customer being served at the premise.",
-            " For an established business - the business owner&rsquo;s photo sitting confidently in his office, or while receiving any award."
+            "For services business - A happy customer being served at the premise.",
+            "For an established business - the business owner&rsquo;s photo sitting confidently in his office, or while receiving any award."
         )
         setOnClickListener(binding?.btnUnderstood, binding?.rivCloseBottomSheet)
         val heading =
             "<p><strong>This image appears with your &lsquo;business description&rsquo; on your website</strong>. It works as the second most important key visual after your business logo which can improve your brand&rsquo;s recall among your customers.</p>\n" +
                     "<p><strong>Picture you can upload:</strong></p>"
-        val footer =
-            "<br /><br/>Supported formats: JPEG, PNG<br />Min. dimension: 600x600 px (square)</pre>"
+        val footer = "<br/>Supported formats: JPEG, PNG<br />Min. dimension: 600x600 px (square)</pre>"
         binding?.ctvWhatsThisHeading?.text = fromHtml(heading)
         binding?.ctvWhatsThisBullet?.text = makeBulletList
         binding?.ctvWhatsThisFooter?.text = fromHtml(footer)
