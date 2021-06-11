@@ -7,17 +7,17 @@
         android:layout_height="match_parent">
 
         <com.framework.views.roundedimageview.RoundedImageView
+            android:id="@+id/riv_close_bottomSheet"
             android:layout_width="39dp"
             android:layout_height="39dp"
-            app:riv_mutate_background="true"
-            android:padding="@dimen/size_8"
-            android:id="@+id/riv_close_bottomSheet"
-            android:src="@drawable/ic_cross_grey"
             android:background="#E9E9E9"
-            app:riv_corner_radius="@dimen/size_24"
+            android:padding="@dimen/size_8"
+            android:src="@drawable/ic_cross_grey"
             app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:riv_corner_radius="@dimen/size_24"
+            app:riv_mutate_background="true" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linearLayoutCompat3"
@@ -38,26 +38,27 @@
                 android:layout_marginStart="@dimen/size_10"
                 android:layout_marginBottom="@dimen/size_6"
                 android:orientation="horizontal">
+
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:src="@drawable/ic_storefront"
                     android:text="@string/the_font_you_want_to_change_as_primary"
+                    android:textColor="@color/warm_grey"
                     android:textSize="12sp"
-                    app:fontFamily="@font/regular"
-                    android:textColor="@color/warm_grey" />
+                    app:fontFamily="@font/regular" />
+
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_subheading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:id="@+id/ctv_subheading"
                     android:layout_marginHorizontal="@dimen/size_20"
+                    android:includeFontPadding="false"
                     android:text="@string/what_is_a_business_featured_image"
+                    android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/regular"
-                    app:textType="HEADING_4"
-                    android:textColor="@color/black_4a4a4a" />
-
+                    app:textType="HEADING_4" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -89,31 +90,51 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintWidth_percent="0.95">
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_whats_this_heading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black_4a4a4a" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_whats_this_bullet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_4a4a4a" />
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/ctv_whats_this"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black_4a4a4a" />
-            </ScrollView>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/constraintLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/size_10"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
 
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/btn_understood"
-                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-                    android:layout_width="match_parent"
-                    android:layout_marginHorizontal="@dimen/size_30"
-                    android:enabled="true"
-                    android:text="@string/understood"
-                    android:textColor="@color/white" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-</layout>
+    </ScrollView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_understood"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/size_30"
+            android:enabled="true"
+            android:text="@string/understood"
+            android:textColor="@color/white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout></androidx.constraintlayout.widget.ConstraintLayout>
+
+    </layout>

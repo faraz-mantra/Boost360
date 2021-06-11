@@ -32,10 +32,12 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_ADDRESS
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId2
 import com.framework.views.customViews.CustomImageView
@@ -98,7 +100,7 @@ class BusinessProfileFragment :
         )?.observeOnce(viewLifecycleOwner, {
             if (it.isSuccess()) {
                 sessionManager?.storeFPDetails(
-                    GET_FP_DETAILS_IMAGE_URI,
+                    Key_Preferences.GET_FP_DETAILS_LogoUrl,
                     it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
                 )
                 showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
@@ -134,7 +136,7 @@ class BusinessProfileFragment :
             |• +91 ${sessionManager?.userPrimaryMobile} 
             |• ${sessionManager?.userProfileEmail?:sessionManager?.fPEmail} 
             |• ${sessionManager?.rootAliasURI}""".trimMargin()
-        setImage(sessionManager?.getFPDetails(GET_FP_DETAILS_IMAGE_URI)!!)
+        setImage(sessionManager?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
         setDataToModel()
         setImageGrayScale()
         setConnectedChannels()
@@ -215,13 +217,13 @@ class BusinessProfileFragment :
     private fun updateFpDetails() {
         showProgress()
         val updateItemList = arrayListOf<UpdatesItem>()
-        if (sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)!=binding?.ctvBusinessName?.text){
+        if (sessionManager?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)!=binding?.ctvBusinessName?.text.toString()){
             updateItemList.add(UpdatesItem(key = "NAME",value = businessProfileModel.businessName))
         }
-        if (sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)!=binding?.ctvBusinessDesc?.text){
+        if (sessionManager?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)!=binding?.ctvBusinessDesc?.text.toString()){
             updateItemList.add(UpdatesItem(key = "DESCRIPTION",value = businessProfileModel.businessDesc))
         }
-        if (businessProfileUpdateRequest == null) businessProfileUpdateRequest =
+            businessProfileUpdateRequest =
             BusinessProfileUpdateRequest(
                 sessionManager?.fpTag,
                 clientId2, updateItemList
@@ -231,16 +233,18 @@ class BusinessProfileFragment :
                 hideProgress()
                 when (it.isSuccess()) {
                     true -> {
+                        binding?.btnSavePublish?.isEnabled = false
                         val response = it?.parseStringResponse()
                         when (response?.contains("NAME")) {true -> { showSnackBarPositive(requireActivity(),getString(R.string.business_name_published_successfully)) } }
                         when (response?.contains("DESCRIPTION")) {true -> { showSnackBarPositive(requireActivity(),getString(R.string.business_description_published_successfully)) } }
                         sessionManager?.storeFPDetails(
                             GET_FP_DETAILS_DESCRIPTION,
-                            businessProfileModel.businessDesc
+                            binding?.ctvBusinessDesc?.text.toString()
                         )
                         sessionManager?.storeFPDetails(
                             GET_FP_DETAILS_BUSINESS_NAME,
-                            businessProfileModel.businessName
+                            binding?.ctvBusinessName?.text.toString()
+
                         )
                     }
                     else -> {

@@ -5,20 +5,20 @@ import com.google.gson.annotations.SerializedName
 data class BusinessProfileUpdateRequest(
 
 	@field:SerializedName("fpTag")
-	val fpTag: String? = null,
+	var fpTag: String? = null,
 
 	@field:SerializedName("clientId")
-	val clientId: String? = null,
+	var clientId: String? = null,
 
 	@field:SerializedName("updates")
-	val updates: List<UpdatesItem?>? = null
+	var updates: List<UpdatesItem?>? = null
 )
 
 data class UpdatesItem(
 
 	@field:SerializedName("value")
-	val value: String? = null,
+	var value: String? = null,
 
 	@field:SerializedName("key")
-	val key: String? = null
+	var key: String? = null
 )
