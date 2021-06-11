@@ -74,6 +74,7 @@
                 android:layout_marginHorizontal="@dimen/size_16"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/size_12"
+                android:textColor="@color/colorAccent"
                 android:text="@string/contact_support"
                 android:enabled="true"
                 android:gravity="center"
