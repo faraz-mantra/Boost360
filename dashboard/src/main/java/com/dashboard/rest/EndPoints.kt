@@ -29,9 +29,11 @@ object EndPoints {
 
   //TODO NOWFLOAT API
   const val NOW_FLOATS_BASE = "https://api.nowfloats.com/"
-
   const val WEBSITE_THEME_GET = "/Discover/v1/floatingPoint/getThemeCustomization"
   const val WEBSITE_THEME_UPDATE = "/Discover/v1/floatingPoint/updateThemeCustomization"
+
+  //TODO FP UPADTE API
+  const val FLOATING_POINT_UPDATE = "Discover/v1/FloatingPoint/update/"
 
 }
 
