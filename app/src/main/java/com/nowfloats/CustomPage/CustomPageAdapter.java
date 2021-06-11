@@ -108,6 +108,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     try {
       if (storeData.get(position) != null) {
         holder.fullLayout.setTag(position + "");
+        holder.cardView.setTag(position + "");
         holder.imageView.setTag(position + "");
         //holder.stencil.setColorFilter(primary);
         if (storeData.get(position).getSel() == 0) {
@@ -152,7 +153,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
         holder.cardView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            int POs = position;//Integer.parseInt(v.getTag().toString());
+            int POs = Integer.parseInt(v.getTag().toString());
             //Log.v("ggg",POs+"");
             if (deleteCheck) {
               if (CustomPageFragment.posList.contains(POs + "")) {
