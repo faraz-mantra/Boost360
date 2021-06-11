@@ -97,7 +97,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         return@setOnClickListener
       }
       WebPreSignInBottomDialog().apply {
-        setData("https://www.getboost360.com/tnc?src=android&stage=user_account_create")
+        setData(baseActivity.getString(R.string.get_boost_360_tnc))
         onClicked = {
           floatsRequest?.webSiteUrl = "$website.nowfloats.com"
           WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)

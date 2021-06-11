@@ -143,4 +143,5 @@
   <string name="change_number">Change number</string>
   <string name="psn_login_now">LOGIN NOW</string>
   <string name="request_otp">request otp</string>
+  <string name="get_boost_360_tnc">https://www.getboost360.com/tnc?v=224</string>
 </resources>

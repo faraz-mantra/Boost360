@@ -9,6 +9,7 @@ import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -55,7 +56,6 @@ import okhttp3.RequestBody
 import java.io.File
 import java.util.*
 
-
 class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
 
   private var businessImage: File? = null
@@ -84,6 +84,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(requireContext())
+    WebEngageController.trackEvent(BUSINESS_PROFILE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(
       binding?.ctvWhatsThis, binding?.ctvBusinessName, binding?.ctvBusinessCategory, binding?.clBusinessDesc,
       binding?.imageAddBtn, binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
@@ -117,9 +118,11 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
   private fun setData() {
     binding?.btnSavePublish?.isEnabled = false
     binding?.ctvBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
+    onBusinessNameAddedOrUpdated(session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty().not())
     binding?.ctvBusinessNameCount?.text = "${session?.fPName?.length}/40"
-    binding?.ctvWebsite?.text = "${session?.rootAliasURI}"
+    binding?.ctvWebsite?.text = "${session?.getDomainName()}"
     binding?.ctvBusinessDesc?.text = session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
+    onBusinessDescAddedOrUpdated(session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty().not())
     binding?.ctvBusinessAddress?.text = session?.getFPDetails(GET_FP_DETAILS_ADDRESS)
     if (session?.getFPDetails(GET_FP_DETAILS_ADDRESS).isNullOrEmpty()) {
       binding?.containerBusinessAddress?.gone()
@@ -214,9 +217,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         showBusinessDescDialog()
       }
       binding?.imageAddBtn, binding?.btnChangeImage -> openImagePicker()
-      binding?.imageAddBtn, binding?.btnSavePublish -> if (isValid()) {
-        updateFpDetails()
-      }
+      binding?.imageAddBtn, binding?.btnSavePublish -> if (isValid()) updateFpDetails()
       binding?.openBusinessAddress -> {
         WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, NO_EVENT_VALUE)
         baseActivity.startBusinessAddress(session)
@@ -265,38 +266,26 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     if (session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION) != binding?.ctvBusinessDesc?.text.toString()) {
       updateItemList.add(UpdatesItem(key = "DESCRIPTION", value = businessProfileModel.businessDesc))
     }
-    businessProfileUpdateRequest =
-      BusinessProfileUpdateRequest(session?.fpTag, clientId2, updateItemList)
-    viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)
-      ?.observeOnce(viewLifecycleOwner, {
-        hideProgress()
-        when (it.isSuccess()) {
-          true -> {
-            binding?.btnSavePublish?.isEnabled = false
-            val response = it?.parseStringResponse()
-            when (response?.contains("NAME")) {
-              true -> {
-                showSnackBarPositive(requireActivity(), getString(R.string.business_name_published_successfully))
-              }
-            }
-            when (response?.contains("DESCRIPTION")) {
-              true -> {
-                showSnackBarPositive(requireActivity(), getString(R.string.business_description_published_successfully))
-              }
-            }
-            session?.storeFPDetails(
-              GET_FP_DETAILS_DESCRIPTION,
-              binding?.ctvBusinessDesc?.text.toString()
-            )
-            session?.storeFPDetails(
-              GET_FP_DETAILS_BUSINESS_NAME,
-              binding?.ctvBusinessName?.text.toString()
-            )
-          }
-          else -> {
-          }
+    businessProfileUpdateRequest = BusinessProfileUpdateRequest(session?.fpTag, clientId2, updateItemList)
+    viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        binding?.btnSavePublish?.isEnabled = false
+        val response = it?.parseStringResponse()
+        if (response?.contains("NAME") == true) {
+          onBusinessNameAddedOrUpdated(true)
+          showSnackBarPositive(requireActivity(), getString(R.string.business_name_published_successfully))
         }
-      })
+        if (response?.contains("DESCRIPTION") == true) {
+          onBusinessDescAddedOrUpdated(true)
+          showSnackBarPositive(requireActivity(), getString(R.string.business_description_published_successfully))
+        }
+        session?.storeFPDetails(GET_FP_DETAILS_DESCRIPTION, binding?.ctvBusinessDesc?.text.toString())
+        session?.storeFPDetails(GET_FP_DETAILS_BUSINESS_NAME, binding?.ctvBusinessName?.text.toString())
+      } else {
+        showShortToast(baseActivity.getString(R.string.error_updating_business))
+      }
+      hideProgress()
+    })
   }
 
   private fun openImagePicker() {
@@ -412,6 +401,20 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
 
   fun File.getBitmap(): Bitmap? {
     return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 800, 800)
+  }
+
+  private fun onBusinessDescAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData()!!.metricdetail == null) return
+    instance.getDrScoreData()!!.metricdetail!!.boolean_add_business_description = isAdded
+    instance.updateDocument()
+  }
+
+  private fun onBusinessNameAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData()!!.metricdetail == null) return
+    instance.getDrScoreData()!!.metricdetail!!.boolean_add_business_name = isAdded
+    instance.updateDocument()
   }
 }
 
