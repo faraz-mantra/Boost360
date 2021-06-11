@@ -412,9 +412,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
     Log.d("WEBSITE_ID", "ID : " + session.getFPID());
-    WebEngageController.initiateUserLogin(session.getUserProfileId());
-    WebEngageController.setUserContactInfoProperties(session);
-    WebEngageController.setFPTag(session.getFpTag());
+//    WebEngageController.initiateUserLogin(session.getUserProfileId());
+//    WebEngageController.setUserContactInfoProperties(session);
+//    WebEngageController.setFPTag(session.getFpTag());
 
     FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
       @Override
@@ -487,7 +487,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (isFromRia && mRiaNodeDataModel != null) {
           featureImage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
         }
-        DashboardFragmentContainerActivityKt.startFragmentDashboardActivity(this,com.dashboard.constant.FragmentType.FRAGMENT_BUSINESS_PROFILE,new Bundle(),false);
+        DashboardFragmentContainerActivityKt.startFragmentDashboardActivity(this, com.dashboard.constant.FragmentType.FRAGMENT_BUSINESS_PROFILE, new Bundle(), false);
       } else if (url.contains(getString(R.string.addProduct))) {
         Intent productActivity = new Intent(HomeActivity.this, Product_Detail_Activity_V45.class);
         productActivity.putExtra("new", "");
@@ -1841,7 +1841,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }).start();
 
     if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-      WebEngageController.setUserContactInfoProperties(session);
+//      WebEngageController.setUserContactInfoProperties(session);
     }
 
 

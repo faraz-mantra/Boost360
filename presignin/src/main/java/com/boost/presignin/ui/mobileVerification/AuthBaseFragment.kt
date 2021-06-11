@@ -45,6 +45,7 @@ abstract class  AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bi
     showProgress()
     WebEngageController.initiateUserLogin(resultLogin()?.loginId)
     WebEngageController.setUserContactAttributes(resultLogin()?.profileProperties?.userEmail, resultLogin()?.profileProperties?.userMobile, resultLogin()?.profileProperties?.userName, resultLogin()?.sourceClientId)
+    WebEngageController.setFPTag(this.floatingPointTag)
     WebEngageController.trackEvent(PS_LOGIN_SUCCESS, LOGIN_SUCCESS, NO_EVENT_VALUE)
     session.userProfileId = resultLogin()?.loginId
     session.userProfileEmail = resultLogin()?.profileProperties?.userEmail
