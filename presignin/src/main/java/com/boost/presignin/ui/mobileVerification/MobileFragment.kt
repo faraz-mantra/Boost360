@@ -47,6 +47,11 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     return LoginSignUpViewModel::class.java
   }
 
+  override fun onResume() {
+    super.onResume()
+    baseActivity.showKeyBoard(binding?.phoneEt)
+  }
+
   override fun onCreateView() {
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = (it.isPhoneValid()) }

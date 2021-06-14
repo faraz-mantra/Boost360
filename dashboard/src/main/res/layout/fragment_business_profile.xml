@@ -40,7 +40,7 @@
                             android:layout_height="@dimen/size_180"
                             android:layout_marginTop="@dimen/size_1"
                             android:layout_marginBottom="@dimen/size_1"
-                            android:scaleType="centerCrop"
+                            android:scaleType="centerInside"
                             android:visibility="gone"
                             app:srcCompat="@color/placeholder_bg" />
 
@@ -51,7 +51,6 @@
                             android:layout_gravity="end"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
-                            android:drawableEnd="@drawable/ic_info"
                             android:drawablePadding="@dimen/size_8"
                             android:text="@string/what_this"
                             android:textColor="@color/blue_4A90E2" />

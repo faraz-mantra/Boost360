@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="please_wait">Please wait...</string>
-  <string name="ps_accept_tnc">By continuing , you agree to Boost 360 <b><u>terms</u></b> and <b><u>conditions</u></b></string>
+  <string name="ps_accept_tnc">By continuing, you agree to Boost 360 <b><u>terms</u></b> and <b><u>conditions</u></b></string>
   <string name="psn_get_started">GET STARTED</string>
 
 

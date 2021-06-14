@@ -29,10 +29,7 @@ import com.dashboard.controller.ui.business.model.BusinessProfileUpdateRequest
 import com.dashboard.controller.ui.business.model.UpdatesItem
 import com.dashboard.controller.ui.website_theme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentBusinessProfileBinding
-import com.dashboard.utils.WebEngageController
-import com.dashboard.utils.startBusinessAddress
-import com.dashboard.utils.startBusinessContactInfo
-import com.dashboard.utils.startDigitalChannel
+import com.dashboard.utils.*
 import com.dashboard.viewmodel.BusinessProfileViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -86,7 +83,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     session = UserSessionManager(requireContext())
     WebEngageController.trackEvent(BUSINESS_PROFILE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(
-      binding?.ctvWhatsThis, binding?.ctvBusinessName, binding?.ctvBusinessCategory, binding?.clBusinessDesc,
+      binding?.ctvWhatsThis, binding?.ctvBusinessName, binding?.businessImage, binding?.ctvBusinessCategory, binding?.clBusinessDesc,
       binding?.imageAddBtn, binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
       binding?.openBusinessChannels, binding?.openBusinessContact, binding?.openBusinessWebsite,
     )
@@ -200,16 +197,14 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.ctvWhatsThis -> {
-        openDialogForInformation()
-      }
+      binding?.ctvWhatsThis -> openDialogForInformation()
+      binding?.businessImage -> baseActivity.startBusinessLogo(session)
       binding?.ctvBusinessName -> {
         WebEngageController.trackEvent(EDIT_BUSINESS_NAME_CLICK, CLICK, NO_EVENT_VALUE)
         openBusinessNameDialog()
       }
       binding?.ctvBusinessCategory -> {
         WebEngageController.trackEvent(BUSINESS_CATEGORY_CLICK, CLICK, NO_EVENT_VALUE)
-
         openBusinessCategoryBottomSheet()
       }
       binding?.clBusinessDesc -> {
@@ -234,7 +229,6 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, NO_EVENT_VALUE)
         openWebViewDialog(session?.rootAliasURI!!, session?.fpTag!!)
       }
-
     }
   }
 

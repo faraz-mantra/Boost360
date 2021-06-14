@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
         app:layout_constraintBottom_toTopOf="@id/presigin_intro_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +32,7 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/presigin_intro_title"
           style="@style/intro_title_text_style"
-          android:layout_marginTop="@dimen/size_16"
+          android:layout_marginTop="@dimen/size_24"
           android:layout_marginBottom="@dimen/_2sdp"
           android:text="@{introItem.title}" />
 
