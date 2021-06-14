@@ -13,4 +13,6 @@
     <color name="gray_4e4e4e">#4E4E4E</color>
     <color name="gray_adadad">#ADADAD</color>
     <color name="gray_828282">#828282</color>
+    <color name="green_6bc95c">#6BC95C</color>
+    <color name="error_red">#E39595</color>
 </resources>

@@ -1,13 +1,16 @@
 package com.framework.utils
 
-import android.content.Intent
+import android.app.Activity
+import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import com.framework.BaseApplication
+import com.framework.R
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 
@@ -17,37 +20,68 @@ class ContentSharing {
         // product, service
         var targetMap: Target? = null
         fun shareProduct(
-            name: String?= null,
-            price: String?= null,
-            link: String?= null,
-            vmn: String?= null,
-            imageUri: String?= null,
-            isWhatsApp: Boolean? = false
+            name: String? = null,
+            price: String? = null,
+            link: String? = null,
+            vmn: String? = null,
+            imageUri: String? = null,
+            isWhatsApp: Boolean? = false,
+            isService: Boolean? = false,
+            isFb:Boolean?=false,
+            activity: Activity
         ) {
+            val orderAppointment = if (isService==true) "appointment" else "order"
             val productTemplate =
                 """🆕 *Item name:* $name
 🏷️ *Price:* Rs.$price
-👉🏼 *Place your order/appointment here:* $link
+👉🏼 *Place your $orderAppointment here:* $link
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(productTemplate, imageUri, isWhatsApp)
+            share(activity,shareText = productTemplate, imageUri = imageUri, isWhatsApp = isWhatsApp, isFb = isFb)
         }
 
 
-        private fun shareTextService(uri: Uri?, shareText: String,isWhatsApp: Boolean?) {
+        private fun shareTextService(
+            activity:Activity,
+            uri: Uri?,
+            shareText: String,
+            isWhatsApp: Boolean?,
+            isFb: Boolean?,
+            isLinkedin: Boolean?,
+            isTwitter: Boolean?,
+            intentChooserTitle: String? = BaseApplication.instance.getString(R.string.app_name)
+        ) {
             val share = Intent(Intent.ACTION_SEND)
             share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             share.putExtra(Intent.EXTRA_TEXT, shareText)
             uri?.let { share.putExtra(Intent.EXTRA_STREAM, uri) }
             share.type = if (uri != null) "image/*" else "text/plain"
-            if (share.resolveActivity(BaseApplication.instance.packageManager!!) != null) {
-                if (isWhatsApp==true)
-                share.setPackage("com.whatsapp")
-                BaseApplication.instance.startActivity(Intent.createChooser(share, "share product"))
+            if (share.resolveActivity(activity.packageManager!!) != null) {
+                try {
+                    if (isWhatsApp == true)
+                        share.setPackage(activity.getString(R.string.whatsapp_package))
+                    if (isFb == true)
+                        share.setPackage(activity.getString(R.string.facebook_package))
+                    if (isLinkedin == true)
+                        share.setPackage("com.linkedin.android")
+                    if (isTwitter == true)
+                        share.setPackage(activity.getString(R.string.twitter_package))
+                    activity.startActivity(Intent.createChooser(share, intentChooserTitle))
+                } catch (e: ActivityNotFoundException) {
+                    activity.startActivity(Intent.createChooser(share, intentChooserTitle))
+                }
+
             }
         }
 
-        fun share(shareText: String, imageUri: String? = null, isWhatsApp: Boolean? = false) {
+        fun share(activity: Activity,
+            shareText: String,
+            imageUri: String? = null,
+            isWhatsApp: Boolean? = false,
+            isFb: Boolean? = false,
+            isTwitter: Boolean? = false,
+            isLinkedin: Boolean? = false
+        ) {
             if (NetworkUtils.isNetworkConnected()) {
 
                 val target: Target = object : Target {
@@ -64,7 +98,15 @@ class ContentSharing {
                                 ""
                             )
                             val uri = Uri.parse(path)
-                            shareTextService(uri, shareText,isWhatsApp)
+                            shareTextService(
+                                activity,
+                                uri,
+                                shareText,
+                                isWhatsApp,
+                                isFb,
+                                isLinkedin,
+                                isTwitter
+                            )
                         } catch (e: OutOfMemoryError) {
                         } catch (e: Exception) {
                         }
@@ -81,25 +123,28 @@ class ContentSharing {
                     targetMap = target
                     Picasso.get().load(imageUri ?: "").into(target)
                 } else {
-                    shareTextService(null, shareText,isWhatsApp)
+                    shareTextService(activity,null, shareText, isWhatsApp, isFb, isLinkedin, isTwitter)
                 }
             }
         }
 
         //todo updates
         fun shareUpdates(
+            activity: Activity,
             updateContent: String,
             link: String?,
             catalogLink: String,
             vmn: String?,
-            isWhatsApp: Boolean?
-        ) {
+            isWhatsApp: Boolean?,
+            isFb: Boolean?,
+            imageUri: String? = null
+            ) {
             val updateTemplate = """👋🏼 Hey there!
 ${truncateString(updateContent, 100)}: Read more $link
 🏷️ Check our online catalogue, $catalogLink
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(updateTemplate, isWhatsApp = isWhatsApp)
+            share(activity = activity,updateTemplate, isWhatsApp = isWhatsApp,isFb = isFb,imageUri = imageUri)
         }
 
         fun truncateString(string: String, maxChar: Int): String {
@@ -112,20 +157,23 @@ ${truncateString(updateContent, 100)}: Read more $link
 
         //todo customPages
         fun shareCustomPages(
-            pageName: String,
-            link: String?,
-            vmn: String?,
-            catalogLink: String,
-            isWhatsApp: Boolean?
+            activity: Activity,
+            pageName: String?="",
+            link: String? ="",
+            vmn: String?="",
+            catalogLink: String?="",
+            isWhatsApp: Boolean?,
+            isFb: Boolean?
         ) {
             val customPagesTemplate = """🆕 Read about $pageName. $link
 🏷️ Check our online catalogue, $catalogLink
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(customPagesTemplate, isWhatsApp = isWhatsApp)
+            share(activity = activity,customPagesTemplate, isWhatsApp = isWhatsApp,isFb = isFb)
         }
 
         fun shareTestimonial(
+            activity: Activity,
             testimonialContent: String,
             customerName: String,
             link: String?,
@@ -138,8 +186,42 @@ ${truncateString(updateContent, 100)}: Read more $link
 🏷️ Check our online catalogue, $catalogLink
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(testimonialTemplate, isWhatsApp = isWhatsApp)
+            share(activity = activity,testimonialTemplate, isWhatsApp = isWhatsApp)
+        }
+
+        fun shareWebsiteTheme(
+            activity: Activity,
+            businessName: String,
+            websiteLink: String,
+            vmn: String,
+            isWhatsApp: Boolean? = false,
+            isFb: Boolean? = false,
+            isTwitter: Boolean? = false,
+            isLinkedin: Boolean? = false,
+            isCopy: Boolean? = false
+        ) {
+            val webSiteThemeTemplate = "Greetings from $businessName.\n" +
+                    "\uD83C\uDF10 Check our website for the latest updates and offers $websiteLink.\n" +
+                    "\uD83D\uDCDE For any query, call: $vmn"
+            if (isCopy == true) {
+                setClipboard(context = activity, webSiteThemeTemplate)
+                return
+            }
+            share(activity,
+                webSiteThemeTemplate, isWhatsApp = isWhatsApp,
+                isFb = isFb, isTwitter = isTwitter, isLinkedin = isLinkedin
+            )
+        }
+
+        private fun setClipboard(context: Context, text: String) {
+            Toast.makeText(context,"Copied!",Toast.LENGTH_LONG).show()
+            val clipboard =
+                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Copied Text", text)
+            clipboard.setPrimaryClip(clip)
         }
 
     }
+
+
 }

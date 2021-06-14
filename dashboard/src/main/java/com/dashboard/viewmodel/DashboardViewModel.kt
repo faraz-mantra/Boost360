@@ -56,9 +56,9 @@ class DashboardViewModel : BaseViewModel() {
     return ApiTwoWithFloatRepository.getBizFloatMessage(request).toLiveData()
   }
 
-  fun fpOnboardingUpdate(request: OnBoardingUpdateModel?): LiveData<BaseResponse> {
-    return KitWebActionRepository.fpOnboardingUpdate(request).toLiveData()
-  }
+//  fun fpOnboardingUpdate(request: OnBoardingUpdateModel?): LiveData<BaseResponse> {
+//    return KitWebActionRepository.fpOnboardingUpdate(request).toLiveData()
+//  }
 
   fun getNotificationCount(clientId: String?, fpId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getNotificationCount(clientId, fpId).toLiveData()
@@ -108,8 +108,8 @@ class DashboardViewModel : BaseViewModel() {
     return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId, request).toLiveData()
   }
 
-  fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
-    return ApiWithFloatRepository.getUserSummary(clientId, fpIdParent, scope, startDate, endDate).toLiveData()
+  fun getUserSummary(fpTag: String?, clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getUserSummary(fpTag, clientId, fpIdParent, scope, startDate, endDate).toLiveData()
   }
 
   fun getSubscriberCount(fpTag: String?, clientId: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
