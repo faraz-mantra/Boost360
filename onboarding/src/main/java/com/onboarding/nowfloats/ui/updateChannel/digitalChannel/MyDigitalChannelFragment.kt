@@ -59,6 +59,8 @@ import kotlin.collections.ArrayList
 
 class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
+  private var connectedChannels: ArrayList<String> = arrayListOf()
+
   private val pref: SharedPreferences?
     get() {
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0)
@@ -158,6 +160,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     requestFloatsNew.categoryDataModel?.resetIsSelect()
     requestFloatsNew.categoryDataModel?.channels?.map { if (it.isGoogleSearch()) it.websiteUrl = websiteUrl }
     if (channelsAccessToken != null) {
+      connectedChannels.clear()
       requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
         var data: ChannelAccessToken? = null
         when {
@@ -169,6 +172,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
               it1.channelAccessToken = data
+              connectedChannels.add(ChannelsType.AccountType.facebookpage.name)
             }
           }
           it1.getAccessTokenType() == ChannelsType.AccountType.facebookshop.name -> {
@@ -180,6 +184,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
               it1.channelAccessToken = data
+              connectedChannels.add(ChannelsType.AccountType.facebookshop.name)
             }
           }
           it1.getAccessTokenType() == ChannelsType.AccountType.twitter.name -> {
@@ -190,6 +195,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
               it1.channelAccessToken = data
+              connectedChannels.add(ChannelsType.AccountType.twitter.name)
             }
           }
           it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
@@ -201,6 +207,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
               it1.channelAccessToken = data
+              connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
             }
           }
         }
@@ -216,6 +223,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
           val channelActionData = ChannelActionData(response.active_whatsapp_number?.trim())
           requestFloatsNew.channelActionDatas?.add(channelActionData)
+          connectedChannels.add(ChannelsType.AccountType.WAB.name)
           requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
             if (it1.isWhatsAppChannel()) {
               it1.isSelected = true
@@ -224,6 +232,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           }
         }
       }
+      ChannelAccessStatusResponse.saveDataConnectedChannel(connectedChannels)
       NavigatorManager.updateRequest(requestFloatsNew)
       setViewChannels(channelsAccessToken)
       hideProgress()

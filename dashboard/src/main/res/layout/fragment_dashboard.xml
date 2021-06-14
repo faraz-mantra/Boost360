@@ -612,9 +612,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_20"
                 android:background="@drawable/ic_bg_dark_white_round"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:orientation="vertical">
 
                 <FrameLayout
                   android:layout_width="match_parent"
@@ -812,9 +810,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_16"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:orientation="vertical">
 
                 <FrameLayout
                   android:layout_width="match_parent"
