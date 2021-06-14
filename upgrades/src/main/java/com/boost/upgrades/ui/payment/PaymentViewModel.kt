@@ -1,36 +1,63 @@
 package com.boost.upgrades.ui.payment
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
+import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
+import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.luminaire.apolloar.base_class.BaseViewModel
 import com.razorpay.BaseRazorpay
 import com.razorpay.Razorpay
+import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
+import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
+import retrofit2.HttpException
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-class PaymentViewModel : ViewModel() {
+class PaymentViewModel(application: Application) : BaseViewModel(application) {
     private var _paymentMethods: MutableLiveData<JSONObject> = MutableLiveData()
     private var _upiPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _externalEmailPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _cardData: MutableLiveData<JSONObject> = MutableLiveData()
     private var _netBankingData: MutableLiveData<JSONObject> = MutableLiveData()
     private var _paymentUsingExterLinkResponse: MutableLiveData<String?> = MutableLiveData()
+    var updateCustomerInfo: MutableLiveData<GetCustomerIDResponse> = MutableLiveData()
+    var customerInfoState: MutableLiveData<Boolean> = MutableLiveData()
+    private var customerInfo: MutableLiveData<CreateCustomerIDResponse> = MutableLiveData()
+    var cityResult: MutableLiveData<List<String>> = MutableLiveData()
+    var stateResult: MutableLiveData<List<String>> = MutableLiveData()
+    var stateValueResult: MutableLiveData<String> = MutableLiveData()
+    var cityValueResult: MutableLiveData<String> = MutableLiveData()
+    var cityNames = ArrayList<String>()
+    var stateNames = ArrayList<String>()
+    var stateValue : String? = null
+    var cityValue : String? = null
+    var selectedState : String? = null
+    var selectedStateResult : MutableLiveData<String> = MutableLiveData()
+    private var APIRequestStatus: String? = null
 
+    var updatesError: MutableLiveData<String> = MutableLiveData()
+    var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
@@ -77,6 +104,50 @@ class PaymentViewModel : ViewModel() {
 
     fun getPamentUsingExternalLink(): LiveData<String?> {
         return _paymentUsingExterLinkResponse
+    }
+
+    fun getUpdatedCustomerResult(): LiveData<CreateCustomerIDResponse> {
+        return customerInfo
+    }
+
+    fun getCustomerInfoStateResult(): LiveData<Boolean> {
+        return customerInfoState
+    }
+
+    fun getCustomerInfoResult(): LiveData<GetCustomerIDResponse> {
+        return updateCustomerInfo
+    }
+
+    fun cityResult(): LiveData<List<String>> {
+        return cityResult
+    }
+
+    fun stateResult(): LiveData<List<String>> {
+        return stateResult
+    }
+
+    fun stateValueResult(): LiveData<String> {
+        return stateValueResult
+    }
+
+    fun cityValueResult(): LiveData<String> {
+        return cityValueResult
+    }
+
+    fun selectedStateResult(state: String) {
+        selectedStateResult.postValue(state)
+    }
+
+    fun getSelectedStateResult(): LiveData<String> {
+        return selectedStateResult
+    }
+
+    fun updatesError(): LiveData<String> {
+        return updatesError
+    }
+
+    fun getLoaderStatus(): LiveData<Boolean> {
+        return updatesLoader
     }
 
     fun loadpaymentMethods(razorpay: Razorpay) {
@@ -133,5 +204,150 @@ class PaymentViewModel : ViewModel() {
         )
     }
 
+    fun getCustomerInfo(InternalSourceId: String, clientId: String) {
+        if (Utils.isConnectedToInternet(getApplication())) {
+            CompositeDisposable().add(
+                ApiService.getCustomerId(InternalSourceId, clientId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.i("getCustomerId>>", it.toString())
+                            updateCustomerInfo.postValue(it)
+                            customerInfoState.postValue(true)
+                        },
+                        {
+                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                            val errorBody: CreateCustomerIDResponse = Gson().fromJson(
+                                temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
+                            )
+                            if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
+                                customerInfoState.postValue(false)
+                            }
+                        }
+                    )
+            )
+        }
+    }
+
+    fun getCitiesFromAssetJson(context: Context) {
+        val data: String? = Utils.getCityFromAssetJsonData(context)
+        try {
+            val json_contact: JSONObject = JSONObject(data)
+            var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
+            var i: Int = 0
+            var size: Int = jsonarray_info.length()
+            for (i in 0..size - 1) {
+                var json_objectdetail: JSONObject = jsonarray_info.getJSONObject(i)
+                cityNames.add(json_objectdetail.getString("name"))
+
+
+            }
+            cityResult.postValue(cityNames)
+        } catch (ioException: JSONException) {
+            ioException.printStackTrace()
+        }
+    }
+
+    fun getStateFromCityAssetJson(context: Context, city: String) {
+        val data: String? = Utils.getCityFromAssetJsonData(context)
+        try {
+            val json_contact: JSONObject = JSONObject(data)
+            var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
+            var i: Int = 0
+            var size: Int = jsonarray_info.length()
+            for (i in 0..size - 1) {
+                var json_objectdetail: JSONObject = jsonarray_info.getJSONObject(i)
+                Log.v("getStateFromCity", " "+ json_objectdetail.getString("name") + " "+ city)
+                if(json_objectdetail.getString("name").equals(city)){
+                    stateValue = json_objectdetail.getString("state")
+                }
+                cityValueResult.postValue(stateValue)
+
+            }
+            cityResult.postValue(cityNames)
+        } catch (ioException: JSONException) {
+            ioException.printStackTrace()
+        }
+    }
+
+    fun getStatesFromAssetJson(context: Context) {
+        val data: String? = Utils.getStatesFromAssetJsonData(context)
+        try {
+            val json_contact: JSONObject = JSONObject(data)
+            var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
+            var i: Int = 0
+            var size: Int = jsonarray_info.length()
+            for (i in 0..size - 1) {
+                var json_objectdetail: JSONObject = jsonarray_info.getJSONObject(i)
+                stateNames.add(json_objectdetail.getString("state"))
+            }
+            stateResult.postValue(stateNames)
+        } catch (ioException: JSONException) {
+            ioException.printStackTrace()
+        }
+    }
+
+    fun getExistingFromAssetJson(context: Context, state: String) {
+        val data: String? = Utils.getStatesFromAssetJsonData(context)
+        try {
+            val json_contact: JSONObject = JSONObject(data)
+            var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
+            var i: Int = 0
+            var size: Int = jsonarray_info.length()
+            for (i in 0..size - 1) {
+                var json_objectdetail: JSONObject = jsonarray_info.getJSONObject(i)
+                if(json_objectdetail.getString("state").equals(state)){
+                    stateValue = json_objectdetail.getString("state")
+                }
+
+            }
+            stateValueResult.postValue(stateValue)
+        } catch (ioException: JSONException) {
+            ioException.printStackTrace()
+        }
+    }
+
+    fun createCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+        APIRequestStatus = "Creating a new payment profile..."
+        CompositeDisposable().add(
+            ApiService.createCustomerId(createCustomerInfoRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        Log.i("CreateCustomerId>>", it.toString())
+                        customerInfo.postValue(it)
+                        updatesLoader.postValue(false)
+                    },
+                    {
+                        Toasty.error(getApplication(), "Failed to create new payment profile for your account - " + it.message, Toast.LENGTH_LONG).show()
+                        updatesError.postValue(it.message)
+                        updatesLoader.postValue(false)
+                    }
+                )
+        )
+    }
+
+    fun updateCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+        APIRequestStatus = "Creating a new payment profile..."
+        CompositeDisposable().add(
+            ApiService.updateCustomerId(createCustomerInfoRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        Log.i("CreateCustomerId>>", it.toString())
+                        customerInfo.postValue(it)
+//                        updatesLoader.postValue(false)
+                    },
+                    {
+                        Toasty.error(getApplication(), "Failed to create new payment profile for your account - " + it.message, Toast.LENGTH_LONG).show()
+                        updatesError.postValue(it.message)
+                        updatesLoader.postValue(false)
+                    }
+                )
+        )
+    }
 
 }
