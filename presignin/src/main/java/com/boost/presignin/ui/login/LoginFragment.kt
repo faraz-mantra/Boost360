@@ -21,6 +21,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId
 import com.framework.utils.ValidationUtils
+import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
@@ -46,6 +47,11 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   override fun authTokenData(): AuthTokenDataItem? {
     return if (resultLogin()?.authTokens.isNullOrEmpty().not()) resultLogin()?.authTokens!![0] else null
+  }
+
+  override fun onResume() {
+    super.onResume()
+   baseActivity.showKeyBoard(binding?.usernameEt)
   }
 
   override fun onCreateView() {

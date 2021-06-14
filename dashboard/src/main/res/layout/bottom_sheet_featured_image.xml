@@ -6,18 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.framework.views.roundedimageview.RoundedImageView
+    <com.framework.views.customViews.CustomImageView
       android:id="@+id/riv_close_bottomSheet"
-      android:layout_width="39dp"
-      android:layout_height="39dp"
-      android:background="#E9E9E9"
-      android:padding="@dimen/size_8"
-      android:src="@drawable/ic_cross_grey"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="@dimen/size_15"
       app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat3"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:riv_corner_radius="@dimen/size_24"
-      app:riv_mutate_background="true" />
+      android:src="@drawable/ic_cross_grey_circle" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/linearLayoutCompat3"
