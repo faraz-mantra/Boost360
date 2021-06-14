@@ -2,6 +2,7 @@ package com.boost.presignin.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -51,7 +52,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   override fun onResume() {
     super.onResume()
-   baseActivity.showKeyBoard(binding?.usernameEt)
+    Handler().postDelayed({ baseActivity.showKeyBoard(binding?.usernameEt) }, 300)
   }
 
   override fun onCreateView() {
@@ -108,14 +109,14 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 //        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
 //      })
 //    } else {
-      if (response.authTokens!!.size == 1) {
-        this.resultLogin = response
-        authTokenData()?.createAccessTokenAuth()
-      } else {
-        navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
-        })
-      }
+    if (response.authTokens!!.size == 1) {
+      this.resultLogin = response
+      authTokenData()?.createAccessTokenAuth()
+    } else {
+      navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+        putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+      })
+    }
 //    }
   }
 
