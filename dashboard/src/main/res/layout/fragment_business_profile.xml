@@ -43,19 +43,6 @@
                             android:scaleType="centerCrop"
                             android:visibility="gone"
                             app:srcCompat="@color/placeholder_bg" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/ctv_whats_this"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:drawableEnd="@drawable/ic_info"
-                            android:drawablePadding="@dimen/size_8"
-                            android:text="@string/what_this"
-                            android:textColor="@color/blue_4A90E2" />
-
                         <LinearLayout
                             android:id="@+id/image_add_btn"
                             android:layout_width="match_parent"
@@ -83,8 +70,18 @@
                                 app:textType="BODY_1" />
 
                         </LinearLayout>
-
-
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/ctv_whats_this"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:visibility="visible"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:drawableRight="@drawable/ic_info"
+                            android:drawablePadding="@dimen/size_8"
+                            android:text="@string/what_this"
+                            android:textColor="@color/blue_4A90E2" />
                     </FrameLayout>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -297,6 +294,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:padding="@dimen/size_10"
+                            android:id="@+id/ctv_active"
                             android:text="@string/active"
                             android:textAllCaps="true"
                             android:textColor="#1DBE73" />
