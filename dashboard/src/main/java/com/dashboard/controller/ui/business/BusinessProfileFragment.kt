@@ -32,6 +32,7 @@ import com.dashboard.viewmodel.BusinessProfileViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_ADDRESS
@@ -54,7 +55,6 @@ import java.util.*
 class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
 
   private var businessImage: File? = null
-  private var targetMap: Target? = null
   private var businessProfileModel = BusinessProfileModel();
   private var businessProfileUpdateRequest: BusinessProfileUpdateRequest? = null
   private var session: UserSessionManager? = null
@@ -85,7 +85,6 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.imageAddBtn, binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
       binding?.openBusinessChannels, binding?.openBusinessContact, binding?.openBusinessWebsite,
     )
-    setImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl) ?: "")
   }
 
   override fun onResume() {
@@ -93,24 +92,8 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     setData()
   }
 
-  private fun uploadBusinessLogo(businessLogoImage: File) {
-    WebEngageController.trackEvent(BUSINESS_LOGO_IMAGE_CLICK, FILE_LINK, NO_EVENT_VALUE)
-    showProgress(getString(R.string.uploading_image))
-    var s_uuid = UUID.randomUUID().toString()
-    s_uuid = s_uuid.replace("-", "")
-    viewModel?.putUploadBusinessLogo(
-      clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid,
-      totalChunks = "1", currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
-    )?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
-        showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
-      } else showSnackBarNegative(requireActivity(), it.message)
-      hideProgress()
-    })
-  }
-
   private fun setData() {
+    loadImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl) ?: "")
     binding?.btnSavePublish?.isEnabled = false
     binding?.ctvBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
     onBusinessNameAddedOrUpdated(session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty().not())
@@ -139,6 +122,39 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     setDataToModel()
     setImageGrayScale()
     setConnectedChannels()
+  }
+
+  private fun uploadBusinessLogo(businessLogoImage: File) {
+    WebEngageController.trackEvent(BUSINESS_LOGO_IMAGE_CLICK, FILE_LINK, NO_EVENT_VALUE)
+    showProgress(getString(R.string.uploading_image))
+    var s_uuid = UUID.randomUUID().toString()
+    s_uuid = s_uuid.replace("-", "")
+    viewModel?.putUploadBusinessLogo(
+      clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid,
+      totalChunks = "1", currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
+    )?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
+        showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
+      } else showSnackBarNegative(requireActivity(), it.message)
+      hideProgress()
+    })
+  }
+
+  private fun loadImage(imageUri: String) {
+    if (imageUri.isEmpty().not()) {
+      baseActivity.glideLoad(mImageView = binding?.businessImage!!, url =imageUri, placeholder = R.drawable.placeholder_image_n)
+      binding?.imageAddBtn?.gone()
+      binding?.btnChangeImage?.visible()
+      binding?.divider3?.visible()
+      binding?.businessImage?.visible()
+    } else {
+      binding?.businessImage?.gone()
+      binding?.btnChangeImage?.gone()
+      binding?.divider3?.gone()
+      binding?.imageAddBtn?.visible()
+      businessImage = null
+    }
   }
 
   private fun setConnectedChannels() {
@@ -338,60 +354,6 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     businessFeaturedBottomSheet.show(parentFragmentManager, BusinessFeaturedBottomSheet::javaClass.name)
   }
 
-  private fun setImage(imageUri: String) {
-    val target: Target = object : Target {
-      override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-        targetMap = null
-        try {
-          val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
-          bindImage(mutableBitmap)
-        } catch (e: OutOfMemoryError) {
-        } catch (e: Exception) {
-        }
-      }
-
-      override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
-        binding?.businessImage?.gone()
-        binding?.btnChangeImage?.gone()
-        binding?.divider3?.gone()
-        binding?.imageAddBtn?.visible()
-        businessImage = null
-//        setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
-        binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
-        targetMap = null
-      }
-
-      override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-      }
-    }
-    if (imageUri.isEmpty().not()) {
-      targetMap = target
-      Picasso.get().load(imageUri).placeholder(R.drawable.placeholder_image_n).into(target)
-      binding?.imageAddBtn?.gone()
-      binding?.btnChangeImage?.visible()
-      binding?.divider3?.visible()
-      binding?.businessImage?.visible()
-    } else {
-      binding?.businessImage?.gone()
-      binding?.btnChangeImage?.gone()
-      binding?.divider3?.gone()
-      binding?.imageAddBtn?.visible()
-      businessImage = null
-//      setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
-      binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
-    }
-  }
-
-  private fun bindImage(mutableBitmap: Bitmap?) {
-    binding?.businessImage?.setImageBitmap(mutableBitmap)
-    setTextViewDrawableColor(binding?.ctvWhatsThis!!, R.color.white)
-    binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.white)))
-    binding?.imageAddBtn?.gone()
-    binding?.btnChangeImage?.visible()
-    binding?.divider3?.visible()
-    binding?.businessImage?.visible()
-  }
-
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
@@ -402,6 +364,14 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         uploadBusinessLogo(businessImage!!)
       }
     }
+  }
+
+  private fun bindImage(bitmap: Bitmap?) {
+    binding?.businessImage?.setImageBitmap(bitmap)
+    binding?.imageAddBtn?.gone()
+    binding?.btnChangeImage?.visible()
+    binding?.divider3?.visible()
+    binding?.businessImage?.visible()
   }
 
   fun File.getBitmap(): Bitmap? {
@@ -424,13 +394,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
 
   private fun setTextViewDrawableColor(textView: TextView, color: Int) {
     for (drawable in textView.compoundDrawables) {
-      if (drawable != null) {
-        drawable.colorFilter =
-          PorterDuffColorFilter(
-            ContextCompat.getColor(textView.context, color),
-            PorterDuff.Mode.SRC_IN
-          )
-      }
+      if (drawable != null) drawable.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(textView.context, color), PorterDuff.Mode.SRC_IN)
     }
   }
 }
