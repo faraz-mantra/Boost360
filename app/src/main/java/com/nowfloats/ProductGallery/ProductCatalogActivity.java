@@ -462,12 +462,12 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       if (!defaultShare) {
         if (type == 0) {
           //fb
-          ContentSharing.Companion.shareProduct(product.Name,String.valueOf(product.Price),product.ProductUrl,session.getUserPrimaryMobile(),product.ImageUri,false,false,true);
+          ContentSharing.Companion.shareProduct(product.Name,String.valueOf(product.Price),product.ProductUrl,session.getUserPrimaryMobile(),product.ImageUri,false,false,true,this);
         } else if (type == 1) {
-          ContentSharing.Companion.shareProduct(product.Name,String.valueOf(product.Price),product.ProductUrl,session.getUserPrimaryMobile(),product.ImageUri,true,false,false);
+          ContentSharing.Companion.shareProduct(product.Name,String.valueOf(product.Price),product.ProductUrl,session.getUserPrimaryMobile(),product.ImageUri,true,false,false,this);
         }
       }else
-      ContentSharing.Companion.shareProduct(product.Name,String.valueOf(product.Price),product.ProductUrl,session.getUserPrimaryMobile(),product.ImageUri,false,false,false);
+      ContentSharing.Companion.shareProduct(product.Name,String.valueOf(product.Price),product.ProductUrl,session.getUserPrimaryMobile(),product.ImageUri,false,false,false,this);
 
 
 

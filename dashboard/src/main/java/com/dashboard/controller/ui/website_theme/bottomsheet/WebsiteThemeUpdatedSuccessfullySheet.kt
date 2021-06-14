@@ -60,35 +60,41 @@ class WebsiteThemeUpdatedSuccessfullySheet :
             }
             binding?.visitWebsite -> onClicked(TypeSuccess.VISIT_WEBSITE.name)
             binding?.btnFb -> ContentSharing.shareWebsiteTheme(
+                requireActivity(),
                 businessName,
                 websiteLink,
                 businessContact,
                 isFb = true
             )
             binding?.btnTwitter -> ContentSharing.shareWebsiteTheme(
+                requireActivity(),
                 businessName,
                 websiteLink,
                 businessContact,
                 isTwitter = true
             )
             binding?.shareWhatsapp -> ContentSharing.shareWebsiteTheme(
+                requireActivity(),
                 businessName,
                 websiteLink,
                 businessContact,
                 isWhatsApp = true
             )
             binding?.btnLinkedin -> ContentSharing.shareWebsiteTheme(
+                requireActivity(),
                 businessName,
                 websiteLink,
                 businessContact,
                 isLinkedin = true
             )
             binding?.btnShare -> ContentSharing.shareWebsiteTheme(
+                requireActivity(),
                 businessName,
                 websiteLink,
                 businessContact
             )
             binding?.btnCopyMessage -> ContentSharing.shareWebsiteTheme(
+                requireActivity(),
                 businessName,
                 websiteLink,
                 businessContact,

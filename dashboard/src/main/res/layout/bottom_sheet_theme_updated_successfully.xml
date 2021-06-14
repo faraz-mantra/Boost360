@@ -68,7 +68,7 @@
         android:layout_height="@dimen/size_38"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_button_proceed_4"
-        android:drawableEnd="@drawable/ic_arrow_top_right"
+        android:drawableStart="@drawable/ic_arrow_top_right"
         android:drawablePadding="@dimen/size_8"
         android:fontFamily="@font/open_sans"
         android:gravity="center"

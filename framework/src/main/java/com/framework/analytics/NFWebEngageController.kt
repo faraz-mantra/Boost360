@@ -8,6 +8,7 @@ import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
 
 object NFWebEngageController {
+
   private var weAnalytics: Analytics = WebEngage.get().analytics()
   private var weUser: User = WebEngage.get().user()
   private var isUserLoggedIn = false
@@ -32,6 +33,7 @@ object NFWebEngageController {
       try {
         AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
       } catch (e: Exception) {
+        e.printStackTrace()
       }
     }
   }
@@ -52,6 +54,7 @@ object NFWebEngageController {
             event_name, event_value.toMap()
           )
         } catch (e: Exception) {
+          e.printStackTrace()
         }
       } else {
         weAnalytics.track(event_name)
@@ -78,6 +81,7 @@ object NFWebEngageController {
             event_name, event_value.toMap()
           )
         } catch (e: Exception) {
+          e.printStackTrace()
         }
       } else {
         weAnalytics.track(event_name)
@@ -132,7 +136,7 @@ object NFWebEngageController {
 
   fun initiateUserLogin(userId: String?) {
     if (BaseApplication.instance.packageName != "com.jio.online") {
-      if (!userId.isNullOrEmpty()) {
+      if (userId != null && !userId.isNullOrEmpty()) {
         Log.d(TAG, "Initiating User login" + userId)
         weUser.login(userId)
 
@@ -140,7 +144,7 @@ object NFWebEngageController {
         FirebaseAnalyticsUtilsHelper.identifyUser(userId)
 
         //AppsFlyer Analytics User Session Event
-        if (weAnalytics != null && weAnalytics.activity != null) {
+        if (weAnalytics.activity != null) {
           AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
         }
         AppsFlyerLib.getInstance().setCustomerUserId(userId)
@@ -164,6 +168,7 @@ object NFWebEngageController {
           AppsFlyerLib.getInstance().setAdditionalData(params)
         }
       } catch (e: Exception) {
+        e.printStackTrace()
       }
     }
   }
@@ -182,6 +187,7 @@ object NFWebEngageController {
         params["fpTag"] = fpTag
         AppsFlyerLib.getInstance().setAdditionalData(params)
       } catch (e: java.lang.Exception) {
+        e.printStackTrace()
       }
     }
   }

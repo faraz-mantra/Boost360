@@ -17,7 +17,7 @@
 
   <string name="intro_sub_title_0">your customers are</string>
   <string name="intro_sub_title_1">for your business</string>
-  <string name="intro_sub_title_2">product or services</string>
+  <string name="intro_sub_title_2">products or services</string>
   <string name="intro_sub_title_3">collect payments easily</string>
   <string name="intro_sub_title_4">digital marketing tools</string>
   <string name="intro_sub_title_5">orders and appointments</string>
@@ -143,4 +143,6 @@
   <string name="number_to_login_via_otp_change_tap_on_change_number">You can also use above number to login via OTP verification. In case you want to change this number, tap on ‘Change number ’.</string>
   <string name="change_number">Change number</string>
   <string name="psn_login_now">LOGIN NOW</string>
+  <string name="request_otp">request otp</string>
+  <string name="get_boost_360_tnc">https://www.getboost360.com/tnc?v=224</string>
 </resources>

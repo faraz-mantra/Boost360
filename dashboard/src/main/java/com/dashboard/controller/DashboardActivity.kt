@@ -101,8 +101,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
     intentDataCheckAndDeepLink()
     getWelcomeData()
+    session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+  }
+
+  private fun UserSessionManager.initializeWebEngageLogin() {
+    WebEngageController.setUserContactInfoProperties(this)
+    WebEngageController.setFPTag(this.fpTag)
   }
 
   private fun initialize() {
@@ -370,7 +376,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.imgBusinessLogo -> {
-        this.startBusinessProfileDetailEdit(session)
+        this.startFeatureLogo(session)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.txtDomainName -> {
@@ -422,11 +428,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun clickPickerType(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(this)
-        .mode(type)
-        .compressLevel(ImagePicker.ComperesLevel.MEDIUM).directory(ImagePicker.Directory.DEFAULT)
-        .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
-        .scale(800, 800)
-        .enableDebuggingMode(true).build()
+      .mode(type)
+      .compressLevel(ImagePicker.ComperesLevel.MEDIUM).directory(ImagePicker.Directory.DEFAULT)
+      .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
+      .scale(800, 800)
+      .enableDebuggingMode(true).build()
   }
 
   private fun uploadSecondaryImage(path: String) {
@@ -447,18 +453,20 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
     val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
-        ?: "bg_${UUID.randomUUID()}.png"
+      ?: "bg_${UUID.randomUUID()}.png"
     return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
   }
 
   private fun initialiseZendeskSupportSdk() {
     try {
-      Zendesk.INSTANCE.init(this, "https://boost360.zendesk.com",
-          "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49", "mobile_sdk_client_6c56562cfec5c64c7857")
+      Zendesk.INSTANCE.init(
+        this, "https://boost360.zendesk.com",
+        "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49", "mobile_sdk_client_6c56562cfec5c64c7857"
+      )
       val identity = AnonymousIdentity.Builder()
-          .withNameIdentifier(session?.fpTag)
-          .withEmailIdentifier(session?.fPEmail)
-          .build()
+        .withNameIdentifier(session?.fpTag)
+        .withEmailIdentifier(session?.fPEmail)
+        .build()
       Zendesk.INSTANCE.setIdentity(identity)
       Support.INSTANCE.init(Zendesk.INSTANCE)
       ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5")
