@@ -28,7 +28,6 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
   var onSkip: (() -> Unit)? = null
   var playPause: ((b: Boolean) -> Unit)? = null
 
-
   companion object {
     private var INTRO_ITEM = "INTRO_ITEM"
     private var POSITION = "POSITION"
@@ -54,10 +53,10 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     if (position == 0) {
       binding?.presiginIntroImg?.setOnClickListener {
         WebEngageController.trackEvent(PS_INTRO_VIDEO_SPLASH_CLICKED, START_INTRO_VIDEO, NO_EVENT_VALUE)
-        playPause?.let { it5 -> it5(true) }
-        binding?.introImgContainer?.isVisible = false;
         binding?.videoViewContainer?.isVisible = true;
+        binding?.introImgContainer?.isVisible = false;
         binding?.progressBar?.isVisible = true
+        playPause?.let { it5 -> it5(true) }
         binding?.videoView?.setOnPreparedListener {
           mediaPlayer = it
           videoDuration = mediaPlayer?.duration ?: 0
@@ -131,8 +130,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     try {
       val duration = mediaPlayer?.duration ?: 0
       val currentTime = mediaPlayer?.currentPosition ?: 0;
-      timer = object :
-        com.boost.presignin.timer.CountDownTimer((duration - currentTime).toLong(), 1000) {
+      timer = object : com.boost.presignin.timer.CountDownTimer((duration - currentTime).toLong(), 1000) {
         override fun onTick(millisUntilFinished: Long) {
           val videoDuration = (millisUntilFinished / 1000).toInt()
           binding?.videoTime?.post {
