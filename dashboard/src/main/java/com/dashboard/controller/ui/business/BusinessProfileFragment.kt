@@ -324,6 +324,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     businessDescDialog.onClicked = {
       binding?.btnSavePublish?.isEnabled = true
       binding?.ctvBusinessDesc?.text = it.businessDesc
+      updateFpDetails()
     }
     businessDescDialog.show(parentFragmentManager, BusinessDescriptionBottomSheet::javaClass.name)
   }
@@ -342,6 +343,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.btnSavePublish?.isEnabled = true
       binding?.ctvBusinessName?.text = it
       binding?.ctvBusinessNameCount?.text = "${it.length}/40"
+      updateFpDetails()
     }
     businessNameBottomSheet.show(parentFragmentManager, BusinessNameBottomSheet::javaClass.name)
   }
