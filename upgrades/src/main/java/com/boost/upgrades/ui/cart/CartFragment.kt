@@ -1,14 +1,18 @@
 package com.boost.upgrades.ui.cart
 
 //import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
+import android.R.attr
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -62,6 +66,15 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import android.R.attr.editable
+import java.lang.NumberFormatException
+import android.text.InputFilter
+import android.text.TextUtils
+import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
+import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
+import kotlinx.android.synthetic.main.cart_fragment.igst_value
+import kotlinx.android.synthetic.main.payment_fragment.*
+
 
 class CartFragment : BaseFragment(), CartFragmentListener {
 
@@ -81,6 +94,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     var bundles_in_cart = false
     var default_validity_months = 1
+    var package_validity_months = 1
 
     var total = 0.0
 
@@ -214,30 +228,39 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         cart_continue_submit.setOnClickListener {
 
-            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
-
-                checkoutKycFragment.show(
-                        (activity as UpgradeActivity).supportFragmentManager,
-                        CHECKOUT_KYC_FRAGMENT
-                )
-            }else{
+//            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
+//
+//                checkoutKycFragment.show(
+//                        (activity as UpgradeActivity).supportFragmentManager,
+//                        CHECKOUT_KYC_FRAGMENT
+//                )
+//            }else{
              /*       renewPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     RENEW_POPUP_FRAGEMENT
             )*/
-
-                    if (prefs.getCartOrderInfo() != null) {
-                        proceedToPayment(prefs.getCartOrderInfo()!!)
-                    } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
-                        val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
-                        if (renewalItems.isNullOrEmpty().not()) {
-                            createCartStateRenewal(renewalItems)
-                        } else createPurchaseOrder(null)
-                    } else {
-                        Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
-                    }
-
+            if(TextUtils.isEmpty(months_validity.text.toString())){
+                months_validity.setBackgroundResource(R.drawable.et_validity_error)
+                Toasty.error(requireContext(), "Validity is empty", Toast.LENGTH_SHORT).show()
+            }else if(bundles_in_cart && months_validity.text.toString().toInt() < package_validity_months){
+                months_validity.setBackgroundResource(R.drawable.et_validity_error)
+                Toasty.error(requireContext(), "Validity is not valid", Toast.LENGTH_SHORT).show()
+            }else{
+                months_validity.setBackgroundResource(R.drawable.et_validity)
+                if (prefs.getCartOrderInfo() != null) {
+                    proceedToPayment(prefs.getCartOrderInfo()!!)
+                } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
+                    val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
+                    if (renewalItems.isNullOrEmpty().not()) {
+                        createCartStateRenewal(renewalItems)
+                    } else createPurchaseOrder(null)
+                } else {
+                    Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
+                }
             }
+
+
+//            }
 
 /*            renewPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
@@ -403,8 +426,17 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         months_validity_edit_inc.setOnClickListener {
             if (!bundles_in_cart) {
 //                if (default_validity_months < 12){
-                    default_validity_months++
-                months_validity.text = default_validity_months.toString() + " months"
+//                    default_validity_months++
+                if(default_validity_months == 1){
+                    default_validity_months = default_validity_months+ 2
+                }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
+                    default_validity_months = default_validity_months+ 12
+                }else{
+                    if(default_validity_months < 60)
+                        default_validity_months = default_validity_months+ 3
+                }
+//                months_validity.text = default_validity_months.toString() + " months"
+                months_validity.setText(default_validity_months.toString())
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
                 prefs.storeCartOrderInfo(null)
@@ -415,15 +447,50 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                   viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
                 else
                   totalCalculationAfterCoupon()
-                Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
+//                Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
 //            }
-            }
+            } else if (bundles_in_cart) {
+//                if (default_validity_months < 12){
+    if(default_validity_months == 1){
+        default_validity_months = default_validity_months+ 2
+    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
+        default_validity_months = default_validity_months+ 12
+    }else{
+        if(default_validity_months < 60)
+          default_validity_months = default_validity_months+ 3
+    }
+
+//            default_validity_months++
+//            months_validity.text = default_validity_months.toString() + " months"
+            months_validity.setText(default_validity_months.toString())
+            totalValidityDays = 30 * default_validity_months
+            prefs.storeMonthsValidity(totalValidityDays)
+            prefs.storeCartOrderInfo(null)
+//                totalCalculation()
+            totalCalculationAfterCoupon()
+            Log.v("cart_amount_value1"," "+ total)
+            if(couponCode.isNotEmpty())
+                viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+            else
+                totalCalculationAfterCoupon()
+//            Toasty.success(requireContext(), "Validity increased by 3 month(s).", Toast.LENGTH_SHORT, true).show()
+//            }
+        }
         }
 
         months_validity_edit_dsc.setOnClickListener {
             if (!bundles_in_cart) {
                 if (default_validity_months > 1) {
-                    default_validity_months--
+//                    default_validity_months--
+                    if(default_validity_months > 12 && default_validity_months % 12 == 0){
+                        default_validity_months = default_validity_months - 12
+                    }else{
+                        default_validity_months = default_validity_months - 3
+                    }
+                    if(default_validity_months < 1){
+                        default_validity_months = 1
+                    }
+
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
@@ -431,14 +498,99 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     totalCalculationAfterCoupon()
                     if(couponCode.isNotEmpty())
                       viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
-                    Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
+//                    Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1)
-                    months_validity.text = default_validity_months.toString() + " months"
+//                    months_validity.text = default_validity_months.toString() + " months"
+                    months_validity.setText(default_validity_months.toString())
                 else
-                    months_validity.text = default_validity_months.toString() + " month"
+//                    months_validity.text = default_validity_months.toString() + " month"
+                    months_validity.setText (default_validity_months.toString())
+            }else if (bundles_in_cart) {
+            if (default_validity_months > package_validity_months) {
+                if(default_validity_months > 12 && default_validity_months % 12 == 0){
+                    default_validity_months = default_validity_months - 12
+                }else{
+                    default_validity_months = default_validity_months - 3
+                }
+
+                if(default_validity_months < 1){
+                    default_validity_months = 1
+                }
+//                default_validity_months--
+                totalValidityDays = 30 * default_validity_months
+                prefs.storeMonthsValidity(totalValidityDays)
+                prefs.storeCartOrderInfo(null)
+//                    totalCalculation()
+                totalCalculationAfterCoupon()
+                if(couponCode.isNotEmpty())
+                    viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+//                Toasty.warning(requireContext(), "Validity reduced by 3 month(s).", Toast.LENGTH_SHORT, true).show()
             }
+            if (default_validity_months > 1)
+                months_validity.setText(default_validity_months.toString())
+//                months_validity.text = default_validity_months.toString() + " months"
+            else
+                months_validity.setText(default_validity_months.toString())
+//                months_validity.text = default_validity_months.toString() + " month"
         }
+        }
+Log.v("package_validity_months", " "+ package_validity_months)
+        months_validity.setFilters(arrayOf<InputFilter>(MinMaxFilter(package_validity_months, 60)))
+        months_validity.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                Log.v("months_validity", " "+ p0)
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                val validity = editable.toString()
+                var n = 0
+                try {
+                    n = validity.toInt()
+                    if (n <= 60) {
+                        default_validity_months = n
+                    } else if (n > 60) {
+                        default_validity_months = 60
+//                        months_validity.setText(default_validity_months)
+                    }else if(n < package_validity_months){
+                        n = package_validity_months
+                        default_validity_months = n
+//                        months_validity.setText(package_validity_months)
+                    }
+
+//                        months_validity.setText(n)
+                        if (!bundles_in_cart) {
+//                            months_validity.setText(default_validity_months.toString())
+                            totalValidityDays = 30 * default_validity_months
+                            prefs.storeMonthsValidity(totalValidityDays)
+                            prefs.storeCartOrderInfo(null)
+                            totalCalculationAfterCoupon()
+                            if(couponCode.isNotEmpty())
+                                viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+                            else
+                                totalCalculationAfterCoupon()
+                        } else if (bundles_in_cart) {
+//                            months_validity.setText(default_validity_months.toString())
+                            totalValidityDays = 30 * default_validity_months
+                            prefs.storeMonthsValidity(totalValidityDays)
+                            prefs.storeCartOrderInfo(null)
+                            totalCalculationAfterCoupon()
+                            if(couponCode.isNotEmpty())
+                                viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+                            else
+                                totalCalculationAfterCoupon()
+
+                        }
+
+                } catch (nfe: NumberFormatException) {
+
+                }
+
+            }
+        })
 
     }
 
@@ -498,9 +650,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
                 } else {
-                    Toasty.warning(requireContext(), "Renewal order not found").show()
-                    ac.isBackCart = true
-                    (activity as UpgradeActivity).onBackPressed()
+//                    Toasty.warning(requireContext(), "Renewal order not found").show()
+                    loadData()
+//                    ac.isBackCart = true
+//                    (activity as UpgradeActivity).onBackPressed()
                 }
             })
         } else loadData()
@@ -1096,27 +1249,33 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     bundles_in_cart = true
                     updatePackage(bundles)
                     for (bundle in bundles) {
-                        if (bundle.min_purchase_months > default_validity_months)
+                        package_validity_months = bundle.min_purchase_months
+                        if (bundle.min_purchase_months > default_validity_months){
                             default_validity_months = bundle.min_purchase_months
+                        }
+//                        if (bundle.min_purchase_months < default_validity_months)
+//                            default_validity_months = default_validity_months
                     }
                     if (default_validity_months > 0)
-                        months_validity.text = default_validity_months.toString() + " months"
+                        months_validity.setText(default_validity_months.toString())
+//                        months_validity.text = default_validity_months.toString() + " months"
                     else
-                        months_validity.text = default_validity_months.toString() + " month"
-                    months_validity_edit_inc.visibility = View.GONE
-                    months_validity_edit_dsc.visibility = View.GONE
+                        months_validity.setText(default_validity_months.toString())
+//                        months_validity.text = default_validity_months.toString() + " month"
+//                    months_validity_edit_inc.visibility = View.GONE
+//                    months_validity_edit_dsc.visibility = View.GONE
                     package_layout.visibility = View.VISIBLE
                 } else {
                     bundles_in_cart = false
                     default_validity_months = 1
-                    months_validity.text = default_validity_months.toString() + " month"
+//                    months_validity.text = default_validity_months.toString() + " month"
+                    months_validity.setText(default_validity_months.toString())
                     months_validity_edit_inc.visibility = View.VISIBLE
                     months_validity_edit_dsc.visibility = View.VISIBLE
                     package_layout.visibility = View.GONE
                 }
 //                totalCalculation()
                 totalCalculationAfterCoupon()
-
 //                var event_attributes: HashMap<String, Double> = HashMap()
                 var event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("total amount", grandTotal)
@@ -1140,7 +1299,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 Constants.COMPARE_CART_COUNT = 0
                 months_validity_edit_inc.visibility = View.GONE
                 months_validity_edit_dsc.visibility = View.GONE
-                months_validity.text = "- -"
+//                months_validity.text = "- -"
+                months_validity.setText("- -")
 
                 //clear coupon
                 validCouponCode = null
@@ -1455,7 +1615,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     if (!bundles_in_cart && item.item_type.equals("features"))
                         total += (item.price * default_validity_months)
                     else
-                        total += item.price
+                        total += ((item.price / package_validity_months) * default_validity_months)
                 }
                 cart_amount_title.text = "Cart total ("+ cartList.size + " items)"
                 cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
