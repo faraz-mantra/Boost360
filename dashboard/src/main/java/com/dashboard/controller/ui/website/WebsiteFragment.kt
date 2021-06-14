@@ -23,6 +23,7 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
+import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
@@ -60,13 +61,13 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private fun setUserData() {
     val desc = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
     binding?.txtDesc?.apply {
-      if (desc.isNullOrEmpty().not()) visible() else gone()
+      if (desc.isNullOrEmpty().not()) visible() else invisible()
       text = desc
     }
     binding?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName()}</u>")
-    var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
-    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri!!.contains("http").not()) {
+    var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
+    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
     binding?.imgProfileLogo?.apply {
@@ -172,7 +173,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     super.onClick(v)
     when (v) {
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
-      binding?.btnProfileLogo -> baseActivity.startFeatureLogo(session)
+      binding?.btnProfileLogo -> baseActivity.startBusinessLogo(session)
       binding?.editProfile -> baseActivity.startBusinessProfileDetailEdit(session)
       binding?.websiteThemeCustomization -> baseActivity.startWebsiteTheme(session)
 //      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
@@ -180,17 +181,17 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_website_theme,menu)
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when(item.itemId){
-      R.id.menu_more->{}
-      R.id.menu_whatsapp_share->{}
-    }
-    return super.onOptionsItemSelected(item)
-
-  }
+//  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//    super.onCreateOptionsMenu(menu, inflater)
+//    inflater.inflate(R.menu.menu_website_theme,menu)
+//  }
+//
+//  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//    when(item.itemId){
+//      R.id.menu_more->{}
+//      R.id.menu_whatsapp_share->{}
+//    }
+//    return super.onOptionsItemSelected(item)
+//
+//  }
 }

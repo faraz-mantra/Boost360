@@ -6,7 +6,8 @@
     <item
         android:id="@+id/menu_whatsapp_share"
         app:actionLayout="@layout/whatsapp_share_menu"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:title="@string/share" />
     <item android:title="@string/more"
         app:showAsAction="always"
         android:id="@+id/menu_more"

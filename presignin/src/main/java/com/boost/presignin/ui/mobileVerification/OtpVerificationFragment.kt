@@ -2,6 +2,7 @@ package com.boost.presignin.ui.mobileVerification
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
@@ -72,7 +73,7 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
     binding?.subheading?.text = String.format(getString(R.string.code_sent_hint, phoneNumber))
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener {
-      parentFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+      baseActivity.onNavPressed()
     }
     binding?.pinTv?.otpListener = object : OTPListener {
       override fun onInteractionListener() {

@@ -108,7 +108,7 @@
       android:layout_marginEnd="@dimen/_16sdp"
       android:enabled="false"
       android:drawableEnd="@null"
-      android:text="@string/next"
+      android:text="@string/request_otp"
       app:layout_constraintTop_toBottomOf="@id/divider"
       tools:ignore="MissingConstraints" />
 
@@ -133,6 +133,7 @@
       android:layout_marginTop="@dimen/_20sdp"
       android:fontFamily="@font/semi_bold"
       android:text="@string/need_help"
+        android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
       tools:ignore="MissingConstraints,UnknownId" />
   </androidx.constraintlayout.widget.ConstraintLayout>

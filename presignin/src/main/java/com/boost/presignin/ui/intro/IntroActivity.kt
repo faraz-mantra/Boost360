@@ -3,7 +3,9 @@ package com.boost.presignin.ui.intro
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
+import androidx.viewpager2.widget.ViewPager2
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroAdapter
 import com.boost.presignin.constant.IntentConstant
@@ -23,7 +25,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
 
   private lateinit var items: List<IntroItem>
   private var isVideoPlaying = false
-  private val handler = Handler()
+  private val handler = Handler(Looper.getMainLooper())
 
   override fun getLayout(): Int {
     return R.layout.activity_intro
@@ -77,6 +79,18 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
       WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
       startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
     }
+
+    binding?.introViewpager?.registerOnPageChangeCallback(object :
+      ViewPager2.OnPageChangeCallback() {
+      override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+        if (position>=items.size-2){
+          binding?.btnCreate?.setText(R.string.psn_login_now)
+        }else{
+          binding?.btnCreate?.setText(R.string.psn_get_started)
+        }
+      }
+    })
   }
 
   private fun setNextPage() {
