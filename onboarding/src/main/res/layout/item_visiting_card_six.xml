@@ -190,7 +190,7 @@
           android:paddingTop="@dimen/size_2"
           android:textColor="@color/white_grey"
           app:autoSizeMaxTextSize="11sp"
-          app:autoSizeMinTextSize="6sp"
+          app:autoSizeMinTextSize="7sp"
           app:autoSizeStepGranularity="1sp"
           app:autoSizeTextType="uniform"
           app:fontFamily="@font/semi_bold"

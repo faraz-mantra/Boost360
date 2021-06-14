@@ -81,22 +81,22 @@
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Services" />
+        android:text="SERVICES" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Updates" />
+        android:text="UPDATES" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Photos" />
+        android:text="PHOTOS" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Details" />
+        android:text="BUSINESS CARD" />
     </com.google.android.material.tabs.TabLayout>
 
     <!--<LinearLayout

@@ -296,7 +296,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_NINE_ITEM.ordinal))
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_TEN_ITEM.ordinal))
       detailsSet.addAll(cardList)
-      SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = "BUSINESS CARD (${detailsSet.size})"
+//      SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = "BUSINESS CARD"
       adapter.submitList(cardList)
       businessFeatureProgressBar.gone()
     }
