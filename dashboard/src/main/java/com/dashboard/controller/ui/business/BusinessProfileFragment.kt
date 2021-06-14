@@ -2,17 +2,15 @@ package com.dashboard.controller.ui.business
 
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
@@ -29,10 +27,7 @@ import com.dashboard.controller.ui.business.model.BusinessProfileUpdateRequest
 import com.dashboard.controller.ui.business.model.UpdatesItem
 import com.dashboard.controller.ui.website_theme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentBusinessProfileBinding
-import com.dashboard.utils.WebEngageController
-import com.dashboard.utils.startBusinessAddress
-import com.dashboard.utils.startBusinessContactInfo
-import com.dashboard.utils.startDigitalChannel
+import com.dashboard.utils.*
 import com.dashboard.viewmodel.BusinessProfileViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -86,11 +81,11 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     session = UserSessionManager(requireContext())
     WebEngageController.trackEvent(BUSINESS_PROFILE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(
-      binding?.ctvWhatsThis, binding?.ctvBusinessName, binding?.ctvBusinessCategory, binding?.clBusinessDesc,
+      binding?.ctvWhatsThis, binding?.ctvBusinessName, binding?.businessImage, binding?.ctvBusinessCategory, binding?.clBusinessDesc,
       binding?.imageAddBtn, binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
       binding?.openBusinessChannels, binding?.openBusinessContact, binding?.openBusinessWebsite,
     )
-    setImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
+    setImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl) ?: "")
   }
 
   override fun onResume() {
@@ -131,6 +126,11 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     }
     var str = ""
     if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "• +91 ${session?.userPrimaryMobile} (VMN)"
+    if (session?.userPrimaryMobile.isNullOrEmpty()) {
+      binding?.ctvActive?.gone()
+    } else {
+      binding?.ctvActive?.visible()
+    }
     if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "\n• +91 ${session?.fPPrimaryContactNumber}"
     if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty().not()) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
     str += "\n• ${session?.getDomainName() ?: ""}"
@@ -200,24 +200,22 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.ctvWhatsThis -> {
-        openDialogForInformation()
-      }
+      binding?.ctvWhatsThis -> openDialogForInformation()
+      binding?.businessImage -> baseActivity.startBusinessLogo(session)
       binding?.ctvBusinessName -> {
         WebEngageController.trackEvent(EDIT_BUSINESS_NAME_CLICK, CLICK, NO_EVENT_VALUE)
         openBusinessNameDialog()
       }
       binding?.ctvBusinessCategory -> {
         WebEngageController.trackEvent(BUSINESS_CATEGORY_CLICK, CLICK, NO_EVENT_VALUE)
-
         openBusinessCategoryBottomSheet()
       }
       binding?.clBusinessDesc -> {
         WebEngageController.trackEvent(EDIT_BUSINESS_DESCRIPTION_CLICK, CLICK, NO_EVENT_VALUE)
         showBusinessDescDialog()
       }
-      binding?.imageAddBtn, binding?.btnChangeImage -> openImagePicker()
-      binding?.imageAddBtn, binding?.btnSavePublish -> if (isValid()) updateFpDetails()
+      binding?.imageAddBtn, binding?.btnChangeImage -> baseActivity.startBusinessLogo(session)// openImagePicker()
+      binding?.btnSavePublish -> if (isValid()) updateFpDetails()
       binding?.openBusinessAddress -> {
         WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, NO_EVENT_VALUE)
         baseActivity.startBusinessAddress(session)
@@ -234,7 +232,6 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, NO_EVENT_VALUE)
         openWebViewDialog(session?.rootAliasURI!!, session?.fpTag!!)
       }
-
     }
   }
 
@@ -301,7 +298,6 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       .mode(type)
       .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
       .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
-      .scale(800, 800)
       .enableDebuggingMode(true).build()
   }
 
@@ -313,6 +309,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     businessDescDialog.onClicked = {
       binding?.btnSavePublish?.isEnabled = true
       binding?.ctvBusinessDesc?.text = it.businessDesc
+      updateFpDetails()
     }
     businessDescDialog.show(parentFragmentManager, BusinessDescriptionBottomSheet::javaClass.name)
   }
@@ -331,6 +328,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.btnSavePublish?.isEnabled = true
       binding?.ctvBusinessName?.text = it
       binding?.ctvBusinessNameCount?.text = "${it.length}/40"
+      updateFpDetails()
     }
     businessNameBottomSheet.show(parentFragmentManager, BusinessNameBottomSheet::javaClass.name)
   }
@@ -355,9 +353,10 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
         binding?.businessImage?.gone()
         binding?.btnChangeImage?.gone()
+        binding?.divider3?.gone()
         binding?.imageAddBtn?.visible()
         businessImage = null
-        binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
+//        setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
         binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
         targetMap = null
       }
@@ -370,21 +369,27 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       Picasso.get().load(imageUri).placeholder(R.drawable.placeholder_image_n).into(target)
       binding?.imageAddBtn?.gone()
       binding?.btnChangeImage?.visible()
+      binding?.divider3?.visible()
       binding?.businessImage?.visible()
     } else {
       binding?.businessImage?.gone()
       binding?.btnChangeImage?.gone()
+      binding?.divider3?.gone()
       binding?.imageAddBtn?.visible()
       businessImage = null
-      binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
+//      setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
       binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
     }
   }
 
   private fun bindImage(mutableBitmap: Bitmap?) {
     binding?.businessImage?.setImageBitmap(mutableBitmap)
-    binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.white))
+    setTextViewDrawableColor(binding?.ctvWhatsThis!!, R.color.white)
     binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.white)))
+    binding?.imageAddBtn?.gone()
+    binding?.btnChangeImage?.visible()
+    binding?.divider3?.visible()
+    binding?.businessImage?.visible()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -415,6 +420,18 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     if (instance.getDrScoreData()!!.metricdetail == null) return
     instance.getDrScoreData()!!.metricdetail!!.boolean_add_business_name = isAdded
     instance.updateDocument()
+  }
+
+  private fun setTextViewDrawableColor(textView: TextView, color: Int) {
+    for (drawable in textView.compoundDrawables) {
+      if (drawable != null) {
+        drawable.colorFilter =
+          PorterDuffColorFilter(
+            ContextCompat.getColor(textView.context, color),
+            PorterDuff.Mode.SRC_IN
+          )
+      }
+    }
   }
 }
 
