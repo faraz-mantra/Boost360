@@ -99,10 +99,10 @@ class RazorPayWebView : DialogFragment() {
                             Log.v("onPaymentSuccess", " cartids"+ it)
                         }
                         val event_attributes: HashMap<String, Any> = HashMap()
-                        event_attributes.put("revenue",(revenue / 100).toString())
-                        event_attributes.put("rev",(revenue / 100).toString())
+                        event_attributes.put("revenue",(revenue / 100))
+                        event_attributes.put("rev",(revenue / 100))
                         event_attributes.put("cartIds",Gson().toJson(prefs.getCardIds()))
-                        event_attributes.put("couponIds",Gson().toJson(prefs.getCouponIds()))
+                        event_attributes.put("couponIds",prefs.getCouponIds().toString())
                         WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_SUCCESS, ADDONS_MARKETPLACE, event_attributes)
 
 //                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success",
