@@ -21,6 +21,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId
 import com.framework.utils.ValidationUtils
+import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
@@ -46,6 +47,11 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   override fun authTokenData(): AuthTokenDataItem? {
     return if (resultLogin()?.authTokens.isNullOrEmpty().not()) resultLogin()?.authTokens!![0] else null
+  }
+
+  override fun onResume() {
+    super.onResume()
+   baseActivity.showKeyBoard(binding?.usernameEt)
   }
 
   override fun onCreateView() {
@@ -97,11 +103,11 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   private fun storeUserDetail(response: VerificationRequestResult) {
     hideProgress()
-    if (response.profileProperties?.userMobile.isNullOrEmpty().not() && ValidationUtils.isMobileNumberValid(response.profileProperties?.userMobile!!)) {
-      navigator?.startActivity(LoginActivity::class.java, Bundle().apply {
-        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
-      })
-    } else {
+//    if (response.profileProperties?.userMobile.isNullOrEmpty().not() && ValidationUtils.isMobileNumberValid(response.profileProperties?.userMobile!!)) {
+//      navigator?.startActivity(LoginActivity::class.java, Bundle().apply {
+//        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+//      })
+//    } else {
       if (response.authTokens!!.size == 1) {
         this.resultLogin = response
         authTokenData()?.createAccessTokenAuth()
@@ -110,7 +116,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
           putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
         })
       }
-    }
+//    }
   }
 
   private fun onDataChanged() {

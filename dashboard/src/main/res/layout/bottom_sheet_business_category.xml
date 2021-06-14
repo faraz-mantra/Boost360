@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data></data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/riv_close_bottomSheet"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="@dimen/size_15"
+      android:src="@drawable/ic_cross_grey_circle" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bottoms_sheet_top20dp_white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:paddingTop="@dimen/size_10">
+
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_4"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/business_category_is_locked"
+        android:textAllCaps="false"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/semi_bold"
+        app:textType="HEADING_5" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_8"
+        android:layout_marginBottom="@dimen/size_16"
+        android:fontFamily="@font/open_sans"
+        android:gravity="start"
+        android:includeFontPadding="false"
+        android:text="@string/business_category_is_to_be_selected_only_once_while_setting_up_your_business_account_on_boost_360_to_know_more_contact_support"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="14sp" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/btn_understood"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:enabled="true"
+        android:text="@string/understood"
+        android:textColor="@color/white" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/btn_contact_support"
+        style="@style/ButtonStyle.Red"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_12"
+        android:layout_marginBottom="@dimen/size_16"
+        android:background="@null"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="@string/contact_support"
+        android:textColor="@color/colorAccent" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

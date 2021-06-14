@@ -132,17 +132,17 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
       val duration = mediaPlayer?.duration ?: 0
       val currentTime = mediaPlayer?.currentPosition ?: 0;
       timer = object :
-          com.boost.presignin.timer.CountDownTimer((duration - currentTime).toLong(), 1000) {
+        com.boost.presignin.timer.CountDownTimer((duration - currentTime).toLong(), 1000) {
         override fun onTick(millisUntilFinished: Long) {
           val videoDuration = (millisUntilFinished / 1000).toInt()
           binding?.videoTime?.post {
             if (videoDuration == 0) {
               timer?.cancel()
               binding?.videoTime?.text =
-                  String.format(getString(R.string.intro_video_time), "00")
+                String.format(getString(R.string.intro_video_time), "00")
             } else {
               binding?.videoTime?.text =
-                  String.format(getString(R.string.intro_video_time), videoDuration)
+                String.format(getString(R.string.intro_video_time), videoDuration)
             }
           }
         }

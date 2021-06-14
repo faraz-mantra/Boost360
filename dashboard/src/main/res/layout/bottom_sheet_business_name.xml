@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data></data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/riv_close_bottomSheet"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="@dimen/size_15"
+      android:src="@drawable/ic_cross_grey_circle" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bottoms_sheet_top20dp_white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:paddingTop="@dimen/size_10">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/customTextView7"
+          style="@style/BusinessProfile_Text_Title"
+          android:text="@string/business_name"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_business_name_count"
+          style="@style/BusinessProfile_Text_Title"
+          android:layout_gravity="end"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="40/100" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+      <com.framework.views.customViews.CustomEditText
+        android:id="@+id/cet_business_name"
+        style="@style/BusinessProfileTextField"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:drawableEnd="@null"
+        android:maxLength="40"
+        android:padding="@dimen/size_10"
+        android:singleLine="true"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:textSize="12sp"
+        tools:ignore="UnusedAttribute" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/btn_publish"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginVertical="@dimen/size_16"
+        android:enabled="true"
+        android:text="@string/save_business_name"
+        android:textColor="@color/white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
