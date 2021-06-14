@@ -44,6 +44,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     var updateCustomerInfo: MutableLiveData<GetCustomerIDResponse> = MutableLiveData()
     var customerInfoState: MutableLiveData<Boolean> = MutableLiveData()
     private var customerInfo: MutableLiveData<CreateCustomerIDResponse> = MutableLiveData()
+    private var updateInfo: MutableLiveData<CreateCustomerIDResponse> = MutableLiveData()
     var cityResult: MutableLiveData<List<String>> = MutableLiveData()
     var stateResult: MutableLiveData<List<String>> = MutableLiveData()
     var stateValueResult: MutableLiveData<String> = MutableLiveData()
@@ -61,6 +62,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
 
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
+    var gstSwitchFlag : MutableLiveData<Boolean> = MutableLiveData()
 
     fun getPaymentMethods(): JSONObject {
         return _paymentMethods.value!!
@@ -110,6 +112,15 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
         return customerInfo
     }
 
+    fun getUpdatedCustomerBusinessResult(): LiveData<CreateCustomerIDResponse> {
+        return customerInfo
+    }
+
+    fun getUpdatedResult(): LiveData<CreateCustomerIDResponse> {
+        return updateInfo
+    }
+
+
     fun getCustomerInfoStateResult(): LiveData<Boolean> {
         return customerInfoState
     }
@@ -148,6 +159,10 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
 
     fun getLoaderStatus(): LiveData<Boolean> {
         return updatesLoader
+    }
+
+    fun getGstSwitchFlag(): LiveData<Boolean> {
+        return gstSwitchFlag
     }
 
     fun loadpaymentMethods(razorpay: Razorpay) {
@@ -215,6 +230,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
                             Log.i("getCustomerId>>", it.toString())
                             updateCustomerInfo.postValue(it)
                             customerInfoState.postValue(true)
+//                            customerInfoState.postValue(false)
                         },
                         {
                             val temp = (it as HttpException).response()!!.errorBody()!!.string()
@@ -260,6 +276,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
                 var json_objectdetail: JSONObject = jsonarray_info.getJSONObject(i)
                 Log.v("getStateFromCity", " "+ json_objectdetail.getString("name") + " "+ city)
                 if(json_objectdetail.getString("name").equals(city)){
+//                    stateValue = json_objectdetail.getString("state") + "("+json_objectdetail.getString("state_tin") +")"
                     stateValue = json_objectdetail.getString("state")
                 }
                 cityValueResult.postValue(stateValue)
@@ -317,7 +334,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
                 .subscribe(
                     {
                         Log.i("CreateCustomerId>>", it.toString())
-                        customerInfo.postValue(it)
+                        updateInfo.postValue(it)
                         updatesLoader.postValue(false)
                     },
                     {
@@ -337,7 +354,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        Log.i("CreateCustomerId>>", it.toString())
+                        Log.i("updateCustomerInfo>>", it.toString())
                         customerInfo.postValue(it)
 //                        updatesLoader.postValue(false)
                     },
