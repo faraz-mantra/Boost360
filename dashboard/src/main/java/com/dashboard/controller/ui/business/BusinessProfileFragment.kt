@@ -2,17 +2,15 @@ package com.dashboard.controller.ui.business
 
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
@@ -56,6 +54,7 @@ import okhttp3.RequestBody
 import java.io.File
 import java.util.*
 
+
 class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
 
   private var businessImage: File? = null
@@ -90,7 +89,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.imageAddBtn, binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
       binding?.openBusinessChannels, binding?.openBusinessContact, binding?.openBusinessWebsite,
     )
-    setImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl)!!)
+    setImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl)?:"")
   }
 
   override fun onResume() {
@@ -131,6 +130,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     }
     var str = ""
     if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "• +91 ${session?.userPrimaryMobile} (VMN)"
+    if (session?.userPrimaryMobile.isNullOrEmpty()){binding?.ctvActive?.gone()}else{binding?.ctvActive?.visible()}
     if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "\n• +91 ${session?.fPPrimaryContactNumber}"
     if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty().not()) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
     str += "\n• ${session?.getDomainName() ?: ""}"
@@ -359,7 +359,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         binding?.btnChangeImage?.gone()
         binding?.imageAddBtn?.visible()
         businessImage = null
-        binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
+        setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
         binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
         targetMap = null
       }
@@ -378,15 +378,18 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.btnChangeImage?.gone()
       binding?.imageAddBtn?.visible()
       businessImage = null
-      binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.blue_4A90E2))
+      setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
       binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
     }
   }
 
   private fun bindImage(mutableBitmap: Bitmap?) {
     binding?.businessImage?.setImageBitmap(mutableBitmap)
-    binding?.ctvWhatsThis?.compoundDrawables?.get(0)?.setTint(getColor(R.color.white))
+    setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.white)
     binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.white)))
+    binding?.imageAddBtn?.gone()
+    binding?.btnChangeImage?.visible()
+    binding?.businessImage?.visible()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -417,6 +420,17 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     if (instance.getDrScoreData()!!.metricdetail == null) return
     instance.getDrScoreData()!!.metricdetail!!.boolean_add_business_name = isAdded
     instance.updateDocument()
+  }
+  private fun setTextViewDrawableColor(textView: TextView, color: Int) {
+    for (drawable in textView.compoundDrawables) {
+      if (drawable != null) {
+        drawable.colorFilter =
+          PorterDuffColorFilter(
+            ContextCompat.getColor(textView.context, color),
+            PorterDuff.Mode.SRC_IN
+          )
+      }
+    }
   }
 }
 
