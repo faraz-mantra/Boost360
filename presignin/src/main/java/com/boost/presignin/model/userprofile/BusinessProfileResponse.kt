@@ -10,8 +10,8 @@ data class BusinessProfileResponse(
   var statusCode: Int? = null,
   @field:SerializedName("Result")
   var result: Result? = null,
-  @SerializedName("Error")
-  val Error: UserError?= null,
+//  @SerializedName("Error")
+//  val Error: UserError?= null,
 ) : BaseResponse(), Serializable
 
 data class Result(
