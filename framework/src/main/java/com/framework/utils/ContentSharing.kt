@@ -1,5 +1,6 @@
 package com.framework.utils
 
+import android.app.Activity
 import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -10,7 +11,6 @@ import android.view.View
 import android.widget.Toast
 import com.framework.BaseApplication
 import com.framework.R
-import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 
@@ -27,7 +27,8 @@ class ContentSharing {
             imageUri: String? = null,
             isWhatsApp: Boolean? = false,
             isService: Boolean? = false,
-            isFb:Boolean?=false
+            isFb:Boolean?=false,
+            activity: Activity
         ) {
             val orderAppointment = if (isService==true) "appointment" else "order"
             val productTemplate =
@@ -36,11 +37,12 @@ class ContentSharing {
 👉🏼 *Place your $orderAppointment here:* $link
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(shareText = productTemplate, imageUri = imageUri, isWhatsApp = isWhatsApp, isFb = isFb)
+            share(activity,shareText = productTemplate, imageUri = imageUri, isWhatsApp = isWhatsApp, isFb = isFb)
         }
 
 
         private fun shareTextService(
+            activity:Activity,
             uri: Uri?,
             shareText: String,
             isWhatsApp: Boolean?,
@@ -49,31 +51,30 @@ class ContentSharing {
             isTwitter: Boolean?,
             intentChooserTitle: String? = BaseApplication.instance.getString(R.string.app_name)
         ) {
-            val context = BaseApplication.instance
             val share = Intent(Intent.ACTION_SEND)
             share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             share.putExtra(Intent.EXTRA_TEXT, shareText)
             uri?.let { share.putExtra(Intent.EXTRA_STREAM, uri) }
             share.type = if (uri != null) "image/*" else "text/plain"
-            if (share.resolveActivity(context.packageManager!!) != null) {
+            if (share.resolveActivity(activity.packageManager!!) != null) {
                 try {
                     if (isWhatsApp == true)
-                        share.setPackage(context.getString(R.string.whatsapp_package))
+                        share.setPackage(activity.getString(R.string.whatsapp_package))
                     if (isFb == true)
-                        share.setPackage(context.getString(R.string.facebook_package))
+                        share.setPackage(activity.getString(R.string.facebook_package))
                     if (isLinkedin == true)
                         share.setPackage("com.linkedin.android")
                     if (isTwitter == true)
-                        share.setPackage(context.getString(R.string.twitter_package))
-                    context.startActivity(Intent.createChooser(share, intentChooserTitle))
+                        share.setPackage(activity.getString(R.string.twitter_package))
+                    activity.startActivity(Intent.createChooser(share, intentChooserTitle))
                 } catch (e: ActivityNotFoundException) {
-                    context.startActivity(Intent.createChooser(share, intentChooserTitle))
+                    activity.startActivity(Intent.createChooser(share, intentChooserTitle))
                 }
 
             }
         }
 
-        fun share(
+        fun share(activity: Activity,
             shareText: String,
             imageUri: String? = null,
             isWhatsApp: Boolean? = false,
@@ -98,6 +99,7 @@ class ContentSharing {
                             )
                             val uri = Uri.parse(path)
                             shareTextService(
+                                activity,
                                 uri,
                                 shareText,
                                 isWhatsApp,
@@ -121,13 +123,14 @@ class ContentSharing {
                     targetMap = target
                     Picasso.get().load(imageUri ?: "").into(target)
                 } else {
-                    shareTextService(null, shareText, isWhatsApp, isFb, isLinkedin, isTwitter)
+                    shareTextService(activity,null, shareText, isWhatsApp, isFb, isLinkedin, isTwitter)
                 }
             }
         }
 
         //todo updates
         fun shareUpdates(
+            activity: Activity,
             updateContent: String,
             link: String?,
             catalogLink: String,
@@ -141,7 +144,7 @@ ${truncateString(updateContent, 100)}: Read more $link
 🏷️ Check our online catalogue, $catalogLink
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(updateTemplate, isWhatsApp = isWhatsApp,isFb = isFb,imageUri = imageUri)
+            share(activity = activity,updateTemplate, isWhatsApp = isWhatsApp,isFb = isFb,imageUri = imageUri)
         }
 
         fun truncateString(string: String, maxChar: Int): String {
@@ -154,6 +157,7 @@ ${truncateString(updateContent, 100)}: Read more $link
 
         //todo customPages
         fun shareCustomPages(
+            activity: Activity,
             pageName: String?="",
             link: String? ="",
             vmn: String?="",
@@ -165,10 +169,11 @@ ${truncateString(updateContent, 100)}: Read more $link
 🏷️ Check our online catalogue, $catalogLink
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(customPagesTemplate, isWhatsApp = isWhatsApp,isFb = isFb)
+            share(activity = activity,customPagesTemplate, isWhatsApp = isWhatsApp,isFb = isFb)
         }
 
         fun shareTestimonial(
+            activity: Activity,
             testimonialContent: String,
             customerName: String,
             link: String?,
@@ -181,10 +186,11 @@ ${truncateString(updateContent, 100)}: Read more $link
 🏷️ Check our online catalogue, $catalogLink
 📞 Feel free to call $vmn if you need any help. 
 """
-            share(testimonialTemplate, isWhatsApp = isWhatsApp)
+            share(activity = activity,testimonialTemplate, isWhatsApp = isWhatsApp)
         }
 
         fun shareWebsiteTheme(
+            activity: Activity,
             businessName: String,
             websiteLink: String,
             vmn: String,
@@ -198,10 +204,10 @@ ${truncateString(updateContent, 100)}: Read more $link
                     "\uD83C\uDF10 Check our website for the latest updates and offers $websiteLink.\n" +
                     "\uD83D\uDCDE For any query, call: $vmn"
             if (isCopy == true) {
-                setClipboard(context = BaseApplication.instance.baseContext, webSiteThemeTemplate)
+                setClipboard(context = activity, webSiteThemeTemplate)
                 return
             }
-            share(
+            share(activity,
                 webSiteThemeTemplate, isWhatsApp = isWhatsApp,
                 isFb = isFb, isTwitter = isTwitter, isLinkedin = isLinkedin
             )

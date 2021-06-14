@@ -114,6 +114,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     get() {
       return PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "") ?: ""
     }
+  private val _connectedChannels: ArrayList<String>
+    get() {
+      return getConnectedChannel()
+    }
 
   private val _connectedChannels: ArrayList<String>
     get() {
@@ -412,7 +416,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(TOTAL_SELLER_SUMMARY)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner, { it1 ->
+      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner, { it1 ->
         val response2 = it1 as? UserSummaryResponse
         response2?.getSummary()?.saveData(USER_BUSINESS_SUMMARY)
         setBusinessSummary(getDrScoreData()?.getDrsTotal() ?: 0, response1?.Data?.getTotalOrders() ?: "0", response2?.getSummary())
@@ -445,7 +449,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(SELLER_BUSINESS_REPORT)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
+      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
         val response2 = it1 as? UserSummaryResponse
         response2?.getSummary()?.saveTotalMessage(TOTAL_USER_MESSAGE)
         val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
@@ -476,7 +480,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (isLoader) showProgress()
     if (isFirstLoad()) Handler().postDelayed({ baseActivity.runOnUiThread { showSimmer(false) } }, 2000)
     val scope = if (session?.iSEnterprise == "true") "1" else "0"
-    viewModel?.getUserSummary(clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
+    viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
       val response1 = it1 as? UserSummaryResponse
       viewModel?.getSubscriberCount(session?.fpTag, clientId, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
         val subscriberCount = (it2.anyResponse as? Double)?.toInt() ?: 0
@@ -863,7 +867,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS_CLICK)
       GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(session, "MAP_VISITS", WEBSITE_REPORT_ADDRESS_VISITS_CLICK)
       GrowthStatsData.GrowthType.NEWSLETTER_SUBSCRIPTION -> baseActivity.startSubscriber(session)
-      GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
+//      GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
     }
   }
 

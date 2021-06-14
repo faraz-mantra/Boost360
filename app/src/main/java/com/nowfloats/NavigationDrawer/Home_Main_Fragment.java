@@ -948,12 +948,12 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     String imageUri = floatsMessageModel.imageUri;
     switch (type) {
       case "whatsapp":
-        ContentSharing.Companion.shareUpdates(message,url, rootAliasURI + "/"+subDomain,session.getUserPrimaryMobile(),true,false,imageUri);
+        ContentSharing.Companion.shareUpdates(requireActivity(),message,url, rootAliasURI + "/"+subDomain,session.getUserPrimaryMobile(),true,false,imageUri);
         break;
       case "facebook":
-        ContentSharing.Companion.shareUpdates(message,url, rootAliasURI + "/"+subDomain,session.getUserPrimaryMobile(),false,true,imageUri);
+        ContentSharing.Companion.shareUpdates(requireActivity(),message,url, rootAliasURI + "/"+subDomain,session.getUserPrimaryMobile(),false,true,imageUri);
         break;
-      default:ContentSharing.Companion.shareUpdates(message,url, rootAliasURI + "/"+subDomain,session.getUserPrimaryMobile(),false,false,imageUri);
+      default:ContentSharing.Companion.shareUpdates(requireActivity(),message,url, rootAliasURI + "/"+subDomain,session.getUserPrimaryMobile(),false,false,imageUri);
 
 
     }

@@ -24,12 +24,12 @@ import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.BaseResponse
 import com.framework.base.FRAGMENT_TYPE
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.observeOnce
 import com.framework.pref.*
 import com.framework.webengageconstant.*
-import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
+import com.invitereferrals.invitereferrals.InviteReferralsApi
+import com.onboarding.nowfloats.constant.PreferenceConstant
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
@@ -45,6 +45,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
 
   companion object {
     const val CATEGORY_DATA = "category_data"
+
     @JvmStatic
     fun newInstance(registerRequest: CategoryFloatsRequest) = BusinessWebsiteFragment().apply {
       arguments = Bundle().apply {
@@ -89,19 +90,23 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       append(getString(R.string.website_available_text))
     }
     binding?.confirmButton?.setOnClickListener {
+      it.isEnabled = false
       val website = binding?.websiteEt?.text?.toString()
       if (!website.isWebsiteValid()) {
         showShortToast(getString(R.string.enter_a_valid_website_name))
         return@setOnClickListener
       }
       WebPreSignInBottomDialog().apply {
-        setData("https://www.getboost360.com/tnc?src=android&stage=user_account_create")
+        setData(baseActivity.getString(R.string.get_boost_360_tnc))
         onClicked = {
           floatsRequest?.webSiteUrl = "$website.nowfloats.com"
           WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)
           apiHitCreateMerchantProfile()
         }
-        show(this@BusinessWebsiteFragment.parentFragmentManager, WebPreSignInBottomDialog::class.java.name)
+        show(
+          this@BusinessWebsiteFragment.parentFragmentManager,
+          WebPreSignInBottomDialog::class.java.name
+        )
       }
     }
   }
@@ -165,6 +170,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   private fun apiHitCreateMerchantProfile() {
     showProgress("We're creating your online ${floatsRequest?.categoryDataModel?.category_Name}...")
     if (this.responseCreateProfile == null) {
+      binding?.confirmButton?.isEnabled = true
       viewModel?.createMerchantProfile(request = floatsRequest?.requestProfile)?.observeOnce(viewLifecycleOwner, {
         val businessProfileResponse = it as? BusinessProfileResponse
         if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
@@ -179,6 +185,18 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
 
+  private fun setReferralCode(floatingPointId: String) {
+    if (prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, "").isNullOrEmpty().not()) {
+      var email = floatsRequest?.userBusinessEmail ?: "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
+      if (email.isEmpty().not()) email = floatsRequest?.userBusinessEmail!!
+      InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, ""), floatingPointId)
+      prefReferral?.edit()?.apply {
+        putString(PreferenceConstant.REFER_CODE_APP, "")
+        apply()
+      }
+    }
+  }
+
   private fun apiHitBusiness(businessProfileResponse: BusinessProfileResponse) {
     putCreateBusinessOnBoarding(businessProfileResponse)
   }
@@ -187,37 +205,35 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     this.responseCreateProfile = response
     val request = getBusinessRequest()
     isSyncCreateFpApi = true
-    viewModel?.putCreateBusinessV6(response.result?.loginId, request)
-      ?.observeOnce(viewLifecycleOwner, {
-        val result = it as? FloatingPointCreateResponse
-        if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
-          WebEngageController.initiateUserLogin(response.result?.loginId)
-          WebEngageController.setUserContactAttributes(
-            response.result?.profileProperties?.userEmail, response.result?.profileProperties?.userMobile,
-            response.result?.profileProperties?.userName, response.result?.sourceClientId
-          )
-          WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
-          session.userProfileId = response.result?.loginId
-          session.userProfileEmail = response.result?.profileProperties?.userEmail
-          session.userProfileName = response.result?.profileProperties?.userName
-          session.userProfileMobile = response.result?.profileProperties?.userMobile
-          session.storeISEnterprise(response.result?.isEnterprise.toString() + "")
-          session.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
-          session.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, floatsRequest?.categoryDataModel?.experience_code)
-          authToken = result.authTokens?.get(0)
-          session.storeFPID(authToken?.floatingPointId)
-          session.storeFpTag(authToken?.floatingPointTag)
+    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
+      val result = it as? FloatingPointCreateResponse
+      if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
+        authToken = result.authTokens?.get(0)
+        WebEngageController.initiateUserLogin(response.result?.loginId)
+        WebEngageController.setUserContactAttributes(response.result?.profileProperties?.userEmail, response.result?.profileProperties?.userMobile, response.result?.profileProperties?.userName, response.result?.sourceClientId)
+        WebEngageController.setFPTag(authToken?.floatingPointTag)
+        authToken?.floatingPointId?.let { it1 -> setReferralCode(floatingPointId = it1) }
+        WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
+        session.userProfileId = response.result?.loginId
+        session.userProfileEmail = response.result?.profileProperties?.userEmail
+        session.userProfileName = response.result?.profileProperties?.userName
+        session.userProfileMobile = response.result?.profileProperties?.userMobile
 
-          floatsRequest?.floatingPointId = authToken?.floatingPointId!!
-          floatsRequest?.fpTag = authToken?.floatingPointTag
-          floatsRequest?.requestProfile?.profileId = response.result?.loginId
-          session.saveCategoryRequest(floatsRequest!!)
-          session.saveAuthTokenData(authToken!!)
-          session.setUserSignUpComplete(true)
-          navigator?.clearBackStackAndStartNextActivity(RegistrationActivity::class.java, Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
-        } else showShortToast(getString(R.string.error_create_business_fp))
-        hideProgress()
-      })
+        session.storeISEnterprise(response.result?.isEnterprise.toString() + "")
+        session.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
+        session.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, floatsRequest?.categoryDataModel?.experience_code)
+        session.storeFPID(authToken?.floatingPointId)
+        session.storeFpTag(authToken?.floatingPointTag)
+        floatsRequest?.floatingPointId = authToken?.floatingPointId!!
+        floatsRequest?.fpTag = authToken?.floatingPointTag
+        floatsRequest?.requestProfile?.profileId = response.result?.loginId
+        session.saveCategoryRequest(floatsRequest!!)
+        session.saveAuthTokenData(authToken!!)
+        session.setUserSignUpComplete(true)
+        navigator?.clearBackStackAndStartNextActivity(RegistrationActivity::class.java, Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
+      } else showShortToast(getString(R.string.error_create_business_fp))
+      hideProgress()
+    })
   }
 
   private fun getBusinessRequest(): BusinessCreateRequest {

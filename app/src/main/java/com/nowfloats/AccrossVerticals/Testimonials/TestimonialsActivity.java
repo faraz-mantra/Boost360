@@ -254,7 +254,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         } else {
             subDomain = "all-services";
         }
-        ContentSharing.Companion.shareTestimonial(data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/"+subDomain, session.getFPPrimaryContactNumber(), false);
+        ContentSharing.Companion.shareTestimonial(this,data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/"+subDomain, session.getFPPrimaryContactNumber(), false);
     }
 
     void updateRecyclerMenuOption(int pos, boolean status) {

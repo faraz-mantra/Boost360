@@ -1,6 +1,7 @@
 package com.dashboard.rest.repository
 
 import com.dashboard.base.rest.AppBaseRepository
+import com.dashboard.controller.ui.business.model.BusinessProfileUpdateRequest
 import com.dashboard.rest.TaskCode
 import com.dashboard.rest.apiClients.WithFloatsTwoApiClient
 import com.dashboard.rest.services.WithFloatTwoRemoteData
@@ -9,7 +10,10 @@ import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.http.Body
 import java.io.File
 
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, DashboardLocalDataSource>() {
@@ -25,7 +29,12 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, Dashbo
       ), TaskCode.UPLOAD_BUSINESS_IMAGE
     )
   }
-
+  fun updateBusinessProfile(
+     profileUpdateRequest: BusinessProfileUpdateRequest
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.
+    updateBusinessProfile(profileUpdateRequest = profileUpdateRequest),TaskCode.UPADTE_BUSINESS_PROFILE)
+  }
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
     return WithFloatTwoRemoteData::class.java
   }
