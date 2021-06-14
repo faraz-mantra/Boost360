@@ -40,7 +40,6 @@
               android:layout_height="@dimen/size_180"
               android:layout_marginTop="@dimen/size_1"
               android:layout_marginBottom="@dimen/size_1"
-              android:scaleType="centerInside"
               android:visibility="gone"
               app:srcCompat="@color/placeholder_bg" />
 
@@ -53,7 +52,8 @@
               android:focusable="true"
               android:foreground="?attr/selectableItemBackground"
               android:gravity="center"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              tools:targetApi="m">
 
               <com.framework.views.customViews.CustomImageView
                 android:layout_width="wrap_content"
@@ -79,13 +79,20 @@
               android:layout_gravity="end"
               android:layout_marginTop="10dp"
               android:layout_marginEnd="10dp"
-              android:drawableRight="@drawable/ic_info"
-              android:drawablePadding="@dimen/size_8"
+              android:drawablePadding="@dimen/size_2"
               android:text="@string/what_this"
               android:textColor="@color/blue_4A90E2"
-              android:visibility="visible" />
+              android:visibility="gone" />
+            <!--            android:drawableRight="@drawable/ic_info_business_logo"-->
+
           </FrameLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+          android:id="@+id/divider2"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#E2E2E2" />
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_change_image"
@@ -100,7 +107,7 @@
           android:visibility="gone" />
 
         <View
-          android:id="@+id/divider2"
+          android:id="@+id/divider3"
           android:layout_width="match_parent"
           android:layout_height="1dp"
           android:background="#E2E2E2" />
@@ -372,6 +379,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_16"
+          android:layout_marginBottom="@dimen/size_20"
           android:background="@drawable/bg_rect_edit_txt_gray"
           android:orientation="vertical">
 
