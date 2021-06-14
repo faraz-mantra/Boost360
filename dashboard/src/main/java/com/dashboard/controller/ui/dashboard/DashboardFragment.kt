@@ -114,10 +114,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     get() {
       return PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "") ?: ""
     }
-  private val _connectedChannels: ArrayList<String>
-    get() {
-      return getConnectedChannel()
-    }
 
   private val _connectedChannels: ArrayList<String>
     get() {
