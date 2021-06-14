@@ -194,6 +194,7 @@
                 android:src="@drawable/cart_status"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -423,24 +424,14 @@
                         app:srcCompat="@mipmap/ic_calendar" />
 
                     <TextView
-                        android:id="@+id/months_validity"
+                        android:id="@+id/months_validity1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingStart="@dimen/_10sdp"
-                      android:text="1 months"
+                      android:text="Select Validity (months)"
                       android:textColor="@color/common_text_color"
                         android:fontFamily="@font/open_sans_semibold"/>
-
-                    <TextView
-                        android:id="@+id/months_validity_edit_inc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:textSize="@dimen/_20sdp"
-                        android:text=" + "
-                        android:textColor="#009688" />
-
                     <TextView
                         android:id="@+id/months_validity_edit_dsc"
                         android:layout_width="wrap_content"
@@ -449,6 +440,29 @@
                         android:textSize="@dimen/_20sdp"
                         android:text=" -- "
                         android:textColor="#F44336" />
+
+                    <EditText
+                        android:id="@+id/months_validity"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:gravity="center"
+                        android:ems="2"
+                        android:maxLength="2"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@color/globalLight"
+                        android:text="0"
+                        android:textSize="@dimen/_13sdp"
+                        android:textCursorDrawable="@null"
+                        android:background="@drawable/et_validity"/>
+                    <TextView
+                        android:id="@+id/months_validity_edit_inc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:textSize="@dimen/_20sdp"
+                        android:text=" + "
+                        android:textColor="#009688" />
 
                 </LinearLayout>
 
