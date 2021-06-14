@@ -120,7 +120,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       it.adapter = adapter
       it.offscreenPageLimit = 3
       it.setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-     // PagerSnapHelper().attachToRecyclerView(it)
+      // PagerSnapHelper().attachToRecyclerView(it)
     }
 
     recyclerViewPhotos = binding.rvListPhotos.also {
@@ -319,7 +319,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun getChannelAccessToken(isShow: Boolean = false) {
-    if (isShow.not()) businessFeatureProgressBar.gone()
+    if (isShow) businessFeatureProgressBar.visible() else businessFeatureProgressBar.gone()
     viewModel.getChannelsAccessTokenStatus(session?.fPID)
     viewModel.channelStatusData.observeForever {
       var urlString = ""
@@ -354,6 +354,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlString += "\n\uD83D\uDCDE *Call: ${session?.userPrimaryMobile}*"
         PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlString)
         getVisitingMessageData()
+        if (isShow) businessFeatureProgressBar.gone()
       }
     }
   }
