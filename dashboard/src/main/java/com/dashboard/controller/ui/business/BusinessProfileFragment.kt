@@ -51,7 +51,6 @@ import okhttp3.RequestBody
 import java.io.File
 import java.util.*
 
-
 class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
 
   private var businessImage: File? = null
@@ -86,7 +85,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.imageAddBtn, binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
       binding?.openBusinessChannels, binding?.openBusinessContact, binding?.openBusinessWebsite,
     )
-    setImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl)?:"")
+    setImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl) ?: "")
   }
 
   override fun onResume() {
@@ -127,7 +126,11 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     }
     var str = ""
     if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "• +91 ${session?.userPrimaryMobile} (VMN)"
-    if (session?.userPrimaryMobile.isNullOrEmpty()){binding?.ctvActive?.gone()}else{binding?.ctvActive?.visible()}
+    if (session?.userPrimaryMobile.isNullOrEmpty()) {
+      binding?.ctvActive?.gone()
+    } else {
+      binding?.ctvActive?.visible()
+    }
     if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "\n• +91 ${session?.fPPrimaryContactNumber}"
     if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty().not()) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
     str += "\n• ${session?.getDomainName() ?: ""}"
@@ -211,8 +214,8 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         WebEngageController.trackEvent(EDIT_BUSINESS_DESCRIPTION_CLICK, CLICK, NO_EVENT_VALUE)
         showBusinessDescDialog()
       }
-      binding?.imageAddBtn, binding?.btnChangeImage -> openImagePicker()
-      binding?.imageAddBtn, binding?.btnSavePublish -> if (isValid()) updateFpDetails()
+      binding?.imageAddBtn, binding?.btnChangeImage -> baseActivity.startBusinessLogo(session)// openImagePicker()
+      binding?.btnSavePublish -> if (isValid()) updateFpDetails()
       binding?.openBusinessAddress -> {
         WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, NO_EVENT_VALUE)
         baseActivity.startBusinessAddress(session)
@@ -295,7 +298,6 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       .mode(type)
       .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
       .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
-      .scale(800, 800)
       .enableDebuggingMode(true).build()
   }
 
@@ -351,9 +353,10 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
         binding?.businessImage?.gone()
         binding?.btnChangeImage?.gone()
+        binding?.divider3?.gone()
         binding?.imageAddBtn?.visible()
         businessImage = null
-        setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
+//        setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
         binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
         targetMap = null
       }
@@ -366,23 +369,26 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       Picasso.get().load(imageUri).placeholder(R.drawable.placeholder_image_n).into(target)
       binding?.imageAddBtn?.gone()
       binding?.btnChangeImage?.visible()
+      binding?.divider3?.visible()
       binding?.businessImage?.visible()
     } else {
       binding?.businessImage?.gone()
       binding?.btnChangeImage?.gone()
+      binding?.divider3?.gone()
       binding?.imageAddBtn?.visible()
       businessImage = null
-      setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
+//      setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.blue_4A90E2)
       binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.blue_4A90E2)))
     }
   }
 
   private fun bindImage(mutableBitmap: Bitmap?) {
     binding?.businessImage?.setImageBitmap(mutableBitmap)
-    setTextViewDrawableColor(binding?.ctvWhatsThis!!,R.color.white)
+    setTextViewDrawableColor(binding?.ctvWhatsThis!!, R.color.white)
     binding?.ctvWhatsThis?.setTextColor(ColorStateList.valueOf(getColor(R.color.white)))
     binding?.imageAddBtn?.gone()
     binding?.btnChangeImage?.visible()
+    binding?.divider3?.visible()
     binding?.businessImage?.visible()
   }
 
@@ -415,6 +421,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     instance.getDrScoreData()!!.metricdetail!!.boolean_add_business_name = isAdded
     instance.updateDocument()
   }
+
   private fun setTextViewDrawableColor(textView: TextView, color: Int) {
     for (drawable in textView.compoundDrawables) {
       if (drawable != null) {
