@@ -67,7 +67,7 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
       val response1 = it as? OrderSummaryResponse
       response1?.Data?.saveTotalOrder(TOTAL_SELLER_ENQUIRIES)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(clientId, session?.fPParentId, scope, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { it1 ->
+      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { it1 ->
         val response2 = it1 as? UserSummaryResponse
         viewModel?.getSubscriberCount(session?.fpTag, clientId, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
           val subscriberCount = (it2.anyResponse as? Double)?.toInt() ?: 0

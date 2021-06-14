@@ -3049,8 +3049,9 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="add_featured_image">ADD FEATURED IMAGE</string>
     <string name="logo_updated_successfully">Logo uploaded successfully.</string>
     <string name="add_logo">Add Logo</string>
+  <string name="business_timings">Business Timings</string>
 
-    <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
+  <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
 <!--    <string name="ir_statusBarColor">#ffb900</string>-->
 
 </resources>

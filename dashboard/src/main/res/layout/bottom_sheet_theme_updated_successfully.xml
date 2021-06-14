@@ -8,25 +8,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <com.framework.views.roundedimageview.RoundedImageView
-        android:layout_width="39dp"
-        android:layout_height="39dp"
-        app:riv_mutate_background="true"
-        android:padding="@dimen/size_8"
-        android:id="@+id/riv_close_bottomSheet"
-        android:src="@drawable/ic_cross_grey"
-        android:layout_marginBottom="@dimen/size_15"
-        android:layout_gravity="center_horizontal"
-        android:background="#E9E9E9"
-        app:riv_corner_radius="@dimen/size_24"
-        />
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/riv_close_bottomSheet"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="@dimen/size_15"
+      android:src="@drawable/ic_cross_grey_circle" />
+
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-        android:background="@drawable/bottoms_sheet_top20dp_white"
-        android:paddingTop="@dimen/size_10"
+      android:background="@drawable/bottoms_sheet_top20dp_white"
       android:gravity="center_horizontal"
-      android:orientation="vertical">
+      android:orientation="vertical"
+      android:paddingTop="@dimen/size_10">
 
       <com.framework.views.customViews.CustomImageView
         android:layout_width="@dimen/size_70"
@@ -67,8 +64,9 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_38"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/size_26"
         android:background="@drawable/bg_button_proceed_4"
-        android:drawableEnd="@drawable/ic_arrow_top_right"
+        android:drawableStart="@drawable/ic_arrow_top_right"
         android:drawablePadding="@dimen/size_8"
         android:fontFamily="@font/open_sans"
         android:gravity="center"
@@ -79,27 +77,28 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:layout_marginBottom="@dimen/size_26"
         android:visibility="visible" />
+
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/share_whatsapp"
-          android:layout_width="wrap_content"
-          android:layout_height="@dimen/size_38"
-          android:layout_gravity="center_horizontal"
-          android:background="@drawable/rounded_stroke_grey_4_solid_green"
-          android:drawableStart="@drawable/ic_whatsapp_for_business_active"
-          android:drawablePadding="@dimen/size_8"
-          android:fontFamily="@font/open_sans"
-          android:gravity="center"
-          android:paddingHorizontal="@dimen/size_20"
-          android:stateListAnimator="@null"
-          android:text="@string/share_on_whatsapp"
-          android:textAllCaps="true"
-          android:textColor="@color/green_6bc95c"
-          android:textSize="14sp"
-          android:textStyle="bold"
-          android:layout_marginBottom="@dimen/size_26"
-          android:visibility="visible"/>
+        android:id="@+id/share_whatsapp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_38"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/size_26"
+        android:background="@drawable/rounded_stroke_grey_4_solid_green"
+        android:drawableStart="@drawable/ic_whatsapp_for_business_active"
+        android:drawablePadding="@dimen/size_8"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/size_20"
+        android:stateListAnimator="@null"
+        android:text="@string/share_on_whatsapp"
+        android:textAllCaps="true"
+        android:textColor="@color/green_6bc95c"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,7 +154,6 @@
           app:srcCompat="@drawable/ic_twitter_service" />
 
 
-
         <com.framework.views.customViews.CustomImageView
           android:id="@+id/btn_linkedin"
           android:layout_width="@dimen/size_36"
@@ -169,7 +167,7 @@
           android:layout_width="@dimen/size_36"
           android:layout_height="@dimen/size_36"
           android:layout_marginStart="@dimen/size_4"
-            android:padding="@dimen/size_2"
+          android:padding="@dimen/size_2"
           app:srcCompat="@drawable/ic_share_rounded" />
 
 
