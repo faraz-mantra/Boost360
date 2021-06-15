@@ -162,6 +162,9 @@ object NFWebEngageController {
 
   fun setFPTag(fpTag: String) {
     try {
+      if(fpTag == null){
+        return;
+      }
       Log.d(TAG, "Setting FP Tag" + fpTag)
       weUser.setAttribute("fpTag", fpTag)
 
