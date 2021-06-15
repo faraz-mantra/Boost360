@@ -3,6 +3,7 @@ package com.dashboard.controller.ui.website_theme.dialog
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +37,9 @@ class WebViewDialog : DialogFragment() {
     super.onViewCreated(view, savedInstanceState)
     loadData(domainUrl)
     if (title.isEmpty()) title = resources.getString(R.string.boost360_terms_conditions)
-    binding.title.text = title
+    binding.ctvBusinessName.text = title
+    binding.ctvWebsiteUrl.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+    binding.ctvWebsiteUrl.text = domainUrl
     binding.backBtn.setOnClickListener { dismiss() }
   }
 

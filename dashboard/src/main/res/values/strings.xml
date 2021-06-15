@@ -165,7 +165,7 @@
   <string name="publish_changes">Publish changes</string>
   <string name="discard_exit"><![CDATA[Discard & Exit]]></string>
   <string name="reset_to_default">Reset to default</string>
-  <string name="need_help">need help?</string>
+  <string name="need_help">Need help?</string>
   <string name="share_on_others">Share on others</string>
   <string name="add_featured_image">Add Featured Image</string>
   <string name="what_this">What’ this?</string>
@@ -185,7 +185,7 @@
   <string name="business_category_is_locked">Business category is locked</string>
   <string name="business_category_is_to_be_selected_only_once_while_setting_up_your_business_account_on_boost_360_to_know_more_contact_support">Business category is to be selected only once while setting up your business account on Boost 360. To know more contact support.</string>
   <string name="contact_support">Contact support</string>
-  <string name="what_is_a_business_featured_image">What is a business featured image?</string>
+  <string name="what_is_a_business_featured_image">What is a business image?</string>
   <string name="this_image_appears_with_your_business_description_on_your"><b>This image appears with your ‘business description’ on your website.</b>It works as the second most important key visual after your business logo which can improve your brand’s recall among your customers.\n\n <b>Picture you can upload:</b> Your office/storefront photo from outside. Your one key product or service that your business is famous for. For services business - a formal picture of your happy staff in full work attire. For services business - A happy customer being served at the premise. For an established business - the business owner’s photo sitting confidently in his office, or while receiving any award. Supported formats: JPEG, PNG Min. dimension: 600x600 px (square)</string>
   <string name="change_featured_image">change featured image</string>
   <string name="please_enter_valid_business_name">please enter valid business name</string>
