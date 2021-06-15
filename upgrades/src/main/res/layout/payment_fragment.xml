@@ -134,8 +134,8 @@
                     android:id="@+id/edit_business_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:text="EDIT"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:text="CHANGE"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:padding="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_14dp"
@@ -169,8 +169,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:text="Business Name"
-                        android:visibility="gone"
+                        android:text="Business name:"
                         android:padding="@dimen/_5sdp"
                         android:textColor="@color/common_text_color" />
 
@@ -179,9 +178,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/business_address"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:gravity="end"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
-                        android:visibility="gone"
                         android:text="Modern SPA"
                         android:textColor="@color/common_text_color" />
                     <TextView
@@ -189,8 +190,45 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Missing"
+                        android:visibility="gone"
+                        android:textSize="@dimen/txt_12sp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/global_red" />
+
+                    <TextView
+                        android:id="@+id/business_gstin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:layout_below="@id/business_name_value"
+                        android:text="GSTIN:"
+                        android:padding="@dimen/_5sdp"
+                        android:textColor="@color/common_text_color" />
+
+                    <TextView
+                        android:id="@+id/business_gstin_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/business_address"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:layout_below="@id/business_name_value"
+                        android:gravity="end"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
+                        android:text="22AAAAA****A1Z5"
+                        android:textColor="@color/common_text_color" />
+                    <TextView
+                        android:id="@+id/business_gstin_missing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_below="@id/business_name_value"
                         android:text="Missing"
                         android:visibility="gone"
                         android:textSize="@dimen/txt_12sp"
@@ -201,29 +239,32 @@
                         android:id="@+id/business_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/business_name"
+                        android:layout_below="@id/business_gstin_value"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
-                        android:text="Business Email"
+                        android:text="Email ID:"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
                         android:id="@+id/business_email_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/business_name_value"
+                        android:layout_below="@id/business_gstin_value"
+                        android:layout_toEndOf="@+id/business_address"
+                        android:layout_marginLeft="@dimen/_12sdp"
                         android:layout_alignParentEnd="true"
+                        android:gravity="end"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
-                        android:text="sample@nowfloats.com"
+                        android:text="hello@nowfloats.com"
                         android:textColor="@color/common_text_color"/>
                     <TextView
                         android:id="@+id/business_email_missing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@id/business_name_value"
-                        android:fontFamily="@font/open_sans"
+                        android:layout_below="@id/business_gstin_value"
+                        android:fontFamily="@font/open_sans_bold"
                         android:padding="@dimen/_5sdp"
                         android:text="Missing"
                         android:visibility="gone"
@@ -235,10 +276,10 @@
                         android:id="@+id/business_mobile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/business_email"
+                        android:layout_below="@id/business_email_value"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
-                        android:text="Mobile"
+                        android:text="Contact no:"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
@@ -246,7 +287,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/business_email_value"
+                        android:layout_toEndOf="@+id/business_address"
+                        android:layout_marginLeft="@dimen/_12sdp"
                         android:layout_alignParentEnd="true"
+                        android:gravity="end"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
                         android:text="+1235678905"
@@ -256,7 +300,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/open_sans_bold"
                         android:text="Missing"
                         android:visibility="gone"
                         android:layout_below="@id/business_email_value"
@@ -269,10 +313,10 @@
                         android:id="@+id/business_supply_place"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/business_mobile"
+                        android:layout_below="@id/business_mobile_value"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
-                        android:text="Place of Supply"
+                        android:text="Place of supply:"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
@@ -280,8 +324,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/business_mobile_value"
+                        android:layout_toEndOf="@+id/business_address"
+                        android:layout_marginLeft="@dimen/_12sdp"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="0dp"
+                        android:gravity="end"
                         android:layout_marginEnd="-1dp"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
@@ -293,11 +340,52 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/open_sans_bold"
                         android:padding="@dimen/_5sdp"
                         android:text="Missing"
                         android:visibility="gone"
                         android:layout_below="@id/business_mobile_value"
+                        android:textSize="@dimen/txt_12sp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/global_red" />
+
+                    <TextView
+                        android:id="@+id/business_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/business_supply_place_value"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Business address:"
+                        android:textColor="@color/common_text_color" />
+
+                    <TextView
+                        android:id="@+id/business_address_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/business_supply_place_value"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="-1dp"
+                        android:layout_toEndOf="@+id/business_address"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="end"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Sample address"
+                        android:textColor="@color/common_text_color" />
+
+                    <TextView
+                        android:id="@+id/business_address_missing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Missing"
+                        android:visibility="gone"
+                        android:layout_below="@id/business_supply_place_value"
                         android:textSize="@dimen/txt_12sp"
                         android:textAllCaps="true"
                         android:textColor="@color/global_red" />
@@ -310,6 +398,7 @@
                     android:layout_height="@dimen/_1sdp"
                     android:background="@color/material_grey_400"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/payment_business_full_amount_layout" />
 
@@ -338,13 +427,14 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:gravity="center"
                         android:visibility="gone"
-                        android:text="Add Details"
+                        android:textAllCaps="true"
+                        android:text="Add Missing Info"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/supply_place_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -357,9 +447,9 @@
                         android:textColor="@color/app_text_yellow"
                         android:textSize="@dimen/txt_14sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/business_name_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -372,9 +462,9 @@
                         android:textColor="@color/app_text_yellow"
                         android:textSize="@dimen/txt_14sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/business_email_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -387,9 +477,9 @@
                         android:textColor="@color/app_text_yellow"
                         android:textSize="@dimen/txt_14sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/business_mobile_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -402,7 +492,7 @@
                         android:textColor="@color/app_text_yellow"
                         android:textSize="@dimen/txt_14sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
