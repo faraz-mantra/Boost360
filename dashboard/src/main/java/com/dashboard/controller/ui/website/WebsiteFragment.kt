@@ -138,7 +138,6 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
       WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
-      WebsiteActionItem.IconType.doctor_e_profile_listing -> baseActivity.startListDoctors(session)
     }
   }
 
