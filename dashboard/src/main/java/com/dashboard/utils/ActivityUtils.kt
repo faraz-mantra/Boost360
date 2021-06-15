@@ -419,6 +419,13 @@ fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
     e.printStackTrace()
   }
 }
+fun AppCompatActivity.startListDoctors(session: UserSessionManager?) {
+  try {
+    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
 
 fun AppCompatActivity.startAddStaff(session: UserSessionManager?) {
   try {
