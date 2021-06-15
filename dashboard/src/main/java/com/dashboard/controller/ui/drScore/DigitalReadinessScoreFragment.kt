@@ -207,6 +207,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 }
 
 fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: AppCompatActivity, session: UserSessionManager?) {
+  WebEngageController.trackEvent(DIGITAL_READINESS_PAGE, PAGE_VIEW, session?.fpTag)
   when (type) {
     DrScoreItem.DrScoreItemType.boolean_add_business_name -> {
 //        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty())
