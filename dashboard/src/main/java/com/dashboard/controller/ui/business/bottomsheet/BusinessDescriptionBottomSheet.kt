@@ -29,6 +29,7 @@ class BusinessDescriptionBottomSheet : BaseBottomSheetDialog<BottomSheetBusiness
         setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnSaveDesc)
         this.businessProfileModel = arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
         binding?.cetBusinessDesc?.setText(businessProfileModel?.businessDesc)
+        binding?.cetBusinessDesc?.setSelection(businessProfileModel?.businessDesc?.length?:0)
         binding?.cetBusinessDesc?.afterTextChanged { binding?.btnSaveDesc?.isEnabled = binding?.cetBusinessDesc?.text?.trim()?.length ?: 0 > 0 }
         baseActivity.showKeyBoard(binding?.cetBusinessDesc)
     }

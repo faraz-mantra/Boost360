@@ -136,10 +136,8 @@ public class Business_Logo_Activity extends AppCompatActivity {
     logoimageView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        if (ActivityCompat.checkSelfPermission(Business_Logo_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-            PackageManager.PERMISSION_GRANTED) {
-          ActivityCompat.requestPermissions(Business_Logo_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-              gallery_req_id);
+        if (ActivityCompat.checkSelfPermission(Business_Logo_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+          ActivityCompat.requestPermissions(Business_Logo_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
           return;
         }
         if (TextUtils.isEmpty(path)) {
@@ -152,11 +150,10 @@ public class Business_Logo_Activity extends AppCompatActivity {
     uploadButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-          Methods.showFeatureNotAvailDialog(Business_Logo_Activity.this);
-          return;
-        }
-
+//        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//          Methods.showFeatureNotAvailDialog(Business_Logo_Activity.this);
+//          return;
+//        }
         final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
         imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 

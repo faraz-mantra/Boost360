@@ -2,6 +2,7 @@ package com.boost.presignin.ui.mobileVerification
 
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
@@ -55,6 +56,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
 
   override fun onCreateView() {
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    setOnClickListener(binding?.helpTv)
     binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = (it.isPhoneValid()) }
     baseActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
@@ -73,6 +75,14 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     binding?.loginUsername?.setOnClickListener {
       WebEngageController.trackEvent(PS_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
       navigator?.startActivity(LoginActivity::class.java)
+    }
+
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when(v){
+    binding?.helpTv->  needHelp()
     }
   }
 

@@ -1,0 +1,226 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "state": "Andhra Pradesh",
+      "state_code": "AD",
+      "state_tin": "37"
+    },
+    {
+      "id": "2",
+      "state": "Arunachal Pradesh",
+      "state_code": "AR",
+      "state_tin": "12"
+    },
+    {
+      "id": "3",
+      "state": "Assam",
+      "state_code": "AS",
+      "state_tin": "18"
+    },
+    {
+      "id": "4",
+      "state": "Bihar",
+      "state_code": "BR",
+      "state_tin": "10"
+    },
+    {
+      "id": "5",
+      "state": "Chattisgarh",
+      "state_code": "CG",
+      "state_tin": "22"
+    },
+    {
+      "id": "6",
+      "state": "Delhi",
+      "state_code": "DL",
+      "state_tin": "07"
+    },
+    {
+      "id": "7",
+      "state": "Goa",
+      "state_code": "GA",
+      "state_tin": "30"
+    },
+    {
+      "id": "8",
+      "state": "Gujarat",
+      "state_code": "GJ",
+      "state_tin": "24"
+    },
+    {
+      "id": "9",
+      "state": "Haryana",
+      "state_code": "HR",
+      "state_tin": "06"
+    },
+    {
+      "id": "10",
+      "state": "Himachal Pradesh ",
+      "state_code": "HP",
+      "state_tin": "02"
+    },
+    {
+      "id": "11",
+      "state": "Jammu and Kashmir",
+      "state_code": "JK",
+      "state_tin": "01"
+    },
+    {
+      "id": "12",
+      "state": "Jharkhand",
+      "state_code": "JH",
+      "state_tin": "20"
+    },
+    {
+      "id": "13",
+      "state": "Karnataka",
+      "state_code": "KA",
+      "state_tin": "29"
+    },
+    {
+      "id": "14",
+      "state": "Kerala",
+      "state_code": "KL",
+      "state_tin": "32"
+    },
+    {
+      "id": "15",
+      "state": "Lakshadweep Islands",
+      "state_code": "LD",
+      "state_tin": "31"
+    },
+    {
+      "id": "16",
+      "state": "Madhya Pradesh",
+      "state_code": "MP",
+      "state_tin": "23"
+    },
+    {
+      "id": "17",
+      "state": "Maharashtra",
+      "state_code": "MH",
+      "state_tin": "27"
+    },
+    {
+      "id": "18",
+      "state": "Manipur",
+      "state_code": "MN",
+      "state_tin": "14"
+    },
+    {
+      "id": "19",
+      "state": "Meghalaya",
+      "state_code": "ML",
+      "state_tin": "17"
+    },
+    {
+      "id": "20",
+      "state": "Mizoram",
+      "state_code": "MZ",
+      "state_tin": "15"
+    },
+    {
+      "id": "21",
+      "state": "Nagaland",
+      "state_code": "NL",
+      "state_tin": "13"
+    },
+    {
+      "id": "22",
+      "state": "Odisha",
+      "state_code": "OD",
+      "state_tin": "21"
+    },
+    {
+      "id": "23",
+      "state": "Pondicherry",
+      "state_code": "PY",
+      "state_tin": "34"
+    },
+    {
+      "id": "24",
+      "state": "Punjab",
+      "state_code": "PB",
+      "state_tin": "03"
+    },
+    {
+      "id": "25",
+      "state": "Rajasthan",
+      "state_code": "RJ",
+      "state_tin": "08"
+    },
+    {
+      "id": "26",
+      "state": "Sikkim",
+      "state_code": "SK",
+      "state_tin": "11"
+    },
+    {
+      "id": "27",
+      "state": "Tamil Nadu",
+      "state_code": "TN",
+      "state_tin": "33"
+    },
+    {
+      "id": "28",
+      "state": "Telangana",
+      "state_code": "TS",
+      "state_tin": "36"
+    },
+    {
+      "id": "29",
+      "state": "Tripura",
+      "state_code": "TR",
+      "state_tin": "16"
+    },
+    {
+      "id": "30",
+      "state": "Uttar Pradesh",
+      "state_code": "UP",
+      "state_tin": "09"
+    },
+    {
+      "id": "31",
+      "state": "Uttarakhand",
+      "state_code": "UK",
+      "state_tin": "05"
+    },
+    {
+      "id": "32",
+      "state": "West Bengal",
+      "state_code": "WB",
+      "state_tin": "19"
+    },
+    {
+      "id": "33",
+      "state": "Andaman and Nicobar Islands",
+      "state_code": "AN",
+      "state_tin": "35"
+    },
+    {
+      "id": "34",
+      "state": "Chandigarh",
+      "state_code": "CH",
+      "state_tin": "04"
+    },
+    {
+      "id": "35",
+      "state": "Dadra & Nagar Haveli and Daman & Diu",
+      "state_code": "DNHDD",
+      "state_tin": "26"
+    },
+    {
+      "id": "36",
+      "state": "Ladakh",
+      "state_code": "LA",
+      "state_tin": "38"
+    },
+    {
+      "id": "37",
+      "state": "Other Territory",
+      "state_code": "OT",
+      "state_tin": "97"
+    }
+  ]
+}

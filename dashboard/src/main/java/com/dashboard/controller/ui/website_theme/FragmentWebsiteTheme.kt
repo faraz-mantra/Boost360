@@ -200,7 +200,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
       }
       binding?.openWebsite -> {
         val website = binding?.ctvWebsite?.text.toString()
-        openWebViewDialog(url = website, website)
+        openWebViewDialog(url = website, sessionData?.fpTag!!)
       }
       binding?.more -> {
         if (this.popupWindow?.isShowing == true) this.popupWindow?.dismiss()
@@ -271,8 +271,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     websiteUpdateSheet.onClicked = {
       when (it) {
         TypeSuccess.VISIT_WEBSITE.name -> {
-          val domainName = UserSessionManager(requireActivity()).getDomainName()!!
-          openWebViewDialog(domainName, domainName)
+          openWebViewDialog(binding?.ctvWebsite?.text.toString(), sessionData?.fpTag!!)
         }
         TypeSuccess.CLOSE.name -> goBack()
       }
@@ -345,13 +344,13 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
           websiteThemePublishBottomSheet.dismiss()
           WebEngageController.trackEvent(WEBSITE_STYLE_CANCEL, CLICK, NO_EVENT_VALUE)
 
-        }
-        TypeSuccess.PUBLISH_CHANGES.name -> {
-          websiteThemePublishBottomSheet.dismiss()
-          updateAPI(true)
+          }
+          TypeSuccess.PUBLISH_CHANGES.name -> {
+            websiteThemePublishBottomSheet.dismiss()
+            updateAPI(false)
+          }
         }
       }
+      websiteThemePublishBottomSheet.show(parentFragmentManager,WebSiteThemePublishBottomSheet::javaClass.name)
     }
-    websiteThemePublishBottomSheet.show(parentFragmentManager, WebSiteThemePublishBottomSheet::javaClass.name)
-  }
 }

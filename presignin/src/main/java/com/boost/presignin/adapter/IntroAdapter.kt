@@ -7,7 +7,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.boost.presignin.model.IntroItem
 import com.boost.presignin.ui.intro.PreSignInIntroFragment
 
-
 class IntroAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,
     val items: List<IntroItem>, val skip: () -> Unit,
     val playPauseState: (state: Boolean) -> Unit,
