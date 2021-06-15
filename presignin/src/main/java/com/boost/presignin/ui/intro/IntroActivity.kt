@@ -38,9 +38,10 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
   private val nextRunnable = Runnable {
     binding?.introViewpager?.post {
       if (!isVideoPlaying) {
-        val item = binding?.introViewpager?.currentItem ?: 0
-        val currentIndex = if (item == (items.size - 1)) 0 else item + 1
-        binding?.introViewpager?.setCurrentItem(currentIndex, true)
+        val lastPosition: Int? = binding?.introViewpager?.adapter?.itemCount?.minus(1)
+        val mCurrentPosition = binding?.introViewpager?.currentItem ?: 0
+        val isLast = (mCurrentPosition == lastPosition)
+        binding?.introViewpager?.setCurrentItem(if (isLast) 0 else mCurrentPosition + 1, isLast.not())
         nextPageTimer()
       }
     }
@@ -71,21 +72,18 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     items = IntroItem().getData(this)
     initTncString()
     nextPageTimer()
-    binding?.introViewpager?.adapter = IntroAdapter(supportFragmentManager, lifecycle, items, { setNextPage() }, { isVideoPlaying = it; })
-    binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
-    binding?.introViewpager?.setPageTransformer(ViewPager2Transformation())
+    binding?.introViewpager?.apply {
+      adapter = IntroAdapter(supportFragmentManager, lifecycle, items, { setNextPage() }, { isVideoPlaying = it; })
+      orientation = ViewPager2.ORIENTATION_HORIZONTAL
+      binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
+      binding?.introViewpager?.registerOnPageChangeCallback(CircularViewPagerHandler(this))
+    }
+//    binding?.introViewpager?.setPageTransformer(ViewPager2Transformation())
     binding?.btnCreate?.setOnClickListener {
-//      navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789896") })
+//    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789896") })
       WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
       startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
     }
-
-    binding?.introViewpager?.registerOnPageChangeCallback(object :
-      ViewPager2.OnPageChangeCallback() {
-      override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-        super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-      }
-    })
   }
 
   private fun setNextPage() {
