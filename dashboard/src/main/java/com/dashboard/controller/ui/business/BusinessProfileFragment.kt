@@ -108,7 +108,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.containerBusinessAddress?.visible()
     }
     var str = ""
-    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "• +91 ${session?.userPrimaryMobile} (VMN)"
+    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
     if (session?.fPPrimaryContactNumber.isNullOrEmpty()) {
       binding?.ctvActive?.gone()
     } else {
