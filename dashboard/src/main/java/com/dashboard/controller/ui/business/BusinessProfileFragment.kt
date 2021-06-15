@@ -37,6 +37,7 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_ADDRESS
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.UserSessionManager
@@ -96,6 +97,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     loadImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl) ?: "")
     binding?.btnSavePublish?.isEnabled = false
     binding?.ctvBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
+    binding?.ctvBusinessCategory?.text = session?.getFPDetails(GET_FP_DETAILS_CATEGORY)
     onBusinessNameAddedOrUpdated(session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty().not())
     binding?.ctvBusinessNameCount?.text = "${session?.fPName?.length}/40"
     binding?.ctvWebsite?.text = "${session?.getDomainName()}"
