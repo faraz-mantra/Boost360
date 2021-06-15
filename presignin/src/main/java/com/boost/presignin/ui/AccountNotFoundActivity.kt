@@ -2,7 +2,9 @@ package com.boost.presignin.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.boost.presignin.R
+import com.boost.presignin.base.AppBaseActivity
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.ActivityAccountNotFoundBinding
 import com.boost.presignin.helper.WebEngageController
@@ -12,7 +14,7 @@ import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.framework.webengageconstant.*
 
-class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, BaseViewModel>() {
+class AccountNotFoundActivity : AppBaseActivity<ActivityAccountNotFoundBinding, BaseViewModel>() {
 
   private val phoneNumber by lazy {
     intent.getStringExtra(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -27,6 +29,7 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
   }
 
   override fun onCreateView() {
+    setOnClickListener(binding?.helpTv)
     WebEngageController.trackEvent(PS_CREATE_LOGIN_OTHER_WAY, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.usernameAccountBt?.setOnClickListener {
       WebEngageController.trackEvent(PS_RETRY_ACCOUNT_ACCOUNT_CLICK, CLICKED, NO_EVENT_VALUE)
@@ -47,6 +50,14 @@ class AccountNotFoundActivity : BaseActivity<ActivityAccountNotFoundBinding, Bas
     }
   }
 
+  override fun onClick(v: View?) {
+    super.onClick(v)
+    when(v){
+      binding?.helpTv->{
+        needHelp()
+      }
+    }
+  }
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == 300 && resultCode == RESULT_OK) finish()
