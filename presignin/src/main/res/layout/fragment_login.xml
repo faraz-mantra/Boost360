@@ -91,6 +91,7 @@
       android:layout_width="wrap_content"
       android:layout_marginTop="@dimen/_20sdp"
       android:fontFamily="@font/semi_bold"
+        android:visibility="invisible"
       android:text="@string/need_help"
       app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
       tools:ignore="MissingConstraints,UnknownId" />
