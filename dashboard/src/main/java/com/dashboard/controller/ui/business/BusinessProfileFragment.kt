@@ -108,13 +108,13 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.containerBusinessAddress?.visible()
     }
     var str = ""
-    if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "• +91 ${session?.userPrimaryMobile} (VMN)"
-    if (session?.userPrimaryMobile.isNullOrEmpty()) {
+    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
+    if (session?.fPPrimaryContactNumber.isNullOrEmpty()) {
       binding?.ctvActive?.gone()
     } else {
       binding?.ctvActive?.visible()
     }
-    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "\n• +91 ${session?.fPPrimaryContactNumber}"
+    if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "\n• +91 ${session?.userPrimaryMobile}"
     if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty().not()) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
     str += "\n• ${session?.getDomainName() ?: ""}"
     binding?.ctvBusinessContacts?.text = str.trimMargin()

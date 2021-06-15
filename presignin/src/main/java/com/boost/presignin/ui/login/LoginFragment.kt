@@ -85,6 +85,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
         baseActivity.finish()
       }
       binding?.helpTv -> {
+        needHelp()
       }
     }
   }

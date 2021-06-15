@@ -97,7 +97,7 @@ const val deeplink_promo_banner = "promo_banner"
 const val deeplink_create_order = "create_order"
 const val deeplink_create_appointment = "create_appointment"
 const val deeplink_create_consultation = "create_consultation"
-
+const val deeplink_website_theme = "website_customization"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
 
@@ -189,7 +189,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_notification)) {
           baseActivity.startNotification(session)
         } else if (url.contains(deeplink_profile)) {
-          baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+          baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(deeplink_contact)) {
           baseActivity.startBusinessInfoEmail(session)
         } else if (url.contains(deeplink_bizaddress)) {
@@ -199,7 +199,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_bizlogo)) {
           baseActivity.startBusinessLogo(session)
         } else if (url.contains(deeplink_nfstoreDomainTTBCombo)) {
-          baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+          baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(deeplink_DR_SCORE)) {
           baseActivity.startReadinessScoreView(session, 0)
         } else if (url.contains(deeplink_imageGallery)) {
@@ -269,6 +269,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "promoBanner", buyItemKey)
         }else if (url.contains(deeplink_REFER_EARN)) {
           baseActivity.startReferralView(session)
+        }else if (url.contains(deeplink_website_theme)) {
+          baseActivity.startWebsiteTheme(session)
         }
       }
     } catch (e: Exception) {
