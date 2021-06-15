@@ -1278,7 +1278,9 @@ Log.v("package_validity_months", " "+ package_validity_months)
                 totalCalculationAfterCoupon()
 //                var event_attributes: HashMap<String, Double> = HashMap()
                 var event_attributes: HashMap<String, Any> = HashMap()
-                event_attributes.put("total amount", grandTotal)
+
+                val revenue = Math.round(grandTotal * 100).toInt() / 100
+                event_attributes.put("total amount", revenue)
                 event_attributes.put("cart size", it.size.toDouble())
                 it.forEach {
                     if(it.boost_widget_key != null){
@@ -1288,7 +1290,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                     }
 
                 }
-                event_attributes.put("cart ids", Gson().toJson(cartFullItems))
+                event_attributes.put("cart ids", Utils.filterBraces(cartFullItems.toString()))
 //                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
                 WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
 
