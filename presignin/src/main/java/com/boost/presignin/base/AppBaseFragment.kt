@@ -4,10 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.databinding.ViewDataBinding
+import com.boost.presignin.R
 import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -59,4 +66,14 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       e.printStackTrace()
     }
   }
+  protected fun needHelp(){
+    val s = SpannableString(resources.getString(R.string.need_help_desc))
+    Linkify.addLinks(s, Linkify.ALL)
+    AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.AlertDialogCustom))
+      .setTitle(getString(R.string.need_help_title))
+      .setMessage(s)
+      .setPositiveButton(resources.getString(R.string.okay), null).show()
+      .findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+  }
+
 }

@@ -144,4 +144,7 @@
   <string name="psn_login_now">LOGIN NOW</string>
   <string name="request_otp">request otp</string>
   <string name="get_boost_360_tnc">https://www.getboost360.com/tnc?v=224</string>
+  <string name="need_help_desc">Please feel free to <a href = "mailto: ria@nowfloats.com">send an email at ria@nowfloats.com</a>. Alternatively you can call us at <a href="tel:18601231233">call us at 1860 123 1233</a>.</string>
+  <string name="need_help_title">We\'re here to help.</string>
+
 </resources>

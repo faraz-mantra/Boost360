@@ -97,9 +97,7 @@ const val deeplink_promo_banner = "promo_banner"
 const val deeplink_create_order = "create_order"
 const val deeplink_create_appointment = "create_appointment"
 const val deeplink_create_consultation = "create_consultation"
-const val deeplink_website_theme = "website_theme"
-const val deeplink_business_profile = "business_profile_new"
-
+const val deeplink_website_theme = "website_customization"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
 
@@ -273,8 +271,6 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startReferralView(session)
         }else if (url.contains(deeplink_website_theme)) {
           baseActivity.startWebsiteTheme(session)
-        }else if (url.contains(deeplink_business_profile)) {
-          baseActivity.startBusinessProfileDetailEdit(session)
         }
       }
     } catch (e: Exception) {
