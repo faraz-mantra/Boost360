@@ -4,9 +4,15 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.ViewDataBinding
@@ -78,5 +84,14 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
       window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
       window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
     }
+  }
+  protected fun needHelp(){
+    val s = SpannableString(resources.getString(R.string.need_help_desc))
+    Linkify.addLinks(s, Linkify.ALL)
+    AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
+      .setTitle(getString(R.string.need_help_title))
+      .setMessage(s)
+      .setPositiveButton(resources.getString(R.string.okay), null).show()
+      .findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
   }
 }
