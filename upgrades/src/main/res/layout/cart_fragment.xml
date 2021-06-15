@@ -798,6 +798,7 @@
                         android:id="@+id/gstin_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_below="@id/coupon_discount_title">
 
                         <TextView
