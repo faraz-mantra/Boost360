@@ -1,6 +1,7 @@
 package com.boost.presignin.ui.mobileVerification
 
 import android.os.Bundle
+import android.os.Handler
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
@@ -47,6 +48,11 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     return LoginSignUpViewModel::class.java
   }
 
+  override fun onResume() {
+    super.onResume()
+    Handler().postDelayed({ baseActivity.showKeyBoard(binding?.phoneEt) }, 300)
+  }
+
   override fun onCreateView() {
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = (it.isPhoneValid()) }
@@ -80,7 +86,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.parseResponse()) {
         navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-          putInt(FRAGMENT_TYPE, OTP_FRAGMENT) ;putString(IntentConstant.EXTRA_PHONE_NUMBER.name,binding?.phoneEt?.text?.toString())
+          putInt(FRAGMENT_TYPE, OTP_FRAGMENT);putString(IntentConstant.EXTRA_PHONE_NUMBER.name, binding?.phoneEt?.text?.toString())
         })
       } else showShortToast(getString(R.string.otp_not_sent))
       hideProgress()

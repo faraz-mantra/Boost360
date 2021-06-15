@@ -1,49 +1,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/screen_bg"
+  android:orientation="vertical">
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/tool_bar_business_profile" />
+
+  <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/screen_bg"
-    android:orientation="vertical">
+    android:layout_height="0dp"
+    android:layout_weight="1">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/tool_bar_business_profile" />
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
-    <ScrollView
+      <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="match_parent"
+        android:background="#CACACA">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <include
+          layout="@layout/business_hours_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#CACACA">
-
-                <include
-                    layout="@layout/business_hours_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </androidx.cardview.widget.CardView>
+      </androidx.cardview.widget.CardView>
 
 
+    </LinearLayout>
+  </ScrollView>
 
-        </LinearLayout>
-    </ScrollView>
-    <com.framework.views.customViews.CustomButton
-        android:id="@+id/btn_save_info"
-        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_36sdp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="@dimen/_60sdp"
-        android:gravity="center"
-        android:layout_marginBottom="16dp"
-        android:layout_gravity="bottom"
-        android:text="@string/save"
-        android:textColor="@color/white" />
+  <com.framework.views.customViews.CustomButton
+    android:id="@+id/btn_save_info"
+    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_36sdp"
+    android:layout_gravity="bottom"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="@dimen/_60sdp"
+    android:layout_marginBottom="16dp"
+    android:gravity="center"
+    android:text="@string/save"
+    android:visibility="gone"
+    android:textColor="@color/white" />
 </LinearLayout>

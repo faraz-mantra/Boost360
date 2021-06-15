@@ -192,7 +192,8 @@
   <string name="please_enter_valid_business_description">please enter valid business description</string>
   <string name="business_name_published_successfully">Business name published successfully</string>
   <string name="business_description_published_successfully">Business description published successfully</string>
-  <string name="active">active</string>
-  <string name="add_business_image">add business image</string>
+  <string name="add_business_image">add business logo</string>
   <string name="error_updating_business">Error updating business profile, please try again.</string>
+  <string name="active">active</string>
+  <string name="update_business_image">Update Business Logo</string>
 </resources>
