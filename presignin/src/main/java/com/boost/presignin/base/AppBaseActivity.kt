@@ -1,5 +1,6 @@
 package com.boost.presignin.base
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
@@ -85,13 +86,13 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
       window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
     }
   }
-  protected fun needHelp(){
+  protected fun needHelp() {
     val s = SpannableString(resources.getString(R.string.need_help_desc))
     Linkify.addLinks(s, Linkify.ALL)
-    AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
-      .setTitle(getString(R.string.need_help_title))
-      .setMessage(s)
-      .setPositiveButton(resources.getString(R.string.okay), null).show()
-      .findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
-  }
-}
+    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
+    alertDialog.setTitle(getString(R.string.need_help_title)).setMessage(s).setPositiveButton(resources.getString(R.string.okay), null)
+    val alert = alertDialog.create()
+    alert.show()
+    alert.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+    alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this,R.color.colorAccent))
+  }}
