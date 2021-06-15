@@ -304,7 +304,7 @@
               android:padding="@dimen/size_10"
               android:text="@string/active"
               android:textAllCaps="true"
-              android:textColor="#1DBE73" />
+              android:textColor="@color/green_27AE60" />
           </FrameLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

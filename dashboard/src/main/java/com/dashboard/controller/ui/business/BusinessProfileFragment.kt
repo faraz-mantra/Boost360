@@ -50,13 +50,14 @@ import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
 
 class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
 
   private var businessImage: File? = null
-  private var businessProfileModel = BusinessProfileModel();
+  private var businessProfileModel = BusinessProfileModel()
   private var businessProfileUpdateRequest: BusinessProfileUpdateRequest? = null
   private var session: UserSessionManager? = null
 
@@ -112,6 +113,13 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     var str = ""
     if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
     if (session?.fPPrimaryContactNumber.isNullOrEmpty()) {
+      if (session?.getStoreWidgets()?.contains("CALLTRACKER") == true) {
+        binding?.ctvActive?.text = getString(R.string.active)
+        binding?.ctvActive?.setTextColor(getColor(R.color.green_27AE60))
+      } else {
+        binding?.ctvActive?.text = getString(R.string.inactive)
+        binding?.ctvActive?.setTextColor(getColor(R.color.red_F40000))
+      }
       binding?.ctvActive?.gone()
     } else {
       binding?.ctvActive?.visible()
@@ -133,7 +141,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     s_uuid = s_uuid.replace("-", "")
     viewModel?.putUploadBusinessLogo(
       clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid,
-      totalChunks = "1", currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
+      totalChunks = "1", currentChunkNumber = "1", file = businessLogoImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
     )?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
@@ -145,7 +153,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
 
   private fun loadImage(imageUri: String) {
     if (imageUri.isEmpty().not()) {
-      baseActivity.glideLoad(mImageView = binding?.businessImage!!, url =imageUri, placeholder = R.drawable.placeholder_image_n)
+      baseActivity.glideLoad(mImageView = binding?.businessImage!!, url = imageUri, placeholder = R.drawable.placeholder_image_n)
       binding?.imageAddBtn?.gone()
       binding?.btnChangeImage?.visible()
       binding?.divider3?.visible()
