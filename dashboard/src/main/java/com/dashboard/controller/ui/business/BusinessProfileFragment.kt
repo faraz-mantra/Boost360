@@ -141,7 +141,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     s_uuid = s_uuid.replace("-", "")
     viewModel?.putUploadBusinessLogo(
       clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid,
-      totalChunks = "1", currentChunkNumber = "1", file = businessLogoImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
+      totalChunks = "1", currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
     )?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
