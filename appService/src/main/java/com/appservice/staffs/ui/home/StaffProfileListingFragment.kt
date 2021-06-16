@@ -79,13 +79,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   override fun onCreateView() {
     super.onCreateView()
     getBundleData()
-    if (isLockStaff().not()) {
+    if (true) {
       layoutManagerN = LinearLayoutManager(baseActivity)
       WebEngageController.trackEvent(STAFF_PROFILE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
       getListServiceFilterApi()
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
-      setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService, binding?.staffEmpty?.btnHowWork)
+      setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService, binding?.staffEmpty?.btnHowWork,binding?.doctorEmpty?.btnAddDoctor)
     }
   }
 
@@ -127,7 +127,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         isServiceEmpty = false
       } else {
         hideProgressN()
-        setEmptyView(isStaffEmpty = false, isServiceEmpty = true)
+        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)){
+          setEmptyDoctorView(false,true)
+        }else {
+          setEmptyView(isStaffEmpty = false, isServiceEmpty = true)
+        }
         isServiceEmpty = true
       }
     })
@@ -181,14 +185,18 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       onStaffAddedOrUpdated(listStaff.isNullOrEmpty().not())
       if (listStaff.isNullOrEmpty().not()) {
         removeLoader()
-        setEmptyView(false)
+        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)){
+          setEmptyDoctorView(false)
+        }else {
+          setEmptyView(isStaffEmpty = false)
+        }
         TOTAL_ELEMENTS = resultStaff?.paging?.count ?: 0
         finalList.addAll(listStaff!!)
         list.clear()
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
         setAdapterNotify()
-      } else if (isFirstLoad) setEmptyView(true)
+      } else if (isFirstLoad) if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)){ setEmptyDoctorView(true) }else { setEmptyView(isStaffEmpty = true) }
     } else {
       if (listStaff.isNullOrEmpty().not()) {
         list.clear()
@@ -218,6 +226,12 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
     binding?.staffEmpty?.root?.visibility = if (isStaffEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
     binding?.rvStaffList?.visibility = if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
+    if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
+  }
+  private fun setEmptyDoctorView(isDoctorEmpty: Boolean, isServiceEmpty: Boolean = false) {
+    binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
+    binding?.doctorEmpty?.root?.visibility = if (isDoctorEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
+    binding?.rvStaffList?.visibility = if (isDoctorEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
   }
 
@@ -286,6 +300,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       }
       binding?.staffLock?.btnStaffAddOns -> startStorePage()
       binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
+      binding?.doctorEmpty?.btnAddDoctor->{startStaffFragmentActivity(FragmentType.DOCTOR_ADD_EDIT_FRAGMENT)}
     }
   }
 

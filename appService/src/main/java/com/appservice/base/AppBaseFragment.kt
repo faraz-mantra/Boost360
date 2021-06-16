@@ -91,4 +91,16 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     hideProgress()
     showLongToast(string)
   }
+  fun getStaffType(category_code:String?):String{
+    return when(category_code){
+      "DOC", "HOS"->"DOCTORS"
+      else ->"STAFF"
+    }
+  }
+  fun isDoctorProfile(category_code:String?): Boolean {
+    return when(category_code){
+      "DOC", "HOS"-> true
+      else ->false
+    }
+  }
 }

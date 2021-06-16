@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_snow"
+        android:fillViewport="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_top"
+                style="@style/match_wrap"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    style="@style/match_wrap">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/service_image_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_180"
+                        android:layout_marginTop="@dimen/size_1"
+                        android:layout_marginBottom="@dimen/size_1"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        app:srcCompat="@color/placeholder_bg" />
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/clear_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="@dimen/size_14"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_close_round" />
+
+                    <LinearLayout
+                        android:id="@+id/image_add_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_180"
+                        android:background="@color/white_smoke_1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_add_image" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_5"
+                            android:includeFontPadding="false"
+                            android:text="@string/jpeg_png"
+                            android:textColor="@color/warm_grey"
+                            app:fontFamily="@font/regular"
+                            app:textType="BODY_1" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/_800x800px"
+                            android:textColor="@color/warm_grey"
+                            app:fontFamily="@font/regular"
+                            app:textType="BODY_1" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_20"
+                            android:text="@string/add_doctor_image"
+                            android:textColor="@color/yellow_ffb900"
+                            app:fontFamily="@font/semi_bold"
+                            app:textAllCaps="true"
+                            app:textType="BODY_1" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+                android:layout_marginStart="@dimen/size_20"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/size_20">
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_36"
+                    android:text="@string/name_"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/tv_service_name"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:hint="@string/write_the_name_of_your_service"
+                    android:inputType="textCapWords"
+                    android:padding="@dimen/size_12"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:text="@string/description"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/tv_desc"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:gravity="top|start"
+                    android:hint="@string/type_doctor_s_description_in_around_2000_characters_at_max"
+                    android:inputType="textMultiLine"
+                    android:padding="@dimen/size_12"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:orientation="vertical">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/size_4"
+                        android:includeFontPadding="false"
+                        android:text="@string/speciality"
+                        android:textColor="@color/black_4a4a4a"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_3" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/this_will_help_you_group_multiple_services_under_this_category"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:fontFamily="@font/regular" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/edt_service_time"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:hint="@string/type_doctor_s_speciality_e_g_physician"
+                    android:inputType="number"
+                    android:padding="@dimen/size_12"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/business_license"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/tv_business_license"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:hint="@string/type_doctor_s_business_license"
+                    android:inputType="textCapWords"
+                    android:padding="@dimen/size_12"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_consultation_hour"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:background="@drawable/shape_grey_stroke_rect_bkg"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/size_10">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/iv_counsultation_hour"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/consultation_hours"
+                            android:textColor="@color/black_4a4a4a"
+                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_3" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/match_wrap"
+                            android:includeFontPadding="false"
+                            android:text="@string/select_doctor_s_consultation_hours"
+                            android:textColor="@color/warm_grey"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+
+                    </LinearLayout>
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_counsultation_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_right_grey_staff" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_select_services"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:background="@drawable/shape_grey_stroke_rect_bkg"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/size_10">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/iv_select_services"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/select_services"
+                            android:textColor="@color/black_4a4a4a"
+                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_3" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/match_wrap"
+                            android:includeFontPadding="false"
+                            android:text="@string/select_services_that_the_doctor_provide"
+                            android:textColor="@color/warm_grey"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+
+                    </LinearLayout>
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_select_services"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_right_grey_staff" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_other_info"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:background="@drawable/shape_grey_stroke_rect_bkg"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/size_10">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/iv_otherInfo"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/additional_information_"
+                            android:textColor="@color/black_4a4a4a"
+                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_3" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/match_wrap"
+                            android:includeFontPadding="false"
+                            android:text="@string/education_years_of_experience_mobile_number_etc"
+                            android:textColor="@color/warm_grey"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+
+                    </LinearLayout>
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_otherInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_right_grey_staff" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_30" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vw_savePublish"
+                style="@style/match_wrap"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginEnd="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_14"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.framework.views.customViews.CustomButton
+                    android:layout_width="match_parent"
+                    style="@style/ButtonStyle.Rounded.Solid"
+                    android:text="@string/save_details"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textType="HEADING_6" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

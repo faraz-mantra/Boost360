@@ -14,6 +14,8 @@ import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
+import com.appservice.staffs.doctors.AdditionalDoctorsInfoFragment
+import com.appservice.staffs.doctors.EditDoctorsDetailsFragment
 import com.appservice.staffs.model.ExperienceModel
 import com.appservice.staffs.ui.breaks.ScheduledBreaksFragmnt
 import com.appservice.staffs.ui.breaks.StaffBreakConfirmFragment
@@ -45,6 +47,8 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   private var breakConfirmFragment: StaffBreakConfirmFragment? = null
   private var staffProfileDetailsFragment: StaffProfileDetailsFragment? = null
   private var staffProfileListingFragment: StaffProfileListingFragment? = null
+  private var editDoctorsDetailsFragment: EditDoctorsDetailsFragment? = null
+  private var additionalDoctorsInfoFragment: AdditionalDoctorsInfoFragment? = null
 
   override fun getLayout(): Int {
     return R.layout.activity_fragment_container
@@ -69,12 +73,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     this. staffType = getStaffType(userSessionManager.fP_AppExperienceCode)
 
   }
-  fun getStaffType(category_code:String?):String{
-    return when(category_code){
-      "DOC", "HOS"->"DOCTORS"
-      else ->"STAFF"
-    }
-  }
+
 
   private fun getBundle() {
     intent.getStringExtra(IntentConstant.FP_TAG.name)?.let {
@@ -160,15 +159,15 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
   override fun getToolbarTitle(): String? {
     return when (fragmentType) {
-      FragmentType.STAFF_ADD_FRAGMENT -> if (staffType!="DOCTORS") resources.getString(R.string.staff_listing) else "Doctors Listing"
-      FragmentType.STAFF_HOME_FRAGMENT ->  if (staffType!="DOCTORS") resources.getString(R.string.toolbar_staff_listing) else "Doctors Listing"
-      FragmentType.STAFF_DETAILS_FRAGMENT -> getString(R.string.toolbar_staff_details)
+      FragmentType.STAFF_ADD_FRAGMENT -> if (staffType!="DOCTORS") resources.getString(R.string.staff_listing) else "Doctor List"
+      FragmentType.STAFF_HOME_FRAGMENT ->  if (staffType!="DOCTORS") resources.getString(R.string.toolbar_staff_listing) else "Doctor List"
+      FragmentType.STAFF_DETAILS_FRAGMENT -> if (staffType!="DOCTORS") getString(R.string.toolbar_staff_details) else resources.getString(R.string.toolbar_doctor_details)
       FragmentType.STAFF_SELECT_SERVICES_FRAGMENT -> getString(R.string.toolbar_select_services)
-      FragmentType.STAFF_TIMING_FRAGMENT -> getString(R.string.toolbar_staff_timing)
+      FragmentType.STAFF_TIMING_FRAGMENT -> if (staffType!="DOCTORS")  getString(R.string.toolbar_staff_timing) else "Consultation hours"
       FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> getString(R.string.toolbar_schedule_break)
       FragmentType.STAFF_SERVICES_CONFIRM_FRAGMENT -> getString(R.string.toolbar_schedule_breaks)
-      FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> if (staffType!="DOCTORS") resources.getString(R.string.toolbar_staff_listing) else "Doctors Listing"
-      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> getString(R.string.toolbar_staff_details)
+      FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> if (staffType!="DOCTORS") resources.getString(R.string.toolbar_staff_listing) else "Doctor List"
+      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> if (staffType!="DOCTORS") getString(R.string.toolbar_staff_details) else resources.getString(R.string.toolbar_doctor_details)
       else -> super.getToolbarTitle()
     }
   }
@@ -178,6 +177,13 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
       FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> {
         staffProfileDetailsFragment = StaffProfileDetailsFragment.newInstance()
         staffProfileDetailsFragment
+      } FragmentType.DOCTOR_ADD_EDIT_FRAGMENT -> {
+        editDoctorsDetailsFragment = EditDoctorsDetailsFragment.newInstance()
+        editDoctorsDetailsFragment
+      }
+      FragmentType.DOCTOR_ADDITIONAL_INFO -> {
+        additionalDoctorsInfoFragment = AdditionalDoctorsInfoFragment.newInstance()
+        additionalDoctorsInfoFragment
       }
       FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> {
         staffProfileListingFragment = StaffProfileListingFragment.newInstance()
