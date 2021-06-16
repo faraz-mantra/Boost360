@@ -6,9 +6,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.core.view.inputmethod.InputConnectionCompat
@@ -35,6 +35,7 @@ import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatus
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
 import com.onboarding.nowfloats.model.digitalCard.CardData
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.addPlus91
+import com.onboarding.nowfloats.utils.viewToBitmap
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
@@ -64,20 +65,21 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     onRegisterInputView(inputView, florisBoard)
   }
 
+  private lateinit var binding: BusinessFeaturesLayoutBinding
+  private lateinit var viewModel: BusinessFeaturesViewModel
+
   private val serviceSet = mutableSetOf<Product>()
+  private val updatesSet = mutableSetOf<FloatUpdate?>()
   private val photosSet = mutableSetOf<Photo>()
   private val detailsSet = mutableSetOf<DigitalCardDataKeyboard>()
-  private val updatesSet = mutableSetOf<FloatUpdate?>()
   private lateinit var mContext: Context
   private var florisBoard: FlorisBoard? = null
   private var session: UserSessionManager? = null
   private lateinit var currentSelectedFeature: BusinessFeatureEnum
-  private lateinit var binding: BusinessFeaturesLayoutBinding
-  private lateinit var recyclerViewPost: RecyclerView
-  private lateinit var recyclerViewPhotos: RecyclerView
-  private lateinit var businessFeatureProgressBar: ProgressBar
-  private lateinit var viewModel: BusinessFeaturesViewModel
-  private lateinit var adapter: SharedAdapter<BaseRecyclerItem?>
+
+  private lateinit var adapterProductUpdates: SharedAdapter<BaseRecyclerItem?>
+  private lateinit var adapterPhoto: SharedAdapter<BaseRecyclerItem?>
+  private lateinit var adapterBusinessCard: SharedAdapter<BaseRecyclerItem?>
   private lateinit var linearLayoutManager: LinearLayoutManager
 
   private var connectedChannels: ArrayList<String> = arrayListOf()
@@ -100,45 +102,42 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     this.mContext = inputView.context
     this.session = UserSessionManager(FlorisApplication.instance)
     this.florisBoard = florisBoard
-    viewModel = BusinessFeaturesViewModel()
-    adapter = SharedAdapter(arrayListOf(), this)
-
+    this.viewModel = BusinessFeaturesViewModel()
+    this.adapterProductUpdates = SharedAdapter(arrayListOf(), this)
+    this.adapterPhoto = SharedAdapter(arrayListOf(), this)
+    this.adapterBusinessCard = SharedAdapter(arrayListOf(), this)
     // initialize business features views
-    binding = BusinessFeaturesLayoutBinding.bind(inputView.findViewById(R.id.business_features))
-
-    businessFeatureProgressBar = binding.businessFeatureProgress
+    this.binding = BusinessFeaturesLayoutBinding.bind(inputView.findViewById(R.id.business_features))
 
     linearLayoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
 
-    recyclerViewPost = binding.productShareRvList.also {
+    binding.productShareRvList.also {
       it.layoutManager = linearLayoutManager
-      it.adapter = adapter
+      it.adapter = this.adapterProductUpdates
       PagerSnapHelper().attachToRecyclerView(it)
+      it.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+          super.onScrolled(recyclerView, dx, dy)
+          if (!isLoading) {
+            if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == adapterProductUpdates.itemCount - 1) {
+              loadMoreItems(currentSelectedFeature)
+              isLoading = true
+            }
+          }
+        }
+      })
     }
 
     binding.viewPagerProfile.also {
-      it.adapter = adapter
+      it.adapter = this.adapterBusinessCard
       it.offscreenPageLimit = 3
       it.setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-      // PagerSnapHelper().attachToRecyclerView(it)
     }
 
-    recyclerViewPhotos = binding.rvListPhotos.also {
+    binding.rvListPhotos.also {
       it.layoutManager = GridLayoutManager(mContext, 2, GridLayoutManager.HORIZONTAL, false)
-      it.adapter = adapter
+      it.adapter = this.adapterPhoto
     }
-    recyclerViewPost.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        super.onScrolled(recyclerView, dx, dy)
-        if (!isLoading) {
-          if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == adapter.itemCount - 1) {
-            //bottom of list!
-            loadMoreItems(currentSelectedFeature)
-            isLoading = true
-          }
-        }
-      }
-    })
     getChannelAccessToken()
   }
 
@@ -171,9 +170,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun initializeAdapters(businessFeatureEnum: BusinessFeatureEnum) {
-    //clear adapter dataset
     clearSets()
-    adapter.clearList()
     if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
       Timber.i("Please do login")
       binding.pleaseLoginCard.visible()
@@ -181,9 +178,9 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     } else {
       binding.pleaseLoginCard.gone()
       if (MethodUtils.isOnline(mContext)) {
-        businessFeatureProgressBar.visible()
+        binding.businessFeatureProgress.visible()
         viewModel.error.observeForever {
-          businessFeatureProgressBar.gone()
+          binding.businessFeatureProgress.gone()
           Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
         }
         when (businessFeatureEnum) {
@@ -191,14 +188,14 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
             viewModel.getUpdates(session?.fPID, clientId, 0, 10)
             viewModel.updates.observeForever {
               Timber.i("updates - $it.")
-              businessFeatureProgressBar.gone()
-              adapter.removeLoader()
+              binding.businessFeatureProgress.gone()
+              adapterProductUpdates.removeLoader()
               if (it.floats?.isNotEmpty() == true) {
-                it.floats?.let { list -> adapter.submitList(list, hasMoreItems = true) }
+                it.floats?.let { list -> adapterProductUpdates.submitList(list, hasMoreItems = true) }
                 updatesSet.addAll(it.floats!!)
                 SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = "UPDATES (${it.totalCount})"
               } else {
-                adapter.removeLoader()
+                adapterProductUpdates.removeLoader()
                 Timber.i("List from api came empty")
               }
               isLoading = false
@@ -208,14 +205,14 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
             viewModel.getProducts(session?.fpTag, clientId, 0, "SINGLE")
             viewModel.products.observeForever {
               Timber.i("products - $it.")
-              businessFeatureProgressBar.gone()
-              adapter.removeLoader()
+              binding.businessFeatureProgress.gone()
+              adapterProductUpdates.removeLoader()
               if (it.isNotEmpty()) {
-                it.let { list -> adapter.submitList(list, hasMoreItems = true) }
+                it.let { list -> adapterProductUpdates.submitList(list, hasMoreItems = true) }
                 serviceSet.addAll(it)
                 SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "SERVICES (${serviceSet.size})"
               } else {
-                adapter.removeLoader()
+                adapterProductUpdates.removeLoader()
                 Timber.i("List from api came empty")
               }
               isLoading = false
@@ -229,16 +226,12 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
             viewModel.getPhotos(session?.fPID ?: "")
             viewModel.photos.observeForever {
               Timber.e("photos - $it.")
-              businessFeatureProgressBar.gone()
-              adapter.removeLoader()
+              binding.businessFeatureProgress.gone()
               if (it.isNotEmpty()) {
-                it.let { list -> adapter.submitList(list, hasMoreItems = true) }
-                photosSet.addAll(it)
+                this.photosSet.addAll(it)
+                this.adapterPhoto.submitList(photosSet.toList())
                 SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = "PHOTOS (${photosSet.size})"
-              } else {
-                adapter.removeLoader()
-                Timber.i("List from api came empty")
-              }
+              } else Timber.i("List from api came empty")
               isLoading = false
             }
           }
@@ -247,7 +240,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         }
       } else {
         Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
-        businessFeatureProgressBar.gone()
+        binding.businessFeatureProgress.gone()
       }
     }
   }
@@ -258,7 +251,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     val city = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
     val country = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
     val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
-    val cardList = ArrayList<DigitalCardDataKeyboard>()
     val cardData = CardData(
       session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME), imageUri, location,
       session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME)?.capitalizeWords(), addPlus91(session?.userPrimaryMobile),
@@ -285,6 +277,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           else -> ""
         }
       }
+      val cardList = ArrayList<DigitalCardDataKeyboard>()
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_ONE_ITEM.ordinal))
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_FOUR_ITEM.ordinal))
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_SIX_ITEM.ordinal))
@@ -295,14 +288,29 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_SEVEN_ITEM.ordinal))
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_NINE_ITEM.ordinal))
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_TEN_ITEM.ordinal))
-      detailsSet.addAll(cardList)
-//      SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = "BUSINESS CARD"
-      adapter.submitList(cardList)
-      businessFeatureProgressBar.gone()
+      this.detailsSet.addAll(cardList)
+      this.adapterBusinessCard.submitList(detailsSet.toList())
+      binding.businessFeatureProgress.gone()
+      binding.btnShareImageBusiness.setOnClickListener { shareImageTextBusiness() }
+      binding.btnShareImageTextBusiness.setOnClickListener {
+        if (finalShareMessage.isNotEmpty()) shareImageTextBusiness(finalShareMessage) else getVisitingMessageData(true)
+      }
     }
   }
 
-  private fun getVisitingMessageData() {
+  private fun shareImageTextBusiness(shareText: String = "") {
+    val bitmap = binding.viewPagerProfile.getChildAt(0)?.let { viewToBitmap(it) }
+    try {
+      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 40, 0, bitmap.width - 80, bitmap.height) }
+      val path = MediaStore.Images.Media.insertImage(mContext.contentResolver, cropBitmap, "boost_${Date().time}", null)
+      val imageUri: Uri = Uri.parse(path)
+      shareUriWithText(imageUri, shareText)
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+  }
+
+  private fun getVisitingMessageData(isShare: Boolean = false) {
     viewModel.getBoostVisitingMessage(mContext)
     viewModel.shareUserDetailData.observeForever {
       if (it.data.isNullOrEmpty().not()) {
@@ -315,11 +323,12 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           finalShareMessage = String.format(messageDetail!!, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "", session?.getDomainName(false), messageBusiness, location)
         }
       }
+      if (isShare) shareImageTextBusiness(finalShareMessage)
     }
   }
 
   private fun getChannelAccessToken(isShow: Boolean = false) {
-    if (isShow) businessFeatureProgressBar.visible() else businessFeatureProgressBar.gone()
+    if (isShow) binding.businessFeatureProgress.visible() else binding.businessFeatureProgress.gone()
     viewModel.getChannelsAccessTokenStatus(session?.fPID)
     viewModel.channelStatusData.observeForever {
       var urlString = ""
@@ -354,16 +363,19 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlString += "\n\uD83D\uDCDE *Call: ${session?.userPrimaryMobile}*"
         PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlString)
         getVisitingMessageData()
-        if (isShow) businessFeatureProgressBar.gone()
+        if (isShow) binding.businessFeatureProgress.gone()
       }
     }
   }
 
   private fun clearSets() {
-    serviceSet.clear()
-    photosSet.clear()
-    updatesSet.clear()
-    detailsSet.clear()
+    this.photosSet.clear()
+    this.detailsSet.clear()
+    this.serviceSet.clear()
+    this.updatesSet.clear()
+    this.adapterProductUpdates.clearList()
+    this.adapterBusinessCard.clearList()
+    this.adapterPhoto.clearList()
   }
 
   override fun onItemClick(pos: Int, item: BaseRecyclerItem) {
@@ -414,23 +426,23 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun pathToUriGet(imageUri: String?, shareText: String) {
     val listenerRequest = object : RequestListener<Bitmap> {
       override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
-        shareService(null, shareText)
+        shareUriWithText(null, shareText)
         return false
       }
 
       override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
         val uri = getImageUri(mContext, resource, "boost_${DateUtils.getCurrentDate().time}")
-        shareService(uri, shareText)
+        shareUriWithText(uri, shareText)
         return false
       }
     }
 
     if (imageUri.isNullOrEmpty().not() && florisBoard?.currentInputEditorInfo?.getImageSupport() == true) {
       Glide.with(mContext).asBitmap().load(imageUri ?: "").listener(listenerRequest).submit()
-    } else shareService(null, shareText)
+    } else shareUriWithText(null, shareText)
   }
 
-  private fun shareService(uri: Uri?, shareText: String) {
+  private fun shareUriWithText(uri: Uri?, shareText: String) {
     Timber.i("Image passed: $uri \n text: $shareText")
     val packageNames: Array<String>? = mContext.packageManager.getPackagesForUid(florisBoard?.currentInputBinding?.uid ?: 0) as? Array<String>
     if (uri != null) {
@@ -460,25 +472,33 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun multipleImageToUriListGet() {
     if (NetworkUtils.isNetworkConnected()) {
       if (florisBoard?.currentInputEditorInfo?.getImageSupport() == true) {
-        var count = 0
-        val imageUriArray = ArrayList<Uri>()
         val selectedImage = photosSet.filter { it.selected }
-        val listenerRequest = object : RequestListener<Bitmap> {
-          override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
-            count += 1
-            if (selectedImage.size == count) doCommitContentMultiple(imageUriArray)
-            return false
-          }
+        if (selectedImage.isNotEmpty()) {
+          var count = 0
+          val imageUriArray = ArrayList<Uri>()
+          val listenerRequest = object : RequestListener<Bitmap> {
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+              count += 1
+              if (selectedImage.size == count) {
+                doCommitContentMultiple(imageUriArray)
+                removeSelected()
+              }
+              return false
+            }
 
-          override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-            val uri = getImageUri(mContext, resource, "boost_${DateUtils.getCurrentDate().time}")
-            uri?.let { imageUriArray.add(it) }
-            count += 1
-            if (selectedImage.size == count) doCommitContentMultiple(imageUriArray)
-            return false
+            override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+              val uri = getImageUri(mContext, resource, "boost_${DateUtils.getCurrentDate().time}")
+              uri?.let { imageUriArray.add(it) }
+              count += 1
+              if (selectedImage.size == count) {
+                doCommitContentMultiple(imageUriArray)
+                removeSelected()
+              }
+              return false
+            }
           }
-        }
-        selectedImage.forEach { Glide.with(mContext).asBitmap().load(it.imageUri ?: "").listener(listenerRequest).submit() }
+          selectedImage.forEach { Glide.with(mContext).asBitmap().load(it.imageUri ?: "").listener(listenerRequest).submit() }
+        } else removeSelected()
       } else Toast.makeText(mContext, mContext.getString(R.string.image_not_suopported), Toast.LENGTH_SHORT).show()
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
   }
@@ -507,9 +527,9 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private fun onPhotoSelected(item: BaseRecyclerItem) {
     photosSet.forEach { if (item == it) it.selected = (item as? Photo)?.selected == true }
-    adapter.clearList()
-    adapter.submitList(photosSet.toList())
-    adapter.notifyDataSetChanged()
+    this.adapterPhoto.clearList()
+    this.adapterPhoto.submitList(photosSet.toList())
+    this.adapterPhoto.notifyDataSetChanged()
     updateLayout()
   }
 
@@ -531,9 +551,9 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private fun removeSelected() {
     photosSet.forEach { it.selected = false }
-    adapter.clearList()
-    adapter.submitList(photosSet.toList())
-    adapter.notifyDataSetChanged()
+    this.adapterPhoto.clearList()
+    this.adapterPhoto.submitList(photosSet.toList())
+    this.adapterPhoto.notifyDataSetChanged()
     updateLayout()
   }
 
@@ -541,10 +561,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun loadMoreItems(businessFeatureEnum: BusinessFeatureEnum) {
     when (businessFeatureEnum) {
       BusinessFeatureEnum.UPDATES -> {
-        viewModel.getUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId, mContext.getString(R.string.client_id), adapter.list.size, 10)
+        viewModel.getUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId, mContext.getString(R.string.client_id), adapterProductUpdates.list.size, 10)
       }
       BusinessFeatureEnum.INVENTORY -> {
-        viewModel.getProducts(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag, mContext.getString(R.string.client_id), adapter.list.size, "SINGLE")
+        viewModel.getProducts(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag, mContext.getString(R.string.client_id), adapterProductUpdates.list.size, "SINGLE")
       }
       else -> {
       }

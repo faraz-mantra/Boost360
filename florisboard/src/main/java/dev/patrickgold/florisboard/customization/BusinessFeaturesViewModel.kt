@@ -142,14 +142,10 @@ class BusinessFeaturesViewModel {
     job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
       BusinessFeatureRepository.getAllImageList(object : GetGalleryImagesAsyncTask.GetGalleryImagesInterface {
-        override fun imagesReceived() {
+        override fun imagesReceived(listImage: ArrayList<String>) {
           Timber.i("Images Received")
           CoroutineScope(Dispatchers.Main).launch {
-            _photo.value = Constants.storeSecondaryImages.map { url ->
-              Photo().apply {
-                imageUri = url
-              }
-            }
+            _photo.value = listImage.map { url -> Photo().apply { imageUri = url } }
           }
         }
       }, fpId)

@@ -179,6 +179,7 @@
       android:id="@+id/business_card_view"
       android:layout_width="match_parent"
       android:layout_height="0dp"
+      android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -220,6 +221,7 @@
               android:clickable="true"
               android:focusable="true"
               android:gravity="center"
+              android:id="@+id/btn_share_image_business"
               android:text="@string/share_only_image"
               android:textAllCaps="true"
               android:textColor="@color/accent_blue" />
@@ -228,6 +230,7 @@
               android:layout_width="wrap_content"
               android:layout_height="@dimen/size_30"
               android:layout_weight="1"
+              android:id="@+id/btn_share_image_text_business"
               android:background="@color/blue_light_e5f1fc"
               android:clickable="true"
               android:focusable="true"

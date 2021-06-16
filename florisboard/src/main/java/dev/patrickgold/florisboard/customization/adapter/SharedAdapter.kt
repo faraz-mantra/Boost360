@@ -80,8 +80,10 @@ class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T?>, val listener
   }
 
   fun clearList() {
-    list.clear()
-    notifyDataSetChanged()
+    if (list.isNullOrEmpty().not()) {
+      list.clear()
+      notifyDataSetChanged()
+    }
   }
 }
 
