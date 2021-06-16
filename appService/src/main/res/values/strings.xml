@@ -388,6 +388,7 @@
   <string name="toolbar_schedule_break">Scheduled Breaks</string>
   <string name="toolbar_schedule_breaks">Scheduled Breaks</string>
   <string name="toolbar_staff_details">Staff Details</string>
+  <string name="toolbar_doctor_details">Doctor Details</string>
   <string name="search_staff">Search Staff</string>
   <string name="staff_timing_add">Adding staff timing...</string>
   <string name="staff_timings_added">staff timings added</string>
@@ -508,6 +509,24 @@
   <string name="staff_profile">Staff Profile</string>
   <string name="add_ons_description_lock">Looks like this add-on is not added to your current plan. Add it now to start using it.</string>
   <string name="see_how_it_works">See how it works</string>
+    <string name="you_don_t_have_any_doctor_listed_on_your_site_as_of_yet">You don’t have any doctor listed on your site as of yet.</string>
+    <string name="add_a_doctor">Add a Doctor</string>
+    <string name="know_how_it_works">know how it works</string>
+    <string name="add_doctor_image">Add doctor Image*</string>
+    <string name="name_">Name*</string>
+  <string name="description">Description*</string>
+  <string name="type_doctor_s_description_in_around_2000_characters_at_max">Type doctor’s description in around 2000 characters at max…</string>
+  <string name="speciality">Speciality*</string>
+  <string name="type_doctor_s_speciality_e_g_physician">Type doctor’s speciality. e.g. Physician</string>
+  <string name="business_license">Business License*</string>
+  <string name="type_doctor_s_business_license">Type doctor’s business license</string>
+    <string name="education_years_of_experience_mobile_number_etc">Education, years of experience, mobile number, etc.</string>
+  <string name="additional_information_">Additional Information</string>
+  <string name="save_details">Save Details</string>
+    <string name="consultation_hours">Consultation hours</string>
+  <string name="select_doctor_s_consultation_hours">Select doctor’s consultation hours</string>
+  <string name="select_services">Select services</string>
+  <string name="select_services_that_the_doctor_provide">Select services that the doctor provide</string>
 
 
   <array name="stock_availbility">

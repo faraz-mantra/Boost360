@@ -7,16 +7,16 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class WebsiteActionItem(
-    @SerializedName("isLock")
-    var isLock: Boolean? = false,
-    @SerializedName("premiumCode")
-    var premiumCode: String? = "",
-    @SerializedName("title")
-    var title: String? = "",
-    @SerializedName("desc")
-    var desc: String? = "",
-    @SerializedName("type")
-    var type: String? = "",
+  @SerializedName("isLock")
+  var isLock: Boolean? = false,
+  @SerializedName("premiumCode")
+  var premiumCode: String? = "",
+  @SerializedName("title")
+  var title: String? = "",
+  @SerializedName("desc")
+  var desc: String? = "",
+  @SerializedName("type")
+  var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
@@ -40,10 +40,11 @@ data class WebsiteActionItem(
     trip_adviser_ratings(R.drawable.trip_advisor_reviews_d),
     seasonal_offers(R.drawable.ic_offer_d),
     website_theme(R.drawable.ic_website_theme),
-      doctor_e_profile_listing(R.drawable.ic_doctors_e_profile);
+    doctor_e_profile_listing(R.drawable.ic_doctors_e_profile);
 
     companion object {
-      fun fromName(name: String?): IconType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
+      fun fromName(name: String?): IconType? =
+        values().firstOrNull { it.name.equals(name, ignoreCase = true) }
     }
   }
 }

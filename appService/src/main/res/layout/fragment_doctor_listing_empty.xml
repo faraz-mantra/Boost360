@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/empty_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/iv_staff_image"
+        android:layout_width="@dimen/size_140"
+        android:layout_height="@dimen/size_140"
+        android:src="@drawable/ic_doctor_e_profile_empty" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:text="@string/no_staff_member_listed_yet"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="HEADING_4" />
+
+      <com.framework.views.customViews.CustomTextView
+        style="@style/TextDescription"
+        android:layout_marginTop="@dimen/size_6"
+        android:gravity="center"
+        android:text="@string/you_don_t_have_any_doctor_listed_on_your_site_as_of_yet"
+        app:textType="BODY_1" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_50"
+          android:orientation="vertical"
+        android:layout_marginTop="@dimen/size_10"
+        android:layout_marginEnd="@dimen/size_50">
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_add_doctor"
+            style="@style/ButtonStyle.Rounded.Solid"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_42"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/size_20"
+            android:stateListAnimator="@null"
+            android:text="@string/add_a_doctor"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_how_it_works"
+            style="@style/ButtonStyle"
+            android:background="@drawable/rounded_stroke_orange_4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_42"
+            android:gravity="center"
+            android:stateListAnimator="@null"
+            android:text="@string/know_how_it_works"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
