@@ -25,6 +25,7 @@
                 android:background="?android:selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
+                android:visibility="gone"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="start"
                 android:padding="@dimen/size_16"
@@ -36,6 +37,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/size_8"
                 android:background="@color/gray_light_3" />
 

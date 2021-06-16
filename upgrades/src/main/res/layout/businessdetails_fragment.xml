@@ -34,18 +34,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/text_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textFontWeight="700"
-                    android:text="Modify Business Info"
-                    android:textSize="@dimen/txt_15sp"
-                    android:textColor="@color/app_text_yellow"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
                 <ImageView
                     android:id="@+id/close"
                     android:layout_width="50dp"
@@ -53,6 +41,30 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
                     android:src="@drawable/ic_close_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/close"/>
+
+                <TextView
+                    android:id="@+id/text_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textFontWeight="700"
+                    android:text="Billing details"
+                    android:gravity="center"
+                    android:textSize="@dimen/txt_18sp"
+                    android:textColor="@color/common_text_color"
+                    app:layout_constraintStart_toEndOf="@+id/close"
+                    app:layout_constraintEnd_toStartOf="@+id/confirm_btn"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/confirm_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/ic_send_invoice"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/close"/>
@@ -64,10 +76,11 @@
                     android:fontFamily="@font/open_sans"
                     android:textSize="@dimen/txt_12sp"
                     android:textFontWeight="400"
-                    android:textColor="#747474"
-                    android:text="This is used to generate send you GST Invoice for your purchase"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/close"
+                    android:gravity="center"
+                    android:textColor="@color/common_text_color"
+                    android:text="for GST invoice"
+                    app:layout_constraintStart_toEndOf="@+id/close"
+                    app:layout_constraintEnd_toStartOf="@+id/confirm_btn"
                     app:layout_constraintTop_toBottomOf="@id/text_content" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -82,28 +95,79 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/marketplace_layout1">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/business_gstin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/_4sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="Business registered on GST?"
+                        android:textFontWeight="400"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/txt_12sp" />
+
+                    <ImageView
+                        android:id="@+id/gstin_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        app:srcCompat="@drawable/ic_switchon"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="end" />
+                    <ImageView
+                        android:id="@+id/gstin_off"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_switchoff"
+                        android:visibility="gone"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="end" />
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/business_gstin_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edit_fill_kyc"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="bottom"
+                    android:imeOptions="actionNext"
+                    android:hint="@string/enter_gstin_number"
+                    android:textAllCaps="true"
+                    android:inputType="text"
+                    android:textColor="@color/common_bold_text_color"
+                    android:textColorHint="@color/common_bold_text_color"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/_5sdp"
-                    android:text="Business contact number"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Business name"
+                    android:textFontWeight="400"
                     android:textColor="@color/common_text_color"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/txt_12sp" />
 
 
                 <EditText
-                    android:id="@+id/business_contact_number"
+                    android:id="@+id/business_name_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edit_fill_kyc"
-                    android:drawableLeft="@drawable/ic_call_phone"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:fontFamily="@font/open_sans"
                     android:gravity="bottom"
-                    android:hint="@string/_10_digit_mobile_number"
-                    android:inputType="phone"
+                    android:imeOptions="actionNext"
+                    android:hint="@string/enter_business_name"
+                    android:inputType="text"
                     android:textColor="#4A4A4A"
                     android:textColorHint="#4A4A4A"
                     android:textFontWeight="400"
@@ -113,9 +177,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:text="Business email address"
+                    android:textFontWeight="400"
                     android:textColor="@color/common_text_color"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/txt_12sp"/>
 
 
                 <EditText
@@ -123,28 +189,84 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edit_fill_kyc"
-                    android:drawableLeft="@drawable/ic_envelopeopen"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:fontFamily="@font/open_sans"
                     android:gravity="bottom"
-                    android:hint="Email Address"
+                    android:imeOptions="actionNext"
+                    android:hint="@string/enter_email"
                     android:inputType="textEmailAddress"
                     android:textSize="@dimen/txt_14sp"
                     android:textFontWeight="400"
                     android:textColor="#4A4A4A"
                     android:textColorHint="#4A4A4A" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Business contact number"
+                    android:textFontWeight="400"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="@dimen/txt_12sp" />
 
+
+                <EditText
+                    android:id="@+id/business_contact_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edit_fill_kyc"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="bottom"
+                    android:imeOptions="actionNext"
+                    android:hint="@string/_10_digit_mobile_number"
+                    android:inputType="phone"
+                    android:textColor="#4A4A4A"
+                    android:textColorHint="#4A4A4A"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_14sp" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/_5sdp"
-                    android:text="Place of Supply"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Complete business address"
+                    android:textFontWeight="400"
                     android:textColor="@color/common_text_color"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/txt_12sp" />
+
+
+                <EditText
+                    android:id="@+id/business_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edit_fill_kyc"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="bottom"
+                    android:hint="@string/enter_business_address"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
+                    android:textColor="#4A4A4A"
+                    android:textColorHint="#4A4A4A"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="State (place of supply)"
+                    android:textFontWeight="400"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="@dimen/txt_12sp" />
 
 
 <!--                <EditText
@@ -163,23 +285,39 @@
                     android:textColor="#4A4A4A"
                     android:textColorHint="#4A4A4A" />-->
 
-                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                <!--<androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+                <!--<androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/business_city_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edit_fill_kyc"
-                    android:drawableLeft="@drawable/ic_location_city"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:fontFamily="@font/open_sans"
+                    android:drawableEnd="@drawable/ic_dropdown_business"
                     android:gravity="bottom"
                     android:textSize="@dimen/txt_14sp"
+                    android:imeOptions="actionDone"
                     android:textFontWeight="400"
-                    android:hint="City name"
+                    android:hint="Select your state"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#4A4A4A"
+                    android:textColorHint="#4A4A4A" />-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/business_city_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edit_fill_kyc"
+                    android:fontFamily="@font/open_sans"
+                    android:drawableEnd="@drawable/ic_dropdown_business"
+                    android:gravity="bottom"
+                    android:textSize="@dimen/txt_14sp"
+                    android:imeOptions="actionDone"
+                    android:textFontWeight="400"
+                    android:hint="Select your state"
                     android:inputType="textEmailAddress"
                     android:textColor="#4A4A4A"
                     android:textColorHint="#4A4A4A" />
-
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -193,7 +331,7 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.5" />
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/confirm_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -208,7 +346,7 @@
                         android:layout_margin="@dimen/_10sdp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent" />-->
 
 
 
