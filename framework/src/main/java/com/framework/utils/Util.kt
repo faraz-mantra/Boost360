@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import com.framework.views.customViews.CustomTextView
 import androidx.appcompat.app.AppCompatActivity
+import java.io.File
 import java.text.NumberFormat
 import java.util.*
 
@@ -94,3 +95,8 @@ fun AppCompatActivity.getNavigationBarHeight(): Int {
     resources.getDimensionPixelSize(resourceId)
   } else 0
 }
+val File.size get() = if (!exists()) 0.0 else length().toDouble()
+val File.sizeInKb get() = size / 1024
+val File.sizeInMb get() = sizeInKb / 1024
+val File.sizeInGb get() = sizeInMb / 1024
+val File.sizeInTb get() = sizeInGb / 1024

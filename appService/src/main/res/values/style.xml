@@ -46,7 +46,10 @@
         <item name="android:layout_marginBottom">@dimen/size_15</item>
         <item name="android:textSize">16sp</item>
     </style>
-
+<style name="RadioWindow" parent="RadioService">
+    <item name="android:layout_marginTop">@dimen/size_4</item>
+    <item name="android:layout_marginBottom">@dimen/size_4</item>
+</style>
     <style name="CatalogTheme.Information" parent="CatalogTheme">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>

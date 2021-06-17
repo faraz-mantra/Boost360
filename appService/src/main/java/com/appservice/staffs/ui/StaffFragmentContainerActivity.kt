@@ -56,7 +56,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
   override fun getToolbarTitleGravity(): Int {
     return when (fragmentType) {
-      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT, FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> Gravity.START
+      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT, FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT,FragmentType.DOCTOR_ADD_EDIT_FRAGMENT,FragmentType.DOCTOR_ADDITIONAL_INFO -> Gravity.START
       else -> super.getToolbarTitleGravity()
     }
   }
@@ -114,7 +114,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   override fun customTheme(): Int? {
     return when (fragmentType) {
       FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT, FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,
-      FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT,
+      FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT,FragmentType.DOCTOR_ADD_EDIT_FRAGMENT,FragmentType.DOCTOR_ADDITIONAL_INFO
       -> R.style.AppTheme_staff_home
       FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> R.style.AppTheme_staff_details
       else -> super.customTheme()
@@ -125,7 +125,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     return when (fragmentType) {
       FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT,
       FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,
-      FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT,
+      FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT,FragmentType.DOCTOR_ADD_EDIT_FRAGMENT,FragmentType.DOCTOR_ADDITIONAL_INFO
       -> ContextCompat.getColor(this, R.color.yellow_ffb900)
       else -> super.getToolbarBackgroundColor()
     }
@@ -134,7 +134,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   override fun getToolbarTitleColor(): Int? {
     return when (fragmentType) {
       FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT,
-      FragmentType.STAFF_DETAILS_FRAGMENT,
+      FragmentType.STAFF_DETAILS_FRAGMENT,FragmentType.DOCTOR_ADDITIONAL_INFO,FragmentType.DOCTOR_ADD_EDIT_FRAGMENT
       -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
@@ -168,6 +168,8 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
       FragmentType.STAFF_SERVICES_CONFIRM_FRAGMENT -> getString(R.string.toolbar_schedule_breaks)
       FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> if (staffType!="DOCTORS") resources.getString(R.string.toolbar_staff_listing) else "Doctor List"
       FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> if (staffType!="DOCTORS") getString(R.string.toolbar_staff_details) else resources.getString(R.string.toolbar_doctor_details)
+      FragmentType.DOCTOR_ADDITIONAL_INFO -> if (staffType!="DOCTORS") getString(R.string.toolbar_staff_details) else getString(R.string.additional_info)
+      FragmentType.DOCTOR_ADD_EDIT_FRAGMENT -> if (staffType!="DOCTORS") getString(R.string.toolbar_staff_details) else getString(R.string.add_doctor_e_profile)
       else -> super.getToolbarTitle()
     }
   }
@@ -235,6 +237,8 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     staffProfileDetailsFragment?.onActivityResult(requestCode, resultCode, data)
     staffServicesFragment?.onActivityResult(requestCode, resultCode, data)
     staffTimingFragment?.onActivityResult(requestCode, resultCode, data)
+    editDoctorsDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+    additionalDoctorsInfoFragment?.onActivityResult(requestCode, resultCode, data)
   }
 }
 

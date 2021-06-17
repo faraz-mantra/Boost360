@@ -89,10 +89,11 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     if (isEdit == true) {
       updatePreviousData()
       (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.getTitleTextView()?.gravity = Gravity.START
-    } else {
-      (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = getColor(R.color.color_primary_dark)
-      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.setBackgroundColor(resources.getColor(R.color.color_primary))
     }
+//    else {
+//      (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = getColor(R.color.color_primary_dark)
+//      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.setBackgroundColor(resources.getColor(R.color.color_primary))
+//    }
     if (staffDetails == null) staffDetails = StaffDetailsResult()
   }
 
@@ -120,7 +121,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   }
 
   private fun setExperience() {
-    binding?.edtExperience?.setText("${staffDetails?.experience}".plus(if (staffDetails?.experience ?: 0 < 2) " Year" else " Years"))
+    binding?.edtExperience?.setText("${staffDetails?.experience}".plus(if (staffDetails?.experience?.toIntOrNull() ?: 0 < 2) " Year" else " Years"))
 
   }
 
@@ -135,7 +136,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     val experienceSheet = ExperienceBottomSheet()
     experienceSheet.onClicked = {
       yearOfExperience = it.toString()
-      staffDetails?.experience = it
+      staffDetails?.experience = it.toString()
       staffProfile?.experience = it
       setExperience()
     }
