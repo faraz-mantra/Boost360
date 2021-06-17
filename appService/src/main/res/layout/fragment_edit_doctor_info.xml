@@ -24,11 +24,10 @@
                 style="@style/match_wrap"
                 android:orientation="vertical">
 
-                <FrameLayout
-                    style="@style/match_wrap">
+                <FrameLayout style="@style/match_wrap">
 
                     <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/service_image_view"
+                        android:id="@+id/staff_image_view"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_180"
                         android:layout_marginTop="@dimen/size_1"
@@ -36,18 +35,6 @@
                         android:scaleType="centerCrop"
                         android:visibility="gone"
                         app:srcCompat="@color/placeholder_bg" />
-
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/clear_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="@dimen/size_14"
-                        android:visibility="gone"
-                        app:srcCompat="@drawable/ic_close_round" />
 
                     <LinearLayout
                         android:id="@+id/image_add_btn"
@@ -100,6 +87,18 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <com.framework.views.customViews.CustomButton
+                android:id="@+id/change_image"
+                style="@style/ButtonStyle.Rounded.Solid"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:background="@drawable/rounded_stroke_orange_4_transparent"
+                android:gravity="center"
+                android:text="@string/change_picture"
+                android:textColor="@color/colorAccent"
+                android:visibility="gone"
+                android:textSize="12sp" />
+
             <View
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
@@ -116,17 +115,17 @@
                     style="@style/wrap_wrap"
                     android:layout_marginStart="@dimen/size_3"
                     android:layout_marginTop="@dimen/size_36"
-                    android:text="@string/name_"
+                    android:text="@string/name_doctor"
                     android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/semi_bold"
                     app:textType="BODY_3" />
 
                 <com.framework.views.customViews.CustomTextField
-                    android:id="@+id/tv_service_name"
+                    android:id="@+id/ctf_staff_name"
                     style="@style/match_wrap"
                     android:layout_marginTop="@dimen/size_5"
                     android:background="@drawable/bg_rect_edit_txt"
-                    android:hint="@string/write_the_name_of_your_service"
+                    android:hint="@string/type_the_doctor_s_name"
                     android:inputType="textCapWords"
                     android:padding="@dimen/size_12"
                     android:singleLine="true"
@@ -146,7 +145,7 @@
                     app:textType="BODY_3" />
 
                 <com.framework.views.customViews.CustomTextField
-                    android:id="@+id/tv_desc"
+                    android:id="@+id/ctf_staff_desc"
                     style="@style/match_wrap"
                     android:layout_marginTop="@dimen/size_5"
                     android:background="@drawable/bg_rect_edit_txt"
@@ -186,7 +185,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <com.framework.views.customViews.CustomTextField
-                    android:id="@+id/edt_service_time"
+                    android:id="@+id/ctf_staff_speciality"
                     style="@style/match_wrap"
                     android:layout_marginTop="@dimen/size_5"
                     android:background="@drawable/bg_rect_edit_txt"
@@ -219,105 +218,191 @@
                     android:textColor="@color/warm_grey_10"
                     android:textColorHint="@color/primary_grey"
                     tools:ignore="UnusedAttribute" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/upload_signature"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <include
+                    android:id="@+id/layout_item_preview"
+                    layout="@layout/item_preview_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:visibility="gone" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btn_consultation_hour"
+                    android:id="@+id/btn_upload_signature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/stroke_blue_transparent"
+                    android:paddingVertical="@dimen/size_10">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_upload_signature"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/customTextView4"
+                        app:layout_constraintHorizontal_bias="0.9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/customTextView4"
+                        style="@style/wrap_wrap"
+                        android:text="@string/upload_signature_"
+                        android:textAllCaps="true"
+                        android:textColor="@color/light_blue_1"
+                        app:fontFamily="@font/regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.55"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:textType="BODY_3" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/appointment_booking_window_for_patients"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/ctf_booking_window"
                     style="@style/match_wrap"
-                    android:layout_marginTop="@dimen/size_20"
-                    android:background="@drawable/shape_grey_stroke_rect_bkg"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:drawableEnd="@drawable/ic_arrow_down_grey_staff"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:hint="@string/select_duration"
+                    android:inputType="textCapWords"
+                    android:padding="@dimen/size_12"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_consultation_hour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:layout_marginBottom="@dimen/size_16"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:padding="@dimen/size_8">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_heading"
+                        style="@style/wrap_wrap"
+                        android:layout_marginStart="@dimen/size_3"
+                        android:text="@string/consultation_hours"
+                        android:textColor="@color/black_4a4a4a"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_3" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_timing_subheading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_heading"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:fontFamily="@font/open_sans"
+                        android:text="@string/select_doctor_s_consultation_hours"
+                        android:textFontWeight="600"
+                        android:textSize="10sp" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_timing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ctv_timing_subheading"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@color/blue_4A90E2"
+                        android:textFontWeight="600"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/size_8"
+                        android:src="@drawable/ic_arrow_right_grey_staff" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_provided"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:background="@drawable/bg_rect_edit_txt"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    android:padding="@dimen/size_10">
+                    android:padding="@dimen/size_8">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/iv_counsultation_hour"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:text="@string/consultation_hours"
-                            android:textColor="@color/black_4a4a4a"
-                            app:fontFamily="@font/semi_bold"
-                            app:textType="BODY_3" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            style="@style/match_wrap"
-                            android:includeFontPadding="false"
-                            android:text="@string/select_doctor_s_consultation_hours"
-                            android:textColor="@color/warm_grey"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/regular" />
-
-                    </LinearLayout>
-
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/iv_counsultation_hour"
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_service_provided_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_arrow_right_grey_staff" />
+                        android:includeFontPadding="false"
+                        android:text="@string/select_service"
+                        android:textColor="@color/black_4a4a4a"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_3" />
 
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btn_select_services"
-                    style="@style/match_wrap"
-                    android:layout_marginTop="@dimen/size_20"
-                    android:background="@drawable/shape_grey_stroke_rect_bkg"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:padding="@dimen/size_10">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/iv_select_services"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:text="@string/select_services"
-                            android:textColor="@color/black_4a4a4a"
-                            app:fontFamily="@font/semi_bold"
-                            app:textType="BODY_3" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            style="@style/match_wrap"
-                            android:includeFontPadding="false"
-                            android:text="@string/select_services_that_the_doctor_provide"
-                            android:textColor="@color/warm_grey"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/regular" />
-
-                    </LinearLayout>
-
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/iv_select_services"
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_services_subheading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_arrow_right_grey_staff" />
+                        android:layout_below="@id/ctv_service_provided_heading"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/select_services_that_the_doctor_provide"
+                        android:textSize="10sp" />
 
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_services"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ctv_services_subheading"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@color/blue_4A90E2"
+                        android:textFontWeight="600"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/size_8"
+                        android:src="@drawable/ic_arrow_right_grey_staff" />
+
+                </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_other_info"
@@ -376,30 +461,23 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/vw_savePublish"
-                style="@style/match_wrap"
-                android:layout_marginStart="@dimen/size_20"
-                android:layout_marginEnd="@dimen/size_20"
-                android:layout_marginBottom="@dimen/size_14"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+
 
                 <com.framework.views.customViews.CustomButton
-                    android:layout_width="match_parent"
                     style="@style/ButtonStyle.Rounded.Solid"
-                    android:text="@string/save_details"
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
                     android:gravity="center"
+                    android:layout_marginStart="@dimen/size_20"
+                    android:layout_marginEnd="@dimen/size_20"
+                    android:layout_marginBottom="@dimen/size_14"
+                    android:text="@string/save_details"
                     android:textAllCaps="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:textType="HEADING_6" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

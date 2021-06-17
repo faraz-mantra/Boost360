@@ -21,19 +21,19 @@ data class StaffDetailsResult(
     var serviceIds: ArrayList<String>? = null,
 
     @field:SerializedName("Memberships")
-    var memberships: Any? = null,
+    var memberships: String? = null,
 
     @field:SerializedName("BusinessLicence")
-    var businessLicence: Any? = null,
+    var businessLicence: String? = null,
 
     @field:SerializedName("Description")
     var description: String? = null,
 
     @field:SerializedName("Speciality")
-    var speciality: Any? = null,
+    var speciality: String? = null,
 
     @field:SerializedName("BookingWindow")
-    var bookingWindow: Double? = null,
+    var bookingWindow: String? = null,
 
     @field:SerializedName("Gender")
     var gender: String? = null,
@@ -45,7 +45,7 @@ data class StaffDetailsResult(
     var name: String? = null,
 
     @field:SerializedName("Experience")
-    var experience: Int? = null,
+    var experience: String? = null,
 
     @field:SerializedName("TileImageUrl")
     var tileImageUrl: String? = null,
@@ -57,19 +57,19 @@ data class StaffDetailsResult(
     var specialisations: ArrayList<SpecialisationsItem>? = null,
 
     @field:SerializedName("Education")
-    var education: Any? = null,
+    var education: String? = null,
 
     @field:SerializedName("Registration")
-    var registration: Any? = null,
+    var registration: String? = null,
 
     @field:SerializedName("IsAvailable")
     var isAvailable: Boolean? = null,
 
     @field:SerializedName("Signature")
-    var signature: Any? = null,
+    var signature: String? = null,
 
     @field:SerializedName("ContactNumber")
-    var contactNumber: Any? = null,
+    var contactNumber: String? = null,
 
     @field:SerializedName("_id")
     var id: String? = null,

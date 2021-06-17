@@ -106,7 +106,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     val b = arguments?.getBoolean(IntentConstant.IS_ADD_NEW.name) ?: false
     if (b) {
       WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
-      startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+      startStaffFragmentActivity( if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
     }
   }
 
@@ -272,7 +272,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     return when (item.itemId) {
       R.id.menu_add_staff -> {
         WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
-        startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+        startStaffFragmentActivity(if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
         true
       }
       R.id.app_bar_search -> {
@@ -293,7 +293,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity( if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
       binding?.serviceEmpty?.cbAddService -> {
         isServiceAdd = true
         startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)

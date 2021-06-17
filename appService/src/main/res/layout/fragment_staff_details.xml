@@ -262,7 +262,7 @@
               android:textColor="@color/blue_4A90E2"
               android:textFontWeight="600"
               android:textSize="10sp"
-              android:visibility="gone" />
+              android:visibility="visible" />
 
             <com.framework.views.customViews.CustomImageView
               android:layout_width="wrap_content"

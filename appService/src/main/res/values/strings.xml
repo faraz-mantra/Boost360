@@ -146,7 +146,6 @@
   <string name="bank_account_not_added">Bank account not added</string>
   <string name="bank_account_added">Bank account added</string>
   <string name="are_you_sure">Are you sure?</string>
-  <string name="cancel">Cancel</string>
   <string name="delete_" translatable="false">Delete</string>
   <string name="enter_service_name">Enter service name</string>
   <string name="enter_product_name">Enter product name</string>
@@ -513,7 +512,7 @@
     <string name="add_a_doctor">Add a Doctor</string>
     <string name="know_how_it_works">know how it works</string>
     <string name="add_doctor_image">Add doctor Image*</string>
-    <string name="name_">Name*</string>
+    <string name="name_doctor">Name*</string>
   <string name="description">Description*</string>
   <string name="type_doctor_s_description_in_around_2000_characters_at_max">Type doctor’s description in around 2000 characters at max…</string>
   <string name="speciality">Speciality*</string>
@@ -527,6 +526,48 @@
   <string name="select_doctor_s_consultation_hours">Select doctor’s consultation hours</string>
   <string name="select_services">Select services</string>
   <string name="select_services_that_the_doctor_provide">Select services that the doctor provide</string>
+    <string name="upload_signature">Upload Signature*</string>
+    <string name="upload_signature_">upload signature</string>
+  <string name="education">Education</string>
+  <string name="e_g_m_b_b_s_m_d_etc">e.g M.B.B.S ,M.D etc.</string>
+  <string name="year_of_experience_doctor">Years of experience</string>
+  <string name="doctor_mobile_number">Mobile number</string>
+  <string name="memberships">Memberships</string>
+  <string name="hyderabad_medical_board">Hyderabad Medical Board</string>
+  <string name="registration">Registration</string>
+  <string name="mci">MCI</string>
+    <string name="appointment_booking_window_for_patients">Appointment booking window for patients*</string>
+  <string name="select_duration">Select duration</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="select_appointment_booking_window_duration">Select appointment booking window duration</string>
+    <string name="_7_days">7 days</string>
+  <string name="_14_days">14 days</string>
+  <string name="_30_days">30 days</string>
+  <string name="_60_days">60 days</string>
+  <string name="_90_days">90 days</string>
+  <string name="cancel">Cancel</string>
+    <string name="select_appointment_type">Select appointment type</string>
+  <string name="the_type_of_consultation_that_patients_will_get">The type of consultation that patients will get</string>
+    <string name="consultation_will_be_given_through_video_call">Consultation will be given through video call.</string>
+  <string name="video_consultation">Video consultation</string>
+    <string name="in_person_consultation">In-person consultation</string>
+  <string name="consultation_to_be_provided_to_patients_in_person">Consultation to be provided to patients in person.</string>
+  <string name="in_person_video_consultation"><![CDATA[In-person & video consultation]]></string>
+    <string name="consultation_can_be_given_in_both_methods">Consultation can be given in both methods.</string>
+  <string name="type_the_doctor_s_name">Type the doctor’s name</string>
+  <string name="please_add_speciality">please add speciality.</string>
+  <string name="enter_doctor_name">enter doctor name.</string>
+  <string name="please_choose_doctor_profile">please choose doctor profile.</string>
+  <string name="please_enter_doctors_description">please enter doctors description</string>
+  <string name="please_enter_speciality">please enter speciality.</string>
+  <string name="please_enter_valid_business_">please enter valid business license</string>
+  <string name="please_choose_signature">please choose signature</string>
+  <string name="please_choose_booking_window_duration">please choose booking window duration</string>
+  <string name="please_select_one_service_provided_by_doctor">please select atlease one service provided by this doctor</string>
+    <string name="additional_info">Additional Info</string>
+  <string name="add_doctor_e_profile">Add doctor e-profile</string>
+    <string name="consultation_type">Consultation type</string>
+  <string name="select_consultation_type">Select consultation type.</string>
 
 
   <array name="stock_availbility">

@@ -59,7 +59,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     val request = StaffProfileUpdateRequest(
         isAvailable = staffDetails?.isAvailable, serviceIds = staffDetails?.serviceIds, gender = staffDetails?.gender,
         floatingPointTag = UserSession.fpTag, name = staffDetails?.name, description = staffDetails?.description,
-        experience = staffDetails?.experience, staffId = staffDetails?.id, age = staffDetails?.age,
+        experience = staffDetails?.experience?.toIntOrNull(), staffId = staffDetails?.id, age = staffDetails?.age,
         specialisations = staffDetails?.specialisations)
     viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
@@ -92,7 +92,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   }
 
   private fun setExperience() {
-    binding?.ctvExperience?.text = "${staffDetails?.experience}".plus(if (staffDetails?.experience ?: 0 < 2) " Year" else " Years")
+    binding?.ctvExperience?.text = "${staffDetails?.experience}".plus(if (staffDetails?.experience?.toIntOrNull() ?: 0 < 2) " Year" else " Years")
   }
 
   private fun setViewBackgrounds() {
@@ -228,7 +228,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
       binding?.ctvEdit -> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
-        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, bundle, false, isResult = true, Constants.STAFF_PROFILE_UPDATED_DATA)
+        startStaffFragmentActivity(requireActivity(), if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, bundle, false, isResult = true, Constants.STAFF_PROFILE_UPDATED_DATA)
       }
       binding?.ctvEditLeaves -> {
 
