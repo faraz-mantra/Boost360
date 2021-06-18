@@ -154,6 +154,7 @@ class BusinessDetailsFragment : DialogFragment() {
         prefs.storeGstRegistered(true)
         close.setOnClickListener {
             dismiss()
+//            viewModel.updatesBusinessPopup(true)
         }
 
         gstin_on.setOnClickListener {
@@ -315,7 +316,7 @@ class BusinessDetailsFragment : DialogFragment() {
 
         })
 
-        viewModel.getSelectedStateResult().observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getSelectedStateResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it != null){
                 business_city_name.text = it
             }
@@ -331,9 +332,7 @@ class BusinessDetailsFragment : DialogFragment() {
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().viewModelStore.clear()
-        listener.backListener(true)
 //        this.viewModelStore.clear()
-//        viewModel.getCustomerInfoResult().removeObservers(this)
-//        viewModel.getUpdatedCustomerBusinessResult().removeObservers(this)
+        listener.backListener(true)
     }
 }

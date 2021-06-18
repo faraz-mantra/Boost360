@@ -206,7 +206,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:text="Last 3 digit printed\non the back of the card"
+                android:text="Last 3 digits printed\non the back of the card"
                 android:textColor="#747474"
                 android:textSize="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="@id/add_card_cvv_image"

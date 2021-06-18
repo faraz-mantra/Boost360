@@ -795,7 +795,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:text="Show more bank"
+                        android:text="Show more banks"
                         android:textColor="@color/common_text_color" />
 
                     <ImageView

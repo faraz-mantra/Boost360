@@ -26,8 +26,7 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerI
 import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.upgrades.data.api_model.customerId.get.Result
 import com.boost.upgrades.datamodule.SingleNetBankData
-import com.boost.upgrades.interfaces.BusinessDetailListener
-import com.boost.upgrades.interfaces.PaymentListener
+import com.boost.upgrades.interfaces.*
 import com.boost.upgrades.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.popup.*
@@ -65,7 +64,8 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener {
+class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
+    MoreBanksListener,UpiPayListener,EmailPopupListener,AddCardListener {
 
     lateinit var root: View
     private lateinit var viewModel: PaymentViewModel
@@ -184,8 +184,16 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                 WebEngageController.trackEvent(ADDONS_MARKETPLACE_ADD_NEW_CARD_CLICK , ADDONS_MARKETPLACE_ADD_NEW_CARD, NO_EVENT_VALUE)
                 val args = Bundle()
                 args.putString("customerId", cartCheckoutData.getString("customerId"))
-                addCardPopUpFragement.arguments = args
-                addCardPopUpFragement.show((activity as UpgradeActivity).supportFragmentManager, ADD_CARD_POPUP_FRAGMENT)
+//                addCardPopUpFragement.arguments = args
+//                addCardPopUpFragement.show((activity as UpgradeActivity).supportFragmentManager, ADD_CARD_POPUP_FRAGMENT)
+
+                val addCardFragement = AddCardPopUpFragement.newInstance(this)
+                addCardFragement.arguments = args
+                addCardFragement.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    ADD_CARD_POPUP_FRAGMENT
+                )
+
             }else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
             }
@@ -193,16 +201,26 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
 
         show_more_bank.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_SHOW_MORE_BANK_CLICK , ADDONS_MARKETPLACE_SHOW_MORE_BANK, NO_EVENT_VALUE)
-            netBankingPopUpFragement.show(
+            /*netBankingPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     NETBANKING_POPUP_FRAGMENT
+            )*/
+            val netBankingFragement = NetBankingPopUpFragement.newInstance(this)
+            netBankingFragement.show(
+                (activity as UpgradeActivity).supportFragmentManager,
+                NETBANKING_POPUP_FRAGMENT
             )
         }
 
         add_upi_layout.setOnClickListener {
             if(paymentProceedFlag){
                 WebEngageController.trackEvent(ADDONS_MARKETPLACE_UPI_CLICK, ADDONS_MARKETPLACE_UPI, NO_EVENT_VALUE)
-                upiPopUpFragement.show(
+               /* upiPopUpFragement.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    UPI_POPUP_FRAGMENT
+                )*/
+                val upiFragment = UPIPopUpFragement.newInstance(this)
+                upiFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     UPI_POPUP_FRAGMENT
                 )
@@ -214,7 +232,12 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
         add_external_email.setOnClickListener {
             if(paymentProceedFlag){
                 WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK, ADDONS_MARKETPLACE_PAYMENT_LINK , NO_EVENT_VALUE)
-                externalEmailPopUpFragement.show(
+                /*externalEmailPopUpFragement.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    EXTERNAL_EMAIL_POPUP_FRAGMENT
+                )*/
+                val emailPopUpFragement = ExternalEmailPopUpFragement.newInstance(this)
+                emailPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     EXTERNAL_EMAIL_POPUP_FRAGMENT
                 )
@@ -286,6 +309,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
             Log.i("netBankingObserver >", it.toString())
             paymentData = it
             payThroughRazorPay()
+//            payThroughRazorPayMoreBanks()
         })
 
         viewModel.upiPaymentData().observe(this, Observer {
@@ -362,7 +386,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                 }
 
                 if (createCustomerInfoRequest!!.AddressDetails != null) {
-//                    business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.City)
+                    business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
                 }
 
                 if(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber == null){
@@ -377,6 +401,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                     paymentProceedFlag = false
                 }else{
                     business_name_missing.visibility = View.GONE
+                    business_name_value.setText(createCustomerInfoRequest!!.Name)
 
                 }
                 if(createCustomerInfoRequest!!.BusinessDetails!!.Email == null){
@@ -411,6 +436,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                     paymentProceedFlag = false
                 }else{
                     business_address_missing.visibility = View.GONE
+                }
+                if(createCustomerInfoRequest!!.AddressDetails!!.State == null){
+                    business_supply_place_missing.visibility = View.VISIBLE
+                    paymentProceedFlag = false
+                }else{
+                    business_supply_place_missing.visibility = View.GONE
+                    business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
                 }
 
                 if(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null &&
@@ -581,6 +613,15 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                 business_gstin_missing.visibility = View.VISIBLE
             }
         })
+
+        viewModel.getBusinessPopup().observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if(it){
+                val businessFragment = BusinessDetailsFragment.newInstance(this)
+//                businessFragment.dismiss()
+//                businessFragment.fragmentManager?.beginTransaction()?.remove(businessFragment)
+                fragmentManager?.beginTransaction()?.remove(businessFragment)
+            }
+        })
     }
 
     fun payViaPaymentLink() {
@@ -630,6 +671,32 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
 
             //RazorPay web
             razorPayWebView.show((activity as UpgradeActivity).supportFragmentManager, RAZORPAY_WEBVIEW_POPUP_FRAGMENT)
+
+            paymentData = JSONObject()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun payThroughRazorPayMoreBanks() {
+        try {
+            for (key in cartCheckoutData.keys()) {
+                if (key != "customerId" && key != "transaction_id") {
+                    paymentData.put(key, cartCheckoutData.get(key))
+                }
+            }
+            var firebaseAnalytics = Firebase.analytics
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO, null)
+            val razorPayWebViewBank = RazorPayWebView.newInstance()
+            val args = Bundle()
+            args.putString("data", paymentData.toString())
+            razorPayWebView.arguments = args
+            razorPayWebViewBank.arguments = args
+
+            //RazorPay web
+
+            razorPayWebViewBank.show((activity as UpgradeActivity).supportFragmentManager, RAZORPAY_WEBVIEW_POPUP_FRAGMENT)
 
             paymentData = JSONObject()
 
@@ -789,7 +856,28 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
     override fun backListener(flag: Boolean) {
         Log.v("backListener", " "+ flag)
         loadCustomerInfo()
+//       loadData()
+    }
 
+    override fun moreBankSelected(data: JSONObject) {
+        paymentData = data
+        payThroughRazorPay()
+    }
+
+    override fun upiSelected(data: JSONObject) {
+        Log.i("upiSelected >", data.toString())
+        paymentData = data
+        payThroughRazorPay()
+    }
+
+    override fun emailSelected(data: JSONObject) {
+        paymentData = data
+        payViaPaymentLink()
+    }
+
+    override fun cardSelected(data: JSONObject) {
+        paymentData = data
+        payThroughRazorPay()
     }
 
 }
