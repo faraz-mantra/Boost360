@@ -532,21 +532,23 @@ class EditDoctorsDetailsFragment :
       isSignatureSelection = true
       openImagePicker()
     }
-    val imageExtension: String? =
-      signatureUri?.toString()?.substring(signatureUri.toString().lastIndexOf("."))
-    val imageToByteArray: ByteArray = imageToByteArray(signatureUri)
-    this.staffSignature = StaffImage(
-      image = "data:image/png;base64,${
-        Base64.encodeToString(
-          imageToByteArray,
-          Base64.DEFAULT
-        )
-      }",
-      fileName = "${System.currentTimeMillis()}$imageExtension",
-      imageFileType = imageExtension?.removePrefix(".")
-    )
-    if (staffDetails?.id != null) {
-      updateStaffImage(IMAGETYPE.SIGNATURE)
+    if (signatureUri?.path!="null") {
+      val imageExtension: String? =
+        signatureUri?.toString()?.substring(signatureUri.toString().lastIndexOf("."))
+      val imageToByteArray: ByteArray = imageToByteArray(signatureUri)
+      this.staffSignature = StaffImage(
+        image = "data:image/png;base64,${
+          Base64.encodeToString(
+            imageToByteArray,
+            Base64.DEFAULT
+          )
+        }",
+        fileName = "${System.currentTimeMillis()}$imageExtension",
+        imageFileType = imageExtension?.removePrefix(".")
+      )
+      if (staffDetails?.id != null) {
+        updateStaffImage(IMAGETYPE.SIGNATURE)
+      }
     }
 
   }
