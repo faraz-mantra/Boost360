@@ -73,7 +73,7 @@ class ExternalEmailPopUpFragement : DialogFragment() {
             if(!validatingStatus) {
                 validatingStatus = true
                 Utils.hideSoftKeyboard(requireActivity())
-//                external_email_popup_submit.setText("Verifying...")
+                external_email_popup_submit.setText("Verifying...")
                 Thread.sleep(1000L)
                 if(validateEmail()){
                     validatingStatus = false
@@ -83,13 +83,14 @@ class ExternalEmailPopUpFragement : DialogFragment() {
                     invalid_email.visibility = View.GONE
                 } else {
                     validatingStatus = false
+                    external_email_popup_submit.setText("CONFIRM")
                     WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXT_EMAIL_VALIDATION_FAILED, external_email_popup_value.text.toString(), NO_EVENT_VALUE)
 //                    Toasty.warning(requireContext(),"Invalid Email Id. Please try again.",Toast.LENGTH_LONG).show()
                     invalid_email.visibility = View.VISIBLE
                 }
             }
         }
-        WebEngageController.trackEvent(ADDONS_MARKETPLACE_ADD_UPI_LOADED , ADD_UPI, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXT_EMAIL_VALIDATION_LOAD , EXT_EMAIL, NO_EVENT_VALUE)
     }
 
     fun validateEmail(): Boolean{
