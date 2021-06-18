@@ -574,7 +574,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
-        WebEngageController.trackEvent(SITE_HEALTH_PAGE, SITE_HEALTH, session?.fpTag);
+//        WebEngageController.trackEvent(SITE_HEALTH_PAGE, SITE_HEALTH, session?.fpTag);
 //        session?.let { baseActivity.startOldSiteMeter(it) }
         baseActivity.startReadinessScoreView(session, 0)
       }

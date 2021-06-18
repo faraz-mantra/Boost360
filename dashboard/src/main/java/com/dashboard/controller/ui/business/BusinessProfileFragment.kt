@@ -37,6 +37,7 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_ADDRESS
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.UserSessionManager
@@ -49,13 +50,14 @@ import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
 
 class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
 
   private var businessImage: File? = null
-  private var businessProfileModel = BusinessProfileModel();
+  private var businessProfileModel = BusinessProfileModel()
   private var businessProfileUpdateRequest: BusinessProfileUpdateRequest? = null
   private var session: UserSessionManager? = null
 
@@ -96,6 +98,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     loadImage(session?.getFPDetails(GET_FP_DETAILS_LogoUrl) ?: "")
     binding?.btnSavePublish?.isEnabled = false
     binding?.ctvBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
+    binding?.ctvBusinessCategory?.text = session?.getFPDetails(GET_FP_DETAILS_CATEGORY)
     onBusinessNameAddedOrUpdated(session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty().not())
     binding?.ctvBusinessNameCount?.text = "${session?.fPName?.length}/40"
     binding?.ctvWebsite?.text = "${session?.getDomainName()}"
@@ -108,13 +111,20 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.containerBusinessAddress?.visible()
     }
     var str = ""
-    if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "• +91 ${session?.userPrimaryMobile} (VMN)"
-    if (session?.userPrimaryMobile.isNullOrEmpty()) {
+    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
+    if (session?.fPPrimaryContactNumber.isNullOrEmpty()) {
+      if (session?.getStoreWidgets()?.contains("CALLTRACKER") == true) {
+        binding?.ctvActive?.text = getString(R.string.active)
+        binding?.ctvActive?.setTextColor(getColor(R.color.green_27AE60))
+      } else {
+        binding?.ctvActive?.text = getString(R.string.inactive)
+        binding?.ctvActive?.setTextColor(getColor(R.color.red_F40000))
+      }
       binding?.ctvActive?.gone()
     } else {
       binding?.ctvActive?.visible()
     }
-    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "\n• +91 ${session?.fPPrimaryContactNumber}"
+    if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "\n• +91 ${session?.userPrimaryMobile}"
     if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty().not()) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
     str += "\n• ${session?.getDomainName() ?: ""}"
     binding?.ctvBusinessContacts?.text = str.trimMargin()
@@ -143,7 +153,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
 
   private fun loadImage(imageUri: String) {
     if (imageUri.isEmpty().not()) {
-      baseActivity.glideLoad(mImageView = binding?.businessImage!!, url =imageUri, placeholder = R.drawable.placeholder_image_n)
+      baseActivity.glideLoad(mImageView = binding?.businessImage!!, url = imageUri, placeholder = R.drawable.placeholder_image_n)
       binding?.imageAddBtn?.gone()
       binding?.btnChangeImage?.visible()
       binding?.divider3?.visible()
