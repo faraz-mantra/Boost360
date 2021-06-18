@@ -60,11 +60,12 @@
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/rg"
                 android:layout_marginTop="@dimen/size_10"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/vw_boostPaymentGateway"
+                    android:id="@+id/ll_video_consultation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -77,6 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         style="@style/RadioWindow"
+                        android:tag="1"
                         android:clickable="false" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -112,7 +114,7 @@
                     android:background="@drawable/shape_grey_dotted_line" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/vw_customPaymentGateway"
+                    android:id="@+id/ll_inperson_consultation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -125,6 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         style="@style/RadioWindow"
+                        android:tag="2"
                         android:clickable="false" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -160,7 +163,7 @@
                     android:background="@drawable/shape_grey_dotted_line" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/vw_externalUrl"
+                    android:id="@+id/ll_inperson_video_consultation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -173,6 +176,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         style="@style/RadioWindow"
+                        android:tag="3"
                         android:clickable="false" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -233,7 +237,7 @@
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_done"
-                    android:layout_height="@dimen/size_42"
+                    android:layout_height="@dimen/size_36"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
                     style="@style/ButtonStyle.Rounded.Solid"
