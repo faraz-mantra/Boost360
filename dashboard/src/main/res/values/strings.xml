@@ -196,4 +196,6 @@
   <string name="error_updating_business">Error updating business profile, please try again.</string>
   <string name="active">active</string>
   <string name="update_business_image">Update Business Logo</string>
+    <string name="choose_primary_font">Choose Primary Font</string>
+  <string name="choose_secondary_font">Choose Secondary Font</string>
 </resources>
