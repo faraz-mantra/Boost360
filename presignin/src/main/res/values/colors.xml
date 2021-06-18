@@ -22,6 +22,7 @@
     <color name="psn_back_button_color">#334A4A4A</color>
     <color name="wrongOTPColor">#E39595</color>
     <color name="et_unselected_color">#E5E5E5</color>
+    <color name="gray_e2e2e2e2">#E2E2E2</color>
     <color name="et_color">#2a2a2a</color>
     <color name="website_status_error_color">#E39595</color>
     <color name="link_color">#2F80ED</color>
