@@ -108,7 +108,10 @@ class StateListPopFragment : DialogFragment() ,StateListener{
             if(it != null){
                 var data = arrayListOf<StateModel>()
                 it.forEach {
-                    data.add(StateModel(it,"",0))
+                    if(!data.contains(StateModel(it,"",0))){
+                        data.add(StateModel(it,"",0))
+                    }
+//                    data.add(StateModel(it,"",0))
                 }
 
 

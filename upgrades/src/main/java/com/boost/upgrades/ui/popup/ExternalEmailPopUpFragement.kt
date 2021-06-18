@@ -10,6 +10,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.interfaces.EmailPopupListener
+import com.boost.upgrades.interfaces.UpiPayListener
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
@@ -29,6 +31,13 @@ class ExternalEmailPopUpFragement : DialogFragment() {
     lateinit var razorpay: Razorpay
 
     var validatingStatus = false
+
+    companion object {
+        lateinit var listener: EmailPopupListener
+        fun newInstance(emailListener: EmailPopupListener) = ExternalEmailPopUpFragement().apply {
+            listener = emailListener
+        }
+    }
 
     override fun onStart() {
         super.onStart()
@@ -55,7 +64,7 @@ class ExternalEmailPopUpFragement : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
 
-        external_email_popup_container_layout.setOnClickListener {
+        email_popup_outer_layout.setOnClickListener {
             dialog!!.dismiss()
         }
         external_email_popup_container_layout.setOnClickListener {}
@@ -64,7 +73,7 @@ class ExternalEmailPopUpFragement : DialogFragment() {
             if(!validatingStatus) {
                 validatingStatus = true
                 Utils.hideSoftKeyboard(requireActivity())
-                external_email_popup_submit.setText("Verifying...")
+//                external_email_popup_submit.setText("Verifying...")
                 Thread.sleep(1000L)
                 if(validateEmail()){
                     validatingStatus = false
@@ -75,7 +84,7 @@ class ExternalEmailPopUpFragement : DialogFragment() {
                 } else {
                     validatingStatus = false
                     WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXT_EMAIL_VALIDATION_FAILED, external_email_popup_value.text.toString(), NO_EVENT_VALUE)
-                    Toasty.warning(requireContext(),"Invalid Email Id. Please try again.",Toast.LENGTH_LONG).show()
+//                    Toasty.warning(requireContext(),"Invalid Email Id. Please try again.",Toast.LENGTH_LONG).show()
                     invalid_email.visibility = View.VISIBLE
                 }
             }
@@ -90,7 +99,8 @@ class ExternalEmailPopUpFragement : DialogFragment() {
     fun sendPaymentLinkEmail(){
         val data = JSONObject()
         data.put("userEmail", external_email_popup_value.text.toString())
-        viewModel.UpdateExternalEmailPaymentData(data)
+//        viewModel.UpdateExternalEmailPaymentData(data)
+        listener.emailSelected(data)
         dialog!!.dismiss()
         clearData()
     }

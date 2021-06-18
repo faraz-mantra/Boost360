@@ -11,16 +11,22 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.upgrades.R
+import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.NetBankingPopUpAdaptor
 import com.boost.upgrades.datamodule.SingleNetBankData
+import com.boost.upgrades.interfaces.BusinessDetailListener
+import com.boost.upgrades.interfaces.MoreBanksListener
 import com.boost.upgrades.interfaces.NetBankingListener
+import com.boost.upgrades.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.utils.WebEngageController
+import com.boost.upgrades.utils.observeOnce
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_NET_BANKING_LOADED
 import com.framework.webengageconstant.NET_BANKING
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.razorpay.Razorpay
 import kotlinx.android.synthetic.main.netbanking_popup.*
 import org.json.JSONObject
 import java.util.*
@@ -35,6 +41,14 @@ class NetBankingPopUpFragement: DialogFragment(), NetBankingListener {
     val list = ArrayList<SingleNetBankData>()
 
     lateinit var netBankingPopUpAdaptor: NetBankingPopUpAdaptor
+    lateinit var razorpay: Razorpay
+
+    companion object {
+        lateinit var listener: MoreBanksListener
+        fun newInstance(moreBankListener: MoreBanksListener) = NetBankingPopUpFragement().apply {
+            listener = moreBankListener
+        }
+    }
 
     override fun onStart() {
         super.onStart()
@@ -50,8 +64,8 @@ class NetBankingPopUpFragement: DialogFragment(), NetBankingListener {
         savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.netbanking_popup, container, false)
-
-        netBankingPopUpAdaptor = NetBankingPopUpAdaptor(list, this)
+        razorpay = (activity as UpgradeActivity).getRazorpayObject()
+        netBankingPopUpAdaptor = NetBankingPopUpAdaptor(ArrayList(), this)
 
         return root
 
@@ -61,8 +75,11 @@ class NetBankingPopUpFragement: DialogFragment(), NetBankingListener {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
 
-        loadBanks()
+//        loadBanks()
+        viewModel.loadMoreBanks(razorpay)
+        initMvvm()
         initializeRecycler()
+
 
         netbanking_outer_layout.setOnClickListener {
             dialog!!.dismiss()
@@ -71,7 +88,23 @@ class NetBankingPopUpFragement: DialogFragment(), NetBankingListener {
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_NET_BANKING_LOADED, NET_BANKING, NO_EVENT_VALUE)
     }
 
-    private fun loadBanks() {
+    private fun initMvvm(){
+        viewModel.getPaymentMethods().observe(this, Observer {
+            val paymentMethods = it.get("netbanking") as JSONObject
+            val retMap: Map<String, String> = Gson().fromJson(
+                paymentMethods.toString(), object : TypeToken<HashMap<String, String>>() {}.type
+            )
+            Log.v("getPaymentMethods"," "+ retMap.size)
+            retMap.map {
+                if(!list.contains(SingleNetBankData(it.key,it.value,null))){
+                    list.add(SingleNetBankData(it.key,it.value,null))
+                }
+
+            }
+            netBankingPopUpAdaptor.addupdates(list)
+        })
+    }
+    /*private fun loadBanks() {
         val paymentMethods = viewModel.getPaymentMethods().get("netbanking") as JSONObject
         val retMap: Map<String, String> = Gson().fromJson(
             paymentMethods.toString(), object : TypeToken<HashMap<String, String>>() {}.type
@@ -79,7 +112,7 @@ class NetBankingPopUpFragement: DialogFragment(), NetBankingListener {
         retMap.map {
             list.add(SingleNetBankData(it.key,it.value,null))
         }
-    }
+    }*/
 
     private fun initializeRecycler() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 1)
@@ -95,9 +128,14 @@ class NetBankingPopUpFragement: DialogFragment(), NetBankingListener {
         val selectedBanking = JSONObject()
         selectedBanking.put("method", "netbanking");
         selectedBanking.put("bank", list.get(itemPosition).bankCode);
-        viewModel.UpdateNetBankingData(selectedBanking)
+//        viewModel.UpdateNetBankingData(selectedBanking)
+        listener.moreBankSelected(selectedBanking)
         dialog!!.dismiss()
     }
 
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        requireActivity().viewModelStore.clear()
+//    }
 
 }
