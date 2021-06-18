@@ -47,7 +47,7 @@ class EditDoctorsDetailsFragment :
   private var isProfileImageUpdated: Boolean? = null
   private var profileImageIsChange: Boolean? = null
   private var resultCode: Int = 1
-  private var isAvailable: Boolean? = false
+  private var isAvailable: Boolean? = true
   private lateinit var yearOfExperience: String
   private lateinit var staffDescription: String
   private var staffAge: Int? = null
@@ -178,9 +178,12 @@ class EditDoctorsDetailsFragment :
       staffDetails?.bookingWindow = it
     }
     val bundle = Bundle()
-    bundle.putSerializable(IntentConstant.STAFF_DATA.name,staffDetails)
+    bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
     appointmentBookingBottomSheet.arguments = bundle
-    appointmentBookingBottomSheet.show(parentFragmentManager,AppointmentBookingBottomSheet::class.java.name)
+    appointmentBookingBottomSheet.show(
+      parentFragmentManager,
+      AppointmentBookingBottomSheet::class.java.name
+    )
   }
 
   private fun startAdditionalInfoFragment() {
@@ -228,12 +231,12 @@ class EditDoctorsDetailsFragment :
   private fun updateStaffImage(imagetype: IMAGETYPE) {
     val staffUpdateImageRequest = StaffUpdateImageRequest()
     if (imagetype == IMAGETYPE.PROFILE) {
-      staffUpdateImageRequest.image = staffSignature
+      staffUpdateImageRequest.image = staffImage
       staffUpdateImageRequest.imageType = IMAGETYPE.PROFILE.ordinal
       staffUpdateImageRequest.staffId = staffDetails?.id
     }
     if (imagetype == IMAGETYPE.SIGNATURE) {
-      staffUpdateImageRequest.image = staffImage
+      staffUpdateImageRequest.image = staffSignature
       staffUpdateImageRequest.imageType = IMAGETYPE.SIGNATURE.ordinal
       staffUpdateImageRequest.staffId = staffDetails?.id
     }
@@ -241,9 +244,11 @@ class EditDoctorsDetailsFragment :
     viewModel?.updateStaffImage(staffUpdateImageRequest)
       ?.observeOnce(viewLifecycleOwner, {
         hideProgress()
-        if (it.isSuccess().not()) showShortToast(
-          it.errorMessage() ?: getString(R.string.something_went_wrong)
-        )
+        if (it.isSuccess().not()) {
+          showShortToast(it.errorMessage() ?: getString(R.string.something_went_wrong))
+        } else if (isEdit==false){
+          finishAndGoBack()
+        }
       })
   }
 
@@ -277,13 +282,9 @@ class EditDoctorsDetailsFragment :
     this.staffDescription = binding?.ctfStaffDesc?.text.toString()
     val businessLicense = binding?.tvBusinessLicense?.text.toString()
     this.appointmentBookingWindow = binding?.ctfBookingWindow?.text.toString()
-    servicesList?.forEach { items ->
-      if (items.id.isNullOrEmpty().not()) serviceListId?.add(items.id!!)
-    }
+    servicesList?.forEach { items -> if (items.id.isNullOrEmpty().not()) serviceListId?.add(items.id!!) }
     if (serviceListId.isNullOrEmpty().not()) staffDetails?.serviceIds = serviceListId
-    if (profileimageUri.toString() == "null" || profileimageUri == null || profileimageUri.toString()
-        .isEmpty() || profileimageUri.toString().isBlank()
-    ) {
+    if (profileimageUri.toString() == "null" || profileimageUri == null || profileimageUri.toString().isEmpty() || profileimageUri.toString().isBlank()) {
       showLongToast(getString(R.string.please_choose_doctor_profile))
       return false
     } else if (staffName.isBlank()) {
@@ -303,7 +304,7 @@ class EditDoctorsDetailsFragment :
     ) {
       showLongToast(getString(R.string.please_choose_signature))
       return false
-    } else if (appointmentBookingWindow.isNullOrEmpty()|| appointmentBookingWindow?.isBlank() == true) {
+    } else if (appointmentBookingWindow.isNullOrEmpty() || appointmentBookingWindow?.isBlank() == true) {
       showLongToast(getString(R.string.please_choose_booking_window_duration))
       return false
     } else if (staffDetails?.serviceIds.isNullOrEmpty()) {
@@ -346,7 +347,7 @@ class EditDoctorsDetailsFragment :
     viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
       if (t.isSuccess()) {
         addStaffTimings((t as StaffCreateProfileResponse).result)
-        updateStaffImage(IMAGETYPE.SIGNATURE)
+        staffDetails?.id = t.result
         showShortToast(getString(R.string.profile_created))
         onStaffAddedOrUpdated()
         WebEngageController.trackEvent(STAFF_PROFILE_CREATE, ADDED, NO_EVENT_VALUE)
@@ -408,7 +409,7 @@ class EditDoctorsDetailsFragment :
       hideProgress()
       if (it.isSuccess()) {
         Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
-        finishAndGoBack()
+        updateStaffImage(IMAGETYPE.SIGNATURE)
       } else showShortToast(it.errorMessage() ?: getString(R.string.something_went_wrong))
     })
   }
@@ -518,9 +519,11 @@ class EditDoctorsDetailsFragment :
     this.signatureUri = Uri.parse(mPaths[0])
     staffSignatureFile = File(mPaths[0])
     binding?.layoutItemPreview?.root?.visible()
+    binding?.btnUploadSignature?.gone()
     staffSignatureFile?.getBitmap()?.let { binding?.layoutItemPreview?.image?.setImageBitmap(it) }
     binding?.layoutItemPreview?.crossIcon?.setOnClickListener {
       binding?.layoutItemPreview?.root?.gone()
+      binding?.btnUploadSignature?.visible()
       binding?.layoutItemPreview?.image?.setImageBitmap(null)
     }
     binding?.layoutItemPreview?.ctvSize?.text = "${staffSignatureFile?.sizeInKb} Kb"

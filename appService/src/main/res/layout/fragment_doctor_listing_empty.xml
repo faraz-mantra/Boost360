@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_10"
-        android:text="@string/no_staff_member_listed_yet"
+        android:text="@string/no_doctor_listed_yet"
         android:textColor="@color/black_4a4a4a"
         app:textType="HEADING_4" />
 

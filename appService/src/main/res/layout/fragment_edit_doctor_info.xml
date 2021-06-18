@@ -190,7 +190,7 @@
                     android:layout_marginTop="@dimen/size_5"
                     android:background="@drawable/bg_rect_edit_txt"
                     android:hint="@string/type_doctor_s_speciality_e_g_physician"
-                    android:inputType="number"
+                    android:inputType="textCapWords"
                     android:padding="@dimen/size_12"
                     android:singleLine="true"
                     android:textColor="@color/warm_grey_10"

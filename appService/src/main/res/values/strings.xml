@@ -568,9 +568,10 @@
   <string name="add_doctor_e_profile">Add doctor e-profile</string>
     <string name="consultation_type">Consultation type</string>
   <string name="select_consultation_type">Select consultation type.</string>
+    <string name="no_doctor_listed_yet">No doctor listed yet</string>
 
 
-  <array name="stock_availbility">
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>

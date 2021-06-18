@@ -1,6 +1,7 @@
 package com.appservice.staffs.doctors
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
@@ -8,6 +9,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAdditionalDoctorInfoBinding
 import com.appservice.staffs.doctors.bottomsheet.AppointmentTypeBottomSheet
+import com.appservice.staffs.model.AppointmentType
 import com.appservice.staffs.model.StaffDetailsResult
 import com.appservice.staffs.ui.Constants
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
@@ -49,6 +51,8 @@ class AdditionalDoctorsInfoFragment :
     binding?.ctfMembership?.setText(staffDetailsResult?.memberships?:"")
     binding?.ctfMobileNumber?.setText(staffDetailsResult?.contactNumber?:"")
     binding?.ctfRegistration?.setText(staffDetailsResult?.registration?:"")
+    binding?.ctfConsultationType?.setText(AppointmentType.typeMap[staffDetailsResult?.appointmentType])
+
   }
 
   override fun onClick(v: View) {
@@ -64,7 +68,10 @@ class AdditionalDoctorsInfoFragment :
 
   private fun openConsultationTypeBottomSheet() {
     val appointmentTypeBottomSheet = AppointmentTypeBottomSheet()
-    appointmentTypeBottomSheet.onClicked = {staffDetailsResult?.appointmentType =it }
+    appointmentTypeBottomSheet.onClicked = {staffDetailsResult?.appointmentType =it; binding?.ctfConsultationType?.setText(AppointmentType.typeMap[it])}
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.STAFF_DATA.name,staffDetailsResult)
+    appointmentTypeBottomSheet.arguments = bundle
     appointmentTypeBottomSheet.show(parentFragmentManager,AppointmentTypeBottomSheet::javaClass.name)
   }
 
