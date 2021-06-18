@@ -429,11 +429,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                    default_validity_months++
                 if(default_validity_months == 1){
                     default_validity_months = default_validity_months+ 2
-                }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
-                    default_validity_months = default_validity_months+ 12
+                }else if(default_validity_months >= 12 && default_validity_months < 60){
+                    if(default_validity_months % 12 == 0 ){
+                        default_validity_months = default_validity_months+ 12
+                    }else{
+                        default_validity_months = default_validity_months + ((12 - default_validity_months % 12)  )
+                    }
+//        default_validity_months = default_validity_months+ 12
                 }else{
-                    if(default_validity_months < 60)
-                        default_validity_months = default_validity_months+ 3
+                    if(default_validity_months < 60){
+                        if(default_validity_months % 3 == 0){
+                            default_validity_months = default_validity_months+ 3
+                        }else if(default_validity_months % 3 == 1){
+                            default_validity_months = default_validity_months+ 2
+                        }else if(default_validity_months % 3 == 2){
+                            default_validity_months = default_validity_months+ 1
+                        }
+                    }
+//                        default_validity_months = default_validity_months+ 3
                 }
 //                months_validity.text = default_validity_months.toString() + " months"
                 months_validity.setText(default_validity_months.toString())
@@ -453,11 +466,27 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                if (default_validity_months < 12){
     if(default_validity_months == 1){
         default_validity_months = default_validity_months+ 2
-    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
-        default_validity_months = default_validity_months+ 12
+//    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
+    }else if(default_validity_months >= 12 && default_validity_months < 60){
+        if(default_validity_months % 12 == 0 ){
+            default_validity_months = default_validity_months+ 12
+        }else{
+//            Log.v("validity_calculator", " "+ (default_validity_months - default_validity_months % 12)  + " "+default_validity_months + " "+ (default_validity_months % 12) )
+            default_validity_months = default_validity_months + ((12 - default_validity_months % 12)  )
+        }
+//        default_validity_months = default_validity_months+ 12
     }else{
-        if(default_validity_months < 60)
-          default_validity_months = default_validity_months+ 3
+//        if(default_validity_months < 60)
+            if(default_validity_months < 60 && default_validity_months < 12 ){
+                if(default_validity_months % 3 == 0){
+                    default_validity_months = default_validity_months+ 3
+                }else if(default_validity_months % 3 == 1){
+                    default_validity_months = default_validity_months+ 2
+                }else if(default_validity_months % 3 == 2){
+                    default_validity_months = default_validity_months+ 1
+                }
+            }
+//          default_validity_months = default_validity_months+ 3
     }
 
 //            default_validity_months++
@@ -482,10 +511,25 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             if (!bundles_in_cart) {
                 if (default_validity_months > 1) {
 //                    default_validity_months--
-                    if(default_validity_months > 12 && default_validity_months % 12 == 0){
-                        default_validity_months = default_validity_months - 12
+//                    if(default_validity_months > 12 && default_validity_months % 12 == 0){
+                    if(default_validity_months > 12){
+//                        default_validity_months = default_validity_months - 12
+                        if(default_validity_months % 12 == 0 ){
+                            default_validity_months = default_validity_months - 12
+                        }else{
+                            default_validity_months = default_validity_months - (( default_validity_months % 12)  )
+                        }
                     }else{
-                        default_validity_months = default_validity_months - 3
+//                        default_validity_months = default_validity_months - 3
+                        if(default_validity_months <= 12 ){
+                            if(default_validity_months % 3 == 0){
+                                default_validity_months = default_validity_months - 3
+                            }else if(default_validity_months % 3 == 1){
+                                default_validity_months = default_validity_months - 1
+                            }else if(default_validity_months % 3 == 2){
+                                default_validity_months = default_validity_months - 2
+                            }
+                        }
                     }
                     if(default_validity_months < 1){
                         default_validity_months = 1
@@ -508,10 +552,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     months_validity.setText (default_validity_months.toString())
             }else if (bundles_in_cart) {
             if (default_validity_months > package_validity_months) {
-                if(default_validity_months > 12 && default_validity_months % 12 == 0){
-                    default_validity_months = default_validity_months - 12
+                if(default_validity_months > 12){
+//                        default_validity_months = default_validity_months - 12
+                    if(default_validity_months % 12 == 0 ){
+                        default_validity_months = default_validity_months - 12
+                    }else{
+                        default_validity_months = default_validity_months - (( default_validity_months % 12)  )
+                    }
                 }else{
-                    default_validity_months = default_validity_months - 3
+//                    default_validity_months = default_validity_months - 3
+                    if(default_validity_months <= 12 ){
+                        if(default_validity_months % 3 == 0){
+                            default_validity_months = default_validity_months - 3
+                        }else if(default_validity_months % 3 == 1){
+                            default_validity_months = default_validity_months - 1
+                        }else if(default_validity_months % 3 == 2){
+                            default_validity_months = default_validity_months - 2
+                        }
+                    }
                 }
 
                 if(default_validity_months < 1){

@@ -28,7 +28,10 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.isValidGSTIN
 import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
+import com.boost.upgrades.utils.WebEngageController
 import com.boost.upgrades.utils.observeOnce
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_BUSINESS_DETAILS_LOAD
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.businessdetails_fragment.*
 import kotlinx.android.synthetic.main.businessdetails_fragment.business_address
@@ -186,6 +189,7 @@ class BusinessDetailsFragment : DialogFragment() {
                 STATE_LIST_FRAGMENT
             )
         }
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_BUSINESS_DETAILS_LOAD, GSTIN, NO_EVENT_VALUE)
     }
 
     private fun validateAgreement(): Boolean {
@@ -283,9 +287,13 @@ class BusinessDetailsFragment : DialogFragment() {
         viewModel.getUpdatedCustomerBusinessResult().observeOnce(viewLifecycleOwner, Observer {
             if (it.Result != null) {
                 Toasty.success(requireContext(), "Successfully Updated Profile.", Toast.LENGTH_LONG).show()
+                val event_attributes: HashMap<String, Any> = HashMap()
+                event_attributes.put("",it.Result.CustomerId)
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_BUSINESS_DETAILS_UPDATE_SUCCESS, ADDONS_MARKETPLACE, event_attributes)
 //                (activity as UpgradeActivity).prefs.storeInitialLoadMarketPlace(false)
             } else {
                 Toasty.error(requireContext(), "Something went wrong. Try Later!!", Toast.LENGTH_LONG).show()
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_BUSINESS_DETAILS_FAILED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
                 (activity as UpgradeActivity).prefs.storeInitialLoadMarketPlace(true)
             }
             dismiss()
@@ -293,9 +301,13 @@ class BusinessDetailsFragment : DialogFragment() {
         viewModel.getUpdatedResult().observeOnce(viewLifecycleOwner, Observer {
             if (it.Result != null) {
                 Toasty.success(requireContext(), "Successfully Created Profile.", Toast.LENGTH_LONG).show()
+                val event_attributes: HashMap<String, Any> = HashMap()
+                event_attributes.put("",it.Result.CustomerId)
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_BUSINESS_DETAILS_CREATE_SUCCESS, ADDONS_MARKETPLACE, event_attributes)
 //                (activity as UpgradeActivity).prefs.storeInitialLoadMarketPlace(false)
             } else {
                 Toasty.error(requireContext(), "Something went wrong. Try Later!!", Toast.LENGTH_LONG).show()
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_BUSINESS_DETAILS_FAILED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
 //                (activity as UpgradeActivity).prefs.storeInitialLoadMarketPlace(true)
             }
             dismiss()
