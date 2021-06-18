@@ -14,7 +14,7 @@
     android:layout_marginEnd="@dimen/size_4"
     android:layout_marginBottom="@dimen/size_12"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="@dimen/size_10"
+    app:cardCornerRadius="@dimen/size_6"
     app:cardElevation="0dp"
     app:contentPadding="0dp">
 

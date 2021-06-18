@@ -93,7 +93,7 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/size_100"
+            android:layout_height="@dimen/size_94"
             android:layout_gravity="bottom"
             android:layout_marginStart="@dimen/size_14"
             android:background="@drawable/ic_rectangle_top_new"
@@ -120,8 +120,9 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_94"
             android:layout_gravity="bottom"
+            android:gravity="bottom"
             android:layout_marginStart="@dimen/size_10"
             android:orientation="vertical">
 
@@ -132,7 +133,7 @@
               android:ellipsize="end"
               android:includeFontPadding="false"
               android:maxLines="1"
-              android:paddingBottom="@dimen/size_7"
+              android:layout_marginBottom="@dimen/size_6"
               android:textColor="@color/white"
               app:textType="CAPTION"
               tools:text="0801234567890" />
@@ -144,7 +145,7 @@
               android:ellipsize="end"
               android:includeFontPadding="false"
               android:maxLines="1"
-              android:paddingBottom="@dimen/size_6"
+              android:layout_marginBottom="@dimen/size_6"
               android:textColor="@color/white"
               app:autoSizeMaxTextSize="12sp"
               app:autoSizeMinTextSize="6sp"
@@ -159,7 +160,7 @@
               android:ellipsize="end"
               android:includeFontPadding="false"
               android:maxLines="1"
-              android:paddingBottom="@dimen/size_6"
+              android:layout_marginBottom="@dimen/size_7"
               android:textColor="@color/white"
               app:autoSizeMaxTextSize="11sp"
               app:autoSizeMinTextSize="7sp"

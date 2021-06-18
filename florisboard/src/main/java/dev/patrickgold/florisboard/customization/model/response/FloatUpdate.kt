@@ -51,5 +51,14 @@ data class FloatUpdate(
   var url: String? = null
 ) : BaseRecyclerItem() {
 
-  override fun getViewType(): Int = FeaturesEnum.UPDATES.ordinal
+  var recyclerViewItem: Int = FeaturesEnum.UPDATES.ordinal
+
+  override fun getViewType(): Int {
+    return recyclerViewItem
+  }
+
+  fun getLoaderItem(): FloatUpdate {
+    this.recyclerViewItem =  FeaturesEnum.LOADER.ordinal
+    return this
+  }
 }

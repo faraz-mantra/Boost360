@@ -2,6 +2,10 @@ package dev.patrickgold.florisboard.customization.network
 
 object EndPoints {
     const val BUSINESS_FEATURE_BASE_URL = "https://api2.withfloats.com/"
+    const val BUSINESS_UPDATES_LISTING = "/Discover/v3/floatingPoint/bizFloats"
+    const val PRODUCT_LISTING = "/Product/v1/GetListings"
+    const val USER_ALL_DETAILS = "/discover/v2/floatingPoint/nf-web/{fpTag}"
+    const val CREATE_PRODUCT_OFFER = "/api/Offers/CreateOffer"
 
     //NFX float APIs
     const val NFX_FLOAT_BASE_URL = "https://nfx.withfloats.com/"

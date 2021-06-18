@@ -7,7 +7,7 @@ import java.io.Serializable
 data class Updates(
   @SerializedName("floats")
   @Expose
-  var floats: List<FloatUpdate?>? = null,
+  var floats: List<FloatUpdate>? = null,
 
   @SerializedName("moreFloatsAvailable")
   @Expose

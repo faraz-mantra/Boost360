@@ -99,8 +99,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       getSupportActionBar().setTitle("");
       binding.layoutToolbar.toolbarTitle.setText(Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
       binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.ic_back_arrow_white);
-      binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
-              Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
+      binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message), Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
     }
 
     this.initProductRecyclerView();

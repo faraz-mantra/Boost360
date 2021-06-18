@@ -18,7 +18,7 @@ import dev.patrickgold.florisboard.databinding.PaginationLoaderKeyboardBinding
 class FloatUpdateViewHolder(binding: AdapterItemUpdateBinding, val listener: OnItemClickListener?) : BaseRecyclerViewHolder<AdapterItemUpdateBinding>(binding) {
 
   override fun bindTo(position: Int, item: BaseRecyclerItem?) {
-    val float = item as FloatUpdate
+    val float = item as? FloatUpdate ?: return
     if (float.imageUri?.isNotEmpty() == true) {
       binding.imageView.visibility = View.VISIBLE
       Glide.with(binding.imageView).load(float.imageUri).placeholder(R.drawable.placeholder_image_n).into(binding.imageView)

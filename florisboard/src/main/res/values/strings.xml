@@ -406,6 +406,7 @@
     <string name="image_not_suopported">Image not supported!</string>
   <string name="share_only_image">Share only Image</string>
     <string name="share_with_text">Share with text</string>
+  <string name="change_layout">Change layout</string>
 
 
 </resources>

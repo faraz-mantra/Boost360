@@ -12,101 +12,136 @@
     android:layout_height="match_parent"
     android:background="@color/lightgray">
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/please_login_card"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:visibility="gone"
-      app:contentPadding="@dimen/size_12">
-
-      <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@drawable/yellow_button_bg"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="10"
-        android:text="@string/please_login"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
       android:id="@+id/cl_selection_layout"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/size_46"
       android:background="@color/whitesmoke"
-      android:paddingVertical="@dimen/size_8"
-      android:paddingStart="@dimen/size_20"
-      android:paddingEnd="@dimen/size_20"
-      android:visibility="visible"
+      android:paddingHorizontal="@dimen/size_18"
+      android:visibility="gone"
       app:layout_constraintTop_toTopOf="parent">
 
+      <LinearLayout
+        android:id="@+id/tab_photo_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-      <TextView
-        android:id="@+id/tv_photos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:text="@string/tap_on_photos_to_select"
-        android:textColor="@color/black_4a4a4a"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/tap_on_photos_to_select"
+          android:textColor="@color/black_4a4a4a" />
 
-      <com.framework.views.customViews.CustomCardView
-        android:id="@+id/btn_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_1"
-        android:layout_marginTop="@dimen/size_1"
-        android:layout_marginEnd="@dimen/size_10"
-        android:layout_marginBottom="@dimen/size_1"
-        app:cardCornerRadius="@dimen/size_14"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/btn_share"
-        app:layout_constraintEnd_toStartOf="@id/btn_share"
-        app:layout_constraintTop_toTopOf="@id/btn_share">
+        <com.framework.views.customViews.CustomCardView
+          android:id="@+id/btn_select_grid"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/size_26"
+          android:layout_marginEnd="@dimen/size_10"
+          app:cardCornerRadius="@dimen/size_14"
+          app:cardElevation="0dp">
 
-        <com.framework.views.customViews.CustomImageView
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/img_grid_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/size_6"
+            android:src="@drawable/ic_layout_four_f" />
+        </com.framework.views.customViews.CustomCardView>
+
+        <com.framework.views.roundedimageview.RoundedImageView
+          android:id="@+id/btn_share"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginHorizontal="@dimen/size_16"
-          android:layout_marginVertical="4dp"
-          android:src="@drawable/ic_squaresfour" />
-      </com.framework.views.customViews.CustomCardView>
+          android:background="@color/white"
+          android:padding="@dimen/size_5"
+          android:src="@drawable/ic_linksimple"
+          android:textColor="@color/white"
+          app:riv_corner_radius="@dimen/size_20"
+          app:riv_mutate_background="true"
+          tools:ignore="MissingClass" />
 
-      <com.framework.views.roundedimageview.RoundedImageView
-        android:id="@+id/btn_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:background="@color/white"
-        android:padding="5dp"
-        android:src="@drawable/ic_linksimple"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:riv_corner_radius="@dimen/size_20"
-        app:riv_mutate_background="true"
-        tools:ignore="MissingClass" />
+      </LinearLayout>
+
+      <com.framework.views.customViews.CustomCardView
+        android:id="@+id/change_photo_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="@dimen/size_6"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size_18"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingHorizontal="@dimen/size_4">
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/btn_change_grid_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_arrow_right_circle_f" />
+
+          <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="@dimen/size_6"
+            android:paddingEnd="@dimen/size_6"
+            android:text="@string/change_layout"
+            android:textColor="@color/black_4a4a4a" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/photo_grid_one"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/size_4"
+            android:layout_marginEnd="@dimen/size_4"
+            android:alpha="0.5"
+            app:srcCompat="@drawable/ic_layout_one_f" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/photo_grid_two"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/size_4"
+            android:layout_marginEnd="@dimen/size_4"
+            android:alpha="0.5"
+            app:srcCompat="@drawable/ic_layout_two_f" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/photo_grid_three"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/size_4"
+            android:layout_marginEnd="@dimen/size_4"
+            android:alpha="0.5"
+            app:srcCompat="@drawable/ic_layout_three_f" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/photo_grid_four"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/size_4"
+            android:background="@drawable/ic_mask_bac_f"
+            app:srcCompat="@drawable/ic_layout_four_f" />
+        </LinearLayout>
+      </com.framework.views.customViews.CustomCardView>
 
       <LinearLayout
         android:id="@+id/container_share_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/whitesmoke"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:visibility="gone">
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_image_share"
@@ -144,12 +179,37 @@
           android:textSize="12sp"
           android:visibility="visible" />
       </LinearLayout>
+    </FrameLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv_list_photos"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:overScrollMode="never"
+      android:paddingStart="@dimen/size_14"
+      android:paddingEnd="@dimen/size_14"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/cl_selection_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/product_share_rv_list"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:clipToPadding="false"
+      android:orientation="horizontal"
+      android:paddingStart="@dimen/size_16"
+      android:paddingEnd="@dimen/size_16"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/update_rv_list"
       android:layout_width="wrap_content"
       android:layout_height="match_parent"
       android:clipToPadding="false"
@@ -162,18 +222,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/rv_list_photos"
-      android:layout_width="wrap_content"
-      android:layout_height="0dp"
-      android:overScrollMode="never"
-      android:paddingStart="@dimen/size_16"
-      android:paddingEnd="@dimen/size_16"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/cl_selection_layout" />
 
     <RelativeLayout
       android:id="@+id/business_card_view"
@@ -214,6 +262,7 @@
             app:showDividers="middle">
 
             <com.framework.views.customViews.CustomTextView
+              android:id="@+id/btn_share_image_business"
               android:layout_width="wrap_content"
               android:layout_height="@dimen/size_30"
               android:layout_weight="1"
@@ -221,16 +270,15 @@
               android:clickable="true"
               android:focusable="true"
               android:gravity="center"
-              android:id="@+id/btn_share_image_business"
               android:text="@string/share_only_image"
               android:textAllCaps="true"
               android:textColor="@color/accent_blue" />
 
             <com.framework.views.customViews.CustomTextView
+              android:id="@+id/btn_share_image_text_business"
               android:layout_width="wrap_content"
               android:layout_height="@dimen/size_30"
               android:layout_weight="1"
-              android:id="@+id/btn_share_image_text_business"
               android:background="@color/blue_light_e5f1fc"
               android:clickable="true"
               android:focusable="true"
@@ -265,7 +313,6 @@
       </androidx.appcompat.widget.LinearLayoutCompat>
     </RelativeLayout>
 
-
     <ProgressBar
       android:id="@+id/business_feature_progress"
       android:layout_width="wrap_content"
@@ -276,6 +323,29 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/please_login_card"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone"
+      app:contentPadding="@dimen/size_12">
+
+      <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/yellow_button_bg"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="10"
+        android:text="@string/please_login"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    </androidx.cardview.widget.CardView>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

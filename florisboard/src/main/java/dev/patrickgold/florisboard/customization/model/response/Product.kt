@@ -129,7 +129,12 @@ data class Product(
 
 ) : BaseRecyclerItem() {
 
-  override fun getViewType(): Int = FeaturesEnum.PRODUCTS.ordinal
+  var recyclerViewItem: Int = FeaturesEnum.PRODUCTS.ordinal
+
+  override fun getViewType(): Int {
+    return recyclerViewItem
+  }
+
 
   fun getProductPrice(): String {
     return if (this.price == null || this.price?.isEmpty() == true)
@@ -165,5 +170,10 @@ data class Product(
       currencyCode = "₹"
     }
     return currencyCode
+  }
+
+  fun getLoaderItem(): Product {
+    this.recyclerViewItem =  FeaturesEnum.LOADER.ordinal
+    return this
   }
 }

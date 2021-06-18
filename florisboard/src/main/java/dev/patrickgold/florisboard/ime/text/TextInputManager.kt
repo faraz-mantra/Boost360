@@ -205,6 +205,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     smartbarView?.setEventListener(this)
   }
 
+  fun getSmartbarView():SmartbarView? {
+   return smartbarView
+  }
+
   fun unregisterSmartbarView(view: SmartbarView) {
     if (smartbarView == view) {
       smartbarView = null

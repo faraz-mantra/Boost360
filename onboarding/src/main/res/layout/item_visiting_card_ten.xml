@@ -85,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_8"
         android:layout_marginEnd="@dimen/size_110"
         android:orientation="vertical">
 
@@ -136,18 +136,19 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_100"
             android:layout_gravity="bottom"
             android:layout_marginStart="@dimen/size_10"
+            android:gravity="bottom"
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/number"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:paddingBottom="@dimen/size_7"
-              android:includeFontPadding="false"
+              android:layout_marginBottom="@dimen/size_7"
               android:ellipsize="end"
+              android:includeFontPadding="false"
               android:maxLines="1"
               android:textColor="@color/grey_light_dark"
               app:textType="CAPTION"
@@ -157,9 +158,9 @@
               android:id="@+id/email"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:paddingBottom="@dimen/size_6"
-              android:includeFontPadding="false"
+              android:layout_marginBottom="@dimen/size_6"
               android:ellipsize="end"
+              android:includeFontPadding="false"
               android:maxLines="1"
               android:textColor="@color/grey_light_dark"
               app:autoSizeMaxTextSize="12sp"
@@ -172,9 +173,9 @@
               android:id="@+id/website"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:paddingBottom="@dimen/size_6"
-              android:includeFontPadding="false"
+              android:layout_marginBottom="@dimen/size_7"
               android:ellipsize="end"
+              android:includeFontPadding="false"
               android:maxLines="1"
               android:textColor="@color/grey_light_dark"
               app:autoSizeMaxTextSize="11sp"

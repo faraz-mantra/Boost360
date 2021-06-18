@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_16"
-        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_16"
         android:layout_marginEnd="@dimen/size_16"
         android:orientation="horizontal">
 
@@ -97,7 +97,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="wrap_content"
-          android:layout_height="@dimen/size_100"
+          android:layout_height="@dimen/size_94"
           android:layout_gravity="bottom"
           android:layout_marginStart="@dimen/size_14"
           android:background="@drawable/ic_rectangle_top_blue_new"
@@ -124,19 +124,20 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/size_94"
           android:layout_gravity="bottom"
           android:layout_marginStart="@dimen/size_10"
+          android:gravity="bottom"
           android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_6"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:paddingBottom="@dimen/size_7"
             android:textColor="@color/darkslateblue"
             app:textType="CAPTION"
             tools:text="0801234567890" />
@@ -145,10 +146,10 @@
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_6"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:paddingBottom="@dimen/size_6"
             android:textColor="@color/darkslateblue"
             app:autoSizeMaxTextSize="12sp"
             app:autoSizeMinTextSize="6sp"
@@ -160,10 +161,10 @@
             android:id="@+id/website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_7"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:paddingBottom="@dimen/size_6"
             android:textColor="@color/darkslateblue"
             app:autoSizeMaxTextSize="11sp"
             app:autoSizeMinTextSize="7sp"

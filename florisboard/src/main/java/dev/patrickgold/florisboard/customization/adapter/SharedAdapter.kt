@@ -11,9 +11,10 @@ import dev.patrickgold.florisboard.customization.viewholder.visitingCard.*
 import dev.patrickgold.florisboard.databinding.*
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T?>, val listener: OnItemClickListener? = null) : RecyclerView.Adapter<BaseRecyclerViewHolder<*>>() {
+open class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T>, val listener: OnItemClickListener? = null) : RecyclerView.Adapter<BaseRecyclerViewHolder<*>>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
     val inflater = LayoutInflater.from(parent.context)
@@ -48,42 +49,47 @@ class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T?>, val listener
 
   override fun getItemCount(): Int = list.size
 
-  fun submitList(newList: List<T>, hasMoreItems: Boolean = false) {
-    if (list != newList) {
-      // list is not same, then append new items
-      list.addAll(newList)
-    }
-    // for pagination
-    if (hasMoreItems) {
-      list.add(null)
-      notifyItemRangeInserted(list.size, newList.size + 1)
-    } else {
-      notifyItemRangeInserted(list.size, newList.size)
+  open fun addItems(newList: List<T>) {
+    if (list != newList) list.addAll(newList)
+    notifyDataSetChanged()
+  }
+
+  fun notifyNewList(newList: List<T>) {
+    this.list.clear()
+    this.list.addAll(newList)
+    notifyDataSetChanged()
+  }
+
+  open fun addLoadingFooter(t: T) {
+    list.add(t)
+    notifyItemInserted(list.size - 1)
+  }
+
+  open fun removeLoader() {
+    val position = list.size - 1
+    if (position > -1) {
+      val item: T? = getItem(position)
+      if (item != null && item.getViewType() == FeaturesEnum.LOADER.ordinal) {
+        list.removeAt(position)
+        notifyItemRemoved(position)
+      }
     }
   }
 
-  fun removeLoader() {
-    try {
-      // get last item
-      val item = list[list.size - 1]
-      // if last item is null then it was added for pagination
-      if (item == null) {
-        list.removeLast()
-      }
-    } catch (e: NoSuchElementException) {
-      Timber.i("List is empty")
-    } catch (e: IndexOutOfBoundsException) {
-      Timber.i("tried to remove item with no items present in it")
-    } catch (e: Exception) {
-      Timber.e(e)
-    }
+  open fun getItem(position: Int): T? {
+    return list[position]
   }
 
   fun clearList() {
     if (list.isNullOrEmpty().not()) {
+      val size = list.size
       list.clear()
-      notifyDataSetChanged()
+      notifyItemRangeRemoved(0, size)
     }
+  }
+
+  fun getListData(): ArrayList<T> {
+    return list
   }
 }
 

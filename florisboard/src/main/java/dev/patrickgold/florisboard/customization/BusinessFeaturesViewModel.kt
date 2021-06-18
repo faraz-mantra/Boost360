@@ -53,7 +53,7 @@ class BusinessFeaturesViewModel {
     job = CoroutineScope(Dispatchers.IO).launch {
       val products = BusinessFeatureRepository.getAllProducts(fpTag, clientId, skipBy, identifierType)
       withContext(Dispatchers.Main) {
-        if (products.isSuccessful) _products.value = products.body()
+        if (products.isSuccessful) _products.postValue(products.body()?: arrayListOf())
         else _error.value = "Inventory getting error!"
       }
     }
