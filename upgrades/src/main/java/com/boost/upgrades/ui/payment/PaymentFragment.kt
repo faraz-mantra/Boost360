@@ -193,13 +193,14 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     (activity as UpgradeActivity).supportFragmentManager,
                     ADD_CARD_POPUP_FRAGMENT
                 )
-
+                payment_submit.visibility = View.VISIBLE
             }else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
             }
         }
 
         show_more_bank.setOnClickListener {
+            if(paymentProceedFlag){
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_SHOW_MORE_BANK_CLICK , ADDONS_MARKETPLACE_SHOW_MORE_BANK, NO_EVENT_VALUE)
             /*netBankingPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
@@ -210,6 +211,10 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 (activity as UpgradeActivity).supportFragmentManager,
                 NETBANKING_POPUP_FRAGMENT
             )
+            payment_submit.visibility = View.VISIBLE
+        }else{
+                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+            }
         }
 
         add_upi_layout.setOnClickListener {
@@ -224,6 +229,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     (activity as UpgradeActivity).supportFragmentManager,
                     UPI_POPUP_FRAGMENT
                 )
+                payment_submit.visibility = View.VISIBLE
             }else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
             }
@@ -241,6 +247,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     (activity as UpgradeActivity).supportFragmentManager,
                     EXTERNAL_EMAIL_POPUP_FRAGMENT
                 )
+                payment_submit.visibility = View.VISIBLE
             }else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
             }
@@ -720,42 +727,56 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         Glide.with(requireContext()).load(netbankingList.get(0).bankImage).into(axis_bank_image)
         axis_bank_layout.setOnClickListener {
             Log.v("axis_bank_layout"," "+ paymentProceedFlag )
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(0).bankCode)
-            else
+                payment_submit.visibility = View.VISIBLE
+            } else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+            }
         }
 
         Glide.with(requireContext()).load(netbankingList.get(1).bankImage).into(icici_bank_image)
         icici_bank_layout.setOnClickListener {
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(1).bankCode)
-            else
+                payment_submit.visibility = View.VISIBLE
+            } else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+            }
+
         }
 
         Glide.with(requireContext()).load(netbankingList.get(2).bankImage).into(hdfc_bank_image)
         hdfc_bank_layout.setOnClickListener {
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(2).bankCode)
-            else
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_submit.visibility = View.VISIBLE
+            }else{
+            payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+        }
+
         }
 
         Glide.with(requireContext()).load(netbankingList.get(3).bankImage).into(citi_bank_image)
         citi_bank_layout.setOnClickListener {
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(3).bankCode)
-            else
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_submit.visibility = View.VISIBLE
+            } else{
+            payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+        }
+
         }
 
         Glide.with(requireContext()).load(netbankingList.get(4).bankImage).into(sbi_bank_image)
         sbi_bank_layout.setOnClickListener {
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(4).bankCode)
-            else
+                payment_submit.visibility = View.VISIBLE
+            }else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+            }
+
         }
 
 
@@ -799,6 +820,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             item.put("wallet", data);
             paymentData = item
             payThroughRazorPay()
+            payment_submit.visibility = View.VISIBLE
         }else{
             payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
         }

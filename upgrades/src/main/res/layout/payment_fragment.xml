@@ -1274,6 +1274,7 @@
             android:paddingEnd="@dimen/_30sdp"
             android:paddingBottom="@dimen/_10sdp"
             android:text="PAY NOW"
+            android:visibility="invisible"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
