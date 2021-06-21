@@ -22,7 +22,9 @@ import com.appservice.staffs.ui.bottomsheets.RemoveStaffConfirmationBottomSheet
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.utils.WebEngageController
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
@@ -85,9 +87,32 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         if (staffDetails?.isAvailable == false) showInactiveProfile()
         fetchServices()
         setTimings()
+        if (isDoctorProfile(sessionLocal?.fP_AppExperienceCode)){
+          setDoctorsData()
+        }
       } else showShortToast(res.errorMessage() ?: getString(R.string.something_went_wrong))
       hideProgress()
     })
+
+  }
+
+  private fun setDoctorsData() {
+    binding?.ctvHeadingSpecialization?.gone()
+    binding?.ctvSpecialization?.gone()
+    binding?.llDoctorsAdditionalInfo?.visible()
+    binding?.ctvBusinessLicense?.visible()
+    binding?.ctvBusinessLicenseHeading?.visible()
+    binding?.ctvBusinessAppointment?.visible()
+    binding?.ctvBusinessAppointmentHeading?.visible()
+    binding?.ctvBusinessLicense?.text = staffDetails?.businessLicence
+    binding?.ctvBusinessAppointment?.text = staffDetails?.bookingWindow
+    binding?.ctvHeadingTiming?.text = getString(R.string.appointment_hours)
+    binding?.ctvEducation?.text = staffDetails?.education
+    binding?.ctvMobNo?.text = staffDetails?.contactNumber
+    binding?.ctvMembership?.text = staffDetails?.memberships
+    binding?.ctvRegistration?.text = staffDetails?.registration
+    binding?.ctvAppointmentType?.text =AppointmentType.typeMap[staffDetails?.appointmentType]
+    binding?.civDoctorsSignature?.let { activity?.glideLoad(it, staffDetails?.signature.toString(), R.drawable.placeholder_image_n) }
 
   }
 

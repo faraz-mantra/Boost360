@@ -3,6 +3,7 @@ package com.appservice.staffs.doctors
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
@@ -28,16 +29,20 @@ import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
+import com.bumptech.glide.load.ImageHeaderParser
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
+import com.framework.utils.size
 import com.framework.utils.sizeInKb
 import com.framework.webengageconstant.ADDED
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.STAFF_PROFILE_CREATE
 import com.framework.webengageconstant.STAFF_PROFILE_UPDATED
+import kotlinx.android.synthetic.main.item_preview_image.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -111,22 +116,17 @@ class EditDoctorsDetailsFragment :
       updatePreviousData()
       (requireActivity() as StaffFragmentContainerActivity).getToolbar()
         ?.getTitleTextView()?.gravity = Gravity.START
-    } else {
-      (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor =
-        getColor(R.color.color_primary_dark)
-      (requireActivity() as StaffFragmentContainerActivity).getToolbar()
-        ?.setBackgroundColor(resources.getColor(R.color.color_primary))
     }
     if (staffDetails == null) staffDetails = StaffDetailsResult()
   }
 
   private fun updatePreviousData() {
-    val speciality = staffDetails?.speciality
+    val speciality = staffDetails?.speciality?:""
     setImage(listOf(staffDetails?.tileImageUrl.toString()))
-    setSignature(listOf(staffDetails?.signature.toString()))
-    binding?.ctfStaffName?.setText(staffDetails?.name.toString())
-    binding?.ctfStaffDesc?.setText(staffDetails?.description.toString())
-    binding?.ctfStaffSpeciality?.setText(staffDetails?.speciality.toString())
+    setSignatureView(listOf(staffDetails?.signature.toString()))
+    binding?.ctfStaffName?.setText(staffDetails?.name)
+    binding?.ctfStaffDesc?.setText(staffDetails?.description)
+    binding?.ctfStaffSpeciality?.setText(staffDetails?.speciality)
     binding?.ctfBookingWindow?.setText(staffDetails?.bookingWindow.toString())
     showHideServicesText()
     // setTimings()
@@ -136,7 +136,7 @@ class EditDoctorsDetailsFragment :
       binding?.ctvTiming?.text = textStaffDays
     } else binding?.ctvTiming?.gone()
 
-    if (speciality?.isEmpty() == false) binding?.ctfStaffSpeciality?.setText(speciality)
+    if (speciality?.isNullOrEmpty() == false) binding?.ctfStaffSpeciality?.setText(speciality)
     binding?.btnSave?.text = getString(R.string.update)
     if (resultCode != AppCompatActivity.RESULT_OK) setServicesList()
   }
@@ -233,20 +233,21 @@ class EditDoctorsDetailsFragment :
     if (imagetype == IMAGETYPE.PROFILE) {
       staffUpdateImageRequest.image = staffImage
       staffUpdateImageRequest.imageType = IMAGETYPE.PROFILE.ordinal
-      staffUpdateImageRequest.staffId = staffDetails?.id
     }
     if (imagetype == IMAGETYPE.SIGNATURE) {
       staffUpdateImageRequest.image = staffSignature
       staffUpdateImageRequest.imageType = IMAGETYPE.SIGNATURE.ordinal
-      staffUpdateImageRequest.staffId = staffDetails?.id
     }
-    showProgress(getString(R.string.uploading_image))
+    staffUpdateImageRequest.staffId = staffDetails?.id
+    if (imagetype==IMAGETYPE.PROFILE) showProgress(getString(R.string.uploading_image)) else showProgress(getString(R.string.upload_signature))
     viewModel?.updateStaffImage(staffUpdateImageRequest)
       ?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess().not()) {
           showShortToast(it.errorMessage() ?: getString(R.string.something_went_wrong))
-        } else if (isEdit==false){
+        } else if (isEdit==false&&imagetype==IMAGETYPE.SIGNATURE&&it.isSuccess()){
+          updateStaffImage(IMAGETYPE.PROFILE)
+        }else {
           finishAndGoBack()
         }
       })
@@ -299,8 +300,7 @@ class EditDoctorsDetailsFragment :
     } else if (businessLicense.isEmpty()) {
       showLongToast(getString(R.string.please_enter_valid_business_))
       return false
-    } else if (signatureUri.toString() == "null" || signatureUri == null || signatureUri.toString()
-        .isEmpty() || signatureUri.toString().isBlank()
+    } else if (signatureUri.toString() == "null" || signatureUri == null || signatureUri.toString().isEmpty() || signatureUri.toString().isBlank()
     ) {
       showLongToast(getString(R.string.please_choose_signature))
       return false
@@ -368,7 +368,7 @@ class EditDoctorsDetailsFragment :
       finishAndGoBack()
       return
     }
-    showProgress(getString(R.string.staff_timings_updating))
+    showProgress(getString(R.string.updating_doctor_timing))
     val request = StaffTimingAddUpdateRequest(
       staffId = staffDetails?.id,
       workTimings = this.staffDetails?.timings
@@ -446,7 +446,9 @@ class EditDoctorsDetailsFragment :
           if (isEdit == true)
             profileImageIsChange = true
         }
-
+        when (isEdit == true && profileImageIsChange != null && profileImageIsChange == true && isValid()) {
+          true -> updateStaffImage(IMAGETYPE.PROFILE)
+        }
       }
       requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
         this.resultCode = resultCode
@@ -480,9 +482,7 @@ class EditDoctorsDetailsFragment :
         this.staffDetails = data?.extras?.get(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
       }
     }
-    when (isEdit == true && profileImageIsChange != null && profileImageIsChange == true && isValid()) {
-      true -> updateStaffImage(IMAGETYPE.PROFILE)
-    }
+
   }
 
   private fun setServicesList() {
@@ -509,30 +509,22 @@ class EditDoctorsDetailsFragment :
   private fun setImage(mPaths: List<String>) {
     this.profileimageUri = Uri.parse(mPaths[0])
     staffProfileFile = File(mPaths[0])
-    binding?.imageAddBtn?.gone()
-    binding?.staffImageView?.visible()
-    binding?.changeImage?.visible()
-    staffProfileFile?.getBitmap()?.let { binding?.staffImageView?.setImageBitmap(it) }
+    if (profileimageUri?.path!="null"||profileimageUri?.path!=null||profileimageUri!=null){
+      binding?.imageAddBtn?.gone()
+      binding?.staffImageView?.visible()
+      binding?.changeImage?.visible()
+      binding?.staffImageView?.let { activity?.glideLoad(it, profileimageUri.toString(), R.drawable.placeholder_image_n) }
+    }else{
+      binding?.imageAddBtn?.visible()
+      binding?.staffImageView?.gone()
+      binding?.changeImage?.gone()
+    }
+
   }
 
   private fun setSignature(mPaths: List<String>) {
-    this.signatureUri = Uri.parse(mPaths[0])
-    staffSignatureFile = File(mPaths[0])
-    binding?.layoutItemPreview?.root?.visible()
-    binding?.btnUploadSignature?.gone()
-    staffSignatureFile?.getBitmap()?.let { binding?.layoutItemPreview?.image?.setImageBitmap(it) }
-    binding?.layoutItemPreview?.crossIcon?.setOnClickListener {
-      binding?.layoutItemPreview?.root?.gone()
-      binding?.btnUploadSignature?.visible()
-      binding?.layoutItemPreview?.image?.setImageBitmap(null)
-    }
-    binding?.layoutItemPreview?.ctvSize?.text = "${staffSignatureFile?.sizeInKb} Kb"
-    binding?.layoutItemPreview?.cbChange?.setOnClickListener {
-      binding?.layoutItemPreview?.root?.gone()
-      isSignatureSelection = true
-      openImagePicker()
-    }
-    if (signatureUri?.path!="null") {
+    setSignatureView(mPaths)
+    if (signatureUri?.path!="null"&&signatureUri?.path!=null&&signatureUri!=null) {
       val imageExtension: String? =
         signatureUri?.toString()?.substring(signatureUri.toString().lastIndexOf("."))
       val imageToByteArray: ByteArray = imageToByteArray(signatureUri)
@@ -546,10 +538,35 @@ class EditDoctorsDetailsFragment :
         fileName = "${System.currentTimeMillis()}$imageExtension",
         imageFileType = imageExtension?.removePrefix(".")
       )
-      if (staffDetails?.id != null) {
-        updateStaffImage(IMAGETYPE.SIGNATURE)
-      }
     }
 
   }
+
+  private fun setSignatureView(mPaths: List<String>) {
+    this.signatureUri = Uri.parse(mPaths[0])
+    staffSignatureFile = File(mPaths[0])
+    if(signatureUri!=null){
+      binding?.layoutItemPreview?.root?.visible()
+      binding?.btnUploadSignature?.gone()
+      binding?.layoutItemPreview?.image?.let { activity?.glideLoad(it, signatureUri.toString(), R.drawable.placeholder_image_n) }
+    }else{
+      binding?.layoutItemPreview?.root?.gone()
+      binding?.btnUploadSignature?.visible()
+    }
+
+    binding?.layoutItemPreview?.crossIcon?.setOnClickListener {
+      binding?.layoutItemPreview?.root?.gone()
+      binding?.btnUploadSignature?.visible()
+      binding?.layoutItemPreview?.image?.setImageBitmap(null)
+    }
+    if (staffSignatureFile!=null&&staffSignatureFile?.size?.equals(0.0)==false)
+    binding?.layoutItemPreview?.ctvSize?.text = "${staffSignatureFile?.sizeInKb} Kb"
+    else binding?.layoutItemPreview?.ctvSize?.text = this.signatureUri.toString().subSequence(signatureUri?.toString()?.lastIndexOf("/")!!+1,signatureUri?.toString()?.length!!)
+    binding?.layoutItemPreview?.cbChange?.setOnClickListener {
+      binding?.layoutItemPreview?.root?.gone()
+      isSignatureSelection = true
+      openImagePicker()
+    }
+  }
+
 }
