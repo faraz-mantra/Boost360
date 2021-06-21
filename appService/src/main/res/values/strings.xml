@@ -569,9 +569,17 @@
     <string name="consultation_type">Consultation type</string>
   <string name="select_consultation_type">Select consultation type.</string>
     <string name="no_doctor_listed_yet">No doctor listed yet</string>
+    <string name="updating_doctor_timing">Updating doctor timing.</string>
+    <string name="business_license_">Business License</string>
+    <string name="mobile_number">Mobile number</string>
+  <string name="membership">Membership</string>
+    <string name="doctor_s_signature">Doctor’s signature</string>
+  <string name="appointment_type">Appointment Type</string>
+    <string name="appointment_hours">Appointment hours</string>
+  <string name="business_mob_number">Mobile number</string>
 
 
-    <array name="stock_availbility">
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>
