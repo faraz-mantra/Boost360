@@ -287,6 +287,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     this.popupWindow = PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     val markAsActive = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.mark_as_active)
     val removeStaff = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.remove_staff_profile)
+    if (isDoctorProfile(sessionLocal?.fP_AppExperienceCode)) removeStaff?.text = getString(R.string.remove_doctor)
     markAsActive?.setOnClickListener {
       staffDetails?.isAvailable = true
       showInactiveConfirmation()
@@ -323,6 +324,9 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   private fun showRemoveStaffConfirmation() {
     val removeStaffConfirmationBottomSheet = RemoveStaffConfirmationBottomSheet()
     removeStaffConfirmationBottomSheet.onClicked = { removeStaffProfile() }
+    val bundle = Bundle()
+    bundle.putBoolean(IntentConstant.STAFF_DATA.name,isDoctorProfile(sessionLocal.fP_AppExperienceCode))
+    removeStaffConfirmationBottomSheet.arguments = bundle
     removeStaffConfirmationBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, RemoveStaffConfirmationBottomSheet::class.java.name)
   }
 
