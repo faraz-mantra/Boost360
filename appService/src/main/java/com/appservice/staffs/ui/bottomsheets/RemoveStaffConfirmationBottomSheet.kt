@@ -2,6 +2,8 @@ package com.appservice.staffs.ui.bottomsheets
 
 import android.view.View
 import com.appservice.R
+import com.appservice.base.AppBaseActivity
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomsheetRemoveStaffBottomSheetBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
@@ -19,6 +21,12 @@ class RemoveStaffConfirmationBottomSheet : BaseBottomSheetDialog<BottomsheetRemo
 
     override fun onCreateView() {
         setOnClickListener(binding?.btnDone, binding?.btnCancel)
+        val isDoctor = arguments?.getBoolean(IntentConstant.STAFF_DATA.name, false) ?: false
+        if (isDoctor){
+            binding?.ctvHeadingRemoveStaff?.text = getString(R.string.delete_doctor)
+            binding?.ctvAboutStaff?.text = getString(R.string.remove_the_doctor_will_remove_all_the_present)
+            binding?.btnDone?.text = getString(R.string.btn_delete_text)
+        }
 
     }
 

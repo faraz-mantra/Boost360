@@ -260,7 +260,7 @@ class EditDoctorsDetailsFragment :
       floatingPointTag = UserSession.fpTag,
       name = staffName,
       description = staffDescription,
-      experience = yearOfExperience.toInt(),
+      experience = yearOfExperience.toIntOrNull(),
       staffId = staffDetails?.id,
       age = staffAge,
       specialisations = specializationList

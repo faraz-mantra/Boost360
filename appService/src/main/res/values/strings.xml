@@ -577,6 +577,10 @@
   <string name="appointment_type">Appointment Type</string>
     <string name="appointment_hours">Appointment hours</string>
   <string name="business_mob_number">Mobile number</string>
+  <string name="remove_doctor">remove doctor</string>
+  <string name="remove_the_doctor_will_remove_all_the_present">Removing the doctor will remove all the present appointments assigned to the doctor. All his appointments needs to be handled separately.</string>
+  <string name="delete_doctor">Delete doctor?</string>
+  <string name="btn_delete_text">Delete doctor</string>
 
 
   <array name="stock_availbility">

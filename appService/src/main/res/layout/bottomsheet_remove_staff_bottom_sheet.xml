@@ -31,6 +31,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:text="@string/do_you_want_to_permanently_delete_this_staff_member"
                 app:fontFamily="@font/semi_bold"
                 android:textSize="24sp"
+                android:id="@+id/ctv_heading_remove_staff"
                 tools:textColor="@color/black_4a4a4a" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
