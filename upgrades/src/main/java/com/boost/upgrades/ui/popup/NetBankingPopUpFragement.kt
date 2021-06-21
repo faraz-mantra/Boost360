@@ -89,7 +89,7 @@ class NetBankingPopUpFragement: DialogFragment(), NetBankingListener {
     }
 
     private fun initMvvm(){
-        viewModel.getPaymentMethods().observe(this, Observer {
+        viewModel.getPaymentMethods().observeOnce(this, Observer {
             val paymentMethods = it.get("netbanking") as JSONObject
             val retMap: Map<String, String> = Gson().fromJson(
                 paymentMethods.toString(), object : TypeToken<HashMap<String, String>>() {}.type
@@ -97,6 +97,7 @@ class NetBankingPopUpFragement: DialogFragment(), NetBankingListener {
             Log.v("getPaymentMethods"," "+ retMap.size)
             retMap.map {
                 if(!list.contains(SingleNetBankData(it.key,it.value,null))){
+                    Log.d("getPayretMap"," "+ list.size)
                     list.add(SingleNetBankData(it.key,it.value,null))
                 }
 

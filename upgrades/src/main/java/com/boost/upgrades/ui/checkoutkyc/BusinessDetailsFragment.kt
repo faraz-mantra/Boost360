@@ -30,6 +30,8 @@ import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
 import com.boost.upgrades.utils.WebEngageController
 import com.boost.upgrades.utils.observeOnce
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_BUSINESS_DETAILS_LOAD
 import es.dmoral.toasty.Toasty
@@ -47,8 +49,10 @@ class BusinessDetailsFragment : DialogFragment() {
     var createCustomerInfoRequest: Result? = null
 
     var customerInfoState = false
+    private var setStates: String? = null
     val stateFragment = StateListPopFragment()
     lateinit var prefs: SharedPrefs
+    private var session: UserSessionManager? = null
 
 
     companion object {
@@ -81,6 +85,7 @@ class BusinessDetailsFragment : DialogFragment() {
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
 
         prefs = SharedPrefs(activity as UpgradeActivity)
+        session = UserSessionManager(requireActivity())
         loadCustomerInfo()
         initMvvm()
         viewModel.getCitiesFromAssetJson(requireActivity())
@@ -154,7 +159,18 @@ class BusinessDetailsFragment : DialogFragment() {
                 }
             }
         }
-        prefs.storeGstRegistered(true)
+//        prefs.storeGstRegistered(true)
+        if(!prefs.getGstRegistered()){
+            gstFlag = false
+            gstin_on.visibility = View.GONE
+            gstin_off.visibility = View.VISIBLE
+            business_gstin_number.visibility = View.GONE
+        }else{
+            gstFlag = true
+            gstin_on.visibility = View.VISIBLE
+            gstin_off.visibility = View.GONE
+            business_gstin_number.visibility = View.VISIBLE
+        }
         close.setOnClickListener {
             dismiss()
 //            viewModel.updatesBusinessPopup(true)
@@ -184,6 +200,9 @@ class BusinessDetailsFragment : DialogFragment() {
             false
         }
         business_city_name.setOnClickListener{
+            val args = Bundle()
+            args.putString("state", setStates)
+            stateFragment.arguments = args
             stateFragment.show(
                 (activity as UpgradeActivity).supportFragmentManager,
                 STATE_LIST_FRAGMENT
@@ -214,7 +233,7 @@ class BusinessDetailsFragment : DialogFragment() {
             }
             if (!isValidMail(business_email_address.text.toString()) /*|| !isValidMail(user_email_address.text.toString())*/) {
                 business_email_address.setBackgroundResource(R.drawable.et_validity_error)
-                Toasty.error(requireContext(), "Entered EmailId is not valid!!", Toast.LENGTH_LONG).show()
+                Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG).show()
                 return false
             }else{
                 business_email_address.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
@@ -260,10 +279,14 @@ class BusinessDetailsFragment : DialogFragment() {
                     business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
                 }
                 if (createCustomerInfoRequest!!.AddressDetails != null) {
-                    business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.City)
+//                    business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.City)
 
                     if(createCustomerInfoRequest!!.AddressDetails!!.City != null){
                         viewModel.getStateFromCityAssetJson(requireActivity(),createCustomerInfoRequest!!.AddressDetails!!.City)
+                    }
+                    if(createCustomerInfoRequest!!.AddressDetails!!.State != null || !createCustomerInfoRequest!!.AddressDetails!!.State.equals("string")){
+                        business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
+                        setStates = createCustomerInfoRequest!!.AddressDetails!!.State
                     }
                     if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
                         business_address.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
@@ -276,12 +299,76 @@ class BusinessDetailsFragment : DialogFragment() {
                     business_name_value.setText(createCustomerInfoRequest!!.Name)
                 }
 
-//                user_contact_number.setText(createCustomerInfoRequest!!.MobileNumber)
-//                user_email_address.setText(createCustomerInfoRequest!!.Email)
+                if(session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")){
+                    if (createCustomerInfoRequest!!.BusinessDetails != null) {
+                        business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
+                    }
+                }else{
+                    business_contact_number.setText(session?.userPrimaryMobile)
+                }
+
+//                if(session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL) == null || session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL).equals("") ){
+                if(session?.fPEmail == null || session?.fPEmail.equals("") ){
+                    if (createCustomerInfoRequest!!.BusinessDetails != null) {
+                        business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
+                    }
+                }else{
+                    business_email_address.setText(session?.fPEmail)
+                }
+
+                if(session?.fPName == null || session?.fPName.equals("") ){
+                    if (createCustomerInfoRequest!!.Name != null) {
+                        business_name_value.setText(createCustomerInfoRequest!!.Name)
+                    }
+                }else{
+                    business_name_value.setText(session?.fPName)
+                }
+
+                if(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
+                        Key_Preferences.GET_FP_DETAILS_ADDRESS).equals("") ){
+                    if (createCustomerInfoRequest!!.AddressDetails != null) {
+//                        business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.City)
+
+                        if(createCustomerInfoRequest!!.AddressDetails!!.City != null){
+                            viewModel.getStateFromCityAssetJson(requireActivity(),createCustomerInfoRequest!!.AddressDetails!!.City)
+                        }
+                        if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
+                            business_address.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+                        }
+                    }
+                }else{
+                    business_address.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
+                }
             }
         })
         viewModel.getCustomerInfoStateResult().observeOnce(this, Observer {
             customerInfoState = it
+            if(!customerInfoState){
+                if(session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")){
+
+                }else{
+                    business_contact_number.setText(session?.userPrimaryMobile)
+                }
+
+//                if(session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL) == null || session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL).equals("") ){
+                if(session?.fPEmail == null || session?.fPEmail.equals("") ){
+                }else{
+                    business_email_address.setText(session?.fPEmail)
+                }
+
+                if(session?.fPName == null || session?.fPName.equals("") ){
+
+                }else{
+                    business_name_value.setText(session?.fPName)
+                }
+
+                if(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
+                        Key_Preferences.GET_FP_DETAILS_ADDRESS).equals("") ){
+
+                }else{
+                    business_address.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
+                }
+            }
         })
 
         viewModel.getUpdatedCustomerBusinessResult().observeOnce(viewLifecycleOwner, Observer {
@@ -315,7 +402,7 @@ class BusinessDetailsFragment : DialogFragment() {
 
         viewModel.cityValueResult().observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it != null){
-                business_city_name.setText(it)
+//                business_city_name.setText(it)
             }
 
         })
@@ -331,6 +418,7 @@ class BusinessDetailsFragment : DialogFragment() {
         viewModel.getSelectedStateResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it != null){
                 business_city_name.text = it
+                setStates = it
             }
 
         })
