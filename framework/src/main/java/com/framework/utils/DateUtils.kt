@@ -31,7 +31,7 @@ object DateUtils {
   const val FORMAT_HH_MMA = "hh:mma"
   const val FORMAT_H_MM_A = "h:mm a"
   const val SPA_DISPLAY_DATE = "EEE',' dd MMMM yyyy"
-  const val KEYBOARD_DISPLAY_DATE = "EEE, MMMM dd, yyyy. hh:mm a"
+  const val KEYBOARD_DISPLAY_DATE = "EEE, MMMM dd, yyyy • hh:mm a"
   const val SPA_REVIEW_DATE_FORMAT = "EEE',' MMM dd, yyyy"
   private val dateFormater = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
   private val dateFormaterToday = SimpleDateFormat("HH:mm", Locale.getDefault())

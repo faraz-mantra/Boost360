@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.customization.viewholder
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.framework.utils.DateUtils.KEYBOARD_DISPLAY_DATE
 import com.framework.utils.DateUtils.getDate
@@ -20,11 +21,13 @@ class FloatUpdateViewHolder(binding: AdapterItemUpdateBinding, val listener: OnI
   override fun bindTo(position: Int, item: BaseRecyclerItem?) {
     val float = item as? FloatUpdate ?: return
     if (float.imageUri?.isNotEmpty() == true) {
-      binding.imageView.visibility = View.VISIBLE
+      binding.cardThumbnail.visibility = View.VISIBLE
       Glide.with(binding.imageView).load(float.imageUri).placeholder(R.drawable.placeholder_image_n).into(binding.imageView)
     } else {
-      binding.imageView.visibility = View.GONE
+      binding.cardThumbnail.visibility = View.GONE
     }
+    binding.tvDescription.textColor = ContextCompat.getColor(binding.root.context, R.color.black_4a4a4a)
+    binding.tvDescription.setTextSize(26F)
     binding.tvDescription.text = float.message
     val timeString = (float.createdOn?.subSequence(float.createdOn?.indexOf("(")!! + 1, float.createdOn?.length!! - 2) as String).toLong()
     binding.ctvDateTime.text = getDate(timeString, KEYBOARD_DISPLAY_DATE)

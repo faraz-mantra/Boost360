@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -30,25 +31,27 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <uk.co.deanwild.flowtextview.FlowTextView
+          android:id="@+id/tv_description"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginVertical="@dimen/size_12"
+          android:layout_marginStart="@dimen/size_12"
+          android:layout_marginEnd="@dimen/size_10"
           android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomCardView
             android:id="@+id/card_thumbnail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/size_12"
-            android:layout_marginStart="@dimen/size_6"
-            android:layout_marginEnd="@dimen/size_6"
+            android:layout_width="@dimen/size_60"
+            android:layout_height="@dimen/size_60"
+            android:layout_marginEnd="@dimen/size_10"
             app:cardCornerRadius="@dimen/size_6"
             app:cardElevation="0dp">
 
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/imageView"
-              android:layout_width="@dimen/size_60"
-              android:layout_height="@dimen/size_60"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:background="@color/gray_10"
               android:scaleType="centerCrop"
               android:src="@drawable/placeholder_image_n" />
@@ -57,33 +60,17 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_date_time"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
+            android:layout_toEndOf="@+id/card_thumbnail"
             android:drawableStart="@drawable/ic_clock"
-            android:drawablePadding="4dp"
+            android:drawablePadding="@dimen/size_2"
             android:gravity="center_vertical"
-            android:paddingTop="4dp"
+            android:includeFontPadding="false"
             android:text="@string/_90_min"
             android:textColor="#828282" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tv_description"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="12dp"
-          android:layout_marginTop="6dp"
-          android:layout_marginEnd="12dp"
-          android:ellipsize="end"
-          android:maxLines="3"
-          android:text="@string/this_is_product_description"
-          android:textColor="@color/black_4a4a4a"
-          android:textSize="13sp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/dotted_line" />
+        </uk.co.deanwild.flowtextview.FlowTextView>
 
       </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -117,7 +104,7 @@
           android:layout_weight="1"
           android:background="@color/blue_accent_10"
           android:gravity="center"
-          android:text="@string/share_now"
+          android:text="@string/share"
           android:textColor="@color/accent_blue"
           android:textSize="12sp"
           android:textStyle="bold" />

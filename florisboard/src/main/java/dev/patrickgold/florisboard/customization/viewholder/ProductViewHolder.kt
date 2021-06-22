@@ -22,27 +22,30 @@ class ProductViewHolder(binding: AdapterItemProductNewBinding, val listener: OnI
     val product = item as? Product ?: return
     // bind views with data
     Glide.with(binding.imageView).load(product.imageUri).placeholder(R.drawable.placeholder_image_n).into(binding.imageView)
-    if (product.price?.toDouble() ?: 0.0 <= 0) {
-      binding.tvPrice.gone()
+    binding.tvName.text = product.name
+    if (product.getProductDiscountedPrice().isNotEmpty()) {
+      binding.tvPrice.text = product.getProductDiscountedPrice()
     } else {
-      binding.tvPrice.visible()
+      binding.tvPrice.text = product.getProductPrice()
     }
-    if (product.discountAmount?.toDouble() ?: 0.0 <= 0) {
-      binding.tvDiscount.gone()
-    } else {
+    if (product.discountAmount?.toDoubleOrNull() ?: 0.0 != 0.0) {
       binding.tvDiscount.visible()
+      binding.tvDiscount.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+      binding.tvDiscount.text = product.getProductPrice()
+      binding.tvOffPercent.visible()
+      binding.tvOffPercent.text = product.getProductOffPrice()
+    } else {
+      binding.tvDiscount.gone()
+      binding.tvOffPercent.gone()
     }
+
     if (product.shipmentDuration ?: 0 <= 0) {
       binding.ctvDuration.gone()
     } else {
       binding.ctvDuration.visible()
+      binding.ctvDuration.text = "${product.shipmentDuration} min"
     }
-    binding.ctvDuration.text = "${product.shipmentDuration} min"
-    binding.tvOffPercent.text = product.getProductOffPrice()
-    binding.tvName.text = product.name
-    binding.tvPrice.text = product.getProductPrice()
-    binding.tvDiscount.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    binding.tvDiscount.text = product.getProductDiscountPrice()
+
     binding.tvDescription.text = product.description
     binding.btnShare.setOnClickListener {
       listener?.onItemClick(position, product)

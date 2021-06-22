@@ -19,6 +19,6 @@ data class Photo(
   override fun getViewType(): Int = FeaturesEnum.PHOTOS.ordinal
 
   enum class ViewGridType(var width:Int,var countGrid:Int,var icon:Int){
-    FIRST_GRID(250,1, R.drawable.ic_layout_one_f),SECOND_GRID(180,2,R.drawable.ic_layout_two_f),THIRD_GRID(150,3,R.drawable.ic_layout_three_f),FOUR_GRID(132,4,R.drawable.ic_layout_four_f),
+    FIRST_GRID(280,1, R.drawable.ic_layout_one_f),SECOND_GRID(210,2,R.drawable.ic_layout_two_f),THIRD_GRID(164,3,R.drawable.ic_layout_three_f),FOUR_GRID(132,4,R.drawable.ic_layout_four_f),
   }
 }

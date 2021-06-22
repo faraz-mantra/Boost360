@@ -22,74 +22,88 @@ import java.io.ByteArrayOutputStream;
 
 public class MethodUtils {
 
-    static int i;
+  static int i;
 
-    public static Spanned fromHtml(String html) {
-        Spanned result;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
-        } else {
-            result = Html.fromHtml(html);
-        }
-        return result;
+  public static Spanned fromHtml(String html) {
+    Spanned result;
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+      result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
+    } else {
+      result = Html.fromHtml(html);
     }
+    return result;
+  }
 
-    public static Uri getImageUri(Context mContext, Bitmap inImage, String imageId) {
-        try {
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            inImage.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-            String path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(), inImage, imageId + ".png", "drawing");
-            if (TextUtils.isEmpty(path)) return null;
-            return Uri.parse(path);
-        } catch (Exception e) {
-            Log.e(MethodUtils.class.getName(), e.getLocalizedMessage());
-            return null;
-        }
+  public static Uri getImageUri(Context mContext, Bitmap inImage, String imageId) {
+    try {
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      inImage.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+      String path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(), inImage, imageId + ".png", "drawing");
+      if (TextUtils.isEmpty(path)) return null;
+      return Uri.parse(path);
+    } catch (Exception e) {
+      Log.e(MethodUtils.class.getName(), e.getLocalizedMessage());
+      return null;
     }
+  }
 
 
-    public static void startBoostActivity(Context mContext) {
-        PackageManager packageManager = mContext.getPackageManager();
-        if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
-            Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
-        }
-        try {
-            Intent LaunchIntent = packageManager.getLaunchIntentForPackage(mContext.getPackageName());
-            mContext.startActivity(LaunchIntent);
-        } catch (Exception e) {
-            Toast.makeText(mContext, "Unable to open Boost App ", Toast.LENGTH_SHORT).show();
-        }
+  public static void startBoostActivity(Context mContext) {
+    try {
+      PackageManager packageManager = mContext.getPackageManager();
+      if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
+        Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
+      }
+      Intent LaunchIntent = packageManager.getLaunchIntentForPackage(mContext.getPackageName());
+      mContext.startActivity(LaunchIntent);
+    } catch (Exception e) {
+      Toast.makeText(mContext, "Unable to open Boost App ", Toast.LENGTH_SHORT).show();
     }
+  }
 
-    private static boolean isPackageInstalled(String packagename, PackageManager manager) {
-        try {
-            manager.getPackageInfo(packagename, 0);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
+  public static void startKeyboardActivity(Context mContext) {
+    try {
+      PackageManager packageManager = mContext.getPackageManager();
+      if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
+        Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
+      }
+      Intent intent = new Intent(mContext, Class.forName("com.nowfloats.helper.AppFragmentContainerActivity"));
+      intent.putExtra("FRAGMENT_TYPE", "ACCOUNT_KEYBOARD");
+      mContext.startActivity(intent);
+    } catch (Exception e){
+      e.printStackTrace();
     }
+  }
 
-    public static boolean isOnline(Context context) {
-        boolean status = false;
-        try {
-            ConnectivityManager connectivityManager = (ConnectivityManager) context
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = connectivityManager.getNetworkInfo(0);
-            if (netInfo != null
-                    && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                status = true;
-            } else {
-                netInfo = connectivityManager.getNetworkInfo(1);
-                if (netInfo != null
-                        && netInfo.getState() == NetworkInfo.State.CONNECTED)
-                    status = true;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return status;
+  private static boolean isPackageInstalled(String packagename, PackageManager manager) {
+    try {
+      manager.getPackageInfo(packagename, 0);
+      return true;
+    } catch (PackageManager.NameNotFoundException e) {
+      return false;
     }
+  }
+
+  public static boolean isOnline(Context context) {
+    boolean status = false;
+    try {
+      ConnectivityManager connectivityManager = (ConnectivityManager) context
+          .getSystemService(Context.CONNECTIVITY_SERVICE);
+      NetworkInfo netInfo = connectivityManager.getNetworkInfo(0);
+      if (netInfo != null
+          && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+        status = true;
+      } else {
+        netInfo = connectivityManager.getNetworkInfo(1);
+        if (netInfo != null
+            && netInfo.getState() == NetworkInfo.State.CONNECTED)
+          status = true;
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+    return status;
+  }
 }

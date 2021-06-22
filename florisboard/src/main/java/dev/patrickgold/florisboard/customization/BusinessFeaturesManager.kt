@@ -175,44 +175,55 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       Timber.i("Please do login")
       binding.pleaseLoginCard.visible()
       binding.pleaseLoginCard.setOnClickListener { MethodUtils.startBoostActivity(mContext) }
-    } else if (MethodUtils.isOnline(mContext)) {
-      binding.pleaseLoginCard.gone()
-      binding.businessFeatureProgress.visible()
-      errorObserveListener()
-      when (businessFeatureEnum) {
-        BusinessFeatureEnum.INVENTORY_SERVICE -> {
-          SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = getProductType(session?.fP_AppExperienceCode ?: "")
-          visibleSelectType(isI = true)
-          initializePaging()
-          this.adapterProductService.clearList()
-          binding.productShareRvList.removeAllViewsInLayout()
-          viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
+    } else if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
+      if (MethodUtils.isOnline(mContext)) {
+        binding.pleaseLoginCard.gone()
+        binding.businessFeatureProgress.visible()
+        errorObserveListener()
+        when (businessFeatureEnum) {
+          BusinessFeatureEnum.INVENTORY_SERVICE -> {
+            SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = getProductType(session?.fP_AppExperienceCode ?: "")
+            visibleSelectType(isI = true)
+            initializePaging()
+            this.adapterProductService.clearList()
+            binding.productShareRvList.removeAllViewsInLayout()
+            viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
+          }
+          BusinessFeatureEnum.UPDATES -> {
+            visibleSelectType(isII = true)
+            initializePaging()
+            this.adapterUpdates.clearList()
+            binding.updateRvList.removeAllViewsInLayout()
+            viewModel.getUpdates(session?.fPID, clientId, offSet, limit)
+          }
+          BusinessFeatureEnum.PHOTOS -> {
+            visibleSelectType(isIII = true)
+            this.photosSet.clear()
+            this.adapterPhoto.clearList()
+            viewModel.getPhotos(session?.fPID ?: "")
+          }
+          BusinessFeatureEnum.BUSINESS_CARD -> {
+            visibleSelectType(isIV = true)
+            this.adapterBusinessCard.clearList()
+            if (messageBusiness.isEmpty() && _connectedChannels.isEmpty()) getChannelAccessToken(true)
+            businessCardDataLoad()
+          }
+          else -> {
+          }
         }
-        BusinessFeatureEnum.UPDATES -> {
-          visibleSelectType(isII = true)
-          initializePaging()
-          this.adapterUpdates.clearList()
-          binding.updateRvList.removeAllViewsInLayout()
-          viewModel.getUpdates(session?.fPID, clientId, offSet, limit)
-        }
-        BusinessFeatureEnum.PHOTOS -> {
-          visibleSelectType(isIII = true)
-          this.photosSet.clear()
-          this.adapterPhoto.clearList()
-          viewModel.getPhotos(session?.fPID ?: "")
-        }
-        BusinessFeatureEnum.BUSINESS_CARD -> {
-          visibleSelectType(isIV = true)
-          this.adapterBusinessCard.clearList()
-          if (messageBusiness.isEmpty() && _connectedChannels.isEmpty()) getChannelAccessToken(true)
-          businessCardDataLoad()
-        }
-        else -> {
-        }
+      } else {
+        Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+        binding.businessFeatureProgress.gone()
       }
     } else {
-      Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
-      binding.businessFeatureProgress.gone()
+      Timber.i("Please add boost keyboard in your current plan.")
+      binding.textView.text = mContext.getString(R.string.keyboard_not_added_plan)
+      binding.pleaseLoginCard.visible()
+      binding.pleaseLoginCard.setOnClickListener {
+        if (binding.textView.text.equals(mContext.getString(R.string.keyboard_not_added_plan))) {
+          MethodUtils.startKeyboardActivity(mContext)
+        }
+      }
     }
   }
 
@@ -237,6 +248,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       binding.businessFeatureProgress.gone()
       if (it.isNotEmpty()) {
         this.photosSet.addAll(it)
+        this.photosSet.map { it1 -> it1.gridType = this.gridType }
+        binding.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
         this.adapterPhoto.notifyNewList(this.photosSet.toList())
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = "PHOTOS (${photosSet.size})"
       } else Timber.i("List from api came empty")
@@ -473,7 +486,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     val product = item as? Product
     if (NetworkUtils.isNetworkConnected()) {
       val shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n", product?.name?.trim { it <= ' ' }, product?.description,
-        "${product?.getCurrencySymbol()} ${product?.discountAmount}", "${product?.getCurrencySymbol()} ${product?.price}", product?.description?.trim { it <= ' ' })
+        "${product?.getProductDiscountedPriceOrPrice()}", "${if (product?.discountAmount?.toDoubleOrNull() ?: 0.0 != 0.0) "~${product?.getProductPrice()}~" else ""}", product?.description?.trim { it <= ' ' })
       pathToUriGet(product?.imageUri, shareText, BusinessFeatureEnum.INVENTORY_SERVICE)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
   }
@@ -598,10 +611,12 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun visiblePhotoTopView() {
-    if (photosSet.any { it.selected }) {
+    val selectedPhoto = photosSet.filter { it.selected }
+    if (selectedPhoto.isNotEmpty()) {
       binding.tabPhotoView.gone()
       binding.changePhotoGridView.gone()
       binding.containerShareImage.visible()
+      binding.btnImageShare.text = "Share ${selectedPhoto.size} ${if (selectedPhoto.size > 1) "images" else "image"}"
     } else {
       binding.containerShareImage.gone()
       binding.changePhotoGridView.visibility = if (tapPhotoSelect) View.GONE else View.VISIBLE

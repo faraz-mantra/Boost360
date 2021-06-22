@@ -205,8 +205,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     smartbarView?.setEventListener(this)
   }
 
-  fun getSmartbarView():SmartbarView? {
-   return smartbarView
+  fun getSmartbarView(): SmartbarView? {
+    return smartbarView
   }
 
   fun unregisterSmartbarView(view: SmartbarView) {
@@ -288,6 +288,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     updateCapsState()
     setActiveKeyboardMode(keyboardMode)
     smartbarView?.updateSmartbarState()
+    if (keyboardMode == KeyboardMode.BUSINESS_FEATURES) {
+      businessFeaturesManager.showSelectedBusinessFeature(BusinessFeatureEnum.values()[SmartbarView.getSmartViewBinding().businessFeatureTabLayout.selectedTabPosition])
+    }
   }
 
   /**

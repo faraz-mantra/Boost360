@@ -340,6 +340,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="10"
+        android:paddingHorizontal="@dimen/size_20"
         android:text="@string/please_login"
         android:textAllCaps="true"
         android:textColor="@color/white"

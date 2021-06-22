@@ -137,15 +137,21 @@ data class Product(
 
 
   fun getProductPrice(): String {
-    return if (this.price == null || this.price?.isEmpty() == true)
-      ""
-    else "₹$price"
+   return  "${getCurrencySymbol()}${price?.toDoubleOrNull()?:0}"
+  }
+
+  fun getProductDiscountedPrice(): String {
+    val priceD = this.price?.toDoubleOrNull()
+    val discountD = this.discountAmount?.toDoubleOrNull()
+    return if (priceD != null && discountD != null && priceD >= discountD) {
+      return "${getCurrencySymbol()}${priceD - discountD}"
+    } else ""
   }
 
   fun getProductDiscountPrice(): String {
     return if (this.discountAmount == null || this.discountAmount?.isEmpty() == true)
       ""
-    else "₹$discountAmount"
+    else "${getCurrencySymbol()}$discountAmount"
   }
 
   fun getProductOffPrice(): String {
@@ -165,6 +171,10 @@ data class Product(
     }
   }
 
+  fun getProductDiscountedPriceOrPrice() :String{
+    val priceDis = getProductDiscountedPrice()
+   return if (priceDis.isNotEmpty()) priceDis else getProductPrice()
+  }
   fun getCurrencySymbol(): String? {
     if (currencyCode == "INR" || currencyCode == "" || currencyCode == null) {
       currencyCode = "₹"
@@ -173,7 +183,7 @@ data class Product(
   }
 
   fun getLoaderItem(): Product {
-    this.recyclerViewItem =  FeaturesEnum.LOADER.ordinal
+    this.recyclerViewItem = FeaturesEnum.LOADER.ordinal
     return this
   }
 }
