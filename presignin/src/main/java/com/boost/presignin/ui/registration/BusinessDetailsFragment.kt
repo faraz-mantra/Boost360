@@ -70,11 +70,11 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
       val businessName = binding?.businessNameEt?.text?.toString();
       val email = binding?.emailEt?.text?.toString()
       val phone = binding?.phoneEt?.text?.toString()
-      if (!name.validateLetters()) {
+      if (!name.isNameValid()) {
         showShortToast(getString(R.string.enter_valid_name))
         return@setOnClickListener
       }
-      if (!businessName.validateLetters()) {
+      if (!businessName.isBusinessNameValid()) {
         showShortToast(getString(R.string.enter_valid_business_name))
         return@setOnClickListener
       }
