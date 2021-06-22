@@ -37,7 +37,7 @@ class BusinessNameBottomSheet : BaseBottomSheetDialog<BottomSheetBusinessNameBin
 
   private fun updateText(s: String) {
     binding?.ctvBusinessNameCount?.text = "${s?.length}/40"
-    binding?.btnPublish?.isEnabled = binding?.cetBusinessName?.text?.length ?: 0 > 0
+    binding?.btnPublish?.isEnabled = binding?.cetBusinessName?.text?.length ?: 0 > 0 && businessProfileModel?.businessName?.trim()!=s.trim()
   }
 
   override fun onClick(v: View) {

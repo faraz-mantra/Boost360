@@ -205,8 +205,8 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
     binding?.tvCustomerDetail?.text = order.BuyerDetails?.getPhoneEmailFull()
-    binding?.userAddress?.tvShippingAddress?.text = order.BuyerDetails?.address()?.addressLine1()
-    binding?.userAddress?.tvBillingAddress?.text = order.BuyerDetails?.address()?.addressLine1()
+    binding?.userAddress?.tvShippingAddress?.text ="${order.BuyerDetails?.address()?.addressLine1()} ${order.BuyerDetails?.address()?.Zipcode}"
+    binding?.userAddress?.tvBillingAddress?.text = "${order.BuyerDetails?.address()?.addressLine1()} ${order.BuyerDetails?.address()?.Zipcode}"
 
 //        binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
 //        binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
