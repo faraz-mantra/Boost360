@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:fillViewport="false"
     android:scrollbars="none"
+    android:fitsSystemWindows="false"
     android:overScrollMode="never"
     android:background="#40000000">
 
@@ -23,9 +24,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/feature_curve_top_bg_popup"
-            android:layout_alignParentBottom="true">
+            android:layout_height="match_parent"
+            android:background="@drawable/feature_curve_top_bg_popup">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/marketplace_layout1"
@@ -95,13 +95,12 @@ android:paddingTop="@dimen/_30sdp"
                     android:id="@+id/scrollViewStates"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:scrollbars="none"
-                    android:padding="@dimen/_15sdp"
+                    android:scrollbars="vertical"
                     android:overScrollMode="never"
                     app:layout_constraintTop_toBottomOf="@id/separator"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
-
+                    <!--android:padding="@dimen/_15sdp"-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_state"
                     android:layout_width="match_parent"
@@ -109,7 +108,7 @@ android:paddingTop="@dimen/_30sdp"
                     android:overScrollMode="never"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
-                    android:nestedScrollingEnabled="false"/>
+                    android:nestedScrollingEnabled="true"/>
                 </androidx.core.widget.NestedScrollView>
 
             <View
