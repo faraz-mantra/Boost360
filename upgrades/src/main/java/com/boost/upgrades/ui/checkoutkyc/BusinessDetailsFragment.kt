@@ -299,46 +299,54 @@ class BusinessDetailsFragment : DialogFragment() {
                     business_name_value.setText(createCustomerInfoRequest!!.Name)
                 }
 
-                if(session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")){
-                    if (createCustomerInfoRequest!!.BusinessDetails != null) {
+                    if (createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null) {
                         business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
-                    }
-                }else{
-                    business_contact_number.setText(session?.userPrimaryMobile)
-                }
+                    }else{
+                        if(session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")){
 
-//                if(session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL) == null || session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL).equals("") ){
-                if(session?.fPEmail == null || session?.fPEmail.equals("") ){
-                    if (createCustomerInfoRequest!!.BusinessDetails != null) {
+                        }else{
+                            business_contact_number.setText(session?.userPrimaryMobile)
+                        }
+                    }
+
+
+                    if (createCustomerInfoRequest!!.BusinessDetails!!.Email != null) {
                         business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
-                    }
-                }else{
-                    business_email_address.setText(session?.fPEmail)
-                }
+                    }else{
+                        if(session?.fPEmail == null || session?.fPEmail.equals("") ){
 
-                if(session?.fPName == null || session?.fPName.equals("") ){
+                        }else{
+                            business_email_address.setText(session?.fPEmail)
+                        }
+                    }
+
+
                     if (createCustomerInfoRequest!!.Name != null) {
                         business_name_value.setText(createCustomerInfoRequest!!.Name)
-                    }
-                }else{
-                    business_name_value.setText(session?.fPName)
-                }
+                    }else{
+                        if(session?.fPName == null || session?.fPName.equals("") ){
 
-                if(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
-                        Key_Preferences.GET_FP_DETAILS_ADDRESS).equals("") ){
-                    if (createCustomerInfoRequest!!.AddressDetails != null) {
-//                        business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.City)
-
-                        if(createCustomerInfoRequest!!.AddressDetails!!.City != null){
-                            viewModel.getStateFromCityAssetJson(requireActivity(),createCustomerInfoRequest!!.AddressDetails!!.City)
+                        }else{
+                            business_name_value.setText(session?.fPName)
                         }
+                    }
+
+
+                    if (createCustomerInfoRequest!!.AddressDetails != null) {
+
+
                         if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
                             business_address.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+                        }else{
+                            if(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
+                                    Key_Preferences.GET_FP_DETAILS_ADDRESS).equals("") ){
+
+                            }else{
+                                business_address.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
+                            }
                         }
                     }
-                }else{
-                    business_address.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
-                }
+
             }
         })
         viewModel.getCustomerInfoStateResult().observeOnce(this, Observer {
