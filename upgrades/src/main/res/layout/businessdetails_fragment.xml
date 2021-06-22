@@ -143,13 +143,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         app:srcCompat="@drawable/ic_switchon"
+                        android:padding="@dimen/_4sdp"
                         android:layout_alignParentEnd="true"
                         android:gravity="end" />
                     <ImageView
                         android:id="@+id/gstin_off"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         app:srcCompat="@drawable/ic_switchoff"
+                        android:padding="@dimen/_4sdp"
                         android:visibility="gone"
                         android:layout_alignParentEnd="true"
                         android:gravity="end" />
