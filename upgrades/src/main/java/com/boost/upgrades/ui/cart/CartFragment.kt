@@ -1821,7 +1821,8 @@ Log.v("package_validity_months", " "+ package_validity_months)
 
   private fun hideProgress() {
     try {
-      if (progressDialog.isShowing) progressDialog.hide()
+//      if (progressDialog.isShowing) progressDialog.hide()
+      if (progressDialog.isShowing) progressDialog.cancel()
     } catch (e: Exception) {
       e.printStackTrace()
     }

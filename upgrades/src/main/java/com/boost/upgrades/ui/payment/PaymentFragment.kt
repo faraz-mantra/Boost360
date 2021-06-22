@@ -558,6 +558,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     business_supply_place_value.visibility = View.INVISIBLE
                     paymentProceedFlag = false
                 }else{
+                    business_supply_place_value.visibility = View.VISIBLE
                     business_supply_place_missing.visibility = View.GONE
                     business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
                 }
@@ -575,11 +576,28 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     if(createCustomerInfoRequest!!.Name == null || createCustomerInfoRequest!!.AddressDetails.State == null ||
                         createCustomerInfoRequest!!.AddressDetails.Line1 == null || createCustomerInfoRequest!!.AddressDetails!!.State.equals("string")){
                         paymentProceedFlag = false
+                        edit_business_details.visibility = View.GONE
                         business_button_layout.visibility = View.VISIBLE
                         all_business_button.visibility = View.VISIBLE
+                        if(createCustomerInfoRequest!!.TaxDetails?.GSTIN == null){
+                            business_gstin_missing.visibility = View.VISIBLE
+                            business_gstin.text = "Have a GST number?"
+                            business_gstin_missing.text = "No"
+                            business_gstin_value.visibility = View.INVISIBLE
+                            prefs.storeGstRegistered(false)
+                        }
                     }else{
                         paymentProceedFlag = true
+                        edit_business_details.visibility = View.VISIBLE
                         business_button_layout.visibility = View.GONE
+//                        payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg)
+                        if(createCustomerInfoRequest!!.TaxDetails?.GSTIN == null){
+                            business_gstin_missing.visibility = View.VISIBLE
+                            business_gstin.text = "Have a GST number?"
+                            business_gstin_missing.text = "No"
+                            business_gstin_value.visibility = View.INVISIBLE
+                            prefs.storeGstRegistered(false)
+                        }
                     }
                 }else{
                     business_button_layout.visibility = View.VISIBLE
@@ -668,9 +686,11 @@ Log.v("getCustomerInfoN"," "+ session?.fPName)
                     business_address_value.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
                 }
 
-                business_gstin.setTextColor(resources.getColor(R.color.global_red))
+//                business_gstin.setTextColor(resources.getColor(R.color.global_red))
                 business_gstin_value.visibility = View.INVISIBLE
                 business_gstin_missing.visibility = View.VISIBLE
+                business_gstin_missing.text = "No"
+                business_gstin.text = "Have a GST number?"
 
                 business_supply_place.setTextColor(resources.getColor(R.color.global_red))
                 business_supply_place_value.visibility = View.INVISIBLE

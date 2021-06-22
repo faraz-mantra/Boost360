@@ -221,13 +221,13 @@
                     android:focusableInTouchMode="true"
                     android:fontFamily="@font/open_sans"
                     android:gravity="bottom"
-                    android:imeOptions="actionNext"
                     android:hint="sample@example.com"
+                    android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
-                    android:textSize="@dimen/txt_14sp"
-                    android:textFontWeight="400"
                     android:textColor="@color/common_bold_text_color"
-                    android:textColorHint="@color/globaLightSuperText" />
+                    android:textColorHint="@color/globaLightSuperText"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
