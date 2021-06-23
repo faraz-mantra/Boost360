@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0400A6</color>
-    <color name="colorAccent">#0400A6</color>
+    <color name="colorPrimary">#EC008C</color>
+    <color name="colorAccent">#EC008C</color>
     <color name="colorPrimaryDark">#03007F</color>
     <color name="accent_dark">@color/colorPrimaryDark</color>
-    <color name="login_button_start_color">@color/colorPrimary</color>
+    <color name="login_button_start_color">@color/colorPrimaryDark</color>
     <color name="login_text_color">@color/colorPrimary</color>
-    <color name="create_account_button_start_color">@color/colorPrimary</color>
-    <color name="create_account_button_end_color">@color/colorPrimary</color>
+    <color name="create_account_button_start_color">@color/colorPrimaryDark</color>
+    <color name="create_account_button_end_color">@color/colorPrimaryDark</color>
     <color name="red_color">@color/colorPrimary</color>
-    <color name="pre_sign_up_title">@color/colorPrimary</color>
-    <color name="login_title">@color/colorPrimary</color>
-    <color name="login_input_underline">@color/colorPrimary</color>
+    <color name="pre_sign_up_title">@color/colorPrimaryDark</color>
+    <color name="login_title">@color/colorPrimaryDark</color>
+    <color name="login_input_underline">@color/colorPrimaryDark</color>
     <color name="addons_toolbar">@color/colorPrimary</color>
-    <color name="addons_text_color">@color/colorPrimary</color>
+    <color name="addons_text_color">@color/colorPrimaryDark</color>
     <color name="app_yellow_1">@color/colorPrimary</color>
 
 </resources>
