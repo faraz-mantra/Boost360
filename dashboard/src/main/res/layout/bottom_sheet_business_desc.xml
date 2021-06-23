@@ -50,7 +50,6 @@
                 android:inputType="textMultiLine"
                 android:maxLines="4"
                 android:singleLine="false"
-                android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="12sp" />
 
             <com.framework.views.customViews.CustomButton

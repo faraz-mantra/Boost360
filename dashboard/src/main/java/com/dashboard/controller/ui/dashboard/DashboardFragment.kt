@@ -291,7 +291,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setTopBackgroundView(isHigh: Boolean) {
     if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
-      val colorD = if (isHigh) R.color.colorPrimary else R.color.white_smoke_1
+      val colorD = if (isHigh) R.color.dashboard_high_score_pink else R.color.white_smoke_1
       (baseActivity as? DashboardActivity)?.changeTheme(colorD, colorD, isHigh.not())
       binding?.viewBgInner?.setTintColor(ContextCompat.getColor(baseActivity, colorD))
       binding?.viewBgOuter?.setImageResource(if (isHigh) R.drawable.ic_fill_bg else R.drawable.ic_fill_bg_primary)
@@ -302,9 +302,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           compoundDrawableTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a)
         }
       }
-      binding?.btnVisitingCard?.background = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_btn_round_white_stroke else R.drawable.ic_btn_round_blue_stroke)
-      binding?.txtVisitingCard?.setTextColor(ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimary))
-      binding?.txtNotification?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.colorPrimary)
+      binding?.btnVisitingCard?.background = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_btn_round_blue_stroke else R.drawable.ic_btn_round_white_stroke)
+      binding?.txtVisitingCard?.setTextColor(ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.white))
+      binding?.txtNotification?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.white)
     }
   }
 

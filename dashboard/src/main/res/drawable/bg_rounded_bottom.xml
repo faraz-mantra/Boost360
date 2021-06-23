@@ -4,9 +4,9 @@
 
     <stroke
         android:width=".5dp"
-        android:color="@color/gray_light_4" />
+        android:color="@color/website_toolbar_color" />
 
     <corners
-        android:bottomLeftRadius="4dp"
-        android:bottomRightRadius="4dp"/>
+        android:bottomLeftRadius="@dimen/size_10"
+        android:bottomRightRadius="@dimen/size_10"/>
 </shape>

@@ -50,6 +50,7 @@
   <item name="android:drawableEnd">@drawable/ic_edit_business</item>
   <item name="android:textColor">@color/warm_grey_10</item>
   <item name="android:textColorHint">@color/primary_grey</item>
+  <item name="android:textCursorDrawable">@drawable/color_cursor</item>
 </style>
   <style name="BusinessProfile_Text_Title">
     <item name="android:layout_width">wrap_content</item>

@@ -129,4 +129,5 @@
 
     <color name="ir_statusBarColor">@color/primaryColorDark</color>
     <color name="ir_actionbarBackground">@color/primaryColor</color>
+
 </resources>
