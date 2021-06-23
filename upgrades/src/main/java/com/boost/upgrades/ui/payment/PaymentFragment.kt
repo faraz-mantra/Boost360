@@ -560,6 +560,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 }else{
                     business_supply_place_value.visibility = View.VISIBLE
                     business_supply_place_missing.visibility = View.GONE
+                    business_supply_place.setTextColor(resources.getColor(R.color.common_text_color))
                     business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
                 }
 
@@ -753,8 +754,9 @@ Log.v("getCustomerInfoN"," "+ session?.fPName)
                 all_business_button.visibility = View.GONE
                 business_supply_place_missing.visibility = View.GONE
                 edit_business_details.visibility = View.VISIBLE
+                business_supply_place.setTextColor(resources.getColor(R.color.common_text_color))
 //                business_supply_place_value.text = it
-                loadCustomerInfo()
+//                loadCustomerInfo()
 //                (activity as UpgradeActivity).prefs.storeInitialLoadMarketPlace(false)
             } else {
                 Toasty.error(requireContext(), "Something went wrong. Try Later!!", Toast.LENGTH_LONG).show()
