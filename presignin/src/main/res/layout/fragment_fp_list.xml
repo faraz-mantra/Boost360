@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+      android:id="@+id/back_iv"
+      android:layout_width="@dimen/_26sdp"
+      android:layout_height="@dimen/_26sdp"
+      android:layout_gravity="center_vertical"
+      android:layout_marginStart="@dimen/_12sdp"
+      android:layout_marginTop="@dimen/_12sdp"
+      android:background="@drawable/psn_back_shape"
+      android:padding="@dimen/_8sdp"
+      android:src="@drawable/ic_back_arrow_left"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_business_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/_18sdp"
+      android:layout_marginTop="@dimen/_12sdp"
+      android:fontFamily="@font/sans_regular"
+      android:includeFontPadding="false"
+      android:maxLines="1"
+      android:text="@string/choose_a_business"
+      android:textColor="@color/black_4a4a4a"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/back_iv"
+      app:textType="HEADING_2" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/customTextView2"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/_20sdp"
+      android:text="@string/you_can_always_switch_between_these_business_accounts_from_the_bottom_side_menu_on_dashboard"
+      android:textColor="@color/black_4a4a4a"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
+      app:textType="BODY_3" />
+
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/rv_business_list"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginTop="@dimen/_4sdp"
+      android:clipToPadding="false"
+      android:orientation="vertical"
+      android:paddingBottom="@dimen/size_70"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/customTextView2"
+      tools:itemCount="3"
+      tools:listitem="@layout/recycler_item_fp_info" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/btn_go_to_dashboard"
+      style="@style/material_button_dashboard"
+      android:layout_marginHorizontal="@dimen/_12sdp"
+      android:layout_marginBottom="@dimen/_12sdp"
+      android:enabled="false"
+      android:text="@string/go_to_dashboard"
+      android:textAllCaps="true"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      tools:ignore="MissingConstraints" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

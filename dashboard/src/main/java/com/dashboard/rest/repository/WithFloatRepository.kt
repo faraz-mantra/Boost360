@@ -2,6 +2,7 @@ package com.dashboard.rest.repository
 
 import android.content.Context
 import com.dashboard.base.rest.AppBaseRepository
+import com.dashboard.model.websitetheme.WebsiteThemeUpdateRequest
 import com.dashboard.rest.TaskCode
 import com.dashboard.rest.apiClients.WithFloatsApiClient
 import com.dashboard.rest.services.WithFloatRemoteData

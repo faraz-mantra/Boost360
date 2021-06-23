@@ -17,6 +17,7 @@ import java.net.URL
 class SignUpConfirmation : AppCompatActivity() {
 
   private var personEmail = ""
+  private var personNumber = ""
   private var personName = ""
   private var profile_id = ""
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,7 @@ class SignUpConfirmation : AppCompatActivity() {
     profile_id = bundle?.getString("profile_id") ?: ""
     personName = bundle?.getString("person_name") ?: ""
     personEmail = bundle?.getString("person_email") ?: ""
+    personNumber = bundle?.getString("person_number") ?: ""
 
     if (personName.isEmpty() && currentFirebaseUser != null) {
       personName = currentFirebaseUser.displayName.toString()
@@ -58,6 +60,7 @@ class SignUpConfirmation : AppCompatActivity() {
       editor?.putString("user_profile_id", profile_id)
       editor?.putString("person_name", personName)
       editor?.putString("person_email", personEmail)
+      editor?.putString("person_number", personNumber)
       editor?.putBoolean("IsSignUpComplete", true)
       editor?.apply()
       NavigatorManager.startActivities(this@SignUpConfirmation)

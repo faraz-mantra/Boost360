@@ -117,4 +117,8 @@ public interface StoreInterface {
     @Headers({"Authorization: 597ee93f5d64370820a6127c", "Accept: application/json"})
     @GET("/api/v1/kycdoc/get-data")
     void getSelfBrandedKyc(@Query("query") String query, Callback<PaymentKycDataResponse> callback);
+
+
+    @POST("/discover/v1/FloatingPoint/AccessToken/Create")
+    void createAccessToken(@Body com.boost.presignin.model.accessToken.AccessTokenRequest request, Callback<com.boost.presignin.model.authToken.AccessTokenResponse> callback);
 }

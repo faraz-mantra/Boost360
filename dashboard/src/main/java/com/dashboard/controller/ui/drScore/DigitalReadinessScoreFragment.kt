@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
@@ -36,6 +35,7 @@ import com.framework.webengageconstant.DIGITAL_READINESS_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.material.snackbar.Snackbar
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
@@ -102,7 +102,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
         binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "85%")
 //        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-        binding?.txtPercentage?.text = "${drScoreData?.getDrsTotal()}%"
+        binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal()}"
         binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
 //        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
 
@@ -156,17 +156,15 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 
   private fun getChannelAccessToken(isShowLoader: Boolean = false) {
     if (isShowLoader) showProgress()
-    viewModel?.getChannelsAccessToken(session?.fPID)?.observeOnce(this, {
+    viewModel?.getChannelsAccessTokenStatus(session?.fPID)?.observeOnce(this, {
       var urlString = ""
       if (it.isSuccess()) {
-        val channelsAccessToken = (it as? ChannelsAccessTokenResponse)?.NFXAccessTokens
-        channelsAccessToken?.forEach { it1 ->
-          when (it1.type()) {
-            ChannelAccessToken.AccessTokenType.facebookpage.name ->
-              if (it1.UserAccountId.isNullOrEmpty().not()) urlString = "\n⚡ *Facebook: https://www.facebook.com/${it1.UserAccountId}*"
-            ChannelAccessToken.AccessTokenType.twitter.name ->
-              if (it1.UserAccountName.isNullOrEmpty().not()) urlString += "\n⚡ *Twitter: https://twitter.com/${it1.UserAccountName?.trim()}*"
-          }
+        val response = it as? ChannelAccessStatusResponse
+        if (response?.channels?.facebookpage?.account?.accountId.isNullOrEmpty().not()) {
+          urlString = "\n⚡ *Facebook: https://www.facebook.com/${response?.channels?.facebookpage?.account?.accountId}*"
+        }
+        if (response?.channels?.twitter?.account?.accountName.isNullOrEmpty().not()) {
+          urlString += "\n⚡ *Twitter: https://twitter.com/${response?.channels?.twitter?.account?.accountName?.trim()}*"
         }
       }
       getWhatsAppData(urlString, isShowLoader)
@@ -175,7 +173,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 
   private fun getWhatsAppData(urlString: String, isShowLoader: Boolean = false) {
     var urlStringN = urlString
-    viewModel?.getWhatsappBusiness(session?.fpTag, WA_KEY)?.observeOnce(this, {
+    viewModel?.getWhatsappBusiness(request = session?.fpTag, auth = WA_KEY)?.observeOnce(this, {
       if (isShowLoader) hideProgress()
       if (it.isSuccess()) {
         val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
@@ -209,6 +207,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 }
 
 fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: AppCompatActivity, session: UserSessionManager?) {
+  WebEngageController.trackEvent(DIGITAL_READINESS_PAGE, PAGE_VIEW, session?.fpTag)
   when (type) {
     DrScoreItem.DrScoreItemType.boolean_add_business_name -> {
 //        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty())

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.WebPreviewActivity">
+
+    <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/preview_toolbar_background"
+      android:paddingStart="@dimen/_14sdp"
+      android:paddingTop="@dimen/_4sdp"
+      android:paddingEnd="@dimen/_6sdp"
+      android:paddingBottom="@dimen/_4sdp"
+      tools:ignore="MissingConstraints">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/heading_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/semi_bold"
+        android:maxLines="1"
+        android:paddingEnd="5dp"
+        android:textColor="@color/link_preview_title"
+        app:layout_constraintEnd_toStartOf="@+id/share_icon"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textType="HEADING_6"
+        tools:text="@string/clinic_website" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/www_sravansclinic_com"
+        android:textColor="@color/black_4a4a4a"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heading_tv"
+        app:textType="CAPTION" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/close_icon"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:padding="@dimen/_3sdp"
+        android:src="@drawable/ic_website_close"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/share_icon"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:padding="@dimen/_4sdp"
+        android:src="@drawable/ic_website_share"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/close_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+      android:id="@+id/progress_bar"
+      style="?android:attr/progressBarStyleHorizontal"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_3"
+      android:indeterminate="true"
+      android:scaleY="4"
+      android:theme="@style/ActiveTheme"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <WebView
+      android:id="@+id/webview"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:background="@color/green_27AE60"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

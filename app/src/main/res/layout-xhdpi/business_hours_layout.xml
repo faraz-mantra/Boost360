@@ -1,431 +1,461 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:background="@color/white"
+  android:orientation="vertical"
+  android:padding="10dp">
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".4"
+      android:gravity="center_vertical"
+      android:text="@string/days"
+      android:textColor="@color/black_4a4a4a"
+      android:textSize="13sp"
+      android:textStyle="bold" />
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:gravity="center"
+      android:text="@string/open_"
+      android:textColor="@color/black_4a4a4a"
+      android:textSize="13sp"
+      android:textStyle="bold" />
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:gravity="center"
+      android:text="@string/close"
+      android:textColor="@color/black_4a4a4a"
+      android:textSize="13sp"
+      android:textStyle="bold" />
+
+    <androidx.appcompat.widget.SwitchCompat
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textOff="@string/close"
+      android:textOn="@string/open_"
+      app:theme="@style/ColorSwitchStyle"
+      android:visibility="invisible" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".4"
+      android:gravity="center_vertical"
+      android:text="@string/monday"
+      android:textColor="#575757"
+      android:textSize="14sp" />
+
+    <EditText
+      android:id="@+id/et_mon_open"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <EditText
+      android:id="@+id/et_mon_close"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:focusableInTouchMode="true"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <androidx.appcompat.widget.SwitchCompat
+      android:id="@+id/switch_mon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:checked="true"
+      app:theme="@style/ColorSwitchStyle"
+      android:textOff="@string/close"
+      android:textOn="@string/open_" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".4"
+      android:gravity="center_vertical"
+      android:text="@string/tuesday"
+      android:textColor="#575757"
+      android:textSize="14sp" />
+
+    <EditText
+      android:id="@+id/et_tue_open"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <EditText
+      android:id="@+id/et_tue_close"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <androidx.appcompat.widget.SwitchCompat
+      android:id="@+id/switch_tue"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:checked="true"
+      app:theme="@style/ColorSwitchStyle"
+      android:textOff="@string/close"
+      android:textOn="@string/open_" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".4"
+      android:gravity="center_vertical"
+      android:text="@string/wednesday"
+      android:textColor="#575757"
+      android:textSize="14sp" />
+
+    <EditText
+      android:id="@+id/et_wed_open"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <EditText
+      android:id="@+id/et_wed_close"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <androidx.appcompat.widget.SwitchCompat
+      android:id="@+id/switch_wed"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:checked="true"
+      app:theme="@style/ColorSwitchStyle"
+      android:textOff="@string/close"
+      android:textOn="@string/open_" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".4"
+      android:gravity="center_vertical"
+      android:text="@string/thursday"
+      android:textColor="#575757"
+      android:textSize="14sp" />
+
+    <EditText
+      android:id="@+id/et_thu_open"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <EditText
+      android:id="@+id/et_thu_close"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <androidx.appcompat.widget.SwitchCompat
+      android:id="@+id/switch_thu"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:checked="true"
+      app:theme="@style/ColorSwitchStyle"
+      android:textOff="@string/close"
+      android:textOn="@string/open_" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".4"
+      android:gravity="center_vertical"
+      android:text="@string/friday"
+      android:textColor="#575757"
+      android:textSize="14sp" />
+
+    <EditText
+      android:id="@+id/et_fri_open"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <EditText
+      android:id="@+id/et_fri_close"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <androidx.appcompat.widget.SwitchCompat
+      android:id="@+id/switch_fri"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:checked="true"
+      app:theme="@style/ColorSwitchStyle"
+      android:textOff="@string/close"
+      android:textOn="@string/open_" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".4"
+      android:gravity="center_vertical"
+      android:text="@string/saturday"
+      android:textColor="#575757"
+      android:textSize="14sp" />
+
+    <EditText
+      android:id="@+id/et_sat_open"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <EditText
+      android:id="@+id/et_sat_close"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <androidx.appcompat.widget.SwitchCompat
+      android:id="@+id/switch_sat"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:checked="true"
+      app:theme="@style/ColorSwitchStyle"
+      android:textOff="@string/close"
+      android:textOn="@string/open_" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".4"
+      android:gravity="center_vertical"
+      android:text="@string/sunday"
+      android:textSize="14sp" />
+
+    <EditText
+      android:id="@+id/et_sun_open"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <EditText
+      android:id="@+id/et_sun_close"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="15dp"
+      android:layout_weight=".3"
+      android:focusable="false"
+      android:gravity="center"
+      android:inputType="none"
+      android:text="@string/_00_00"
+      android:textSize="13sp" />
+
+    <androidx.appcompat.widget.SwitchCompat
+      android:id="@+id/switch_sun"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:checked="true"
+      app:theme="@style/ColorSwitchStyle"
+      android:textOff="@string/close"
+      android:textOn="@string/open_" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
     android:orientation="vertical"
-    android:background="@color/white"
-    android:padding="10dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="bottom">
+    android:visibility="gone">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/days"
-            android:textStyle="italic|bold"
-            android:gravity="center_vertical"
-            android:textSize="13sp"
-            android:layout_weight=".4"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textStyle="italic|bold"
-            android:layout_marginEnd="15dp"
-            android:text="@string/open_" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:text="@string/close"
-            android:textSize="13sp"
-            android:textStyle="italic|bold"
-            android:layout_marginEnd="15dp"
-            android:gravity="center" />
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="@string/close"
-            android:visibility="invisible"
-            android:textOn="@string/open_"/>
-
-    </LinearLayout>
+    <CheckBox
+      android:id="@+id/chbx_same_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:drawableTint="@color/primary"
+      android:text="@string/use_same_time_for_whole_week" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+      android:id="@+id/ll_same_time"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp"
+      android:orientation="horizontal">
+
+      <EditText
+        android:id="@+id/et_all_open"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:gravity="bottom">
+        android:layout_marginEnd="30dp"
+        android:focusable="false"
+        android:gravity="center"
+        android:inputType="none"
+        android:text="@string/_00_00" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/monday"
-            android:gravity="center_vertical"
-            android:textSize="14sp"
-            android:layout_weight=".4"
-            android:textColor="#575757"/>
-
-        <EditText
-            android:id="@+id/et_mon_open"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:inputType="none"
-            android:focusable="false"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00"/>
-
-        <EditText
-            android:id="@+id/et_mon_close"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:focusableInTouchMode="true"
-            android:inputType="none"
-            android:focusable="false"
-            android:layout_height="wrap_content"
-            android:text="@string/_00_00"
-            android:textSize="13sp"
-            android:layout_marginEnd="15dp"
-            android:gravity="center" />
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch_mon"
-            android:textOff="@string/close"
-            android:checked="true"
-            android:textOn="@string/open_"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+      <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:gravity="bottom">
+        android:text="@string/to"
+        android:textColor="@color/black" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/tuesday"
-            android:gravity="center_vertical"
-            android:textSize="14sp"
-            android:layout_weight=".4"
-            android:textColor="#575757"/>
-
-        <EditText
-            android:id="@+id/et_tue_open"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:inputType="none"
-            android:textSize="13sp"
-            android:focusable="false"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00" />
-
-        <EditText
-            android:id="@+id/et_tue_close"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:inputType="none"
-            android:textSize="13sp"
-            android:focusable="false"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00" />
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch_tue"
-            android:textOff="@string/close"
-            android:checked="true"
-            android:textOn="@string/open_"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+      <EditText
+        android:id="@+id/et_all_close"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:gravity="bottom">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/wednesday"
-            android:gravity="center_vertical"
-            android:textSize="14sp"
-            android:layout_weight=".4"
-            android:textColor="#575757"/>
-
-        <EditText
-            android:id="@+id/et_wed_open"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:inputType="none"
-            android:focusable="false"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00" />
-
-        <EditText
-            android:id="@+id/et_wed_close"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:inputType="none"
-            android:focusable="false"
-            android:textSize="13sp"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00"/>
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch_wed"
-            android:textOff="@string/close"
-            android:checked="true"
-            android:textOn="@string/open_"/>
-
+        android:layout_marginStart="30dp"
+        android:focusable="false"
+        android:gravity="center"
+        android:inputType="none"
+        android:text="@string/_00_00" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:gravity="bottom">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/thursday"
-            android:gravity="center_vertical"
-            android:textSize="14sp"
-            android:layout_weight=".4"
-            android:textColor="#575757"/>
-
-        <EditText
-            android:id="@+id/et_thu_open"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:inputType="none"
-            android:textSize="13sp"
-            android:focusable="false"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00" />
-
-        <EditText
-            android:id="@+id/et_thu_close"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:inputType="none"
-            android:focusable="false"
-            android:textSize="13sp"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00" />
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch_thu"
-            android:checked="true"
-            android:textOff="@string/close"
-            android:textOn="@string/open_"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:gravity="bottom">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/friday"
-            android:gravity="center_vertical"
-            android:textSize="14sp"
-            android:layout_weight=".4"
-            android:textColor="#575757"/>
-
-        <EditText
-            android:id="@+id/et_fri_open"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:inputType="none"
-            android:textSize="13sp"
-            android:focusable="false"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00" />
-
-        <EditText
-            android:id="@+id/et_fri_close"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:inputType="none"
-            android:textSize="13sp"
-            android:focusable="false"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00" />
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch_fri"
-            android:checked="true"
-            android:textOff="@string/close"
-            android:textOn="@string/open_"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:gravity="bottom">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/saturday"
-            android:gravity="center_vertical"
-            android:textSize="14sp"
-            android:layout_weight=".4"
-            android:textColor="#575757"/>
-
-        <EditText
-            android:id="@+id/et_sat_open"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:inputType="none"
-            android:textSize="13sp"
-            android:focusable="false"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00" />
-
-        <EditText
-            android:id="@+id/et_sat_close"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:inputType="none"
-            android:focusable="false"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00"/>
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch_sat"
-            android:textOff="@string/close"
-            android:checked="true"
-            android:textOn="@string/open_"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:gravity="bottom">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/sunday"
-            android:gravity="center_vertical"
-            android:textSize="14sp"
-            android:layout_weight=".4"/>
-
-        <EditText
-            android:id="@+id/et_sun_open"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:inputType="none"
-            android:textSize="13sp"
-            android:focusable="false"
-            android:layout_marginEnd="15dp"
-            android:text="@string/_00_00" />
-
-        <EditText
-            android:id="@+id/et_sun_close"
-            android:layout_width="0dp"
-            android:layout_weight=".3"
-            android:layout_height="wrap_content"
-            android:text="@string/_00_00"
-            android:focusable="false"
-            android:textSize="13sp"
-            android:inputType="none"
-            android:layout_marginEnd="15dp"
-            android:gravity="center" />
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch_sun"
-            android:textOff="@string/close"
-            android:checked="true"
-            android:textOn="@string/open_"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:visibility="gone"
-        android:orientation="vertical">
-        <CheckBox
-            android:id="@+id/chbx_same_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTint="@color/primary"
-            android:text="@string/use_same_time_for_whole_week"/>
-
-        <LinearLayout
-            android:id="@+id/ll_same_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/et_all_open"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:inputType="none"
-                android:focusable="false"
-                android:layout_marginEnd="30dp"
-                android:text="@string/_00_00" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="@string/to"/>
-
-            <EditText
-                android:id="@+id/et_all_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:inputType="none"
-                android:layout_marginStart="30dp"
-                android:focusable="false"
-                android:text="@string/_00_00"/>
-        </LinearLayout>
-    </LinearLayout>
+  </LinearLayout>
 </LinearLayout>

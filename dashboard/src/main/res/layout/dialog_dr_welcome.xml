@@ -15,94 +15,102 @@
     app:cardElevation="0dp"
     app:cardUseCompatPadding="true">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:padding="@dimen/size_24">
+      android:layout_height="wrap_content"
+      android:fillViewport="true"
+      android:scrollbars="none">
 
-      <com.framework.views.customViews.CustomTextView
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0"
-        android:gravity="center"
-        android:id="@+id/title"
-        android:text="@string/your_website_readiness_reached_above_85"
-        android:textAlignment="gravity"
-        android:textColor="@color/colorAccent"
-        app:fontFamily="@font/bold"
-        app:textType="HEADING_4"
-        tools:alpha="1" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/size_24">
 
-      <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lotty_progress"
-        android:layout_width="@dimen/size_800"
-        android:layout_height="@dimen/size_70"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/size_16"
-        android:alpha="0"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/green_progress_bar_animation"
-        app:lottie_repeatMode="restart"
-        tools:alpha="1" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:alpha="0"
+          android:gravity="center"
+          android:text="@string/your_website_readiness_reached_above_85"
+          android:textAlignment="gravity"
+          android:textColor="@color/colorAccent"
+          app:fontFamily="@font/bold"
+          app:textType="HEADING_4"
+          tools:alpha="1" />
 
-      <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/dr_score_welcome_anim"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_200"
-        android:layout_gravity="center"
-        android:alpha="0"
-        android:visibility="gone"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/dr_score_welcome_anim"
-        app:lottie_repeatMode="restart"
-        tools:alpha="1" />
+        <com.airbnb.lottie.LottieAnimationView
+          android:id="@+id/lotty_progress"
+          android:layout_width="@dimen/size_800"
+          android:layout_height="@dimen/size_70"
+          android:layout_gravity="center"
+          android:layout_marginStart="@dimen/size_16"
+          android:alpha="0"
+          app:lottie_autoPlay="true"
+          app:lottie_loop="true"
+          app:lottie_rawRes="@raw/green_progress_bar_animation"
+          app:lottie_repeatMode="restart"
+          tools:alpha="1" />
 
-      <com.framework.views.customViews.CustomImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/image_icon"
-        android:layout_gravity="center_horizontal"
-        android:alpha="0"
-        android:layout_marginTop="@dimen/size_10"
-        android:visibility="gone"
-        app:srcCompat="@drawable/ic_welcome_new_dr"
-        tools:alpha="1" />
+        <com.airbnb.lottie.LottieAnimationView
+          android:id="@+id/dr_score_welcome_anim"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_200"
+          android:layout_gravity="center"
+          android:alpha="0"
+          android:visibility="gone"
+          app:lottie_autoPlay="false"
+          app:lottie_loop="true"
+          app:lottie_rawRes="@raw/dr_score_welcome_anim"
+          app:lottie_repeatMode="restart"
+          tools:alpha="1" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_20"
-        android:alpha="0"
-        android:id="@+id/desc"
-        android:gravity="center"
-        android:textColor="@color/black_4a4a4a"
-        android:text="@string/you_score_social_media_platforms"
-        android:textAlignment="gravity"
-        android:visibility="gone"
-        app:textType="BODY_1"
-        tools:alpha="1" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/image_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="@dimen/size_10"
+          android:alpha="0"
+          android:visibility="gone"
+          app:srcCompat="@drawable/ic_welcome_new_dr"
+          tools:alpha="1" />
 
-      <com.framework.views.customViews.CustomButton
-        android:id="@+id/btn_done"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/size_20"
-        android:alpha="0"
-        android:background="@drawable/bg_button_proceed"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="center"
-        android:padding="@dimen/size_12"
-        android:stateListAnimator="@null"
-        android:text="@string/understood"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        app:textType="HEADING_6"
-        tools:alpha="1" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/desc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_20"
+          android:alpha="0"
+          android:gravity="center"
+          android:text="@string/you_score_social_media_platforms"
+          android:textAlignment="gravity"
+          android:textColor="@color/black_4a4a4a"
+          android:visibility="gone"
+          app:textType="BODY_1"
+          tools:alpha="1" />
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_done"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="@dimen/size_20"
+          android:alpha="0"
+          android:background="@drawable/bg_button_proceed"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:padding="@dimen/size_12"
+          android:stateListAnimator="@null"
+          android:text="@string/understood"
+          android:textAllCaps="true"
+          android:textColor="@color/white"
+          android:visibility="gone"
+          app:textType="HEADING_6"
+          tools:alpha="1" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
   </com.framework.views.customViews.CustomCardView>
 </layout>

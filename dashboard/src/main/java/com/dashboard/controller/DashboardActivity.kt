@@ -94,35 +94,34 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     mNavController.graph = graph
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
-//    binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
     intentDataCheckAndDeepLink()
     getWelcomeData()
+    session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+  }
 
+  private fun UserSessionManager.initializeWebEngageLogin() {
+    WebEngageController.setUserContactInfoProperties(this)
+    WebEngageController.setFPTag(this.fpTag)
   }
 
   private fun initialize() {
-    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-    StrictMode.setThreadPolicy(policy)
-    WebEngageController.initiateUserLogin(session?.userProfileId)
-    WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
-    WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent(HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
-      WebEngage.get().setRegistrationID(token)
+      if (token.isNullOrEmpty().not()) {
+        WebEngage.get().setRegistrationID(token)
+        AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
+        AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
+      }
     }
     initialiseZendeskSupportSdk()
-    if (FirebaseInstanceId.getInstance().token != null) {
-      AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
-      AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
-    }
-    //checkCustomerAssistantService()
   }
 
   private fun intentDataCheckAndDeepLink() {
@@ -134,7 +133,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val action = intent.action
       val data = intent.dataString
       val uri = intent.data
-      Log.d("Data: ", "$data  $action")
+      Log.d("Data: ", "$data  $action $uri")
       if (session?.isLoginCheck == true) {
         if (uri != null && uri.toString().contains("onelink", true)) {
           isAppFlyerLink()
@@ -148,7 +147,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
         }
       } else {
-        this.startPreSignUp(session,true)
+        this.startPreSignUp(session, true)
         finish()
       }
     } else isAppFlyerLink()
@@ -159,7 +158,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
       val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
-      AppsFlyerUtils.sAttributionData= mapOf()
+      AppsFlyerUtils.sAttributionData = mapOf()
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
     }
@@ -239,10 +238,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onItemSelect(pos: Int) {
     when (pos) {
-      0 -> {
-        mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-        toolbarPropertySet(pos)
-      }
+      0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
       else -> {
@@ -331,7 +327,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 //      3 -> checkWelcomeShowScreen(pos)
       3 -> {
         binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-        WebEngageController.trackEvent(MORE, CLICK, TO_BE_ADDED)
+        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
       }
     }
   }
@@ -340,10 +336,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     return NavOptions.Builder().setExitAnim(R.anim.slide_out_left).setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
   }
 
-  private fun openDashboard() {
+  private fun openDashboard(isSet: Boolean = true) {
     mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-    binding?.navView?.setActiveItem(0)
+    if (isSet) binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -378,7 +375,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.imgBusinessLogo -> {
-        this.startBusinessProfileDetailEdit(session)
+        this.startFeatureLogo(session)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.txtDomainName -> {
@@ -430,11 +427,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun clickPickerType(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(this)
-        .mode(type)
-        .compressLevel(ImagePicker.ComperesLevel.MEDIUM).directory(ImagePicker.Directory.DEFAULT)
-        .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
-        .scale(800, 800)
-        .enableDebuggingMode(true).build()
+      .mode(type)
+      .compressLevel(ImagePicker.ComperesLevel.MEDIUM).directory(ImagePicker.Directory.DEFAULT)
+      .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
+      .scale(800, 800)
+      .enableDebuggingMode(true).build()
   }
 
   private fun uploadSecondaryImage(path: String) {
@@ -455,18 +452,20 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
     val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
-        ?: "bg_${UUID.randomUUID()}.png"
+      ?: "bg_${UUID.randomUUID()}.png"
     return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
   }
 
   private fun initialiseZendeskSupportSdk() {
     try {
-      Zendesk.INSTANCE.init(this, "https://boost360.zendesk.com",
-          "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49", "mobile_sdk_client_6c56562cfec5c64c7857")
+      Zendesk.INSTANCE.init(
+        this, "https://boost360.zendesk.com",
+        "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49", "mobile_sdk_client_6c56562cfec5c64c7857"
+      )
       val identity = AnonymousIdentity.Builder()
-          .withNameIdentifier(session?.fpTag)
-          .withEmailIdentifier(session?.fPEmail)
-          .build()
+        .withNameIdentifier(session?.fpTag)
+        .withEmailIdentifier(session?.fPEmail)
+        .build()
       Zendesk.INSTANCE.setIdentity(identity)
       Support.INSTANCE.init(Zendesk.INSTANCE)
       ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5")

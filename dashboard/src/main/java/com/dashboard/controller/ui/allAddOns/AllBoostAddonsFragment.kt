@@ -28,7 +28,7 @@ import com.dashboard.viewmodel.AddOnsViewModel
 import com.framework.extensions.observeOnce
 import com.framework.webengageconstant.BOOST_ADD_ONS_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
-import com.framework.webengageconstant.WEBSITE_REPORT_ALL_VISITS
+import com.framework.webengageconstant.WEBSITE_REPORT_ALL_VISITS_CLICK
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -215,7 +215,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.team_page_d -> baseActivity.startListProjectAndTeams(session)
     ManageBusinessData.BusinessType.upcoming_batches_d -> baseActivity.startListBatches(session)
     ManageBusinessData.BusinessType.toppers_institute_d -> baseActivity.startListToppers(session)
-    ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS)
+    ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS_CLICK)
     ManageBusinessData.BusinessType.business_name_d,
     ManageBusinessData.BusinessType.clinic_basic_info,
     -> baseActivity.startBusinessProfileDetailEdit(session)

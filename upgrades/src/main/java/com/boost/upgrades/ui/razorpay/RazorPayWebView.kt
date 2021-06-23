@@ -17,6 +17,7 @@ import com.boost.upgrades.ui.popup.FailedTransactionPopUpFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.analytics.NFWebEngageController
 import com.framework.webengageconstant.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -28,6 +29,8 @@ import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.razor_pay_web_view_fragment.*
 import org.json.JSONObject
+import java.util.HashMap
+import kotlin.reflect.jvm.internal.impl.protobuf.LazyStringArrayList
 
 
 class RazorPayWebView : DialogFragment() {
@@ -39,6 +42,7 @@ class RazorPayWebView : DialogFragment() {
     val failedTransactionPopUpFragment = FailedTransactionPopUpFragment()
 
     var data = JSONObject()
+    lateinit var prefs: SharedPrefs
 
     companion object {
         fun newInstance() = RazorPayWebView()
@@ -62,16 +66,22 @@ class RazorPayWebView : DialogFragment() {
 
         razorpay = (activity as UpgradeActivity).getRazorpayObject()
 
-        val jsonString = arguments!!.getString("data")
+        val jsonString = requireArguments().getString("data")
         data = JSONObject(jsonString!!)
-
+        prefs = SharedPrefs(activity as UpgradeActivity)
+//        val cartids = data["cartIds"] as LazyStringArrayList
+//        cartids.forEach {
+            Log.v("onPaymentSuccess", " cartids "+ data)
+//        }
         return root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
-
+        prefs.getCardIds()!!.forEach {
+            Log.v("onPaymentActivity", " cartids"+ it)
+        }
         if(savedInstanceState == null ) {
 
             try {
@@ -82,9 +92,21 @@ class RazorPayWebView : DialogFragment() {
                     override fun onPaymentSuccess(razorpayPaymentId: String) {
                         // Razorpay payment ID is passed here after a successful payment
                         Log.i("onPaymentSuccess", razorpayPaymentId)
+
                         val revenue = data["amount"] as Int
-                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success",
-                                "rev", (revenue / 100).toString())
+
+                        prefs.getCardIds()!!.forEach {
+                            Log.v("onPaymentSuccess", " cartids"+ it)
+                        }
+                        val event_attributes: HashMap<String, Any> = HashMap()
+                        event_attributes.put("revenue",(revenue / 100))
+                        event_attributes.put("rev",(revenue / 100))
+                        event_attributes.put("cartIds",Gson().toJson(prefs.getCardIds()))
+                        event_attributes.put("couponIds",prefs.getCouponIds().toString())
+                        WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_SUCCESS, ADDONS_MARKETPLACE, event_attributes)
+
+//                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success",
+//                                "rev", (revenue / 100).toString())
 
                         var firebaseAnalytics = Firebase.analytics
                         val bundle = Bundle()
@@ -122,7 +144,8 @@ class RazorPayWebView : DialogFragment() {
     fun redirectOrderConfirmation(paymentTransactionId: String) {
         var prefs = SharedPrefs(activity as UpgradeActivity)
         prefs.storeLatestOrderStatus(1)
-
+        prefs.storeCardIds(null)
+        prefs.storeCouponIds(null)
         //RAZORPAY payment ID IS NOT BEEN USED  ---> renamed to prefs.storeTransactionIdFromCart()
 //        prefs.storeLatestPaymentIdFromPG(paymentTransactionId)
 

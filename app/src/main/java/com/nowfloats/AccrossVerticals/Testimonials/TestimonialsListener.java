@@ -10,4 +10,6 @@ public interface TestimonialsListener {
     void editOptionClicked(TestimonialData data);
 
     void deleteOptionClicked(TestimonialData data);
+
+    void shareOptionClicked(TestimonialData data);
 }

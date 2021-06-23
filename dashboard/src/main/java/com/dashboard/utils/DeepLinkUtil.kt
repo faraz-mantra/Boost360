@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.framework.pref.FACEBOOK_PAGE_WITH_ID
@@ -91,7 +92,12 @@ const val deeplink_recommended_add_ons = "recommended_add_ons"
 const val deeplink_item_on_market_place = "ITEM_ONS_MARKETPLACE"
 const val deeplink_REFER_EARN = "refer_and_earn"
 const val deeplink_compare_package = "compare_package_selection"
-
+const val deeplink_package_bundle = "package_bundle"
+const val deeplink_promo_banner = "promo_banner"
+const val deeplink_create_order = "create_order"
+const val deeplink_create_appointment = "create_appointment"
+const val deeplink_create_consultation = "create_consultation"
+const val deeplink_website_theme = "website_customization"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
 
@@ -109,6 +115,12 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           //pending
         } else if (url.contains(third_party_queries)) {
           baseActivity.startThirdPartyQueries(session)
+        } else if (url.contains(deeplink_create_appointment)) {
+          baseActivity.startBookAppointmentConsult(session, false)
+        } else if (url.contains(deeplink_create_consultation)) {
+          baseActivity.startBookAppointmentConsult(session, true)
+        } else if (url.contains(deeplink_create_order)) {
+          baseActivity.startOrderCreate(session)
         } else if (url.contains(facebook_chat_main)) {
           //pending
         } else if (url.contains(deeplink_manage_customer)) {
@@ -161,7 +173,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
             url.contains(deeplink_nfstoreimage) || url.contains(deeplink_nfstoreimage)) {
           baseActivity.startPricingPlan(session)
         } else if (url.contains(deeplink_searchqueries)) {
-          baseActivity.startSearchQuery(session)
+//          baseActivity.startSearchQuery(session)
         } else if (url.contains(blog)) {
           baseActivity.startBlog(url, session)
         } else if (url.contains(subscribers) || url.contains(new_subscribers)) {
@@ -177,7 +189,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_notification)) {
           baseActivity.startNotification(session)
         } else if (url.contains(deeplink_profile)) {
-          baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+          baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(deeplink_contact)) {
           baseActivity.startBusinessInfoEmail(session)
         } else if (url.contains(deeplink_bizaddress)) {
@@ -187,7 +199,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_bizlogo)) {
           baseActivity.startBusinessLogo(session)
         } else if (url.contains(deeplink_nfstoreDomainTTBCombo)) {
-          baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+          baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(deeplink_DR_SCORE)) {
           baseActivity.startReadinessScoreView(session, 0)
         } else if (url.contains(deeplink_imageGallery)) {
@@ -247,8 +259,18 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "", buyItemKey)
         } else if (url.contains(deeplink_compare_package)) {
           baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
-        } else if (url.contains(deeplink_REFER_EARN)) {
+        } else if (url.contains(deeplink_package_bundle)) {
+//          println("deeplink_package_bundle ${url}  ${buyItemKey}")
+          Log.v("deeplink_package_bundle", " "+ url + " "+ buyItemKey)
+//          baseActivity.initiateAddonMarketplace(session, false, "packageBundle", "")
+          baseActivity.initiateAddonMarketplace(session, false, "packageBundle", buyItemKey)
+
+        }else if (url.contains(deeplink_promo_banner)) {
+          baseActivity.initiateAddonMarketplace(session, false, "promoBanner", buyItemKey)
+        }else if (url.contains(deeplink_REFER_EARN)) {
           baseActivity.startReferralView(session)
+        }else if (url.contains(deeplink_website_theme)) {
+          baseActivity.startWebsiteTheme(session)
         }
       }
     } catch (e: Exception) {

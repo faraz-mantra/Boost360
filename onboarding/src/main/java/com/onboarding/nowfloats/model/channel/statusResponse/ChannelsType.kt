@@ -8,6 +8,8 @@ const val CHANNEL_STATUS_SUCCESS = "CONNECTED"
 data class ChannelsType(
     @SerializedName("facebookpage")
     var facebookpage: Facebookpage? = null,
+    @SerializedName("facebookusertimeline")
+    var facebookusertimeline: FacebookTimeLine? = null,
     @SerializedName("facebookshop")
     var facebookshop: Facebookshop? = null,
     @SerializedName("googlemybusiness")
@@ -17,6 +19,6 @@ data class ChannelsType(
 ) : Serializable {
 
   enum class AccountType {
-    facebookpage, facebookshop, twitter, googlemybusiness;
+    facebookusertimeline, facebookpage, facebookshop, twitter, googlemybusiness ,WAB;
   }
 }

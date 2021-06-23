@@ -38,7 +38,7 @@ const val RIA_NODE_DATA = "riaNodeDatas"
 
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelType: String = "") {
   try {
-    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val bundle = Bundle()
     session.setHeader(WA_KEY)
     bundle.putString(UserSessionManager.KEY_FP_ID, session.fPID)
@@ -69,7 +69,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
 
 fun AppCompatActivity.startVmnCallCard(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(TRACK_CALL_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(TRACK_CALL_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val i = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.VmnCallCardsActivity"))
     startActivity(i)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -80,7 +80,7 @@ fun AppCompatActivity.startVmnCallCard(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessEnquiry(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(BUSINESS_ENQUIRY_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(BUSINESS_ENQUIRY_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val queries = Intent(this, Class.forName("com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -89,9 +89,10 @@ fun AppCompatActivity.startBusinessEnquiry(session: UserSessionManager?) {
   }
 }
 
+@Deprecated("startSearchQuery")
 fun AppCompatActivity.startSearchQuery(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(SEARCH_QUERIES_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(SEARCH_QUERIES_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SearchQueriesActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -103,7 +104,7 @@ fun AppCompatActivity.startSearchQuery(session: UserSessionManager?) {
 
 fun AppCompatActivity.startRevenueSummary(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(REVENUE_SUMMARY_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(REVENUE_SUMMARY_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.RevenueSummaryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -114,7 +115,7 @@ fun AppCompatActivity.startRevenueSummary(session: UserSessionManager?) {
 
 fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(ORDER_SUMMARY_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(ORDER_SUMMARY_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.OrderSummaryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -125,7 +126,7 @@ fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -136,7 +137,7 @@ fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) 
 
 fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(FEVICON_IMAGE_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(FEVICON_IMAGE_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val queries = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -147,7 +148,7 @@ fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
 
 fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(DOMAIN_EMAIL_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(DOMAIN_EMAIL_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val queries = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -170,7 +171,7 @@ fun AppCompatActivity.startSiteViewAnalytic(session: UserSessionManager?, type: 
 
 fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(SUBSCRIBERS_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(SUBSCRIBERS_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val subscribers = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SubscribersActivity"))
     startActivity(subscribers)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -179,9 +180,10 @@ fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
   }
 }
 
+
 fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: Int?) {
   try {
-    WebEngageController.trackEvent(ANALYTICS_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(ANALYTICS_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val intent = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"))
     if (table_name != null) intent.putExtra("table_name", table_name)
     startActivity(intent)
@@ -194,7 +196,7 @@ fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: I
 fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?, isLoadingShow: Boolean = true) {
   try {
     if (isLoadingShow) delayProgressShow()
-    WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
@@ -228,47 +230,47 @@ fun AppCompatActivity.delayProgressShow() {
 }
 
 fun AppCompatActivity.startSettingActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(ACCOUNT_SETTING_PAGE, CLICK, TO_BE_ADDED)
+  WebEngageController.trackEvent(ACCOUNT_SETTING_PAGE_CLICK, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "ACCOUNT_SETTING")
 }
 
 fun AppCompatActivity.startKeyboardActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(EVENT_NAME_BIZ_KEYBOARD, EVENT_LABEL_BIZ_KEYBOARD, session.fpTag)
+  WebEngageController.trackEvent(EVENT_NAME_BIZ_KEYBOARD_CLICK, EVENT_LABEL_BIZ_KEYBOARD, session.fpTag)
   startAppActivity(fragmentType = "ACCOUNT_KEYBOARD")
 }
 
 fun AppCompatActivity.startManageContentActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(MANAGE_CONTENT_PAGE, CLICK, TO_BE_ADDED)
+  WebEngageController.trackEvent(MANAGE_CONTENT_PAGE_CLICK, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "MANAGE_CONTENT")
 }
 
 fun AppCompatActivity.startManageInventoryActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(MANAGE_INVENTORY_PAGE, CLICK, TO_BE_ADDED)
+  WebEngageController.trackEvent(MANAGE_INVENTORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "MANAGE_INVENTORY")
 }
 
 fun AppCompatActivity.startHelpAndSupportActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(HELP_AND_SUPPORT_PAGE, CLICK, TO_BE_ADDED)
+  WebEngageController.trackEvent(HELP_AND_SUPPORT_PAGE_CLICK, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "HELP_AND_SUPPORT")
 }
 
 fun AppCompatActivity.startAboutBoostActivity(session: UserSessionManager) {
-  WebEngageController.trackEvent(ABOUT_BOOST_PAGE, CLICK, TO_BE_ADDED)
+  WebEngageController.trackEvent(ABOUT_BOOST_PAGE_CLICK, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "ABOUT_BOOST")
 }
 
 fun AppCompatActivity.startManageCustomer(session: UserSessionManager) {
-  WebEngageController.trackEvent(MANAGE_CUSTOMER_PAGE, CLICK, TO_BE_ADDED)
+  WebEngageController.trackEvent(MANAGE_CUSTOMER_PAGE_CLICK, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "MANAGE_CUSTOMER_VIEW")
 }
 
 fun AppCompatActivity.startNotification(session: UserSessionManager) {
-  WebEngageController.trackEvent(NOTIFICATION_PAGE, CLICK, TO_BE_ADDED)
+  WebEngageController.trackEvent(NOTIFICATION_PAGE_CLICK, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "NOTIFICATION_VIEW")
 }
 
 fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
-  WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE, CLICK, TO_BE_ADDED)
+  WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
   startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
 }
 
@@ -289,7 +291,7 @@ fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: 
 
 fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(POST_UPDATE_MESSAGE_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(POST_UPDATE_MESSAGE_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Create_Message_Activity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -300,8 +302,8 @@ fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
 
 fun AppCompatActivity.startThirdPartyQueries(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(THIRD_PARTY_QUERIES_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("om.nowfloats.customerassistant.ThirdPartyQueriesActivity"))
+    WebEngageController.trackEvent(THIRD_PARTY_QUERIES_PAGE_CLICK, CLICK, TO_BE_ADDED)
+    val webIntent = Intent(this, Class.forName("com.nowfloats.customerassistant.ThirdPartyQueriesActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -311,7 +313,7 @@ fun AppCompatActivity.startThirdPartyQueries(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(BOOST_360_EXTENSIONS_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(BOOST_360_EXTENSIONS_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Boost360ExtensionsActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -322,7 +324,7 @@ fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
 
 fun AppCompatActivity.startReferralView(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(REFER_A_FRIEND, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(REFER_A_FRIEND_CLICK, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
     startActivity(webIntent)
     overridePendingTransition(0, 0)
@@ -347,6 +349,7 @@ fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?, isCreat
   try {
     WebEngageController.trackEvent(IMAGE_GALLERY, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.Image_Gallery.ImageGalleryActivity"))
+    webIntent.putStringArrayListExtra("userPurchsedWidgets", session?.getStoreWidgets() as ArrayList<String>)
     webIntent.putExtra("create_image", isCreate)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -395,10 +398,10 @@ fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boole
 fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   try {
     if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
-      WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
+      WebEngageController.trackEvent(SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
       session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_LISTING, bundle = getBundleData(it)) }
     } else {
-      WebEngageController.trackEvent(PRODUCT_SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
+      WebEngageController.trackEvent(PRODUCT_INVENTORY, CLICK, TO_BE_ADDED)
       val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
       startActivity(webIntent)
       overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -474,10 +477,10 @@ fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: 
 fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
   try {
     if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
-      WebEngageController.trackEvent(ADD_SERVICE_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
+      WebEngageController.trackEvent(ADD_SERVICE_PAGE, CLICK, TO_BE_ADDED)
       session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_DETAIL_VIEW, bundle = getBundleData(it)) }
     } else {
-      WebEngageController.trackEvent(ADD_SERVICE_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
+      WebEngageController.trackEvent(ADD_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
       val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
       webIntent.putExtra("IS_ADD", true)
       startActivity(webIntent)
@@ -488,15 +491,18 @@ fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startOrderCreate(session: UserSessionManager?) {
+  if (getProductType(session?.fP_AppExperienceCode) == "PRODUCTS") {
+    val bundle = getSessionOrder(session)
+    startFragmentOrderActivity(type = com.inventoryorder.constant.FragmentType.CREATE_NEW_ORDER, bundle = bundle, isResult = true)
+  }
+}
+
 fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, isConsult: Boolean = true) {
   try {
     val txt = if (isConsult) CONSULTATION_CREATE_PAGE else APPOINTMENT_CREATE_PAGE
     WebEngageController.trackEvent(txt, CLICK, TO_BE_ADDED)
-    val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
-        session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
-        session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
-    val bundle = Bundle()
-    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+    val bundle = getSessionOrder(session)
     val fragmentType = when {
       (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC") ->
         com.inventoryorder.constant.FragmentType.CREATE_SPA_APPOINTMENT
@@ -505,7 +511,7 @@ fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, 
         com.inventoryorder.constant.FragmentType.CREATE_APPOINTMENT_VIEW
       }
     }
-    this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)
+    this.startFragmentOrderActivity(type = fragmentType, bundle = bundle, isResult = true)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
@@ -513,23 +519,30 @@ fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, 
 
 fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isOrder: Boolean = false, isConsult: Boolean = false) {
   try {
-    val txt = if (isOrder) ORDER_PAGE else if (isConsult) CONSULTATION_PAGE else APPOINTMENT_PAGE
+    val txt = if (isOrder) ORDER_PAGE_CLICK else if (isConsult) CONSULTATION_PAGE_CLICK else APPOINTMENT_PAGE_CLICK
     WebEngageController.trackEvent(txt, CLICK, TO_BE_ADDED)
-    val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
-        session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
-        session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
-    val bundle = Bundle()
-    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+    val bundle = getSessionOrder(session)
     val fragmentType = when {
       isOrder -> com.inventoryorder.constant.FragmentType.ALL_ORDER_VIEW
       isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
       (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC") -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
       else -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_VIEW
     }
-    this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)
+    this.startFragmentOrderActivity(type = fragmentType, bundle = bundle, isResult = true)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
+}
+
+private fun getSessionOrder(session: UserSessionManager?): Bundle {
+  val data = PreferenceData(
+    clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+    session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
+    session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode
+  )
+  val bundle = Bundle()
+  bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+  return bundle
 }
 
 fun AppCompatActivity.startBusinessLogo(session: UserSessionManager?) {
@@ -590,8 +603,7 @@ fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
 fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BUSINESS_PROFILE_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"))
-    startActivity(webIntent)
+    startFragmentDashboardActivity(com.dashboard.constant.FragmentType.FRAGMENT_BUSINESS_PROFILE)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
@@ -785,6 +797,15 @@ fun AppCompatActivity.startListTeams(session: UserSessionManager?) {
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startWebsiteTheme(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent(WEBSITE_STYLE, CLICK, TO_BE_ADDED)
+    session?.getBundleDataKyc()?.let { startFragmentDashboardActivity(com.dashboard.constant.FragmentType.FRAGMENT_WEBSITE_THEME, it, false) }
+  } catch (e: Exception) {
     e.printStackTrace()
   }
 }

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/riv_close_bottomSheet"
+          android:layout_width="@dimen/size_40"
+          android:layout_height="@dimen/size_40"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginBottom="@dimen/size_15"
+          android:src="@drawable/ic_cross_grey_circle" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottoms_sheet_top20dp_white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/size_10">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/txt_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_4"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/reset_website_style"
+                android:textAllCaps="false"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/semi_bold"
+                app:textType="HEADING_5" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/txt_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_16"
+                android:fontFamily="@font/open_sans"
+                android:gravity="start"
+                android:includeFontPadding="false"
+                android:text="@string/this_will_change_the_fonts_and_color_of_your_website_to_default_ones_shown_below"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/horizontal_dashed_line" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_20"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/size_16"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/default_font"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black_4a4a4a" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctf_font_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_4"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="fasjnasjdknaskdj" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_default_shade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/default_shade"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black_4a4a4a" />
+
+                    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/ccv_color"
+                        android:layout_width="@dimen/size_30"
+                        android:layout_height="@dimen/size_30"
+                        android:layout_marginTop="@dimen/size_10"
+                        app:cardBackgroundColor="@color/blue_4A90E2"
+                        app:cardCornerRadius="@dimen/size_4" />
+                </LinearLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:layout_marginBottom="@dimen/size_16"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_rest"
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                    android:layout_width="match_parent"
+                    android:enabled="true"
+                    android:text="@string/yes_reset_to_default"
+                    android:textColor="@color/white" />
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_back"
+                    style="@style/ButtonStyle.Red"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:text="@string/go_back" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

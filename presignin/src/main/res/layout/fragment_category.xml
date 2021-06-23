@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.registration.CategoryFragment">
+
+    <com.boost.presignin.views.PsnCustomToolbar
+      android:id="@+id/toolbar"
+      style="@style/psn_toolbar_style"
+      tools:ignore="MissingConstraints" />
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fillViewport="true"
+      app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+        <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+        <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/title"
+          style="@style/psn_heading_style"
+          android:layout_marginTop="0dp"
+          android:text="@string/select_business_category"
+          tools:ignore="MissingConstraints" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/sub_heading_tv"
+          style="@style/psn_subheading_style"
+          android:text="@string/let_me_know_which_of_the_following_describes_the_business_you_are_running"
+          app:layout_constraintTop_toBottomOf="@id/title"
+          tools:ignore="MissingConstraints" />
+
+        <com.framework.views.GridRecyclerView
+          android:id="@+id/recyclerView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:clipToPadding="false"
+          android:orientation="vertical"
+          android:overScrollMode="never"
+          android:paddingStart="@dimen/size_12"
+          android:paddingTop="@dimen/size_12"
+          android:paddingEnd="@dimen/size_12"
+          android:paddingBottom="@dimen/_120sdp"
+          app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+          app:layout_constraintTop_toBottomOf="@id/sub_heading_tv"
+          tools:itemCount="15"
+          tools:listitem="@layout/item_category_layout"
+          tools:spanCount="2" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/confirm_button"
+      style="@style/psn_button_style"
+      android:enabled="true"
+      android:layout_width="match_parent"
+      android:text="@string/confirm_business_category"
+      android:layout_marginHorizontal="@dimen/_20sdp"
+      android:layout_marginBottom="@dimen/_14sdp"
+      android:visibility="invisible"
+      app:layout_constraintBottom_toBottomOf="parent"
+      tools:ignore="MissingConstraints,UnknownId" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

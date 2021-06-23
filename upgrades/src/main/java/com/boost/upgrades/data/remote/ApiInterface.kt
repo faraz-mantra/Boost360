@@ -3,6 +3,7 @@ package com.boost.upgrades.data.remote
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.upgrades.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.upgrades.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
+import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
@@ -63,6 +64,10 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("https://api2.withfloats.com/Internal/v1/PushEmailToQueue/{clientId}")
     fun createPaymentThroughEmail(@Path("clientId") clientId: String, @Body data: PaymentThroughEmailRequestBody): Observable<String?>
+
+    @Headers("Content-Type: application/json")
+    @POST("https://api.withfloats.com/discover/v1/FloatingPoint/SendEmailWithPriority/")
+    fun createPaymentThroughEmailPriority(@Body data: PaymentPriorityEmailRequestBody): Observable<String?>
 
   @Headers("Content-Type: application/json")
   @GET("Payment/v9/floatingpoint/AllPurchasedWidgets/{floatingPointId}")

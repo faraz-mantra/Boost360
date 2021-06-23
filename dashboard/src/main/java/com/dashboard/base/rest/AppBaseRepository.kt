@@ -1,5 +1,7 @@
 package com.dashboard.base.rest
 
+import android.content.Intent
+import com.appservice.AppServiceApplication
 import com.dashboard.rest.TaskCode
 import com.dashboard.rest.apiClients.WithFloatsApiClient
 import com.framework.base.BaseRepository
@@ -22,12 +24,26 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
     return makeLocalResponse(observable, taskCode.ordinal)
   }
 
-  protected fun onFailure(response: BaseResponse, taskCode: TaskCode) {
-    super.onFailure(response, taskCode.ordinal)
+  override fun onFailure(response: BaseResponse, taskCode: Int) {
+    super.onFailure(response, taskCode)
+    unauthorizedUserCheck(taskCode)
   }
 
-  protected fun onSuccess(response: BaseResponse, taskCode: TaskCode) {
-    super.onSuccess(response, taskCode.ordinal)
-    localDataSource.saveToLocal(response, taskCode)
+  override fun onSuccess(response: BaseResponse, taskCode: Int) {
+    super.onSuccess(response, taskCode)
+    unauthorizedUserCheck(taskCode)
+  }
+
+  private fun unauthorizedUserCheck(taskCode: Int) {
+    if (taskCode == 401) {
+      AppServiceApplication.instance.apply {
+        try {
+          val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
+          startActivity(i)
+        } catch (e: Exception) {
+          e.printStackTrace()
+        }
+      }
+    }
   }
 }

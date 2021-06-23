@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.WA_KEY
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -35,11 +36,6 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
 
   private var requestFloatsModel: RequestFloatsModel? = null
   private val animations = ChannelSelectorAnimator()
-  private val auth: String?
-    get() {
-      return getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0)
-          ?.getString(PreferenceConstant.AUTHORIZATION, "58ede4d4ee786c1604f6c535")
-    }
 
   val fragment: ChannelPickerFragment?
     get() = supportFragmentManager.findFragmentById(R.id.channelPickerFragment) as? ChannelPickerFragment
@@ -94,7 +90,7 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
             if (categoryData != null) {
               viewModel.getChannelsAccessToken(floatingPoint).observeOnce(this, Observer { it1 ->
                 if (it1.error is NoNetworkException) errorMessage(resources.getString(R.string.internet_connection_not_available))
-                else if (it1.status == 200 || it1.status == 201 || it1.status == 202) {
+                else if (it1.isSuccess()) {
                   val channelsAccessToken = (it1 as? ChannelsAccessTokenResponse)?.NFXAccessTokens
                   setDataRequestChannels(categoryData, channelsAccessToken, floatingPoint, fpTag)
                 } else if (it1.status == 404) {
@@ -121,7 +117,8 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
         when (it.type()) {
           ChannelAccessToken.AccessTokenType.facebookpage.name,
           ChannelAccessToken.AccessTokenType.facebookshop.name,
-          ChannelAccessToken.AccessTokenType.twitter.name -> {
+          ChannelAccessToken.AccessTokenType.twitter.name,
+          -> {
             if (it.isValidType()) {
               val data = ChannelAccessToken(type = it.type(), userAccessTokenKey = it.UserAccessTokenKey,
                   userAccountId = it.UserAccountId, userAccountName = it.UserAccountName)
@@ -142,9 +139,9 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
   }
 
   private fun getWhatsAppData(requestFloatsNew: RequestFloatsModel) {
-    viewModel.getWhatsappBusiness(requestFloatsNew.fpTag, auth!!).observeOnce(this, Observer {
+    viewModel.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = WA_KEY).observeOnce(this, Observer {
       if ((it.error is NoNetworkException).not()) {
-        if (it.status == 200 || it.status == 201 || it.status == 202) {
+        if (it.isSuccess()) {
           val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
           if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
             requestFloatsNew.categoryDataModel?.channels?.forEach { it4 -> if (it4.isWhatsAppChannel()) it4.isSelected = true }

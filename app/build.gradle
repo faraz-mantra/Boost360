@@ -49,9 +49,7 @@ allprojects {
         maven { url "https://maven.google.com" }
 
         google()
-        maven {
-            url "https://dl.bintray.com/notifyvisitors/invitereferrals"
-        }
+
     }
 }
 
@@ -75,7 +73,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020091
+        versionCode 2020020092
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -147,7 +145,7 @@ android {
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
-            versionName "5.3.69"
+            versionName "6.0.1"
             applicationId "com.biz2.nowfloats"
             dimension "default"
         }
@@ -191,8 +189,10 @@ dependencies {
     implementation files('libs/libraries/signpost-core-1.2.1.2.jar')
     implementation files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
     implementation project(':messagelibrary')
-    //presignup library
+    //presignup library old flow
     implementation project(path: ':presignup')
+    //presignup library new flow
+    implementation project(path: ':presignin')
     api project(path: ':dashboard')
 
     //upgrade library
@@ -230,6 +230,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 
 
 //    implementation 'uk.co.chrisjenx:calligraphy:2.2.0'

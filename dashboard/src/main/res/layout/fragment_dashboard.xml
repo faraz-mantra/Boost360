@@ -91,7 +91,7 @@
                       android:includeFontPadding="false"
                       android:lineSpacingExtra="0dp"
                       android:textColor="@color/white"
-                      app:fontFamily="@font/barlow_light"
+                      app:fontFamily="@font/barlow_regular"
                       app:textType="HEADING_TEXT_2"
                       tools:text="26" />
 
@@ -597,7 +597,9 @@
 
             <include
               android:id="@+id/social_media"
-              layout="@layout/item_social_media_promotion" />
+              layout="@layout/item_social_media_promotion"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
               android:layout_width="match_parent"
@@ -610,9 +612,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_20"
                 android:background="@drawable/ic_bg_dark_white_round"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:orientation="vertical">
 
                 <FrameLayout
                   android:layout_width="match_parent"
@@ -752,7 +752,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/size_10"
                 android:visibility="gone"
                 tools:visibility="visible">
 
@@ -796,7 +795,6 @@
                   android:layout_height="wrap_content"
                   android:layout_gravity="center_horizontal"
                   android:layout_marginTop="@dimen/size_12"
-                  android:layout_marginBottom="@dimen/size_8"
                   app:dotsColor="@color/light_grey_1"
                   app:dotsCornerRadius="@dimen/_6dp"
                   app:dotsSize="@dimen/size_5"
@@ -811,9 +809,8 @@
                 android:id="@+id/view_website_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:layout_marginTop="@dimen/size_16"
+                android:orientation="vertical">
 
                 <FrameLayout
                   android:layout_width="match_parent"
@@ -967,6 +964,7 @@
       android:layout_marginBottom="@dimen/size_16"
       android:clickable="true"
       android:focusable="true"
+      android:visibility="gone"
       app:cardBackgroundColor="@color/accent_30"
       app:cardCornerRadius="@dimen/size_15"
       app:cardElevation="0dp">

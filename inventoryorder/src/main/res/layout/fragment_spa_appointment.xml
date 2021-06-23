@@ -58,6 +58,7 @@
             android:layout_height="@dimen/size_15"
             android:layout_marginStart="@dimen/size_10"
             android:src="@drawable/ic_help"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/text_service_name"
             app:layout_constraintStart_toEndOf="@id/text_service_name"
             app:layout_constraintTop_toTopOf="@id/text_service_name" />
