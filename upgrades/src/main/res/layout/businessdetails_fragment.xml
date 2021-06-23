@@ -236,9 +236,9 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:text="State (place of supply)"
-                    android:textFontWeight="400"
+                    android:text="State (Place of supply)"
                     android:textColor="@color/common_text_color"
+                    android:textFontWeight="400"
                     android:textSize="@dimen/txt_12sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -279,7 +279,7 @@
                     android:fontFamily="@font/open_sans"
                     android:gravity="bottom"
                     android:hint="@string/enter_business_address"
-                    android:inputType="textCapSentences"
+                    android:inputType="textCapWords"
                     android:imeOptions="actionDone"
                     android:textColor="@color/common_bold_text_color"
                     android:textColorHint="@color/globaLightSuperText"

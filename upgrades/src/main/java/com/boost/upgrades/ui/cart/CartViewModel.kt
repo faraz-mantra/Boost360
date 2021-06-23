@@ -406,7 +406,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             updatesLoader.postValue(false)
                         }
                         .doOnError {
-                            updatesError.postValue(it.message)
+//                            updatesError.postValue(it.message)
                             updatesLoader.postValue(false)
                         }
                         .subscribe()
@@ -425,7 +425,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             allFeatures.postValue(it)
                             updatesLoader.postValue(false)
                         }, {
-                            updatesError.postValue(it.message)
+//                            updatesError.postValue(it.message)
                             updatesLoader.postValue(false)
                         })
         )
@@ -443,7 +443,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             allBundles.postValue(it)
                             updatesLoader.postValue(false)
                         }, {
-                            updatesError.postValue(it.message)
+//                            updatesError.postValue(it.message)
                             updatesLoader.postValue(false)
                         })
         )
