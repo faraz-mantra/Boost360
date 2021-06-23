@@ -173,6 +173,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     this.listenerRequest = null
     if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
       Timber.i("Please do login")
+      binding.textView.text = mContext.getString(R.string.please_login)
       binding.pleaseLoginCard.visible()
       binding.pleaseLoginCard.setOnClickListener { MethodUtils.startBoostActivity(mContext) }
     } else if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
@@ -452,11 +453,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   override fun onItemClick(pos: Int, item: BaseRecyclerItem) {
-    handleListItemClick(currentSelectedFeature, pos, item)
-  }
-
-  private fun handleListItemClick(businessFeatureEnum: BusinessFeatureEnum, pos: Int, item: BaseRecyclerItem) {
-    when (businessFeatureEnum) {
+    when (currentSelectedFeature) {
       BusinessFeatureEnum.UPDATES -> {
         shareUpdates(item)
       }
@@ -473,6 +470,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       }
     }
   }
+
 
   private fun shareUpdates(item: BaseRecyclerItem) {
     val float = item as? FloatUpdate
