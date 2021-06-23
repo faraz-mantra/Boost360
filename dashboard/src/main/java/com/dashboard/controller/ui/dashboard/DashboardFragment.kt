@@ -9,10 +9,10 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide
-import androidx.core.content.ContextCompat
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
@@ -194,8 +194,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       setDataMarketBanner(ArrayList())
       setDataRiaAcademy(ArrayList())
     } else {
-      setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
       setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
+      setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
       viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
         val response = it as? DashboardPremiumBannerResponse
         if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
@@ -230,14 +230,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setDrScoreData(isLoadingShimmerDr: Boolean) {
     handler.removeCallbacks(runnable)
-    viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+    viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? DrScoreUiDataResponse
       val drScoreData = getDrScoreData()
-//      if(baseActivity.packageName.equals("com.jio.online", ignoreCase = true) && drScoreData?.drs_segment.isNullOrEmpty()){
-//        binding?.highReadinessScoreView?.visible()
-//        binding?.lowReadinessScoreView?.gone()
-//        showSimmerDrScore(false)
-//      }else{}
       val isHighDrScore = drScoreData != null && (drScoreData.getDrsTotal() >= 85)
       val drScoreSetupList = response?.data?.let { it1 -> drScoreData?.getDrScoreData(it1) }
       if (response?.isSuccess() == true && drScoreSetupList.isNullOrEmpty().not()) {
@@ -245,8 +240,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         if (isHighDrScore.not()) {
           binding?.highReadinessScoreView?.gone()
           binding?.lowReadinessScoreView?.visible()
-          binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal()}"
-          binding?.progressScore?.progress = drScoreData?.getDrsTotal() ?: 0
+          binding?.txtReadinessScore?.text = "${drScoreData!!.getDrsTotal()}"
+          binding?.progressScore?.progress = drScoreData.getDrsTotal()
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
           binding?.pagerBusinessSetupLow?.apply {
 //            binding?.motionOne?.transitionToStart()
@@ -286,7 +281,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           visibleViewHighLow(true)
         }
         setTopBackgroundView(isHighDrScore)
-        showSimmerDrScore(false)
       } else {
         if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true))
           (baseActivity as? DashboardActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimary)
@@ -370,7 +364,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setBusinessManageTask() {
     binding?.recommendedTask?.apply {
-      viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+      viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, {
         val response = it as? QuickActionResponse
         val listAction = response?.data?.firstOrNull { it1 ->
           it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true)
@@ -668,7 +662,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun marketPlaceBannerClick(data: DashboardMarketplaceBanner) {
     if (data.ctaWebLink.isNullOrEmpty().not()) {
-      if (data.ctaWebLink!!.contains("com.biz2.nowfloats.keyboard.home")) {
+      if (data.ctaWebLink!!.contains("com.jio.online.keyboard.home")) {
         WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, DEEP_LINK, NO_EVENT_VALUE)
         val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
         if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
@@ -898,7 +892,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS_CLICK)
       GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(session, "MAP_VISITS", WEBSITE_REPORT_ADDRESS_VISITS_CLICK)
       GrowthStatsData.GrowthType.NEWSLETTER_SUBSCRIPTION -> baseActivity.startSubscriber(session)
-//      GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
+      GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
     }
   }
 

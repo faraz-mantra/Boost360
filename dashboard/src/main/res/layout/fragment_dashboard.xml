@@ -143,7 +143,7 @@
                     android:layout_width="@dimen/size_82"
                     android:layout_height="@dimen/size_26"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/ic_round_green_strock"
+                    android:background="@drawable/ic_round_green_stroke"
                     android:drawableEnd="@drawable/ic_arrow_right_7_white_d"
                     android:drawablePadding="-6dp"
                     android:gravity="center"
@@ -935,7 +935,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/size_3"
-                  android:textColor="@color/colorLightGrey"
+                  android:textColor="@color/colorLightGrey_jio"
                   app:textType="CAPTION"
                   tools:text="Version 1.6.17" />
 

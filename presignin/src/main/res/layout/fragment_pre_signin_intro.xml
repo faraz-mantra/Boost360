@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/size_10"
         app:layout_constraintBottom_toTopOf="@id/presigin_intro_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,17 +46,27 @@
       </LinearLayout>
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/presigin_intro_img"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/intro_text_container"
-        tools:srcCompat="@string/intro_sub_title_0" />
+          android:id="@+id/presigin_intro_img"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_marginStart="@dimen/_16sdp"
+          android:layout_marginTop="16dp"
+          android:layout_marginEnd="@dimen/_16sdp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/intro_text_container"
+          tools:srcCompat="@string/intro_sub_title_0" />
+
+<!--      <com.framework.views.customViews.CustomImageView-->
+<!--        android:id="@+id/boost_logo"-->
+<!--        android:layout_width="@dimen/_100sdp"-->
+<!--        android:layout_height="@dimen/_34sdp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:src="@drawable/psn_boost_intro_logo"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout

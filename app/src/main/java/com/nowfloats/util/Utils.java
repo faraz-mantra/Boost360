@@ -29,13 +29,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import jp.wasabeef.richeditor.RichEditor;
-
+import static com.thinksity.Specific.CONTACT_EMAIL_ID;
+import static com.thinksity.Specific.CONTACT_PHONE_ID;
 import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE_CREATION_SUCCESS;
 import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE_CLICK;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_SUCCESSFUL;
-import static com.thinksity.Specific.CONTACT_EMAIL_ID;
-import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 
 public class Utils {
@@ -410,7 +409,7 @@ public class Utils {
   public static void initiateAddonMarketplace(Context context, UserSessionManager session, boolean isOpenCardFragment, String screenType, String buyItemKey, Boolean isLoadingShow) {
     try {
 //            if (isLoadingShow) delayProgressShow()
-      WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, START_VIEW, session.getFpTag());
+      WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, session.getFpTag());
       Intent intent = new Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"));
       intent.putExtra("expCode", session.getFP_AppExperienceCode());
       intent.putExtra("fpName", session.getFPName());

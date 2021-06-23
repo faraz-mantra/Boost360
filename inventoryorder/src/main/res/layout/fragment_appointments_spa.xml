@@ -102,6 +102,7 @@
           </LinearLayout>
 
           <LinearLayout
+            android:id="@+id/linearLayout4"
             style="@style/match_wrap"
             android:gravity="center"
             android:orientation="vertical"

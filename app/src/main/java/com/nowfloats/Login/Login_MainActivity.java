@@ -349,11 +349,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
       @Override
       public void onSuccess(@Nullable VerificationRequestResult response) {
-        if (response != null && response.getLoginId() != null) {
-          processLoginSuccessRequest(response);
-        } else {
-          if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-          Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
+        if (progressDialog != null && progressDialog.isShowing()) {
+          progressDialog.dismiss();
         }
         if (response != null && response.getLoginId() != null) processLoginSuccessRequest(response);
         else
@@ -437,13 +434,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void startDashboard() {
-    runOnUiThread(() -> {
-      dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-      startActivity(dashboardIntent);
-      overridePendingTransition(0, 0);
-      if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-      finish();
-    });
+    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+    dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    startActivity(dashboardIntent);
+    overridePendingTransition(0, 0);
+    finish();
   }
 
   @Override
@@ -612,7 +607,6 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void processLoginSuccessRequest(VerificationRequestResult response) {
-    if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
     if (response.getLoginId() != null && !response.getLoginId().isEmpty()) {
       try {
         session.setUserProfileId(response.getLoginId());
@@ -626,8 +620,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
       if (response.getValidFPIds() == null || response.getValidFPIds().length == 0) {
         showBusinessProfileCreationStartScreen(response.getLoginId());
       } else {
-        progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
         session.setUserLogin(true);
+        progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
         session.storeISEnterprise(response.isEnterprise() + "");
         session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
         session.storeFPID(response.getValidFPIds()[0]);
@@ -755,8 +749,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void showBusinessProfileCreationStartScreen(String userProfileId) {
-//    WebEngageController.initiateUserLogin(userProfileId);
-//    WebEngageController.setUserContactInfoProperties(session);
+    WebEngageController.initiateUserLogin(userProfileId);
+    WebEngageController.setUserContactInfoProperties(session);
 
     Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
     signupConfirmationPage.putExtra("profileUrl", "");
@@ -798,10 +792,14 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 //            MixPanelController.setProperties("LoggedIn", "True");
       getFPDetails_retrofit(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
     } else {
+      if (progressDialog != null) {
+        progressDialog.dismiss();
+        progressDialog = null;
+      }
       if (value.equals("Partial")) {
         session.setUserLogin(true);
         showBusinessProfileCreationStartScreen(session.getUserProfileId());
-      } else if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+      }
     }
   }
 
@@ -816,9 +814,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 //        businessEnquiries.getMessages();
     //VISITOR and SUBSCRIBER COUNT API
     fetchData();
-    GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
-    visit_subcribersCountAsyncTask.execute();
-    new Handler().postDelayed(this::startDashboard, 5000);
+    new Handler().postDelayed(() -> Login_MainActivity.this.runOnUiThread(() -> {
+      GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
+      visit_subcribersCountAsyncTask.execute();
+      startDashboard();
+    }), 2000);
   }
 
   @Subscribe
@@ -849,17 +849,10 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void checkSelfBrandedKyc() {
-    if (!progressDialog.isShowing())
-      progressDialog.show();
     StoreInterface boostKit = Constants.restAdapterBoostKit.create(StoreInterface.class);
-
     boostKit.getSelfBrandedKyc(getQuery(), new Callback<PaymentKycDataResponse>() {
       @Override
       public void success(PaymentKycDataResponse data, Response response) {
-        if (progressDialog != null) {
-          progressDialog.dismiss();
-          progressDialog = null;
-        }
         if (data.getData() != null && !data.getData().isEmpty()) session.setSelfBrandedKycAdd(true);
         else session.setSelfBrandedKycAdd(false);
       }
@@ -882,18 +875,11 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void checkUserAccount() {
-    if (!progressDialog.isShowing())
-      progressDialog.show();
     StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
     getAccountDetail.userAccountDetail(session.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
       @Override
       public void success(AccountDetailsResponse data, Response response) {
-        if (progressDialog != null) {
-          progressDialog.dismiss();
-          progressDialog = null;
-        }
-        if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null))
-          session.setAccountSave(false);
+        if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) session.setAccountSave(false);
         else session.setAccountSave(true);
       }
 
