@@ -2,18 +2,42 @@
 <resources>
     <color name="colorPrimary">#EC008C</color>
     <color name="colorAccent">#EC008C</color>
-    <color name="colorPrimaryDark">#03007F</color>
-    <color name="accent_dark">@color/colorPrimaryDark</color>
-    <color name="login_button_start_color">@color/colorPrimaryDark</color>
+    <color name="colorPrimaryDark">#EC008C</color>
+    <color name="colorPrimaryDarkBlue">#03007F</color>
+    <color name="accent_dark">@color/colorPrimaryDarkBlue</color>
+    <color name="login_button_start_color">@color/colorPrimaryDarkBlue</color>
     <color name="login_text_color">@color/colorPrimary</color>
-    <color name="create_account_button_start_color">@color/colorPrimaryDark</color>
-    <color name="create_account_button_end_color">@color/colorPrimaryDark</color>
+    <color name="create_account_button_start_color">@color/colorPrimaryDarkBlue</color>
+    <color name="create_account_button_end_color">@color/colorPrimaryDarkBlue</color>
     <color name="red_color">@color/colorPrimary</color>
-    <color name="pre_sign_up_title">@color/colorPrimaryDark</color>
-    <color name="login_title">@color/colorPrimaryDark</color>
-    <color name="login_input_underline">@color/colorPrimaryDark</color>
+    <color name="pre_sign_up_title">@color/colorPrimaryDarkBlue</color>
+    <color name="login_title">@color/colorPrimaryDarkBlue</color>
+    <color name="login_input_underline">@color/colorPrimaryDarkBlue</color>
     <color name="addons_toolbar">@color/colorPrimary</color>
-    <color name="addons_text_color">@color/colorPrimaryDark</color>
+    <color name="addons_text_color">@color/colorPrimaryDarkBlue</color>
     <color name="app_yellow_1">@color/colorPrimary</color>
+    <!--    new common colors added-->
+    <color name="buttonUnselected">#E2E2E2</color>
+    <color name="ButtoncolorAccent">@color/colorPrimaryDarkBlue</color>
+    <color name="IntroIndicatorAccent">@color/colorPrimaryDarkBlue</color>
+    <color name="ButtonStrokeWhite">@color/colorPrimaryDarkBlue</color>
+    <color name="button_background_white_1a">@color/colorPrimaryDarkBlue</color>
+    <color name="ButtonTextcolorAccent">#ffb900</color>
+    <color name="ButtoncolorPrimary">#ffb900</color>
+    <color name="ButtoncolorPrimaryDark">#d99d00</color>
+    <color name="dashboard_high_score_tint">#EC008C</color>
+    <color name="website_toolbar_color">#EC008C</color>
+    <color name="website_button_lite">@color/white</color>
+    <color name="website_button_tint">@color/white</color>
+    <color name="website_toolbar_color_lite">#FFC5E7</color>
+    <color name="text_color_light_white">@color/colorPrimaryDarkBlue</color>
+    <color name="text_color_light_white_gray">@color/black_4a4a4a</color>
+    <color name="website_desc">@color/white</color>
+    <color name="open_website_background">@color/white</color>
+    <color name="text_dark">@color/colorPrimaryDarkBlue</color>
+    <color name="bg_dark_grey">@color/colorPrimary</color>
+
+
+
 
 </resources>

@@ -73,7 +73,7 @@ open class DashboardFragmentContainerActivity :
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
       FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.BusinessProfileTheme
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.DashboardTheme
       else -> super.customTheme()
     }
   }
@@ -81,8 +81,8 @@ open class DashboardFragmentContainerActivity :
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
-      FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
-      FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
+      FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
   }

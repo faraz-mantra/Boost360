@@ -54,6 +54,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   override fun onCreateView() {
     hideToolBar()
     super.onCreateView()
+    baseActivity.window.statusBarColor = getColor(R.color.website_toolbar_color)
     session = UserSessionManager(baseActivity)
     getWebsiteData()
     setOnClickListener(

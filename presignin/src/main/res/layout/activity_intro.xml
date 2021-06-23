@@ -42,7 +42,7 @@
       app:layout_constraintBottom_toTopOf="@id/btn_create"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:selectedDotColor="@color/colorAccent" />
+      app:selectedDotColor="@color/IntroIndicatorAccent" />
 
 
     <com.framework.views.customViews.CustomButton
@@ -63,7 +63,7 @@
       android:visibility="gone"
       android:background="@drawable/signin_button_bac"
       android:text="@string/login_to_existing_account"
-      android:textColor="@color/colorAccent"
+      android:textColor="@color/ButtonTextcolorAccent"
       app:layout_constraintBottom_toTopOf="@id/accept_tnc"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
