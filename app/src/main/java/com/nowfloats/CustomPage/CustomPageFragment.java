@@ -120,8 +120,7 @@ public class CustomPageFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View mainView = inflater.inflate(R.layout.fragment_custom_page, container, false);
-    return mainView;
+    return inflater.inflate(R.layout.fragment_custom_page, container, false);
   }
 
   @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

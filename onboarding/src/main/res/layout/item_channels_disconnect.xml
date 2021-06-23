@@ -62,7 +62,7 @@
           android:maxLines="1"
           android:paddingBottom="@dimen/size_4"
           android:text="@string/why_sync_on_whatsapp"
-          android:textColor="@color/light_blue_1"
+          android:textColor="@color/colorAccent_jio"
           app:fontFamily="@font/regular"
           app:textType="CAPTION"
           tools:text="Why sync on whatsapp" />

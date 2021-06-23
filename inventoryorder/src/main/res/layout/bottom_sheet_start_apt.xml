@@ -117,7 +117,7 @@
           android:id="@+id/tvCancel"
           style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
           android:layout_marginEnd="@dimen/size_10"
-          android:background="@color/white"
+          android:background="@null"
           android:text="@string/cancel" />
 
       <com.framework.views.customViews.CustomButton

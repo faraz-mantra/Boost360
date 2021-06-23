@@ -1,0 +1,130 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+    <com.boost.presignin.views.PsnCustomToolbar
+      android:id="@+id/toolbar"
+      style="@style/psn_toolbar_style"
+      app:rightIcon="@drawable/ic_business_website_toolbar_icon"
+      tools:ignore="MissingConstraints" />
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginBottom="@dimen/_16sdp"
+      android:fillViewport="true"
+      android:scrollbars="none"
+      app:layout_constraintBottom_toTopOf="@id/confirm_button"
+      app:layout_constraintEnd_toEndOf="@id/endGuide"
+      app:layout_constraintStart_toStartOf="@id/startGuide"
+      app:layout_constraintTop_toBottomOf="@id/toolbar"
+      tools:ignore="NotSibling,UnknownId">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/step_counter"
+          style="@style/step_counter_style"
+          android:layout_width="wrap_content"
+          android:layout_marginTop="0dp"
+          android:text="@string/step_2_2" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/heading_tv"
+          style="@style/psn_heading_style"
+          android:layout_width="wrap_content"
+          android:layout_marginStart="0dp"
+          android:layout_marginTop="@dimen/_6sdp"
+          android:text="@string/select_website_address" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/sub_heading_tv"
+          style="@style/psn_subheading_style"
+          android:layout_width="wrap_content"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:text="@string/select_website_subheading" />
+
+        <LinearLayout
+          android:id="@+id/phone_et_container"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_50sdp"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
+
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/website_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+            android:fontFamily="@font/open_sans"
+            android:inputType="textFilter"
+            android:textAllCaps="false"
+            android:maxLength="50"
+            android:textColor="@color/et_color"
+            android:textSize="@dimen/heading_4" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/signin_nowfloats_com"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/subheading_1" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/fragment_status_iv"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:src="@drawable/ic_tick_success" />
+        </LinearLayout>
+
+        <View
+          android:id="@+id/divider"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="@dimen/_6sdp"
+          android:background="@color/colorAccent"
+          app:layout_constraintTop_toBottomOf="@id/phone_et_container" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/website_status_tv"
+          style="@style/psn_subheading_style"
+          android:layout_width="wrap_content"
+          android:layout_marginTop="@dimen/_16sdp"
+          android:text="@string/website_available_text"
+          android:textColor="@color/red_error_e3954"
+          app:layout_constraintTop_toBottomOf="@id/divider" />
+      </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/confirm_button"
+      style="@style/psn_button_style"
+      android:enabled="false"
+      android:text="@string/create_my_business_website"
+      app:layout_constraintBottom_toTopOf="@id/bottomGuide"
+      tools:ignore="MissingConstraints,UnknownId" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -12,13 +12,15 @@ import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
+import java.util.*
+import kotlin.collections.ArrayList
 
 data class ChannelModel(
     var moreDesc: String? = null,
     var priority: String? = null,
     var type: String? = null,
     var isSelected: Boolean? = false,
-    var status: String? = ProcessApiSyncModel.SyncStatus.PROCESSING.name
+    var status: String? = ProcessApiSyncModel.SyncStatus.PROCESSING.name,
 ) : AppBaseRecyclerViewItem, Parcelable {
 
   var websiteUrl: String? = ""
@@ -79,16 +81,15 @@ data class ChannelModel(
 }
 
 fun ChannelModel.getPriority(): ChannelPriority? {
-  return ChannelPriority.values().firstOrNull { it.name.toLowerCase() == priority?.toLowerCase() }
+  return ChannelPriority.values().firstOrNull { it.name.equals(priority, ignoreCase = true) }
 }
 
 fun ChannelModel.getType(): ChannelType? {
-  return ChannelType.values().firstOrNull { it.name.toLowerCase() == type?.toLowerCase() }
+  return ChannelType.values().firstOrNull { it.name.equals(type, ignoreCase = true) }
 }
 
 fun ChannelModel.isGoogleChannel(): Boolean {
-  return getType() == ChannelType.G_MAPS || getType() == ChannelType.G_SEARCH
-  //|| getType() == ChannelType.G_BUSINESS
+  return getType() == ChannelType.G_MAPS || getType() == ChannelType.G_SEARCH // || getType() == ChannelType.G_BUSINESS
 }
 
 fun ChannelModel.isGoogleSearch(): Boolean {
@@ -148,7 +149,7 @@ fun ChannelModel.getAccessTokenType(): String {
     ChannelType.FB_PAGE -> ChannelAccessToken.AccessTokenType.facebookpage.name
     ChannelType.G_MAPS -> ChannelAccessToken.AccessTokenType.googlemap.name
     ChannelType.FB_SHOP -> ChannelAccessToken.AccessTokenType.facebookshop.name
-    ChannelType.WAB -> ""
+    ChannelType.WAB -> ChannelType.WAB.name
     ChannelType.T_FEED -> ChannelAccessToken.AccessTokenType.twitter.name
     ChannelType.G_BUSINESS -> ChannelAccessToken.AccessTokenType.googlemybusiness.name
     null -> ""
@@ -182,6 +183,7 @@ fun ChannelModel.getDrawableActiveNew(context: Context?): Drawable? {
     else -> null
   }
 }
+
 fun ChannelModel.getDrawableInActiveNew(context: Context?): Drawable? {
   if (context == null) return null
   return when (getType()) {

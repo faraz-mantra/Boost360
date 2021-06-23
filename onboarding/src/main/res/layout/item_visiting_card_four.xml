@@ -57,7 +57,7 @@
               android:layout_height="match_parent"
               android:layout_gravity="center"
               android:background="@color/white"
-              android:scaleType="centerCrop" />
+              android:scaleType="fitCenter" />
           </com.framework.views.customViews.CustomCardView>
 
         </com.framework.views.customViews.CustomCardView>
@@ -86,7 +86,9 @@
           android:layout_marginTop="@dimen/size_5"
           android:orientation="vertical">
 
-          <include layout="@layout/item_card_channel" />
+          <include layout="@layout/item_card_channel"
+              android:id="@+id/item_channels_group"
+              />
         </LinearLayout>
       </androidx.appcompat.widget.LinearLayoutCompat>
 

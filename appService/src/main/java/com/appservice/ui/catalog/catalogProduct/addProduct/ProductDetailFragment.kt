@@ -199,13 +199,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getAddPreviousData() {
-    viewModel?.getProductImage(auth_3, String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getProductImage(String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val response = it as? ProductImageResponse
         if (response?.status == 200 && response.data.isNullOrEmpty().not()) {
           secondaryDataImage = response.data
         }
-        viewModel?.getProductGstDetail(auth_3, String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer { it1 ->
+        viewModel?.getProductGstDetail(String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer { it1 ->
           if ((it1.error is NoNetworkException).not()) {
             val response2 = it1 as? ProductGstResponse
             if (response2?.status == 200 && response2.data.isNullOrEmpty().not()) {
@@ -359,7 +359,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         gstData.length?.toString() ?: "0.0", gstData.weight?.toString()
         ?: "0.0", gstData.width?.toString() ?: "0.0")
     request.updateValueSet(UpdateValueU(setGST))
-    viewModel?.updateProductGstDetail(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.updateProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
@@ -375,7 +375,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         ?: 0.0, gstData.length ?: 0.0,
         merchantId = fpId, productId = productId, gstData.weight ?: 0.0, gstData.height
         ?: 0.0), fpId)
-    viewModel?.addProductGstDetail(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.addProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
@@ -431,7 +431,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             ?: "service_${Date()}.jpg"
         val requestProfile = secondaryFile?.let { it.asRequestBody("image/*".toMediaTypeOrNull()) }
         val body = requestProfile?.let { MultipartBody.Part.createFormData("file", fileNew, it) }
-        viewModel?.uploadImageProfile(auth_3, fileNew, body)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.uploadImageProfile(fileNew, body)?.observeOnce(viewLifecycleOwner, Observer {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -452,7 +452,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       var checkPosition = 0
       secondaryImageList.forEach { image ->
         val request = ProductImageRequest(ActionDataI(ImageI(url = image, description = ""), productId), fpId)
-        viewModel?.addProductImage(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.addProductImage(request)?.observeOnce(viewLifecycleOwner, Observer {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -531,7 +531,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
     if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
-      product?.BuyOnlineLink = BuyOnlineLink(url = externalUrl,description =  externalUrlName)
+      product?.BuyOnlineLink = BuyOnlineLink(url = externalUrl, description = externalUrlName)
     } else product?.BuyOnlineLink = BuyOnlineLink()
 
     if (isEdit == false) {

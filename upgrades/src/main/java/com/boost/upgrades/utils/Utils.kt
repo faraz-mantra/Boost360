@@ -195,4 +195,19 @@ object Utils {
     }
     return json
   }
+
+  fun getStatesFromAssetJsonData(context: Context): String? {
+    val json: String
+    try {
+      val inputStream = context.getAssets().open("states.json")
+      val size = inputStream.available()
+      val buffer = ByteArray(size)
+      inputStream.use { it.read(buffer) }
+      json = String(buffer)
+    } catch (ioException: IOException) {
+      ioException.printStackTrace()
+      return null
+    }
+    return json
+  }
 }

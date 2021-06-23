@@ -1,6 +1,5 @@
 package com.appservice.rest.services
 
-import com.appservice.model.ProductDimensionRequest
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
@@ -27,13 +26,12 @@ interface KitWebActionRemoteData {
   @GET(EndPoints.GET_PRODUCT_DETAIL)
   fun getProductGstDetail(@Header("Authorization") auth: String?, @Query("query") query: String?): Observable<Response<ProductGstResponse>>
 
-
   @Multipart
   @POST(EndPoints.UPLOAD_FILE_PRODUCT)
   fun uploadImageProfile(
       @Header("Authorization") auth: String?,
       @Query("assetFileName") assetFileName: String?,
-      @Part file: MultipartBody.Part?
+      @Part file: MultipartBody.Part?,
   ): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.ADD_PRODUCT_IMAGE)
@@ -45,10 +43,4 @@ interface KitWebActionRemoteData {
   //String.format("{'_pid':'%s'}", productId)
   @GET(EndPoints.GET_PRODUCT_IMAGE)
   fun getProductImage(@Header("Authorization") auth: String?, @Query("query") query: String?): Observable<Response<ProductImageResponse>>
-
-  @POST(EndPoints.FP_ONBOARDING_UPDATE_DATA)
-  fun fpOnboardingUpdate(@Header("Authorization") auth: String?, @Body request: OnBoardingUpdateModel?): Observable<Response<ResponseBody>>
-//  fun addProductDimensionDetails(request: ProductDimensionRequest): Observable<Response<ResponseBody>> {
-//
-//  }
 }

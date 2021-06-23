@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="accent_dark">#F2994A</color>
+  <color name="accent_30">#4DFFB900</color>
   <color name="greyish_brown">#4A4A4A</color>
   <color name="dashboard_business_url">#4A4A4A</color>
   <color name="greyish_brown_1">#25252F</color>
@@ -23,6 +24,7 @@
   <color name="white_grey">#E5E5E5</color>
   <color name="white_smoke">#f5f7f9</color>
   <color name="white_smoke_1">#F8F8F8</color>
+  <color name="white_smoke_20">#33F8F8F8</color>
   <color name="white_one">#F2F2F2</color>
   <color name="aliceblue">#e6f4fc</color>
   <color name="aliceblue_10">#ecf3fe</color>
@@ -111,9 +113,9 @@
   <color name="light_grey_two">#B7B7B7</color>
   <color name="dodger_blue_ED73FE">#EDF3FE</color>
   <color name="black_2A2A2A">#2A2A2A</color>
-  <color name="black_4a4a4a">#4a4a4a</color>
-  <color name="black_4a4a4a_jio">@color/black_4a4a4a</color>
+  <color name="black_4a4a4a">#4A4A4A</color>
   <color name="black_4a4a4a_50">#804A4A4A</color>
+  <color name="black_4a4a4a_30">#4D4A4A4A</color>
   <color name="black_4f4f4f">#4f4f4f</color>
   <color name="grey_dark_1">#787878</color>
   <color name="bg_grey_light">#E3E3E3</color>

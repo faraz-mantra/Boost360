@@ -17,6 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
+import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
@@ -106,10 +107,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     @Override
     public void onCreate() {
         super.onCreate();
-        BaseOrderApplication.instance = this;
-        SharedPreferences pref =  BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
 //        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
+        BaseOrderApplication.instance = this;
         BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
         BaseBoardingApplication.initModule(this);
@@ -117,6 +116,10 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppServiceApplication.initModule(this);
         AppDashboardApplication.instance = this;
         AppDashboardApplication.initModule(this);
+        AppPreSignInApplication.instance = this;
+        AppPreSignInApplication.initModule(this);
+        SharedPreferences pref =  BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
         initWebEngage();
         //Invite Referral
         InviteReferralsApplication.register(this);

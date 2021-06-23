@@ -273,6 +273,7 @@ class MainFragment : Fragment() {
             root.video_loading.visibility = View.VISIBLE
             checkVideoPlaying()
         }
+
         resetVideo()
 //        root.videoPlayer.start()
         viewModel.enableBottomView()

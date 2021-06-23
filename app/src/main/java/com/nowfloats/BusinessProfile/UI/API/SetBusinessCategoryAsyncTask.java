@@ -75,7 +75,7 @@ public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String
 				//NewBusinessDetailsFragment.businessCategory.setText(category);
 
 				if (flag4upateprofile) {
-					Edit_Profile_Activity.saveTextView.setVisibility(View.GONE);
+					Edit_Profile_Activity.saveButton.setVisibility(View.GONE);
 					Util.changeDefaultBackgroundImage(category.toString());
 				}
 

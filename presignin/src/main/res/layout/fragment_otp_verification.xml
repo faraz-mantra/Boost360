@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.mobileVerification.MobileFragment">
+
+    <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+
+    <com.boost.presignin.views.PsnCustomToolbar
+      android:id="@+id/toolbar"
+      style="@style/psn_toolbar_style"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/title"
+      style="@style/psn_heading_style"
+      android:text="@string/almost_there"
+      app:layout_constraintTop_toBottomOf="@id/toolbar"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/subheading"
+      style="@style/psn_subheading_style"
+      android:text="@string/code_sent_hint"
+      app:layout_constraintTop_toBottomOf="@id/title"
+      tools:ignore="MissingConstraints" />
+
+    <com.boost.presignin.views.otptextview.OtpTextView
+      android:id="@+id/pin_tv"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/_20sdp"
+      app:bar_active_color="@color/colorAccent"
+      app:bar_enabled="true"
+      app:bar_height="2dp"
+      app:height="@dimen/_28sdp"
+      app:layout_constraintEnd_toEndOf="@id/endGuide"
+      app:layout_constraintStart_toStartOf="@id/startGuide"
+      app:layout_constraintTop_toBottomOf="@id/subheading"
+      app:length="4"
+      app:otp_box_background="@color/transparent"
+      app:otp_text_size="@dimen/heading_3"
+      app:width="@dimen/_30sdp"
+      tools:ignore="NotSibling" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/wrong_otp_error_tv"
+      style="@style/psn_wrong_otp_style"
+      android:layout_marginTop="@dimen/_8sdp"
+      android:text="@string/wrong_otp_tv"
+      android:visibility="gone"
+      app:layout_constraintEnd_toEndOf="@id/endGuide"
+      app:layout_constraintTop_toBottomOf="@id/pin_tv" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/resend_tv"
+      style="@style/psn_subheading_style"
+      android:text="@string/psn_resend_hint"
+      app:layout_constraintBottom_toBottomOf="@+id/verifyButton"
+      app:layout_constraintTop_toTopOf="@+id/verifyButton"
+      tools:ignore="MissingConstraints" />
+
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/verifyButton"
+      style="@style/psn_signin_bt_style"
+      android:enabled="false"
+      android:text="@string/verify"
+      app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+      app:layout_constraintEnd_toEndOf="@id/endGuide"
+      tools:ignore="UnknownId" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

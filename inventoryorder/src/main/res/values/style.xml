@@ -262,6 +262,10 @@
     <item name="android:layout_height">wrap_content</item>
     <item name="android:paddingEnd">@dimen/size_30</item>
   </style>
+  <style name="ButtonStyle.Outline" parent="ButtonStyle.Rounded.Outlined">
+    <item name="android:background">@drawable/bg_corners_stroke</item>
+
+  </style>
 
   <style name="ButtonStyle.Rounded.Solid.BottomSheet">
     <item name="android:textSize">14sp</item>
@@ -271,8 +275,10 @@
     <item name="android:textAllCaps">true</item>
     <item name="paddingStart">@dimen/size_28</item>
     <item name="paddingEnd">@dimen/size_28</item>
+    <item name="backgroundTint">@color/button_selector_enabled</item>
     <item name="android:textColor">@color/pinkish_grey</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">@dimen/size_36</item>
+    <item name="android:layout_height">@dimen/size_38</item>
   </style>
+
 </resources>

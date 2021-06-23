@@ -77,7 +77,7 @@ class OrderConfirmationFragment : BaseFragment() {
             Toasty.info(requireContext(),getString(R.string.in_case_of_any_concerns)).show()
         }
 
-        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, ADDONS_MARKETPLACE_ORDER_CONFIRMATION)
+        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM, PAGE_VIEW, ADDONS_MARKETPLACE_ORDER_CONFIRMATION)
 
     }
 

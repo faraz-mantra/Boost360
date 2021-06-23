@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+  <data></data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.DesiredLoginMethodActivity">
+
+    <ImageView
+      android:id="@+id/back_iv"
+      android:layout_width="@dimen/_32sdp"
+      android:layout_height="@dimen/_32sdp"
+      android:layout_gravity="center_vertical"
+      android:layout_marginStart="@dimen/_16sdp"
+      android:layout_marginTop="@dimen/_16sdp"
+      android:background="@drawable/psn_back_shape"
+      android:backgroundTint="@color/psn_back_button_color"
+      android:padding="@dimen/_8sdp"
+      android:src="@drawable/psn_back_icon"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/heading_tv"
+      style="@style/psn_heading_style"
+      android:text="@string/psn_choose_desired_login_method"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/back_iv" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/sub_heading_tv"
+      style="@style/psn_subheading_style"
+      android:text="@string/psn_choose_method_to_retrieve_account"
+      app:layout_constraintTop_toBottomOf="@id/heading_tv"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/username_or_email_bt"
+      style="@style/psn_stroke_button_style"
+      android:gravity="start|center"
+      android:text="@string/psn_login_using_username_or_email_id"
+      app:layout_constraintTop_toBottomOf="@id/sub_heading_tv"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/another_method_bt"
+      style="@style/psn_stroke_button_style"
+      android:gravity="start|center"
+      android:text="@string/psn_try_a_different_mobile_number"
+      app:layout_constraintTop_toBottomOf="@id/username_or_email_bt"
+      tools:ignore="MissingConstraints" />
+
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/contact_support_hint_tv"
+      style="@style/psn_subheading_style"
+      android:layout_marginBottom="@dimen/_4sdp"
+      android:gravity="center"
+      android:text="@string/something_doesnt_seem_right"
+      app:layout_constraintBottom_toTopOf="@id/contact_support_tv"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/contact_support_tv"
+      style="@style/psn_subheading_style"
+      android:layout_width="wrap_content"
+      android:fontFamily="@font/open_sans_semibold"
+      android:gravity="center"
+      android:text="@string/contact_support"
+      android:textColor="@color/colorAccent"
+      app:layout_constraintBottom_toTopOf="@id/bottomGuide"
+      app:textAllCaps="true"
+      tools:ignore="MissingConstraints,UnknownId" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
