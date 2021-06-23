@@ -75,7 +75,7 @@
   <string name="perform_online_business">How your business has performed online.</string>
   <string name="website_report_description">Learn how to make Boost 360 work for you.</string>
   <string name="share_business_card">Share Business card</string>
-  <string name="website_pages_and_widgets">Website pages and widgets</string>
+  <string name="website_pages_and_widgets">Other website content and pages</string>
   <string name="for_better_engagement_and_traffic_desc">Update regularly for better engagement and traffic.</string>
   <string name="press_again_exit">Press again to exit</string>
   <string name="download_file_banner">Downloading the file...</string>
@@ -121,15 +121,16 @@
   <string name="engaging_business_across_the_social_channels">See how your customers are engaging with your business across the social channels.</string>
   <string name="no_enquiry_yet">No enquiry yet</string>
   <string name="promote_your_website_with_as_many_people_as_you_can">Promote your website with as many people as you can.</string>
-  <string name="share_on_messanger">Share on Messenger</string>
+  <string name="share_on_messanger">Share on Messanger</string>
   <string name="share_on_instagram">Share on Instagram</string>
   <string name="share_on_telegram">Share on Telegram</string>
   <string name="share_on_email">Share on Email</string>
+  <string name="share_on_others">Share on others</string>
   <string name="preview_your_website_by_clicking_the_link_below">Preview your website by clicking the link below.</string>
   <string name="customise_font">Customise font</string>
   <string name="primary_font">Primary font</string>
   <string name="secondary_font">Secondary font</string>
-  <string name="default_theme_shade">Default</string>
+  <string name="default_theme_shade">Default theme shade</string>
   <string name="optional_shades_to_choose_from">Optional shades to choose from</string>
   <string name="open_sans">Open Sans</string>
   <string name="change_font_type">Change font type</string>
@@ -137,7 +138,7 @@
   <string name="the_font_you_want_to_change_as_secondary">The font you want to change as secondary.</string>
   <string name="save">Save</string>
   <string name="save_changes">Save Changes</string>
-  <string name="website_style_customisation">Website customisation</string>
+  <string name="website_style_customisation">Website Style Customisation</string>
   <string name="error_while_getting_website_theme">Error while getting website theme.</string>
   <string name="your_theme_update_published">Your changes are saved successfully published and live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="unable_to_get_primary_fonts">Unable to get primary fonts</string>
@@ -166,7 +167,6 @@
   <string name="discard_exit"><![CDATA[Discard & Exit]]></string>
   <string name="reset_to_default">Reset to default</string>
   <string name="need_help">Need help?</string>
-  <string name="share_on_others">Share on others</string>
   <string name="add_featured_image">Add Featured Image</string>
   <string name="what_this">What’ this?</string>
   <string name="business_name">Business name</string>

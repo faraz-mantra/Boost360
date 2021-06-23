@@ -71,14 +71,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       return baseActivity.getSharedPreferences(PreferenceConstant.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
     }
 
-  private val auth: String?
-    get() {
-      return pref?.getString(PreferenceConstant.AUTHORIZATION, "58ede4d4ee786c1604f6c535")
-    }
-  private val clientId: String?
-    get() {
-      return pref?.getString(PreferenceConstant.CLIENT_ID, "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5")
-    }
   private var requestFloatsModel: RequestFloatsModel? = null
   private var adapterConnect: AppBaseRecyclerViewAdapter<ChannelModel>? = null
   private var adapterDisconnect: AppBaseRecyclerViewAdapter<ChannelModel>? = null

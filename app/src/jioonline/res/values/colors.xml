@@ -86,9 +86,18 @@
 
     <color name="ir_statusBarColor">@color/colorPrimaryDark</color>
     <color name="ir_actionbarBackground">@color/colorPrimary</color>
+    <color name="colorLightGrey_jio">#4a4a4a</color>
 
     <color name="accent_30">#4D0400A6</color>
     <color name="red_light_1">#EC008C</color>
     <color name="colorAccent_jio">@color/red_light_1</color>
     <color name="black_4a4a4a_jio">@color/colorPrimary</color>
+
+    <color name="started_button_start">@color/colorPrimary</color>
+    <color name="started_button_end">@color/colorPrimary</color>
+    <color name="back_button_color">@color/colorAccentLight</color>
+
+    <color name="black_4a4a4a_n">#918F8F</color>
+    <color name="grey_575757_n">#BDBCBC</color>
+    <color name="grey_333333_n">#515151</color>
 </resources>

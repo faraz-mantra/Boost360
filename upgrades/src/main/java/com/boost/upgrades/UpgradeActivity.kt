@@ -112,10 +112,11 @@ class UpgradeActivity : AppCompatActivity() {
 
       progressDialog = ProgressDialog(this)
 
-    prefs = SharedPrefs(this)
+      prefs = SharedPrefs(this)
 //    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
-    initView()
-    initRazorPay()
+      initView()
+      initRazorPay()
+    }
   }
 
   infix fun setBackListener(compareBackListener: CompareBackListener?) {
@@ -156,9 +157,7 @@ class UpgradeActivity : AppCompatActivity() {
   private fun initRazorPay() {
     try {
       razorpay = Razorpay(this, RAZORPAY_KEY)
-    } catch (e: Exception) {
-      e.printStackTrace()
-    }
+    }catch (e: Exception){e.printStackTrace()}
   }
 
 //  public fun initYoutube(){
@@ -366,28 +365,28 @@ class UpgradeActivity : AppCompatActivity() {
                         else if (prefs.getInitialLoadMarketPlace()) {
                           Log.v("getInitialLoadM", " getInitialLoadM")
 //                Handler().postDelayed({
-                  /*splashFragment.show(
-              supportFragmentManager,
-              SPLASH_FRAGMENT
-          )*/
+                          /*splashFragment.show(
+                      supportFragmentManager,
+                      SPLASH_FRAGMENT
+                  )*/
 //                }, 1000)
-                }
-              } else {
-                //recall after 1 second
-                Handler().postDelayed({
-                  if (initialLoadUpgradeActivity < 3) {
-                    initialLoadUpgradeActivity += 1
-                    showingPopUp(checkNetworkType(applicationContext))
-                  } else {
-                    loaderStatus(false)
-                    Toasty.error(this, "Critical error occurred while loading the Addon Marketplace. Please close the app and try again.\n\nIf the issue persists, please get in touch with the Support Team.", Toast.LENGTH_LONG).show()
-                  }
-                }, networkRecallTimer) // networkRecallTimer works based on the network speed
-              }
-            }, {
-              loaderStatus(false)
-              Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
-            })
+                        }
+                      } else {
+                        //recall after 1 second
+                        Handler().postDelayed({
+                          if (initialLoadUpgradeActivity < 3) {
+                            initialLoadUpgradeActivity += 1
+                            showingPopUp(checkNetworkType(applicationContext))
+                          } else {
+                            loaderStatus(false)
+                            Toasty.error(this, "Critical error occurred while loading the Addon Marketplace. Please close the app and try again.\n\nIf the issue persists, please get in touch with the Support Team.", Toast.LENGTH_LONG).show()
+                          }
+                        }, networkRecallTimer) // networkRecallTimer works based on the network speed
+                      }
+                    }, {
+                      loaderStatus(false)
+                      Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                    })
     )
 
   }

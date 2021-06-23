@@ -118,6 +118,7 @@
   <string name="boost360_terms_conditions" translatable="false"><![CDATA[Boost360 - Terms & Conditions]]></string>
     <string name="enter_a_valid_website_name">Enter a valid website name</string>
   <string name="ensure_that_the_entered_username_and_password_">Ensure that the entered username and password is correct.</string>
+  <string name="ensure_that_the_entered_mobile_correct">Ensure that the entered mobile number correct.</string>
   <string name="share_your_business">Share your business...</string>
   <string name="enter_valid_name">Enter valid name.</string>
   <string name="enter_valid_business_name">Enter valid business name.</string>

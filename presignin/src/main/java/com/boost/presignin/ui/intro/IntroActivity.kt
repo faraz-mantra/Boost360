@@ -15,6 +15,7 @@ import com.boost.presignin.helper.ViewPager2Transformation
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
 import com.boost.presignin.ui.AccountNotFoundActivity
+import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
@@ -51,11 +52,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.acceptTnc?.makeLinks(
       Pair("terms", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+        openTNCDialog(resources.getString(R.string.boost_360_tnc_presignup), resources.getString(R.string.boost360_terms_conditions))
       }),
       Pair("conditions", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+        openTNCDialog(resources.getString(R.string.boost_360_tnc_presignup), resources.getString(R.string.boost360_terms_conditions))
       })
     )
   }
@@ -82,7 +83,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.btnCreate?.setOnClickListener {
 //    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789896") })
       WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
-      startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+      if (packageName.equals("com.jio.online", ignoreCase = true)) {
+        startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
+      } else {
+        startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+      }
     }
   }
 

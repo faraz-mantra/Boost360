@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.dashboard.AppDashboardApplication
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
@@ -490,7 +491,7 @@ fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
   if(rootAliasUri.isNullOrEmpty().not()){
     rootAliasUri = rootAliasUri?.replace("http://", "https://")
   }
-  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.${AppDashboardApplication.instance.resources.getString(R.string.boost_360_tag_domain)}"
   return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
     return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
     else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
