@@ -210,4 +210,14 @@ object Utils {
     }
     return json
   }
+
+  fun filterBraces(cartids: String): String{
+    var cartid = cartids.replace("[","").replace("]","")
+    return cartid
+  }
+
+  fun filterQuotes(coupon: String): String{
+    var couponid = coupon.replace("\"","")
+    return couponid
+  }
 }
