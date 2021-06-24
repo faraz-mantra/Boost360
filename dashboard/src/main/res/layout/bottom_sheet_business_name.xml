@@ -24,12 +24,11 @@
       android:background="@drawable/bottoms_sheet_top20dp_white"
       android:gravity="center_horizontal"
       android:orientation="vertical"
-      android:paddingTop="@dimen/size_10">
+      android:padding="@dimen/size_20">
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_16"
         android:orientation="horizontal">
 
         <com.framework.views.customViews.CustomTextView
@@ -52,7 +51,6 @@
       <com.framework.views.customViews.CustomEditText
         android:id="@+id/cet_business_name"
         style="@style/BusinessProfileTextField"
-        android:layout_marginHorizontal="@dimen/size_16"
         android:drawableEnd="@null"
         android:gravity="top|left"
         android:inputType="textMultiLine"
@@ -70,8 +68,7 @@
         android:id="@+id/btn_publish"
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="@dimen/size_16"
-        android:layout_marginVertical="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_16"
         android:enabled="true"
         android:text="@string/save_business_name"
         android:textColor="@color/white" />

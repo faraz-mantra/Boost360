@@ -228,7 +228,6 @@
           android:layout_margin="16dp"
           android:clickable="true"
           android:focusable="true"
-          app:fabBackground="@drawable/bg_button_rounded_orange"
           app:fabIcon="@drawable/ic_add_white"
           app:fabSize="normal" />
       </androidx.coordinatorlayout.widget.CoordinatorLayout>

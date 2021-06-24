@@ -117,12 +117,12 @@
         android:orientation="horizontal"
         android:padding="@dimen/size_14">
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tvCancel"
-            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-            android:layout_marginEnd="@dimen/size_10"
-            android:background="@color/white"
-            android:text="@string/cancel" />
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/tvCancel"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:layout_marginEnd="@dimen/size_10"
+          android:text="@string/cancel"
+          android:textColor="@color/white" />
 
         <com.framework.views.customViews.CustomButton
             android:id="@+id/buttonDone"
