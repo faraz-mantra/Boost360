@@ -360,7 +360,7 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:background="@null"
-              android:hint="Type a tag and press 'ADD'"
+              android:hint="@string/type_a_tag_and_press_add_s_info"
               android:inputType="textCapWords"
               android:maxEms="3"
               android:padding="@dimen/size_12"
