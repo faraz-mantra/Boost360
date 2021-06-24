@@ -22,7 +22,7 @@
     <item name="colorPrimaryDark">@color/black_4a4a4a</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
-<style name="BusinessProfileTheme" parent="DashboardThemeNew">
+<style name="BusinessProfileTheme" parent="DashboardTheme">
   <item name="bottomSheetDialogTheme">@style/BottomDialog</item>
 </style>
   <style name="BottomDialog" parent="BottomSheetTheme">
