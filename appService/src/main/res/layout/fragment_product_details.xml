@@ -192,7 +192,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_5"
               android:background="@drawable/bg_rect_edit_txt"
-              android:hint="Create a product category"
+              android:hint="@string/create_a_product_category"
               android:inputType="textCapWords"
               android:padding="@dimen/size_12"
               android:singleLine="true"
@@ -205,7 +205,7 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_3"
               android:layout_marginTop="@dimen/size_20"
-              android:text="Product Description*"
+              android:text="@string/product_description"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
@@ -217,7 +217,7 @@
                 android:layout_marginTop="@dimen/size_5"
                 android:background="@drawable/bg_rect_edit_txt"
                 android:gravity="top|start"
-                android:hint="Describe this product in around 2000 characters at max..."
+                android:hint="@string/describe_this_product_in_around_2000_characters_at_max"
                 android:inputType="textMultiLine"
                 android:padding="@dimen/size_12"
                 android:textColor="@color/warm_grey_10"
@@ -231,7 +231,7 @@
               android:layout_marginTop="@dimen/size_20"
               android:drawablePadding="@dimen/size_4"
               android:includeFontPadding="false"
-              android:text="Pricing info"
+              android:text="@string/pricing_info"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
@@ -253,7 +253,7 @@
                 <com.framework.views.customViews.CustomTextView
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:text="Want to sell this product online?"
+                  android:text="@string/want_to_sell_this_product_online"
                   android:textColor="@color/black_4f4f4f"
                   android:textSize="12sp"
                   app:fontFamily="@font/semi_bold"
@@ -291,7 +291,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:fontFamily="@font/open_sans"
-                  android:text="Price includes taxes"
+                  android:text="@string/price_includes_taxes"
                   android:textColor="@color/primary_text"
                   android:textFontWeight="400"
                   android:textStyle="normal"
@@ -318,7 +318,7 @@
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Price without tax (INR)"
+                      android:text="@string/price_without_tax_inr"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
@@ -329,7 +329,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="@dimen/size_5"
                       android:background="@drawable/bg_rect_edit_txt"
-                      android:hint="XX,XXX"
+                      android:hint="@string/xx_xxx"
                       android:inputType="number"
                       android:maxLength="7"
                       android:padding="@dimen/size_8"
@@ -354,7 +354,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:singleLine="true"
-                      android:text="Discount amt. (INR)"
+                      android:text="@string/discount_amt_inr"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
@@ -365,7 +365,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="@dimen/size_5"
                       android:background="@drawable/bg_rect_edit_txt"
-                      android:hint="XXX"
+                      android:hint="@string/xxx"
                       android:inputType="number"
                       android:maxLength="6"
                       android:padding="@dimen/size_8"
@@ -390,7 +390,7 @@
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Final Price"
+                      android:text="@string/final_price"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
@@ -402,7 +402,7 @@
                       android:layout_marginTop="@dimen/size_5"
                       android:background="@null"
                       android:enabled="false"
-                      android:hint="INR XX,XXX"
+                      android:hint="@string/inr_xx_xxx"
                       android:inputType="number"
                       android:paddingTop="@dimen/size_8"
                       android:paddingRight="@dimen/size_8"
@@ -423,7 +423,7 @@
                   android:layout_marginStart="@dimen/size_8"
                   android:layout_marginTop="@dimen/size_10"
                   android:includeFontPadding="false"
-                  android:text="Select, how you want to receive money."
+                  android:text="@string/select_how_you_want_to_receive_money"
                   android:textColor="@color/warm_grey"
                   android:textSize="12sp"
                   app:fontFamily="@font/regular" />
@@ -431,7 +431,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginLeft="@dimen/size_8"
+                  android:layout_marginLeft="@dimen/size_10"
                   android:layout_marginRight="@dimen/size_10"
                   android:layout_marginBottom="@dimen/size_10"
                   android:background="@drawable/shape_grey_stroke_rect_bkg"
@@ -509,7 +509,7 @@
                           android:layout_marginTop="@dimen/size_3"
                           android:drawablePadding="@dimen/size_4"
                           android:includeFontPadding="false"
-                          android:text="Kotak Mahindra Bnak - 345547684878"
+                          android:text="@string/kotak_mahindra_bnak_345547684878"
                           android:textColor="@color/light_blue"
                           android:textSize="12sp"
                           android:visibility="gone"
@@ -540,7 +540,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/size_4"
                         android:includeFontPadding="false"
-                        android:text="Add External URL"
+                        android:text="@string/add_external_url"
                         android:textColor="@color/warm_grey"
                         android:textSize="12sp"
                         app:fontFamily="@font/regular" />
@@ -564,7 +564,7 @@
                           android:layout_height="wrap_content"
                           android:layout_weight="1.5"
                           android:background="@android:color/transparent"
-                          android:hint="Website name"
+                          android:hint="@string/website_name"
                           android:maxLines="1"
                           android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
@@ -583,7 +583,7 @@
                           android:layout_height="wrap_content"
                           android:layout_weight="1"
                           android:background="@android:color/transparent"
-                          android:hint="Paste your URL here"
+                          android:hint="@string/paste_your_url_here_"
                           android:maxLines="1"
                           android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
@@ -622,7 +622,7 @@
               android:layout_marginTop="@dimen/size_20"
               android:drawablePadding="@dimen/size_4"
               android:includeFontPadding="false"
-              android:text="Product Delivery Configuration"
+              android:text="@string/product_delivery_configuration"
               android:textColor="@color/black_4a4a4a"
               android:visibility="gone"
               app:fontFamily="@font/semi_bold"
@@ -647,7 +647,7 @@
                 <com.framework.views.customViews.CustomTextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="Both online and in-person"
+                  android:text="@string/both_online_and_in_person"
                   android:textColor="@color/black_4f4f4f"
                   android:textSize="12sp"
                   app:fontFamily="@font/semi_bold"
@@ -696,7 +696,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/size_16"
-                        android:text="Deliver to customer's address"
+                        android:text="@string/deliver_to_customer_s_address"
                         android:textColor="@color/primary_text"
                         android:theme="@style/ActiveTheme" />
 
@@ -705,7 +705,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_48"
                         android:includeFontPadding="false"
-                        android:text="I’ll deliver via local delivery guy or shipping partner"
+                        android:text="@string/i_ll_deliver_via_local_delivery_guy_or_shipping_partner"
                         android:textColor="@color/warm_grey"
                         android:textSize="12sp"
                         app:fontFamily="@font/regular" />
@@ -723,7 +723,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/size_16"
-                        android:text="Allow pickup from my store"
+                        android:text="@string/allow_pickup_from_my_store"
                         android:textColor="@color/primary_text"
                         android:theme="@style/ActiveTheme" />
 
@@ -732,7 +732,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_48"
                         android:includeFontPadding="false"
-                        android:text="• 244/5, Sector -5, Sukhdev Vihar, New Delhi - 100065"
+                        android:text="@string/_244_5_sector_5_sukhdev_vihar_new_delhi_100065"
                         android:textColor="@color/warm_grey"
                         android:textSize="12sp"
                         app:fontFamily="@font/regular" />
@@ -750,7 +750,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/size_16"
-                        android:text="Allow pickup from my warehouse"
+                        android:text="@string/allow_pickup_from_my_warehouse"
                         android:textColor="@color/primary_text"
                         android:theme="@style/ActiveTheme" />
 
@@ -759,7 +759,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_48"
                         android:includeFontPadding="false"
-                        android:text="• 244/5, Sector -5, Sukhdev Vihar, New Delhi - 100065"
+                        android:text="@string/_244_5_sector_5_sukhdev_vihar_new_delhi_100065"
                         android:textColor="@color/warm_grey"
                         android:textSize="12sp"
                         app:fontFamily="@font/regular" />
@@ -801,7 +801,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/size_6"
                     android:includeFontPadding="false"
-                    android:text="product delivery at:"
+                    android:text="@string/product_delivery_at"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     app:drawableStartCompat="@drawable/ic_delivery_business_location"
@@ -812,7 +812,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_5"
                     android:includeFontPadding="false"
-                    android:text="My business Location"
+                    android:text="@string/my_business_location_"
                     android:textColor="@color/warm_grey"
                     android:textSize="12sp"
                     app:fontFamily="@font/regular" />
@@ -849,7 +849,7 @@
                   android:layout_height="wrap_content"
                   android:drawablePadding="@dimen/size_4"
                   android:includeFontPadding="false"
-                  android:text="Other Information"
+                  android:text="@string/other_information"
                   android:textColor="@color/black_4a4a4a"
                   app:fontFamily="@font/semi_bold"
                   app:textType="BODY_3" />
@@ -858,7 +858,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:includeFontPadding="false"
-                  android:text="Channels, Product Specifications, Product category, etc."
+                  android:text="@string/channels_product_specifications_product_category_etc"
                   android:textColor="@color/warm_grey"
                   android:textSize="12sp"
                   app:fontFamily="@font/regular" />
