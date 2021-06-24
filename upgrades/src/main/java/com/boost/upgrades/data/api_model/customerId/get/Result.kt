@@ -12,7 +12,7 @@ data class Result(
     val InternalSourceId: String,
     val IsArchived: Boolean,
     val MobileNumber: String,
-    val Name: String,
+    val Name: String? = null,
     val TaxDetails: TaxDetails,
     val UpdatedOn: String,
     val _id: String
