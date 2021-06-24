@@ -73,7 +73,7 @@ open class DashboardFragmentContainerActivity :
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
       FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.DashboardTheme
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.BusinessProfileTheme
       else -> super.customTheme()
     }
   }
