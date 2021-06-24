@@ -26,4 +26,5 @@
     <color name="website_desc">@color/pinkish_grey</color>
     <color name="open_website_background">@color/gray_828282</color>
     <color name="text_dark">@color/black_4a4a4a</color>
+
 </resources>
