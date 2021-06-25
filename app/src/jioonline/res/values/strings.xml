@@ -584,4 +584,7 @@
   <string name="pranav_email">pranav.venuturumilli@nowfloats.com</string>
   <string name="wildfire_email">wildfire.team@nowfloats.com</string>
   <string name="signin_nowfloats_com">.bizdigital.com</string>
+
+  <string name="get_boost_360_tnc">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="need_help_desc">Please feel free to <a href="mailto: businesscare@jio.com">send an email at businesscare@jio.com</a>. Alternatively you can <a href="tel:18008899444">call us at 1800 889 9444</a>.</string>
 </resources>
