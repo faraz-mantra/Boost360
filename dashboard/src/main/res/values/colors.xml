@@ -10,6 +10,7 @@
   <color name="grey_light_2_d">#b5b5b5</color>
   <color name="website_url">@color/colorAccent</color>
   <color name="red_light_1">#EF4B39</color>
+  <color name="accent_light_red">@color/red_light_1</color>
   <color name="accent_30">#4DFFB900</color>
   <color name="black_4a4a4a_n">#4A4A4A</color>
   <color name="grey_575757_n">#575757</color>

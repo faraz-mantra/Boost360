@@ -310,7 +310,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun showToolbar(title: String) {
-    changeTheme(R.color.black_4a4a4a, R.color.black_4a4a4a,false)
+    changeTheme(R.color.black_4a4a4a_jio, R.color.black_4a4a4a_jio,false)
     getToolbar()?.apply {
       visibility = View.VISIBLE
       setTitle(title)

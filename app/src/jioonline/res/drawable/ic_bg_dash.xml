@@ -15,16 +15,16 @@
         android:startY="233"
         android:type="linear">
         <item
-          android:color="#0400A6"
+          android:color="#EC008C"
           android:offset="0" />
         <item
-          android:color="#0400A6"
+          android:color="#EC008C"
           android:offset="1" />
       </gradient>
     </aapt:attr>
   </path>
   <path
-    android:fillColor="#0400A6"
+    android:fillColor="#EC008C"
     android:fillType="evenOdd"
     android:pathData="M0,233H375V0H0L0,233Z" />
 </vector>
