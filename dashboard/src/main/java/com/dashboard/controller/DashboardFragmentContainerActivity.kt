@@ -72,7 +72,7 @@ open class DashboardFragmentContainerActivity :
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardTheme
+      FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardThemeNew
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.BusinessProfileTheme
       else -> super.customTheme()
     }
