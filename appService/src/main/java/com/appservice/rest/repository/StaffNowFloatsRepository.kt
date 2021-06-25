@@ -6,7 +6,7 @@ import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.StaffNowFloatsApiClient
 import com.appservice.rest.services.StaffNowFloatsRemoteData
-import com.appservice.staffs.model.*
+import com.appservice.model.staffModel.*
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit

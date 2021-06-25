@@ -8,10 +8,10 @@ import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType.*
 import com.appservice.databinding.*
 import com.appservice.holder.*
-import com.appservice.staffs.recycler.StaffExperienceViewHolder
-import com.appservice.staffs.recycler.StaffFilterViewHolder
-import com.appservice.staffs.recycler.StaffListingViewHolder
-import com.appservice.staffs.recycler.StaffServiceViewHolder
+import com.appservice.holder.StaffExperienceViewHolder
+import com.appservice.holder.StaffFilterViewHolder
+import com.appservice.holder.StaffListingViewHolder
+import com.appservice.holder.StaffServiceViewHolder
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
@@ -29,6 +29,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       ADDITIONAL_FILE_VIEW -> AdditionalFileViewHolder(binding as ItemPdfFileBinding)
       SESSION_ITEM_VIEW -> WeeklyAppointmentViewHolder(binding as RecyclerItemSessionBinding)
       SERVICE_TIMING_ITEM_VIEW -> ServiceTimingViewHolder(binding as ItemServiceTimingBinding)
+      UPDATE_BUSINESS_ITEM_VIEW -> UpdateBusinessViewHolder(binding as ItemUpdatesListBinding)
       CREATE_CATEGORY_ITEM_VIEW -> CreateCategoryViewHolder(binding as ItemCreateCategoryBinding)
       SERVICE_ITEM_VIEW -> StaffServiceViewHolder(binding as RecyclerItemServiceBinding)
       EXPERIENCE_RECYCLER_ITEM -> StaffExperienceViewHolder(binding as ItemExperienceDetailsBinding)
@@ -94,7 +95,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
     val position = list.size - 1
     if (position > -1) {
       val item: T? = getItem(position)
-      if (item != null) {
+      if (item != null && item.getViewType() == PAGINATION_LOADER.getLayout()) {
         list.removeAt(position)
         notifyItemRemoved(position)
       }

@@ -51,15 +51,8 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     introItem.imageResource?.let { binding?.presiginIntroImg?.setImageResource(it) }
 
     if (position == 0) {
-//      binding?.boostLogo?.visible()
       binding?.presiginIntroImg?.setOnClickListener {
-        WebEngageController.trackEvent(
-          PS_INTRO_VIDEO_SPLASH_CLICKED,
-          START_INTRO_VIDEO,
-          NO_EVENT_VALUE
-        )
-        playPause?.let { it5 -> it5(true) }
-        binding?.introImgContainer?.isVisible = false;
+        WebEngageController.trackEvent(PS_INTRO_VIDEO_SPLASH_CLICKED, START_INTRO_VIDEO, NO_EVENT_VALUE)
         binding?.videoViewContainer?.isVisible = true;
         binding?.introImgContainer?.isVisible = false;
         binding?.progressBar?.isVisible = true
@@ -97,11 +90,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
           true
         }
         binding?.videoViewContainer?.setOnClickListener {
-          WebEngageController.trackEvent(
-            PS_CLICKED_INTRO_VIDEO_AREA,
-            VIDEO_AREA_CLICKED,
-            NO_EVENT_VALUE
-          )
+          WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_AREA, VIDEO_AREA_CLICKED, NO_EVENT_VALUE)
           if (binding?.videoView?.isPlaying == true) {
             binding?.videoView?.pause()
             binding?.playPauseLottie?.isVisible = true
@@ -114,7 +103,6 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         timer?.resume()
         it.isVisible = false
       }
-//    } else binding?.boostLogo?.gone()
     }
 
     binding?.muteVideo?.setOnClickListener {

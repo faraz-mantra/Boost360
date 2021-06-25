@@ -163,6 +163,7 @@ const val ADDONS_MARKETPLACE_PAYMENT_LINK = "ADDONS MARKETPLACE PAYMENT LINK"
 const val PAYMENT_SCREEN = "Payment screen"
 const val DISCOUNT_COUPON = "Discount coupon"
 const val ADD_UPI = "Add UPI"
+const val EXT_EMAIL = "External Email Validation"
 const val FAILED_PAYMENT_TRANSACTION = "Failed payment transaction"
 const val GSTIN = "GSTIN"
 const val NET_BANKING = "Net banking"
@@ -192,6 +193,7 @@ const val DEEP_LINK = "Deep Link"
 const val YOUTUBE_LINK = "Youtube Link"
 const val CLICK_DIFFERENT_NUMBER= "Click different number"
 const val CLICK_LOGIN_USERNAME= "Click login username"
+const val BUSINESS_DETAILS = "BUSINESS DETAILS"
 
 
 

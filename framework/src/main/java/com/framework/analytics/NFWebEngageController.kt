@@ -8,32 +8,35 @@ import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
 
 object NFWebEngageController {
+
   private var weAnalytics: Analytics = WebEngage.get().analytics()
   private var weUser: User = WebEngage.get().user()
   private var isUserLoggedIn = false
   private val TAG = "NFController"
 
 
-    fun trackEvent(event_name: String, event_label: String, event_value: String) {
-        if (BaseApplication.instance.packageName != "com.jio.online") {
-            val trackEvent: MutableMap<String, Any> = HashMap()
-            trackEvent["event_name"] = event_name
-            trackEvent["fptag/event_value"] = event_value
-            trackEvent["event_label"] = event_label
-            if (event_label.equals("rev")) {
-                trackEvent["revenue"] = event_value
-            }
-            weAnalytics.track(event_name, trackEvent)
-            weAnalytics.screenNavigated(event_name)
-            //Firebase Analytics Event...
-            FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value)
+  fun trackEvent(event_name: String, event_label: String, event_value: String) {
+    if (BaseApplication.instance.packageName != "com.jio.online") {
+      val trackEvent: MutableMap<String, Any> = HashMap()
+      trackEvent["event_name"] = event_name
+      trackEvent["fptag/event_value"] = event_value
+      trackEvent["event_label"] = event_label
+      if (event_label.equals("rev")) {
+        trackEvent["revenue"] = event_value
+      }
+      weAnalytics.track(event_name, trackEvent)
+      weAnalytics.screenNavigated(event_name)
+      //Firebase Analytics Event...
+      FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value)
+
       //AppsFlyerEvent...
       try {
-          AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
+        AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
       } catch (e: Exception) {
+        e.printStackTrace()
       }
+    }
   }
-}
 
   fun trackEvent(event_name: String, event_label: String, event_value: HashMap<String, Any>) {
     if (BaseApplication.instance.packageName != "com.jio.online") {
@@ -41,8 +44,8 @@ object NFWebEngageController {
         weAnalytics.track(event_name, event_value)
         weAnalytics.screenNavigated(event_name)
 
-      //Firebase Analytics Event...
-      FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
+        //Firebase Analytics Event...
+        FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
 
         //AppsFlyerEvent...
         try {
@@ -51,6 +54,7 @@ object NFWebEngageController {
             event_name, event_value.toMap()
           )
         } catch (e: Exception) {
+          e.printStackTrace()
         }
       } else {
         weAnalytics.track(event_name)
@@ -77,6 +81,7 @@ object NFWebEngageController {
             event_name, event_value.toMap()
           )
         } catch (e: Exception) {
+          e.printStackTrace()
         }
       } else {
         weAnalytics.track(event_name)
@@ -131,7 +136,7 @@ object NFWebEngageController {
 
   fun initiateUserLogin(userId: String?) {
     if (BaseApplication.instance.packageName != "com.jio.online") {
-      if (!userId.isNullOrEmpty()) {
+      if (userId != null && !userId.isNullOrEmpty()) {
         Log.d(TAG, "Initiating User login" + userId)
         weUser.login(userId)
 
@@ -139,7 +144,7 @@ object NFWebEngageController {
         FirebaseAnalyticsUtilsHelper.identifyUser(userId)
 
         //AppsFlyer Analytics User Session Event
-        if (weAnalytics != null && weAnalytics.activity != null) {
+        if (weAnalytics.activity != null) {
           AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
         }
         AppsFlyerLib.getInstance().setCustomerUserId(userId)
@@ -154,8 +159,8 @@ object NFWebEngageController {
         if (!userCategory.isNullOrEmpty()) {
           weUser.setAttribute("Category", userCategory)
 
-                    //Firebase Analytics User Property.
-        FirebaseAnalyticsUtilsHelper.setUserProperty("Category", userCategory)
+          //Firebase Analytics User Property.
+          FirebaseAnalyticsUtilsHelper.setUserProperty("Category", userCategory)
 
           //AppsFlyer User Property
           val params = HashMap<String, Any>()
@@ -163,6 +168,7 @@ object NFWebEngageController {
           AppsFlyerLib.getInstance().setAdditionalData(params)
         }
       } catch (e: Exception) {
+        e.printStackTrace()
       }
     }
   }
@@ -170,6 +176,7 @@ object NFWebEngageController {
   fun setFPTag(fpTag: String) {
     if (BaseApplication.instance.packageName != "com.jio.online") {
       try {
+        if(fpTag == null) return;
         Log.d(TAG, "Setting FP Tag" + fpTag)
         weUser.setAttribute("fpTag", fpTag)
 
@@ -181,6 +188,7 @@ object NFWebEngageController {
         params["fpTag"] = fpTag
         AppsFlyerLib.getInstance().setAdditionalData(params)
       } catch (e: java.lang.Exception) {
+        e.printStackTrace()
       }
     }
   }

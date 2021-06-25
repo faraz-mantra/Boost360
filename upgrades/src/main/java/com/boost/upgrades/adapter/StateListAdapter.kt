@@ -23,6 +23,8 @@ class StateListAdapter(
 ) : RecyclerView.Adapter<StateListAdapter.upgradeViewHolder>(){
 
     private var list = ArrayList<StateModel>()
+    private var selectedState: String? = null
+    private var selectedItem: Int? = 0
     private lateinit var context: Context
 
     init {
@@ -46,6 +48,11 @@ class StateListAdapter(
         val items = list[position]
         holder.upgradeListItem(items)
 
+        if(items.state == selectedState){
+            holder.state_name.setTypeface(null,Typeface.BOLD)
+            holder.selected_state.setImageDrawable(context.resources.getDrawable(R.drawable.ic_checked))
+        }
+
         holder.itemView.setOnClickListener{
             holder.state_name.setTypeface(null,Typeface.BOLD)
             holder.selected_state.setImageDrawable(context.resources.getDrawable(R.drawable.ic_checked))
@@ -54,7 +61,8 @@ class StateListAdapter(
     }
 
 
-    fun addupdates(upgradeModel: List<StateModel>) {
+    fun addupdates(upgradeModel: List<StateModel>, state: String?) {
+        selectedState = state
         val initPosition = list.size
         list.clear()
         list.addAll(upgradeModel)

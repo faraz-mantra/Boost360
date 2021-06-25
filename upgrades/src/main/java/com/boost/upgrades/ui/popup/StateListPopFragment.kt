@@ -31,6 +31,7 @@ import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.utils.Utils.isValidGSTIN
 import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
+import com.boost.upgrades.utils.observeOnce
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.businessdetails_fragment.*
 import kotlinx.android.synthetic.main.businessdetails_fragment.close
@@ -53,6 +54,7 @@ class StateListPopFragment : DialogFragment() ,StateListener{
     var customerInfoState = false
 
     lateinit var stateListAdapter: StateListAdapter
+    private var getState: String? = null
 
 
     companion object {
@@ -80,6 +82,7 @@ class StateListPopFragment : DialogFragment() ,StateListener{
 //        viewModel = ViewModelProviders.of(requireActivity()).get(CheckoutKycViewModel::class.java)
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
         stateListAdapter = StateListAdapter((activity as UpgradeActivity),ArrayList(),this)
+        getState = requireArguments().getString("state")
         initializeFreeAddonsRecyclerView()
         initMvvm()
         viewModel.getStatesFromAssetJson(requireActivity())
@@ -104,15 +107,18 @@ class StateListPopFragment : DialogFragment() ,StateListener{
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMvvm() {
 
-        viewModel.stateResult().observe(this, androidx.lifecycle.Observer {
+        viewModel.stateResult().observeOnce(this, androidx.lifecycle.Observer {
             if(it != null){
                 var data = arrayListOf<StateModel>()
                 it.forEach {
-                    data.add(StateModel(it,"",0))
+                    if(!data.contains(StateModel(it,"",0))){
+                        data.add(StateModel(it,"",0))
+                    }
+//                    data.add(StateModel(it,"",0))
                 }
 
 
-                stateListAdapter.addupdates(data)
+                stateListAdapter.addupdates(data,getState)
                 stateListAdapter.notifyDataSetChanged()
             }
 
@@ -136,6 +142,8 @@ class StateListPopFragment : DialogFragment() ,StateListener{
     }
 
     override fun stateSelected(data: StateModel) {
+        getState = data.state
+//        stateListAdapter.notifyDataSetChanged()
 viewModel.selectedStateResult(data.state)
         Handler().postDelayed({
             dismiss()
