@@ -98,6 +98,7 @@
   <color name="lightest_grey">#F6F6F6</color>
   <color name="lightest_grey_10">#E7E7E7</color>
   <color name="primary_grey">#B3B4B4</color>
+  <color name="primary_grey_light">#888888</color>
   <color name="primary_grey_dark">#90918D</color>
   <color name="warm_grey_10">#4D4D4D</color>
   <color name="watermelon_light">#F06428</color>
