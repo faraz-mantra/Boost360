@@ -214,7 +214,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         Log.d("InitiatePurchaseOld", " " + createPurchaseOrderV2)
         if (Utils.isConnectedToInternet(getApplication())) {
 //            var sample = Gson().toJson(createPurchaseOrderV2)
-//            writeStringAsFile(sample, "booststring2.txt")
+//            writeStringAsFile(sample, "initiatePurchase.txt")
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
@@ -647,7 +647,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 //                                        updatesLoader.postValue(false)
                                     },
                                     {
-                                        Toasty.error(getApplication(), "Error occurred while registering your order - " + it.message, Toast.LENGTH_LONG).show()
+                                        Toasty.error(getApplication(), "Error occurred while applying coupon - " + it.message, Toast.LENGTH_LONG).show()
                                         updatesError.postValue(it.message)
                                         updatesLoader.postValue(false)
                                     }

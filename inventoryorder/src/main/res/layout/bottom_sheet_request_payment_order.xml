@@ -115,11 +115,13 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent">
 
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancel"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:background="@color/white"
-          android:text="@string/go_back" />
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_20"
+        android:text="@string/go_back"
+        android:textColor="@color/white" />
+
 
       <com.framework.views.customViews.CustomButton
           android:id="@+id/buttonDone"

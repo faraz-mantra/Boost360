@@ -42,12 +42,12 @@ class NetBankingPopUpAdaptor(itemList: ArrayList<SingleNetBankData>,val listener
         listener.popupSelectedBank(v!!)
     }
 
-//    fun addupdates(itemlist: List<String>) {
-//        val initPosition = list.size
+    fun addupdates(itemlist: List<SingleNetBankData>) {
+        val initPosition = list.size
 //        list = hash
-//        list.addAll(itemlist)
-//        notifyItemRangeInserted(initPosition, list.size)
-//    }
+        list.addAll(itemlist)
+        notifyItemRangeInserted(initPosition, list.size)
+    }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

@@ -216,7 +216,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
         buyItemButton = (TextView) findViewById(R.id.buy_item);
-        if (Constants.StoreWidgets.contains("CALLTRACKER")) {
+        if (session.getStoreWidgets().contains("CALLTRACKER")) {
             //oldCode
 //            setVmnTotalCallCount();
             //newCode

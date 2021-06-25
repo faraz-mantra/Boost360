@@ -64,12 +64,16 @@ class SuccessLoginNumberFragment : AuthBaseFragment<FragmentSuccessLoginBinding>
     when (v) {
       binding?.goDashboardBt -> {
         WebEngageController.trackEvent(PS_USER_LOGIN_SUCCESS_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
-        if (resultLogin?.authTokens?.size == 1) {
+        if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
           authTokenData()?.createAccessTokenAuth()
-        } else {
-          navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-            putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin)
-          })
+        }else {
+          if (resultLogin?.authTokens?.size == 1) {
+            authTokenData()?.createAccessTokenAuth()
+          } else {
+            navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+              putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin)
+            })
+          }
         }
       }
       binding?.changeNumberBtn -> {

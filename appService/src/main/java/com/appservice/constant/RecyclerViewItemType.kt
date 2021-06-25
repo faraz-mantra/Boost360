@@ -10,6 +10,7 @@ enum class RecyclerViewItemType {
   GST_DETAILS_VIEW,
   SESSION_ITEM_VIEW,
   SERVICE_TIMING_ITEM_VIEW,
+  UPDATE_BUSINESS_ITEM_VIEW,
   CREATE_CATEGORY_ITEM_VIEW,
   ADDITIONAL_FILE_VIEW,
   SERVICE_ITEM_VIEW,
@@ -28,6 +29,7 @@ enum class RecyclerViewItemType {
       GST_DETAILS_VIEW -> R.layout.item_gst_detail
       SESSION_ITEM_VIEW -> R.layout.recycler_item_session
       SERVICE_TIMING_ITEM_VIEW -> R.layout.item_service_timing
+      UPDATE_BUSINESS_ITEM_VIEW -> R.layout.item_updates_list
       CREATE_CATEGORY_ITEM_VIEW -> R.layout.item_create_category
       ADDITIONAL_FILE_VIEW -> R.layout.item_pdf_file
       SERVICE_ITEM_VIEW -> R.layout.recycler_item_service

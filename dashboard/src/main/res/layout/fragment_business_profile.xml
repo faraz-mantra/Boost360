@@ -165,7 +165,7 @@
           android:id="@+id/ctv_business_category"
           style="@style/BusinessProfileTextField"
           android:drawableEnd="@drawable/ic_lock_business"
-          android:text="@string/services_business" />
+          tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
@@ -304,7 +304,7 @@
               android:padding="@dimen/size_10"
               android:text="@string/active"
               android:textAllCaps="true"
-              android:textColor="#1DBE73" />
+              android:textColor="@color/green_27AE60" />
           </FrameLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
