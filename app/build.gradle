@@ -274,7 +274,7 @@ dependencies {
     implementation project(':imagepicker')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.github.angads25:toggle:1.1.0'
-    implementation 'com.nbsp:library:1.8'
+    implementation 'com.nbsp:materialfilepicker:1.9.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     implementation 'com.github.florent37:viewtooltip:1.1.5'
 
