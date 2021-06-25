@@ -176,6 +176,7 @@ object NFWebEngageController {
   fun setFPTag(fpTag: String) {
     if (BaseApplication.instance.packageName != "com.jio.online") {
       try {
+        if(fpTag == null) return;
         Log.d(TAG, "Setting FP Tag" + fpTag)
         weUser.setAttribute("fpTag", fpTag)
 

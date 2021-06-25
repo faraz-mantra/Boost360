@@ -38,23 +38,8 @@
               android:id="@+id/business_image"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_180"
-              android:layout_marginTop="@dimen/size_1"
-              android:layout_marginBottom="@dimen/size_1"
-              android:scaleType="centerCrop"
               android:visibility="gone"
               app:srcCompat="@color/placeholder_bg" />
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/ctv_whats_this"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="end"
-              android:layout_marginTop="10dp"
-              android:layout_marginEnd="10dp"
-              android:drawableEnd="@drawable/ic_info"
-              android:drawablePadding="@dimen/size_8"
-              android:text="@string/what_this"
-              android:textColor="@color/blue_4A90E2" />
 
             <LinearLayout
               android:id="@+id/image_add_btn"
@@ -65,7 +50,8 @@
               android:focusable="true"
               android:foreground="?attr/selectableItemBackground"
               android:gravity="center"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              tools:targetApi="m">
 
               <com.framework.views.customViews.CustomImageView
                 android:layout_width="wrap_content"
@@ -84,9 +70,27 @@
 
             </LinearLayout>
 
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_whats_this"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="end"
+              android:layout_marginTop="10dp"
+              android:layout_marginEnd="10dp"
+              android:drawablePadding="@dimen/size_2"
+              android:text="@string/what_this"
+              android:textColor="@color/blue_4A90E2"
+              android:visibility="gone" />
+            <!--            android:drawableRight="@drawable/ic_info_business_logo"-->
 
           </FrameLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+          android:id="@+id/divider2"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#E2E2E2" />
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_change_image"
@@ -96,12 +100,12 @@
           android:background="@null"
           android:enabled="true"
           android:gravity="center"
-          android:text="@string/add_business_image"
+          android:text="@string/update_business_image"
           android:textColor="@color/colorAccent"
           android:visibility="gone" />
 
         <View
-          android:id="@+id/divider2"
+          android:id="@+id/divider3"
           android:layout_width="match_parent"
           android:layout_height="1dp"
           android:background="#E2E2E2" />
@@ -161,7 +165,7 @@
           android:id="@+id/ctv_business_category"
           style="@style/BusinessProfileTextField"
           android:drawableEnd="@drawable/ic_lock_business"
-          android:text="@string/services_business" />
+          tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
@@ -292,6 +296,7 @@
               tools:text="+91 8242558406\n (VMN)+91 7042490968\nbrajmadhav@gmail.com\nhttp://brajmadhav.com" />
 
             <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_active"
               style="@style/TextSemiBoldStyle"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -299,7 +304,7 @@
               android:padding="@dimen/size_10"
               android:text="@string/active"
               android:textAllCaps="true"
-              android:textColor="#1DBE73" />
+              android:textColor="@color/green_27AE60" />
           </FrameLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -372,6 +377,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_16"
+          android:layout_marginBottom="@dimen/size_20"
           android:background="@drawable/bg_rect_edit_txt_gray"
           android:orientation="vertical">
 
@@ -545,6 +551,7 @@
           android:text="@string/save_amp_publish"
           android:textAllCaps="true"
           android:textColor="@color/white"
+          android:visibility="gone"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"

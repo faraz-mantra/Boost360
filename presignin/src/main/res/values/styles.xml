@@ -130,6 +130,7 @@
     <item name="android:textColor">@color/white</item>
     <item name="android:background">@drawable/signin_button_selector</item>
     <item name="android:textAllCaps">true</item>
+    <item name="android:drawableEnd">@null</item>
     <item name="android:paddingStart">@dimen/_24sdp</item>
     <item name="android:paddingEnd">@dimen/_24sdp</item>
   </style>

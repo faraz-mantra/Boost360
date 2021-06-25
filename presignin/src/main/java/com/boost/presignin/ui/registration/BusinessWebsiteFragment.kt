@@ -177,7 +177,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
           apiHitBusiness(businessProfileResponse)
         } else {
           hideProgress()
-          val msg = businessProfileResponse?.Error?.ErrorList?.eXCEPTION
+          val msg = it?.errorNMessage()
           showShortToast(if (msg.isNullOrEmpty().not()) msg else getString(R.string.unable_to_create_profile))
         }
       })
@@ -218,7 +218,6 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         session.userProfileEmail = response.result?.profileProperties?.userEmail
         session.userProfileName = response.result?.profileProperties?.userName
         session.userProfileMobile = response.result?.profileProperties?.userMobile
-
         session.storeISEnterprise(response.result?.isEnterprise.toString() + "")
         session.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
         session.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, floatsRequest?.categoryDataModel?.experience_code)
@@ -231,7 +230,10 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         session.saveAuthTokenData(authToken!!)
         session.setUserSignUpComplete(true)
         navigator?.clearBackStackAndStartNextActivity(RegistrationActivity::class.java, Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
-      } else showShortToast(getString(R.string.error_create_business_fp))
+      } else {
+        val msg = it.message()
+        showShortToast(if (msg.isNotEmpty()) msg else getString(R.string.error_create_business_fp))
+      }
       hideProgress()
     })
   }

@@ -119,6 +119,6 @@ public interface StoreInterface {
     void getSelfBrandedKyc(@Query("query") String query, Callback<PaymentKycDataResponse> callback);
 
 
-    @POST("discover/v1/FloatingPoint/AccessToken/Create")
+    @POST("/discover/v1/FloatingPoint/AccessToken/Create")
     void createAccessToken(@Body com.boost.presignin.model.accessToken.AccessTokenRequest request, Callback<com.boost.presignin.model.authToken.AccessTokenResponse> callback);
 }
