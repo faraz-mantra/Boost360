@@ -14,6 +14,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.interfaces.AddCardListener
+import com.boost.upgrades.interfaces.EmailPopupListener
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.utils.KeyboardUtils
 import com.boost.upgrades.utils.Utils
@@ -37,6 +39,12 @@ class AddCardPopUpFragement : DialogFragment() {
 
     var customerId: String? = null
 
+    companion object {
+        lateinit var listener: AddCardListener
+        fun newInstance(cardListener: AddCardListener) = AddCardPopUpFragement().apply {
+            listener = cardListener
+        }
+    }
 
     override fun onStart() {
         super.onStart()
@@ -108,7 +116,8 @@ class AddCardPopUpFragement : DialogFragment() {
 //                    data.put("customer_id", "cust_ETcczL3iRGxBNt");
                     data.put("save", "1");
                 }
-                viewModel.UpdateCardData(data)
+//                viewModel.UpdateCardData(data)
+                listener.cardSelected(data)
                 clearData()
                 dialog!!.dismiss()
             }

@@ -34,6 +34,9 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.HttpException
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
 
 class CartViewModel(application: Application) : BaseViewModel(application) {
 
@@ -69,7 +72,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     var customerInfoState: MutableLiveData<Boolean> = MutableLiveData()
     var cityResult: MutableLiveData<List<String>> = MutableLiveData()
+    var stateResult: MutableLiveData<List<String>> = MutableLiveData()
     var cityNames = ArrayList<String>()
+    var stateNames = ArrayList<String>()
 //    var redeemCouponResult: MutableLiveData<RedeemCouponResponse> = MutableLiveData()
     var redeemCouponResult: MutableLiveData<CouponServiceModel> = MutableLiveData()
 
@@ -194,10 +199,22 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun redeemCouponResult(): LiveData<CouponServiceModel>{
         return redeemCouponResult
     }
+    fun writeStringAsFile(fileContents: String?, fileName: String?) {
+        val context: Context = getApplication()
+        try {
+            val out = FileWriter(File(context.filesDir, fileName))
+            out.write(fileContents)
+            out.close()
+        } catch (e: IOException) {
+            println("exception  $e")
+        }
+    }
 
     fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
         Log.d("InitiatePurchaseOld", " " + createPurchaseOrderV2)
         if (Utils.isConnectedToInternet(getApplication())) {
+//            var sample = Gson().toJson(createPurchaseOrderV2)
+//            writeStringAsFile(sample, "initiatePurchase.txt")
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
@@ -593,6 +610,25 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+    fun getStatesFromAssetJson(context: Context) {
+        val data: String? = Utils.getStatesFromAssetJsonData(context)
+        try {
+            val json_contact: JSONObject = JSONObject(data)
+            var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
+            var i: Int = 0
+            var size: Int = jsonarray_info.length()
+            for (i in 0..size - 1) {
+                var json_objectdetail: JSONObject = jsonarray_info.getJSONObject(i)
+                stateNames.add(json_objectdetail.getString("state"))
+
+
+            }
+            stateResult.postValue(stateNames)
+        } catch (ioException: JSONException) {
+            ioException.printStackTrace()
+        }
+    }
+
     fun getCouponRedeem(redeemCouponRequest: RedeemCouponRequest, coupon_key: String) {
         Log.v("InitiatePurchaseAuto", " " + redeemCouponRequest + " " + coupon_key)
         if (Utils.isConnectedToInternet(getApplication())) {
@@ -611,7 +647,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 //                                        updatesLoader.postValue(false)
                                     },
                                     {
-                                        Toasty.error(getApplication(), "Error occurred while registering your order - " + it.message, Toast.LENGTH_LONG).show()
+                                        Toasty.error(getApplication(), "Error occurred while applying coupon - " + it.message, Toast.LENGTH_LONG).show()
                                         updatesError.postValue(it.message)
                                         updatesLoader.postValue(false)
                                     }

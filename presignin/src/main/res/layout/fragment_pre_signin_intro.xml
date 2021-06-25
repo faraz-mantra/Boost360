@@ -33,7 +33,7 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/presigin_intro_title"
           style="@style/intro_title_text_style"
-          android:layout_marginTop="@dimen/size_16"
+          android:layout_marginTop="@dimen/size_24"
           android:layout_marginBottom="@dimen/_2sdp"
           android:text="@{introItem.title}" />
 

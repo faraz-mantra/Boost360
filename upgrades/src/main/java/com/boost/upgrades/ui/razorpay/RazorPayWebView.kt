@@ -16,6 +16,7 @@ import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.ui.popup.FailedTransactionPopUpFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.analytics.NFWebEngageController
 import com.framework.webengageconstant.*
@@ -79,9 +80,7 @@ class RazorPayWebView : DialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
-        prefs.getCardIds()!!.forEach {
-            Log.v("onPaymentActivity", " cartids"+ it)
-        }
+
         if(savedInstanceState == null ) {
 
             try {
@@ -95,14 +94,11 @@ class RazorPayWebView : DialogFragment() {
 
                         val revenue = data["amount"] as Int
 
-                        prefs.getCardIds()!!.forEach {
-                            Log.v("onPaymentSuccess", " cartids"+ it)
-                        }
                         val event_attributes: HashMap<String, Any> = HashMap()
-                        event_attributes.put("revenue",(revenue / 100).toString())
-                        event_attributes.put("rev",(revenue / 100).toString())
-                        event_attributes.put("cartIds",Gson().toJson(prefs.getCardIds()))
-                        event_attributes.put("couponIds",Gson().toJson(prefs.getCouponIds()))
+                        event_attributes.put("revenue",(revenue / 100))
+                        event_attributes.put("rev",(revenue / 100))
+                        event_attributes.put("cartIds", Utils.filterBraces(prefs.getCardIds().toString()))
+                        event_attributes.put("couponIds",Utils.filterQuotes(prefs.getCouponIds().toString()))
                         WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_SUCCESS, ADDONS_MARKETPLACE, event_attributes)
 
 //                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success",

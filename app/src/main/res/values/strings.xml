@@ -3056,8 +3056,9 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my Boost website’s web address/URL.</string>
     <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make Boost website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
     <string name="add_logo">Add Logo</string>
+  <string name="business_timings">Business Timings</string>
 
-    <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
+  <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
 <!--    <string name="ir_statusBarColor">#ffb900</string>-->
     <string name="ria_customer_mail">ria@nowfloats.com</string>
     <string name="ria_customer_number">9160004303</string>

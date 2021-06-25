@@ -3,6 +3,7 @@ package com.appservice.rest.services
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
+import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.rest.EndPoints
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -27,17 +28,20 @@ interface WithFloatTwoRemoteData {
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.ADD_IMAGE)
   fun addUpdateImageProductService(
-          @Query("clientId") clientId: String?,
-          @Query("requestType") requestType: String?,
-          @Query("requestId") requestId: String?,
-          @Query("totalChunks") totalChunks: Int?,
-          @Query("currentChunkNumber") currentChunkNumber: Int?,
-          @Query("productId") productId: String?,
-          @Body requestBody: RequestBody?,
+    @Query("clientId") clientId: String?,
+    @Query("requestType") requestType: String?,
+    @Query("requestId") requestId: String?,
+    @Query("totalChunks") totalChunks: Int?,
+    @Query("currentChunkNumber") currentChunkNumber: Int?,
+    @Query("productId") productId: String?,
+    @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
   @GET(EndPoints.GET_NOTIFICATION)
   fun getNotificationCount(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?, @Query("isRead") isRead: Boolean = false): Observable<Response<Any>>
+
+  @GET(EndPoints.GET_LATEST_UPDATES)
+  fun getMessageUpdates(@QueryMap map: Map<String?, String?>?): Observable<Response<BusinessUpdateResponse>>
 
   @POST(EndPoints.CREATE_PRODUCT)
   fun createProduct(@Body request: CatalogProduct?): Observable<Response<String>>
@@ -51,12 +55,12 @@ interface WithFloatTwoRemoteData {
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.ADD_IMAGE)
   fun addUpdateImageProduct(
-          @Query("clientId") clientId: String?,
-          @Query("requestType") requestType: String?,
-          @Query("requestId") requestId: String?,
-          @Query("totalChunks") totalChunks: Int?,
-          @Query("currentChunkNumber") currentChunkNumber: Int?,
-          @Query("productId") productId: String?,
-          @Body requestBody: RequestBody?,
+    @Query("clientId") clientId: String?,
+    @Query("requestType") requestType: String?,
+    @Query("requestId") requestId: String?,
+    @Query("totalChunks") totalChunks: Int?,
+    @Query("currentChunkNumber") currentChunkNumber: Int?,
+    @Query("productId") productId: String?,
+    @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 }

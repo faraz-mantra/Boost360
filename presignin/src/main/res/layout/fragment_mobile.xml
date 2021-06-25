@@ -90,7 +90,7 @@
       android:layout_marginTop="@dimen/_6sdp"
       android:layout_marginEnd="@dimen/_16sdp"
       android:layout_marginBottom="@dimen/_4sdp"
-      android:background="#cacaca"
+      android:background="@color/graycacaca"
       app:layout_constraintTop_toBottomOf="@id/phone_et_container" />
 
     <!--        <com.framework.views.customViews.CustomTextView-->
@@ -107,6 +107,7 @@
       android:layout_marginTop="@dimen/_24sdp"
       android:layout_marginEnd="@dimen/_16sdp"
       android:enabled="false"
+        android:textAllCaps="false"
       android:drawableEnd="@null"
       android:text="@string/request_otp"
       app:layout_constraintTop_toBottomOf="@id/divider"
@@ -127,14 +128,15 @@
       tools:targetApi="p" />
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/help_tv"
-      style="@style/psn_subheading_style"
-      android:layout_width="wrap_content"
-      android:layout_marginTop="@dimen/_20sdp"
-      android:fontFamily="@font/semi_bold"
-      android:text="@string/need_help"
-        android:visibility="gone"
-      app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
-      tools:ignore="MissingConstraints,UnknownId" />
+        android:id="@+id/help_tv"
+        style="@style/psn_subheading_style"
+        android:layout_width="wrap_content"
+        android:fontFamily="@font/semi_bold"
+        app:layout_constraintVertical_bias="1"
+        android:text="@string/need_help"
+        app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+        app:layout_constraintTop_toBottomOf="@+id/login_username"
+        tools:ignore="MissingConstraints,UnknownId"
+         />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
