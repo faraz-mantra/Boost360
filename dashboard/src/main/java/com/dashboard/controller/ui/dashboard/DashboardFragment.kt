@@ -3,6 +3,7 @@ package com.dashboard.controller.ui.dashboard
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.*
 import android.net.Uri
 import android.os.Handler
@@ -302,6 +303,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           compoundDrawableTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a)
         }
       }
+      binding?.ctvImproveScore?.setTextColor(getColor(R.color.colorAccent))
       binding?.btnVisitingCard?.background = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_btn_round_blue_stroke else R.drawable.ic_btn_round_white_stroke)
       binding?.txtVisitingCard?.setTextColor(ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.white))
       binding?.txtNotification?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.white)

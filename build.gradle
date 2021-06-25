@@ -32,12 +32,6 @@ allprojects {
         maven {
             url "http://repo.apxor.com/artifactory/list/libs-release-android"
         }
-        maven {
-            url "https://dl.bintray.com/notifyvisitors/invitereferrals"
-        }
-        maven {
-            url  "http://dl.bintray.com/lukaville/maven"
-        }
         flatDir {
             dirs 'libs'
         }
