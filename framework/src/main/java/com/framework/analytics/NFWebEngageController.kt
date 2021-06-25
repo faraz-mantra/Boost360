@@ -16,6 +16,7 @@ object NFWebEngageController {
 
 
   fun trackEvent(event_name: String, event_label: String, event_value: String) {
+    if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
       val trackEvent: MutableMap<String, Any> = HashMap()
       trackEvent["event_name"] = event_name
@@ -39,6 +40,7 @@ object NFWebEngageController {
   }
 
   fun trackEvent(event_name: String, event_label: String, event_value: HashMap<String, Any>) {
+    if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
       if (event_value.size > 0) {
         weAnalytics.track(event_name, event_value)
@@ -64,6 +66,7 @@ object NFWebEngageController {
   }
 
   fun trackEventLoad(event_name: String, event_label: String, event_value: HashMap<String, Any>, value: String) {
+    if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
       if (event_value.size > 0) {
         event_value["event_name"] = event_name
@@ -91,6 +94,7 @@ object NFWebEngageController {
   }
 
   fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
+    if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
       if (isUserLoggedIn) {
         if (!email.isNullOrEmpty()) {
@@ -135,6 +139,7 @@ object NFWebEngageController {
 
 
   fun initiateUserLogin(userId: String?) {
+    if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
       if (userId != null && !userId.isNullOrEmpty()) {
         Log.d(TAG, "Initiating User login" + userId)
@@ -154,6 +159,7 @@ object NFWebEngageController {
   }
 
   fun setCategory(userCategory: String?) {
+    if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
       try {
         if (!userCategory.isNullOrEmpty()) {
@@ -174,9 +180,10 @@ object NFWebEngageController {
   }
 
   fun setFPTag(fpTag: String) {
+    if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
       try {
-        if(fpTag == null) return;
+        if (fpTag == null) return;
         Log.d(TAG, "Setting FP Tag" + fpTag)
         weUser.setAttribute("fpTag", fpTag)
 
@@ -194,6 +201,7 @@ object NFWebEngageController {
   }
 
   fun logout() {
+    if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
       Log.d(TAG, "Loggind user out from analytics")
       weUser.logout()

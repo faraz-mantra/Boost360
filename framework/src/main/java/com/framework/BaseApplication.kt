@@ -16,6 +16,7 @@ open class BaseApplication : MultiDexApplication() {
 
   companion object {
     lateinit var instance: Application
+    fun isInitialised() = ::instance.isInitialized
   }
 
   override fun attachBaseContext(base: Context) {

@@ -22,9 +22,9 @@
     <color name="IntroIndicatorAccent">@color/colorPrimaryDarkBlue</color>
     <color name="ButtonStrokeWhite">@color/colorPrimaryDarkBlue</color>
     <color name="button_background_white_1a">@color/colorPrimaryDarkBlue</color>
-    <color name="ButtonTextcolorAccent">#ffb900</color>
-    <color name="ButtoncolorPrimary">#ffb900</color>
-    <color name="ButtoncolorPrimaryDark">#d99d00</color>
+    <color name="ButtonTextcolorAccent">@color/colorPrimary</color>
+    <color name="ButtoncolorPrimary">@color/colorPrimary</color>
+    <color name="ButtoncolorPrimaryDark">@color/colorPrimary</color>
     <color name="dashboard_high_score_tint">#EC008C</color>
     <color name="website_toolbar_color">#EC008C</color>
     <color name="website_button_lite">@color/white</color>
@@ -36,8 +36,5 @@
     <color name="open_website_background">@color/white</color>
     <color name="text_dark">@color/colorPrimaryDarkBlue</color>
     <color name="bg_dark_grey">@color/colorPrimary</color>
-
-
-
 
 </resources>
