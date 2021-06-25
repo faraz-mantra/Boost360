@@ -94,7 +94,7 @@
     <color name="accent_light_red">@color/colorAccentLight</color>
     <color name="colorAccent_jio">@color/red_light_1</color>
     <color name="black_4a4a4a_jio">@color/colorPrimary</color>
-    <color name="primary_4a4a4a_jio">@color/colorAccentLight</color>
+    <color name="primary_4a4a4a_jio">@color/colorPrimaryDarkBlue</color>
 
     <color name="started_button_start">@color/colorPrimary</color>
     <color name="started_button_end">@color/colorPrimary</color>
