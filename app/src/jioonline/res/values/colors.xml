@@ -21,6 +21,7 @@
 
     <color name="dark_black_color">#6e6e6e</color>
 
+    <color name="white_green_light">@color/green</color>
     <color name="light_black_color">#a4a4a4</color>
     <color name="search_date_color">#8c8c8c</color>
     <color name="title_popup">#212121</color>
@@ -90,8 +91,10 @@
 
     <color name="accent_30">#4D0400A6</color>
     <color name="red_light_1">#EC008C</color>
+    <color name="accent_light_red">@color/colorAccentLight</color>
     <color name="colorAccent_jio">@color/red_light_1</color>
     <color name="black_4a4a4a_jio">@color/colorPrimary</color>
+    <color name="primary_4a4a4a_jio">@color/colorAccentLight</color>
 
     <color name="started_button_start">@color/colorPrimary</color>
     <color name="started_button_end">@color/colorPrimary</color>
@@ -100,4 +103,5 @@
     <color name="black_4a4a4a_n">#918F8F</color>
     <color name="grey_575757_n">#BDBCBC</color>
     <color name="grey_333333_n">#515151</color>
+    <color name="gray_text_hint">#CCFFFFFF</color>
 </resources>
