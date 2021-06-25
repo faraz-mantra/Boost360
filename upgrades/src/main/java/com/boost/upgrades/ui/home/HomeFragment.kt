@@ -333,6 +333,14 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
       getItemPromoBanner(arguments?.getString("buyItemKey"))
     }
+    else if (arguments?.getString("screenType") == "expertContact") {
+      if (progressDialog.isShowing) {
+        progressDialog.hide()
+      }
+        callExpertContact(prefs.getExpertContact())
+
+
+    }
 
     //chat bot view button clicked
     view_chat.setOnClickListener {
@@ -678,6 +686,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
       Log.e("getYoutubeVideoDetails", it.toString())
       val expertConnectDetails = it
       if (it.is_online) {
+        prefs.storeExpertContact(it.contact_number)
         callnow_layout.visibility = View.VISIBLE
         callnow_image.visibility = View.VISIBLE
         callnow_title.setText(it.line1)
@@ -1984,6 +1993,18 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                         it.printStackTrace()
                       })
       )
+    }
+  }
+
+  fun callExpertContact(phone: String?){
+Log.v("callExpertContact", " "+ phone)
+    if(phone != null){
+      WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXPERT_SPEAK, CLICK, NO_EVENT_VALUE)
+      val callIntent = Intent(Intent.ACTION_DIAL)
+      callIntent.data = Uri.parse("tel:" + phone)
+      startActivity(Intent.createChooser(callIntent, "Call by:"))
+    }else{
+      Toasty.error(requireContext(), "Expert will be available tomorrow from 10am", Toast.LENGTH_LONG).show()
     }
   }
 }
