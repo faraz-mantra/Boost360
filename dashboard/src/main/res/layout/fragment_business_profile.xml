@@ -148,7 +148,12 @@
           style="@style/BusinessProfileTextField"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
           android:singleLine="true"
-          tools:ignore="UnusedAttribute" />
+          tools:ignore="UnusedAttribute"
+          app:textType="BODY_2"
+          android:includeFontPadding="false"
+          android:textColor="@color/black_2A2A2A"
+          android:textFontWeight="500"
+          tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
@@ -166,6 +171,7 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_business_category"
           style="@style/BusinessProfileTextField"
+          android:textColor="@color/primary_grey_light"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
           android:drawableEnd="@drawable/ic_lock_business"
           tools:text="@string/services_business" />
