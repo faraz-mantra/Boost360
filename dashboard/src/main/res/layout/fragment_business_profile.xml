@@ -10,7 +10,7 @@
   <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_snow"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -118,7 +118,8 @@
         android:layout_marginStart="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
         android:orientation="vertical"
-        android:paddingEnd="@dimen/size_20">
+        android:paddingEnd="@dimen/size_20"
+        tools:ignore="RtlSymmetry">
 
         <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
@@ -145,6 +146,7 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_business_name"
           style="@style/BusinessProfileTextField"
+          android:background="@drawable/bg_rect_edit_txt_gray_business"
           android:singleLine="true"
           tools:ignore="UnusedAttribute" />
 
@@ -164,6 +166,7 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_business_category"
           style="@style/BusinessProfileTextField"
+          android:background="@drawable/bg_rect_edit_txt_gray_business"
           android:drawableEnd="@drawable/ic_lock_business"
           tools:text="@string/services_business" />
 
