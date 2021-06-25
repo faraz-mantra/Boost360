@@ -11,8 +11,8 @@ import com.appservice.databinding.FragmentStaffTimingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.staffs.model.StaffDetailsResult
-import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.model.staffModel.StaffDetailsResult
+import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
