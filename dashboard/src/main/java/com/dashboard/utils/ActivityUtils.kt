@@ -11,12 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
-import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
+import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
@@ -271,6 +272,7 @@ fun AppCompatActivity.startNotification(session: UserSessionManager) {
 
 fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
   WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
+//  startUpdateFragmentActivity(com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT)
   startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
 }
 

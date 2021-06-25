@@ -3,6 +3,7 @@ package com.framework.utils
 import android.app.Activity
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Build
+import android.os.SystemClock
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -16,6 +17,14 @@ import androidx.appcompat.app.AppCompatActivity
 import java.text.NumberFormat
 import java.util.*
 
+fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
+  var lastClickTime: Long = 0
+  this.setOnClickListener {
+    if (SystemClock.elapsedRealtime() - lastClickTime < blockInMillis) return@setOnClickListener
+    lastClickTime = SystemClock.elapsedRealtime()
+    listener.onClick(this)
+  }
+}
 
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus

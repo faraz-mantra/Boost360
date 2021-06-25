@@ -39,6 +39,10 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.getNotificationCount(clientId, fpId), TaskCode.GET_NOTIFICATION)
   }
 
+  fun getMessageUpdates(map: Map<String?, String?>): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getMessageUpdates(map), TaskCode.GET_LATEST_UPDATE)
+  }
+
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
     return WithFloatTwoRemoteData::class.java
   }

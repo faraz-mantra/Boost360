@@ -176,6 +176,7 @@
   <string name="product_details">Product details</string>
   <string name="additional_information">Additional Info</string>
   <string name="testimonial_title">Testimonials</string>
+  <string name="updates_title">Latest Updates</string>
   <string name="testimonial_add">Add Testimonial</string>
   <string name="testimonial_edit">Edit Testimonial</string>
   <string name="error_getting_web_action">Error getting web action list!</string>
@@ -563,6 +564,7 @@
   <string name="type_a_tag_and_press_add_s_info">Type a tag and press \'ADD\'</string>
   <string name="current_selection">Current selection</string>
   <string name="_4_products_under_this_category">4 products under this category</string>
+  <string name="latest_update_data_not_found">Latest update data not found!</string>
 
 
   <array name="stock_availbility">
