@@ -150,7 +150,7 @@
           android:focusable="true"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
-          android:textColor="@color/white"
+          android:backgroundTint="@color/colorAccentLight"
           app:fabIcon="@drawable/ic_add_white"
           app:fabIconPosition="start"
           app:fabSize="normal"

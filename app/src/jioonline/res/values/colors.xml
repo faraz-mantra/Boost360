@@ -5,9 +5,13 @@
     <color name="greenDark">#458b00</color>
     <color name="product_delete_btn">#ff3f3f</color>
 
+    <color name="orange">@color/colorPrimary</color>
     <color name="colorAccentLight">#0E0AC3</color>
+    <color name="squash">#0E0AC3</color>
+    <color name="marigold">#0E0AC3</color>
     <color name="colorPrimary_10">#1A0400A6</color>
     <color name="accentLight_1">#2522D3</color>
+
 
 
 <!--    <color name="primaryColorDark">#d99d00</color>-->
@@ -71,11 +75,11 @@
     <color name="primary_color">@color/colorPrimary</color>
     <color name="primary_color_dark">@color/colorPrimaryDark</color>
 
-    <color name="accent_lemon">#1A0400A6</color>
+    <color name="accent_lemon">#1AEC008C</color>
 
     <color name="success_green">#6DCA07</color>
 
-    <color name="orange">@color/colorPrimary</color>
+
     <color name="orange_light">#1A0400A6</color>
     <color name="login_button_color">@color/orange_light</color>
     <color name="dashboard_business_url">@color/white</color>

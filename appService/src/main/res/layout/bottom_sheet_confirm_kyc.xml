@@ -210,7 +210,7 @@
         android:paddingVertical="@dimen/size_14"
         android:text="@string/cancel_and_review"
         android:textAllCaps="false"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorAccentLight"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 

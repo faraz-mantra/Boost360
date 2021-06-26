@@ -13,6 +13,6 @@
     <color name="black_50">#80000000</color>
 
     <color name="live_red">#FF3144</color>
-    <color name="ButtoncolorAccent">@color/colorAccent</color>
+    <color name="ButtoncolorAccent">@color/colorAccentLight</color>
 
 </resources>

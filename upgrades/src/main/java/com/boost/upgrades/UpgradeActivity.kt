@@ -76,7 +76,7 @@ class UpgradeActivity : AppCompatActivity() {
   var deepLinkDay: Int = 7
   var compareBackListener: CompareBackListener? = null
 
-  var clientid: String = "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5"
+  var clientid: String = "1YGC764N4AV65XJ9ELXIGJAZ9W3P4K28UUIFX8ZUMW0VTTOJ2EZR9T1KVI6A79RE"
   private var widgetFeatureCode: String? = null
 
   private var initialLoadUpgradeActivity: Int = 0

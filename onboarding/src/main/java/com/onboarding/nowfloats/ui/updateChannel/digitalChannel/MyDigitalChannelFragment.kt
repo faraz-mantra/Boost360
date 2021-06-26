@@ -305,8 +305,8 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun changeView(isConnect: Boolean) {
-    (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorAccent else R.color.bg_dark_grey)
-    (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorAccent else R.color.bg_dark_grey)
+    (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
+    (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
     binding?.disconnectedBg?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.viewConnect?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.connectedRiya?.visibility = if (isConnect) View.VISIBLE else View.GONE
