@@ -173,7 +173,7 @@
           style="@style/BusinessProfileTextField"
           android:textColor="@color/primary_grey_light"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
-          android:drawableEnd="@drawable/ic_lock_business"
+          android:drawableEnd="@drawable/ic_lock_business_n"
           tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat

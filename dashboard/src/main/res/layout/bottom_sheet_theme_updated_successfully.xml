@@ -28,8 +28,9 @@
       <com.framework.views.customViews.CustomImageView
         android:layout_width="@dimen/size_70"
         android:layout_height="@dimen/size_70"
+        android:padding="@dimen/size_10"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_success" />
+        android:src="@drawable/ic_selected_icon" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/txt_message"
@@ -40,7 +41,7 @@
         android:fontFamily="@font/open_sans"
         android:text="@string/website_updated"
         android:textAllCaps="true"
-        android:textColor="@color/yellow_ffb900"
+        android:textColor="@color/colorAccentLight"
         app:fontFamily="@font/semi_bold"
         app:textType="HEADING_5" />
 

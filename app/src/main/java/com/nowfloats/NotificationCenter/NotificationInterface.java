@@ -18,20 +18,20 @@ import retrofit.http.QueryMap;
  */
 public interface NotificationInterface {
     //https://api.withfloats.com/Discover/v1/floatingpoint/getnotifications?
-    // clientId=2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5&
+    // clientId=1YGC764N4AV65XJ9ELXIGJAZ9W3P4K28UUIFX8ZUMW0VTTOJ2EZR9T1KVI6A79RE&
     // fpId=5406bd254ec0a40d409f2b2b&isRead=&&offset=0&limit=10
     @GET("/Discover/v1/floatingpoint/getnotifications")
     public void getAlerts(@QueryMap Map<String, String> map, Callback<ArrayList<AlertModel>> callback);
 
 
     //https://api.withfloats.com/Discover/v1/floatingpoint/notification/notificationStatus?
-    // fpId=5406bd254ec0a40d409f2b2b&clientId=2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5&notificationId=558415374ec0a42df8ca0937&isRead=FALSE
+    // fpId=5406bd254ec0a40d409f2b2b&clientId=1YGC764N4AV65XJ9ELXIGJAZ9W3P4K28UUIFX8ZUMW0VTTOJ2EZR9T1KVI6A79RE&notificationId=558415374ec0a42df8ca0937&isRead=FALSE
     @POST("/Discover/v1/floatingpoint/notification/notificationStatus")
     public void setRead(@Body JSONObject empty, @QueryMap Map<String, String> map, Callback<String> callback);
 
 
     //https://api.withfloats.com/Discover/v1/floatingpoint/notificationscount?
-    // clientId=2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5&fpId=5406bd254ec0a40d409f2b2b&isRead=false
+    // clientId=1YGC764N4AV65XJ9ELXIGJAZ9W3P4K28UUIFX8ZUMW0VTTOJ2EZR9T1KVI6A79RE&fpId=5406bd254ec0a40d409f2b2b&isRead=false
     @GET("/Discover/v1/floatingpoint/notificationscount")
     public void getAlertCount(@QueryMap Map<String, String> map, Callback<String> callback);
 
