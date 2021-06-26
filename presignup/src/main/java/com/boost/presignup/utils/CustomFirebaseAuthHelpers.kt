@@ -211,7 +211,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
     val userInfo = UserProfileRequest(
         personIdToken,
-        "1YGC764N4AV65XJ9ELXIGJAZ9W3P4K28UUIFX8ZUMW0VTTOJ2EZR9T1KVI6A79RE",
+        "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5",
         loginKey,
         userPassword,
         ProfileProperties(email, userMobile, personName, userPassword), provider, null)
@@ -250,7 +250,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
   fun verifyUserProfileAPI(loginKey: String, loginSecret: String, provider: String) {
     val userInfo = UserProfileVerificationRequest("", provider,
-        loginKey, loginSecret, "1YGC764N4AV65XJ9ELXIGJAZ9W3P4K28UUIFX8ZUMW0VTTOJ2EZR9T1KVI6A79RE")
+        loginKey, loginSecret, "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5")
 
     ApiService.verifyUserProfileAny(userInfo).enqueue(object : Callback<ResponseBody> {
       override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

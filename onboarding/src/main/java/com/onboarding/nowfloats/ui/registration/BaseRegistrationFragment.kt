@@ -54,7 +54,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     }
   protected val clientId: String?
     get() {
-      return pref?.getString(PreferenceConstant.CLIENT_ID, "1YGC764N4AV65XJ9ELXIGJAZ9W3P4K28UUIFX8ZUMW0VTTOJ2EZR9T1KVI6A79RE")
+      return pref?.getString(PreferenceConstant.CLIENT_ID, "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5")
     }
 
   protected var requestFloatsModel: RequestFloatsModel? = null
