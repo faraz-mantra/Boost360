@@ -318,7 +318,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/initiate_new_order"
-          android:textColor="@color/orange"
+          android:textColor="@color/colorAccentLight"
           android:textAllCaps="true"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_1" />
