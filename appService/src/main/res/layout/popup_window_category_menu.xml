@@ -64,7 +64,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:padding="@dimen/size_16"
-                android:text="@string/delete"
+                android:text="@string/delete_"
                 android:textAllCaps="true"
                 android:textColor="@color/red_F40000"
                 android:textSize="12sp" />
