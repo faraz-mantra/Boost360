@@ -60,33 +60,33 @@
           app:textType="HEADING_6" />
 
         <RadioGroup
-            android:id="@+id/radioGroup"
-            style="@style/match_wrap"
-            android:layout_marginTop="@dimen/size_10"
-            android:orientation="vertical">
+          android:id="@+id/radioGroup"
+          style="@style/match_wrap"
+          android:layout_marginTop="@dimen/size_10"
+          android:orientation="vertical">
 
           <com.framework.views.customViews.CustomRadioButton
-              android:id="@+id/radio_store"
-              style="@style/RadioButtonStyle"
-              android:checked="true"
-              android:text="@string/your_store"
-              app:textType="HEADING_6" />
+            android:id="@+id/radio_store"
+            style="@style/RadioButtonStyle"
+            android:checked="true"
+            android:text="@string/your_store"
+            app:textType="HEADING_6" />
 
           <com.framework.views.DashedDividerView
-              android:layout_width="match_parent"
-              android:layout_height="0.8dp"
-              android:layout_marginTop="@dimen/size_10"
-              android:layout_marginBottom="@dimen/size_10"
-              android:textColor="@color/black_2A2A2A"
-              app:dividerDashColor="@color/light_grey_2"
-              app:dividerDashGap="@dimen/size_2"
-              app:dividerDashWidth="@dimen/size_3" />
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_10"
+            android:textColor="@color/black_2A2A2A"
+            app:dividerDashColor="@color/light_grey_2"
+            app:dividerDashGap="@dimen/size_2"
+            app:dividerDashWidth="@dimen/size_3" />
 
           <com.framework.views.customViews.CustomRadioButton
-              android:id="@+id/radio_customer"
-              style="@style/RadioButtonStyle"
-              android:text="@string/customer"
-              app:textType="HEADING_6" />
+            android:id="@+id/radio_customer"
+            style="@style/RadioButtonStyle"
+            android:text="@string/customer"
+            app:textType="HEADING_6" />
 
         </RadioGroup>
 
@@ -137,28 +137,30 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/btn_bottom"
-        style="@style/match_wrap"
-        android:background="@color/white"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:padding="@dimen/size_14"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+      android:id="@+id/btn_bottom"
+      style="@style/match_wrap"
+      android:background="@color/white"
+      android:gravity="end"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_14"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
+
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/tvCancel"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:layout_marginEnd="@dimen/size_10"
-          android:background="@color/white"
-          android:text="@string/go_back" />
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_20"
+        android:text="@string/go_back"
+        android:textColor="@color/white" />
+
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:text="@string/done"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:text="@string/done"
+        android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

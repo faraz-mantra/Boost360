@@ -374,7 +374,7 @@
 -keep class com.inventoryorder.model.** { <fields>; }
 -keep class com.dashboard.model.** { <fields>; }
 -keep class com.appservice.model.** { <fields>; }
--keep class com.appservice.staffs.model.** { <fields>; }
+-keep class com.appservice.model.staffModel.** { <fields>; }
 -keep class com.boost.presignup.datamodel.** { <fields>; }
 -keep class com.appservice.ui.model.** { <fields>; }
 -keep class com.inventoryorder.ui.tutorials.model.** { <fields>; }

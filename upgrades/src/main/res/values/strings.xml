@@ -54,4 +54,9 @@
     <string name="marketoffer_termFour">This coupon code is valid for one-time use only.<br/></string>
     <string name="marketoffer_termFive">There is no minimum cart amount to avail this offer.<br/></string>
     <string name="marketoffer_termSix">Offer valid from %1$s - %2$s.For more information regarding money click here.<br/></string>
+
+    <string name="enter_gstin_number">Enter your GSTIN</string>
+    <string name="enter_business_name">Enter your Business name</string>
+    <string name="enter_email">Enter email address</string>
+    <string name="enter_business_address">Enter your business address</string>
 </resources>

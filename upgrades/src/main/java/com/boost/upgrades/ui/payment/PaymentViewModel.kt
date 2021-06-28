@@ -36,6 +36,7 @@ import java.io.IOException
 
 class PaymentViewModel(application: Application) : BaseViewModel(application) {
     private var _paymentMethods: MutableLiveData<JSONObject> = MutableLiveData()
+    private var _paymentMoreBanksMethods: MutableLiveData<JSONObject> = MutableLiveData()
     private var _upiPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _externalEmailPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _cardData: MutableLiveData<JSONObject> = MutableLiveData()
@@ -44,6 +45,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     var updateCustomerInfo: MutableLiveData<GetCustomerIDResponse> = MutableLiveData()
     var customerInfoState: MutableLiveData<Boolean> = MutableLiveData()
     private var customerInfo: MutableLiveData<CreateCustomerIDResponse> = MutableLiveData()
+    private var updateInfo: MutableLiveData<CreateCustomerIDResponse> = MutableLiveData()
     var cityResult: MutableLiveData<List<String>> = MutableLiveData()
     var stateResult: MutableLiveData<List<String>> = MutableLiveData()
     var stateValueResult: MutableLiveData<String> = MutableLiveData()
@@ -61,9 +63,13 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
 
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
+    var gstSwitchFlag : MutableLiveData<Boolean> = MutableLiveData()
+    var closeBusinessPopupFlag: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun getPaymentMethods(): JSONObject {
-        return _paymentMethods.value!!
+//    fun getPaymentMethods(): JSONObject {
+    fun getPaymentMethods(): LiveData<JSONObject>  {
+//        return _paymentMethods.value!!
+        return _paymentMoreBanksMethods
     }
 
     fun walletPaymentData(): LiveData<JSONObject> {
@@ -110,6 +116,15 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
         return customerInfo
     }
 
+    fun getUpdatedCustomerBusinessResult(): LiveData<CreateCustomerIDResponse> {
+        return customerInfo
+    }
+
+    fun getUpdatedResult(): LiveData<CreateCustomerIDResponse> {
+        return updateInfo
+    }
+
+
     fun getCustomerInfoStateResult(): LiveData<Boolean> {
         return customerInfoState
     }
@@ -150,12 +165,51 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
         return updatesLoader
     }
 
+    fun getGstSwitchFlag(): LiveData<Boolean> {
+        return gstSwitchFlag
+    }
+
+    fun updatesBusinessPopup(popUp: Boolean) {
+        return closeBusinessPopupFlag.postValue(popUp)
+    }
+
+    fun getBusinessPopup(): LiveData<Boolean> {
+        return closeBusinessPopupFlag
+    }
+
+    fun writeStringAsFile(fileContents: String?, fileName: String?) {
+        val context: Context = getApplication()
+        try {
+            val out = FileWriter(File(context.filesDir, fileName))
+            out.write(fileContents)
+            out.close()
+        } catch (e: IOException) {
+            println("exception  $e")
+        }
+    }
+
     fun loadpaymentMethods(razorpay: Razorpay) {
         razorpay.getPaymentMethods(object : BaseRazorpay.PaymentMethodsCallback {
             override fun onPaymentMethodsReceived(result: String?) {
               val paymentMethods = JSONObject(result!!)
               Log.i("onPaymentMethods :", paymentMethods.toString())
               _paymentMethods.postValue(paymentMethods)
+            }
+
+            override fun onError(e: String?) {
+                Log.e("onError :", e!!)
+            }
+
+        })
+    }
+
+    fun loadMoreBanks(razorpay: Razorpay) {
+        razorpay.getPaymentMethods(object : BaseRazorpay.PaymentMethodsCallback {
+            override fun onPaymentMethodsReceived(result: String?) {
+                val paymentMethods = JSONObject(result!!)
+            writeStringAsFile(paymentMethods.toString(), "loadMoreBanks.txt")
+                Log.i("onPaymentMethods :", paymentMethods.toString())
+                _paymentMoreBanksMethods.postValue(paymentMethods)
             }
 
             override fun onError(e: String?) {
@@ -215,6 +269,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
                             Log.i("getCustomerId>>", it.toString())
                             updateCustomerInfo.postValue(it)
                             customerInfoState.postValue(true)
+//                            customerInfoState.postValue(false)
                         },
                         {
                             val temp = (it as HttpException).response()!!.errorBody()!!.string()
@@ -260,6 +315,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
                 var json_objectdetail: JSONObject = jsonarray_info.getJSONObject(i)
                 Log.v("getStateFromCity", " "+ json_objectdetail.getString("name") + " "+ city)
                 if(json_objectdetail.getString("name").equals(city)){
+//                    stateValue = json_objectdetail.getString("state") + "("+json_objectdetail.getString("state_tin") +")"
                     stateValue = json_objectdetail.getString("state")
                 }
                 cityValueResult.postValue(stateValue)
@@ -317,7 +373,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
                 .subscribe(
                     {
                         Log.i("CreateCustomerId>>", it.toString())
-                        customerInfo.postValue(it)
+                        updateInfo.postValue(it)
                         updatesLoader.postValue(false)
                     },
                     {
@@ -330,6 +386,8 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun updateCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+//                    var sample = Gson().toJson(createCustomerInfoRequest)
+//            writeStringAsFile(sample, "updateCustomer.txt")
         APIRequestStatus = "Creating a new payment profile..."
         CompositeDisposable().add(
             ApiService.updateCustomerId(createCustomerInfoRequest)
@@ -337,7 +395,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        Log.i("CreateCustomerId>>", it.toString())
+                        Log.i("updateCustomerInfo>>", it.toString())
                         customerInfo.postValue(it)
 //                        updatesLoader.postValue(false)
                     },

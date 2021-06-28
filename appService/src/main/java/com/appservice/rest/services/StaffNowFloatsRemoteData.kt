@@ -3,7 +3,7 @@ package com.appservice.rest.services
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.model.serviceTiming.ServiceTimingResponse
 import com.appservice.rest.EndPoints
-import com.appservice.staffs.model.*
+import com.appservice.model.staffModel.*
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.ResponseBody

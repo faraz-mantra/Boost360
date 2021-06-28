@@ -221,6 +221,12 @@
       "state": "Other Territory",
       "state_code": "OT",
       "state_tin": "97"
+    },
+    {
+      "id": "38",
+      "state": "Others",
+      "state_code": "OT",
+      "state_tin": "97"
     }
   ]
 }

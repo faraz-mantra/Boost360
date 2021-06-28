@@ -10,6 +10,6 @@
     <solid android:color="#1AFFB900" />
 
 
-    <corners android:radius="@dimen/size_4" />
+    <corners android:radius="@dimen/size_10" />
 
 </shape>
