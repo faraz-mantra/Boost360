@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/match_wrap"
-        android:background="@android:color/transparent">
+  <androidx.constraintlayout.widget.ConstraintLayout
+    style="@style/match_wrap"
+    android:background="@android:color/transparent">
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tvTitle"
-            style="@style/match_wrap"
-            android:layout_marginStart="@dimen/size_20"
-            android:layout_marginBottom="@dimen/size_8"
-            tools:text="@string/add_delivery_fee"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:textType="HEADING_4"
-            tools:ignore="RtlSymmetry"
-            tools:textColor="@color/dimgray" />
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvTitle"
+      style="@style/match_wrap"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_8"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:textType="HEADING_4"
+      tools:ignore="RtlSymmetry"
+      tools:text="@string/add_delivery_fee"
+      tools:textColor="@color/dimgray" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tvSubTitle"
-            style="@style/match_wrap"
-            android:layout_marginStart="@dimen/size_20"
-            android:layout_marginBottom="@dimen/size_8"
-            tools:text="@string/enter_the_delivery_charges_to_add_it_to_billing"
-            android:textColor="@color/white"
-            app:fontFamily="@font/italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-            app:textType="BODY_1"
-            tools:textColor="@color/dimgray" />
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvSubTitle"
+      style="@style/match_wrap"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_8"
+      android:textColor="@color/white"
+      app:fontFamily="@font/italic"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+      app:textType="BODY_1"
+      tools:text="@string/enter_the_delivery_charges_to_add_it_to_billing"
+      tools:textColor="@color/dimgray" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/match_wrap"
-            android:layout_marginTop="@dimen/size_10"
-            android:background="@drawable/bg_rounded_top_white_2"
-            android:paddingTop="@dimen/size_20"
-            android:paddingBottom="@dimen/size_20"
-            app:layout_constraintBottom_toTopOf="@id/btn_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvSubTitle">
+    <androidx.appcompat.widget.LinearLayoutCompat
+      style="@style/match_wrap"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@drawable/bg_rounded_top_white_2"
+      android:paddingTop="@dimen/size_20"
+      android:paddingBottom="@dimen/size_20"
+      app:layout_constraintBottom_toTopOf="@id/btn_bottom"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tvSubTitle">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_order_options"
-                style="@style/match_wrap" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_order_options"
+        style="@style/match_wrap" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btn_bottom"
-            style="@style/match_wrap"
-            android:background="@color/white"
-            android:gravity="end"
-            android:orientation="horizontal"
-            android:padding="@dimen/size_14"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/btn_bottom"
+      style="@style/match_wrap"
+      android:background="@color/white"
+      android:gravity="end"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_14"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
 
-            <com.framework.views.customViews.CustomButton
-                android:id="@+id/tvCancel"
-                style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-                android:layout_marginEnd="@dimen/size_20"
-                android:text="@string/cancel"
-                android:background="@color/white" />
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_10"
+        android:text="@string/cancel"
+        android:textColor="@color/white" />
 
-            <com.framework.views.customViews.CustomButton
-                android:id="@+id/buttonDone"
-                style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-                android:layout_width="wrap_content"
-                android:text="@string/done"
-                android:textColor="@color/white" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_width="wrap_content"
+        android:text="@string/done"
+        android:textColor="@color/white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

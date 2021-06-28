@@ -60,30 +60,30 @@
           app:textType="HEADING_6" />
 
         <RadioGroup
-            android:id="@+id/radioGroup"
-            style="@style/match_wrap"
+          android:id="@+id/radioGroup"
+          style="@style/match_wrap"
+          android:layout_marginTop="@dimen/size_10"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/radio_store"
+            style="@style/wrap_wrap"
+            android:layout_marginStart="@dimen/size_16"
+            android:buttonTint="@color/colorAccent"
+            android:checked="true"
+            android:text="@string/your_business"
+            android:textColor="@color/black_2A2A2A"
+            app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/radio_customer"
+            style="@style/wrap_wrap"
+            android:layout_marginStart="@dimen/size_16"
             android:layout_marginTop="@dimen/size_10"
-            android:orientation="vertical">
-
-          <com.framework.views.customViews.CustomRadioButton
-              android:id="@+id/radio_store"
-              style="@style/wrap_wrap"
-              android:layout_marginStart="@dimen/size_16"
-              android:buttonTint="@color/colorAccent"
-              android:checked="true"
-              android:text="@string/your_business"
-              android:textColor="@color/black_2A2A2A"
-              app:textType="HEADING_6" />
-
-          <com.framework.views.customViews.CustomRadioButton
-              android:id="@+id/radio_customer"
-              style="@style/wrap_wrap"
-              android:layout_marginStart="@dimen/size_16"
-              android:layout_marginTop="@dimen/size_10"
-              android:buttonTint="@color/colorAccent"
-              android:text="@string/the_customer"
-              android:textColor="@color/black_2A2A2A"
-              app:textType="HEADING_6" />
+            android:buttonTint="@color/colorAccent"
+            android:text="@string/the_customer"
+            android:textColor="@color/black_2A2A2A"
+            app:textType="HEADING_6" />
 
         </RadioGroup>
 
@@ -100,7 +100,6 @@
           style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_10"
-            android:textCursorDrawable="@drawable/color_cursor"
           android:layout_marginEnd="@dimen/size_20"
           android:background="@drawable/bg_rect_edit_txt"
           android:hint="@string/type_if_there_are_any_known_reason"
@@ -109,6 +108,7 @@
           android:singleLine="true"
           android:textColor="@color/warm_grey_10"
           android:textColorHint="@color/primary_grey"
+          android:textCursorDrawable="@drawable/color_cursor"
           tools:ignore="UnusedAttribute" />
 
         <com.framework.views.customViews.CustomTextView
@@ -137,31 +137,32 @@
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/btn_bottom"
       style="@style/match_wrap"
+      android:layout_marginTop="@dimen/size_10"
+      android:layout_marginEnd="@dimen/size_4"
       android:background="@color/white"
       android:gravity="end"
       android:orientation="vertical"
       android:padding="@dimen/size_14"
-      android:layout_marginEnd="@dimen/size_4"
-      android:layout_marginTop="@dimen/size_10"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent">
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:layout_width="wrap_content"
-          android:layout_height="@dimen/size_38"
-          android:backgroundTint="@color/lemon_light"
-          android:text="@string/cancel_appointment_n"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_38"
+        android:backgroundTint="@color/lemon_light"
+        android:text="@string/cancel_appointment_n"
+        android:textColor="@color/white" />
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/tvCancel"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:layout_marginTop="@dimen/size_10"
-          android:background="@color/white"
-          android:text="@string/don_t_cancel" />
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginTop="@dimen/size_10"
+        android:text="@string/don_t_cancel"
+        android:textColor="@color/white" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

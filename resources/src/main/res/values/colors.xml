@@ -95,6 +95,7 @@
   <color name="lightest_grey">#F6F6F6</color>
   <color name="lightest_grey_10">#E7E7E7</color>
   <color name="primary_grey">#B3B4B4</color>
+  <color name="primary_grey_light">#888888</color>
   <color name="primary_grey_dark">#90918D</color>
   <color name="warm_grey_10">#4D4D4D</color>
   <color name="watermelon_light">#F06428</color>
@@ -134,6 +135,7 @@
   <color name="green_27AE60">#27AE60</color>
   <color name="green_78AF00">#78AF00</color>
   <color name="green_light">#00C42D</color>
+  <color name="white_green_light">#FFFFFF</color>
   <color name="green_light_1">#6DCA07</color>
   <color name="white_80FFFFFF">#80FFFFFF</color>
   <color name="blue_4A90E2">#4A90E2</color>

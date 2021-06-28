@@ -43,6 +43,7 @@ object EndPoints {
   const val ADD_IMAGE = "Product/v1/AddImage"
   const val GET_TAGS = "Product/v1/tags"
   const val GET_NOTIFICATION = "Discover/v1/floatingpoint/notificationscount"
+  const val GET_LATEST_UPDATES = "Discover/v1/floatingPoint/bizFloats"
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"

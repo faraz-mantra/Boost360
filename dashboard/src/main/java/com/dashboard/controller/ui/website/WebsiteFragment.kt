@@ -33,8 +33,7 @@ import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
 
-class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(),
-  RecyclerItemClickListener {
+class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null
@@ -294,7 +293,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     val more =
       this.popupWindow?.contentView?.findViewById<LinearLayoutCompat>(R.id.ll_share)
     more?.setOnClickListener {
-        shareMore()
+      shareMore()
       this.popupWindow?.dismiss()
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) this.popupWindow?.elevation =

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/size_14"
+    android:layout_marginTop="@dimen/size_14"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/size_4">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      tools:ignore="MissingDefaultResource">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/image_card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_160"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@drawable/placeholder_image_n" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_14"
+        android:layout_marginVertical="@dimen/size_10"
+        android:textColor="@color/black_4a4a4a"
+        android:fontFamily="@font/regular"
+        app:textType="HEADING_6"
+        tools:text="This is an update" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_14"
+        android:layout_marginVertical="@dimen/size_10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/date_txt"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:fontFamily="@font/light"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="CAPTION"
+          tools:text="This is an update" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/share_more"
+          android:layout_width="@dimen/size_30"
+          android:layout_height="@dimen/size_30"
+          android:layout_marginEnd="@dimen/size_10"
+          app:srcCompat="@drawable/share_icon_normal" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/share_fp"
+          android:layout_width="@dimen/size_30"
+          android:layout_height="@dimen/size_30"
+          android:layout_marginEnd="@dimen/size_10"
+          app:srcCompat="@drawable/facebook_icon_share" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/share_whatsapp"
+          android:layout_width="@dimen/size_74"
+          android:layout_height="@dimen/size_30"
+          app:srcCompat="@drawable/share_whatsapp" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </com.framework.views.customViews.CustomCardView>
+
+</layout>

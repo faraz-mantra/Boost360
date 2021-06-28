@@ -1,261 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@color/screen_bg"
+  android:orientation="vertical"
+  android:paddingStart="6dp"
+  android:paddingTop="6dp"
+  android:paddingRight="6dp"
+  android:tag="cards main container">
+
+  <!-- <android.support.v7.widget.CardView
+       android:id="@+id/initial_card_view"
+       xmlns:card_view="http://schemas.android.com/apk/res-auto"
+       android:layout_width="340dp"
+       android:layout_height="340dp"
+       android:visibility="gone"
+       android:clickable="false"
+       android:layout_margin="5dp"
+       card_view:cardBackgroundColor="#FFFFFF"
+       card_view:cardCornerRadius="3dp"
+       card_view:cardElevation="3dp"
+
+       >
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           >
+
+           <ImageView
+               android:id="@+id/cancelCardImageView"
+               android:tag="image_tag"
+               android:visibility="visible"
+               android:layout_height="wrap_content"
+               android:layout_gravity="end"
+               android:layout_margin="15dp"
+               android:src="@drawable/card_cancel"
+               android:layout_width="wrap_content" />
+
+           <LinearLayout
+
+               android:layout_height="wrap_content"
+               android:gravity="top"
+               android:orientation="vertical"
+               android:layout_width="fill_parent">
+
+               <TextView
+                   android:id="@+id/card_titleTextView"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:maxLines="4"
+                   android:gravity="center"
+                   android:textSize="24sp"
+                   android:text="Congratulations !"/>
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="5dp"
+                   android:orientation="horizontal">
+
+                   <TextView
+                       android:id="@+id/card_websiteTextView"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       android:textSize="16sp"
+                       android:textColor="@color/primaryColor"
+                       android:text="website name"
+                       />
+                   <TextView
+                       android:id="@+id/card_websiteExtensionTextView"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       android:textSize="16sp"
+                       android:text=" is ready"
+                       />
+               </LinearLayout>
+
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_horizontal"
+                   android:padding="5dp"
+                   android:src="@drawable/cards_screens"/>
+
+               <TextView
+                   android:id="@+id/newCreatedWebsiteTextView"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:textSize="14sp"
+                   android:paddingStart="20dp"
+                   android:paddingRight="20dp"
+                   android:text="You can view your newly created websites's desktop version on any PC / Mac nearby"
+                   />
+
+           </LinearLayout>
+
+           <Button
+               android:id="@+id/showWebsiteButton"
+               android:layout_width="300dp"
+               android:layout_height="50dp"
+               android:text="Show me mobile Site"
+               android:textColor="#FFFFFF"
+               android:layout_marginTop="10dp"
+               android:background="@drawable/drop_shadow"
+               android:layout_gravity="center_horizontal"
+               android:layout_marginEnd="25dp"
+               android:layout_marginStart="25dp"
+               android:textSize="16sp"/>
+
+       </LinearLayout>
+
+   </android.support.v7.widget.CardView>-->
+
+  <androidx.cardview.widget.CardView
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:tag="cards main container"
-    android:background="@color/screen_bg"
-    android:paddingStart="6dp"
-    android:paddingRight="6dp"
-    android:paddingTop="6dp">
+    android:layout_marginBottom="2dp"
+    android:background="#FFFFFF"
+    card_view:cardBackgroundColor="#FFFFFF"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
 
-    <!-- <android.support.v7.widget.CardView
-         android:id="@+id/initial_card_view"
-         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-         android:layout_width="340dp"
-         android:layout_height="340dp"
-         android:visibility="gone"
-         android:clickable="false"
-         android:layout_margin="5dp"
-         card_view:cardBackgroundColor="#FFFFFF"
-         card_view:cardCornerRadius="3dp"
-         card_view:cardElevation="3dp"
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-         >
-
-         <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:orientation="vertical"
-             >
-
-             <ImageView
-                 android:id="@+id/cancelCardImageView"
-                 android:tag="image_tag"
-                 android:visibility="visible"
-                 android:layout_height="wrap_content"
-                 android:layout_gravity="end"
-                 android:layout_margin="15dp"
-                 android:src="@drawable/card_cancel"
-                 android:layout_width="wrap_content" />
-
-             <LinearLayout
-
-                 android:layout_height="wrap_content"
-                 android:gravity="top"
-                 android:orientation="vertical"
-                 android:layout_width="fill_parent">
-
-                 <TextView
-                     android:id="@+id/card_titleTextView"
-                     android:layout_width="fill_parent"
-                     android:layout_height="wrap_content"
-                     android:maxLines="4"
-                     android:gravity="center"
-                     android:textSize="24sp"
-                     android:text="Congratulations !"/>
-                 <LinearLayout
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:gravity="center"
-                     android:layout_gravity="center"
-                     android:layout_marginTop="5dp"
-                     android:orientation="horizontal">
-
-                     <TextView
-                         android:id="@+id/card_websiteTextView"
-                         android:layout_width="fill_parent"
-                         android:layout_height="wrap_content"
-                         android:textSize="16sp"
-                         android:textColor="@color/primaryColor"
-                         android:text="website name"
-                         />
-                     <TextView
-                         android:id="@+id/card_websiteExtensionTextView"
-                         android:layout_width="fill_parent"
-                         android:layout_height="wrap_content"
-                         android:textSize="16sp"
-                         android:text=" is ready"
-                         />
-                 </LinearLayout>
-
-                 <ImageView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_gravity="center_horizontal"
-                     android:padding="5dp"
-                     android:src="@drawable/cards_screens"/>
-
-                 <TextView
-                     android:id="@+id/newCreatedWebsiteTextView"
-                     android:layout_width="fill_parent"
-                     android:layout_height="wrap_content"
-                     android:textSize="14sp"
-                     android:paddingStart="20dp"
-                     android:paddingRight="20dp"
-                     android:text="You can view your newly created websites's desktop version on any PC / Mac nearby"
-                     />
-
-             </LinearLayout>
-
-             <Button
-                 android:id="@+id/showWebsiteButton"
-                 android:layout_width="300dp"
-                 android:layout_height="50dp"
-                 android:text="Show me mobile Site"
-                 android:textColor="#FFFFFF"
-                 android:layout_marginTop="10dp"
-                 android:background="@drawable/drop_shadow"
-                 android:layout_gravity="center_horizontal"
-                 android:layout_marginEnd="25dp"
-                 android:layout_marginStart="25dp"
-                 android:textSize="16sp"/>
-
-         </LinearLayout>
-
-     </android.support.v7.widget.CardView>-->
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+      <LinearLayout
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:background="#FFFFFF"
-        card_view:cardBackgroundColor="#FFFFFF"
-        card_view:cardCornerRadius="3dp"
-        card_view:cardElevation="2dp"
-        card_view:cardUseCompatPadding="true">
+        android:gravity="start"
+        android:orientation="vertical">
+
+        <ImageView
+          android:id="@+id/imageView"
+          android:layout_width="fill_parent"
+          android:layout_height="160dp"
+          android:layout_weight="1"
+          android:scaleType="centerCrop"
+          android:src="@drawable/logo_default_image"
+          android:tag="image_tag"
+          android:visibility="gone" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:id="@+id/layout_main"
-                android:orientation="vertical">
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="2"
+          android:gravity="top"
+          android:orientation="vertical"
+          android:padding="25dp">
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="160dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/logo_default_image"
-                    android:tag="image_tag"
-                    android:visibility="gone" />
-
-                <LinearLayout
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="top"
-                    android:orientation="vertical"
-                    android:padding="25dp">
-
-                    <com.nowfloats.CustomWidget.roboto_lt_45_505050
-                        android:id="@+id/textViewName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="4"
-                        android:text="@string/large_text"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+          <com.nowfloats.CustomWidget.roboto_lt_45_505050
+            android:id="@+id/textViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:text="@string/large_text"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
 
-                   <!-- <com.nowfloats.CustomWidget.roboto_md_36__565656
-                        android:id="@+id/textViewEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="17dp"
-                        android:text="@string/medium_text"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />-->
-
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/share_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                         android:layout_marginStart="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginEnd="0dp"
-                        android:layout_marginEnd="0dp"
-                         android:padding="5dp">
-
-                        <ImageView
-                            android:id="@+id/shareData"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="8dp"
-                             android:layout_marginEnd="8dp"
-                            android:src="@drawable/share_icon_normal"
-                            android:visibility="visible"
-                            card_view:layout_constraintEnd_toStartOf="@+id/share_facebook"
-                            card_view:layout_constraintHorizontal_bias="0.5"
-                            card_view:layout_constraintStart_toStartOf="parent"
-                            card_view:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/share_facebook"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="8dp"
-                             android:layout_marginEnd="8dp"
-                            android:src="@drawable/facebook_icon_share"
-                            android:visibility="visible"
-                            card_view:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
-                            card_view:layout_constraintHorizontal_bias="0.5"
-                            card_view:layout_constraintStart_toEndOf="@+id/shareData"
-                            card_view:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/share_whatsapp"
-                            android:layout_width="75dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="8dp"
-                             android:layout_marginEnd="8dp"
-                             android:src="@drawable/share_whatsapp"
-                            android:visibility="visible"
-                            card_view:layout_constraintEnd_toEndOf="parent"
-                            card_view:layout_constraintHorizontal_bias="0.5"
-                            card_view:layout_constraintStart_toEndOf="@+id/share_facebook"
-                            card_view:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <com.nowfloats.CustomWidget.roboto_lt_10_8c8c8c
-                        android:id="@+id/textViewEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                         android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="0dp"
-                        android:paddingStart="25dp"
-                        android:text="@string/medium_text"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                </RelativeLayout>
-
-
-            </LinearLayout>
+          <!-- <com.nowfloats.CustomWidget.roboto_md_36__565656
+               android:id="@+id/textViewEmail"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="17dp"
+               android:text="@string/medium_text"
+               android:textColor="@color/black"
+               android:textSize="16sp" />-->
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/share_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="0dp"
+            android:padding="5dp">
+
+            <ImageView
+              android:id="@+id/shareData"
+              android:layout_width="30dp"
+              android:layout_height="30dp"
+              android:layout_marginStart="8dp"
+              android:layout_marginEnd="8dp"
+              android:src="@drawable/share_icon_normal"
+              android:visibility="visible"
+              card_view:layout_constraintEnd_toStartOf="@+id/share_facebook"
+              card_view:layout_constraintHorizontal_bias="0.5"
+              card_view:layout_constraintStart_toStartOf="parent"
+              card_view:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+              android:id="@+id/share_facebook"
+              android:layout_width="30dp"
+              android:layout_height="30dp"
+              android:layout_marginStart="8dp"
+              android:layout_marginEnd="8dp"
+              android:src="@drawable/facebook_icon_share"
+              android:visibility="visible"
+              card_view:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
+              card_view:layout_constraintHorizontal_bias="0.5"
+              card_view:layout_constraintStart_toEndOf="@+id/shareData"
+              card_view:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+              android:id="@+id/share_whatsapp"
+              android:layout_width="75dp"
+              android:layout_height="30dp"
+              android:layout_marginStart="8dp"
+              android:layout_marginEnd="8dp"
+              android:src="@drawable/share_whatsapp"
+              android:visibility="visible"
+              card_view:layout_constraintEnd_toEndOf="parent"
+              card_view:layout_constraintHorizontal_bias="0.5"
+              card_view:layout_constraintStart_toEndOf="@+id/share_facebook"
+              card_view:layout_constraintTop_toTopOf="parent" />
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <com.nowfloats.CustomWidget.roboto_lt_10_8c8c8c
+            android:id="@+id/textViewEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="0dp"
+            android:paddingStart="25dp"
+            android:text="@string/medium_text"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        </RelativeLayout>
+
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </androidx.cardview.widget.CardView>
 
 </LinearLayout>
 
