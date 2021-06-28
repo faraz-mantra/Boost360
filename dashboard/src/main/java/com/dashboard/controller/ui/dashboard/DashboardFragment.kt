@@ -12,12 +12,6 @@ import androidx.core.app.ActivityCompat
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide
-import androidx.viewpager2.widget.ViewPager2
-import com.appservice.constant.IntentConstant
-import com.appservice.offers.startOfferFragmentActivity
-import com.appservice.staffs.ui.UserSession
-import com.appservice.staffs.ui.startStaffFragmentActivity
-import com.appservice.ui.catalog.startFragmentActivity
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
@@ -138,7 +132,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
         binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
         binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries, binding?.viewEmptyEnquiries?.btnMessangerEnquiries, binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries)
-            binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
     binding?.txtVersion2?.text = "Version $versionName"
@@ -179,11 +172,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           }
         } else adapterSocialMedia?.notify(channels)
       } else mainView.gone()
-    }
-    WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
-    //todo remove this
-    binding?.cbLaunchOfferFlow?.setOnClickListener {
-      session?.let { startOfferFragmentActivity(baseActivity,com.appservice.constant.FragmentType.OFFER_LISTING_FRAGMENT, bundle = getBundleData(it)) }
     }
   }
 
