@@ -740,12 +740,12 @@
     <string name="only_one_file_is_allowed">only one file is allowed</string>
     <string name="error_getting_payment_details">error getting payment details</string>
     <string name="error_updating_gst_details">error updating gst details.</string>
-  <string name="gst_details_updated">gst details updated.</string>
+  <string name="gst_details_updated">GST details updated.</string>
     <string name="invalid_gstin_number">Invalid GSTIN number</string>
     <string name="please_enter_valid_upi_id">please enter valid UPI id.</string>
-    <string name="error_updating_upi_id">error updating upi id</string>
-  <string name="signature_uploaded">signature uploaded</string>
-  <string name="merchant_upi_added">merchant upi added.</string>
+    <string name="error_updating_upi_id">Error updating upi id</string>
+  <string name="signature_uploaded">Signature uploaded</string>
+  <string name="merchant_upi_added">Merchant UPI added.</string>
 
 
 </resources>

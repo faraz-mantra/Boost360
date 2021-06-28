@@ -58,14 +58,15 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     }
 
     private fun getprofileDetails() {
+        showProgress()
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_payment_details))
-
     }
 
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
         when (it.taskcode) {
             TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> {
+                hideProgress()
                 if (data == null) data = PaymentProfileResponse()
                 this.data = it as PaymentProfileResponse
                 val gSTIN = data?.result?.taxDetails?.gSTDetails?.gSTIN
@@ -77,15 +78,23 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
                 updatePreviousData()
             }
             TaskCode.SETUP_INVOICE.ordinal -> {
+                hideProgress()
                 showShortToast(getString(R.string.gst_details_updated))
             }
             TaskCode.PUT_MERCHANT_SIGNATURE.ordinal -> {
+                hideProgress()
                 showShortToast(getString(R.string.signature_uploaded))
             }
             TaskCode.ADD_MERCHANT_UPI.ordinal -> {
+                hideProgress()
                 showShortToast(getString(R.string.merchant_upi_added))
             }
         }
+    }
+
+    override fun onFailure(it: BaseResponse) {
+        super.onFailure(it)
+        hideProgress()
     }
 
     private fun updatePreviousData() {
@@ -123,13 +132,15 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         bottomSheetTaxInvoicesForPurchases.upiId = { binding?.upiId?.text = it.toString() }
         bottomSheetTaxInvoicesForPurchases.clickType = {
             if (it == BottomSheetTaxInvoicesForPurchases.ClickType.SAVECHANGES) {
+                showProgress()
 //                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
                 hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(UserSession.clientId, uPIId = binding?.upiId?.text.toString(), UserSession.fpId)), (R.string.error_updating_upi_id))
-                if (imageList.isNotEmpty())
+                if (imageList.isNotEmpty()){
+                    showProgress()
                 hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT), UserSession.clientId,
                         floatingPointId = UserSession.fpId, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
 
-            }
+            }}
             if (it == BottomSheetTaxInvoicesForPurchases.ClickType.CANCEL) {
 
             }
@@ -174,6 +185,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         bottomSheetConfirmGST.arguments = bundle
         bottomSheetConfirmGST.clickType = {
             if (it == BottomSheetConfirmGST.ClickType.SAVECHANGES) {
+                showProgress()
                 hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
             }
             if (it == BottomSheetConfirmGST.ClickType.CANCEL) {
