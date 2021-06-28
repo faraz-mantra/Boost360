@@ -42,6 +42,7 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     }
 
     private fun getAccountDetails() {
+        showProgress()
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_bank_details))
     }
 
@@ -85,6 +86,7 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     }
 
     private fun addBankAccount() {
+        showProgress()
         hitApi(viewModel?.addBankAccount(UserSession.clientId,UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
 
     }
@@ -98,6 +100,7 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     }
 
     private fun onReceivedBankDetails(it: BaseResponse) {
+        hideProgress()
         val paymentProfileResponse = it as PaymentProfileResponse
         binding?.edtBankName?.setText(paymentProfileResponse.result?.bankAccountDetails?.bankName)
         binding?.edtAccountName?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountName)
@@ -115,6 +118,7 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     }
 
     private fun onAddingBankAccount(it: BaseResponse) {
+        hideProgress()
         if (it.isSuccess()) {
             val bundle = Bundle()
             bundle.putBoolean(IntentConstant.IS_EDIT.name, false)
