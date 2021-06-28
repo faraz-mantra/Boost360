@@ -1,24 +1,14 @@
 package com.nowfloats.manufacturing.projectandteams.ui.teams;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -32,13 +22,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.hotel.API.UploadOfferImage;
-import com.nowfloats.hotel.seasonalOffers.SeasonalOffersDetailsActivity;
 import com.nowfloats.manufacturing.API.ManufacturingAPIInterfaces;
 import com.nowfloats.manufacturing.API.UploadTeamsImage;
 import com.nowfloats.manufacturing.API.model.AddTeams.ActionData;
@@ -58,7 +53,6 @@ import com.thinksity.R;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -124,7 +118,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
             @Override
             public void onClick(View v) {
                 if (path != null) {
-                    showLoader("Uploading Image.Please Wait...");
+                    showLoader(getString(R.string.uploading_image_please_wait));
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -173,7 +167,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
             @Override
             public void onClick(View v) {
                 if (ScreenType != null && ScreenType.equals("edit")) {
-                    showLoader("Deleting Record.Please Wait...");
+                    showLoader(getString(R.string.deleting_record_please_wait));
                     deleteRecord(itemId);
                     return;
                 }
@@ -221,7 +215,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.creating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setName(nameValue.getText().toString());
                 actionData.setDesignation(designationValue.getText().toString());
@@ -273,7 +267,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(TeamsDetailsActivity.this, "Successfully Added Team Details");
+                        Methods.showSnackBarPositive(TeamsDetailsActivity.this, getString(R.string.successfully_added_team_details));
                         onBackPressed();
                     }
 
@@ -297,7 +291,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
         try {
 
             if (validateInput()) {
-
+                showLoader(getString(R.string.updating_record_please_wait));
                 ActionData actionData = new ActionData();
                 actionData.setName(nameValue.getText().toString());
                 actionData.setDesignation(designationValue.getText().toString());
@@ -349,7 +343,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(TeamsDetailsActivity.this, "Successfully dd Team Details");
+                        Methods.showSnackBarPositive(TeamsDetailsActivity.this, getString(R.string.successfully_updated_team_details));
                         finish();
                     }
 
@@ -357,7 +351,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
                     public void failure(RetrofitError error) {
                         hideLoader();
                         if (error.getResponse().getStatus() == 200) {
-                            Methods.showSnackBarPositive(TeamsDetailsActivity.this, "Successfully Updated Team Details");
+                            Methods.showSnackBarPositive(TeamsDetailsActivity.this, getString(R.string.successfully_updated_team_details));
                             finish();
                         } else {
                             Methods.showSnackBarNegative(TeamsDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -395,7 +389,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTeams ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(TeamsDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(TeamsDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(TeamsDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -406,7 +400,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(TeamsDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(TeamsDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(TeamsDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -575,7 +569,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
     private boolean validateInput() {
         if (nameValue.getText().toString().isEmpty() || designationValue.getText().toString().isEmpty() || fbValue.getText().toString().isEmpty()
                 || twitterValue.getText().toString().isEmpty() || skypeValue.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Fields are Empty!!..", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -591,11 +585,9 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader("Updating Record.Please Wait...");
             updateExistingTeamsAPI();
             Methods.hideKeyboard(TeamsDetailsActivity.this);
         } else {
-            showLoader("Creating Record.Please Wait...");
             createNewTeamsAPI();
             Methods.hideKeyboard(TeamsDetailsActivity.this);
         }

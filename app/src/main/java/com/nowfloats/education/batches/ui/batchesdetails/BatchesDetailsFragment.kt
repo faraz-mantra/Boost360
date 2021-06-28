@@ -95,10 +95,10 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
         rightIcon.setImageResource(R.drawable.ic_delete_white_outerline)
         rightButton.setOnClickListener {
             if (addUpdateBatch) {
-                showLoader("Deleting batch")
+                showLoader(getString(R.string.deleting_batch))
                 viewModel.deleteUpcomingBatch(batchesData as Data)
             } else {
-                Toast.makeText(requireContext(), "No batch found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.no_batch_found), Toast.LENGTH_SHORT).show()
             }
         }
         backButton.setOnClickListener { requireActivity().onBackPressed() }
@@ -136,7 +136,7 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
             addBatchResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 hideLoader()
                 if (!it.isNullOrBlank()) {
-                    Toast.makeText(requireContext(), "Batch added successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.batch_added_successfully), Toast.LENGTH_SHORT).show()
                     (activity as BatchesActivity).popFragmentFromBackStack()
                 }
             })
@@ -144,7 +144,7 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
             updateBatchResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 hideLoader()
                 if (!it.isNullOrBlank()) {
-                    Toast.makeText(requireContext(), "Batch updated successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.batch_updated_successfully), Toast.LENGTH_SHORT).show()
                     (activity as BatchesActivity).popFragmentFromBackStack()
                 }
             })
@@ -153,7 +153,7 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
                 if (!it.isNullOrBlank()) {
                     if (it == SUCCESS) {
                         hideLoader()
-                        Toast.makeText(requireContext(), "Batch deleted successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.batch_deleted_successfully), Toast.LENGTH_SHORT).show()
                         (activity as BatchesActivity).popFragmentFromBackStack()
                     }
                 }
@@ -164,7 +164,7 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
     private fun validate(): Boolean {
         when {
             binding.courseNameEditText.text.isNullOrBlank() -> {
-                binding.courseNameEditText.error = "Enter valid course name"
+                binding.courseNameEditText.error = getString(R.string.enter_valid_course_name)
                 binding.courseNameEditText.requestFocus()
                 return false
             }
@@ -175,8 +175,8 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
 
         when {
             binding.courseTimingEditText.text.isNullOrBlank() -> {
-                binding.courseTimingEditText.error = "Enter course timing"
-                showToast("Enter course timing")
+                binding.courseTimingEditText.error = getString(R.string.enter_course_timing)
+                showToast(getString(R.string.enter_course_timing))
                 return false
             }
             else -> {
@@ -186,7 +186,7 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
 
         when {
             binding.courseDurationEditText.text.isNullOrBlank() -> {
-                binding.courseDurationEditText.error = "Enter course duration"
+                binding.courseDurationEditText.error = getString(R.string.enter_course_duration)
                 binding.courseDurationEditText.requestFocus()
                 return false
             }
@@ -197,8 +197,8 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
 
         when {
             binding.commencementDate.text.isNullOrBlank() -> {
-                binding.commencementDate.error = "Enter valid Commencement Date"
-                showToast("Enter Commencement Date")
+                binding.commencementDate.error = getString(R.string.enter_valid_commencement_date)
+                showToast(getString(R.string.enter_commencement_date))
                 return false
             }
             else -> {
@@ -229,10 +229,10 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
                         batchTiming += " to $timeString"
                         binding.courseTimingEditText.setText(batchTiming)
                     } else {
-                        showToast("Start time and end time should not be same")
+                        showToast(getString(R.string.start_time_and_end_time_should_not_be_same))
                     }
                 } else {
-                    showToast("End time should be greater than start time")
+                    showToast(getString(R.string.end_time_should_be_grater_than_start_time))
                 }
             }
         }

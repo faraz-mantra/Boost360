@@ -37,6 +37,22 @@ import java.util.Date;
 import zendesk.support.guide.HelpCenterActivity;
 import zendesk.support.requestlist.RequestListActivity;
 
+import static com.framework.webengageconstant.EventLabelKt.CALL_SUPPORT_OPTION_IN_ACCOUNT;
+import static com.framework.webengageconstant.EventLabelKt.CHAT_OPTION_IN_ACCOUNT;
+import static com.framework.webengageconstant.EventLabelKt.DIRECT_AGENT_CALL_OPTION_IN_ACCOUNT;
+import static com.framework.webengageconstant.EventLabelKt.EMAIL_OPTION_IN_ACCOUNT;
+import static com.framework.webengageconstant.EventLabelKt.LEARN_HOW_TO_USE;
+import static com.framework.webengageconstant.EventLabelKt.SUPPORT_SCREEN_LOADED;
+import static com.framework.webengageconstant.EventLabelKt.VIEW_MY_SUPPORT_TICKETS;
+import static com.framework.webengageconstant.EventNameKt.SUPPORT_CALL;
+import static com.framework.webengageconstant.EventNameKt.SUPPORT_CHAT;
+import static com.framework.webengageconstant.EventNameKt.SUPPORT_DIRECT_AGENT_CALL;
+import static com.framework.webengageconstant.EventNameKt.SUPPORT_EMAIL;
+import static com.framework.webengageconstant.EventNameKt.SUPPORT_LEARN;
+import static com.framework.webengageconstant.EventNameKt.SUPPORT_VIEWED;
+import static com.framework.webengageconstant.EventNameKt.SUPPORT_VIEWED_PREMIUM;
+import static com.framework.webengageconstant.EventNameKt.SUPPORT_VIEW_TICKETS;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 /**
@@ -101,7 +117,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         view.findViewById(R.id.btn_faqs).setOnClickListener(this);
         view.findViewById(R.id.btn_my_tickets).setOnClickListener(this);
 
-        WebEngageController.trackEvent(is_premium_support ? "SUPPORT - Viewed Premium" : "SUPPORT - Viewed","Support Screen Loaded",null);
+        WebEngageController.trackEvent(is_premium_support ? SUPPORT_VIEWED_PREMIUM : SUPPORT_VIEWED, SUPPORT_SCREEN_LOADED, NULL);
 
         nameTv.setText(riaSupportModel.getName());
         if(is_premium_support)
@@ -127,10 +143,10 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
 
     private void showPremiumAddOnDialog() {
         MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-                .title("Upgrade to Premium Support")
-                .content("You are currently on the default support plan. This gives you access to Boost Care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to Boost Care team by phone, email and chat,\nwith a promise of 1 hour SLA.")
-                .positiveText("View Details")
-                .negativeText("Later")
+                .title(R.string.upgrade_to_premium_support)
+                .content(R.string.you_are_currently_on_the_default_support_plan)
+                .positiveText(getString(R.string.save_data))
+                .negativeText(R.string.later)
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.gray_40)
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -143,12 +159,12 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         ProgressDialog progressDialog = new ProgressDialog(requireContext());
-                        String status = "Loading. Please wait...";
+                        String status = getString(R.string.loading_please_wait);
                         progressDialog.setMessage(status);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
                         UserSessionManager session = new UserSessionManager(getContext(), getActivity());
-                        Intent intent = new Intent(requireActivity(), UpgradeActivity.class);
+                        Intent intent = new Intent(getActivity(), UpgradeActivity.class);
                         intent.putExtra("expCode", session.getFP_AppExperienceCode());
                         intent.putExtra("fpName", session.getFPName());
                         intent.putExtra("fpid", session.getFPID());
@@ -180,7 +196,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_chat_action:
-                WebEngageController.trackEvent("SUPPORT - CHAT","Chat option in Account",null);
+                WebEngageController.trackEvent(SUPPORT_CHAT, CHAT_OPTION_IN_ACCOUNT, NULL);
                 if(is_premium_support) {
                     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                     Date dateobj = new Date();
@@ -200,12 +216,12 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                     showPremiumAddOnDialog();
                 break;
             case R.id.tv_person_email:
-                WebEngageController.trackEvent("SUPPORT - EMAIL","Email option in Account",null);
-                Methods.sendEmail(mContext,new String[]{riaSupportModel.getEmail()}, "Need help with Boost360 [" + sessionManager.getFpTag() + " , " + sessionManager.getFP_AppExperienceCode()+ "]");
+                WebEngageController.trackEvent(SUPPORT_EMAIL, EMAIL_OPTION_IN_ACCOUNT, NULL);
+                Methods.sendEmail(mContext, new String[]{riaSupportModel.getEmail()}, getString(R.string.need_help_with_boost) + sessionManager.getFpTag() + " , " + sessionManager.getFP_AppExperienceCode() + "]");
                 break;
             case R.id.tv_person_number:
                 if(is_premium_support) {
-                    WebEngageController.trackEvent("SUPPORT - DIRECT_AGENT_CALL","Direct Agent Call option in Account",null);
+                    WebEngageController.trackEvent(SUPPORT_DIRECT_AGENT_CALL, DIRECT_AGENT_CALL_OPTION_IN_ACCOUNT, NULL);
                     Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
                 } else {
                     showPremiumAddOnDialog();
@@ -213,19 +229,19 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 break;
             case R.id.btn_call_option:
                 if(is_premium_support) {
-                    WebEngageController.trackEvent("SUPPORT - CALL", "Call Support option in Account", null);
+                    WebEngageController.trackEvent(SUPPORT_CALL, CALL_SUPPORT_OPTION_IN_ACCOUNT, NULL);
                     Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
                 } else {
                     showPremiumAddOnDialog();
                 }
                 break;
             case R.id.btn_my_tickets:
-                WebEngageController.trackEvent("SUPPORT - VIEW_TICKETS","View My Support Tickets",null);
+                WebEngageController.trackEvent(SUPPORT_VIEW_TICKETS, VIEW_MY_SUPPORT_TICKETS, NULL);
                 RequestListActivity.builder()
                         .show(mContext);
                 break;
             case R.id.btn_faqs:
-                WebEngageController.trackEvent("SUPPORT - LEARN","Learn How to use",null);
+                WebEngageController.trackEvent(SUPPORT_LEARN, LEARN_HOW_TO_USE, NULL);
                 HelpCenterActivity.builder()
                         .show(mContext);
                 break;

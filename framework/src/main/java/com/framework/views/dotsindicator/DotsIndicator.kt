@@ -12,16 +12,16 @@ import android.widget.RelativeLayout
 import com.framework.R
 import com.framework.views.dotsindicator.BaseDotsIndicator.Type.DEFAULT
 
-class DotsIndicator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
+open class DotsIndicator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
                                               defStyleAttr: Int = 0) : BaseDotsIndicator(context, attrs, defStyleAttr) {
 
   companion object {
     const val DEFAULT_WIDTH_FACTOR = 2.5f
   }
 
-  private var linearLayout: LinearLayout? = null
+  protected var linearLayout: LinearLayout? = null
   private var dotsWidthFactor: Float = 0f
-  private var progressMode: Boolean = false
+  protected var progressMode: Boolean = false
 
   var selectedDotColor: Int = 0
     set(value) {
@@ -29,7 +29,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
       refreshDotsColors()
     }
 
-  private val argbEvaluator = ArgbEvaluator()
+  protected val argbEvaluator = ArgbEvaluator()
 
   init {
     init(attrs)

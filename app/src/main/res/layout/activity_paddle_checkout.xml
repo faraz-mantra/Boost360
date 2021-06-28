@@ -9,7 +9,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Test Payment"
+        android:text="@string/test_payment"
         android:visibility="gone"
         android:id="@+id/btn_test_payment"/>
     <WebView

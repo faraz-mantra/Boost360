@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/margin_10"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/margin_10"
-        android:paddingLeft="@dimen/margin_25"
+        android:paddingStart="@dimen/margin_25"
         android:paddingTop="@dimen/margin_10">
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/margin_20"
             app:srcCompat="@drawable/ic_sort_icon" />
     </LinearLayout>
 

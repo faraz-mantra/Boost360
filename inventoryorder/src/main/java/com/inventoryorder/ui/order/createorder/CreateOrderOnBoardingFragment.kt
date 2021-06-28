@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.saveData
+import com.framework.webengageconstant.CLICKED_ON_ORDERS_CREATION
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.PreferenceConstant
@@ -26,7 +27,7 @@ class CreateOrderOnBoardingFragment : BaseInventoryFragment<FragmentOrderOnBoard
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on Orders Creation", "ORDERS", it) }
+    fpTag?.let { WebEngageController.trackEvent(CLICKED_ON_ORDERS_CREATION, "ORDERS", it) }
     setOnClickListener(binding?.tvGetStarted, binding?.ivClose)
   }
 

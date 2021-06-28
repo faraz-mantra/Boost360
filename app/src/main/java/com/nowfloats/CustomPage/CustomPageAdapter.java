@@ -6,14 +6,15 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
@@ -33,7 +34,7 @@ import java.util.TimeZone;
 /**
  * Created by guru on 27-04-2015.
  */
-public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.ViewHolder>{
+public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.ViewHolder> {
     Activity appContext;
     View displayView;
     ArrayList<CustomPageModel> storeData;
@@ -46,7 +47,8 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     public static boolean deleteCheck = false;
     public Bus bus;
     private CustomPageLink customPageLink;
-//    Drawable drawableFromTheme;
+
+    //    Drawable drawableFromTheme;
     //PorterDuffColorFilter primary;
     public CustomPageAdapter(Activity appContext, ArrayList<CustomPageModel> storeData,
                              UserSessionManager session, CustomPageInterface pageInterface, Bus bus, CustomPageLink customPageLink) {
@@ -55,7 +57,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
         this.session = session;
         this.pageInterface = pageInterface;
         this.bus = bus;
-        this.customPageLink=customPageLink;
+        this.customPageLink = customPageLink;
 //        pageDeleteInterface = (CustomPageDeleteInterface)appContext;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         format = new SimpleDateFormat("MMM dd,yyyy hh:mm aa", Locale.US);
@@ -68,34 +70,27 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        ImageView imageView,stencil,share,share_whatsapp,share_facebook;
-        TextView titleText,dateText;
+        ImageView imageView, stencil, share, share_whatsapp, share_facebook;
+        TextView titleText, dateText;
         CardView cardView;
         LinearLayout fullLayout;
+
         public ViewHolder(View v) {
             super(v);
-            stencil = (ImageView)itemView.findViewById(R.id.page_stencil_icon);
-            imageView = (ImageView)itemView.findViewById(R.id.page_menu);
-            titleText = (TextView)itemView.findViewById(R.id.page_name);
-            dateText = (TextView)itemView.findViewById(R.id.page_date);
-            fullLayout = (LinearLayout)itemView.findViewById(R.id.full_layout_card);
+            stencil = (ImageView) itemView.findViewById(R.id.page_stencil_icon);
+            imageView = (ImageView) itemView.findViewById(R.id.page_menu);
+            titleText = (TextView) itemView.findViewById(R.id.page_name);
+            dateText = (TextView) itemView.findViewById(R.id.page_date);
+            fullLayout = (LinearLayout) itemView.findViewById(R.id.full_layout_card);
            /* share = (ImageView) itemView.findViewById(R.id.shareData);
             share_facebook = (ImageView) itemView.findViewById(R.id.share_facebook);
             share_whatsapp = (ImageView) itemView.findViewById(R.id.share_whatsapp);*/
-            cardView=(CardView) itemView.findViewById(R.id.cardView);
-
-
-
-
-
-
-
+            cardView = (CardView) itemView.findViewById(R.id.cardView);
 
 
         }
 
-}
-
+    }
 
 
     @Override
@@ -107,15 +102,15 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        try{
-            if (storeData.get(position)!=null){
-                holder.fullLayout.setTag(position+"");
-                holder.imageView.setTag(position+"");
+        try {
+            if (storeData.get(position) != null) {
+                holder.fullLayout.setTag(position + "");
+                holder.imageView.setTag(position + "");
                 //holder.stencil.setColorFilter(primary);
-                if (storeData.get(position).getSel()==0){
+                if (storeData.get(position).getSel() == 0) {
                     holder.imageView.setVisibility(View.INVISIBLE);
 
-                    int[] attrs = new int[] { android.R.attr.selectableItemBackground /* index 0 */};
+                    int[] attrs = new int[]{android.R.attr.selectableItemBackground /* index 0 */};
                     TypedArray ta = appContext.obtainStyledAttributes(attrs);
                     Drawable drawableFromTheme = ta.getDrawable(0 /* index */);
 
@@ -123,12 +118,12 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         holder.fullLayout.setBackground(drawableFromTheme);
-                    }else{
+                    } else {
                         holder.fullLayout.setBackgroundDrawable(drawableFromTheme);
                     }
                     //holder.fullLayout.setBackgroundColor( ContextCompat.getColor(appContext,android.R.color.transparent));
 //                    holder.imageView.setColorFilter(greyBg);
-                }else{
+                } else {
                     holder.imageView.setVisibility(View.VISIBLE);
                     holder.fullLayout.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
                 }
@@ -199,33 +194,33 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                     public void onClick(View v) {
                         int POs = Integer.parseInt(v.getTag().toString());
                         //Log.v("ggg",POs+"");
-                        if (deleteCheck){
-                            if (CustomPageFragment.posList.contains(POs+"")){
-                                if(CustomPageFragment.posList.size()==1){
+                        if (deleteCheck) {
+                            if (CustomPageFragment.posList.contains(POs + "")) {
+                                if (CustomPageFragment.posList.size() == 1) {
                                     deleteCheck = false;
                                 }
 //                                v.setBackgroundColor(android.R.attr.selectableItemBackground);
-                                CustomPageFragment.posList.remove(POs+"");
-                                bus.post(new DeletePageTriggerEvent(POs,false,v));
+                                CustomPageFragment.posList.remove(POs + "");
+                                bus.post(new DeletePageTriggerEvent(POs, false, v));
 //                                pageDeleteInterface.DeletePageTrigger(POs,false,v);
 //                                holder.imageView.setVisibility(View.INVISIBLE);
                                 storeData.get(POs).setSel(0);
-                            }else{
+                            } else {
 //                                v.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
-                                deleteCheck =true;
-                                if (!(CustomPageFragment.posList.contains(POs+"")))
-                                    CustomPageFragment.posList.add(POs+"");
+                                deleteCheck = true;
+                                if (!(CustomPageFragment.posList.contains(POs + "")))
+                                    CustomPageFragment.posList.add(POs + "");
 //                                pageDeleteInterface.DeletePageTrigger(POs,true,v);
-                                bus.post(new DeletePageTriggerEvent(POs,true,v));
+                                bus.post(new DeletePageTriggerEvent(POs, true, v));
 //                                holder.imageView.setVisibility(View.VISIBLE);
                                 storeData.get(POs).setSel(1);
                             }
-                            if (CustomPageFragment.custompageAdapter!=null)
+                            if (CustomPageFragment.custompageAdapter != null)
                                 CustomPageFragment.custompageAdapter.notifyDataSetChanged();
-                            if (CustomPageFragment.recyclerView!=null)
+                            if (CustomPageFragment.recyclerView != null)
                                 CustomPageFragment.recyclerView.invalidate();
-                        }else {
-                            BoostLog.d(CustomPageAdapter.class.getSimpleName() , storeData.get(POs).PageId+" "+POs);
+                        } else {
+                            BoostLog.d(CustomPageAdapter.class.getSimpleName(), storeData.get(POs).PageId + " " + POs);
                             editPage(storeData.get(POs).PageId, POs);
                         }
                     }
@@ -282,25 +277,27 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                     }
                 });*/
             }
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    public void updateSelection(int position){
-        if (position==0){
+
+    public void updateSelection(int position) {
+        if (position == 0) {
             for (int i = 0; i < storeData.size(); i++) {
                 storeData.get(i).setSel(0);
             }
-        }else{
+        } else {
             storeData.get(position).setSel(0);
         }
     }
 
-    public void shareLink(String id,String type)
-    {
-        String url=null;
+    public void shareLink(String id, String type) {
+        String url = null;
         Iterator<ItemsItem> it = customPageLink.getItems().iterator();
         while (it.hasNext()) {
             if (it.next().getId().equals(id)) {
-                url=it.next().getUrl().getUrl();
+                url = it.next().getUrl().getUrl();
                 break;
             }
         }
@@ -309,11 +306,13 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
         sendIntent.putExtra(Intent.EXTRA_TEXT, url);
         sendIntent.setType("text/plain");
 
-        switch (type){
-            case "facebook": sendIntent.setPackage("com.facebook.katana");
-            break;
-            case "whatsapp":  sendIntent.setPackage("com.whatsapp");
-            break;
+        switch (type) {
+            case "facebook":
+                sendIntent.setPackage(appContext.getString(R.string.facebook_package));
+                break;
+            case "whatsapp":
+                sendIntent.setPackage(appContext.getString(R.string.whatsapp_package));
+                break;
         }
         appContext.startActivity(sendIntent);
 

@@ -8,8 +8,7 @@
   </data>
 
   <androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match_match"
     android:background="@color/lightest_grey"
     android:orientation="vertical"
     tools:context=".ui.FragmentContainerOrderActivity">
@@ -22,13 +21,11 @@
       android:visibility="gone" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      style="@style/match_match">
 
       <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/booking_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -37,8 +34,7 @@
 
       <ProgressBar
         android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_gravity="center"
         android:indeterminate="true"
         android:theme="@style/progressBar"
@@ -46,8 +42,7 @@
 
       <LinearLayout
         android:id="@+id/error_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/size_30"
         android:layout_marginEnd="@dimen/size_30"
@@ -62,22 +57,20 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/error_txt"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_10"
           android:gravity="center"
-          android:text="Error"
+          android:text="@string/error"
           android:textAlignment="gravity"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/semi_bold"
           app:textType="HEADING_7" />
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_4"
           android:gravity="center"
-          android:text="Once your patients starts booking video consultation from your boost website, they will appear here. Alternatively, you can also create a booking on behalf of any patients by clicking the create button below."
+          android:text="@string/once_your_patients_starts_booking_video_consultation_from_your_boost_website_they_will_appear_here_alternatively_you_can_also_create_a_booking_on_behalf_of_any_patients_by_clicking_the_create_button_below"
           android:textAlignment="gravity"
           android:textColor="@color/grey_light_2"
           app:textType="BODY_1" />
@@ -85,8 +78,7 @@
 
       <com.framework.views.fabButton.FloatingActionButton
         android:id="@+id/btn_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="16dp"
         android:clickable="true"

@@ -13,6 +13,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.thinksity.R;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -76,7 +77,7 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
             appContext.runOnUiThread(() -> {
                 try {
                     listener.onSuccess(true);
-                    Methods.showSnackBarPositive(appContext, "Image updated successfully");
+                    Methods.showSnackBarPositive(appContext, appContext.getString(R.string.logo_updated_successfully));
                     Constants.LOGOUPLOADED = true ;
                     Bitmap bmp = Methods.decodeSampledBitmap(path, 720,720);
                     bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);

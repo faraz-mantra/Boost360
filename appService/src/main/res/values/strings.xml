@@ -146,7 +146,7 @@
   <string name="bank_account_added">Bank account added</string>
   <string name="are_you_sure">Are you sure?</string>
   <string name="cancel">Cancel</string>
-  <string name="delete">Delete</string>
+  <string name="delete_" translatable="false">Delete</string>
   <string name="enter_service_name">Enter service name</string>
   <string name="enter_product_name">Enter product name</string>
   <string name="enter_category_catalog_product">Please add product category</string>
@@ -335,7 +335,7 @@
   <string name="services_updated_success">Service updated successfully.</string>
   <string name="services_saved">Service saved successfully.</string>
   <string name="enter_service_category">Enter service category</string>
-  <string name="enter_service_duration">Enter service duration.</string>
+  <string name="enter_service_duration">Enter valid service duration.</string>
   <string name="service_removed_successfully">Service removed successfully.</string>
   <string name="removing_service_failed">Removing service failed, please try again.</string>
   <string name="only_eight_files_are_allowed_discarding">Only 8 files are allowed. Discarding the rest.</string>
@@ -639,6 +639,41 @@
   <string name="done">Done</string>
   <string name="update_offer">Update offer</string>
   <string name="business_closed">Business closed</string>
+  <string name="bank_account_cannot_empty">Bank account name can\'t empty.</string>
+  <string name="bank_number_can_not_empty">Bank account number can\'t empty.</string>
+  <string name="confirm_bank_account_cannot_empty">Confirm bank account number can\'t empty.</string>
+  <string name="enter_a_valid_account_number">Enter valid confirm account number.</string>
+  <string name="bank_ifcs_cannot_empty">Bank IFSC can\'t empty.</string>
+  <string name="please_enter_valid_ifcs">Please enter valid IFSC code</string>
+  <string name="bank_name_cant_empty">Bank name can\'t empty.</string>
+  <string name="product_adding_error_try_again">Product adding error, please try again.</string>
+  <string name="product_updating_error_try_again">Product updating error, please try again.</string>
+  <string name="uploading_product_image">Uploading product image, please wait...</string>
+  <string name="product_image_uploading_error">Product image uploading error, please try again.</string>
+  <string name="secondary_product_image_uploading_error_please">Secondary Product image uploading error, please try again.</string>
+  <string name="add_secondary_image_data_error_please_try_again">Add secondary image data error, please try again.</string>
+  <string name="product_updated_successfully">Product updated successfully.</string>
+  <string name="product_saved_successfully">Product saved successfully.</string>
+  <string name="you_have_unsaved_information_do_you_still_want_to_close">You have unsaved information. Do you still want to close?</string>
+  <string name="service_image_uploading_error">Service image uploading error, please try again.</string>
+  <string name="name_of_the_account_holder">Name of the account holder*</string>
+  <string name="account_number_required">Account Number*</string>
+  <string name="confirm_account_number">Confirm Account Number*</string>
+  <string name="bank_ifsc_code_required">Bank IFSC Code*</string>
+  <string name="bank_name_required">Bank name*</string>
+  <string name="account_alias">Account Alias</string>
+  <string name="bank_branch_required">Bank Branch*</string>
+  <string name="service_duration">Please provide a valid duration of service</string>
+  <string name="why_do_we_need_your_bank_account_required">Why do we need your bank account?</string>
+  <string name="storage_permission" translatable="false">Storage Permission</string>
+  <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
+  <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
+  <string name="no">No</string>
+  <string name="yes">Yes</string>
+  <string name="staff_profile">Staff Profile</string>
+  <string name="add_ons_description_lock">Looks like this add-on is not added to your current plan. Add it now to start using it.</string>
+  <string name="see_how_it_works">See how it works</string>
+
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
@@ -646,7 +681,7 @@
   </array>
 
   <string-array name="business_hours_arrays">
-    <item>12:00AM</item>
+    <item>12:00 AM</item>
     <item>12:30AM</item>
     <item>01:00AM</item>
     <item>01:30AM</item>

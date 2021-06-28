@@ -139,7 +139,7 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
                 cameraIntent();
 
             } else {
-                Toast.makeText(this, "Please give storage and camera permission", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.please_give_storage_and_camera_permission), Toast.LENGTH_SHORT).show();
             }
 
         } else if (requestCode == gallery_req_id) {
@@ -148,7 +148,7 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
                 galleryIntent();
 
             } else {
-                Toast.makeText(this, "Please give read storage permission", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,getString( R.string.please_give_read_storage_permission), Toast.LENGTH_SHORT).show();
             }
 
         }

@@ -20,6 +20,9 @@ import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_DISCOUNT_COUPON_LOADED
+import com.framework.webengageconstant.DISCOUNT_COUPON
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.add_card_popup.*
 import kotlinx.android.synthetic.main.coupon_popup.*
@@ -112,7 +115,7 @@ class CouponPopUpFragment : DialogFragment() {
             }
         }
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Discount_Coupon Loaded", "Discount_Coupon", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_DISCOUNT_COUPON_LOADED, DISCOUNT_COUPON, NO_EVENT_VALUE)
 
     }
 

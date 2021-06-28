@@ -8,12 +8,10 @@
   </data>
 
   <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    style="@style/match_wrap">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_10"
       android:layout_marginEnd="@dimen/size_10"
       android:background="@drawable/ic_bac_order_menu"
@@ -21,8 +19,7 @@
 
       <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/rv_menu_order"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/match_match"
         android:layout_marginTop="@dimen/size_4"
         android:layout_marginBottom="@dimen/size_8"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -13,7 +13,7 @@
         android:layout_marginBottom="@dimen/margin_50"
         android:layout_marginTop="@dimen/margin_10"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/margin_15"
+        android:paddingStart="@dimen/margin_15"
         android:paddingTop="@dimen/margin_10">
 
         <TextView
@@ -24,7 +24,7 @@
             android:drawableLeft="@drawable/ic_ca_arrow_back_black_24dp"
             android:drawablePadding="@dimen/margin_10"
             android:fontFamily="sans-serif"
-            android:text="Potential Customers"
+            android:text="@string/potential_customers"
             android:textColor="#80000000"
             android:textSize="@dimen/large_text_size"
             android:textStyle="bold" />
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_20"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/margin_20"
+        android:paddingStart="@dimen/margin_20"
         android:paddingRight="@dimen/margin_20"
         android:paddingTop="@dimen/margin_10">
 
@@ -84,7 +84,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginStart="@dimen/margin_10"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -97,7 +97,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif"
-                            android:text="+91 84932987498"
+                            android:text="@string/_91_84932987498"
                             android:textColor="#80000000"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -106,9 +106,8 @@
                             android:id="@+id/tvExpiryDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_2"
+                            android:layout_marginStart="@dimen/margin_2"
                             android:fontFamily="sans-serif-light"
-                            android:text="fjilsdjkfgjfidjgkfjdkgjkdfjkgjdfkjgkdjfg"
                             android:textColor="#80000000"
                             android:textSize="12sp"
                             android:textStyle="italic" />
@@ -131,10 +130,10 @@
                 android:id="@+id/tvViewMore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_marginTop="@dimen/margin_10"
                 android:fontFamily="sans-serif"
-                android:gravity="right"
+                android:gravity="end"
                 android:text="@string/view_less"
                 android:textAllCaps="true"
                 android:textColor="@color/primary"
@@ -146,16 +145,16 @@
                 android:layout_height="0.5dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margin_10"
-                android:background="#9E9E9E" />
+                android:background="@color/gray_9e9e9e" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
                 android:fontFamily="sans-serif"
-                android:gravity="left"
-                android:text="Relevant update and product suggestions: "
-                android:textColor="#80000000"
+                android:gravity="start"
+                android:text="@string/relevant_update_and_product_suggestions"
+                android:textColor="@color/gray_80000000"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -194,7 +193,7 @@
                     android:id="@+id/btnShare"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@color/primaryColor"
                     android:fontFamily="sans-serif"

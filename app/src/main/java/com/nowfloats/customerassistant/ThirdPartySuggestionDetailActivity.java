@@ -163,12 +163,12 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                 if(screen == ADD_PRODUCTS)
                 {
                     if(mSuggestionDO.getProducts().size()==0){
-                        Toast.makeText(ThirdPartySuggestionDetailActivity.this, "No product found for this query", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ThirdPartySuggestionDetailActivity.this,getString( R.string.no_product_found_for_this_category), Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }else if(mSuggestionDO.getUpdates().size()==0)
                 {
-                    Toast.makeText(ThirdPartySuggestionDetailActivity.this, "No updates found for this query", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ThirdPartySuggestionDetailActivity.this, getString(R.string.no_update_found_for_this_query), Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -230,7 +230,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
 
             for (SharedSuggestionsDO shareItem: sharedSuggestionsDOList) {
                 try {
-                    selectedProducts = selectedProducts + shareItem.getName() + "\n" + "\n" + "View Details : " + shareItem.getUrl()+ "\n" + "\n";
+                    selectedProducts = selectedProducts + shareItem.getName() + "\n" + "\n" + getString(R.string.view_details_)+ shareItem.getUrl()+ "\n" + "\n";
                     imageUrl = shareItem.getImage();
 
                 } catch (Exception e) {
@@ -337,7 +337,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
 
         if (type != SHOW_MESSAGE && positions.size() == 0) {
             String item = type == ADD_PRODUCTS ? "product" : "update";
-            Toast.makeText(ThirdPartySuggestionDetailActivity.this, "Please select at least one " + item, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ThirdPartySuggestionDetailActivity.this, getString(R.string.please_select_at_least_one) + item, Toast.LENGTH_SHORT).show();
             return;
         }
         switch (type) {
@@ -404,7 +404,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                         //updateActionsToServer(mSuggestionDO);
                         Methods.makeCall(ThirdPartySuggestionDetailActivity.this, mSuggestionDO.getValue());
                     }else {
-                        Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this, "Number is not valid");
+                        Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this, getString(R.string.number_is_not_valid));
                     }
                 }
                 else
@@ -419,7 +419,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                         Methods.sendEmail(ThirdPartySuggestionDetailActivity.this, new String []{mSuggestionDO.getValue()}, "");
                     }
                     else{
-                        Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this,"Email is not valid");
+                        Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this,getString(R.string.email_is_not_valid));
                     }
 
                 }

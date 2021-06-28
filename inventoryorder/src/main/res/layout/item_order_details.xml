@@ -4,8 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/match_wrap"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingStart="@dimen/size_12"
@@ -13,8 +12,7 @@
     android:paddingEnd="@dimen/size_13">
 
     <com.framework.views.customViews.CustomCardView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       app:cardCornerRadius="@dimen/size_4"
       app:cardUseCompatPadding="true">
 
@@ -28,16 +26,14 @@
     </com.framework.views.customViews.CustomCardView>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:orientation="vertical"
       android:paddingStart="@dimen/size_10"
       tools:ignore="RtlSymmetry">
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tvDishName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:ellipsize="end"
         android:gravity="start"
         android:maxLines="1"
@@ -47,8 +43,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tvDishQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap_wrap"
         android:gravity="start"
         android:includeFontPadding="false"
         android:textColor="@color/grey_text_color"
@@ -56,28 +51,24 @@
         tools:text="Qty: 2" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_weight="1"
           android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:textColor="@color/black_4a4a4a"
             app:textType="BODY_1"
             tools:text="₹1000" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvQty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:textColor="@color/primary_grey"
             app:textType="BODY_1"
             tools:text=" x 2" />
@@ -85,16 +76,14 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_gravity="bottom"
           android:gravity="bottom"
           android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvActualPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:includeFontPadding="false"
             android:textColor="@color/grey_text_color"
             android:visibility="gone"
@@ -103,8 +92,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvDishAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_6"
             android:includeFontPadding="false"
             android:textColor="@color/black_4a4a4a"

@@ -57,7 +57,7 @@ public class ActionItemsFragment extends Fragment {
         pbView.setVisibility(View.VISIBLE);
 
         ((SuggestionsActivity) getActivity()).setSupportActionBar(toolbar);
-        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
+        getActivity().setTitle(Html.fromHtml(getString(R.string.same_says)));
         toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));
     }
 

@@ -43,7 +43,7 @@ public class WhatsAppBubbleCloseDialog extends AppCompatActivity {
                     startActivity(launchIntent);
                 }catch(Exception e){
                     e.printStackTrace();
-                    Toast.makeText(WhatsAppBubbleCloseDialog.this, "Problem to open Boost", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WhatsAppBubbleCloseDialog.this, getResources().getString(R.string.problem_to_open_boost), Toast.LENGTH_SHORT).show();
                 }
                 finish();
             }

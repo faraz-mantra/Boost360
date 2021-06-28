@@ -35,6 +35,7 @@ import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.HorizontalMarginItemDecoration
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -46,7 +47,6 @@ import kotlinx.android.synthetic.main.compare_package_fragment.package_back
 import kotlinx.android.synthetic.main.compare_package_fragment.package_cart_icon
 import kotlinx.android.synthetic.main.compare_package_fragment.package_indicator2
 import kotlinx.android.synthetic.main.compare_package_fragment.package_viewpager
-import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONObject
 
 
@@ -97,6 +97,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
                 context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         packageAdaptor = ParentCompareItemAdapter(ArrayList(),(activity as UpgradeActivity),this)
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
         prefs = SharedPrefs(activity as UpgradeActivity)
         progressDialog = ProgressDialog(requireContext())
         return root
@@ -532,7 +533,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
                                             event_attributes.put("Discounted Price", offeredBundlePrice)
                                             event_attributes.put("Discount %", item!!.overall_discount_percent)
                                             item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                                            WebEngageController.trackEvent("ADDONS_MARKETPLACE Compare Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                                            WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
                                             badgeNumber = badgeNumber + 1
                                             Log.v("badgeNumber321", " "+ badgeNumber)
                                             Constants.CART_VALUE = badgeNumber

@@ -24,8 +24,8 @@
                 android:id="@+id/firstrow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/sidepanel_dashboard" />
@@ -52,8 +52,8 @@
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:tint="#808080"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="10dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/seller_analytics" />
@@ -81,8 +81,8 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_marginEnd="@dimen/icon_right_margin"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:layout_marginStart="@dimen/icon_left_margin"
                 android:padding="3dp"
                 android:scaleType="centerInside"
@@ -99,15 +99,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right">
+                android:gravity="end">
 
                 <Button
                     android:id="@+id/new_business_button"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="15dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/corner_white_backgrnd_yellow"
                     android:clickable="false"
                     android:padding="3dp"
@@ -121,8 +121,8 @@
                     android:id="@+id/business_lock_widget"
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:layout_marginStart="@dimen/icon_left_margin"
+                    android:layout_marginEnd="@dimen/icon_right_margin"
                     android:padding="5dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/lock_widget"
@@ -142,8 +142,8 @@
                 android:id="@+id/secondRow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/sidepanel_business" />
@@ -171,8 +171,8 @@
                 android:id="@+id/tenthRow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:tint="#808080"
                 android:padding="5dp"
                 android:scaleType="fitXY"
@@ -201,8 +201,8 @@
                 android:id="@+id/twelveth_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:tint="#808080"
                 android:padding="5dp"
                 android:scaleType="fitXY"
@@ -234,8 +234,8 @@
                 android:padding="5dp"
                 android:layout_height="33dp"
                 android:src="@drawable/site_appearance"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="29dp" />
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="29dp" />
 
             <TextView
                 android:id="@+id/tv_site_appearance"
@@ -264,8 +264,8 @@
                 android:layout_height="@dimen/icon_size"
                 android:padding="5dp"
                 android:src="@drawable/sidepanel_enquiry"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin" />
 
             <TextView
                 android:id="@+id/thirdRow_TextView"
@@ -279,7 +279,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="right">
+                android:gravity="end">
 
                 <ImageView
                     android:id="@+id/lock_widget_business_enquiries"
@@ -289,9 +289,9 @@
                     android:padding="5dp"
                     android:visibility="gone"
                     android:src="@drawable/lock_widget"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/icon_left_margin"
+                    android:layout_marginEnd="@dimen/icon_right_margin" />
                 <TextView
                     android:id="@+id/enquiry_count_textview"
                     android:layout_width="18dp"
@@ -301,8 +301,8 @@
                     android:padding="2dp"
                     android:text=""
                     android:gravity="center"
-                    android:layout_marginRight="32dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="32dp"
+                    android:layout_alignParentEnd="true"
                     android:textSize="10sp"
                     android:visibility="gone"
                     android:textColor="@color/white"
@@ -325,8 +325,8 @@
                 android:id="@+id/Product_Gal_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/catalog" />
@@ -342,15 +342,15 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
                 android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/lock_product_gal"
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:layout_marginStart="@dimen/icon_left_margin"
+                    android:layout_marginEnd="@dimen/icon_right_margin"
                     android:padding="5dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/lock_widget"
@@ -373,8 +373,8 @@
                 android:id="@+id/fourthRow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/sidepanel_gallery" />
@@ -390,15 +390,15 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
                 android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/lock_widget"
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:layout_marginStart="@dimen/icon_left_margin"
+                    android:layout_marginEnd="@dimen/icon_right_margin"
                     android:padding="5dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/lock_widget"
@@ -421,8 +421,8 @@
                 android:id="@+id/csp_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/custom_page_icon" />
@@ -438,15 +438,15 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="end"
                 android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/lock_widget_csp"
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:layout_marginStart="@dimen/icon_left_margin"
+                    android:layout_marginEnd="@dimen/icon_right_margin"
                     android:padding="5dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/lock_widget"
@@ -467,8 +467,8 @@
                 android:id="@+id/storeRow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/sidepanel_store" />
@@ -484,14 +484,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:gravity="right">
+                android:layout_marginEnd="15dp"
+                android:gravity="end">
 
                 <Button
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="80dp"
                     android:layout_height="27dp"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     android:background="@drawable/corner_white_backgrnd_yellow"
                     android:clickable="false"
                     android:padding="3dp"
@@ -514,8 +514,8 @@
                 android:id="@+id/eleventh_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:tint="#808080"
                 android:padding="5dp"
                 android:scaleType="fitXY"
@@ -542,8 +542,8 @@
                 android:id="@+id/seventhRow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="10dp"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/ic_help_and_support"
@@ -571,8 +571,8 @@
                 android:id="@+id/wildfire_img"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="6dp"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/wildfire_gray"
@@ -600,8 +600,8 @@
                 android:id="@+id/dictate_img"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:scaleType="fitXY"
                 android:padding="4dp"
                 app:srcCompat="@drawable/dictate_gray"
@@ -635,8 +635,8 @@
                 android:id="@+id/fifthRow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/sidepanel_settings" />
@@ -664,8 +664,8 @@
                 android:id="@+id/sixthRow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/sidepanel_chat" />
@@ -687,15 +687,15 @@
                     android:adjustViewBounds="true"
                     android:layout_height="wrap_content"
                     android:tint="@color/primaryColor"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="35dp"
                     android:src="@drawable/ic_info_outline_white_24dp"/>-->
                 <TextView
                     android:id="@+id/tv_write_to_ria_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="35dp"
                     android:background="@drawable/write_to_ria_info_bg"
                     android:gravity="center"
                     android:text="i"
@@ -720,8 +720,8 @@
                 android:id="@+id/iv_get_in_touch"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon_feedback"
@@ -731,7 +731,7 @@
                 android:id="@+id/tv_get_in_touch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="@string/feedback"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
@@ -752,8 +752,8 @@
                 android:id="@+id/eigthRow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/sidepanel_share" />
@@ -781,8 +781,8 @@
                 android:id="@+id/ninethRow_ImageView"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
+                android:layout_marginStart="@dimen/icon_left_margin"
+                android:layout_marginEnd="@dimen/icon_right_margin"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon_info" />

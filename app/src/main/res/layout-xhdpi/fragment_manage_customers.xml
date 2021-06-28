@@ -34,7 +34,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="24dp"
-                    android:text="Website\nInteractions"
+                    android:text="@string/website_ninteractions"
                     android:textSize="22sp"
                     app:layout_constraintBottom_toBottomOf="@+id/img_laptop"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="32dp"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:paddingRight="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +57,7 @@
                     android:id="@+id/img_info1"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginTop="5dp"
                     android:padding="5dp"
                     android:tint="@color/light_gray"
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="32dp"
-                        android:text="Orders"
+                        android:text="@string/orders"
                         android:textColor="@color/gray"
                         android:textSize="13sp"
                         android:textAllCaps="true" />
@@ -88,7 +88,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@string/zero" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="32dp"
-                        android:text="Enquiries"
+                        android:text="@string/enquiries_"
                         android:textColor="@color/gray"
                         android:textSize="13sp"
                         android:textAllCaps="true" />
@@ -127,7 +127,7 @@
                         android:id="@+id/tv_enquiries_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@string/zero" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -157,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="32dp"
-                        android:text="Calls"
+                        android:text="@string/calls"
                         android:textColor="@color/gray"
                         android:textSize="13sp"
                         android:textAllCaps="true" />
@@ -165,7 +165,7 @@
                         android:id="@+id/tv_calls_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@string/zero" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -195,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="32dp"
-                        android:text="Subscribers"
+                        android:text="@string/subscribers_"
                         android:textColor="@color/gray"
                         android:textSize="13sp"
                         android:textAllCaps="true" />
@@ -204,7 +204,7 @@
                         android:id="@+id/tv_subscriber_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@string/zero" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -248,7 +248,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="24dp"
-                    android:text="Cross\nPlatform"
+                    android:text="@string/cross_nplatform"
                     android:textSize="22sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -261,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="32dp"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:paddingRight="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -271,7 +271,7 @@
                     android:id="@+id/img_info2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginTop="5dp"
                     android:padding="5dp"
                     android:src="@drawable/icon_info"
@@ -295,7 +295,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_weight="1"
-                        android:text="Third Party Quiries"
+                        android:text="@string/third_party_quiries"
                         android:textAllCaps="true"
                         android:textColor="@color/gray"
                         android:textSize="13sp" />
@@ -333,7 +333,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_weight="1"
-                        android:text="Facebook Chats"
+                        android:text="@string/facebook_chats"
                         android:textAllCaps="true"
                         android:textColor="@color/gray"
                         android:textSize="13sp" />

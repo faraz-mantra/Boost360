@@ -47,7 +47,7 @@ public class PurchaseFeaturesPopup extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.purchase_feature_popup, container, false);
-        session = new UserSessionManager(requireActivity().getApplicationContext(), (HomeActivity) requireActivity());
+        session = new UserSessionManager(getActivity().getApplicationContext(), (HomeActivity) requireActivity());
         itemName = getArguments().getString("itemName");
         buyItemKey = getArguments().getString("buyItemKey");
         return layout;
@@ -86,7 +86,7 @@ public class PurchaseFeaturesPopup extends DialogFragment {
     }
 
     private void initiateBuyFromMarketplace() {
-        Intent intent = new Intent((HomeActivity) requireActivity(), UpgradeActivity.class);
+        Intent intent = new Intent((HomeActivity) getActivity(), UpgradeActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());

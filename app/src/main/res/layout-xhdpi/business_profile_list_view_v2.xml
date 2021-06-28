@@ -13,7 +13,7 @@
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginRight="@dimen/margin_10"
+      android:layout_marginEnd="@dimen/margin_10"
       android:background="@color/white"
       android:orientation="vertical">
 
@@ -204,8 +204,8 @@
             android:id="@+id/lock_widget_business_hours"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
-            android:layout_marginLeft="@dimen/icon_left_margin"
-            android:layout_marginRight="@dimen/icon_right_margin"
+            android:layout_marginStart="@dimen/icon_left_margin"
+            android:layout_marginEnd="@dimen/icon_right_margin"
             android:background="?android:selectableItemBackground"
             android:padding="5dp"
             android:scaleType="fitXY"

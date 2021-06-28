@@ -55,8 +55,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
-                android:layout_marginLeft="7dp"
-                android:background="@color/grey"></View>
+                android:layout_marginStart="7dp"
+                android:background="@color/grey" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -90,8 +90,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
-                android:layout_marginLeft="7dp"
-                android:background="@color/grey"></View>
+                android:layout_marginStart="7dp"
+                android:background="@color/grey" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -125,8 +125,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
-                android:layout_marginLeft="7dp"
-                android:background="@color/grey"></View>
+                android:layout_marginStart="7dp"
+                android:background="@color/grey" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -158,7 +158,7 @@
                         fontPath="Roboto-Bold.ttf"
                         android:singleLine="true"
                         android:text="@string/expired"
-                        android:gravity="left"
+                        android:gravity="start"
                         android:textColor="@color/green"
                         android:id="@+id/account_status"
                         tools:ignore="MissingPrefix" />

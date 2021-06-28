@@ -2,7 +2,6 @@ package com.inventoryorder.ui.appointmentSpa.list
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
@@ -10,11 +9,13 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.webengageconstant.APPOINTMENT_PAGE_LOAD
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -50,6 +51,7 @@ import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.*
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
@@ -68,7 +70,6 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   lateinit var mPopupWindow: PopupWindow
   private var orderItem: OrderItem? = null
   private var position: Int? = null
-  private var orderItemType = OrderSummaryModel.OrderSummaryType.TOTAL.type
 
   /* Paging */
   private var isLoadingD = false
@@ -89,7 +90,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on appointments", "APPOINTMENTS", it) }
+    WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
     layoutManager = LinearLayoutManager(baseActivity)
@@ -97,7 +98,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     requestFilter = getRequestFilterData(arrayListOf())
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
-    binding?.swipeRefresh?.setOnRefreshListener {loadNewData()}
+    binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
   }
 
   override fun onClick(v: View) {
@@ -141,8 +142,8 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
     if (isFirst || isSearch) showProgressLoad()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
-     hideProgressLoad()
+    viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
@@ -547,7 +548,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
         if (position != null && orderAdapter != null && orderAdapter!!.list().size > position!!) {
-          orderListFinalList= orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
+          orderListFinalList = orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
           response.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout()
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()
@@ -614,38 +615,38 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     orderAdapter?.clear()
     orderListFinalList.clear()
     orderList.clear()
-    apiOrderListCall()
+    clickFilterItem(filterItem)
   }
 
-  private fun apiOrderListCall() {
-    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
-      OrderSummaryModel.OrderSummaryType.RECEIVED -> {
-        val statusList = arrayListOf(OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)
-        requestFilter = getRequestFilterData(statusList)
-        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-      }
-      OrderSummaryModel.OrderSummaryType.SUCCESSFUL -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
-        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-      }
-      /*  OrderSummaryModel.OrderSummaryType.CANCELLED -> {
-          requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
-                  paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name, operatorType = QueryObject.Operator.NE.name)
-          getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-        }
-        OrderSummaryModel.OrderSummaryType.ABANDONED -> {
-          requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
-                  paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name)
-          getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-        }*/
-      OrderSummaryModel.OrderSummaryType.ESCALATED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ESCALATED.name))
-        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-      }
-      else -> {
-        requestFilter = getRequestFilterData(arrayListOf())
-        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
-      }
-    }
-  }
+//  private fun apiOrderListCall() {
+//    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
+//      OrderSummaryModel.OrderSummaryType.RECEIVED -> {
+//        val statusList = arrayListOf(OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)
+//        requestFilter = getRequestFilterData(statusList)
+//        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//      }
+//      OrderSummaryModel.OrderSummaryType.SUCCESSFUL -> {
+//        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+//        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//      }
+//      /*  OrderSummaryModel.OrderSummaryType.CANCELLED -> {
+//          requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+//                  paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name, operatorType = QueryObject.Operator.NE.name)
+//          getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//        }
+//        OrderSummaryModel.OrderSummaryType.ABANDONED -> {
+//          requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+//                  paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name)
+//          getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//        }*/
+//      OrderSummaryModel.OrderSummaryType.ESCALATED -> {
+//        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ESCALATED.name))
+//        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//      }
+//      else -> {
+//        requestFilter = getRequestFilterData(arrayListOf())
+//        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+//      }
+//    }
+//  }
 }

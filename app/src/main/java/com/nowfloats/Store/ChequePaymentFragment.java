@@ -50,19 +50,19 @@ public class ChequePaymentFragment extends ImagesPaymentFragment {
 
     public boolean validateAllFields() {
         if (bankNameEt.getText().toString().trim().length() == 0) {
-            showMessage("Enter bank name");
+            showMessage(getString(R.string.enter_bank_name));
         } else if (ifscCodeEt.getText().toString().trim().length() == 0) {
-            showMessage("Enter ifsc code");
+            showMessage(getString(R.string.enter_ifsc_code));
         } else if (accountNumberEt.getText().toString().trim().length() == 0) {
-            showMessage("Enter account number");
+            showMessage(getString(R.string.enter_account_no));
         } else if (transactionAmountEt.getText().toString().trim().length() == 0) {
-            showMessage("Enter cheque amount");
+            showMessage(getString(R.string.enter_cheque_amount));
         } else if (chequeNumberEt.getText().toString().trim().length() == 0) {
-            showMessage("Enter cheque number");
+            showMessage(getString(R.string.enter_cheque_no));
         } else if (TextUtils.isEmpty(mainImage)) {
-            showMessage("Please attach cheque image");
+            showMessage(getString(R.string.please_attach_cheque_imaeg));
         } else if (TextUtils.isEmpty(paymentDateEt.getText().toString())) {
-            showMessage("Please enter cheque date");
+            showMessage(getString(R.string.please_enter_cheque_date));
         } else {
             paymentMode = InitiateModel.PAYMENT_MODE.CHEQUE.ordinal();
             try {
@@ -81,15 +81,13 @@ public class ChequePaymentFragment extends ImagesPaymentFragment {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.textView_add_main:
-                ((OnPaymentOptionClick) mContext).onPickImage(PaymentOptionsActivity.PaymentType.CHEQUE, 10);
-                break;
-            case R.id.textView_add_alt:
-                ((OnPaymentOptionClick) mContext).onPickImage(PaymentOptionsActivity.PaymentType.CHEQUE, 11);
-                break;
-            default:
-                super.onClick(v);
+        int id = v.getId();
+        if (id == R.id.textView_add_main) {
+            ((OnPaymentOptionClick) mContext).onPickImage(PaymentOptionsActivity.PaymentType.CHEQUE, 10);
+        } else if (id == R.id.textView_add_alt) {
+            ((OnPaymentOptionClick) mContext).onPickImage(PaymentOptionsActivity.PaymentType.CHEQUE, 11);
+        } else {
+            super.onClick(v);
         }
     }
 }

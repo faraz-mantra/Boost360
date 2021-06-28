@@ -26,6 +26,7 @@ import com.boost.presignup.ui.PopUpDialogFragment
 import com.boost.presignup.utils.AppConstants.Companion.ENABLE_BOTTOM_VIEW
 import com.boost.presignup.utils.AppConstants.Companion.SINGLE_LANGUAGE_BUTTON_VIEW
 import com.boost.presignup.utils.WebEngageController
+import com.framework.webengageconstant.*
 
 
 class PreSignUpActivity : AppCompatActivity() {
@@ -95,7 +96,7 @@ class PreSignUpActivity : AppCompatActivity() {
     }
 
     binding.loginButton.setOnClickListener {
-      WebEngageController.trackEvent("PS_Clicked Login", "login clicked", "")
+      WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
       val intent = Intent(applicationContext, Class.forName("com.nowfloats.Login.Login_MainActivity"))
       startActivity(intent)
       //PresignupManager.getListener()?.loginClicked(activityContext)
@@ -121,7 +122,7 @@ class PreSignUpActivity : AppCompatActivity() {
     val intent = Intent(this, SignUpActivity::class.java)
     intent.putExtra("provider", "EMAIL")
     startActivity(intent)
-    WebEngageController.trackEvent("PS_Auth Provider Success EMAIL", "Provider Success EMAIL", "")
+    WebEngageController.trackEvent(PS_AUTH_PROVIDER_SUCCESS_EMAIL, PROVIDER_SUCCESS_EMAIL, NO_EVENT_VALUE)
   }
 
   private fun getPopupWindow(): PopupWindow {
@@ -129,17 +130,17 @@ class PreSignUpActivity : AppCompatActivity() {
     val listView: View = LayoutInflater.from(baseContext)
         .inflate(R.layout.language_recyclerview, null)
     val mAdapter = LanguageDropDownAdapter(this, langList,
-        object : LanguageDropDownAdapter.RecyclerViewClickListener {
-          override fun onClick(viewHolder: LanguageDropDownAdapter.ViewHolder, itemPos: Int) {
-            if (::mPopupWindow.isInitialized) {
-              mPopupWindow.dismiss()
-              dropDownStatus = false
-            }
-            binding.languageDropdownText.text = langList.get(itemPos)
-            binding.viewModel?.LanguageSelection(langList.get(itemPos))
-            WebEngageController.trackEvent("PS_Language Changed to " + langList.get(itemPos), "language changed to " + langList.get(itemPos), "")
-          }
-        })
+            object : LanguageDropDownAdapter.RecyclerViewClickListener {
+              override fun onClick(viewHolder: LanguageDropDownAdapter.ViewHolder, itemPos: Int) {
+                if (::mPopupWindow.isInitialized) {
+                  mPopupWindow.dismiss()
+                  dropDownStatus = false
+                }
+                binding.languageDropdownText.text = langList.get(itemPos)
+                binding.viewModel?.LanguageSelection(langList.get(itemPos))
+                WebEngageController.trackEvent(PS_LANGUAGE_CHANGED_TO + langList.get(itemPos), LANGUAGE_CHANGED_TO + langList.get(itemPos), NO_EVENT_VALUE)
+              }
+            })
     listView.setOnClickListener {
       if (::mPopupWindow.isInitialized) {
         mPopupWindow.dismiss()
@@ -201,28 +202,28 @@ class PreSignUpActivity : AppCompatActivity() {
 
   fun languageButtonSelection() {
     binding.englishButton.setOnClickListener {
-      WebEngageController.trackEvent("PS_Language Changed to " + langList.get(0), "language changed to " + langList.get(0), "")
+      WebEngageController.trackEvent(PS_LANGUAGE_CHANGED_TO + langList.get(0), LANGUAGE_CHANGED_TO + langList.get(0), "")
       if (!binding.viewModel!!.languageSelected.equals(langList.get(0))) {
         styleLanguageButton(it.id)
         binding.viewModel?.LanguageSelection(langList.get(0))
       }
     }
     binding.hindiButton.setOnClickListener {
-      WebEngageController.trackEvent("PS_Language Changed to " + langList.get(1), "language changed to " + langList.get(1), "")
+      WebEngageController.trackEvent(PS_LANGUAGE_CHANGED_TO + langList.get(1), LANGUAGE_CHANGED_TO + langList.get(1), "")
       if (!binding.viewModel!!.languageSelected.equals(langList.get(1))) {
         styleLanguageButton(it.id)
         binding.viewModel?.LanguageSelection(langList.get(1))
       }
     }
     binding.teluguButton.setOnClickListener {
-      WebEngageController.trackEvent("PS_Language Changed to " + langList.get(2), "language changed to " + langList.get(2), "")
+      WebEngageController.trackEvent(PS_LANGUAGE_CHANGED_TO + langList.get(2), LANGUAGE_CHANGED_TO + langList.get(2), "")
       if (!binding.viewModel!!.languageSelected.equals(langList.get(2))) {
         styleLanguageButton(it.id)
         binding.viewModel?.LanguageSelection(langList.get(2))
       }
     }
     binding.tamilButton.setOnClickListener {
-      WebEngageController.trackEvent("PS_Language Changed to " + langList.get(3), "language changed to " + langList.get(3), "")
+      WebEngageController.trackEvent(PS_LANGUAGE_CHANGED_TO + langList.get(3), LANGUAGE_CHANGED_TO + langList.get(3), "")
       if (!binding.viewModel!!.languageSelected.equals(langList.get(3))) {
         styleLanguageButton(it.id)
         binding.viewModel?.LanguageSelection(langList.get(3))

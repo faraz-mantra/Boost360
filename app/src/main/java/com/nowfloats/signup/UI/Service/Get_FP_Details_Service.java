@@ -46,6 +46,12 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.framework.utils.GsonUtilsKt.convertListObjToString;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_ANDROID_FAILED_TO_LOAD_DATA_IN_GET_FP_DETAILS;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_ANDROID_GET_FP_DETAILS_FP_DATA_NULL;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_ANDROID_GET_FP_DETAILS_SERVICE_EXCEPTION;
+import static com.framework.webengageconstant.EventNameKt.ANDROID_FAILED_TO_LOAD_DATA_IN_GET_FP_DETAILS;
+import static com.framework.webengageconstant.EventNameKt.ANDROID_GET_FP_DETAILS_FP_DATA_NULL;
+import static com.framework.webengageconstant.EventNameKt.ANDROID_GET_FP_DETAILS_SERVICE_EXCEPTION;
 import static com.nfx.leadmessages.Constants.CALL_LOG_TIME_INTERVAL;
 import static com.nfx.leadmessages.Constants.SHARED_PREF;
 import static com.nfx.leadmessages.Constants.SMS_REGEX;
@@ -104,7 +110,7 @@ public class Get_FP_Details_Service {
             activity.runOnUiThread(() -> {
               if (activity.isFinishing()) return;
               Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
-              WebEngageController.trackEvent("[Android] Get_FP_Details FP Data Null", "[Android] Get_FP_Details FP Data Null", fpID);
+              WebEngageController.trackEvent(ANDROID_GET_FP_DETAILS_FP_DATA_NULL, EVENT_LABEL_ANDROID_GET_FP_DETAILS_FP_DATA_NULL, fpID);
 
               if (WebSiteAddressActivity.pd != null) {
                 WebSiteAddressActivity.pd.dismiss();
@@ -120,7 +126,7 @@ public class Get_FP_Details_Service {
             bus.post(response);
           }
         } catch (Exception e) {
-          WebEngageController.trackEvent("[Android] Get_FP_Details Service Exception", "[Android] Get_FP_Details Service Exception", e.getMessage());
+          WebEngageController.trackEvent(ANDROID_GET_FP_DETAILS_SERVICE_EXCEPTION, EVENT_LABEL_ANDROID_GET_FP_DETAILS_SERVICE_EXCEPTION, e.getMessage());
           bus.post(e.getLocalizedMessage());
         }
       }
@@ -128,7 +134,7 @@ public class Get_FP_Details_Service {
       @Override
       public void failure(RetrofitError error) {
         Log.d("", "" + error.getMessage());
-        WebEngageController.trackEvent("[Android] Failed to load data in Get_FP_Details", "[Android] Failed to load data in Get_FP_Details", fpID);
+        WebEngageController.trackEvent(ANDROID_FAILED_TO_LOAD_DATA_IN_GET_FP_DETAILS, EVENT_LABEL_ANDROID_FAILED_TO_LOAD_DATA_IN_GET_FP_DETAILS, fpID);
         try {
           activity.runOnUiThread(() -> {
             //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");

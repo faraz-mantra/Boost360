@@ -133,7 +133,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             public void onClick(View v) {
                 if (!discountText.getText().toString().isEmpty() && !currentPriceText.getText().toString().isEmpty()) {
                     if (Double.parseDouble(discountText.getText().toString()) > 100) {
-                        Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, "Invalid Discount Percentage!!");
+                        Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, getString(R.string.invalid_discount_percent));
                         checkButtonClickStatus = false;
                     } else {
                         checkButtonClickStatus = true;
@@ -143,7 +143,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                     offerPrice = (discount * mrpPrice) / 100;
                     offerPriceText.setText("Rs." + String.valueOf(offerPrice));
                 }else{
-                    Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -152,7 +152,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
                 if (path != null) {
-                    showLoader("Uploading Image.Please Wait...");
+                    showLoader(getString(R.string.uploading_image_please_wait));
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -308,7 +308,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
                 if (ScreenType != null && ScreenType.equals("edit")) {
-                    showLoader("Deleting Record.Please Wait...");
+                    showLoader(getString(R.string.deleting_record_please_wait));
                     deleteRecord(itemId);
                     return;
                 }
@@ -446,7 +446,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, "Successfully Added Offer Details");
+                        Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, getString(R.string.successfully_added_offer_details));
                         onBackPressed();
                     }
 
@@ -468,12 +468,12 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     private boolean validateInput() {
         if (offerTitleText.getText().toString().isEmpty() || currentPriceText.getText().toString().isEmpty()
                 || discountText.getText().toString().isEmpty() || offerDescriptionText.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (!checkButtonClickStatus) {
-            Methods.showSnackBar(SeasonalOffersDetailsActivity.this, "Click CHECK Button To Continue...");
+            Methods.showSnackBar(SeasonalOffersDetailsActivity.this, getString(R.string.click_check_button_to_continue));
             return false;
         }
 
@@ -559,7 +559,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, "Successfully Updated Offer Details");
+                        Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, getString(R.string.successfully_updated_offer_details));
                         finish();
                     }
 
@@ -567,7 +567,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                     public void failure(RetrofitError error) {
                         hideLoader();
                         if (error.getResponse().getStatus() == 200) {
-                            Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, "Successfully Updated Offer Details");
+                            Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, getString(R.string.successfully_updated_offer_details));
                             finish();
                         } else {
                             Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -604,7 +604,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -615,7 +615,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -637,10 +637,10 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader("Updating Record.Please Wait...");
+            showLoader(getString(R.string.updating_record_please_wait));
             updateExistingOfferAPI();
         } else {
-            showLoader("Creating Record.Please Wait...");
+            showLoader(getString(R.string.creating_record_please_wait));
             createNewOfferAPI();
             Methods.hideKeyboard(SeasonalOffersDetailsActivity.this);
         }

@@ -27,6 +27,11 @@ import com.thinksity.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventNameKt.PS_FORGOT_PASSWORD_PAGE_LOAD;
+import static com.framework.webengageconstant.EventValueKt.FORGOT_PASSWORD_FAILED;
+import static com.framework.webengageconstant.EventValueKt.NULL;
+
 public class ForgotPassword extends Activity {
 
     EditText userName;
@@ -105,10 +110,10 @@ public class ForgotPassword extends Activity {
 
                 if (isUpdatedOnServer) {
                     SuccessDialog();
-                    WebEngageController.trackEvent("FORGOT PASSWORD","null","null");
+                    WebEngageController.trackEvent(PS_FORGOT_PASSWORD_PAGE_LOAD,EVENT_LABEL_NULL,NULL);
                 } else {
                    Toast.makeText(ForgotPassword.this,getString(R.string.enter_correct_user_name),Toast.LENGTH_SHORT);
-                    WebEngageController.trackEvent("FORGOT PASSWORD","null","Forgot Password failed");
+                    WebEngageController.trackEvent(PS_FORGOT_PASSWORD_PAGE_LOAD,EVENT_LABEL_NULL,FORGOT_PASSWORD_FAILED);
 
                 }
             }

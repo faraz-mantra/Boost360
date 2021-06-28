@@ -6,7 +6,6 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -27,7 +26,7 @@ import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
 import com.dashboard.model.live.welcomeData.WelcomeData
 import com.dashboard.model.live.welcomeData.getIsShowWelcome
-import com.dashboard.pref.*
+import com.framework.pref.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -42,6 +41,7 @@ import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
+import com.framework.webengageconstant.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
@@ -55,6 +55,7 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
+import kotlin.system.exitProcess
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
@@ -67,6 +68,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isSecondaryImage = false
   var isLoadShimmer = true
+  var count = 0
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -93,7 +95,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     mNavController.graph = graph
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
-    binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
@@ -105,23 +106,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun initialize() {
-    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-    StrictMode.setThreadPolicy(policy)
-    WebEngageController.initiateUserLogin(session?.userProfileId)
-    WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
-    WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent("Home Page", "pageview", session?.fpTag ?: "")
-    WebEngageController.trackEvent("Home Page", "screen_name", session?.fpTag ?: "")
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
-      WebEngage.get().setRegistrationID(token)
+      if (token.isNullOrEmpty().not()) {
+        WebEngage.get().setRegistrationID(token)
+        AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
+        AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
+      }
     }
     initialiseZendeskSupportSdk()
-    if (FirebaseInstanceId.getInstance().token != null) {
-      AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
-      AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
-    }
-    //checkCustomerAssistantService()
   }
 
   private fun intentDataCheckAndDeepLink() {
@@ -133,16 +128,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val action = intent.action
       val data = intent.dataString
       val uri = intent.data
-      Log.d("Data: ", "$data  $action")
+      Log.d("Data: ", "$data  $action $uri")
       if (session?.isLoginCheck == true) {
-        //Appsflyer Deep Link...
         if (uri != null && uri.toString().contains("onelink", true)) {
-          if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-            val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
-            val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
-
-            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
-          }
+          isAppFlyerLink()
         } else {
           //Default Deep Link..
           val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
@@ -152,11 +141,22 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
           } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
         }
-      } else this.startPreSignUp(session)
+      } else {
+        this.startPreSignUp(session, true)
+        finish()
+      }
+    } else isAppFlyerLink()
+  }
+
+  private fun isAppFlyerLink() {
+    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+      val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+      val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
+      if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
+      AppsFlyerUtils.sAttributionData = mapOf()
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
     }
-
   }
 
   override fun onResume() {
@@ -171,11 +171,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
 
   fun setPercentageData(score: Int) {
-    val isHigh = (score >= 80)
+    val isHigh = (score >= 85)
     binding?.drawerView?.txtPercentage?.text = "$score% "
     binding?.drawerView?.progressBar?.progress = score
-    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+//    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+//    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
   }
 
   private fun setUserData() {
@@ -195,7 +195,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setDrawerHome() {
-    viewModel.getNavDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
+    viewModel.getNavDashboardData(this).observeOnce(this, {
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         binding?.drawerView?.rvLeftDrawer?.apply {
@@ -233,10 +233,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onItemSelect(pos: Int) {
     when (pos) {
-      0 -> {
-        mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-        toolbarPropertySet(pos)
-      }
+      0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
       else -> {
@@ -323,7 +320,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onItemClick(pos)
     when (pos) {
       3 -> checkWelcomeShowScreen(pos)
-      4 -> binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
+      4 -> {
+        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
+        WebEngageController.trackEvent(MORE, CLICK, TO_BE_ADDED)
+      }
     }
   }
 
@@ -331,10 +331,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     return NavOptions.Builder().setExitAnim(R.anim.slide_out_left).setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
   }
 
-  private fun openDashboard() {
+  private fun openDashboard(isSet: Boolean = true) {
     mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-    binding?.navView?.setActiveItem(0)
+    if (isSet) binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -365,11 +366,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onClick(v)
     when (v) {
       binding?.drawerView?.btnSiteMeter -> {
-//        session?.let { this.startOldSiteMeter(it) }
         startReadinessScoreView(session, 0)
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.imgBusinessLogo -> this.startBusinessProfileDetailEdit(session)
-      binding?.drawerView?.txtDomainName -> this.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.drawerView?.imgBusinessLogo -> {
+        this.startBusinessProfileDetailEdit(session)
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+      }
+      binding?.drawerView?.txtDomainName -> {
+        this.startWebViewPageLoad(session, session!!.getDomainName(false))
+        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+      }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
     }
   }

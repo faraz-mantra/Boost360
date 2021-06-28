@@ -110,6 +110,7 @@
           android:layout_marginBottom="0dp"
           android:alpha="0"
           android:text="@string/skip"
+          android:gravity="center"
           app:textType="HEADING_6"
           tools:alpha="1" />
     </LinearLayout>

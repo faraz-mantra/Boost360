@@ -44,6 +44,18 @@ import com.thinksity.R;
 import zendesk.support.guide.HelpCenterActivity;
 
 import static android.view.Window.FEATURE_NO_TITLE;
+import static com.framework.webengageconstant.EventLabelKt.LEARN_HOW_TO_USE;
+import static com.framework.webengageconstant.EventLabelKt.NO_EVENT_LABLE;
+import static com.framework.webengageconstant.EventLabelKt.SHARE_WEBSITE_FROM_ONBOARDING_CARDS;
+import static com.framework.webengageconstant.EventLabelKt.SITE_HEALTH_FROM_ONBOARDING_CARDS;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_ADD_PRODUCT;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_CUSTOM_PAGE;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_LEARN;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_ONBOARDING_CARDS_COMPLETE;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_SHARE_WEBSITE;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_SITE_HEALTH;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_SITE_HEALTH_FROM_ONBOARDING_CARDS;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 
 /**
  * Created by Admin on 16-03-2018.
@@ -138,29 +150,29 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                     OnBoardingApiCalls.updateData(session.getFpTag(), "welcome_aboard:true");
                 }
                 isSomethingChanged = true;
-                WebEngageController.trackEvent("DASHBOARD - LEARN", "Learn How to use",null);
+                WebEngageController.trackEvent(DASHBOARD_LEARN, LEARN_HOW_TO_USE,NULL);
                 HelpCenterActivity.builder()
                         .show(this);
                 break;
             case 1:
-                WebEngageController.trackEvent("DASHBOARD - SITE_HEALTH", "Site Health from Onboarding Cards",null);
+                WebEngageController.trackEvent(DASHBOARD_SITE_HEALTH, SITE_HEALTH_FROM_ONBOARDING_CARDS,NULL);
                 intent = new Intent(this, FragmentsFactoryActivity.class);
                 intent.putExtra("fragmentName", "SiteMeterFragment");
                 isSomethingChanged = true;
                 break;
             case 2:
-                WebEngageController.trackEvent("DASHBOARD - CUSTOM_PAGE", "Site Health from Onboarding Cards",null);
+                WebEngageController.trackEvent(DASHBOARD_CUSTOM_PAGE, EVENT_NAME_SITE_HEALTH_FROM_ONBOARDING_CARDS,NULL);
                 intent = new Intent(this, CustomPageActivity.class);
                 isSomethingChanged = true;
                 break;
             case 3:
-                WebEngageController.trackEvent("DASHBOARD - ADD_PRODUCT", "Site Health from Onboarding Cards",null);
+                WebEngageController.trackEvent(DASHBOARD_ADD_PRODUCT, EVENT_NAME_SITE_HEALTH_FROM_ONBOARDING_CARDS,NULL);
                 intent = new Intent(this, ProductGalleryActivity.class);
                 isSomethingChanged = true;
                 break;
             case 4:
                 isSomethingChanged = true;
-                WebEngageController.trackEvent("DASHBOARD - ONBOARDING_CARDS_COMPLETE", "",null);
+                WebEngageController.trackEvent(DASHBOARD_ONBOARDING_CARDS_COMPLETE, NO_EVENT_LABLE,NULL);
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);
                     adapter.refreshAfterComplete();
@@ -169,7 +181,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 return;
             case 5:
                 isSomethingChanged = true;
-                WebEngageController.trackEvent("DASHBOARD - SHARE_WEBSITE", "Share website from Onboarding Cards",null);
+                WebEngageController.trackEvent(DASHBOARD_SHARE_WEBSITE, SHARE_WEBSITE_FROM_ONBOARDING_CARDS,NULL);
                 shareWebsite();
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);
@@ -245,7 +257,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
-            Toast.makeText(OnBoardingActivity.this, "Failed to connect account. Please try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OnBoardingActivity.this, getString(R.string.failed_to_connect_account_please_try_again), Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -290,7 +302,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
     }
 
     private void startPhoneNumberAuth(String phoneNumber, boolean gotoNextPage) {
-        progressDialog = ProgressDialog.show(this, "", "Loading");
+        progressDialog = ProgressDialog.show(this, "", getString(R.string.loading_));
 
         customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(this, customFirebaseAuthListeners, session.getFPID());
 
@@ -326,7 +338,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
     }
 
     private void submitUserOtp(String otp) {
-        progressDialog = ProgressDialog.show(this, "", "Loading");
+        progressDialog = ProgressDialog.show(this, "", getString(R.string.loading_));
         customFirebaseAuthHelpers.phoneAuthVerification(otp);
     }
 

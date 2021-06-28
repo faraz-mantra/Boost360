@@ -14,6 +14,8 @@ enum class FacebookPermissions {
   manage_pages,
   publish_pages,
   ads_management,
-  pages_manage_posts
+  pages_read_engagement,
+  pages_manage_posts,
+  pages_read_user_content
 }
 

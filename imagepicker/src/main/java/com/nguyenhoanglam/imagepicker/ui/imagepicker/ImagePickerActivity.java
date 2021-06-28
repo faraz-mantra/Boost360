@@ -283,26 +283,26 @@ public class ImagePickerActivity extends AppCompatActivity implements ImagePicke
         switch (requestCode) {
             case Config.RC_WRITE_EXTERNAL_STORAGE_PERMISSION: {
                 if (PermissionHelper.hasGranted(grantResults)) {
-                    logger.d("Write External permission granted");
+                    logger.d(getString(R.string.write_external_permission_granted));
                     getData();
                     return;
                 }
-                logger.e("Permission not granted: results len = " + grantResults.length +
-                        " Result code = " + (grantResults.length > 0 ? grantResults[0] : "(empty)"));
+                logger.e(getString(R.string.permission_not_granted_results_len) + grantResults.length +
+                        getString(R.string.result_code) + (grantResults.length > 0 ? grantResults[0] : "(empty)"));
                 finish();
             }
             case Config.RC_CAMERA_PERMISSION: {
                 if (PermissionHelper.hasGranted(grantResults)) {
-                    logger.d("Camera permission granted");
+                    logger.d(getString(R.string.camera_permission_granted));
                     captureImage();
                     return;
                 }
-                logger.e("Permission not granted: results len = " + grantResults.length +
-                        " Result code = " + (grantResults.length > 0 ? grantResults[0] : "(empty)"));
+                logger.e(getString(R.string.permission_not_granted_results_len) + grantResults.length +
+                        getString(R.string.result_code) + (grantResults.length > 0 ? grantResults[0] : "(empty)"));
                 break;
             }
             default: {
-                logger.d("Got unexpected permission result: " + requestCode);
+                logger.d(getString(R.string.got_unexpacted_permission_result) + requestCode);
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
                 break;
             }

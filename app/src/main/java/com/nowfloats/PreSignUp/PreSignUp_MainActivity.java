@@ -223,7 +223,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
     public void accessTokenFacebook() {
 
-        progressDialog = ProgressDialog.show(PreSignUp_MainActivity.this, "", "Fetching Details...");
+        progressDialog = ProgressDialog.show(PreSignUp_MainActivity.this, "", getString(R.string.fetching_details));
         progressDialog.setCancelable(false);
 
         List<String> readPermissions= Arrays.asList("email"
@@ -334,8 +334,8 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                                 if (pageItems != null && pageItems.size() > 0) {
                                     final String[] array = pageItems.toArray(new String[pageItems.size()]);
                                     new MaterialDialog.Builder(PreSignUp_MainActivity.this)
-                                            .title("Choose a Facebook Page")
-                                            .positiveText("Choose")
+                                            .title(R.string.choose_a_facebook_page)
+                                            .positiveText(R.string.choose)
                                             .items(array)
                                             .widgetColorRes(R.color.primaryColor)
                                             .dismissListener(new DialogInterface.OnDismissListener() {

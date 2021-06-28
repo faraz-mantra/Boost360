@@ -38,6 +38,10 @@ import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PAYMENT_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
+import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
+import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
 import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
@@ -85,8 +89,7 @@ class UpgradeActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
- var connectionStatus = checkNetworkType(applicationContext)
-    Log.v("checkNetworkType", " " + connectionStatus)
+
     isDeepLink = intent.getBooleanExtra("isDeepLink", false)
     deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
     deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
@@ -102,20 +105,12 @@ class UpgradeActivity : AppCompatActivity() {
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
-    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
-
-    if (userPurchsedWidgets != null) {
-      for (a in userPurchsedWidgets) {
-//      println("userPurchsedWidgets  ${userPurchsedWidgets}")
-      }
-
-
-    }
+    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")?:ArrayList()
 
     progressDialog = ProgressDialog(this)
 
     prefs = SharedPrefs(this)
-    WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE HOME")
+//    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
     initView()
     initRazorPay()
   }
@@ -132,6 +127,7 @@ class UpgradeActivity : AppCompatActivity() {
       bundle.putString("screenType", intent.getStringExtra("screenType"))
       bundle.putStringArrayList("userPurchsedWidgets", intent.getStringArrayListExtra("userPurchsedWidgets"))
       bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+      bundle.putString("buyItemKey", intent.getStringExtra("buyItemKey"))
 //      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
       addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT, bundle)
       //update userdetails and buyitem
@@ -190,7 +186,7 @@ class UpgradeActivity : AppCompatActivity() {
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
           if (tag == CART_FRAGMENT) {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back button_cart screen", "ADDONS_MARKETPLACE", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_CART_SCREEN, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             supportFragmentManager.addOnBackStackChangedListener {
               val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
               if (currentFragment != null) {
@@ -206,7 +202,7 @@ class UpgradeActivity : AppCompatActivity() {
             }
           }
           if (tag == PAYMENT_FRAGMENT)
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", "ADDONS_MARKETPLACE", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_PAYMENTSCREEN, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
           if (tag == ORDER_CONFIRMATION_FRAGMENT) {
             if (isDeepLink) goHomeActivity()
             else goToHomeFragment()
@@ -353,7 +349,7 @@ class UpgradeActivity : AppCompatActivity() {
                                               details.arguments = args
                                               addFragment(details, Constants.DETAILS_FRAGMENT)
                                             } else {
-                                              Toasty.error(this, "This Add-ons Not Available to Your Account.", Toast.LENGTH_LONG).show()
+//                                              Toasty.error(this, "This Add-ons Not Available to Your Account.", Toast.LENGTH_LONG).show()
                                             }
                                           }, {
                                             Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()

@@ -3,6 +3,7 @@ package com.framework.views.customViews
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import com.framework.R
 import com.framework.enums.TextType
@@ -39,5 +40,24 @@ class CustomAutoCompleteTextView : AppCompatAutoCompleteTextView {
       it.type == typedArray?.getInt(R.styleable.CustomTextView_textType, -1)
     }
     this.setTextStyle(textType)
+  }
+
+  override fun enoughToFilter(): Boolean {
+    return true
+  }
+
+  override fun onTouchEvent(event: MotionEvent): Boolean {
+    if (event.action == MotionEvent.ACTION_DOWN) {
+      performClick()
+    }
+    return super.onTouchEvent(event)
+  }
+
+  override fun performClick(): Boolean {
+    if (filter != null && !isPopupShowing) {
+      performFiltering(text, 0)
+      showDropDown()
+    }
+    return super.performClick()
   }
 }

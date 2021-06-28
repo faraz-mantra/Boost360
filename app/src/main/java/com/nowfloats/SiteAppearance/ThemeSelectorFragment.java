@@ -97,7 +97,7 @@ public class ThemeSelectorFragment extends Fragment {
                 if (manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     Methods.showFeatureNotAvailDialog(getContext());
                 } else if (setLook.getText().toString().equals("Current look")) {
-                    Toast.makeText(mContext, "Your website already has this look", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getString(R.string.your_website_already_has_this_look), Toast.LENGTH_SHORT).show();
                 } else {
                     showDialog();
                     setTheme();
@@ -171,9 +171,9 @@ public class ThemeSelectorFragment extends Fragment {
             setCurrentThemeButtonBg();
             manager.storeFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID, themeIds[pos]);
             ((SiteAppearanceActivity) mContext).notifyDataSetChanged();
-            Toast.makeText(mContext, "Changed theme to " + themeNames[pos], Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, getString(R.string.changed_theme_to) + themeNames[pos], Toast.LENGTH_SHORT).show();
         } else if (s.equals("false")) {
-            Toast.makeText(mContext, "Not able to change theme", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, getString(R.string.not_able_to_change_theme), Toast.LENGTH_SHORT).show();
         }
         hideDialog();
     }

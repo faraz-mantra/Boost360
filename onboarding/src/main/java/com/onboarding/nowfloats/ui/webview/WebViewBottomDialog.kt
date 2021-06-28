@@ -52,7 +52,7 @@ class WebViewBottomDialog : BaseBottomSheetDialog<WebViewBottomsheetBinding, Bas
       shareIntent.type = "text/plain"
       shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
       shareIntent.putExtra(Intent.EXTRA_TEXT, "$title\n\n$domainUrl")
-      baseActivity.startActivity(Intent.createChooser(shareIntent, "Share connected channel..."))
+      baseActivity.startActivity(Intent.createChooser(shareIntent, getString(R.string.share_connected_channel)))
     } catch (e: Exception) {
       e.printStackTrace()
     }
@@ -104,7 +104,7 @@ class WebViewBottomDialog : BaseBottomSheetDialog<WebViewBottomsheetBinding, Bas
     return true
   }
 
-  override fun getDraggable(): Boolean? {
+  override fun isDraggable(): Boolean? {
     return false
   }
 }

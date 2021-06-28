@@ -44,7 +44,7 @@
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="3dp"
-            android:text="Uh oh! You have no subscribers."/>
+            android:text="@string/uh_oh_you_have_no_subscribers"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -109,7 +109,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="₹"
                 android:fontFamily="@font/open_sans_semibold"
                 android:textColor="#0068e0"
@@ -118,7 +118,7 @@
                 android:id="@+id/remove_addons_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="400"
                 android:fontFamily="@font/open_sans_semibold"
                 android:textColor="#0068e0"
@@ -126,7 +126,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="/month"
                 android:textColor="#0068e0"
                 android:textSize="@dimen/_8sdp" />

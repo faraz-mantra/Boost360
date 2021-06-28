@@ -7,7 +7,7 @@
     android:background="#F1F2F2"
     android:orientation="vertical"
     android:paddingBottom="12dp"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:paddingRight="10dp"
     android:paddingTop="12dp">
 
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_3"
             android:layout_toRightOf="@+id/img_question"
             android:textColor="@color/gray"
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_2"
-        android:paddingLeft="@dimen/margin_20"></androidx.recyclerview.widget.RecyclerView>
+        android:paddingStart="@dimen/margin_20"></androidx.recyclerview.widget.RecyclerView>
 
     <RelativeLayout
         android:layout_width="wrap_content"

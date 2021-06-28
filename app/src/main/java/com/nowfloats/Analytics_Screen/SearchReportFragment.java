@@ -61,7 +61,7 @@ public class SearchReportFragment extends Fragment {
     private void getSearch() {
         HashMap<String, String> map = new HashMap<>();
 
-        mSession = new UserSessionManager(mContext, getActivity());
+        mSession = new UserSessionManager(mContext, requireActivity());
         //map.put("fpTag", mSession.getFpTag());
         map.put("fpTag", "TESTFP");
 

@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Nothing to Show"
+                android:text="@string/nothing_to_show"
                 android:textColor="@color/common_text_color"
                 android:textSize="@dimen/_16sdp" />
 

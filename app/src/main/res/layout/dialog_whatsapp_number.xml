@@ -9,7 +9,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="24dp"
+        android:paddingStart="24dp"
         android:paddingRight="24dp"
         android:gravity="center"
         android:text="Enter your WhatsApp Number" />
@@ -23,7 +23,7 @@
         android:inputType="phone"
         android:digits="0123456789"
         android:maxLength="12"
-        android:paddingLeft="24dp"
+        android:paddingStart="24dp"
         android:paddingRight="24dp" />
 
 </LinearLayout>

@@ -16,9 +16,8 @@ object WhatsAppRepository : AppBaseRepository<WebActionRemoteDataSource, AppBase
     return WebActionRemoteDataSource::class.java
   }
 
-
   fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.updateWhatsAppNumber(request = request, auth = auth), Taskcode.POST_CREATE_BUSINESS_WHATSAPP)
+    return makeRemoteRequest(remoteDataSource.updateWhatsAppNumber(auth = auth, request = request), Taskcode.POST_CREATE_BUSINESS_WHATSAPP)
   }
 
   fun getWhatsappBusiness(request: String?, auth: String): Observable<BaseResponse> {

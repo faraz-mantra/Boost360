@@ -3,7 +3,7 @@ package com.dashboard.controller.ui.academy
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.databinding.FragmentAcademyBinding
-import com.dashboard.pref.UserSessionManager
+import com.framework.pref.UserSessionManager
 import com.dashboard.viewmodel.DashboardViewModel
 
 class AcademyFragment : AppBaseFragment<FragmentAcademyBinding, DashboardViewModel>(){

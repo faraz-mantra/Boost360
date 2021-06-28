@@ -93,6 +93,13 @@ import java.util.List;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.framework.webengageconstant.EventLabelKt.FAB;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_CUSTOM_PAGE;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_INVENTORY;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_TESTIMONIAL;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_UPDATE;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.NavigationDrawer.floating_view.FloatingViewBottomSheetDialog.FLOATING_CLICK_TYPE.WRITE_UPDATE;
 
 public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetch_Home_Data_Interface {
@@ -216,14 +223,14 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
       uploadPicture(event.path, event.msg, event.mSocialShare, getActivity(), new UserSessionManager(getActivity(), getActivity()));
     } catch (Exception e) {
       e.printStackTrace();
-      Toast.makeText(getActivity(), "Unable to post Message", Toast.LENGTH_SHORT).show();
+      Toast.makeText(getActivity(), getString(R.string.unable_to_post_message), Toast.LENGTH_SHORT).show();
     }
   }
 
   @Subscribe
   public void ImageUploadCheck(PostImageSuccessEvent event) {
     ImageResponseID = event.imageResponseId;
-    BoostLog.i("IMAGE---", "Image UpLoAd sent_check Triggered");
+    BoostLog.i("IMAGE---", getString(R.string.image_upload_sent_check_triggered));
     mIsNewMsg = true;
     getNewAvailableUpdates();
     mPref.edit().putString("msg_post", "").apply();
@@ -236,7 +243,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     if (event.status) {
       event.status = false;
       mIsNewMsg = true;
-      BoostLog.i("TEXT---", "TeXt UpLoAd sent_check Triggered");
+      BoostLog.i("TEXT---", getString(R.string.text_upload_sent_check_triggered));
       getNewAvailableUpdates();
       Create_Message_Activity.path = "";
 
@@ -552,9 +559,10 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   private void onBusinessUpdateAddedOrUpdated(Integer count) {
     if (count == null) count = 0;
     FirestoreManager instance = FirestoreManager.INSTANCE;
-    if (instance.getDrScoreData().getMetricdetail() == null) return;
-    instance.getDrScoreData().getMetricdetail().setNumber_updates_posted(count);
-    instance.updateDocument();
+    if(instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null){
+      instance.getDrScoreData().getMetricdetail().setNumber_updates_posted(count);
+      instance.updateDocument();
+    }
   }
 
   @Override
@@ -641,7 +649,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void addImage() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Image", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_IMAGE, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), ImageGalleryActivity.class);
     webIntent.putExtra("create_image", true);
     startActivity(webIntent);
@@ -700,14 +708,14 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void openAddUpdateActivity() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Update", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_UPDATE, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
     startActivity(webIntent);
     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
   }
 
   private void addCustomPage() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - CustomPage", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_CUSTOM_PAGE, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), CustomPageActivity.class);
     webIntent.putExtra("IS_ADD", true);
     startActivity(webIntent);
@@ -715,7 +723,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void addTestimonial() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Testimonial", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_TESTIMONIAL, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), TestimonialsActivity.class);
     webIntent.putExtra("IS_ADD", true);
     startActivity(webIntent);
@@ -853,7 +861,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void addInventory() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Inventory", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_INVENTORY, FAB, NULL);
     String type = Utils.getProductType(session.getFP_AppExperienceCode());
     Product newProduct = new Product();
     newProduct.setProductType(type);

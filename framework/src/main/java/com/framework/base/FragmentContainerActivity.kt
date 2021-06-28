@@ -10,7 +10,6 @@ import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 import kotlinx.android.synthetic.main.activity_fragment_container.*
 
-
 const val FRAGMENT_TYPE = "FRAGMENT_TYPE"
 
 abstract class FragmentContainerActivity : BaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {

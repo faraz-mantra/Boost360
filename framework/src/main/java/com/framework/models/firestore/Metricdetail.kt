@@ -13,6 +13,7 @@ data class Metricdetail (
 		@SerializedName("boolean_add_custom_domain_name_and_ssl") var boolean_add_custom_domain_name_and_ssl : Boolean,
 		@SerializedName("number_updates_posted") var number_updates_posted : Int,
 		@SerializedName("boolean_social_channel_connected") var boolean_social_channel_connected : Boolean,
+		@SerializedName("boolean_create_staff") var boolean_create_staff : Boolean,
 		@SerializedName("number_services_added") var number_services_added : Int,
 		@SerializedName("number_products_added") var number_products_added : Int,
 		@SerializedName("boolean_add_bank_account") var boolean_add_bank_account : Boolean,

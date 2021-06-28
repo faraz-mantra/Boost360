@@ -2,7 +2,6 @@ package com.inventoryorder.ui.order
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
@@ -15,6 +14,9 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.ORDER_PAGE_LOAD
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -51,6 +53,7 @@ import com.inventoryorder.ui.order.createorder.SendFeedbackOrderSheetDialog
 import com.inventoryorder.ui.order.createorder.SendReBookingOrderSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
@@ -88,8 +91,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
-    setOnClickListener(binding?.btnAdd)
+     WebEngageController.trackEvent(ORDER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
@@ -102,7 +105,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd -> {
+      binding?.btnAdd, binding?.buttonAddApt -> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         if (!PreferencesUtils.instance.getData(PreferenceConstant.SHOW_CREATE_ORDER_WELCOME, false)) {
@@ -143,7 +146,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
     if (isFirst || isSearch) showProgressLoad()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, {
       hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
@@ -570,6 +573,10 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun emptyView() {
     binding?.orderRecycler?.gone()
     binding?.errorView?.visible()
+    binding?.btnActionTutorials?.setOnClickListener {
+      val sheet = LearnHowItWorkBottomSheet()
+      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+    }
   }
 
   private fun getRequestFilterData(statusList: ArrayList<String>, paymentStatus: String? = null, operatorType: String = QueryObject.Operator.EQ.name, searchTxt: String = ""): OrderFilterRequest {

@@ -33,6 +33,11 @@ import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
+import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
 import static com.nowfloats.helper.FragmentType.UPDATE_LATEST_STORY_VIEW;
 
 /**
@@ -58,7 +63,7 @@ public class ManageContentFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
-        WebEngageController.trackEvent("Manage content", "pageview", "Manage content");
+        WebEngageController.trackEvent(EVENT_NAME_MANAGE_CONTENT, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
         UserSessionManager session = new UserSessionManager(getContext(), getActivity());
         String experience_code = session.getFP_AppExperienceCode();
 
@@ -98,7 +103,7 @@ public class ManageContentFragment extends Fragment {
             Intent intent = null;
             switch (pos) {
                 case 0:
-                    WebEngageController.trackEvent("Clicked on products catalogue", "MANAGE CONTENT", session.getFpTag());
+                    WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE , MANAGE_CONTENT, session.getFpTag());
                     intent = new Intent(mContext, ProductCatalogActivity.class);
                     break;
                 case 1:

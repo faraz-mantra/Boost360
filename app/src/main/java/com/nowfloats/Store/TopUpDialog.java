@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.finsky.externalreferrer.IGetInstallReferrerService;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.TopUpDialogAdapter;
 import com.nowfloats.Store.Model.PackageDetails;
@@ -98,7 +99,7 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
             }
         }
         if (visiblePackages.size() == 0){
-            Toast.makeText(mContext, "Your account can't activate this TopUp packages", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext,mContext.getString( R.string.your_account_can_t_activate_this_top_up_packages), Toast.LENGTH_SHORT).show();
             return;
         }
         if (topUpDialog == null) {
@@ -122,7 +123,7 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
         TextView title = view.findViewById(R.id.tv_title);
         TextView description = view.findViewById(R.id.tv_description);
         title.setText(String.format("%s Pricing",planType));
-        description.setText(String.format("Select the duration of %s package that suits your requirements.",planType));
+        description.setText(String.format(mContext.getString(R.string.select_the_duration_s_package_),planType));
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_plans);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -141,7 +142,7 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
     @Override
     public void onDataReceived(List<PackageDetails> packages) {
         if (packages == null || packages.size() == 0){
-            Toast.makeText(mContext, "Your account can't activate any TopUp packages.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, mContext.getString(R.string.your_account_cant_activate_any_topup_package), Toast.LENGTH_SHORT).show();
             return;
         }
         mTopUps = packages;
@@ -231,8 +232,8 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
                         hideProgressDialog();
                         if(!showTobeActivatedOn) {
                             String msg = "Thank you! \n" +
-                                    "The Payment ID for your transaction is " + paymentid + ". Your package will be activated within 24 hours. \n" +
-                                    "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                                    mContext.getString(R.string.the_payment_id_for_your_transaction_is) + paymentid + mContext.getString(R.string.your_package_will_be_activated_within_24_hours) +
+                                    mContext.getString(R.string.you_can_reach_customer_support_at_ria_nowfloats_com_or_1860_123_1233_for_any_queries);
                             Methods.showDialog(mContext,status, msg);
                         }
 
@@ -249,7 +250,7 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String msg = "Your PaymentId is: " + paymentid + ". Please Contact Customer Support.";
+                String msg = mContext.getString(R.string.your_payment_id_is_) + paymentid + mContext.getString(R.string.please_contact_customer_support);
                 hideProgressDialog();
                 Methods.showDialog(mContext,status, msg);
             }

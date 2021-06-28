@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.nowfloats.manufacturing.projectandteams.Interfaces.TeamsDetailsListener;
 import com.nowfloats.util.Methods;
+import com.thinksity.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,7 +43,7 @@ public class UploadTeamsImage extends AsyncTask<Void, String, String> {
         appContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                pd = ProgressDialog.show(appContext, "", "Uploading Logo...");
+                pd = ProgressDialog.show(appContext, "", appContext.getString(R.string.uploading_logo));
                 pd.setCancelable(false);
             }
         });
@@ -96,7 +97,7 @@ public class UploadTeamsImage extends AsyncTask<Void, String, String> {
                 listener.uploadImageURL(Objects.requireNonNull(response.body()).string());
                 return Objects.requireNonNull(response.body()).string();
             } else {
-                Methods.showSnackBarNegative(appContext, "Uploading Image Failed");
+                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.uploading_image_failed));
             }
 
             in.close();

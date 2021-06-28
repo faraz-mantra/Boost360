@@ -228,7 +228,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                 public void success(String s, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(SeasonalOffersActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(SeasonalOffersActivity.this,  getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(SeasonalOffersActivity.this, getString(R.string.something_went_wrong));
@@ -238,7 +238,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                 @Override
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(SeasonalOffersActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(SeasonalOffersActivity.this,  getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(SeasonalOffersActivity.this, getString(R.string.something_went_wrong));

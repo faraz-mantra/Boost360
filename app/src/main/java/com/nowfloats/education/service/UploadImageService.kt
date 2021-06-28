@@ -3,8 +3,10 @@ package com.nowfloats.education.service
 import android.os.AsyncTask
 import android.util.Log
 import com.nowfloats.education.helper.Constants
+import com.nowfloats.education.koindi.KoinBaseApplication
 import com.nowfloats.education.model.ResponseImageModel
 import com.nowfloats.education.model.UploadImageModel
+import com.thinksity.R
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -26,7 +28,7 @@ class UploadImageService(private val listener: UploadImageServiceListener, priva
                 listener.onSuccess(responseImageUrlList)
             }
             else -> {
-                listener.onFailed("Error occurred while uploading images.")
+                listener.onFailed(KoinBaseApplication.instance.getString(R.string.error_occured_while_uploadin_images))
             }
         }
     }
@@ -69,7 +71,7 @@ class UploadImageService(private val listener: UploadImageServiceListener, priva
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.e(TAG, e.message)
+                Log.e(TAG, e.message?:"")
             }
         }
         return null

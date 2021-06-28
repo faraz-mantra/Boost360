@@ -12,7 +12,7 @@
         android:background="@drawable/plan_order_border"
         android:gravity="center"
         android:padding="@dimen/margin_10"
-        android:text="SNo"
+        android:text="@string/sno"
         android:textStyle="bold" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:background="@drawable/plan_order_border"
         android:gravity="center"
         android:padding="@dimen/margin_10"
-        android:text="Payment Date"
+        android:text="@string/payment_date"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
@@ -34,7 +34,7 @@
         android:background="@drawable/plan_order_border"
         android:gravity="center"
         android:padding="@dimen/margin_10"
-        android:text="Order Confirmation Id"
+        android:text="@string/order_confirmation_id"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="97dp"
         tools:layout_editor_absoluteY="0dp" />
@@ -46,7 +46,7 @@
         android:background="@drawable/plan_order_border"
         android:gravity="center"
         android:padding="@dimen/margin_10"
-        android:text="Package Name"
+        android:text="@string/package_name"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="81dp"
         tools:layout_editor_absoluteY="80dp" />
@@ -58,7 +58,7 @@
         android:background="@drawable/plan_order_border"
         android:gravity="center"
         android:padding="@dimen/margin_10"
-        android:text="Total Amount (including taxes)"
+        android:text="@string/total_amount_including_taxes"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="81dp"
         tools:layout_editor_absoluteY="80dp" />
@@ -70,7 +70,7 @@
         android:background="@drawable/plan_order_border"
         android:gravity="center"
         android:padding="@dimen/margin_10"
-        android:text="Claim Id"
+        android:text="@string/claim_id"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="81dp"
         tools:layout_editor_absoluteY="80dp" />
@@ -82,7 +82,7 @@
         android:background="@drawable/plan_order_border"
         android:gravity="center"
         android:padding="@dimen/margin_10"
-        android:text="Payment Status"
+        android:text="@string/payment_status"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="81dp"
         tools:layout_editor_absoluteY="80dp" />

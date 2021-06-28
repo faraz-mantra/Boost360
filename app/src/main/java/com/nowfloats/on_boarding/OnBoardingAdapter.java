@@ -2,11 +2,6 @@ package com.nowfloats.on_boarding;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -17,18 +12,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nowfloats.Login.AuthLoginInterface;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.nowfloats.Login.LoginManager;
-import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.on_boarding.models.OnBoardingModel;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Admin on 16-03-2018.
@@ -251,7 +248,7 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         ((ItemClickListener)mContext).onItemClick(getAdapterPosition(), mOnBoardingModel.getScreenDataArrayList().get(getAdapterPosition()));
 
                     }else if(mRecyclerView != null){
-                        Toast.makeText(mContext, "You need to finish the previous step before you proceed further", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, mContext.getString(R.string.you_need_to_finish_the_previous_setup_before_), Toast.LENGTH_SHORT).show();
                         mRecyclerView.scrollToPosition(mOnBoardingModel.getToBeCompletePos());
                     }
                 }

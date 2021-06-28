@@ -12,8 +12,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginTop="12sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_one"
         android:background="@drawable/round_corner_grey_background">
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/adapter_item_product_keyboard_text_size"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="@string/currency" />
 
         <EditText
@@ -41,7 +41,7 @@
             android:focusable="false"
             android:background="@android:color/transparent"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
             android:paddingRight="5dp" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -200,8 +200,8 @@
         android:layout_height="1dp"
         android:layout_marginTop="4dp"
         android:background="@android:color/darker_gray"
-        android:layout_marginRight="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical_offer"
         app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_offer"
         app:layout_constraintTop_toBottomOf="@+id/btn_nine"/>

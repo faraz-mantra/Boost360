@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="1"
-            android:layout_marginRight="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
             xmlns:app="http://schemas.android.com/apk/res-auto">
 
             <LinearLayout
@@ -28,7 +28,7 @@
                     android:id="@+id/label_inventory_hint"
                     style="@style/ProductLabelTextStyle"
                     android:layout_gravity="center_vertical"
-                    android:text="Inventory Availability"/>
+                    android:text="@string/inventory_availability"/>
 
                 <ImageButton
                     android:id="@+id/ib_info_product_inventory"
@@ -50,7 +50,7 @@
                     android:id="@+id/iv_stock_indicator"
                     android:layout_width="10dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginStart="@dimen/margin_10"
                     android:layout_marginTop="2dp"
                     android:layout_gravity="center_vertical"
                     app:srcCompat="@drawable/ic_availble_indicator"/>
@@ -79,7 +79,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:id="@+id/layout_quantity_main"
-            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_10"
             xmlns:app="http://schemas.android.com/apk/res-auto">
 
             <LinearLayout
@@ -125,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
                     android:paddingRight="20dp"
                     android:text="0"
                     android:textColor="#4a4a4a"
@@ -137,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
                     android:paddingRight="20dp"
                     android:text="0"
                     android:maxLength="5"

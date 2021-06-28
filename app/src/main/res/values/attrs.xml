@@ -11,7 +11,7 @@
         <attr name="android:scrollY" />
         <attr name="android:background" />
         <attr name="android:padding" />
-        <attr name="android:paddingLeft" />
+        <attr name="android:paddingStart" />
         <attr name="android:paddingTop" />
         <attr name="android:paddingRight" />
         <attr name="android:paddingBottom" />

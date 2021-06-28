@@ -27,7 +27,7 @@ class ItemContentSetupHolder(binding: ItemContentSetupManageBinding) : AppBaseRe
       binding.imgArrowIcon.gone()
       binding.imgArrowGif.visible()
       binding.imgArrowGif.play()
-      getColor(R.color.colorAccent)?.let { binding.txtTitle.setTextColor(it) }
+      getColor(R.color.red_light_1)?.let { binding.txtTitle.setTextColor(it) }
     }
     binding.view2.visibility = if (itemCount != null && position == (itemCount!! - 1)) View.INVISIBLE else View.VISIBLE
     binding.mainContent.setOnClickListener {

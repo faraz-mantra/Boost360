@@ -15,7 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/margin_20"
+            android:paddingStart="@dimen/margin_20"
             android:paddingRight="@dimen/margin_20"
             android:paddingTop="@dimen/margin_10"
             android:paddingBottom="@dimen/margin_10" >
@@ -24,7 +24,7 @@
                 android:id="@+id/label_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add new Address"
+                android:text="@string/add_new_address"
                 android:textSize="18sp"
                 android:textColor="@android:color/white" />
 
@@ -32,7 +32,7 @@
                 android:id="@+id/label_warehouse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#1 Banjara Warehouse"
+                android:text="@string/_1_banjara_warehouse"
                 android:textSize="14sp"
                 android:paddingRight="10dp"
                 android:textStyle="bold"
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/margin_20"
+                android:paddingStart="@dimen/margin_20"
                 android:paddingRight="@dimen/margin_20"
                 android:paddingTop="@dimen/margin_10"
                 android:paddingBottom="@dimen/margin_20"
@@ -68,7 +68,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="Warehouse/Shop area name"/>
+                        android:text="@string/warehouse_shop_area_name"/>
 
                     <ImageButton
                         android:visibility="invisible"
@@ -80,7 +80,7 @@
                     android:id="@+id/edit_warehouse_name"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
-                    android:hint="e.g Banjara warehouse"
+                    android:hint="@string/e_g_banjara_warehouse"
                     style="@style/ProductEditTextStyle" />
 
                 <!--
@@ -100,7 +100,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="Warehouse contact number" />
+                        android:text="@string/warehouse_contact_number" />
 
                     <ImageButton
                         android:visibility="invisible"
@@ -112,7 +112,7 @@
                     android:id="@+id/edit_contact_number"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
-                    android:hint="XXXXXXXXXX"
+                    android:hint="@string/xxxxxxxxxx"
                     android:digits="0123456789"
                     android:inputType="number"
                     android:maxLength="13"
@@ -126,7 +126,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="Pickup address proof (jpeg/png/pdf 1mb)" />
+                        android:text="@string/pickup_address_proof_jpeg_png_pdf_1mb" />
 
                     <ImageButton
                         android:visibility="invisible"
@@ -147,7 +147,7 @@
                         android:id="@+id/btn_file_chooser"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:text="Select address proof"
+                        android:text="@string/select_address_proof"
                         android:textSize="12sp"
                         android:textAllCaps="false"
                         android:padding="5dp"
@@ -167,7 +167,7 @@
                             style="@style/ProductLabelTextStyle"
                             android:layout_weight="1"
                             android:paddingRight="5dp"
-                            android:paddingLeft="5dp"
+                            android:paddingStart="5dp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text=""/>
@@ -191,7 +191,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="Building/Plot No. and street address" />
+                        android:text="@string/building_plot_no_and_street_address" />
 
                     <ImageButton
                         android:visibility="invisible"
@@ -203,7 +203,7 @@
                     android:id="@+id/edit_building_name"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
-                    android:hint="e.g. D-234/K-4B, Road No 10, Banjara Hills"
+                    android:hint="@string/e_g_d_234_k_4b_road_no_10_banjara_hills"
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
@@ -214,7 +214,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="City" />
+                        android:text="@string/city_" />
 
                     <ImageButton
                         android:visibility="invisible"
@@ -226,7 +226,7 @@
                     android:id="@+id/edit_city"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
-                    android:hint="e.g. Hyderabad"
+                    android:hint="@string/e_g_hyderabad"
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
@@ -237,7 +237,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="State/Province" />
+                        android:text="@string/state_province_" />
 
                     <ImageButton
                         android:visibility="invisible"
@@ -249,7 +249,7 @@
                     android:id="@+id/edit_state"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/margin_5"
-                    android:hint="e.g. Telangana"
+                    android:hint="@string/e_g_telangana"
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
@@ -260,7 +260,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="Country" />
+                        android:text="@string/country" />
 
                     <ImageButton
                         android:visibility="invisible"
@@ -302,7 +302,7 @@
                         android:layout_weight="1"
                         android:textSize="12sp"
                         android:layout_gravity="center_vertical"
-                        android:text="I confirm the details entered above are correct"/>
+                        android:text="@string/i_confirm_the_details_entered_above_are_correct"/>
 
                 </LinearLayout>
 
@@ -326,8 +326,9 @@
                         android:background="@android:color/transparent"
                         android:textColor="@color/secondaryTextColor"
                         android:layout_toLeftOf="@+id/btn_save"
+                        android:textAllCaps="true"
                         android:textSize="14sp"
-                        android:text="CANCEL" />
+                        android:text="@string/cancel" />
 
                     <Button
                         android:id="@+id/btn_save"
@@ -337,10 +338,10 @@
                         android:background="@drawable/rounded_button_enabled"
                         style="?android:attr/borderlessButtonStyle"
                         android:textColor="@android:color/white"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:textSize="14sp"
                         android:gravity="center"
-                        android:text="SAVE ADDRESS" />
+                        android:text="@string/save_address" />
 
                 </RelativeLayout>
 

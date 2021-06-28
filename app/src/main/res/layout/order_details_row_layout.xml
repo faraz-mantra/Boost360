@@ -12,19 +12,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order Date:"
+            android:text="@string/order_date"
             />
         <TextView
             android:id="@+id/tv_order_date"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="12sp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="07 September 2017"
+            android:text="@string/_07_september_2017"
             />
     </TableRow>
 
@@ -35,19 +35,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delivery Date:"
+            android:text="@string/delivery_date"
             />
         <TextView
             android:id="@+id/tv_delivery_date"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="12sp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="12 September 2017"
+            android:text="@string/_12_september_2017"
             />
     </TableRow>
 
@@ -59,19 +59,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Net Amount:"
+            android:text="@string/net_amount"
             />
         <TextView
             android:id="@+id/tv_net_amount"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="12sp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="INR 600"
+            android:text="@string/inr_600"
             />
     </TableRow>
 
@@ -83,19 +83,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shipping Charge:"
+            android:text="@string/shipping_charge"
             />
         <TextView
             android:id="@+id/tv_shipping_charge"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="12sp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="INR 125"
+            android:text="@string/inr_125"
             />
     </TableRow>
 
@@ -107,19 +107,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assured Purchase Charge:"
+            android:text="@string/assured_purchase_charge"
             />
         <TextView
             android:id="@+id/tv_assured_purchase_charge"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="12sp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="INR 80"
+            android:text="@string/inr_80"
             />
     </TableRow>
 
@@ -130,19 +130,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cart Total:"
+            android:text="@string/cart_total"
             />
         <TextView
             android:id="@+id/tv_total_price"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="12sp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="INR 805"
+            android:text="@string/inr_805"
             />
     </TableRow>
 

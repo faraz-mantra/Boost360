@@ -19,6 +19,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.framework.webengageconstant.EventLabelKt.CHANGE_PASSWORD_ERROR;
+import static com.framework.webengageconstant.EventLabelKt.SUCCESSFULLY_CHANGED_PASSWORD;
+import static com.framework.webengageconstant.EventNameKt.CHANGE_PASSWORD;
+import static com.framework.webengageconstant.EventValueKt.NULL;
+
 public class changePasswordAsyncTask extends AsyncTask<Void, Void, Void> {
 
 	Context context;
@@ -41,11 +46,11 @@ public class changePasswordAsyncTask extends AsyncTask<Void, Void, Void> {
 		    pd.dismiss();
 		if (success) {
             Methods.showSnackBarPositive(app,context.getResources().getString(R.string.password_updated));
-			WebEngageController.trackEvent("CHANGEPASSWORD","Successfully Changed password", null);
+			WebEngageController.trackEvent(CHANGE_PASSWORD,SUCCESSFULLY_CHANGED_PASSWORD, NULL);
 //			app.finish();
 		} else {
             Methods.showSnackBarNegative(app,context.getResources().getString(R.string.entered_password_incorrect));
-			WebEngageController.trackEvent("CHANGEPASSWORD","Change Password Error", null);
+			WebEngageController.trackEvent(CHANGE_PASSWORD,CHANGE_PASSWORD_ERROR, NULL);
 		}
 	}
 

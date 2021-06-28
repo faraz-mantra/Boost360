@@ -25,14 +25,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Plan:"/>
+                        android:text="@string/plan"/>
                     <TextView
                         android:id="@+id/tv_plan"
                         android:singleLine="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Light House"/>
+                        android:text="@string/light_house"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -43,13 +43,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Unit Price:"/>
+                        android:text="@string/unit_price"/>
                     <TextView
                         android:id="@+id/tv_unit_price"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="INR 48000 /-"/>
+                        android:text="@string/inr_48000"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_marginTop="5dp"
@@ -60,13 +60,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Discounted Price:"/>
+                        android:text="@string/discounted_price"/>
                     <TextView
                         android:id="@+id/tv_discount_price"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="INR 43000 /-"/>
+                        android:text="@string/inr_43000"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_marginTop="5dp"
@@ -76,13 +76,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Quantity:"/>
+                        android:text="@string/quantity"/>
                     <TextView
                         android:id="@+id/tv_quantity"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1"/>
+                        android:text="@string/_1"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_marginTop="5dp"
@@ -93,13 +93,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Discount:"/>
+                        android:text="@string/discount_"/>
                     <TextView
                         android:id="@+id/tv_discount_percent"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10 %"/>
+                        android:text="@string/_10_space_percent"/>
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

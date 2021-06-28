@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="31dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/websiteTitleCardView"
@@ -76,9 +76,8 @@
                 android:id="@+id/domainCheckStatus"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginEnd="5dp"
                 android:scaleType="fitXY"
-                android:layout_marginRight="5dp" />
+                android:layout_marginEnd="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -115,8 +114,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:lineSpacingExtra="2dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="#969696"
                 android:text="@string/by_pressing_above_button_to_agree"
                 android:textSize="12sp" />

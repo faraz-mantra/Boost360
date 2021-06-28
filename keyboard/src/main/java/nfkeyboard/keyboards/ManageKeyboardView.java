@@ -763,20 +763,20 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
 //                if (updatesList.size() > 0 && updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
 //                    updatesList.remove(updatesList.size() - 1);
 //                }
-//                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
 //                break;
 //            case PRODUCTS:
 //                selectionLayout.setVisibility(GONE);
 //                if (productList.size() > 0 && productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
 //                    productList.remove(productList.size() - 1);
 //                }
-//                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
 //                break;
 //            case PHOTOS:
 //                selectionLayout.setVisibility(VISIBLE);
 //                mRecyclerView.setLayoutManager(linearLayoutManager);
 //                selectionLayout.setVisibility(GONE);
-//                Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
 //                break;
 //        }
 //        if (type == presenterListener.getTabType()) {

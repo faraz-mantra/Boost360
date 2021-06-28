@@ -52,7 +52,7 @@
                     android:layout_marginTop="50dp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="70dp"
                     android:paddingRight="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_20sdp">
@@ -89,7 +89,7 @@
                         android:gravity="center"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
-                        android:text="VIEW IN ADD-ON STORE"
+                        android:text="@string/view_in_add_on_store"
                         android:textColor="@color/white" />
 
 

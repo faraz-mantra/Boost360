@@ -29,6 +29,7 @@ import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.my_addons_fragment.*
@@ -185,7 +186,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                         read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_up), null)
 
 
-                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Free_Addons See_More", "Free_Addons", "")
+                        WebEngageController.trackEvent(ADDONS_MARKETPLACE_FREE_ADDONS_SEE_MORE, FREE_ADDONS, NO_EVENT_VALUE)
                     }
                 }
             }
@@ -218,7 +219,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
             }
         }
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE My_Addons Loaded", "My_Addons", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_MY_ADDONS_LOADED, MY_ADDONS, NO_EVENT_VALUE)
     }
 
     private fun loadData() {

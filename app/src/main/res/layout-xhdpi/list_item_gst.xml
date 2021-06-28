@@ -20,8 +20,8 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="GST Identification NUmber"
+            android:layout_marginStart="10dp"
+            android:text="@string/gst_identification_number_"
             android:textColor="#383838"
             android:textSize="14sp" />
 
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="Address Line 1"
+            android:hint="@string/address_line_1"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -51,8 +51,8 @@
             fontPath="Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="E-Signature"
+            android:layout_marginStart="10dp"
+            android:text="@string/e_signature"
             android:textColor="#383838"
             android:textSize="14sp" />
 
@@ -60,8 +60,8 @@
             android:id="@+id/llSignature"
             android:layout_width="fill_parent"
             android:layout_height="150dip"
-            android:layout_marginLeft="@dimen/margin_10"
-            android:layout_marginRight="@dimen/margin_15"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_15"
             android:layout_marginTop="@dimen/margin_10"
             android:background="@drawable/sign_bg"
             android:orientation="horizontal"

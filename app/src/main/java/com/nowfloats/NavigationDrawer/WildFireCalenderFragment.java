@@ -61,9 +61,9 @@ public class WildFireCalenderFragment extends Fragment implements View.OnClickLi
         switch (view.getId()){
             case R.id.tv_save:
                 if (startDate ==-1 || endDate == -1){
-                    Toast.makeText(mContext, "Please select start, end date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getString(R.string.please_select_start_end_date), Toast.LENGTH_SHORT).show();
                 }else if(startDate>=endDate){
-                    Toast.makeText(mContext, "end date should be greater than start date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getString(R.string.end_date_should_be_grater_than_start_date), Toast.LENGTH_SHORT).show();
                 }else {
                     ((WildFireDialogFragment.OnMenuDialogOptionSelection) mContext).onDateSelected(String.format(Locale.ENGLISH, "%s_%s", startDate, endDate));
                 }
@@ -99,16 +99,13 @@ public class WildFireCalenderFragment extends Fragment implements View.OnClickLi
         Calendar calendar = Calendar.getInstance();
         calendar.set(year,month,dayOfMonth);
         String s = formatter.format(calendar.getTime());
-        switch (editDateViewId){
-            case R.id.tv_date_period:
-                startDate = calendar.getTime().getTime();
-                startDateTv.setText(s);
-                endDateTv.performClick();
-                break;
-            case R.id.et_end:
-                endDate = calendar.getTime().getTime();
-                endDateTv.setText(s);
-                break;
+        if (editDateViewId == R.id.tv_date_period) {
+            startDate = calendar.getTime().getTime();
+            startDateTv.setText(s);
+            endDateTv.performClick();
+        } else if (editDateViewId == R.id.et_end) {
+            endDate = calendar.getTime().getTime();
+            endDateTv.setText(s);
         }
     }
 }

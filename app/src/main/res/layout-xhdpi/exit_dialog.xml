@@ -12,7 +12,7 @@
         android:text="@string/are_you_sure_want_to_delete"
         android:layout_gravity="left"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
         />
 
 </LinearLayout>

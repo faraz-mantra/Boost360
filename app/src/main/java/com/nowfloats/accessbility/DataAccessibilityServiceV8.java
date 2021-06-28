@@ -12,9 +12,11 @@ import androidx.annotation.RequiresApi;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
+import com.thinksity.R;
 
 import java.util.List;
 
@@ -27,7 +29,7 @@ import java.util.List;
 public class DataAccessibilityServiceV8 extends AccessibilityService {
 
 
-    public static final String PK_NAME_WHATSAPP = "com.whatsapp";
+    public static final String PK_NAME_WHATSAPP = KoinBaseApplication.instance.getString(R.string.whatsapp_package);
     public static final String PK_NAME_NOWFLOATS = "com.biz2.nowfloats";
     public static final String PK_NAME_NOWFLOATS_HOME_ACTIVTY = "com.nowfloats";
 

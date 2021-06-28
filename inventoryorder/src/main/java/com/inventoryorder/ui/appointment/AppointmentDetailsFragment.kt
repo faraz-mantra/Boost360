@@ -11,7 +11,6 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -41,12 +40,7 @@ import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.*
 import com.inventoryorder.ui.order.INVOICE_URL
-import com.inventoryorder.ui.order.sheetOrder.CancelBottomSheetDialog
-import com.inventoryorder.ui.order.sheetOrder.ConfirmBottomSheetDialog
-import com.inventoryorder.ui.order.sheetOrder.DeliveredBottomSheetDialog
-import com.inventoryorder.ui.order.sheetOrder.RequestPaymentBottomSheetDialog
 import com.inventoryorder.ui.startFragmentOrderActivity
-import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -150,7 +144,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   private fun setDetails(order: OrderItem?) {
     val product = order?.firstItemForAptConsult()?.product()
     val extraAptDetail = product?.extraItemProductConsultation()
-    binding?.textFromBookingValue?.text = "#${order?.ReferenceNumber}"
+    binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
     binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
     binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
@@ -273,12 +267,18 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
-    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
-      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
-    }
+    menu.findItem(R.id.menu_item_invoice)
   }
 
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.menu_item_invoice -> {
+        startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
 
   fun getBundleData(): Bundle {
     return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, isRefresh) }

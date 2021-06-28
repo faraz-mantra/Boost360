@@ -19,6 +19,8 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
+import com.framework.webengageconstant.BUSINESS_WEBSITE_VIEW_CLICKED
+import com.framework.webengageconstant.REGISTRATION_COMPLETE
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.bottomsheet.builder.BottomDialog
 import com.onboarding.nowfloats.bottomsheet.builder.imagePicker
@@ -147,7 +149,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
       binding?.businessClick -> openImagePicker(false)
       binding?.websiteBtnClick -> {
         try {
-          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Business website view clicked", "REGISTRATION COMPLETE", it) }
+          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent( BUSINESS_WEBSITE_VIEW_CLICKED , REGISTRATION_COMPLETE, it) }
           val bundle = Bundle()
           bundle.putString(IntentConstant.DOMAIN_URL.name, "${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com")
           navigator?.startActivity(WebViewActivity::class.java, bundle)
@@ -202,7 +204,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
       when (item!!.itemId) {
         R.id.menu_logout -> {
           NavigatorManager.clearStackAndFormData()
-          showShortToast("Logout...")
+          showShortToast(getString(R.string.str_logout))
         }
       }
       true

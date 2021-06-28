@@ -47,6 +47,6 @@ public class Mobile_Load_Html_Activity extends AppCompatActivity{
         //        startWebView(url);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadData(data, "text/html", null);
-        Toast.makeText(this, "Loading data...", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.loading_data), Toast.LENGTH_LONG).show();
     }
 }

@@ -33,6 +33,10 @@ import java.util.HashMap;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
+import static com.framework.webengageconstant.EventLabelKt.DELETED_UPDATE;
+import static com.framework.webengageconstant.EventLabelKt.UNABLE_TO_DELETE_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.DELETE_AN_UPDATE;
+
 /**
  * Created by Kamal on 17-02-2015.
  */
@@ -91,9 +95,9 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
 
                 DbController.getDbController(activity).deleteUpdate(new String[]{Card_Full_View_MainActivity.getMessageList(isDashboard).get(position)._id});
                 Card_Full_View_MainActivity.getMessageList(isDashboard).remove(position);
-                temp	=	"Its Gone!";
-                WebEngageController.trackEvent("DELETE AN UPDATE","Deleted update",session.getFpTag());
-                refresh = new CardAdapter_v2(null,activity);
+                temp = "Its Gone!";
+                WebEngageController.trackEvent(DELETE_AN_UPDATE, DELETED_UPDATE, session.getFpTag());
+                refresh = new CardAdapter_v2(null, activity);
                 refresh.notifyItemRemoved(position);
                 refresh.notifyDataSetChanged();
 
@@ -106,8 +110,8 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
             }
         } else {
             temp	=	"error";
-            Log.i("Delete POST---",""+temp);
-            WebEngageController.trackEvent("DELETE AN UPDATE","Unable to delete Update",session.getFpTag());
+            Log.i("Delete POST---", "" + temp);
+            WebEngageController.trackEvent(DELETE_AN_UPDATE, UNABLE_TO_DELETE_UPDATE, session.getFpTag());
 
             try {
                 Home_View_Card_Delete cardDelete = new Home_View_Card_Delete(activity, url, values, position, v,retryKey);

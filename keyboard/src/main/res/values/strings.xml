@@ -18,16 +18,16 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Title for Latin keyboard input options dialog [CHAR LIMIT=25] -->
-    <string name="english_ime_input_options">Input options</string>
+    <string name="english_ime_input_options" translatable="false">Input options</string>
 
     <!-- Title for the spell checker option to turn on/off contact names lookup [CHAR LIMIT=25] -->
-    <string name="use_contacts_for_spellchecking_option_title">Look up contact names</string>
+    <string name="use_contacts_for_spellchecking_option_title" translatable="false">Look up contact names</string>
 
     <!-- Description for the spell checker option to turn on/off contact names lookup. [CHAR LIMIT=65] -->
-    <string name="use_contacts_for_spellchecking_option_summary">Spell checker uses entries from your contact list</string>
+    <string name="use_contacts_for_spellchecking_option_summary" translatable="false">Spell checker uses entries from your contact list</string>
 
     <!-- Option to provide vibrate/haptic feedback on keypress -->
-    <string name="vibrate_on_keypress">Vibrate on keypress</string>
+    <string name="vibrate_on_keypress" translatable="false">Vibrate on keypress</string>
 
     <!-- Option to play back sound on keypress in soft keyboard -->
     <string name="sound_on_keypress">Sound on keypress</string>
@@ -616,6 +616,7 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="enable_layout">Enable the keyboard</string>
     <string name="link_copied">"Link has been copied to clipboard!"</string>
     <string name="invalid">"Oops! Something went wrong, try again"</string>
+    <string name="something_went_wrong_" translatable="false">Something went wrong</string>
     <string name="share">share</string>
     <string name="share_link">share Link</string>
     <string name="enter_offer_price">Enter Offer Price</string>
@@ -657,6 +658,37 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="tv_done">Done</string>
     <string name="separator">". "</string>
     <string name="text_space">"SPACE"</string>
+    <string name="go">go</string>
+    <string name="name">Name</string>
+    <string name="business_name">Business Name</string>
+    <string name="website_url">Website URL</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="creating_new_offer_for">Creating new offer for</string>
+    <string name="price_colon">Price:</string>
+    <string name="offer_price_heading">OFFER PRICE</string>
+    <string name="validity_heading">VALIDITY</string>
+    <string name="_24_hrs">24 Hrs</string>
+    <string name="qty">QTY.</string>
+    <string name="_0_0">0.0</string>
+    <string name="this_is_product_description">This is product description</string>
+    <string name="share_now">SHARE NOW</string>
+    <string name="updates">UPDATES</string>
+    <string name="inventory">INVENTORY</string>
+    <string name="photos">PHOTOS</string>
+    <string name="details">DETAILS</string>
+    <string name="neural_network_technology">Neural network technology</string>
+    <string name="get_ready_for_your_first_truly_machine_learning_powered_keyboard">Get ready for your first truly machine learning powered keyboard.</string>
+    <string name="help_us_improving_your_typing_experience_collecting_anonymous_data">Help us improving your typing experience collecting anonymous data.</string>
+    <string name="lol">LoL</string>
+    <string name="h">h</string>
+    <string name="listening">Listening...</string>
+    <string name="in_the_language_and_input_settings_tap_the_toggle_next_to_agah_keyboard_this_will_authorize_the_keyboard_to_run_on_your_device">In the Language and Input settings, tap the toggle next to Agah Keyboard. This will authorize the keyboard to run on your device.</string>
+    <string name="can_not_select_more_than_5_images">Cannot select more than 5 images for WhatsApp</string>
+    <string name="please_reopen_the_keyboard">Please reopen this keyboard</string>
+    <string name="no_updates_available">No updates available.</string>
+    <string name="no_product_available">No products available.</string>
+    <string name="no_details_available">No details available.</string>
+    <string name="whatsapp_package" translatable="false">com.whatsapp</string>
 
 
     <string-array name="validity_items">

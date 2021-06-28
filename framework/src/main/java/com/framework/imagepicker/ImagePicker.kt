@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Environment
+import com.framework.BaseApplication
 import java.lang.ref.WeakReference
 
 class ImagePicker(builder: Builder) {
@@ -57,7 +58,7 @@ class ImagePicker(builder: Builder) {
 
         override fun directory(directory: Directory?): Builder {
             when (directory) {
-                Directory.DEFAULT -> imageConfig.directory = Environment.getExternalStorageDirectory().absolutePath + ImageTags.Tags.IMAGE_PICKER_DIR
+                Directory.DEFAULT -> imageConfig.directory = BaseApplication.instance.applicationContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.absolutePath + ImageTags.Tags.IMAGE_PICKER_DIR
                 else -> {
                 }
             }
@@ -90,7 +91,7 @@ class ImagePicker(builder: Builder) {
             return ImagePicker(this)
         }
 
-        fun getContext(): Activity? {
+        fun requireContext(): Activity? {
             return context.get()
         }
 

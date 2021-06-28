@@ -38,7 +38,7 @@
         android:orientation="vertical"
         android:background="@color/white"
         android:layout_alignParentBottom="true"
-        android:paddingLeft="18dp"
+        android:paddingStart="18dp"
         android:paddingRight="12dp"
         android:gravity="center">
 
@@ -75,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:src="@drawable/facebook_signup" />
 
                     <TextView
@@ -85,7 +85,7 @@
                         android:layout_height="fill_parent"
                         android:layout_width="wrap_content"
                         android:text="@string/facebook_page"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_centerVertical="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/small_text_size"
@@ -99,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:layout_marginLeft="9dp"
+            android:layout_marginStart="9dp"
             >
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -113,14 +113,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/facebook_mail" />
 
             <TextView
                 android:id="@+id/create_txt"
                 android:gravity="center"
 
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_height="fill_parent"
                 android:layout_width="wrap_content"
                 android:text="@string/email_address"

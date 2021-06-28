@@ -60,6 +60,11 @@ import java.util.HashMap;
 
 import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
 import static com.appservice.ui.paymentgateway.PaymentGatewayContainerActivityKt.startFragmentPaymentActivityNew;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_CHANGEPASSWORD;
+import static com.framework.webengageconstant.EventLabelKt.NO_EVENT_LABLE;
+import static com.framework.webengageconstant.EventNameKt.DOMAIN_EMAIL;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_CHANGEPASSWORD;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -116,7 +121,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         intent = new Intent(mContext, FragmentsFactoryActivity.class);
                         intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
                         startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                     case "My Bank Account":
                         Bundle bundle = new Bundle();
@@ -124,26 +129,26 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         bundle.putString(IntentConstant.USER_PROFILE_ID.name(), sessionManager.getUserProfileId());
                         bundle.putString(IntentConstant.FP_ID.name(), sessionManager.getFPID());
                         if (sessionManager.getAccountSave()) {
-                            startFragmentAccountActivityNew(requireActivity(), FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
+                            startFragmentAccountActivityNew(getActivity(), FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
                         } else {
-                            startFragmentAccountActivityNew(requireActivity(), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
+                            startFragmentAccountActivityNew(getActivity(), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
                         }
 //                        intent = new Intent(mContext, AccountInfoActivity.class);
                         break;
                     case "Self Branded Payment Gateway":
                         Bundle b = getBundleDataKyc();
-                        startFragmentPaymentActivityNew(requireActivity(), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
+                        startFragmentPaymentActivityNew(getActivity(), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
                         break;
                     case "My Business KYC":
                         Bundle b1 = getBundleDataKyc();
                         if (sessionManager.isSelfBrandedKycAdd()) {
-                            startFragmentPaymentActivityNew(requireActivity(), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
-                        } else startFragmentPaymentActivityNew(requireActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
+                            startFragmentPaymentActivityNew(getActivity(), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
+                        } else startFragmentPaymentActivityNew(getActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
                     case "Boost Extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
                         startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
 //                    case "Site Appearance":
 //                        intent = new Intent(mContext, SiteAppearanceActivity.class);
@@ -153,7 +158,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     case "Domain and Email":
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-                        WebEngageController.trackEvent("DOMAIN-EMAIL", "", sessionManager.getFpTag());
+                        WebEngageController.trackEvent(DOMAIN_EMAIL, NO_EVENT_LABLE, sessionManager.getFpTag());
                         if (Methods.isOnline(getActivity())) {
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
@@ -164,11 +169,11 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     case "Subscription History":
                         intent = new Intent(mContext, YourPurchasedPlansActivity.class);
                         startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                     case "Change Password":
                         changePassword();
-                        WebEngageController.trackEvent("CHANGEPASSWORD", "CHANGEPASSWORD", null);
+                        WebEngageController.trackEvent(EVENT_NAME_CHANGEPASSWORD, EVENT_LABEL_CHANGEPASSWORD, NULL);
                         return;
                     case "Log out":
                         logoutAlertDialog_Material();

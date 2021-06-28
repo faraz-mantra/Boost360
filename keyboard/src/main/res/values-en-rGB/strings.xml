@@ -40,7 +40,7 @@
     <string name="clear_sync_data_title" msgid="8582001557037069154">"Delete cloud data"</string>
     <string name="clear_sync_data_summary" msgid="993477139012576584">"Deletes your synced data from Google"</string>
     <string name="clear_sync_data_confirmation" msgid="2811931135574727678">"Your synced data will be deleted from the cloud. Are you sure?"</string>
-    <string name="clear_sync_data_ok" msgid="613104067705915132">"Delete"</string>
+    <string name="clear_sync_data_ok" msgid="613104067705915132">"@string/delete_"</string>
     <string name="cloud_sync_cancel" msgid="5877481252150919037">"Cancel"</string>
     <string name="cloud_sync_opt_in_text" msgid="9176039655776298248">"Your personal dictionary will be synced and backed up to Google servers. The statistical information of word frequency may be collected to help improve our products. The collection and usage of all the information will be compliant with "<a href="https://www.google.com/policies/privacy">"Google\'s Privacy Policy"</a>"."</string>
     <string name="add_account_to_enable_sync" msgid="7836932571852055265">"Please add a Google account to this device to enable this feature"</string>
@@ -180,7 +180,7 @@
     <string name="go_to_settings" msgid="3876892339342569259">"Settings"</string>
     <string name="install_dict" msgid="180852772562189365">"Install"</string>
     <string name="cancel_download_dict" msgid="7843340278507019303">"Cancel"</string>
-    <string name="delete_dict" msgid="756853268088330054">"Delete"</string>
+    <string name="delete_dict" msgid="756853268088330054">"@string/delete_"</string>
     <string name="should_download_over_metered_prompt" msgid="6737084685073734292">"The selected language on your mobile device has an available dictionary.&lt;br/&gt; We recommend &lt;b&gt;downloading&lt;/b&gt; the <xliff:g id="LANGUAGE_NAME">%1$s</xliff:g> dictionary to improve your typing experience.&lt;br/&gt; &lt;br/&gt; The download could take a minute or two over 3G. Charges may apply if you don\'t have an &lt;b&gt;unlimited data plan&lt;/b&gt;.&lt;br/&gt; If you are not sure which data plan you have, we recommend finding a Wi-Fi connection to start the download automatically.&lt;br/&gt; &lt;br/&gt; Tip: You can download and remove dictionaries by going to &lt;b&gt;Languages &amp; input&lt;/b&gt; in the &lt;b&gt;Settings&lt;/b&gt; menu of your mobile device."</string>
     <string name="download_over_metered" msgid="1643065851159409546">"Download now (<xliff:g id="SIZE_IN_MEGABYTES">%1$.1f</xliff:g>MB)"</string>
     <string name="do_not_download_over_metered" msgid="2176209579313941583">"Download over Wi-Fi"</string>
@@ -201,10 +201,10 @@
     <string name="user_dict_settings_add_shortcut_hint" msgid="2265453012555060178">"Optional shortcut"</string>
     <string name="user_dict_settings_edit_dialog_title" msgid="3765774633869590352">"Edit word"</string>
     <string name="user_dict_settings_context_menu_edit_title" msgid="6812255903472456302">"Edit"</string>
-    <string name="user_dict_settings_context_menu_delete_title" msgid="8142932447689461181">"Delete"</string>
+    <string name="user_dict_settings_context_menu_delete_title" msgid="8142932447689461181">"@string/delete_"</string>
     <string name="user_dict_settings_empty_text" msgid="6889278304342592383">"You don\'t have any words in the user dictionary. To add a word, tap the Add (+) button."</string>
     <string name="user_dict_settings_all_languages" msgid="8276126583216298886">"For all languages"</string>
     <string name="user_dict_settings_more_languages" msgid="7131268499685180461">"More languages…"</string>
-    <string name="user_dict_settings_delete" msgid="110413335187193859">"Delete"</string>
+    <string name="user_dict_settings_delete" msgid="110413335187193859">"@string/delete_"</string>
     <string name="user_dict_fast_scroll_alphabet" msgid="5431919401558285473">" ABCDEFGHIJKLMNOPQRSTUVWXYZ"</string>
 </resources>

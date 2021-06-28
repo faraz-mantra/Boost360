@@ -57,6 +57,12 @@ import com.thinksity.R;
 
 import java.util.HashMap;
 
+import static com.framework.webengageconstant.EventLabelKt.BUTTON;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_ABOUT_BOOST;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_REFER_A_FRIEND;
+import static com.framework.webengageconstant.EventNameKt.SELF_WEBSITE_CLICK;
+import static com.framework.webengageconstant.EventValueKt.CLICKED;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -219,7 +225,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Self Website Event Trigger
-                WebEngageController.trackEvent("Self website click", "Button", "Clicked");
+                WebEngageController.trackEvent(SELF_WEBSITE_CLICK, BUTTON, CLICKED);
 
                 String url = fpNameTextView.getText().toString().trim();
 
@@ -371,10 +377,10 @@ public class SidePanelFragment extends Fragment {
             tvManageInventory.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(category_code));
             switch (category_code) {
                 case "MFG":
-                    tvInbox.setText("Quotation Requests");
+                    tvInbox.setText(R.string.quotation_request);
                     break;
                 default:
-                    tvInbox.setText("Enquiries");
+                    tvInbox.setText(R.string.enquires);
                     break;
             }
         }
@@ -386,9 +392,9 @@ public class SidePanelFragment extends Fragment {
         facebookTextView = (TextView) facebookLayout.findViewById(R.id.facebook_TextView);
         marketplaceTextView = (TextView) marketplaceLayout.findViewById(R.id.marketplace_TextView);
         if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
-            keyboardTextView.setText("RedTim Keyboard");
+            keyboardTextView.setText(R.string.redtim_keyboard);
         } else {
-            keyboardTextView.setText("Boost Keyboard");
+            keyboardTextView.setText(R.string.boost_keyboard);
         }
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
         tvReferrals = (TextView) referralLayout.findViewById(R.id.ninthRow_TextView);
@@ -496,7 +502,7 @@ public class SidePanelFragment extends Fragment {
 //                    bundle.putString("itemName", "Boost Keyboard");
 //                    bundle.putString("buyItemKey","BOOSTKEYBOARD");
 //                    purchaseFeaturesPopup.setArguments(bundle);
-//                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
+//                    purchaseFeaturesPopup.show(getActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
 //                }
             }
         });
@@ -556,7 +562,7 @@ public class SidePanelFragment extends Fragment {
 //                    bundle.putString("itemName", "Customer Call Tracking");
 //                    bundle.putString("buyItemKey","CALLTRACKER");
 //                    purchaseFeaturesPopup.setArguments(bundle);
-//                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
+//                    purchaseFeaturesPopup.show(getActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
 //                }
             }
         });
@@ -572,7 +578,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //About Boost Event Trigger
-                WebEngageController.trackEvent("Clicked on about Boost", "Button", "Clicked");
+                WebEngageController.trackEvent(CLICKED_ON_ABOUT_BOOST, BUTTON, CLICKED);
 
                 onclickColorChange(aboutImageView, aboutText, aboutLayout);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.about));
@@ -625,7 +631,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //About Boost Event Trigger
-                WebEngageController.trackEvent("Clicked on Refer and Earn", "Button", "Clicked");
+                WebEngageController.trackEvent(CLICKED_ON_REFER_A_FRIEND , BUTTON, CLICKED);
 
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.referrals_button));
 //                String name = session.getUserProfileName();

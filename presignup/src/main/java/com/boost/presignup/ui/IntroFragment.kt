@@ -3,7 +3,6 @@ package com.boost.presignup.ui
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import com.boost.presignup.adapter.IntroPageAdapter
 import com.boost.presignup.datamodel.SharedViewModel
 import com.boost.presignup.datamodel.SingleScreenModel
 import com.boost.presignup.utils.WebEngageController
+import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.fragment_intro.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -73,7 +73,7 @@ class IntroFragment : Fragment() {
 
         root = inflater.inflate(R.layout.fragment_intro, container, false)
         root.replay_intro_text.setOnClickListener {
-            WebEngageController.trackEvent("PS_Clicked Replay Intro_video", "Replay Intro Video", "")
+            WebEngageController.trackEvent(PS_CLICKED_REPLAY_INTRO_VIDEO, REPLAY_INTRO_VIDEO, NO_EVENT_VALUE)
             requireActivity().onBackPressed()
         }
         root.replay_intro_text.paintFlags =
@@ -81,12 +81,12 @@ class IntroFragment : Fragment() {
         root.view_pager.adapter = IntroPageAdapter(list)
         root.view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
             ) {
                 currentPage = position
-                WebEngageController.trackEvent("PS_Intro Feature Slider", "Slide # " + currentPage, "")
+                WebEngageController.trackEvent(PS_INTRO_FEATURE_SLIDER, Slide_NO + currentPage, NO_EVENT_VALUE)
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
 

@@ -28,7 +28,7 @@
             android:gravity="center"
             android:layout_below="@+id/image1"
             android:textColor="@color/zeroth_grey_title"
-            android:text="Inorganic add-on unavailable"/>
+            android:text="@string/inorganic_add_on_unavailable"/>
 
         <TextView
             android:id="@+id/message_text2"
@@ -38,10 +38,10 @@
             android:textSize="14sp"
             android:padding="10dp"
             android:textColor="@color/zeroth_grey"
-            android:layout_marginLeft="@dimen/margin_20"
-            android:layout_marginRight="@dimen/margin_20"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/margin_20"
             android:layout_below="@+id/main_text1"
-            android:text="Looks like you have not installed any add-on to generate inorganic traffic on different channels such as Facebook Ads or Google Adwards."/>
+            android:text="@string/looks_like_you_have_not_installed_any_add_on_to_generate_inorganic_traffic_on_different_channels_such_as_facebook_ads_or_google_adwards"/>
 
     </RelativeLayout>
 
@@ -63,7 +63,7 @@
                 android:gravity="center"
                 android:textSize="14sp"
                 android:paddingTop="20dp"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:layerType="software"
@@ -81,7 +81,7 @@
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/ic_ribbon"
-            android:text="Info"/>
+            android:text="@string/info"/>
 
     </FrameLayout>
 

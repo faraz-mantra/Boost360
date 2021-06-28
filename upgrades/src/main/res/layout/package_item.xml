@@ -164,7 +164,7 @@
                         android:background="@drawable/share_helper_click_effect"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
-                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:paddingStart="@dimen/_15sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_15sdp"

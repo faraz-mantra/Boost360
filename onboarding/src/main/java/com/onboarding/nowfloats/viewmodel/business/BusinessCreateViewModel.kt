@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.viewmodel.business
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -14,6 +15,8 @@ import com.onboarding.nowfloats.model.googleAuth.GoogleAuthTokenRequest
 import com.onboarding.nowfloats.model.riaWhatsapp.RiaWhatsappRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
+import com.onboarding.nowfloats.model.verification.RequestValidateEmail
+import com.onboarding.nowfloats.model.verification.RequestValidatePhone
 import com.onboarding.nowfloats.rest.repositories.*
 import org.json.JSONObject
 
@@ -32,11 +35,11 @@ class BusinessCreateViewModel : BaseViewModel() {
   }
 
   fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.postUpdateWhatsappRequest(request, auth).toLiveData()
+    return WhatsAppRepository.postUpdateWhatsappRequest(auth = auth, request = request).toLiveData()
   }
 
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(getJsonRequest(request), auth).toLiveData()
+    return WhatsAppRepository.getWhatsappBusiness(auth = auth, request = getJsonRequest(request)).toLiveData()
   }
 
   fun postCheckBusinessDomain(request: BusinessDomainRequest): LiveData<BaseResponse> {
@@ -66,6 +69,19 @@ class BusinessCreateViewModel : BaseViewModel() {
   fun updateRiaWhatsapp(req: RiaWhatsappRequest?): LiveData<BaseResponse> {
     return RiaFloatWhatsappRepository.updateRiaWhatsapp(req).toLiveData()
   }
+
+  fun validateUsersEmail(requestValidateEmail: RequestValidateEmail?): LiveData<BaseResponse> {
+    return BusinessCreateRepository.validateUsersEmail(requestValidateEmail = requestValidateEmail).toLiveData()
+  }
+
+  fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): LiveData<BaseResponse> {
+    return BusinessCreateRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
+  }
+
+  fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
+    return CategoryRepository.getCategoriesPlan(context).toLiveData()
+  }
+
 }
 
 fun getJsonRequest(fpTag: String?): String {

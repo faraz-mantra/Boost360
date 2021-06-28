@@ -39,6 +39,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.HELP_AND_SUPPORT;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_HELP_AND_SUPPORT;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
@@ -68,7 +71,7 @@ public class HelpAndSupportFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        WebEngageController.trackEvent("Clicked on Help and Support", "HELP AND SUPPORT", null);
+        WebEngageController.trackEvent(CLICKED_ON_HELP_AND_SUPPORT, HELP_AND_SUPPORT, NULL);
         return inflater.inflate(R.layout.fragment_new_help_and_support, container, false);
     }
 

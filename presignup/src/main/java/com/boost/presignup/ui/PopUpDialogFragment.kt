@@ -26,6 +26,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -89,7 +90,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
         .build()
 
     root.popup_layout.setOnClickListener {
-      WebEngageController.trackEvent("PS_Clicked outlide the pop-up area", "Clicked outlide the pop-up area", "")
+      WebEngageController.trackEvent(PS_CLICKED_OUTLIDE_THE_POP_UP_AREA, CLICKED_OUTLIDE_THE_POP_UP_AREA, NO_EVENT_VALUE)
       dialog?.dismiss()
     }
     root.view.setOnClickListener {
@@ -160,13 +161,13 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
             Log.d(TAG, "signInWithCredential:success")
             val user = mAuth.currentUser
             AuthorizedGoogleUser(user, acct)
-            WebEngageController.trackEvent("PS_Auth Provider Success GOOGLE", "Provider Success GOOGLE", "")
+            WebEngageController.trackEvent(PS_AUTH_PROVIDER_SUCCESS_GOOGLE, PROVIDER_SUCCESS_GOOGLE, NO_EVENT_VALUE)
           } else {
             // If sign in fails, display a message to the user.
             Log.w(TAG, "signInWithCredential:failure", task.exception)
             Toast.makeText(context, "Authentication failed.",
-                Toast.LENGTH_SHORT).show()
-            WebEngageController.trackEvent("PS_Auth Provider Failed GOOGLE", "Provider Failed GOOGLE", "")
+                    Toast.LENGTH_SHORT).show()
+            WebEngageController.trackEvent(PS_AUTH_PROVIDER_FAILED_GOOGLE, PROVIDER_FAILED_GOOGLE, NO_EVENT_VALUE)
           }
         }
   }
@@ -275,7 +276,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
   }
 
   private fun createNewJioSecureIdSignUp() {
-    WebEngageController.trackEvent("PS_Auth Provider Success JIO_ID", "Provider Success JIO_ID", "")
+    WebEngageController.trackEvent(PS_AUTH_PROVIDER_SUCCESS_JIO_ID, PROVIDER_SUCCESS_JIO_ID, NO_EVENT_VALUE)
     val intent = Intent(requireContext(), JioSignupActivity::class.java)
     startActivity(intent)
     dialog!!.dismiss()
@@ -285,7 +286,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     val intent = Intent(requireContext(), SignUpActivity::class.java)
     intent.putExtra("provider", "EMAIL")
     startActivity(intent)
-    WebEngageController.trackEvent("PS_Auth Provider Success EMAIL", "Provider Success EMAIL", "")
+    WebEngageController.trackEvent(PS_AUTH_PROVIDER_SUCCESS_EMAIL, PROVIDER_SUCCESS_EMAIL, NO_EVENT_VALUE)
     dialog!!.dismiss()
   }
 
@@ -298,13 +299,13 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success")
             AuthorizedFacebookUser(mAuth.currentUser)
-            WebEngageController.trackEvent("PS_Auth Provider Success FACEBOOK", "Provider Success FACEBOOK", "")
+            WebEngageController.trackEvent(PS_AUTH_PROVIDER_SUCCESS_FACEBOOK, PROVIDER_SUCCESS_FACEBOOK, NO_EVENT_VALUE)
           } else {
             // If sign in fails, display a message to the user.
             Log.w(TAG, "signInWithCredential:failure", task.exception)
             Toast.makeText(context, "SignIn Failed: " + task.exception!!.message,
-                Toast.LENGTH_LONG).show()
-            WebEngageController.trackEvent("PS_Auth Provider Failed FACEBOOK", "Provider Failed FACEBOOK", "")
+                    Toast.LENGTH_LONG).show()
+            WebEngageController.trackEvent(PS_AUTH_PROVIDER_FAILED_FACEBOOK , PROVIDER_FAILED_FACEBOOK, NO_EVENT_VALUE)
             mAuth.signOut()
             LoginManager.getInstance().logOut()
           }
@@ -327,7 +328,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
   }
 
   override fun onFacebookLoginCancel() {
-    Toast.makeText(activity, "Login cancel.", Toast.LENGTH_SHORT).show()
+    Toast.makeText(activity, getString(R.string.login_cancel), Toast.LENGTH_SHORT).show()
   }
 
   override fun onFacebookLoginError(error: FacebookException?) {

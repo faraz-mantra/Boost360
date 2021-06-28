@@ -20,8 +20,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimonialsData;
-import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialData;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.WebActionsItem;
 import com.nowfloats.Login.UserSessionManager;
@@ -87,11 +87,11 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     getHeaderAuthToken();
   }
 
-  void initialization() {
-    vmnProgressBar = new ProgressDialog(this);
-    vmnProgressBar.setIndeterminate(true);
-    vmnProgressBar.setMessage(getString(R.string.please_wait));
-    vmnProgressBar.setCancelable(false);
+    void initialization() {
+        vmnProgressBar = new ProgressDialog(this);
+        vmnProgressBar.setIndeterminate(true);
+        vmnProgressBar.setMessage(getString(R.string.please_wait));
+        vmnProgressBar.setCancelable(false);
 
     addTestimonialsButton = findViewById(R.id.add_testimonials);
     session = new UserSessionManager(getApplicationContext(), this);
@@ -128,12 +128,12 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     backButton.setOnClickListener(v -> onBackPressed());
   }
 
-  private void initialiseRecycler() {
-    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
-    gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-    recyclerView.setAdapter(testimonialsAdapter);
-    recyclerView.setLayoutManager(gridLayoutManager);
-  }
+    private void initialiseRecycler() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setAdapter(testimonialsAdapter);
+        recyclerView.setLayoutManager(gridLayoutManager);
+    }
 
   void loadData() {
     try {
@@ -169,72 +169,28 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
           }
         }
 
-        @Override
-        public void failure(RetrofitError error) {
-          hideProgress();
-          Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
+                @Override
+                public void failure(RetrofitError error) {
+                    hideProgress();
+                    Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-      });
-    } catch (Exception e) {
-      e.printStackTrace();
+
+  }
+
+    private void updateRecyclerView() {
+        testimonialsAdapter.updateList(dataList);
+        testimonialsAdapter.notifyDataSetChanged();
     }
 
-  }
 
-//  void loadHotelsData() {
-//    try {
-//      showProgress();
-//      JSONObject query = new JSONObject();
-//      query.put("WebsiteId", session.getFpTag());
-//      APIInterfaces APICalls = new RestAdapter.Builder()
-//          .setEndpoint("https://webaction.api.boostkit.dev")
-//          .setLogLevel(RestAdapter.LogLevel.FULL)
-//          .setLog(new AndroidLog("ggg"))
-//          .build()
-//          .create(APIInterfaces.class);
-//      Log.v("headerToken", " " + headerToken);
-//      APICalls.getHotelsTestimonialsList(headerToken, query, 0, 1000, new Callback<GetTestimonialData>() {
-//        @Override
-//        public void success(GetTestimonialData testimonialModel, Response response) {
-//          hideProgress();
-//          if (testimonialModel == null || response.getStatus() != 200) {
-//            Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
-//            return;
-//          }
-//          if (testimonialModel.getData().size() > 0) {
-//            dataList = testimonialModel.getData();
-//            updateRecyclerView();
-//            mainLayout.setVisibility(View.VISIBLE);
-//            secondaryLayout.setVisibility(View.GONE);
-//            rightButton.setVisibility(View.VISIBLE);
-//          } else {
-//            mainLayout.setVisibility(View.GONE);
-//            secondaryLayout.setVisibility(View.VISIBLE);
-//            rightButton.setVisibility(View.INVISIBLE);
-//          }
-//        }
-//
-//        @Override
-//        public void failure(RetrofitError error) {
-//          hideProgress();
-//          Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
-//        }
-//      });
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//    }
-//
-//  }
-
-  private void updateRecyclerView() {
-    testimonialsAdapter.updateList(dataList);
-  }
-
-
-  @Override
-  public void itemMenuOptionStatus(int pos, boolean status) {
-    updateRecyclerMenuOption(pos, status);
-  }
+    @Override
+    public void itemMenuOptionStatus(int pos, boolean status) {
+        updateRecyclerMenuOption(pos, status);
+    }
 
   @Override
   public void editOptionClicked(TestimonialData data) {
@@ -288,22 +244,22 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     }
   }
 
-  void updateRecyclerMenuOption(int pos, boolean status) {
-    testimonialsAdapter.menuOption(pos, status);
-    testimonialsAdapter.notifyDataSetChanged();
-  }
-
-  private void showProgress() {
-    if (!vmnProgressBar.isShowing() && !isFinishing()) {
-      vmnProgressBar.show();
+    void updateRecyclerMenuOption(int pos, boolean status) {
+        testimonialsAdapter.menuOption(pos, status);
+        testimonialsAdapter.notifyDataSetChanged();
     }
-  }
 
-  private void hideProgress() {
-    if (vmnProgressBar.isShowing() && !isFinishing()) {
-      vmnProgressBar.dismiss();
+    private void showProgress() {
+        if (!vmnProgressBar.isShowing() && !isFinishing()) {
+            vmnProgressBar.show();
+        }
     }
-  }
+
+    private void hideProgress() {
+        if (vmnProgressBar.isShowing() && !isFinishing()) {
+            vmnProgressBar.dismiss();
+        }
+    }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -360,4 +316,3 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     }
   }
 }
-

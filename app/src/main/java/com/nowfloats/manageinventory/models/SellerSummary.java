@@ -2,6 +2,7 @@ package com.nowfloats.manageinventory.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.j256.ormlite.stmt.query.In;
 
 /**
  * Created by vinay on 13-06-2018.
@@ -10,126 +11,134 @@ import com.google.gson.annotations.SerializedName;
 public class SellerSummary {
 
 
-    @SerializedName("Data")
+  @SerializedName("Data")
+  @Expose
+  private Data data;
+
+  public class Data {
+
+    @SerializedName("TotalRevenue")
     @Expose
-    private Data data;
+    private Double totalRevenue;
 
-    public class Data {
+    @SerializedName("TotalNetAmount")
+    @Expose
+    private Double totalNetAmount;
 
-        @SerializedName("TotalRevenue")
-        @Expose
-        private String totalRevenue;
+    @SerializedName("CurrencyCode")
+    @Expose
+    private String currencyCode;
 
-        @SerializedName("TotalNetAmount")
-        @Expose
-        private Integer totalNetAmount;
+    @SerializedName("TotalOrders")
+    @Expose
+    private Double totalOrders;
 
-        @SerializedName("CurrencyCode")
-        @Expose
-        private String currencyCode;
+    @SerializedName("TotalOrdersCompleted")
+    @Expose
+    private Double totalOrdersCompleted;
 
-        @SerializedName("TotalOrders")
-        @Expose
-        private Integer totalOrders;
+    @SerializedName("TotalOrdersCancelled")
+    @Expose
+    private Double totalOrdersCancelled;
 
-        @SerializedName("TotalOrdersCompleted")
-        @Expose
-        private Integer totalOrdersCompleted;
+    @SerializedName("TotalOrdersEscalated")
+    @Expose
+    private Double totalOrdersEscalated;
 
-        @SerializedName("TotalOrdersCancelled")
-        @Expose
-        private Integer totalOrdersCancelled;
+    @SerializedName("TotalOrdersInProgress")
+    @Expose
+    private Double totalOrdersInProgress;
 
-        @SerializedName("TotalOrdersEscalated")
-        @Expose
-        private Integer totalOrdersEscalated;
+    @SerializedName("TotalOrdersAbandoned")
+    @Expose
+    private Double totalOrdersAbandoned;
 
-        @SerializedName("TotalOrdersInProgress")
-        @Expose
-        private Integer totalOrdersInProgress;
-
-        @SerializedName("TotalOrdersAbandoned")
-        @Expose
-        private Integer totalOrdersAbandoned;
-
-        public Integer getTotalNetAmount() {
-            return totalNetAmount;
-        }
-
-        public void setTotalNetAmount(Integer totalNetAmount) {
-            this.totalNetAmount = totalNetAmount;
-        }
-
-        public String getTotalRevenue() {
-            return totalRevenue;
-        }
-
-        public void setTotalRevenue(String totalRevenue) {
-            this.totalRevenue = totalRevenue;
-        }
-
-        public Integer getTotalOrders() {
-            return totalOrders;
-        }
-
-        public void setTotalOrders(Integer totalOrders) {
-            this.totalOrders = totalOrders;
-        }
-
-        public Integer getTotalOrdersCompleted() {
-            return totalOrdersCompleted;
-        }
-
-        public void setTotalOrdersCompleted(Integer totalOrdersCompleted) {
-            this.totalOrdersCompleted = totalOrdersCompleted;
-        }
-
-        public Integer getTotalOrdersCancelled() {
-            return totalOrdersCancelled;
-        }
-
-        public void setTotalOrdersCancelled(Integer totalOrdersCancelled) {
-            this.totalOrdersCancelled = totalOrdersCancelled;
-        }
-
-        public Integer getTotalOrdersEscalated() {
-            return totalOrdersEscalated;
-        }
-
-        public void setTotalOrdersEscalated(Integer totalOrdersEscalated) {
-            this.totalOrdersEscalated = totalOrdersEscalated;
-        }
-
-        public Integer getTotalOrdersAbandoned() {
-            return totalOrdersAbandoned;
-        }
-
-        public void setTotalOrdersAbandoned(Integer totalOrdersAbandoned) {
-            this.totalOrdersAbandoned = totalOrdersAbandoned;
-        }
-
-        public Integer getTotalOrdersInProgress() {
-            return totalOrdersInProgress;
-        }
-
-        public void setTotalOrdersInProgress(Integer totalOrdersInProgress) {
-            this.totalOrdersInProgress = totalOrdersInProgress;
-        }
-
-        public String getCurrencyCode() {
-            return currencyCode;
-        }
-
-        public void setCurrencyCode(String currencyCode) {
-            this.currencyCode = currencyCode;
-        }
+    public Integer getTotalNetAmount() {
+      if (totalNetAmount != null) return totalNetAmount.intValue();
+      return 0;
     }
 
-    public Data getData() {
-        return data;
+    public void setTotalNetAmount(Double totalNetAmount) {
+      this.totalNetAmount = totalNetAmount;
     }
 
-    public void setData(Data data) {
-        this.data = data;
+    public Integer getTotalRevenue() {
+      if (totalRevenue != null) return totalRevenue.intValue();
+      return 0;
     }
+
+    public void setTotalRevenue(Double totalRevenue) {
+      this.totalRevenue = totalRevenue;
+    }
+
+    public Integer getTotalOrders() {
+      if (totalOrders != null) return totalOrders.intValue();
+      return 0;
+    }
+
+    public void setTotalOrders(Double totalOrders) {
+      this.totalOrders = totalOrders;
+    }
+
+    public Integer getTotalOrdersCompleted() {
+      if (totalOrdersCompleted != null) return totalOrdersCompleted.intValue();
+      return 0;
+    }
+
+    public void setTotalOrdersCompleted(Double totalOrdersCompleted) {
+      this.totalOrdersCompleted = totalOrdersCompleted;
+    }
+
+    public Integer getTotalOrdersCancelled() {
+      if (totalOrdersCancelled != null) return totalOrdersCancelled.intValue();
+      return 0;
+    }
+
+    public void setTotalOrdersCancelled(Double totalOrdersCancelled) {
+      this.totalOrdersCancelled = totalOrdersCancelled;
+    }
+
+    public Integer getTotalOrdersEscalated() {
+      if (totalOrdersEscalated != null) return totalOrdersEscalated.intValue();
+      return 0;
+    }
+
+    public void setTotalOrdersEscalated(Double totalOrdersEscalated) {
+      this.totalOrdersEscalated = totalOrdersEscalated;
+    }
+
+    public Integer getTotalOrdersAbandoned() {
+      if (totalOrdersAbandoned != null) return totalOrdersAbandoned.intValue();
+      return 0;
+    }
+
+    public void setTotalOrdersAbandoned(Double totalOrdersAbandoned) {
+      this.totalOrdersAbandoned = totalOrdersAbandoned;
+    }
+
+    public Integer getTotalOrdersInProgress() {
+      if (totalOrdersInProgress != null) return totalOrdersInProgress.intValue();
+      return 0;
+    }
+
+    public void setTotalOrdersInProgress(Double totalOrdersInProgress) {
+      this.totalOrdersInProgress = totalOrdersInProgress;
+    }
+
+    public String getCurrencyCode() {
+      return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+      this.currencyCode = currencyCode;
+    }
+  }
+
+  public Data getData() {
+    return data;
+  }
+
+  public void setData(Data data) {
+    this.data = data;
+  }
 }

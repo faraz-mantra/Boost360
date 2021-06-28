@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/screen_bg"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
+    android:paddingStart="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp"
     android:tag="cards main container">
@@ -49,7 +49,7 @@
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:paddingBottom="10dp"
-                            android:paddingLeft="15dp"
+                            android:paddingStart="15dp"
                             android:paddingRight="5dp"
                             android:paddingTop="15dp">
 
@@ -63,7 +63,7 @@
                                     fontPath="Roboto-Medium.ttf"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginRight="2dp"
+                                    android:layout_marginEnd="2dp"
                                     android:singleLine="true"
                                     android:text="From:"
                                     android:textColor="@color/white"
@@ -117,7 +117,7 @@
                                     android:layout_marginTop="2dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="3dp"
+                                    android:layout_marginStart="3dp"
                                     android:text="@string/sam"
                                     android:textColor="@color/white"
                                     android:textSize="12sp"
@@ -131,7 +131,7 @@
                             android:id="@+id/contactButton"
                             android:layout_width="80dp"
                             android:layout_height="40dp"
-                            android:layout_marginRight="8dp">
+                            android:layout_marginEnd="8dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -163,7 +163,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="?android:selectableItemBackground"
-                                android:orientation="horizontal"></LinearLayout>
+                                android:orientation="horizontal" />
                         </FrameLayout>
                     </LinearLayout>
 
@@ -195,12 +195,12 @@
                 android:id="@+id/entity_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="10dp"
                 android:visibility="visible">
@@ -231,7 +231,7 @@
                         fontPath="Roboto-LightItalic.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/wow_this_is_amazing_offer_is_it_avail_trip"

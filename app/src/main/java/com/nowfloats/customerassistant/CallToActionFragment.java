@@ -349,7 +349,7 @@ public class CallToActionFragment extends Fragment {
                     if (sugUpdates.isSelected()) {
 
                         try {
-                            selectedProducts = selectedProducts + sugUpdates.getName() + "\n" + "\n" + "View Details : " + sugUpdates.getUpdateUrl() + "\n" + "\n";
+                            selectedProducts = selectedProducts + sugUpdates.getName() + "\n" + "\n" + getString(R.string.view_details_) + sugUpdates.getUpdateUrl() + "\n" + "\n";
                             imageUrl = sugUpdates.getImage();
 
                         } catch (Exception e) {
@@ -364,7 +364,7 @@ public class CallToActionFragment extends Fragment {
                     if (sugProducts.isSelected()) {
 
                         try {
-                            selectedProducts = selectedProducts + sugProducts.getProductName() + "\n" + "\n" + "View Details : " +
+                            selectedProducts = selectedProducts + sugProducts.getProductName() + "\n" + "\n" + getString(R.string.view_details_) +
                                     sugProducts.getProductUrl() + "\n" + "\n";
                             imageUrl = sugProducts.getImage();
 

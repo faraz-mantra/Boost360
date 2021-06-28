@@ -98,13 +98,13 @@ public class TopUpPlansActivity extends AppCompatActivity{
         public void onBindViewHolder(TopUpCardHolder holder, int position) {
             switch (position){
                 case 0:
-                    holder.setCardHolderData(R.drawable.wild_fire_expire,"Wildfire",getString(R.string.wildfire_definition));
+                    holder.setCardHolderData(R.drawable.wild_fire_expire,getString(R.string.wildfire),getString(R.string.wildfire_definition));
                     break;
                 case 1:
-                    holder.setCardHolderData(R.drawable.ic_dictate_plan,"Dictate",getString(R.string.dictate_definition));
+                    holder.setCardHolderData(R.drawable.ic_dictate_plan,getString(R.string.dictate),getString(R.string.dictate_definition));
                     break;
                 case 2:
-                    holder.setCardHolderData(R.drawable.ic_business_apps,"My Business App",getString(R.string.business_app_definition));
+                    holder.setCardHolderData(R.drawable.ic_business_apps,getString(R.string.my_business_app),getString(R.string.business_app_definition));
                     break;
             }
         }

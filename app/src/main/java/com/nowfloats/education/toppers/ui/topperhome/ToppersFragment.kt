@@ -55,10 +55,10 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
         }
 
         if (Utils.isNetworkConnected(requireContext())) {
-            showLoader("Loading Our Toppers")
+            showLoader(getString(R.string.loading_our_topper))
             viewModel.getOurToppers()
         } else {
-            showToast("No Internet!")
+            showToast(resources.getString(R.string.noInternet))
         }
     }
 
@@ -80,8 +80,8 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
                 if (!it.isNullOrBlank()) {
                     if (it == SUCCESS) {
                         hideLoader()
-                        Toast.makeText(requireContext(), "Topper deleted successfully", Toast.LENGTH_SHORT).show()
-                        showLoader("Loading Toppers")
+                        Toast.makeText(requireContext(), getString(R.string.topper_deleted_successfully), Toast.LENGTH_SHORT).show()
+                        showLoader(getString(R.string.loading_topper))
                         setDeleteTopperLiveDataValue("")
                         viewModel.getOurToppers()
                     }
@@ -119,7 +119,7 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
 
     override fun onDeleteClick(data: Any, position: Int) {
         toppersAdapter.menuOption(position, false)
-        showLoader("Deleting Topper")
+        showLoader(getString(R.string.deleting_topper))
         viewModel.deleteOurTopper(data as Data)
     }
 

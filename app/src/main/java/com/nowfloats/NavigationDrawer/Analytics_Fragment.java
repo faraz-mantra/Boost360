@@ -50,7 +50,6 @@ import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
 import com.nowfloats.Analytics_Screen.Graph.api.AnalyticsFetch;
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Analytics_Screen.Graph.model.VisitsModel;
-import com.nowfloats.Analytics_Screen.OrderAnalyticsActivity;
 import com.nowfloats.Analytics_Screen.OrderSummaryActivity;
 import com.nowfloats.Analytics_Screen.RevenueSummaryActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
@@ -58,7 +57,6 @@ import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
-import com.nowfloats.Analytics_Screen.model.OrderStatusSummary;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
@@ -96,6 +94,15 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventLabelKt.SEARCH_RANKING;
+import static com.framework.webengageconstant.EventNameKt.ROI_SUMMARY_ADDRESS_VIEWS;
+import static com.framework.webengageconstant.EventNameKt.SALES_ANALYTICS;
+import static com.framework.webengageconstant.EventNameKt.SEARCH_ANALYTICS;
+import static com.framework.webengageconstant.EventNameKt.SOCIAL_ANALYTICS_DETAILS_FROM_HOME;
+import static com.framework.webengageconstant.EventNameKt.SUBSCRIBERS;
+import static com.framework.webengageconstant.EventNameKt.WEBSITE_VISITS_CHART_DURATION_CHANGED;
+import static com.framework.webengageconstant.EventNameKt.WILDFIRE_ANALYTICS;
 import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
 
 /**
@@ -106,7 +113,7 @@ public class Analytics_Fragment extends Fragment {
     public static TextView visitCount, mapVisitsCount, visitorsCount, subscriberCount, vmnTotalCallCount, vmnTotalCustomerCount,
             searchQueriesCount, businessEnqCount, facebokImpressions, tvOrdersCount;
     private static ImageView rupeeSymbol;
-    private int noOfSearchQueries = 0;
+    private final int noOfSearchQueries = 0;
     public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar, vmnCustomerProgressBar,
             subscriber_progress, search_query_progress, businessEnqProgress, pbOrders;
     UserSessionManager session;
@@ -290,12 +297,12 @@ public class Analytics_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_analytics, container, false);
-        LinearLayout queryLayout = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_queries);
-        llTwoButtons = (LinearLayout) rootView.findViewById(R.id.ll_twobuttons);
-        llSingleButtonLayout = (LinearLayout) rootView.findViewById(R.id.ll_single_button);
-        btnSingleResponse = (Button) rootView.findViewById(R.id.btnSingleResponse);
-        vmnCallCard = (CardView) rootView.findViewById(R.id.card_view_vmn_call);
-        cvCustomerAppointment = (CardView) rootView.findViewById(R.id.card_view_customer_appointment);
+        LinearLayout queryLayout = rootView.findViewById(R.id.analytics_screen_search_queries);
+        llTwoButtons = rootView.findViewById(R.id.ll_twobuttons);
+        llSingleButtonLayout = rootView.findViewById(R.id.ll_single_button);
+        btnSingleResponse = rootView.findViewById(R.id.btnSingleResponse);
+        vmnCallCard = rootView.findViewById(R.id.card_view_vmn_call);
+        cvCustomerAppointment = rootView.findViewById(R.id.card_view_customer_appointment);
         customerAppointmentTitle = rootView.findViewById(R.id.customer_appointment_title);
         //mLockLayout = rootView.findViewById(R.id.lock_analytics);
         //setAnalyticsLockScreen();
@@ -309,7 +316,7 @@ public class Analytics_Fragment extends Fragment {
             }
         });
 
-        LinearLayout enqLayOut = (LinearLayout) rootView.findViewById(R.id.analytics_screen_business_enq);
+        LinearLayout enqLayOut = rootView.findViewById(R.id.analytics_screen_business_enq);
         enqLayOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -319,11 +326,11 @@ public class Analytics_Fragment extends Fragment {
             }
         });
 
-        LinearLayout visitsLinearLayout = (LinearLayout) rootView.findViewById(R.id.numberOfVisitsLinearLayout);
+        LinearLayout visitsLinearLayout = rootView.findViewById(R.id.numberOfVisitsLinearLayout);
         visitsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("WEBSITE visits - CHART DURATION CHANGED", "null", session.getFpTag());
+                WebEngageController.trackEvent(WEBSITE_VISITS_CHART_DURATION_CHANGED, EVENT_LABEL_NULL, session.getFpTag());
                 MixPanelController.track("OverallVisitsDetailedView", null);
                 Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
@@ -331,7 +338,7 @@ public class Analytics_Fragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-        LinearLayout visitorsLinearLayout = (LinearLayout) rootView.findViewById(R.id.numberOfVisitorsLinearLayout);
+        LinearLayout visitorsLinearLayout = rootView.findViewById(R.id.numberOfVisitorsLinearLayout);
         visitorsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -343,11 +350,11 @@ public class Analytics_Fragment extends Fragment {
             }
         });
 
-        LinearLayout mapVisitsLinearLayout = (LinearLayout) rootView.findViewById(R.id.mapVisitsLinearLayout);
+        LinearLayout mapVisitsLinearLayout = rootView.findViewById(R.id.mapVisitsLinearLayout);
         mapVisitsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("ROI SUMMARY - ADDRESS VIEWS", "null", session.getFpTag());
+                WebEngageController.trackEvent(ROI_SUMMARY_ADDRESS_VIEWS, EVENT_LABEL_NULL, session.getFpTag());
                 MixPanelController.track("MapVisitsDetailedView", null);
                 Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.MAP_VISITS);
@@ -358,27 +365,27 @@ public class Analytics_Fragment extends Fragment {
         if (session.getISEnterprise().equals("true")) {
             rootView.findViewById(R.id.map_card).setVisibility(View.GONE);
         }
-        LinearLayout subscribeLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscribers_details);
+        LinearLayout subscribeLinearLayout = rootView.findViewById(R.id.subscribers_details);
         subscribeLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 addSubscription();
-                WebEngageController.trackEvent("ROI SUMMARY - ADDRESS VIEWS", "null", session.getFpTag());
+                WebEngageController.trackEvent(ROI_SUMMARY_ADDRESS_VIEWS, EVENT_LABEL_NULL, session.getFpTag());
 
 //                Intent i = new Intent(getActivity(), SubscribersActivity.class);
 //                startActivity(i);
 //                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-        LinearLayout facebookLayout = (LinearLayout) rootView.findViewById(R.id.facebook_analytics_layout);
+        LinearLayout facebookLayout = rootView.findViewById(R.id.facebook_analytics_layout);
         facebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                /* if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
                 } else {*/
-                WebEngageController.trackEvent("SOCIAL ANALYTICS - DETAILS FROM HOME", "null", session.getFpTag());
+                WebEngageController.trackEvent(SOCIAL_ANALYTICS_DETAILS_FROM_HOME, EVENT_LABEL_NULL, session.getFpTag());
                 int status = pref.getInt("fbPageStatus", 0);
 
                 Intent i = new Intent(getActivity(), SocialAnalytics.class);
@@ -390,11 +397,11 @@ public class Analytics_Fragment extends Fragment {
             }
         });
 
-        LinearLayout orderLayout = (LinearLayout) rootView.findViewById(R.id.order_analytics_layout);
+        LinearLayout orderLayout = rootView.findViewById(R.id.order_analytics_layout);
         orderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("SALES ANALYTICS", "null", session.getFpTag());
+                WebEngageController.trackEvent(SALES_ANALYTICS, EVENT_LABEL_NULL, session.getFpTag());
 //                Intent i = new Intent(getActivity(), OrderAnalyticsActivity.class);
                 Intent i = new Intent(getActivity(), RevenueSummaryActivity.class);
                 startActivity(i);
@@ -403,11 +410,11 @@ public class Analytics_Fragment extends Fragment {
             }
         });
 
-        LinearLayout llSearchRanking = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_ranking);
+        LinearLayout llSearchRanking = rootView.findViewById(R.id.analytics_screen_search_ranking);
         llSearchRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("SEARCH ANALYTICS", "SEARCH RANKING", session.getFpTag());
+                WebEngageController.trackEvent(SEARCH_ANALYTICS, SEARCH_RANKING, session.getFpTag());
                 Intent i = new Intent(getActivity(), SearchRankingActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -418,7 +425,7 @@ public class Analytics_Fragment extends Fragment {
         wildfireAnalytics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("WILDFIRE ANALYTICS", "null", session.getFpTag());
+                WebEngageController.trackEvent(WILDFIRE_ANALYTICS, EVENT_LABEL_NULL, session.getFpTag());
                 Intent i = new Intent(getActivity(), WildFireAdsActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -426,11 +433,11 @@ public class Analytics_Fragment extends Fragment {
         });
 
 
-        cvRiaCard = (CardView) rootView.findViewById(R.id.cvRiaCard);
-        btnRiaCardLeft = (Button) rootView.findViewById(R.id.btnRiaResponse1);
-        btnRiaCrdRight = (Button) rootView.findViewById(R.id.btnRiaResponse2);
-        tvRiaCardHeader = (TextView) rootView.findViewById(R.id.tvRiaCardHeader);
-        llRiaCardSections = (LinearLayout) rootView.findViewById(R.id.llRiaCardSections);
+        cvRiaCard = rootView.findViewById(R.id.cvRiaCard);
+        btnRiaCardLeft = rootView.findViewById(R.id.btnRiaResponse1);
+        btnRiaCrdRight = rootView.findViewById(R.id.btnRiaResponse2);
+        tvRiaCardHeader = rootView.findViewById(R.id.tvRiaCardHeader);
+        llRiaCardSections = rootView.findViewById(R.id.llRiaCardSections);
 
 //        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 //        ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
@@ -455,33 +462,33 @@ public class Analytics_Fragment extends Fragment {
         orderAnalyticsBack.setColorFilter(porterDuffColorFilter);*/
 
 
-        visitCount = (TextView) rootView.findViewById(R.id.analytics_screen_visitor_count);
-        mapVisitsCount = (TextView) rootView.findViewById(R.id.analytics_screen_map_count);
-        visitorsCount = (TextView) rootView.findViewById(R.id.visitors_count);
-        subscriberCount = (TextView) rootView.findViewById(R.id.analytics_screen_subscriber_count);
-        searchQueriesCount = (TextView) rootView.findViewById(R.id.analytics_screen_search_queries_count);
-        vmnTotalCallCount = (TextView) rootView.findViewById(R.id.analytics_screen_vmn_tracker_count);
-        vmnTotalCustomerCount = (TextView) rootView.findViewById(R.id.customer_appointment_total_count);
-        businessEnqCount = (TextView) rootView.findViewById(R.id.analytics_screen_business_enq_count);
-        tvOrdersCount = (TextView) rootView.findViewById(R.id.orders_count);
-        rupeeSymbol = (ImageView) rootView.findViewById(R.id.iv_rupee_symbol);
-        facebokImpressions = (TextView) rootView.findViewById(R.id.analytics_screen_updates_count);
+        visitCount = rootView.findViewById(R.id.analytics_screen_visitor_count);
+        mapVisitsCount = rootView.findViewById(R.id.analytics_screen_map_count);
+        visitorsCount = rootView.findViewById(R.id.visitors_count);
+        subscriberCount = rootView.findViewById(R.id.analytics_screen_subscriber_count);
+        searchQueriesCount = rootView.findViewById(R.id.analytics_screen_search_queries_count);
+        vmnTotalCallCount = rootView.findViewById(R.id.analytics_screen_vmn_tracker_count);
+        vmnTotalCustomerCount = rootView.findViewById(R.id.customer_appointment_total_count);
+        businessEnqCount = rootView.findViewById(R.id.analytics_screen_business_enq_count);
+        tvOrdersCount = rootView.findViewById(R.id.orders_count);
+        rupeeSymbol = rootView.findViewById(R.id.iv_rupee_symbol);
+        facebokImpressions = rootView.findViewById(R.id.analytics_screen_updates_count);
         searchQueriesCount.setVisibility(View.INVISIBLE);
-        visits_progressBar = (ProgressBar) rootView.findViewById(R.id.visits_progressBar);
+        visits_progressBar = rootView.findViewById(R.id.visits_progressBar);
         visits_progressBar.setVisibility(View.VISIBLE);
-        map_progressbar = (ProgressBar) rootView.findViewById(R.id.map_progressBar);
+        map_progressbar = rootView.findViewById(R.id.map_progressBar);
         map_progressbar.setVisibility(View.VISIBLE);
-        visitors_progressBar = (ProgressBar) rootView.findViewById(R.id.visitors_progressBar);
+        visitors_progressBar = rootView.findViewById(R.id.visitors_progressBar);
         visitors_progressBar.setVisibility(View.VISIBLE);
-        subscriber_progress = (ProgressBar) rootView.findViewById(R.id.subscriber_progressBar);
+        subscriber_progress = rootView.findViewById(R.id.subscriber_progressBar);
         subscriber_progress.setVisibility(View.VISIBLE);
-        vmnProgressBar = (ProgressBar) rootView.findViewById(R.id.vmn_progressbar);
-        vmnCustomerProgressBar = (ProgressBar) rootView.findViewById(R.id.customer_appointment_progressbar);
-        search_query_progress = (ProgressBar) rootView.findViewById(R.id.search_query_progressBar);
+        vmnProgressBar = rootView.findViewById(R.id.vmn_progressbar);
+        vmnCustomerProgressBar = rootView.findViewById(R.id.customer_appointment_progressbar);
+        search_query_progress = rootView.findViewById(R.id.search_query_progressBar);
         search_query_progress.setVisibility(View.GONE);
-        businessEnqProgress = (ProgressBar) rootView.findViewById(R.id.business_enq_progressBar);
+        businessEnqProgress = rootView.findViewById(R.id.business_enq_progressBar);
         businessEnqProgress.setVisibility(View.VISIBLE);
-        pbOrders = (ProgressBar) rootView.findViewById(R.id.order_progressBar);
+        pbOrders = rootView.findViewById(R.id.order_progressBar);
         pbOrders.setVisibility(View.GONE);
 
 
@@ -1127,15 +1134,15 @@ public class Analytics_Fragment extends Fragment {
          * If not new pricing plan
          */
         if (!WidgetKey.isNewPricingPlan) {
-            WebEngageController.trackEvent("SUBSCRIBERS", "null", session.getFpTag());
+            WebEngageController.trackEvent(SUBSCRIBERS, EVENT_LABEL_NULL, session.getFpTag());
             openSubscriberActivity();
         } else {
             String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SUBSCRIPTION, WidgetKey.WIDGET_PROPERTY_SUBSCRIPTION);
 
             if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
-                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
             } else {
-                WebEngageController.trackEvent("SUBSCRIBERS", "null", session.getFpTag());
+                WebEngageController.trackEvent(SUBSCRIBERS, EVENT_LABEL_NULL, session.getFpTag());
                 openSubscriberActivity();
             }
         }

@@ -16,7 +16,7 @@
 
             <TextView
                 style="@style/ProductLabelTextStyle"
-                android:text="Delivery package dimensions"/>
+                android:text="@string/delivery_package_dimensions"/>
 
             <ImageButton
                 android:id="@+id/ib_info_product_dimension"
@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_5"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -53,7 +53,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Package Weight"/>
+                            android:text="@string/package_weight"/>
 
                         <ImageButton
                             android:id="@+id/ib_info_product_weight"
@@ -73,7 +73,7 @@
                             android:id="@+id/spinner_package_weight"
                             style="@style/ProductEditTextStyle"
                             android:layout_weight="1"
-                            android:text="gm"
+                            android:text="@string/gm"
                             android:textColor="@color/secondaryTextColor"
                             android:background="@color/spinner_grey_background" />
 
@@ -98,7 +98,7 @@
                             android:gravity="center"
                             android:digits="0123456789."
                             android:inputType="numberDecimal"
-                            android:hint="XXX"
+                            android:hint="@string/xxx"
                             android:maxLength="9"
                             android:background="#FFF" />
 
@@ -111,7 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_marginStart="@dimen/margin_5"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -122,7 +122,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Package Length"/>
+                            android:text="@string/package_length"/>
 
                         <ImageButton
                             android:id="@+id/ib_info_product_length"
@@ -142,7 +142,7 @@
                             android:id="@+id/spinner_package_length"
                             style="@style/ProductEditTextStyle"
                             android:layout_weight="1"
-                            android:text="inch"
+                            android:text="@string/inch"
                             android:textColor="@color/secondaryTextColor"
                             android:background="@color/spinner_grey_background" />
 
@@ -167,7 +167,7 @@
                             android:gravity="center"
                             android:digits="0123456789."
                             android:inputType="numberDecimal"
-                            android:hint="XXX"
+                            android:hint="@string/xxx"
                             android:maxLength="9"
                             android:background="#FFF" />
 
@@ -187,7 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_5"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -198,7 +198,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Package Height"/>
+                            android:text="@string/package_height"/>
 
                         <ImageButton
                             android:id="@+id/ib_info_product_height"
@@ -218,7 +218,7 @@
                             android:id="@+id/spinner_package_height"
                             style="@style/ProductEditTextStyle"
                             android:layout_weight="1"
-                            android:text="inch"
+                            android:text="@string/inch"
                             android:textColor="@color/secondaryTextColor"
                             android:background="@color/spinner_grey_background" />
 
@@ -243,7 +243,7 @@
                             android:gravity="center"
                             android:digits="0123456789."
                             android:inputType="numberDecimal"
-                            android:hint="XXX"
+                            android:hint="@string/xxx"
                             android:maxLength="9"
                             android:background="#FFF" />
 
@@ -255,7 +255,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_marginStart="@dimen/margin_5"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -266,7 +266,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Package Thickness"/>
+                            android:text="@string/package_thickness"/>
 
                         <ImageButton
                             android:id="@+id/ib_info_product_thickness"
@@ -286,7 +286,7 @@
                             android:id="@+id/spinner_package_thickness"
                             style="@style/ProductEditTextStyle"
                             android:layout_weight="1"
-                            android:text="inch"
+                            android:text="@string/inch"
                             android:textColor="@color/secondaryTextColor"
                             android:background="@color/spinner_grey_background" />
 
@@ -311,7 +311,7 @@
                             android:gravity="center"
                             android:digits="0123456789."
                             android:inputType="numberDecimal"
-                            android:hint="XXX"
+                            android:hint="@string/xxx"
                             android:maxLength="9"
                             android:background="#FFF" />
 

@@ -46,7 +46,7 @@
                 android:background="@drawable/button_bg"
                 android:elevation="5dp"
                 android:padding="5dp"
-                android:text="Add Multiple Images"
+                android:text="@string/add_multiple_images"
                 android:textColor="@color/white" />
 
 
@@ -54,8 +54,8 @@
                 android:id="@+id/productLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:orientation="vertical">
 
 
@@ -200,7 +200,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:hint="Available Units"
+                    android:hint="@string/available_units"
                     android:inputType="number|numberDecimal"
                     android:textColor="@color/main_text_color"
                     android:textColorHint="@color/primaryColor"
@@ -221,8 +221,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="15dp"
                         android:singleLine="true"
                         android:text="@string/product_detail_availability"
                         android:textColor="@color/product_price"
@@ -232,14 +232,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:gravity="right">
+                        android:layout_marginEnd="5dp"
+                        android:gravity="end">
 
                         <Switch
                             android:id="@+id/switchView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
+                            android:layout_gravity="end"
                             android:checked="true"
                             android:textColorHighlight="@color/product_price" />
                     </LinearLayout>
@@ -264,8 +264,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="15dp"
                         android:singleLine="true"
                         android:text="@string/product_detail_free_shipping"
                         android:textColor="@color/product_price"
@@ -275,14 +275,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:gravity="right">
+                        android:layout_marginEnd="5dp"
+                        android:gravity="end">
 
                         <Switch
                             android:id="@+id/sv_free_shipping"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
+                            android:layout_gravity="end"
                             android:checked="false"
                             android:textColorHighlight="@color/product_price" />
                     </LinearLayout>

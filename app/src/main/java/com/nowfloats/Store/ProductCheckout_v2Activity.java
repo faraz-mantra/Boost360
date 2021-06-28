@@ -112,7 +112,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
 
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
-                .content("Please Wait...")
+                .content(getString(R.string.please_wait_))
                 .progress(true, 0)
                 .cancelable(false)
                 .show();
@@ -200,14 +200,11 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
         rgSalesman.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (group.getCheckedRadioButtonId()) {
-                    case R.id.radioButton_yes:
-                        edtSalesman.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                        edtSalesman.setText("");
-                        edtSalesman.setVisibility(View.GONE);
-                        break;
+                if (group.getCheckedRadioButtonId() == R.id.radioButton_yes) {
+                    edtSalesman.setVisibility(View.VISIBLE);
+                } else {
+                    edtSalesman.setText("");
+                    edtSalesman.setVisibility(View.GONE);
                 }
             }
         });
@@ -216,10 +213,9 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            switch (v.getId()) {
-                case R.id.edtSalesman:
-                    getSalesmanList();
-                    return true;
+            if (v.getId() == R.id.edtSalesman) {
+                getSalesmanList();
+                return true;
             }
         }
         return false;
@@ -337,9 +333,9 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
                 public void failure(RetrofitError error) {
                     hideDiscount();
                     if (error.getResponse().getStatus() == 400) {
-                        Toast.makeText(ProductCheckout_v2Activity.this, "Coupon does not exist", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductCheckout_v2Activity.this,getString( R.string.coupon_does_not_exist), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ProductCheckout_v2Activity.this, "Error processing the request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductCheckout_v2Activity.this,getString( R.string.error_processing_the_request), Toast.LENGTH_SHORT).show();
                     }
                     hideLoader();
                 }
@@ -348,7 +344,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
             e.printStackTrace();
             hideDiscount();
             hideLoader();
-            Toast.makeText(ProductCheckout_v2Activity.this, "Error processing the request", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProductCheckout_v2Activity.this, getString( R.string.error_processing_the_request), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -364,7 +360,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
     private void showLoader() {
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
-                .content("Please Wait...")
+                .content(getString(R.string.please_wait_))
                 .progress(true, 0)
                 .cancelable(false)
                 .show();

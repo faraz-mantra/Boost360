@@ -1,7 +1,6 @@
 package com.dashboard.holder
 
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import com.dashboard.R
 import com.dashboard.databinding.ItemBusinessContentSetupBinding
 import com.dashboard.model.live.drScore.DrScoreItem
@@ -24,14 +23,14 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
     binding.txtTitle.text = data.type?.title
     binding.txtDes.text = data.getRemainingPercentage()
     if (data.percentage == 100) {
-      WRAP_CONTENT.setHeight()
+//      WRAP_CONTENT.setHeight()
       getColor(R.color.light_green_2)?.let { binding.txtDes.setTextColor(it) }
       binding.viewImage.gone()
       binding.lottySyncOk.visible()
       startCheckAnimation(true)
     }else{
-      MATCH_PARENT.setHeight()
-      getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }
+//      MATCH_PARENT.setHeight()
+      getColor(R.color.red_light_1)?.let { binding.txtDes.setTextColor(it) }
       binding.viewImage.visible()
       binding.lottySyncOk.gone()
       startCheckAnimation(false)

@@ -53,6 +53,14 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.framework.webengageconstant.EventLabelKt.CLICK;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ITEM;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATALOGUE_LIST;
+import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
 public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
 
@@ -78,7 +86,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_product_catalog);
-
+    WebEngageController.trackEvent(PRODUCT_CATALOGUE_LIST, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
     setSupportActionBar(binding.layoutToolbar.toolbar);
 
     session = new UserSessionManager(getApplicationContext(), this);
@@ -204,7 +212,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       }
     });
     adapter.SetOnItemClickListener(product -> {
-      WebEngageController.trackEvent("Clicked on products catalogue item", "PRODUCT CATALOGUE", "");
+      WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ITEM, CLICK, NO_EVENT_VALUE);
       openAddProductActivity(product);
 //            Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
 //            intent.putExtra("PRODUCT", selected_product);
@@ -321,7 +329,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
         Methods.showFeatureNotAvailDialog(this);
       } else {
-        WebEngageController.trackEvent("Clicked on products catalogue add new", "PRODUCT CATALOGUE", "");
+        WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW, CLICK, NO_EVENT_VALUE);
         openAddProductActivity(new Product());
       }
 
@@ -336,7 +344,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && adapter.getItemCount() >= Integer.parseInt(value)) {
         Toast.makeText(getApplicationContext(), getString(R.string.message_add_product_limit), Toast.LENGTH_LONG).show();
       } else {
-        WebEngageController.trackEvent("Clicked on products catalogue add new", "PRODUCT CATALOGUE", "");
+        WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW, CLICK, NO_EVENT_VALUE);
         openAddProductActivity(new Product());
       }
 
@@ -434,7 +442,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
   public boolean checkStoragePermission() {
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      Methods.showDialog(this, "Storage Permission", "To share the image we need storage permission.",
+      Methods.showDialog(this, getString(R.string.storage_permission), "To share the image we need storage permission.",
               (dialog, which) -> ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
       return false;
     }
@@ -471,15 +479,15 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             if (share.resolveActivity(getApplicationContext().getPackageManager()) != null) {
               if (!defaultShare) {
                 if (type == 0) {
-                  share.setPackage("com.facebook.katana");
+                  share.setPackage(getString(R.string.facebook_package));
                 } else if (type == 1) {
-                  share.setPackage("com.whatsapp");
+                  share.setPackage(getString(R.string.whatsapp_package));
                 }
               }
               startActivityForResult(Intent.createChooser(share, getApplicationContext().getString(R.string.share_updates)), 1);
             }
           } catch (OutOfMemoryError e) {
-            Toast.makeText(getApplicationContext(), "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.image_size_is_large), Toast.LENGTH_SHORT).show();
           } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Image not able to share", Toast.LENGTH_SHORT).show();
           }

@@ -9,6 +9,9 @@ import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.getDrawable
 import com.framework.extensions.observeOnce
+import com.framework.webengageconstant.BUTTON
+import com.framework.webengageconstant.CLICKED
+import com.framework.webengageconstant.PS_BUSINESS_WEBSITE_CLICK
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWebsiteBinding
@@ -153,7 +156,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
           if ((binding?.textBtn?.visibility == View.VISIBLE)) {
 
             //create my business website Event Tracker.
-            WebEngageController.trackEvent("Create my business website", "Button", "Clicked")
+            WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, BUTTON, CLICKED)
 
             getDotProgress()?.let {
               binding?.textBtn?.visibility = View.GONE
@@ -161,6 +164,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
               it.startAnimation()
               Handler().postDelayed({
                 it.stopAnimation()
+                binding?.next?.removeView(it)
                 it.removeAllViews()
                 binding?.textBtn?.visibility = View.VISIBLE
                 when {

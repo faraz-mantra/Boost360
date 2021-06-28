@@ -24,8 +24,8 @@
                 android:id="@+id/cvRiaCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
                 card_view:contentPadding="15dp">
@@ -50,7 +50,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:text="Your Customers Love you"
                             android:textColor="#808080"
                             android:textStyle="bold" />
@@ -79,7 +79,7 @@
                             android:layout_height="35dp"
                             android:layout_marginBottom="5dp"
                             android:background="@drawable/ria_positive_btn"
-                            android:paddingLeft="10dp"
+                            android:paddingStart="10dp"
                             android:paddingRight="10dp"
                             android:text="Sure!"
                             android:textAllCaps="false"
@@ -100,7 +100,7 @@
                             android:layout_height="35dp"
                             android:layout_marginBottom="5dp"
                             android:background="@drawable/ria_positive_btn"
-                            android:paddingLeft="10dp"
+                            android:paddingStart="10dp"
                             android:paddingRight="10dp"
                             android:text="Sure!"
                             android:textAllCaps="false"
@@ -111,9 +111,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="35dp"
                             android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="30dp"
+                            android:layout_marginStart="30dp"
                             android:background="@drawable/ria_negative"
-                            android:paddingLeft="10dp"
+                            android:paddingStart="10dp"
                             android:paddingRight="10dp"
                             android:text="Not Now"
                             android:textAllCaps="false"
@@ -129,8 +129,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 card_view:cardBackgroundColor="#FFFFFF"
@@ -146,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginStart="20dp">
 
 
                         <ImageView
@@ -166,14 +166,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/unique_visitors" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -219,8 +219,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 card_view:cardBackgroundColor="#FFFFFF"
@@ -236,7 +236,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginStart="20dp">
 
 
                         <ImageView
@@ -256,14 +256,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/overall_visits" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -309,8 +309,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 card_view:cardBackgroundColor="#FFFFFF"
@@ -327,7 +327,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginStart="20dp">
 
 
                         <ImageView
@@ -349,14 +349,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/map_visits" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -402,8 +402,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 card_view:cardBackgroundColor="#FFFFFF"
@@ -419,7 +419,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginStart="20dp">
 
 
                         <ImageView
@@ -440,14 +440,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/business_enquiries_title" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:orientation="horizontal">
 
                         <FrameLayout
@@ -487,8 +487,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 card_view:cardBackgroundColor="#FFFFFF"
@@ -504,7 +504,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginStart="20dp">
 
 
                         <ImageView
@@ -524,7 +524,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/subscribers" />
 
                     <LinearLayout
@@ -575,8 +575,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 card_view:cardBackgroundColor="#FFFFFF"
@@ -592,7 +592,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginStart="20dp">
 
 
                         <ImageView
@@ -612,14 +612,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/search_queries" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:orientation="horizontal">
 
                         <FrameLayout
@@ -659,8 +659,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 android:visibility="gone"
@@ -676,7 +676,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginStart="20dp">
 
                         <ImageView
                             android:id="@+id/img_wildfire_back"
@@ -696,14 +696,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/wildfire_analytics" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -720,8 +720,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 android:visibility="gone"
@@ -738,7 +738,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginStart="20dp">
 
 
                         <ImageView
@@ -759,14 +759,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/call_tracker" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:orientation="horizontal">
 
                         <FrameLayout
@@ -806,8 +806,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 card_view:cardBackgroundColor="#FFFFFF"
@@ -823,7 +823,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginStart="20dp">
 
 
                         <ImageView
@@ -845,14 +845,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/search_ranking" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -870,8 +870,8 @@
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:elevation="3dp"
                 android:visibility="visible"
@@ -891,14 +891,14 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:src="@drawable/analytics_facebook" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:text="@string/facebook_analytics" />
 
                     <LinearLayout

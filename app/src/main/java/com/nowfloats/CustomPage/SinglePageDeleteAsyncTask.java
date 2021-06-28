@@ -25,6 +25,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_DELETE_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventNameKt.DELETE_CUSTOMPAGE;
+
 /**
  * Created by guru on 26-08-2015.
  */
@@ -90,14 +94,14 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
             if (status.getStatusCode() == 200) {
                 MixPanelController.track("DeleteCustomPage", null);
                 Log.i("Delete page...","Success");
-                WebEngageController.trackEvent("DELETE CUSTOMPAGE","Delete Custompage",pageId);
+                WebEngageController.trackEvent(DELETE_CUSTOMPAGE,EVENT_LABEL_DELETE_CUSTOMPAGE,pageId);
                 flag = true;
             }else{
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
-                        WebEngageController.trackEvent("DELETE CUSTOMPAGE","Failed to Delete Custompage",pageId);
+                        WebEngageController.trackEvent(DELETE_CUSTOMPAGE,FAILED_TO_DELETE_CUSTOMPAGE,pageId);
                     }
                 });
             }

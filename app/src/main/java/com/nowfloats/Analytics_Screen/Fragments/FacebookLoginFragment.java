@@ -111,9 +111,9 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
         TextView message= (TextView) view.findViewById(R.id.facebook_analytics_connect_text1);
         facebookHandler = new FacebookHandler(this,mContext);
         if(status == 2)
-            message.setText("Your Facebook session has expired. Please login.");
+            message.setText(R.string.your_facebook_session_has_expired);
         if(getActivity() instanceof FacebookChatActivity){
-            message.setText("Please connect your Facebook page.");
+            message.setText(R.string.please_connect_your_facebook_page);
         }
         Methods.isOnline(getActivity());
         session = new UserSessionManager(getContext(), getActivity());
@@ -221,7 +221,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 mNewPosition = dialog.getSelectedIndex();
                                 if (mNewPosition == -1) {
-                                    Toast.makeText(mContext, "Please select any Facebook page", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mContext, getString(R.string.please_select_any_facebook_page), Toast.LENGTH_SHORT).show();
                                 } else {
                                     String strName = items.get(mNewPosition);
                                     String FACEBOOK_PAGE_ID = null;
@@ -240,7 +240,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                                                 || !strName.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME)))
                                             pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                         else {
-                                            showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.");
+                                            showDialog("Alert", getString(R.string.you_cannot_select_the_same_facebook_page_to_share_your_update));
                                         }
                                         //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                     }
@@ -369,7 +369,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
     public void nfxCallBack(String response, int callType, String name) {
         hideLoader();
         if (response.equals("error")) {
-            Toast.makeText(mContext, "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, getString(R.string.something_went_wrong_please), Toast.LENGTH_SHORT).show();
             return;
         }
         BoostLog.d("ggg: ", response + callType + ":");
@@ -407,7 +407,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                                     }else{
-                                        Methods.materialDialog(getActivity(), "Alert","This feature is available to paid customers only.");
+                                        Methods.materialDialog(getActivity(), "Alert",getString(R.string.this_feature_is_available_for_paid_customers));
                                     }
                                 }
                             });
@@ -428,7 +428,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                         break;
                     case "profile_incomplete":
                         MixPanelController.track(MixPanelController.FACEBOOK_PAGE_PROFILE_INCOMPLETE, null);
-                        showDialog("Site Health Should Be 80%", getString(R.string.business_profile_incomplete));
+                        showDialog(getString(R.string.site_health_should_be_eighty_percent), getString(R.string.business_profile_incomplete));
                         break;
                     case "error_creating_page":
                         MixPanelController.track(MixPanelController.FACEBOOK_PAGE_ERROR_IN_CREATE, null);
@@ -439,7 +439,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                         pageSuggestionDialog();
                         break;
                     default:
-                        Toast.makeText(getActivity(), "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
                         break;
                 }
                 break;
@@ -499,7 +499,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                     dialog.dismiss();
                     createFBPage(page);
                 } else {
-                    Toast.makeText(getActivity(), "Page name can't be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.page_name_cant_be_empty), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -579,9 +579,9 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
         boolean publishContain = givenPermissions.containsAll(publishPermissions);
         if(!readContain){
 
-            Methods.showSnackBarNegative(getActivity(),"Required permissions are not given, please connect again");
+            Methods.showSnackBarNegative(getActivity(),getString(R.string.required_permission_is_not_given_please_connect_again));
         }else if(!publishContain){
-            Methods.showSnackBarNegative(getActivity(),"Required permissions are not given, please connect again");
+            Methods.showSnackBarNegative(getActivity(),getString(R.string.required_permission_is_not_given_please_connect_again));
         }
     }
 

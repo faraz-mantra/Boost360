@@ -4,13 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:text="@string/customer_name"
             android:textColor="@color/black_4a4a4a"
             app:fontFamily="@font/regular"
@@ -39,8 +37,7 @@
 
             <com.framework.views.customViews.CustomEditText
                 android:id="@+id/edit_customer_name_with_contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/match_wrap"
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
@@ -55,7 +52,7 @@
                 android:layout_marginEnd="@dimen/size_10"
                 android:background="@color/grey_dark_3" />
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
                 android:id="@+id/image_contact"
                 android:layout_width="@dimen/size_15"
                 android:layout_height="@dimen/size_15"
@@ -64,31 +61,29 @@
 
 
         <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_12"
             android:text="@string/customer_phone_number"
             android:textColor="@color/black_4a4a4a"
             app:fontFamily="@font/regular"
             app:textType="BODY_1" />
 
-        <com.framework.views.customViews.CustomEditText
+        <com.framework.views.customViews.PrefixEditText
             android:id="@+id/edit_customer_phone"
             style="@style/EditTextStyle"
             android:layout_marginTop="@dimen/size_6"
             android:layout_marginBottom="@dimen/size_10"
-            android:gravity="center_vertical"
             android:maxLength="10"
             android:singleLine="true"
+            android:digits="0123456789"
+            android:tag="+91"
             android:imeOptions="actionNext"
-            android:hint="@string/phone_hint"
+            android:hint="@string/phone_hint_appointment"
             android:inputType="number"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_service_name" />
+            tools:ignore="MissingClass" />
 
         <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_12"
             android:text="@string/customer_email_id_optional"
             android:textColor="@color/black_4a4a4a"
@@ -110,8 +105,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_add_customer_gstin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_14"
             android:drawableStart="@drawable/ic_add_gstn_yellow"
             android:drawablePadding="@dimen/size_5"
@@ -122,20 +116,17 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyt_customer_gstn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_16"
             android:orientation="vertical"
             android:visibility="gone"
             tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                style="@style/match_wrap">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:text="@string/customer_gstin_optional"
                     android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/regular"
@@ -145,8 +136,7 @@
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_remove"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:text="@string/remove"
                     android:textColor="@color/orange"
                     app:fontFamily="@font/bold"

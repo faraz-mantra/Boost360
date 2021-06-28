@@ -7,10 +7,10 @@
         android:id="@+id/view_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:visibility="gone"
         android:alpha=".6"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         android:background="@color/light_gray"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:id="@+id/img_email"
             android:layout_width="85dp"
             android:layout_height="85dp"
-            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
             android:paddingRight="15dp"
             android:src="@drawable/domain_email"/>
         <LinearLayout
@@ -33,7 +33,7 @@
                 android:id="@+id/tv_domain_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your Business emails"
+                android:text="@string/your_business_emails_"
                 android:textSize="15sp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
@@ -41,9 +41,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Coming Soon"
+                android:text="@string/coming_soon_"
                 android:textAllCaps="true"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
                 android:textSize="12sp"
@@ -56,7 +56,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Choose your email address through which your customers can contact you. You can select upto 3 email address with your domain."
+                android:text="@string/choose_your_email_address_through_which_your_customers_can_contact_you_you_can_select_upto_3_email_address_with_your_domain"
                 android:textSize="12sp"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_email_expired"
@@ -70,7 +70,7 @@
         android:id="@+id/tv_email_booked"
         android:layout_width="match_parent"
         android:textStyle="bold"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
         android:paddingRight="15dp"
         android:visibility="gone"
         android:layout_marginBottom="5dp"
@@ -79,7 +79,7 @@
         android:id="@+id/ll_email_active"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
         android:paddingRight="15dp"
         android:visibility="gone"
         android:paddingBottom="10dp"
@@ -96,18 +96,18 @@
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
             android:background="?android:selectableItemBackground"
-            android:text="Add email"/>
+            android:text="@string/add_email"/>
         <TextView
             android:id="@+id/tv_confirm_request"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:textSize="13sp"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
             android:paddingRight="10dp"
             android:layout_marginTop="15dp"
-            android:text="Confirm Request"
+            android:text="@string/confirm_request"
             android:visibility="gone"
             android:textColor="@drawable/yellow_btn_hover_text_color"
             android:background="@drawable/ria_positive_btn"/>

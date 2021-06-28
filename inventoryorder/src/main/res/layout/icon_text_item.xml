@@ -9,23 +9,20 @@
 
   <androidx.appcompat.widget.LinearLayoutCompat
     android:id="@+id/main_view"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    style="@style/wrap_wrap"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/icon"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:minWidth="@dimen/size_18"
       android:minHeight="@dimen/size_18"
       app:srcCompat="@drawable/ic_payment_mode" />
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginStart="@dimen/size_8"
       android:textColor="@color/black_4a4a4a"
       app:textType="BODY_1"
@@ -33,8 +30,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/value"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginStart="@dimen/size_6"
       android:textColor="@color/black_4a4a4a"
       app:fontFamily="@font/semi_bold"

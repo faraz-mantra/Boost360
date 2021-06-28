@@ -7,4 +7,6 @@
   <color name="grey_white">#F0F0F0</color>
   <color name="grey_light_1_d">#e6e6e6</color>
   <color name="grey_light_2_d">#b5b5b5</color>
+  <color name="red_light_1">#EB5757</color>
+  <color name="accent_30">#4DFFB900</color>
 </resources>

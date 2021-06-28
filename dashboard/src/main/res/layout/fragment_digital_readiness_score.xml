@@ -68,6 +68,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/size_6"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_alert_18_d" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -83,8 +84,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:textColor="@color/accent_dark"
-            app:fontFamily="@font/regular"
+            android:textColor="@color/white"
+            app:fontFamily="@font/barlow_regular"
             app:textType="HEADING_TEXT_3"
             tools:text="26%" />
 
@@ -133,7 +134,7 @@
             app:dotsSpacing="@dimen/size_2"
             app:dotsWidthFactor="2.5"
             app:progressMode="false"
-            app:selectedDotColor="@color/black_4a4a4a"/>
+            app:selectedDotColor="@color/black_4a4a4a" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
       </FrameLayout>

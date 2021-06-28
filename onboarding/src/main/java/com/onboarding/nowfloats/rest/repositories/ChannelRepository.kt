@@ -30,12 +30,21 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
       AccessTokenType.twitter -> postUpdateTwitterAccessToken(request)
       AccessTokenType.googlemap,
       AccessTokenType.googlesearch,
-      AccessTokenType.googlemybusiness -> postUpdateGoogleMyBusinessToken(request)
+      AccessTokenType.googlemybusiness,
+      -> postUpdateGoogleMyBusinessToken(request)
     }
   }
 
   fun getChannelsAccessToken(nowfloatsId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getChannelsAccessToken(nowfloatsId), Taskcode.GET_CHANNELS_ACCESS_TOKEN)
+  }
+
+  fun getChannelsStatus(nowfloatsId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getChannelsStatus(nowfloatsId), Taskcode.GET_CHANNELS_STATUS)
+  }
+
+  fun getChannelsInsights(nowfloatsId: String?, identifier: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getChannelsInsights(nowfloatsId, identifier), Taskcode.GET_CHANNELS_INSIGHTS)
   }
 
   fun nfxProcess(request: NFXProcessRequest?): Observable<BaseResponse> {

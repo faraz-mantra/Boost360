@@ -25,7 +25,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_16"
           android:layout_weight="1"
-          android:text="Digital channel in Boost"
+          android:text="@string/digital_channel_in_boost"
           android:textColor="@color/white"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_2" />
@@ -53,7 +53,7 @@
           android:id="@+id/tv_body_heading"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="More channels connected = increased targeted reach"
+          android:text="@string/more_channels_connected_increased_targeted_reach"
           android:textColor="@color/warm_grey"
           app:textType="HEADING_6"
           android:textStyle="bold"
@@ -66,11 +66,10 @@
           android:layout_height="wrap_content"
           app:layout_constraintTop_toBottomOf="@id/tv_body_heading"
           app:textType="BODY_2"
-          android:text="Your business website needs to be connected to social networks and discovery platforms which increase the reach and visibility of your brand, bringing your products and services to more customers."
+          android:text="@string/your_business_website_needs_to_be_connected_to_social_networks_and_discovery_platforms_which_increase_the_reach_and_visibility_of_your_brand_bringing_your_products_and_services_to_more_customers"
           android:textColor="@color/warm_grey"
           android:fontFamily="@font/regular"
-          android:layout_marginTop="@dimen/size_4"
-          />
+          android:layout_marginTop="@dimen/size_4" />
     </LinearLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>

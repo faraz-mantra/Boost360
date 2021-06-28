@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="Offers and Benefits"
+                android:text="Offers Info"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp"
@@ -117,7 +117,7 @@
         android:layout_height="0dp"
         android:overScrollMode="never"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="@id/avail_coupon_submit"
+        app:layout_constraintBottom_toBottomOf="@id/avail_coupon_submit1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -125,7 +125,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/_10sdp">
+            android:padding="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -134,8 +134,9 @@
                 <ImageView
                     android:id="@+id/marketoffers_image"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_70sdp"
+                    android:layout_height="@dimen/_100sdp"
                     android:src="@drawable/group"
+                    android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -143,15 +144,15 @@
                     android:id="@+id/offer_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
                     android:background="@drawable/marketoffers_title_bg"
                     android:fontFamily="@font/open_sans_bold"
-                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_18sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginEnd="@dimen/_6sdp"
                     android:text="Market Offers"
                     android:textColor="@color/white"
                     android:textFontWeight="700"
@@ -163,8 +164,8 @@
                     android:id="@+id/coupontxt_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
                     android:background="@drawable/marketoffers_cupon_bottom_bg"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/offer_title">
@@ -175,7 +176,7 @@
                         android:gravity="center"
                         android:orientation="vertical"
                         android:padding="@dimen/_5sdp"
-                        app:layout_constraintEnd_toStartOf="@id/middle_guideline"
+                        app:layout_constraintEnd_toStartOf="@id/coupon_divider"
                         app:layout_constraintStart_toStartOf="@id/start_guideline"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -185,11 +186,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:gravity="center"
-                            android:paddingStart="@dimen/_10sdp"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:text="Apply Coupon"
+                            android:text="Coupon Code"
                             android:textColor="@color/app_text_yellow"
                             android:textFontWeight="600"
                             android:textSize="@dimen/txt_12sp"
@@ -202,7 +202,6 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_bold"
                             android:gravity="center"
-                            android:paddingStart="@dimen/_10sdp"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
@@ -210,18 +209,31 @@
                             android:textAllCaps="true"
                             android:textColor="@color/common_text_color"
                             android:textFontWeight="700"
-                            android:textSize="@dimen/txt_12sp"
+                            android:textSize="@dimen/txt_15sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
+                    <View
+                        android:id="@+id/coupon_divider"
+                        android:layout_width="1dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:alpha="0.5"
+                        android:background="@drawable/view_vertical_dot_lines_bg"
+                        app:layout_constraintBottom_toTopOf="@id/end_guideline_vertical"
+                        app:layout_constraintEnd_toStartOf="@+id/date_from_to"
+                        app:layout_constraintStart_toStartOf="@id/middle_guideline"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <LinearLayout
+                        android:id="@+id/date_from_to"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:padding="@dimen/_5sdp"
                         app:layout_constraintEnd_toEndOf="@id/end_guideline"
-                        app:layout_constraintStart_toStartOf="@id/middle_guideline"
+                        app:layout_constraintStart_toEndOf="@id/coupon_divider"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
@@ -234,7 +246,7 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:text="Offer Validity"
+                            android:text="Offer Valid till"
                             android:textColor="@color/app_text_yellow"
                             android:textFontWeight="600"
                             android:textSize="@dimen/txt_12sp"
@@ -251,10 +263,10 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:text=" 06-Nov-20 To 15-Nov-20"
+                            android:text=" 15-Nov-20"
                             android:textColor="@color/common_text_color"
                             android:textFontWeight="700"
-                            android:textSize="@dimen/txt_12sp"
+                            android:textSize="@dimen/txt_15sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -270,14 +282,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.6" />
+                        app:layout_constraintGuide_begin="71dp" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/start_guideline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.05" />
+                        app:layout_constraintGuide_begin="19dp" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/middle_guideline"
@@ -293,23 +305,65 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.95" />
 
+                    <LinearLayout
+                        android:id="@+id/date_from_to_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/copy_coupon_code_bg"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_18sdp"
+                        android:layout_marginEnd="@dimen/_18sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/bottomToCoupon"
+                        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                        app:layout_constraintStart_toStartOf="@+id/start_guideline"
+                        app:layout_constraintTop_toBottomOf="@+id/date_from_to">
 
+
+                        <TextView
+                            android:id="@+id/veqrifybtn1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:text="COPY COUPON CODE "
+                            android:textColor="#828282"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_14sp" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/bottomToCoupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:text=""
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/how_to_avail_coupon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:background="@drawable/marketoffers_title_bg"
                     android:fontFamily="@font/open_sans_bold"
-                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_18sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginEnd="@dimen/_6sdp"
-                    android:text="How to Avail"
+                    android:text="Offer Details"
                     android:textColor="@color/white"
                     android:textFontWeight="700"
                     android:textSize="@dimen/txt_16sp"
@@ -320,8 +374,8 @@
                     android:id="@+id/howtoavail_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
                     android:background="@drawable/marketoffers_cupon_bottom_bg"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/how_to_avail_coupon">
@@ -335,10 +389,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <LinearLayout
+                        <!--<LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginEnd="@dimen/_8sdp">
 
                             <View
                                 android:layout_width="5dp"
@@ -362,41 +418,55 @@
                                 android:textFontWeight="600"
                                 android:textSize="@dimen/txt_12sp"
                                 app:layout_constraintTop_toBottomOf="@+id/marketoffers_image" />
-                        </LinearLayout>
-
-                        <LinearLayout
+                        </LinearLayout>-->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerOfferDetails"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@color/transparent"
+                            android:overScrollMode="never"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/marketoffers_info_item" />
 
-                            <View
-                                android:layout_width="5dp"
-                                android:layout_height="5dp"
-                                android:layout_marginLeft="@dimen/_7sdp"
-                                android:layout_marginTop="12dp"
-                                android:background="@drawable/ic_bullet_icon"
-                                android:drawableStart="@drawable/ic_bullet_icon" />
+                        <!-- <LinearLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+                             android:orientation="horizontal"
+                             android:layout_marginStart="@dimen/_8sdp"
+                             android:layout_marginEnd="@dimen/_8sdp">
 
-                            <TextView
-                                android:id="@+id/howto_pointTwo"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingTop="@dimen/_5sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:paddingBottom="@dimen/_5sdp"
-                                android:text="@string/marketoffer_howtoTwo"
-                                android:textColor="@color/common_text_color"
-                                android:textFontWeight="600"
-                                android:textSize="@dimen/txt_12sp" />
-                        </LinearLayout>
+                             <View
+                                 android:layout_width="5dp"
+                                 android:layout_height="5dp"
+                                 android:layout_marginLeft="@dimen/_7sdp"
+                                 android:layout_marginTop="12dp"
+                                 android:background="@drawable/ic_bullet_icon"
+                                 android:drawableStart="@drawable/ic_bullet_icon" />
 
-                        <LinearLayout
+                             <TextView
+                                 android:id="@+id/howto_pointTwo"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:fontFamily="@font/open_sans"
+                                 android:paddingStart="@dimen/_10sdp"
+                                 android:paddingTop="@dimen/_5sdp"
+                                 android:paddingEnd="@dimen/_10sdp"
+                                 android:paddingBottom="@dimen/_5sdp"
+                                 android:text="@string/marketoffer_howtoTwo"
+                                 android:textColor="@color/common_text_color"
+                                 android:textFontWeight="600"
+                                 android:textSize="@dimen/txt_12sp" />
+                         </LinearLayout>-->
+
+                        <!--<LinearLayout
                             android:id="@+id/howto_pointThree_layout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginEnd="@dimen/_8sdp">
 
                             <View
                                 android:layout_width="5dp"
@@ -419,12 +489,237 @@
                                 android:textColor="@color/common_text_color"
                                 android:textFontWeight="600"
                                 android:textSize="@dimen/txt_12sp" />
-                        </LinearLayout>
+                        </LinearLayout>-->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/view_dot_lines_bg" />
+
+                        <TextView
+                            android:id="@+id/term_and_conditions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_6sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_6sdp"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:paddingStart="@dimen/_7sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:text="Terms  &amp; Conditions "
+                            android:textColor="@color/common_text_color"
+                            android:textFontWeight="700"
+                            android:textSize="@dimen/txt_16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@+id/howtoavail_layout" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/terms_andcond_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_6sdp"
+                            android:layout_marginEnd="@dimen/_6sdp"
+                            android:background="@drawable/marketoffers_cupon_bottom_bg"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/term_and_conditions">
+
+                            <!--<LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_5sdp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="5dp"
+                                        android:layout_height="5dp"
+                                        android:layout_marginLeft="@dimen/_7sdp"
+                                        android:layout_marginTop="12dp"
+                                        android:background="@drawable/ic_bullet_icon"
+                                        android:drawableStart="@drawable/ic_bullet_icon" />
+
+                                    <TextView
+                                        android:id="@+id/term_one"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/open_sans"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/marketoffer_termOne"
+                                        android:textColor="@color/common_text_color"
+                                        android:textFontWeight="600"
+                                        android:textSize="@dimen/txt_12sp"
+                                        app:layout_constraintTop_toBottomOf="@+id/marketoffers_image" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="5dp"
+                                        android:layout_height="5dp"
+                                        android:layout_marginLeft="@dimen/_7sdp"
+                                        android:layout_marginTop="12dp"
+                                        android:background="@drawable/ic_bullet_icon"
+                                        android:drawableStart="@drawable/ic_bullet_icon" />
+
+                                    <TextView
+                                        android:id="@+id/term_two"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/open_sans"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/marketoffer_termTwo"
+                                        android:textColor="@color/common_text_color"
+                                        android:textFontWeight="600"
+                                        android:textSize="@dimen/txt_12sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="5dp"
+                                        android:layout_height="5dp"
+                                        android:layout_marginLeft="@dimen/_7sdp"
+                                        android:layout_marginTop="12dp"
+                                        android:background="@drawable/ic_bullet_icon"
+                                        android:drawableStart="@drawable/ic_bullet_icon" />
+
+                                    <TextView
+                                        android:id="@+id/term_three"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/open_sans"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/marketoffer_termThree"
+                                        android:textColor="@color/common_text_color"
+                                        android:textFontWeight="600"
+                                        android:textSize="@dimen/txt_12sp" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="5dp"
+                                        android:layout_height="5dp"
+                                        android:layout_marginLeft="@dimen/_7sdp"
+                                        android:layout_marginTop="12dp"
+                                        android:background="@drawable/ic_bullet_icon"
+                                        android:drawableStart="@drawable/ic_bullet_icon" />
+
+                                    <TextView
+                                        android:id="@+id/term_four"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/open_sans"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/marketoffer_termFour"
+                                        android:textColor="@color/common_text_color"
+                                        android:textFontWeight="600"
+                                        android:textSize="@dimen/txt_12sp" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="5dp"
+                                        android:layout_height="5dp"
+                                        android:layout_marginLeft="@dimen/_7sdp"
+                                        android:layout_marginTop="12dp"
+                                        android:background="@drawable/ic_bullet_icon"
+                                        android:drawableStart="@drawable/ic_bullet_icon" />
+
+                                    <TextView
+                                        android:id="@+id/term_five"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/open_sans"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/marketoffer_termFive"
+                                        android:textColor="@color/common_text_color"
+                                        android:textFontWeight="600"
+                                        android:textSize="@dimen/txt_12sp" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="5dp"
+                                        android:layout_height="5dp"
+                                        android:layout_marginLeft="@dimen/_7sdp"
+                                        android:layout_marginTop="12dp"
+                                        android:background="@drawable/ic_bullet_icon"
+                                        android:drawableStart="@drawable/ic_bullet_icon" />
+
+                                    <TextView
+                                        android:id="@+id/term_six"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/open_sans"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/marketoffer_termSix"
+                                        android:textColor="@color/common_text_color"
+                                        android:textFontWeight="600"
+                                        android:textSize="@dimen/txt_12sp" />
+                                </LinearLayout>
+                            </LinearLayout>-->
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerTerms"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:overScrollMode="never"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:itemCount="2"
+                                tools:listitem="@layout/marketoffers_info_item" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/term_and_conditions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -629,25 +924,25 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>-->
                 <TextView
-                    android:id="@+id/avail_coupon_submit1"
+                    android:id="@+id/avail_coupon_submit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
                     android:background="@drawable/orange_button_click_effect"
                     android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
                     android:padding="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginEnd="@dimen/_12sdp"
                     android:text="Avail Now"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/txt_12sp"
-                    app:layout_constraintTop_toBottomOf="@+id/terms_andcond_layout"
+                    android:textSize="@dimen/txt_14sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/howtoavail_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
@@ -655,7 +950,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <TextView
-        android:id="@+id/avail_coupon_submit"
+        android:id="@+id/avail_coupon_submit1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
@@ -664,10 +959,10 @@
         android:gravity="center"
         android:padding="@dimen/_10sdp"
         android:text="Avail Now"
-        android:visibility="gone"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_12sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -146,7 +146,7 @@
   <string name="my_digital_channels">My Digital Channels</string>
   <string name="invalid_experience_code">Invalid experience code.</string>
   <string name="channels_belong_to_respective_owners_boost_360_does_not_own_them"><b>Disclaimer:</b> The Names and Logos of Google Search, Google Maps, Facebook Page, Facebook Shop, WhatsApp Business &amp; Twitter belong to their respective owners. Boost 360 does not own them.</string>
-  <string name="about_channel_desc"><b>About channels:</b> This list has number of channels through which any potentia customerl can get in touch with your business.</string>
+  <string name="about_channel_desc"><b>About channels:</b> This list has number of channels through which any potential customer can get in touch with your business.</string>
   <string name="in_case_you_need_any_help">In case you need any help,</string>
   <string name="click_here"><u>Click here</u></string>
   <string name="decline">Decline</string>
@@ -166,6 +166,50 @@
   <string name="share_on_more">Share on more...</string>
   <string name="my_business_card">My business card</string>
   <string name="share_your_website_address_desc">Share your website address and business contact details on WhatsApp and social media, to attract new customers daily.</string>
+  <string name="xxxxx_xxxxx">XXXXX XXXXX</string>
+  <string name="_91">+91</string>
+  <string name="connection_error_001">Connection error: 001</string>
+  <string name="sync">Sync</string>
+  <string name="sood_child_n_hospital_amp_clinic"><![CDATA[Sood Child \n hospital & Clinic]]></string>
+  <string name="select_the_location_on_map">Select a location on map</string>
+  <string name="google_login_error">Google login error.</string>
+  <string name="disable_boost_notifications">DISABLE BOOST NOTIFICATIONS</string>
+  <string name="not_opted_for_boost_alerts">Not Opted For Boost Alerts</string>
+  <string name="disconnect_channel">DISCONNECT CHANNEL</string>
+  <string name="error_in_your_phone_call">Error in your phone call!</string>
+  <string name="coming_soon">Coming soon…</string>
+  <string name="digital_channel_in_boost">Digital channel in Boost</string>
+  <string name="more_channels_connected_increased_targeted_reach">More channels connected = increased targeted reach</string>
+  <string name="your_business_website_needs_to_be_connected_to_social_networks_and_discovery_platforms_which_increase_the_reach_and_visibility_of_your_brand_bringing_your_products_and_services_to_more_customers">Your business website needs to be connected to social networks and discovery platforms which increase the reach and visibility of your brand, bringing your products and services to more customers.</string>
+  <string name="refreshing_your_channels">Refreshing your channels…</string>
+  <string name="failed_to_disconnecting">Failed to disconnect channel!</string>
+  <string name="disconnecting_your_channel">Disconnecting your channel…</string>
+  <string name="whatsapp_business_heading">WhatsApp business</string>
+  <string name="why_sync_on_whatsapp">Why sync on whatsapp</string>
+  <string name="error_sharing_visiting_card_please_try_again">Error sharing visiting card, please try again.</string>
+  <string name="share_your_business_card">Share your business card...</string>
+  <string name="share_your_business">Share your business...</string>
+  <string name="permission_denied_to_read_your_external_storage">Permission denied to read your External storage</string>
+  <string name="invalid_url">Invalid url.</string>
+  <string name="share_connected_channel">Share connected channel…</string>
+  <string name="boost_360">Boost 360</string>
+  <string name="str_logout">Logout…</string>
+  <string name="string_for">\"for \"</string>
+  <string name="a_business_owner_or_manager_the_decision_to_opt_for_offshore_software">As a business owner or manager, the decision to opt for offshore software development can be difficult. As anyone who has experience knows, there are advantages and disadvantages to outsourcing software development.</string>
+  <string name="continue_syncing">Continue Syncing</string>
+  <string name="string_channel">Channel</string>
+  <string name="string_channels">Channels</string>
+  <string name="whatsapp_package">com.whatsapp</string>
+  <string name="onboarding_please_wait">Please wait…</string>
+  <string name="https_shantisalonspa_com">https://shantisalonspa.com/</string>
+  <string name="permission_denied_to_your_external_storage">Permission denied to read your External storage</string>
+  <string name="upto_50_latest_news_updates">Upto 50 Latest News/Updates</string>
+  <string name="business_card">Business Card</string>
+  <string name="google_business_url">https://business.google.com/create</string>
+
+  <string name="this_number_is_already_in_use">This number is already in use.</string>
+  <string name="this_email_is_already_in_use">This email is already in use.</string>
+  <string name="validation_error_try_again">Validation error, please try again.</string>
 
 </resources>
 

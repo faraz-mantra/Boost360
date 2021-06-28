@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/headerTextView"
             android:textSize="16sp"
-            android:text="Header"/>
+            android:text="@string/header"/>
 
        </LinearLayout>
 
@@ -29,6 +29,6 @@
         android:textSize="20sp"
         android:gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="value"/>
+        android:text="@string/value"/>
 
 </RelativeLayout>

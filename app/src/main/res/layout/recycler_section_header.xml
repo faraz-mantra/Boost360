@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:background="@drawable/facebook_chat_date_header"
-        android:text="21 july, 2017"
+        android:text="@string/_21_july_2017"
         android:elevation="1dp"
         android:textColor="#A5A5A5"
         android:textSize="10sp" />

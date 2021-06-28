@@ -5,49 +5,43 @@
 
   <androidx.coordinatorlayout.widget.CoordinatorLayout
       android:id="@+id/coordinatorLayoutBottomSheet"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      style="@style/match_wrap">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:orientation="vertical">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:gravity="center_vertical"
           android:orientation="horizontal"
           android:paddingStart="@dimen/size_16"
           android:paddingTop="@dimen/size_20">
 
-        <ImageView
+        <com.framework.views.customViews.CustomImageView
             android:layout_width="@dimen/size_46"
             android:layout_height="@dimen/size_46"
             android:src="@drawable/ic_delivery_vechile" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_12"
             android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:includeFontPadding="false"
-              android:text="Delivery Option"
+              android:text="@string/delivery_option"
               android:textColor="@color/little_light_black"
               app:fontFamily="@font/bold"
               app:textType="HEADING_4" />
 
           <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_2"
               android:layout_marginTop="@dimen/size_2"
               android:includeFontPadding="false"
-              android:text="Pick a delivery mode from the list below"
+              android:text="@string/pick_a_delivery_mode_from_the_list_below"
               android:textColor="@color/primary_grey"
               app:textType="BODY_1" />
 
@@ -64,8 +58,7 @@
 
       <com.framework.views.viewgroups.BaseRecyclerView
           android:id="@+id/recycler"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           tools:itemCount="6"
           tools:listitem="@layout/item_bottom_sheet_pick_up_delivery_option" />

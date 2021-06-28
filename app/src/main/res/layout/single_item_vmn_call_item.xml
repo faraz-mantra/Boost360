@@ -22,7 +22,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:padding="10dp"
             android:orientation="vertical">
@@ -32,14 +31,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#BBBBBB"
-                android:text="OUTGOING" />
+                android:text="@string/outgoing" />
 
             <TextView
                 android:id="@+id/tv_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="9695787711"
+                android:text="@string/_9695787711"
                 android:textColor="@color/biz_msg_txt_color"
                 android:textSize="18sp" />
 
@@ -55,7 +54,7 @@
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="24 jan 2020"
+                android:text="@string/_24_jan_2020"
                 android:textColor="#979797"
                 android:textSize="12sp" />
 
@@ -63,7 +62,7 @@
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="01:17 am"
+                android:text="@string/_01_17_am"
                 android:textColor="#979797"
                 android:textSize="12sp" />
 
@@ -111,13 +110,13 @@
             android:id="@+id/tv_rec_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0:00"
+            android:text="@string/_0_00_"
             android:textColor="#979797" />
         <TextView
             android:id="@+id/tv_end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" / 0:00"
+            android:text="@string/_0_00_back_slash"
             android:textColor="#979797"
             android:layout_marginEnd="@dimen/_10sdp"/>
     </LinearLayout>

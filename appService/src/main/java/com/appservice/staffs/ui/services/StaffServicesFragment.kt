@@ -13,6 +13,7 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.framework.extensions.observeOnce
 import kotlinx.android.synthetic.main.fragment_kyc_details.*
 import java.util.*
 
@@ -52,16 +53,15 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
 
   private fun fetchServices() {
     showProgress("Loading...")
-    viewModel!!.getServiceListing(ServiceListRequest(
-        FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
-    ).observe(viewLifecycleOwner, {
+    val request = ServiceListRequest(FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
+    viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
-      data = (it as ServiceListResponse).result!!.data!!
+      data = (it as? ServiceListResponse)?.result?.data ?: return@observeOnce
       setServiceCount()
       this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemService>, itemClickListener = this@StaffServicesFragment)
       binding?.rvServiceProvided?.adapter = adapter
-      when {
-        isEdit!! -> {
+      when (isEdit) {
+        true -> {
           data.forEach { datum ->
             if (serviceIds?.contains(datum?.id) == true) {
               datum?.isChecked = true
@@ -72,13 +72,12 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
       }
       setServiceCount()
       adapter?.notifyDataSetChanged()
-
     })
   }
 
   private fun init() {
     fetchServices()
-    setOnClickListener(binding!!.flConfirmServices)
+    setOnClickListener(binding?.flConfirmServices)
   }
 
 

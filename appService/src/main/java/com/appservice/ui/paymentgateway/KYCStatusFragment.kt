@@ -26,6 +26,8 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.webengageconstant.KYC_VERIFICATION
+import com.framework.webengageconstant.KYC_VERIFIED
 import org.json.JSONObject
 import java.util.*
 import kotlin.concurrent.schedule
@@ -61,7 +63,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
 
   private fun getKycDetails() {
     showProgress()
-    viewModel?.getKycData(session?.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getKycData(session?.auth_1,getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse
         if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -88,7 +90,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
     binding?.tvBankAccNumber?.text = "A/C No. ${dataKyc.bankAccountNumber}"
     binding?.tvBankBranchDetails?.text = "${dataKyc.nameOfBank} - ${dataKyc.bankBranchName}"
     if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
-      session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC VERIFICATION", "KYC verified", it1) }
+      session?.fpTag?.let { it1 -> WebEngageController.trackEvent(KYC_VERIFICATION, KYC_VERIFIED, it1) }
       startFragmentPaymentActivity(FragmentType.KYC_DETAIL_NEW, Bundle().apply { putSerializable(IntentConstant.KYC_DETAIL.name, dataKyc) })
       baseActivity.finish()
     } else binding?.mainView?.visible()

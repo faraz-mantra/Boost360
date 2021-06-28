@@ -69,6 +69,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
+import com.nowfloats.util.EventKeys;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -88,6 +89,21 @@ import java.util.Locale;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.framework.webengageconstant.EventLabelKt.ADDED_PHOTO;
+import static com.framework.webengageconstant.EventLabelKt.CLICKED_CANCEL;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventLabelKt.HAS_CLICKED_FB_PAGE_SHARING_ON;
+import static com.framework.webengageconstant.EventLabelKt.HAS_CLICKED_SUBSCRIBER_SHARING_ON;
+import static com.framework.webengageconstant.EventLabelKt.HAS_CLICKED_TWITTER_SHARING_ON;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
+import static com.framework.webengageconstant.EventNameKt.ADDED_PHOTO_IN_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.FB_PAGE_SHARING_ACTIVATED;
+import static com.framework.webengageconstant.EventNameKt.POST_AN_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.POST_AN_UPDATE_CANCLED;
+import static com.framework.webengageconstant.EventNameKt.SUBSCRIBER_SHARING_ACTIVATED;
+import static com.framework.webengageconstant.EventNameKt.TWITTER_SHARING_ACTIVATED;
 
 
 public class Create_Message_Activity extends AppCompatActivity implements Fetch_Home_Data.Fetch_Home_Data_Interface {
@@ -159,7 +175,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     title_card = findViewById(R.id.title_card);
     message_card = findViewById(R.id.message_card_view);
     ivSpeakUpdate = findViewById(R.id.iv_speak_update);
-    WebEngageController.trackEvent("UPDATE", "pageview", session.getFpTag());
+    WebEngageController.trackEvent(EVENT_NAME_UPDATE, PAGE_VIEW, session.getFpTag());
     TextView shareText = findViewById(R.id.shareTextView);
     tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
     if (session.getISEnterprise().equals("true")) {
@@ -184,7 +200,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     post.setText(getString(R.string.post_in_capital));
 
     post.setOnClickListener(v -> {
-      WebEngageController.trackEvent("POST AN UPDATE", "null", session.getFpTag());
+      WebEngageController.trackEvent(POST_AN_UPDATE, EVENT_LABEL_NULL, session.getFpTag());
       String businessMessage = msg.getText().toString();
 
       if (TextUtils.isEmpty((businessMessage))) {
@@ -209,7 +225,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
           MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, null);
           Constants.imageNotSet = true;
           HashMap<String, String> eventKey = new HashMap<String, String>();
-          eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, "Posted Update with only text");
+          eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, getString(R.string.posted_update_with_only_text));
 
         } else {
 
@@ -217,7 +233,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
           Constants.imageNotSet = false;
 
           HashMap<String, String> eventKey = new HashMap<String, String>();
-          eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, "Posted Update with text and image");
+          eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, getString(R.string.posted_update_with_text_and_image));
 
         }
 
@@ -235,7 +251,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         if (mQuikrShare == 1) {
           socialShare += "QUIKR.";
         }
-        showLoader("Uploading...");
+        showLoader(getString(R.string.uploading_));
 //                    mBusEvent.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
         uploadProcess(new UploadPostEvent(path, msg.getText().toString(), socialShare));
         if (path != null && path.trim().length() > 0) {
@@ -267,9 +283,9 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         int status = pref.getInt("quikrStatus", -1);
         if (status == 0) {
           MixPanelController.track(Key_Preferences.POST_TO_QUIKR_SECOND_TIME, null);
-          Methods.showSnackBar(activity, "You cannot post more than one ad on Quikr in a day");
+          Methods.showSnackBar(activity, getString(R.string.you_can_not_post_more_than_one_ad_on_quicker_a_day));
         } else if (status == -1) {
-          Methods.showSnackBarNegative(activity, "Something went wrong, please restart the application");
+          Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_please_restart_the_application));
         } else {
           if (mQuikrShare == 1) {
             mQuikrShare = 0;
@@ -324,13 +340,13 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
             mTwitterShare = 0;
             twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_inactive));
             twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
-            Toast.makeText(Create_Message_Activity.this, "Twitter Disabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this, getString(R.string.twitter_disabled), Toast.LENGTH_SHORT).show();
           } else {
             Constants.twitterShareEnabled = true;
             mTwitterShare = 1;
             twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_active));
             twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
-            Toast.makeText(Create_Message_Activity.this, "Twitter Enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this, getString(R.string.twitter_enabled), Toast.LENGTH_SHORT).show();
           }
 
         } else {
@@ -370,7 +386,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
                 public void onPositive(MaterialDialog dialog) {
                   super.onPositive(dialog);
                   if (tosubscribers) {
-                    WebEngageController.trackEvent("SUBSCRIBER SHARING ACTIVATED", "Has/Clicked Subscriber sharing on", session.getFpTag());
+                    WebEngageController.trackEvent(SUBSCRIBER_SHARING_ACTIVATED, HAS_CLICKED_SUBSCRIBER_SHARING_ON, session.getFpTag());
                     MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
                     create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.subscribe_icon));
                     create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
@@ -410,14 +426,14 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
             mFbPageShare = 0;
             facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebookpage_icon_inactive));
             facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
-            Toast.makeText(Create_Message_Activity.this, "Facebook Page Disabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this, getString(R.string.facebook_page_disabled), Toast.LENGTH_SHORT).show();
 
           } else {
             mFbPageShare = 1;
-            Toast.makeText(Create_Message_Activity.this, "Facebook Page Enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this,getString( R.string.facebook_page_enabled), Toast.LENGTH_SHORT).show();
             facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_page));
             facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
-            WebEngageController.trackEvent("FB PAGE SHARING ACTIVATED", "Has/Clicked Fb Page sharing on", session.getFpTag());
+            WebEngageController.trackEvent(FB_PAGE_SHARING_ACTIVATED, HAS_CLICKED_FB_PAGE_SHARING_ON, session.getFpTag());
                         /* PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(Create_Message_Activity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
                         facebookPageShare.setColorFilter(porterDuffColorFilter);*/
           }
@@ -442,12 +458,12 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
             mFbProfileShare = 0;
             facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_icon_inactive));
             facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
-            Toast.makeText(Create_Message_Activity.this, "Facebook Disabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this,getString( R.string.fb_disabled), Toast.LENGTH_SHORT).show();
           } else {
             mFbProfileShare = 1;
             facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_icon));
             facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
-            Toast.makeText(Create_Message_Activity.this, "Facebook Enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this, getString(R.string.fb_enabled), Toast.LENGTH_SHORT).show();
 
           }
 
@@ -549,7 +565,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     } catch (Exception e) {
       e.printStackTrace();
       hideLoader();
-      Toast.makeText(this, "Unable to post Message", Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, getString(R.string.unable_to_post_image), Toast.LENGTH_SHORT).show();
     }
   }
 
@@ -867,7 +883,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         cameraIntent();
 
       } else {
-        Toast.makeText(activity, "Please give storage and camera permission", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, getString(R.string.please_give_storage_and_camera_permission), Toast.LENGTH_SHORT).show();
       }
 
     } else if (requestCode == gallery_req_id) {
@@ -876,7 +892,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         galleryIntent();
 
       } else {
-        Toast.makeText(activity, "Please give read storage permission", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, getString(R.string.please_give_read_storage_permission), Toast.LENGTH_SHORT).show();
       }
 
     }
@@ -907,7 +923,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
       String errorMessage = getString(R.string.device_does_not_support_capturing_image);
       Methods.showSnackBarNegative(activity, errorMessage);
     } catch (SecurityException e) {
-      Toast.makeText(this, "Please eanble camera permission in settings to use your camera", Toast.LENGTH_SHORT);
+      Toast.makeText(this, R.string.please_enable_camera_permission_in_settings_to_use_your_camera, Toast.LENGTH_SHORT);
     }
   }
 
@@ -995,13 +1011,13 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
             path = Util.saveBitmap(CameraBitmap, activity, tagName + System.currentTimeMillis());
             picUri = Uri.parse(path);
             setPicture(CameraBitmap);
-            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
+            WebEngageController.trackEvent(ADDED_PHOTO_IN_UPDATE, ADDED_PHOTO, session.getFpTag());
 
           } else {
             path = getRealPathFromURI(picUri);
             CameraBitmap = Util.getBitmap(path, activity);
             setPicture(CameraBitmap);
-            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
+            WebEngageController.trackEvent(ADDED_PHOTO_IN_UPDATE, ADDED_PHOTO, session.getFpTag());
 
           }
         } catch (Exception e) {
@@ -1021,13 +1037,13 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
               path = Util.saveCameraBitmap(CameraBitmap, activity, tagName + System.currentTimeMillis());
               picUri = Uri.parse(path);
               setPicture(CameraBitmap);
-              WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
+              WebEngageController.trackEvent(ADDED_PHOTO_IN_UPDATE, ADDED_PHOTO, session.getFpTag());
 
             } else {
               path = getRealPathFromURI(picUri);
               CameraBitmap = Util.getBitmap(path, activity);
               setPicture(CameraBitmap);
-              WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
+              WebEngageController.trackEvent(ADDED_PHOTO_IN_UPDATE, ADDED_PHOTO, session.getFpTag());
 
             }
           } else {
@@ -1129,7 +1145,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     if (Constants.twitterShareEnabled) {
       twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.twitter_icon_active));
       twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-      WebEngageController.trackEvent("TWITTER SHARING ACTIVATED", "Has/Clicked TWITTER sharing on", session.getFpTag());
+      WebEngageController.trackEvent(TWITTER_SHARING_ACTIVATED, HAS_CLICKED_TWITTER_SHARING_ON, session.getFpTag());
     } else {
       twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
     }
@@ -1180,7 +1196,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     } else {
       super.onBackPressed();
       overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-      WebEngageController.trackEvent("POST AN UPDATE-CANCLED", "Clicked Cancel", session.getFpTag());
+      WebEngageController.trackEvent(POST_AN_UPDATE_CANCLED, CLICKED_CANCEL, session.getFpTag());
     }
   }
 
@@ -1189,11 +1205,11 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
       return;
     }
     new MaterialDialog.Builder(this)
-        .content("Do you want to save this update as draft?")
+        .content(R.string.do_you_want_to_save_this_update_as_draft)
         .positiveColorRes(R.color.primaryColor)
         .negativeColorRes(R.color.primaryColor)
-        .positiveText("Save")
-        .negativeText("Delete")
+        .positiveText(getString(R.string.save))
+        .negativeText(getString(R.string.delete_))
         .onPositive(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

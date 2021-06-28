@@ -22,6 +22,7 @@ import com.boost.presignup.datamodel.userprofile.UserProfileResponse
 import com.boost.presignup.utils.Utils.hideKeyBoard
 import com.boost.presignup.utils.WebEngageController
 import com.framework.utils.showKeyBoard
+import com.framework.webengageconstant.*
 import com.google.firebase.auth.FirebaseAuth
 import com.onboarding.nowfloats.ui.webview.WebViewTNCDialog
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -52,7 +53,7 @@ class SignUpActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_sign_up)
-    WebEngageController.trackEvent("PS_Signup Form Loaded", "Signup Form Loaded", "")
+    WebEngageController.trackEvent(PS_SIGNUP_FORM_LOADED, SIGNUP_FORM_LOADED, NO_EVENT_VALUE)
     mAuth = FirebaseAuth.getInstance()
     spannableString()
     if (intent != null && intent.hasExtra("provider")) {
@@ -148,7 +149,7 @@ class SignUpActivity : AppCompatActivity() {
 //              email = "" // Remove previous email data.
               create_account_button.isVisible = true
               Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
-              WebEngageController.trackEvent("PS_Account Creation Failed in Firebase " + provider, "Create User Failed in Firebase With " + provider, "")
+              WebEngageController.trackEvent(PS_ACCOUNT_CREATION_FAILED_IN_FIREBASE + provider, CREATE_USER_FAILED_IN_FIREBASE_WITH + provider, NO_EVENT_VALUE)
             }
           }
     } else {
@@ -163,11 +164,13 @@ class SignUpActivity : AppCompatActivity() {
             Log.d("createUserProfile", ">>>> Successfull")
             WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
             WebEngageController.setUserContactAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
-            WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
+            WebEngageController.trackEvent(PS_ACCOUNT_CREATION_SUCCESS, ACCOUNT_CREATION_SUCCESS, NO_EVENT_VALUE)
 //            SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
             val intent = Intent(applicationContext, SignUpConfirmation::class.java)
             intent.putExtra("profileUrl", profileUrl)
             intent.putExtra("person_name", personName)
+            intent.putExtra("person_number", userMobile)
+            intent.putExtra("person_email", email)
             intent.putExtra("profile_id", responseResult?.Result?.LoginId)
             startActivity(intent)
           } else {
@@ -176,7 +179,7 @@ class SignUpActivity : AppCompatActivity() {
 //                email = "" // Remove previous email data.
             create_account_button.isVisible = true
             Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
-            WebEngageController.trackEvent("PS_Account Creation Failed in Firebase " + provider, "Create User Failed in Firebase With " + provider, "")
+            WebEngageController.trackEvent(PS_ACCOUNT_CREATION_FAILED_IN_FIREBASE + provider, CREATE_USER_FAILED_IN_FIREBASE_WITH + provider, NO_EVENT_VALUE)
           }
         }
   }
@@ -208,7 +211,7 @@ class SignUpActivity : AppCompatActivity() {
               // These 3 must happen when firebase creation is successful too
               WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
               WebEngageController.setUserContactAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
-              WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
+              WebEngageController.trackEvent(PS_ACCOUNT_CREATION_SUCCESS, ACCOUNT_CREATION_SUCCESS, NO_EVENT_VALUE)
 //              SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
             }
           } else {
@@ -235,7 +238,7 @@ class SignUpActivity : AppCompatActivity() {
 
       override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
         Toast.makeText(applicationContext, "error >>" + t.message, Toast.LENGTH_LONG).show()
-        WebEngageController.trackEvent("PS_Account Creation Failed", "Account Creation Failed", "")
+        WebEngageController.trackEvent(PS_ACCOUNT_CREATION_FAILED, ACCOUNT_CREATION_FAILED, NO_EVENT_VALUE)
 //        email = "" // Remove previous email data.
         create_account_button.isVisible = true
         enableFormInput()
@@ -261,15 +264,15 @@ class SignUpActivity : AppCompatActivity() {
     this.email = user_email.text.toString()
 
     if (user_name.text!!.isEmpty() || user_password.text!!.isEmpty() || user_mobile.text!!.isEmpty()) {
-      Toast.makeText(applicationContext, "Please enter all values.", Toast.LENGTH_SHORT).show()
+      Toast.makeText(applicationContext, getString(R.string.please_enter_all_values), Toast.LENGTH_SHORT).show()
       return false
     }
     if (!isValidMail(email, allowEmpty = true)) {
-      Toast.makeText(applicationContext, "Enter Valid EmailId.", Toast.LENGTH_SHORT).show()
+      Toast.makeText(applicationContext, getString(R.string.enter_valid_email_id), Toast.LENGTH_SHORT).show()
       return false
     }
     if (!isValidMobile(userMobile)) {
-      Toast.makeText(applicationContext, "Enter Valid Mobile No.", Toast.LENGTH_SHORT).show()
+      Toast.makeText(applicationContext, getString(R.string.enter_valid_mobile_no), Toast.LENGTH_SHORT).show()
       return false
     }
     return true
@@ -294,9 +297,7 @@ class SignUpActivity : AppCompatActivity() {
   }
 
   private fun isValidMobile(phone: String): Boolean {
-    return Pattern.compile(
-        "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
-        .matcher(phone).matches()
+    return Pattern.compile("[6-9][0-9]{9}").matcher(phone).matches()
   }
 
   fun registerUserProfileAPI() {
@@ -310,7 +311,7 @@ class SignUpActivity : AppCompatActivity() {
     ApiService.createUserProfile(userInfo).enqueue(object : Callback<UserProfileResponse> {
       override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
         Toast.makeText(applicationContext, "error >>" + t.message, Toast.LENGTH_LONG).show()
-        WebEngageController.trackEvent("PS_Account Creation Failed", "Account Creation Failed", "")
+        WebEngageController.trackEvent(PS_ACCOUNT_CREATION_FAILED, ACCOUNT_CREATION_FAILED, NO_EVENT_VALUE)
         create_account_button.isVisible = true
         enableFormInput()
       }
@@ -320,13 +321,15 @@ class SignUpActivity : AppCompatActivity() {
           val responseResult: UserProfileResponse? = response.body()
           if (responseResult?.Result?.LoginId.isNullOrEmpty().not()) {
             WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
-            WebEngageController.setUserContactAttributes(email, userMobile, personName,responseResult?.Result?.ClientId)
-            WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
+            WebEngageController.setUserContactAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
+            WebEngageController.trackEvent(PS_ACCOUNT_CREATION_SUCCESS, ACCOUNT_CREATION_SUCCESS, NO_EVENT_VALUE)
 //            SmartLookController.setUserAttributes(email, userMobile, personName, responseResult?.Result?.ClientId)
 
             val intent = Intent(applicationContext, SignUpConfirmation::class.java)
             intent.putExtra("profileUrl", profileUrl)
             intent.putExtra("person_name", personName)
+            intent.putExtra("person_number", userMobile)
+            intent.putExtra("person_email", email)
             intent.putExtra("profile_id", responseResult?.Result?.LoginId)
             startActivity(intent)
           } else {

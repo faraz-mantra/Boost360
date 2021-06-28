@@ -15,14 +15,14 @@
         android:id="@+id/cbCOD"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NF Delivery" />
+        android:text="@string/nf_delivery" />
 
     <CheckBox
         android:id="@+id/cbOnlinePayment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_5"
-        android:text="Self" />
+        android:text="@string/self" />
 
 
 </LinearLayout>

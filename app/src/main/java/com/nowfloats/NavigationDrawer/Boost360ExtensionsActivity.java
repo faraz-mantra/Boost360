@@ -26,7 +26,7 @@ public class Boost360ExtensionsActivity extends AppCompatActivity implements Cus
         toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText("Boost Extensions");
+        headerText.setText(R.string.boost_extension);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

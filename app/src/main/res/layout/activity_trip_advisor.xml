@@ -52,7 +52,7 @@
                 android:gravity="center"
                 android:fontFamily="@font/open_sans"
                 android:textColor="#747474"
-                android:text="Showcase Tripadvisor Ratings on your Boost business website."
+                android:text="@string/showcase_tripadvisor_ratings_on_your_boost_business_website"
                 android:textSize="@dimen/_15sdp" />
         </LinearLayout>
 
@@ -91,7 +91,7 @@
             android:layout_marginTop="50dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
             android:paddingTop="70dp"
             android:paddingRight="@dimen/_10sdp"
             android:paddingBottom="@dimen/_20sdp">
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Feature Locked!"
+                android:text="@string/feature_locked"
                 android:textColor="@color/common_text_color"
                 android:textSize="@dimen/_16sdp" />
 
@@ -111,7 +111,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
-                android:text="Looks like this add-on is not added to your current plan. Add it now to start using it. if you’ve added it before and have not reviewed it, please renew it to start showing/making changes to this script."
+                android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_if_you_ve_added_it_before_and_have_not_reviewed_it_please_renew_it_to_start_showing_making_changes_to_this_script"
                 android:textSize="@dimen/_11sdp" />
 
             <TextView
@@ -126,7 +126,7 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:text="VIEW IN ADD-ON STORE"
+                android:text="@string/view_in_add_on_store"
                 android:textColor="@color/white" />
 
 
@@ -165,7 +165,7 @@
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:textColor="#747474"
                     android:fontFamily="@font/open_sans"
-                    android:text="Widget Visiblity" />
+                    android:text="@string/widget_visiblity" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/setting_switch"
@@ -179,7 +179,7 @@
                     android:src="@drawable/right_arrow"
                     android:textOn="YES"
                     android:textOff="NO"
-                    android:text="Show This Widget"
+                    android:text="@string/show_this_widget"
                     android:showText="true"
                     android:fontFamily="@font/open_sans"
                     android:textColor="#747474"
@@ -196,7 +196,7 @@
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:fontFamily="@font/open_sans"
                     android:textColor="#747474"
-                    android:text="Widget Snippet" />
+                    android:text="@string/widget_snippet" />
 
                 <EditText
                     android:id="@+id/widget_snippet"
@@ -210,7 +210,7 @@
                     android:gravity="top"
                     android:textColor="#747474"
                     android:fontFamily="@font/open_sans"
-                    android:hint="Paste Your Script Here"
+                    android:hint="@string/paste_your_script_here"
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
@@ -227,7 +227,7 @@
                     android:gravity="center"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
-                    android:text="save"
+                    android:text="@string/save"
                     android:textAllCaps="true"
                     android:textColor="@color/white" />
 

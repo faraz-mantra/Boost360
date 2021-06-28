@@ -46,7 +46,7 @@
     <string name="spoken_description_symbols_shift_shifted">Symbols</string>
     <!-- Spoken description for the "Shift" keyboard key when "Caps lock" is on. -->
     <string name="spoken_description_caps_lock">Shift</string>
-    <!-- Spoken description for the "Delete" keyboard key. -->
+    <!-- Spoken description for the "@string/delete_" keyboard key. -->
     <string name="spoken_description_delete">Delete</string>
     <!-- Spoken description for the "To Symbol" keyboard key. -->
     <string name="spoken_description_to_symbol">Symbols</string>

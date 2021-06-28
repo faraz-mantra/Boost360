@@ -45,6 +45,8 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
+import com.framework.webengageconstant.KYC_VERIFICATION
+import com.framework.webengageconstant.KYC_VERIFICATION_REQUESTED
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -111,7 +113,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       if (ifsc.length == 11) {
         apiGetIfscDetail(ifsc, true)
         binding?.edtBankName?.isFocusable = false
-      }else{
+      } else {
         binding?.edtBankName?.isFocusable = true
       }
     }
@@ -170,7 +172,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val mimType = panCarImage?.getMimeType() ?: "multipart/form-data"
     val requestBody = panCarImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
     val bodyPanCard = requestBody?.let { MultipartBody.Part.createFormData("file", filePancard, it) }
-    viewModel?.putUploadFile(session?.auth_2, bodyPanCard, filePancard)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.putUploadFile(session?.auth_1,bodyPanCard, filePancard)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           request?.actionData?.panCardDocument = getResponse(it.responseBody)
@@ -193,7 +195,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val mimType = bankStatementImage?.getMimeType() ?: "multipart/form-data"
     val requestBody = bankStatementImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
     val bodyStatement = requestBody?.let { MultipartBody.Part.createFormData("file", fileStatement, it) }
-    viewModel?.putUploadFile(session?.auth_2, bodyStatement, fileStatement)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.putUploadFile(session?.auth_1,bodyStatement, fileStatement)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           hideProgress()
@@ -229,7 +231,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
           val mimType = file.getMimeType() ?: "multipart/form-data"
           val requestBody = file.asRequestBody(mimType.toMediaTypeOrNull())
           val bodyAdditional = MultipartBody.Part.createFormData("file", fileAdditional, requestBody)
-          viewModel?.putUploadFile(session?.auth_2, bodyAdditional, fileAdditional)?.observeOnce(viewLifecycleOwner, Observer {
+          viewModel?.putUploadFile(session?.auth_1,bodyAdditional, fileAdditional)?.observeOnce(viewLifecycleOwner, Observer {
             checkPosition += 1
             if ((it.error is NoNetworkException).not()) {
               if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -252,12 +254,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     request?.actionData?.additionalDocument = convertListObjToString(additionFile)
     if (isEdit.not()) {
       showProgress(resources.getString(R.string.please_wait_))
-      viewModel?.addKycData(session?.auth_1, request)?.observeOnce(viewLifecycleOwner, Observer {
+      viewModel?.addKycData(session?.auth_1,request)?.observeOnce(viewLifecycleOwner, Observer {
         hideProgress()
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
             setPreference()
-            session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
+            session?.fpTag?.let { it1 -> WebEngageController.trackEvent(KYC_VERIFICATION_REQUESTED, KYC_VERIFICATION, it1) }
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
             bundle.putSerializable(IntentConstant.KYC_DETAIL.name, request)
@@ -277,11 +279,11 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun updateKycInformation(updateRequest: UpdatePaymentKycRequest) {
     showProgress(resources.getString(R.string.please_wait_))
-    viewModel?.updateKycData(session?.auth_1, updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.updateKycData(session?.auth_1,updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
-          session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
+          session?.fpTag?.let { it1 -> WebEngageController.trackEvent(KYC_VERIFICATION_REQUESTED, KYC_VERIFICATION, it1) }
           val output = Intent()
           output.putExtra(IntentConstant.IS_EDIT.name, true)
           baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
@@ -600,7 +602,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun getKycDetails() {
     showProgress()
-    viewModel?.getKycData(session?.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getKycData(session?.auth_1,getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse
@@ -657,10 +659,11 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     }
   }
 
-  private fun isPanNumberValid(panNumber: String): Boolean{
+  private fun isPanNumberValid(panNumber: String): Boolean {
     return Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}").matcher(panNumber).matches()
   }
-  private fun isNameValid(name: String): Boolean{
+
+  private fun isNameValid(name: String): Boolean {
     return Pattern.compile("^([^0-9]*)\$").matcher(name).matches()
   }
 }

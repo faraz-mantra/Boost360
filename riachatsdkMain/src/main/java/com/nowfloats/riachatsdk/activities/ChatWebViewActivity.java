@@ -25,7 +25,7 @@ public class ChatWebViewActivity extends Activity {
         mWebView = (WebView) findViewById(R.id.webView1);
         ImageView ivBack = (ImageView)findViewById(R.id.ivBack);
 
-        progressDialog = ProgressDialog.show(ChatWebViewActivity.this, "Loading", "Please wait...", true);
+        progressDialog = ProgressDialog.show(ChatWebViewActivity.this, "Loading", getString(R.string.please_wait_), true);
         progressDialog.setCancelable(false);
 
         WebSettings webSettings = mWebView.getSettings();

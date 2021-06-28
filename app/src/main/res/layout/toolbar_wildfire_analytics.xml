@@ -10,7 +10,7 @@
         android:id="@+id/image1"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginEnd="10dp"/>
     <TextView
         android:id="@+id/text1"
         android:layout_width="wrap_content"
@@ -18,5 +18,5 @@
         android:textSize="18sp"
         android:textColor="@color/white"
         android:text="@string/facebook"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginStart="10dp" />
 </androidx.appcompat.widget.Toolbar>

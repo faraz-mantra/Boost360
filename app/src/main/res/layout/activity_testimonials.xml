@@ -61,7 +61,7 @@
                 android:layout_marginTop="50dp"
                 android:gravity="center"
                 android:paddingTop="70dp"
-                android:paddingLeft="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
                 android:orientation="vertical">
@@ -76,7 +76,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website."
+                    android:text="@string/with_the_feature_you_can_showcase_your_customer_reviews_and_highlight_their_experience_on_the_homepage_of_your_website"
                     android:gravity="center"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="@dimen/_11sdp"

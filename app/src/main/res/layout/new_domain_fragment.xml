@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Enter the domain you want to be booked &amp; mapped to your Boost business website."
+            android:text="@string/enter_the_domain_you_want_to_be_booked_amp_mapped_to_your_boost_business_website"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="Write a domain name..."
+                android:hint="@string/write_a_domain_name"
                 android:padding="@dimen/_5sdp" />
 
             <LinearLayout
@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="You’re getting this domain worth ₹600 for first year."
+            android:text="@string/you_re_getting_this_domain_worth_600_for_first_year"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -85,7 +85,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="*Boost doesn’t buy any premium domain." />
+                android:text="@string/boost_doesn_t_buy_any_premium_domain" />
 
             <TextView
                 android:id="@+id/confirm_btn"
@@ -100,7 +100,7 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:text="Confirm"
+                android:text="@string/confirm_"
                 android:textAllCaps="true"
                 android:textColor="@color/white" />
 
@@ -115,7 +115,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:padding="@dimen/_10sdp"
-                android:text="back"
+                android:text="@string/back"
                 android:textAllCaps="true"
                 android:textColor="@color/common_text_color" />
         </LinearLayout>

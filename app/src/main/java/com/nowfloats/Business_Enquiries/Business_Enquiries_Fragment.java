@@ -23,6 +23,10 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_BUSINESS_ENQUIRIES;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_ENQUIRIES;
+import static com.framework.webengageconstant.EventValueKt.NULL;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -60,7 +64,7 @@ public class Business_Enquiries_Fragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     BoostLog.d("Business_Enquiri", "onCreateView");
     View mainView = inflater.inflate(R.layout.fragment_business__enguiries, container, false);
-    WebEngageController.trackEvent("BUSINESS ENQUIRIES", "BUSINESS ENQUIRIES", null);
+    WebEngageController.trackEvent(BUSINESS_ENQUIRIES, EVENT_LABEL_BUSINESS_ENQUIRIES, NULL);
     return mainView;
   }
 

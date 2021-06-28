@@ -43,13 +43,6 @@ interface WithFloatTwoRemoteData {
   @POST(EndPoints.CREATE_PRODUCT)
   fun createProduct(@Body request: CatalogProduct?): Observable<Response<String>>
 
-//  @GET(EndPoints.GET_PRODUCT_LISTING)
-//  fun getAllProducts(
-//          @Query("clientId") clientId: String?,
-//          @Query("skipBy") skipBy: Int?,
-//          @Query("fpTag") fpTag: String?,
-//  )
-
   @PUT(EndPoints.UPDATE_PRODUCT)
   fun updateProduct(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
 

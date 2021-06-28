@@ -53,6 +53,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -111,17 +112,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("Service product catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent(PRODUCT_CATALOGUE_ADD_PAGE, ADDED, NO_EVENT_VALUE)
     getBundleData()
     getPickUpAddress()
     binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig,
-            binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
+        binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
     binding?.toggleProduct?.isOn = product?.isPriceToggleOn()!!
     binding?.payProductView?.visibility = View.GONE
     binding?.toggleProduct?.setOnToggledListener { _, _ ->
-    initProductToggleView()
+      initProductToggleView()
     }
     initProductToggleView()
     listenerEditText()
@@ -198,13 +199,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getAddPreviousData() {
-    viewModel?.getProductImage(auth_3, String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer{
+    viewModel?.getProductImage(String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val response = it as? ProductImageResponse
         if (response?.status == 200 && response.data.isNullOrEmpty().not()) {
           secondaryDataImage = response.data
         }
-        viewModel?.getProductGstDetail(auth_3, String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer{ it1 ->
+        viewModel?.getProductGstDetail(String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer { it1 ->
           if ((it1.error is NoNetworkException).not()) {
             val response2 = it1 as? ProductGstResponse
             if (response2?.status == 200 && response2.data.isNullOrEmpty().not()) {
@@ -226,45 +227,45 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     binding?.tvDesc?.setText(product?.Description)
     binding?.edtProductCategory?.setText(product?.category)
     when {
-        product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty() || !bankAccountDetail?.accountNumber.isNullOrEmpty() -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-          binding?.bankAccountName?.visible()
-          binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-          binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-        }
+      product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty() || !bankAccountDetail?.accountNumber.isNullOrEmpty() -> {
+        binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+        binding?.bankAccountName?.visible()
+        binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
+        binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+        binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+      }
     }
     when (product?.paymentType) {
-        CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
-          binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
-          binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
-          binding?.bankAccountView?.gone()
-          binding?.externalUrlView?.visible()
-        }
-        else -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-          binding?.bankAccountName?.gone()
-          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-          binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
-        }
+      CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value -> {
+        binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
+        binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
+        binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
+        binding?.bankAccountView?.gone()
+        binding?.externalUrlView?.visible()
+      }
+      else -> {
+        binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+        binding?.bankAccountName?.gone()
+        binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
+        binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
+      }
     }
     when {
-        product?.Price ?: 0.0 <= 0.0 -> {
-          binding?.toggleProduct?.isOn = false
-          binding?.payProductView?.gone()
-          binding?.freeProductView?.visible()
-        }
+      product?.Price ?: 0.0 <= 0.0 -> {
+        binding?.toggleProduct?.isOn = false
+        binding?.payProductView?.gone()
+        binding?.freeProductView?.visible()
+      }
     }
     binding?.amountEdt?.setText("${product?.Price ?: 0}")
     binding?.discountEdt?.setText("${product?.DiscountAmount ?: 0.0}")
     when {
-        product?.ImageUri.isNullOrEmpty().not() -> {
-          binding?.imageAddBtn?.gone()
-          binding?.clearImage?.visible()
-          binding?.productImageView?.visible()
-          binding?.productImageView?.let { activity?.glideLoad(it, product?.ImageUri!!, R.drawable.placeholder_image) }
-        }
+      product?.ImageUri.isNullOrEmpty().not() -> {
+        binding?.imageAddBtn?.gone()
+        binding?.clearImage?.visible()
+        binding?.productImageView?.visible()
+        binding?.productImageView?.let { activity?.glideLoad(it, product?.ImageUri!!, R.drawable.placeholder_image) }
+      }
     }
   }
 
@@ -299,7 +300,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 //      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
       binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
       binding?.btnOtherInfo -> {
-        WebEngageController.trackEvent("Product click other information", "PRODUCT CATALOGUE ADD/UPDATE", "")
+        WebEngageController.trackEvent(PRODUCT_OTHER_INFORMATION, CLICK, NO_EVENT_VALUE)
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, product)
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
@@ -314,24 +315,23 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun createUpdateApi() {
     showProgress()
     if (isEdit == false) {
-      WebEngageController.trackEvent("Add product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "")
       if (productIdAdd.isNullOrEmpty().not() && errorType == "addGstService") {
         addGstService(productIdAdd)
       } else if (productIdAdd.isNullOrEmpty().not() && errorType == "uploadImageSingle") {
         uploadImageSingle(productIdAdd)
       } else {
-        viewModel?.createProduct(product)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.createProduct(product)?.observeOnce(viewLifecycleOwner, {
           if ((it.error is NoNetworkException).not()) {
             val productId = it.stringResponse
-            if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
+            if (it.isSuccess() && productId.isNullOrEmpty().not()) {
+              WebEngageController.trackEvent(PRODUCT_CATALOGUE_CREATED, ADDED, NO_EVENT_VALUE)
               productIdAdd = productId
               addGstService(productId)
-            } else showError(getString(R.string.error_unknown))
+            } else showError(getString(R.string.product_adding_error_try_again))
           } else showError(resources.getString(R.string.internet_connection_not_available))
         })
       }
     } else {
-      WebEngageController.trackEvent("Update product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "")
       val updates = ArrayList<UpdateValue>()
       val json = JSONObject(Gson().toJson(product))
       val keys = json.keys()
@@ -340,11 +340,12 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         updates.add(UpdateValue(key, json[key].toString()))
       }
       val request = ProductUpdate(clientId, productId = product?.productId, productType = product?.productType, updates = updates)
-      viewModel?.updateProduct(request)?.observeOnce(viewLifecycleOwner, Observer {
+      viewModel?.updateProduct(request)?.observeOnce(viewLifecycleOwner, {
         if ((it.error is NoNetworkException).not()) {
-          if ((it.status == 200 || it.status == 201 || it.status == 202)) {
+          if ((it.isSuccess())) {
+            WebEngageController.trackEvent(PRODUCT_CATALOGUE_UPDATED, ADDED, NO_EVENT_VALUE)
             updateGstService(product?.productId)
-          } else showError("Oops some unknown error occurred while updating the product, please try again.")
+          } else showError(getString(R.string.product_updating_error_try_again))
         } else showError(resources.getString(R.string.internet_connection_not_available))
       })
     }
@@ -353,31 +354,35 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun updateGstService(productId: String?) {
     val gstData = gstProductData ?: GstData()
     val request = ProductUpdateRequest(false, query = String.format("{'product_id':'%s'}", productId))
-    val setGST = SetGST(gstData.gstSlab?.toString() ?: "0.0", gstData.height?.toString() ?: "0.0",
-        gstData.length?.toString() ?: "0.0", gstData.weight?.toString() ?: "0.0", gstData.width?.toString() ?: "0.0")
+    val setGST = SetGST(gstData.gstSlab?.toString() ?: "0.0", gstData.height?.toString()
+        ?: "0.0",
+        gstData.length?.toString() ?: "0.0", gstData.weight?.toString()
+        ?: "0.0", gstData.width?.toString() ?: "0.0")
     request.updateValueSet(UpdateValueU(setGST))
-    viewModel?.updateProductGstDetail(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.updateProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
-        } else showError("Oops some unknown error occurred while updating the product, please try again.")
+        } else showError(getString(R.string.product_updating_error_try_again))
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
   }
 
   private fun addGstService(productId: String?) {
     val gstData = gstProductData ?: GstData()
-    val request = ProductGstDetailRequest(ActionDataG(gstData.gstSlab ?: 0.0, gstData.height?:0.0, gstData.length?:0.0,
-        merchantId = fpId, productId = productId, gstData.weight?:0.0, gstData.height?:0.0), fpId)
-    viewModel?.addProductGstDetail(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
+    val request = ProductGstDetailRequest(ActionDataG(gstData.gstSlab ?: 0.0, gstData.height
+        ?: 0.0, gstData.length ?: 0.0,
+        merchantId = fpId, productId = productId, gstData.weight ?: 0.0, gstData.height
+        ?: 0.0), fpId)
+    viewModel?.addProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
         } else {
           if (isEdit == false) errorType = "addGstService"
-          showError(getString(R.string.error_unknown))
+          showError(getString(R.string.product_adding_error_try_again))
         }
       } else {
         if (isEdit == false) errorType = "addGstService"
@@ -387,20 +392,19 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun uploadImageSingle(productId: String?) {
-    showProgress("Uploading product image, please wait...")
+    showProgress(getString(R.string.uploading_product_image))
     if (isEdit == true && productImage == null) {
       uploadSecondaryImage(productId)
       return
     }
     viewModel?.addUpdateProductImage(clientId, "sequential", deviceId,
-            1, 1, productId, getRequestServiceImage(productImage))?.observeOnce(viewLifecycleOwner, Observer {
+        1, 1, productId, getRequestServiceImage(productImage))?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
-          WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "null")
           uploadSecondaryImage(productId)
         } else {
           if (isEdit == false) errorType = "uploadImageSingle"
-          showError(getString(R.string.error_upload_product_image))
+          showError(getString(R.string.product_image_uploading_error))
         }
       } else {
         if (isEdit == false) errorType = "uploadImageSingle"
@@ -423,16 +427,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       val secondaryImageList = ArrayList<String>()
       images.forEach { fileData ->
         val secondaryFile = fileData.getFile()
-        val fileNew = takeIf { secondaryFile?.name.isNullOrEmpty().not() }?.let { secondaryFile?.name } ?: "service_${Date()}.jpg"
+        val fileNew = takeIf { secondaryFile?.name.isNullOrEmpty().not() }?.let { secondaryFile?.name }
+            ?: "service_${Date()}.jpg"
         val requestProfile = secondaryFile?.let { it.asRequestBody("image/*".toMediaTypeOrNull()) }
         val body = requestProfile?.let { MultipartBody.Part.createFormData("file", fileNew, it) }
-        viewModel?.uploadImageProfile(auth_3, fileNew, body)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.uploadImageProfile(fileNew, body)?.observeOnce(viewLifecycleOwner, Observer {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
-            } else showError(getString(R.string.error_upload_secondary_images))
+            } else showError(getString(R.string.secondary_product_image_uploading_error_please))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
@@ -447,21 +452,21 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       var checkPosition = 0
       secondaryImageList.forEach { image ->
         val request = ProductImageRequest(ActionDataI(ImageI(url = image, description = ""), productId), fpId)
-        viewModel?.addProductImage(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.addProductImage(request)?.observeOnce(viewLifecycleOwner, Observer {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               Log.d(ProductDetailFragment::class.java.name, "$it")
-            } else showLongToast("Oops some unknown error occurred while adding the secondary images data, please try again.")
+            } else showLongToast(getString(R.string.add_secondary_image_data_error_please_try_again))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
+            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(R.string.product_saved_successfully))
             goBack()
           }
         })
       }
     } else {
-      showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
+      showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(R.string.product_saved_successfully))
       goBack()
     }
   }
@@ -526,7 +531,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
     if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
-      product?.BuyOnlineLink = BuyOnlineLink(externalUrl, externalUrlName)
+      product?.BuyOnlineLink = BuyOnlineLink(url = externalUrl, description = externalUrlName)
     } else product?.BuyOnlineLink = BuyOnlineLink()
 
     if (isEdit == false) {
@@ -561,8 +566,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   private fun openImagePicker(it: ClickType) {
     val type = when (it) {
-        ClickType.CAMERA -> ImagePicker.Mode.CAMERA
-        else -> ImagePicker.Mode.GALLERY
+      ClickType.CAMERA -> ImagePicker.Mode.CAMERA
+      else -> ImagePicker.Mode.GALLERY
     }
     ImagePicker.Builder(baseActivity)
         .mode(type)
@@ -585,7 +590,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
-      secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
+      secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
+          ?: ArrayList()
       gstProductData = data?.getSerializableExtra(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 202) {
       bankAccountDetail = data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name) as? BankAccountDetails
@@ -604,7 +610,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun showServiceDeliveryConfigBottomSheet() {
     val dialog = ServiceDeliveryConfigBottomSheet()
     dialog.onClicked = { product?.prepaidOnlineAvailable = true }
-    if (product?.prepaidOnlineAvailable != null) dialog.isUpdate(product?.prepaidOnlineAvailable ?: true)
+    if (product?.prepaidOnlineAvailable != null) dialog.isUpdate(product?.prepaidOnlineAvailable
+        ?: true)
     dialog.show(parentFragmentManager, ServiceDeliveryConfigBottomSheet::class.java.name)
   }
 
@@ -658,7 +665,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     }
     dialog.onListenerChange = { goAddBankView() }
     if (((product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) ||
-                    (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
+            (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
       product?.paymentType = ""
     }
     dialog.setDataPaymentGateway(bankAccountDetail, product?.paymentType)
@@ -666,7 +673,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun goAddBankView() {
-    WebEngageController.trackEvent("Add/Update bank account", "SERVICE CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent(ADD_UPDATE_BANK_ACCOUNT, CLICK, NO_EVENT_VALUE)
     val bundle = Bundle()
     bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
@@ -694,10 +701,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       R.id.id_delete -> {
         MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme).setTitle(resources.getString(R.string.are_you_sure))
             .setMessage(resources.getString(R.string.delete_record_not_undone))
-            .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
+            .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete_)) { d, _ ->
               d.dismiss()
               showProgress()
-              WebEngageController.trackEvent("Delete product catalogue", "Product Item DELETE", "")
+              WebEngageController.trackEvent(DELETE_PRODUCT_CATALOGUE, DELETE, NO_EVENT_VALUE)
               val request = DeleteProductRequest(clientId, "SINGLE", product?.productId, product?.productType)
               viewModel?.deleteService(request)?.observeOnce(viewLifecycleOwner, Observer {
                 hideProgress()
@@ -722,7 +729,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
         .setTitle(resources.getString(R.string.information_not_saved)).setMessage(resources.getString(R.string.you_have_unsaved_info))
-        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+        .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
           baseActivity.finish()
           d.dismiss()
         }.show()

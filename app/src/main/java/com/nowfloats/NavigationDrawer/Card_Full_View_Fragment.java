@@ -114,7 +114,7 @@ public class Card_Full_View_Fragment extends Fragment {
 //                    for (ResolveInfo resInfo : resInfos) {
 //                        String packageName = resInfo.activityInfo.packageName;
 //                        Log.i("Package Name", packageName);
-//                        if (packageName.contains("com.twitter.android") || packageName.contains("com.facebook.katana") || packageName.contains("com.instagram.android")) {
+//                        if (packageName.contains("com.twitter.android") || packageName.contains(getString(R.string.facebook_package)) || packageName.contains("com.instagram.android")) {
 //                            Intent intent = new Intent();
 //                            intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
 //                            intent.setAction(Intent.ACTION_SEND);
@@ -157,7 +157,7 @@ public class Card_Full_View_Fragment extends Fragment {
         if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
+                Methods.showDialog(appContext, getString(R.string.storage_permission), getString(R.string.to_share_your_image_we_need_storage_permission));
             } else {
                 ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
             }
@@ -167,10 +167,10 @@ public class Card_Full_View_Fragment extends Fragment {
         switch (type)
         {
             case "whatsapp":
-                shareIntent.setPackage("com.whatsapp");
+                shareIntent.setPackage(getString(R.string.whatsapp_package));
                 break;
             case "facebook":
-                shareIntent.setPackage("com.facebook.katana");
+                shareIntent.setPackage(getString(R.string.facebook_package));
                 break;
         }
 
@@ -208,7 +208,7 @@ public class Card_Full_View_Fragment extends Fragment {
                                 Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
                             }
                         } catch (OutOfMemoryError e) {
-                            Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(appContext, getString(R.string.image_size_is_large), Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
 
                         }
@@ -272,7 +272,7 @@ public class Card_Full_View_Fragment extends Fragment {
 
             final String[] INTENT_FILTER = new String[] {
                     "com.twitter.android",
-                    "com.facebook.katana"
+                    getString(R.string.facebook_package)
             };
 
             List<Intent> targetShareIntents=new ArrayList<Intent>();
@@ -285,7 +285,7 @@ public class Card_Full_View_Fragment extends Fragment {
                 for (ResolveInfo resInfo : resInfos) {
                     String packageName = resInfo.activityInfo.packageName;
                     Log.i("Package Name", packageName);
-                    if (packageName.contains("com.twitter.android") || packageName.contains("com.facebook.katana") || packageName.contains("com.instagram.android")) {
+                    if (packageName.contains("com.twitter.android") || packageName.contains(getString(R.string.facebook_package)) || packageName.contains("com.instagram.android")) {
                         Intent intent = new Intent();
                         intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
                         intent.setAction(Intent.ACTION_SEND);
@@ -302,7 +302,7 @@ public class Card_Full_View_Fragment extends Fragment {
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
                     startActivity(chooserIntent);
                 } else {
-                    System.out.println("Do not Have Intent");
+                    System.out.println(getString(R.string.do_not_have_intent));
                     //showDialaog(this);
                 }
 
@@ -336,7 +336,7 @@ public class Card_Full_View_Fragment extends Fragment {
                 if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
 
                     if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                        Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
+                        Methods.showDialog(appContext,getString(R.string.storage_permission), "To share your image we need storage permission.");
                     }else{
                         ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
                     }

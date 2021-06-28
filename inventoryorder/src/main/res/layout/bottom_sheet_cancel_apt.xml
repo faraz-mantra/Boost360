@@ -4,14 +4,12 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/match_wrap"
     android:background="@android:color/transparent">
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
       android:text="@string/cancelling_appointment"
@@ -25,8 +23,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvSubTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
       android:textColor="@color/white"
@@ -40,8 +37,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/coordinatorLayoutBottomSheet"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginTop="@dimen/size_10"
       android:background="@drawable/bg_rounded_top_white_2"
       android:orientation="vertical"
@@ -52,53 +48,47 @@
       app:layout_constraintTop_toBottomOf="@+id/tvSubTitle">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginTop="@dimen/size_20"
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_20"
           android:text="@string/cancellation_requested_by"
           android:textColor="@color/grey_dark_2"
           app:textType="HEADING_6" />
 
         <RadioGroup
-          android:id="@+id/radioGroup"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_10"
-          android:orientation="vertical">
-
-          <RadioButton
-            android:id="@+id/radio_store"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_16"
-            android:buttonTint="@color/colorAccent"
-            android:checked="true"
-            android:text="@string/your_business"
-            android:textColor="@color/black_2A2A2A"
-            app:textType="HEADING_6" />
+            android:id="@+id/radioGroup"
+            style="@style/match_wrap"
+            android:layout_marginTop="@dimen/size_10"
+            android:orientation="vertical">
 
           <com.framework.views.customViews.CustomRadioButton
-            android:id="@+id/radio_customer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_16"
-            android:layout_marginTop="@dimen/size_10"
-            android:buttonTint="@color/colorAccent"
-            android:text="@string/the_customer"
-            android:textColor="@color/black_2A2A2A"
-            app:textType="HEADING_6" />
+              android:id="@+id/radio_store"
+              style="@style/wrap_wrap"
+              android:layout_marginStart="@dimen/size_16"
+              android:buttonTint="@color/colorAccent"
+              android:checked="true"
+              android:text="@string/your_business"
+              android:textColor="@color/black_2A2A2A"
+              app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomRadioButton
+              android:id="@+id/radio_customer"
+              style="@style/wrap_wrap"
+              android:layout_marginStart="@dimen/size_16"
+              android:layout_marginTop="@dimen/size_10"
+              android:buttonTint="@color/colorAccent"
+              android:text="@string/the_customer"
+              android:textColor="@color/black_2A2A2A"
+              app:textType="HEADING_6" />
 
         </RadioGroup>
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_16"
           android:text="@string/reason_for_cancellation_optional"
@@ -107,10 +97,10 @@
 
         <com.framework.views.customViews.CustomTextField
           android:id="@+id/txt_reason"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_10"
+            android:textCursorDrawable="@drawable/color_cursor"
           android:layout_marginEnd="@dimen/size_20"
           android:background="@drawable/bg_rect_edit_txt"
           android:hint="@string/type_if_there_are_any_known_reason"
@@ -122,8 +112,7 @@
           tools:ignore="UnusedAttribute" />
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_16"
           android:layout_marginEnd="@dimen/size_20"
@@ -147,8 +136,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/btn_bottom"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:background="@color/white"
       android:gravity="end"
       android:orientation="vertical"
@@ -160,33 +148,20 @@
       app:layout_constraintStart_toStartOf="parent">
 
       <com.framework.views.customViews.CustomButton
-        android:id="@+id/buttonDone"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_38"
-        android:background="@drawable/button_rounded_6"
-        android:gravity="center"
-        android:paddingStart="@dimen/size_30"
-        android:paddingEnd="@dimen/size_30"
-        android:backgroundTint="@color/lemon_light"
-        android:stateListAnimator="@null"
-        android:text="@string/cancel_appointment_n"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        app:fontFamily="@font/semi_bold"
-        app:textType="BODY_1"
-        tools:ignore="UnusedAttribute" />
+          android:id="@+id/buttonDone"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/size_38"
+          android:backgroundTint="@color/lemon_light"
+          android:text="@string/cancel_appointment_n"
+          android:textColor="@color/white" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tvCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_10"
-        android:padding="@dimen/size_4"
-        android:text="@string/don_t_cancel"
-        android:textAllCaps="true"
-        android:textColor="@color/pinkish_grey"
-        app:fontFamily="@font/semi_bold"
-        app:textType="BODY_1" />
+      <com.framework.views.customViews.CustomButton
+          android:id="@+id/tvCancel"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:layout_marginTop="@dimen/size_10"
+          android:background="@color/white"
+          android:text="@string/don_t_cancel" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

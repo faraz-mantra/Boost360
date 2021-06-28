@@ -12,6 +12,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.order_confirmation_fragment.*
 import java.text.SimpleDateFormat
@@ -47,21 +48,20 @@ class OrderConfirmationFragment : BaseFragment() {
 
         try {
             if(arguments!=null) {
-                if (arguments!!.containsKey("payment_type") && arguments!!.getString("payment_type").equals("External_Link")) {
+                if (requireArguments().containsKey("payment_type") && requireArguments().getString("payment_type").equals("External_Link")) {
                     external_link_payment_status.visibility = View.VISIBLE
                 } else {
                     external_link_payment_status.visibility = View.GONE
                 }
             }
-            order_details_feature_count.setText("Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month.")
-            paymentBanner.setText("Order #"+prefs.getLatestPurchaseOrderId())
+            order_details_feature_count.text = "Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month."
+            paymentBanner.text = "Order #"+prefs.getLatestPurchaseOrderId()
             val date = Calendar.getInstance().time
             val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")
-            order_id_details.setText("Order placed on " + formatter.format(date) +
-                    "\nOrder ID #" + prefs.getLatestPurchaseOrderId() +
-                    "\nTransaction ID #" + prefs.getTransactionIdFromCart())
+            order_id_details.text = "Order placed on " + formatter.format(date) +
+                "\nOrder ID #" + prefs.getLatestPurchaseOrderId() + "\nTransaction ID #" + prefs.getTransactionIdFromCart()
         } catch (e: Exception){
-            Log.e("Error", e.message)
+            Log.e("Error", e.message?:"")
         }
 
         back_button.setOnClickListener {
@@ -69,7 +69,7 @@ class OrderConfirmationFragment : BaseFragment() {
         }
 
         check_activation_status.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Check_Activation_Status Clicked", "Check_Activation_Status", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CHECK_ACTIVATION_STATUS_CLICKED, Check_Activation_Status, NO_EVENT_VALUE)
             (activity as UpgradeActivity).goBackToMyAddonsScreen()
         }
 
@@ -77,7 +77,7 @@ class OrderConfirmationFragment : BaseFragment() {
             Toasty.info(requireContext(),"In case of any concerns, you can write to ria@nowfloats.com. Boost Care Team is available during business hours.").show()
         }
 
-        WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE ORDER CONFIRMATION")
+        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM, PAGE_VIEW, ADDONS_MARKETPLACE_ORDER_CONFIRMATION)
 
     }
 

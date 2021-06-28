@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#FBFBFB"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/app_bar"
         layout="@layout/new_custome_app_bar"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,163 +30,168 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company Title"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                android:text="@string/company_title" />
 
             <EditText
                 android:id="@+id/company_title"
+                style="@style/EditTextCustomeStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/EditTextCustomeStyle"
-                android:hint="Enter Company Title"
-                android:elevation="@dimen/_2sdp"/>
+                android:elevation="@dimen/_2sdp"
+                android:hint="@string/enter_company_title" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="About Company"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                android:text="@string/about_company" />
 
 
             <EditText
                 android:id="@+id/company_description"
+                style="@style/EditTextColored"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
-                style="@style/EditTextCustomeStyle"
-                android:hint="Enter Company Description \n (100 Characters Max)"
-                android:textSize="@dimen/_12sdp"
                 android:elevation="@dimen/_2sdp"
-                android:gravity="top"/>
+                android:gravity="top"
+                android:hint="@string/enter_company_description_100_characters_max"
+                android:inputType="textMultiLine"
+                android:textSize="@dimen/_12sdp" />
 
             <View
                 android:id="@+id/dummy_view1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_3sdp"
-                android:background="@drawable/dotted_line"
-                android:layout_marginTop="@dimen/_15sdp" />
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/dotted_line" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Client Name"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                android:text="@string/client_name" />
 
             <EditText
                 android:id="@+id/client_name"
+                style="@style/EditTextCustomeStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/EditTextCustomeStyle"
-                android:hint="Enter Client Name"
-                android:elevation="@dimen/_2sdp"/>
+                android:elevation="@dimen/_2sdp"
+                android:hint="@string/enter_client_name" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Client Category"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                android:text="@string/client_category" />
 
             <EditText
                 android:id="@+id/client_category"
+                style="@style/EditTextCustomeStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/EditTextCustomeStyle"
-                android:hint="Enter Client Category"
-                android:elevation="@dimen/_2sdp"/>
+                android:elevation="@dimen/_2sdp"
+                android:hint="@string/enter_client_category" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Project Client Requirement"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                android:text="@string/project_client_requirement" />
 
 
             <EditText
                 android:id="@+id/project_client_requirement"
+                style="@style/EditTextCustomeStyle"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
-                style="@style/EditTextCustomeStyle"
-                android:hint="Enter Description \n(200 Characters Max)"
                 android:elevation="@dimen/_2sdp"
-                android:gravity="top"/>
+                android:gravity="top"
+                android:hint="@string/enter_description_200_characters_max" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Our Approach"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                android:text="@string/our_approach" />
 
 
             <EditText
                 android:id="@+id/our_approach"
+                style="@style/EditTextCustomeStyle"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
-                style="@style/EditTextCustomeStyle"
-                android:hint="Enter Description \n(200 Characters Max)"
                 android:elevation="@dimen/_2sdp"
-                android:gravity="top"/>
+                android:gravity="top"
+                android:hint="@string/enter_description_200_characters_max" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.5"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Budget"
                         android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_15sdp"/>
+                        android:text="@string/budget" />
 
                     <EditText
                         android:id="@+id/budget_value"
+                        style="@style/EditTextCustomeStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/EditTextCustomeStyle"
-                        android:hint="0"
-                        android:inputType="number"
-                        android:elevation="@dimen/_2sdp"/>
+                        android:elevation="@dimen/_2sdp"
+                        android:hint="@string/zero"
+                        android:inputType="number" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date of Completion"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_15sdp"/>
+                        android:text="@string/date_of_completion" />
 
                     <EditText
                         android:id="@+id/date_of_completion"
+                        style="@style/EditTextCustomeStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/EditTextCustomeStyle"
                         android:layout_marginStart="0dp"
-                        android:hint="00-00-0000"
-                        android:inputType="none"
-                        android:focusable="false"
-                        android:textSize="@dimen/_12sdp"
                         android:drawableEnd="@drawable/ic_blue_calander"
-                        android:elevation="@dimen/_2sdp"/>
+                        android:elevation="@dimen/_2sdp"
+                        android:focusable="false"
+                        android:hint="@string/_00_00_0000"
+                        android:inputType="none"
+                        android:textSize="@dimen/_12sdp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -194,44 +199,44 @@
                 android:id="@+id/dummy_view2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_3sdp"
-                android:background="@drawable/dotted_line"
-                android:layout_marginTop="@dimen/_15sdp" />
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/dotted_line" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/image_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                tools:listitem="@layout/item_project_details_image"/>
+                tools:listitem="@layout/item_project_details_image" />
 
             <RelativeLayout
                 android:id="@+id/add_image_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:padding="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:background="@drawable/all_side_small_curve_grey_bg"
-                android:elevation="@dimen/_2sdp">
+                android:elevation="@dimen/_2sdp"
+                android:padding="@dimen/_10sdp">
 
                 <ImageView
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_camera_outline"/>
+                    app:srcCompat="@drawable/ic_camera_outline" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Add Images"
-                    android:fontFamily="@font/open_sans"
-                    android:textAllCaps="true"
                     android:layout_centerVertical="true"
+                    android:fontFamily="@font/open_sans"
                     android:gravity="center"
-                    android:textSize="@dimen/_13sdp"/>
+                    android:text="Add Images"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13sdp" />
             </RelativeLayout>
 
             <LinearLayout
@@ -241,23 +246,23 @@
                 android:layout_marginEnd="@dimen/_15sdp">
 
                 <TextView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Maximum 3"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:textColor="@color/grey_400"
-                    android:fontFamily="@font/open_sans"/>
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/maximum_3"
+                    android:textColor="@color/grey_400" />
 
                 <TextView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Jpg/png (800x800px)"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans"
                     android:gravity="end"
-                    android:textColor="@color/grey_400"
-                    android:fontFamily="@font/open_sans"/>
+                    android:text="@string/jpg_png_800x800px"
+                    android:textColor="@color/grey_400" />
 
             </LinearLayout>
 
@@ -266,89 +271,96 @@
                 android:id="@+id/dummy_view3"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_3sdp"
-                android:background="@drawable/dotted_line"
-                android:layout_marginTop="@dimen/_15sdp" />
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/dotted_line" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="STATUS"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/open_sans"
-                android:textColor="@color/common_text_color"/>
+                android:text="@string/status"
+                android:textAllCaps="true"
+                android:textColor="@color/common_text_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:id="@+id/completed_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@drawable/all_side_small_curve_bg"
-                    android:padding="@dimen/_10sdp"
-                    android:gravity="center"
                     android:elevation="@dimen/_2sdp"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_7sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_5sdp">
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp">
+
                     <TextView
                         android:id="@+id/completed_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="COMPLETED"
-                        android:textStyle="bold"
+                        android:text="@string/completed"
+                        android:textAllCaps="true"
                         android:textColor="#9ABFFF"
                         android:textSize="@dimen/_8sdp"
-                        android:textAllCaps="true" />
+                        android:textStyle="bold" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/inprogress_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@drawable/all_side_small_curve_bg"
-                    android:padding="@dimen/_10sdp"
-                    android:gravity="center"
-                    android:layout_marginStart="@dimen/_7sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:elevation="@dimen/_2sdp"
-                    android:layout_marginBottom="@dimen/_5sdp">
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp">
+
                     <TextView
                         android:id="@+id/inprogress_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="IN PROGRESS"
-                        android:textStyle="bold"
+                        android:text="@string/in_progress"
+                        android:textAllCaps="true"
                         android:textColor="#9ABFFF"
                         android:textSize="@dimen/_8sdp"
-                        android:textAllCaps="true" />
+                        android:textStyle="bold" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/withdraw_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@drawable/all_side_small_curve_bg"
-                    android:padding="@dimen/_10sdp"
-                    android:gravity="center"
                     android:elevation="@dimen/_2sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_5sdp">
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp">
+
                     <TextView
                         android:id="@+id/withdraw_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="WITHDRAW"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_8sdp"
+                        android:text="@string/withdraw"
+                        android:textAllCaps="true"
                         android:textColor="#9ABFFF"
-                        android:textAllCaps="true" />
+                        android:textSize="@dimen/_8sdp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -356,19 +368,19 @@
                 android:id="@+id/save_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/orange_button_click_effect"
-                android:fontFamily="@font/open_sans_semibold"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/orange_button_click_effect"
+                android:elevation="@dimen/_2sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:gravity="center"
-                android:text="save"
+                android:text="@string/save"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:elevation="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_20sdp"/>
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </ScrollView>

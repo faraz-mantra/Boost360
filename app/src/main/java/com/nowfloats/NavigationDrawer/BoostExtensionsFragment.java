@@ -20,21 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.BusinessProfile.UI.UI.changePasswordAsyncTask;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Model.OnItemClickCallback;
-import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
-import com.nowfloats.Store.YourPurchasedPlansActivity;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -116,15 +107,15 @@ public class BoostExtensionsFragment extends Fragment {
                         clipboard.setPrimaryClip(clip);
 
                         Methods.showSnackBarPositive(getActivity(),
-                                "The key has been copied to clipboard. Also you can share the key with your developer using the most appropriate share option.");
+                                getString(R.string.the_key_has_been_copied_to_clipboard));
 
                         /*Create an ACTION_SEND Intent*/
-                        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                        Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/plain");
-                        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Boost360 Wordpress Integration key");
-                        intent.putExtra(android.content.Intent.EXTRA_TEXT, session.getFPID());
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Boost360 Wordpress Integration key");
+                        intent.putExtra(Intent.EXTRA_TEXT, session.getFPID());
                         /*Fire!*/
-                        startActivity(Intent.createChooser(intent, "Shared from Boost360"));
+                        startActivity(Intent.createChooser(intent, getString(R.string.shared_from_boost)));
                     }
                 }).build();
         EditText scriptText = (EditText)dialog.getCustomView().findViewById(R.id.boostx_script_body);
@@ -136,7 +127,7 @@ public class BoostExtensionsFragment extends Fragment {
                 MaterialDialog dialog2 = new MaterialDialog.Builder(mContext)
                         .customView(R.layout.boostx_script_panel, true)
                         .title("wordpress-plugin script")
-                        .positiveText("COPY & SHARE")
+                        .positiveText(R.string.copy_and_share)
                         .negativeText("LATER")
                         .positiveColorRes(R.color.primaryColor)
                         .negativeColorRes(R.color.gray_40)
@@ -155,16 +146,16 @@ public class BoostExtensionsFragment extends Fragment {
                                 clipboard.setPrimaryClip(clip);
 
                                 Methods.showSnackBarPositive(getActivity(),
-                                        "The script has been copied to clipboard. Also you can share the script with your developer using the most appropriate option.");
+                                        getString(R.string.the_script_has_been_copied_to_clipboard_also_you_can));
 
                                 /*Create an ACTION_SEND Intent*/
-                                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                                Intent intent = new Intent(Intent.ACTION_SEND);
                                 intent.setType("text/plain");
                                 /*Applying information Subject and Body.*/
-                                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Boost360 wordpress-plugin script");
-                                intent.putExtra(android.content.Intent.EXTRA_TEXT, script);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Boost360 wordpress-plugin script");
+                                intent.putExtra(Intent.EXTRA_TEXT, script);
                                 /*Fire!*/
-                                startActivity(Intent.createChooser(intent, "Shared from Boost360"));
+                                startActivity(Intent.createChooser(intent, getString(R.string.shared_from_boost)));
                             }
                         }).build();
                 EditText scriptText = (EditText)dialog2.getCustomView().findViewById(R.id.boostx_script_body);
@@ -201,19 +192,19 @@ public class BoostExtensionsFragment extends Fragment {
                         clipboard.setPrimaryClip(clip);
 
                         Methods.showSnackBarPositive(getActivity(),
-                                "The script has been copied to clipboard. Also you can share the script with your developer using the most appropriate option.");
+                                getString(R.string.the_script_has_been_copied_to_clipboard_also_you_can));
 
                         /*Create an ACTION_SEND Intent*/
-                        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                        Intent intent = new Intent(Intent.ACTION_SEND);
                         /*This will be the actual content you wish you share.*/
-                        String shareBody = "Here is the share content body";
+                        String shareBody = getString(R.string.here_is_the_content_share_body);
                         /*The type of the content is text, obviously.*/
                         intent.setType("text/plain");
                         /*Applying information Subject and Body.*/
-                        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Boost360 website-plugin script");
-                        intent.putExtra(android.content.Intent.EXTRA_TEXT, script);
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Boost360 website-plugin script");
+                        intent.putExtra(Intent.EXTRA_TEXT, script);
                         /*Fire!*/
-                        startActivity(Intent.createChooser(intent, "Shared from Boost360"));
+                        startActivity(Intent.createChooser(intent, getString(R.string.shared_from_boost)));
                     }
                 }).build();
 

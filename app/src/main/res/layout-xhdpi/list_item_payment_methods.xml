@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="COD" />
+            android:text="@string/cod" />
 
 
         <EditText
@@ -31,11 +31,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_10"
-            android:layout_marginLeft="0dip"
+            android:layout_marginStart="0dip"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_weight="1"
             android:backgroundTint="#383838"
-            android:hint="Minimum Order"
+            android:hint="@string/minimum_order"
             android:inputType="number"
             android:maxLines="1"
             android:textCursorDrawable="@drawable/custom_edit_text_cursor"
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Online Payment" />
+            android:text="@string/online_payment" />
 
         <EditText
             android:id="@+id/edtOPMinOrder"
@@ -62,12 +62,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_10"
-            android:layout_marginLeft="0dip"
+            android:layout_marginStart="0dip"
             android:layout_marginTop="@dimen/margin_10"
             android:inputType="number"
             android:layout_weight="1"
             android:backgroundTint="#383838"
-            android:hint="Minimum Order"
+            android:hint="@string/minimum_order"
             android:maxLines="1"
             android:textCursorDrawable="@drawable/custom_edit_text_cursor"
             tools:ignore="MissingPrefix" />

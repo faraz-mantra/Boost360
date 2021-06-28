@@ -1,6 +1,5 @@
 package com.appservice.rest.services
 
-import com.appservice.model.ProductDimensionRequest
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
@@ -18,37 +17,34 @@ import retrofit2.http.*
 interface KitWebActionRemoteData {
 
   @POST(EndPoints.ADD_PRODUCT_DETAIL)
-  fun addProductGstDetail(@Header("Authorization") auth: String?, @Body request: ProductGstDetailRequest?): Observable<Response<ResponseBody>>
+  fun addProductGstDetail(@Body request: ProductGstDetailRequest?): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.UPDATE_PRODUCT_DETAIL)
-  fun updateProductGstDetail(@Header("Authorization") auth: String?, @Body request: ProductUpdateRequest?): Observable<Response<ResponseBody>>
+  fun updateProductGstDetail(@Body request: ProductUpdateRequest?): Observable<Response<ResponseBody>>
 
   //kotlin.String.format("{'product_id':'%s'}", productId)
   @GET(EndPoints.GET_PRODUCT_DETAIL)
-  fun getProductGstDetail(@Header("Authorization") auth: String?, @Query("query") query: String?): Observable<Response<ProductGstResponse>>
+  fun getProductGstDetail(@Query("query") query: String?): Observable<Response<ProductGstResponse>>
 
 
   @Multipart
   @POST(EndPoints.UPLOAD_FILE_PRODUCT)
   fun uploadImageProfile(
-      @Header("Authorization") auth: String?,
       @Query("assetFileName") assetFileName: String?,
-      @Part file: MultipartBody.Part?
+      @Part file: MultipartBody.Part?,
   ): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.ADD_PRODUCT_IMAGE)
-  fun addProductImage(@Header("Authorization") auth: String?, @Body request: ProductImageRequest?): Observable<Response<ResponseBody>>
+  fun addProductImage(@Body request: ProductImageRequest?): Observable<Response<ResponseBody>>
 
   @HTTP(method = "DELETE", path = EndPoints.DELETE_PRODUCT_IMAGE, hasBody = true)
-  fun deleteProductImage(@Header("Authorization") auth: String?, @Body request: ProductImageDeleteRequest?): Observable<Response<ResponseBody>>
+  fun deleteProductImage(@Body request: ProductImageDeleteRequest?): Observable<Response<ResponseBody>>
 
   //String.format("{'_pid':'%s'}", productId)
   @GET(EndPoints.GET_PRODUCT_IMAGE)
-  fun getProductImage(@Header("Authorization") auth: String?, @Query("query") query: String?): Observable<Response<ProductImageResponse>>
+  fun getProductImage(@Query("query") query: String?): Observable<Response<ProductImageResponse>>
 
   @POST(EndPoints.FP_ONBOARDING_UPDATE_DATA)
-  fun fpOnboardingUpdate(@Header("Authorization") auth: String?, @Body request: OnBoardingUpdateModel?): Observable<Response<ResponseBody>>
-//  fun addProductDimensionDetails(request: ProductDimensionRequest): Observable<Response<ResponseBody>> {
-//
-//  }
+  fun fpOnboardingUpdate(@Body request: OnBoardingUpdateModel?): Observable<Response<ResponseBody>>
+
 }

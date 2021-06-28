@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -125,8 +125,8 @@
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:layout_marginStart="@dimen/icon_left_margin"
+                    android:layout_marginEnd="@dimen/icon_right_margin"
                     android:padding="6dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/lock_widget"
@@ -162,7 +162,7 @@
                 android:layout_height="@dimen/cell_height"
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
-                android:text="Order Analytics"
+                android:text="@string/order_analytics_"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
 
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Book A Table"
+                    android:text="@string/book_a_table"
                     android:textColor="@color/cell_text_color"
                     android:textSize="@dimen/cell_text_size" />
 
@@ -193,7 +193,7 @@
                     android:id="@+id/feature_lock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="30dp"
+                    android:paddingEnd="30dp"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_expiry_lock"
                     tools:visibility="visible" />

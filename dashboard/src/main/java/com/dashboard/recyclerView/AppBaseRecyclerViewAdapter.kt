@@ -20,6 +20,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       CHANNEL_ITEM_VIEW -> ChannelViewHolder(binding as ItemChannelDBinding)
+      CHANNEL_STATUS_ITEM_VIEW -> ChannelSocialMediaViewHolder(binding as ItemSocialMediaBinding)
       BUSINESS_SETUP_ITEM_VIEW -> BusinessSetupViewHolder(binding as ItemBusinessManagementBinding)
       BUSINESS_SETUP_HIGH_ITEM_VIEW -> BusinessSetupHighViewHolder(binding as ItemBusinessSetupHighBinding)
       QUICK_ACTION_ITEM_VIEW -> QuickActionViewHolder(binding as ItemQuickActionBinding)
@@ -35,6 +36,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       BOOST_ENQUIRIES_ITEM_VIEW -> CustomerPatientItemViewHolder(binding as ItemCustomerPatientItemBinding)
       BOOST_WEBSITE_ITEM_VIEW -> WebsiteItemViewHolder(binding as ItemWebsiteItemBinding)
       FILTER_DATE_VIEW -> DateFilterViewHolder(binding as ItemFilterDateBinding)
+      WEBSITE_COLOR_VIEW -> WebsiteColorViewHolder(binding as RecyclerItemColorsBinding)
+      WEBSITE_FONT_VIEW -> WebSiteFontViewHolder(binding as RecyclerItemSelectFontBinding)
     }
   }
 

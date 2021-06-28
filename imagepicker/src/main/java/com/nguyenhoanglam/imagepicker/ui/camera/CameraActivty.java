@@ -74,7 +74,7 @@ public class CameraActivty extends AppCompatActivity implements CameraView {
         if (PermissionHelper.hasSelfPermissions(this, permissions)) {
             captureImage();
         } else {
-            logger.w("Camera permission is not granted. Requesting permission");
+            logger.w(getString(R.string.camera_permission_is_not_granted_requesting_permission));
             requestCameraPermission();
         }
     }
@@ -91,7 +91,7 @@ public class CameraActivty extends AppCompatActivity implements CameraView {
     }
 
     private void requestCameraPermission() {
-        logger.w("Write External permission is not granted. Requesting permission");
+        logger.w(getString(R.string.write_external_permission_is_not_granted_requesting_permission));
 
         boolean hasPermissionDisbled = false;
 
@@ -144,13 +144,13 @@ public class CameraActivty extends AppCompatActivity implements CameraView {
         switch (requestCode) {
             case Config.RC_CAMERA_PERMISSION: {
                 if (PermissionHelper.hasGranted(grantResults)) {
-                    logger.d("Camera permission granted");
+                    logger.d(getString(R.string.camera_permission_granted));
                     captureImage();
                     return;
                 }
 
-                logger.e("Permission not granted: results len = " + grantResults.length +
-                        " Result code = " + (grantResults.length > 0 ? grantResults[0] : "(empty)"));
+                logger.e(getString(R.string.permission_not_granted_results_len) + grantResults.length +
+                        getString(R.string.result_code) + (grantResults.length > 0 ? grantResults[0] : "(empty)"));
 
                 boolean shouldShowSnackBar = false;
                 for (int grantResult : grantResults) {
@@ -173,7 +173,7 @@ public class CameraActivty extends AppCompatActivity implements CameraView {
                 break;
             }
             default: {
-                logger.d("Got unexpected permission result: " + requestCode);
+                logger.d(getString(R.string.got_unexpacted_permission_result) + requestCode);
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
                 finish();
                 break;

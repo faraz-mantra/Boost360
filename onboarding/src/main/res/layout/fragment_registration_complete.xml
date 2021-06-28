@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:alpha="0"
                 android:gravity="center_horizontal"
-                android:text="Sood Child \n hospital &amp; Clinic"
+                android:text="@string/sood_child_n_hospital_amp_clinic"
                 android:textAlignment="gravity"
                 android:textColor="@color/greyish_brown"
                 app:fontFamily="@font/light"

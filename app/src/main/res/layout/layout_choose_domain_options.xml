@@ -21,11 +21,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="10dp"
-            android:text="You haven't linked a domain to your website yet. Please link a domain to your website to engage more traffic and get more customers." />
+            android:text="@string/you_haven_t_linked_a_domain_to_your_website_yet_please_link_a_domain_to_your_website_to_engage_more_traffic_and_get_more_customers" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Link a existing domain"
+                android:text="@string/link_a_existing_domain"
                 android:textColor="@color/gray" />
 
         </RadioGroup>
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
-                android:text="Domain is a great first step towards building your brand on web."
+                android:text="@string/domain_is_a_great_first_step_towards_building_your_brand_on_web"
                 android:textSize="@dimen/_15sdp" />
         </LinearLayout>
 
@@ -131,7 +131,7 @@
             android:background="@drawable/rounded_corner_button"
             android:gravity="center"
             android:padding="8dp"
-            android:text="have an existing domain"
+            android:text="@string/have_an_existing_domain_"
             android:textAllCaps="true"
             android:textColor="@drawable/yellow_btn_hover_text_color"
             android:textSize="18sp"

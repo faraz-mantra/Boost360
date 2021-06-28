@@ -1,89 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="175dp">
+
         <ImageView
             android:id="@+id/img_feature"
             android:layout_width="match_parent"
             android:layout_height="154dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_product_image"/>
+            android:src="@drawable/default_product_image" />
+
         <ImageView
             android:id="@+id/img_logo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:background="@drawable/transparant_gray_round_corner"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/facebook_page2"/>
+            android:adjustViewBounds="true"
+            android:background="@drawable/transparant_gray_round_corner"
+            android:scaleType="fitCenter"
+            android:src="@drawable/facebook_page2" />
+
         <LinearLayout
             android:id="@+id/llayout_message"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/img_logo"
-            android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:visibility="gone">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/white_round_corner"
                 android:padding="10dp"
-                android:textColor="#000"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:textSize="12sp"
                 android:text="@string/fb_page_default_logo_message"
-                android:background="@drawable/white_round_corner" />
+                android:textColor="#000"
+                android:textSize="12sp" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/ic_down_arrow"/>
+                app:srcCompat="@drawable/ic_down_arrow" />
         </LinearLayout>
+
         <ImageView
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/gallery_cancel"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:alpha="1"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:src="@drawable/gallery_cancel" />
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingLeft="30dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="30dp"
         android:orientation="vertical"
-        android:paddingRight="30dp">
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:paddingBottom="30dp">
+
         <TextView
             android:id="@+id/tv_fb_page_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/facebook_page"
             android:layout_marginTop="5dp"
-            android:textSize="18sp"
-            android:textColor="@color/com_facebook_blue"
             android:layout_marginBottom="10dp"
-            android:textStyle="bold"/>
+            android:text="@string/facebook_page"
+            android:textColor="@color/com_facebook_blue"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/congratulations"
-            android:textSize="13sp"
             android:textAllCaps="true"
-            android:gravity="center"/>
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/textView3"
@@ -91,8 +99,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:textColor="@color/light_black"
             android:text="@string/your_facebook_page_is_created"
+            android:textColor="@color/light_black"
             android:textSize="14sp" />
 
         <TextView
@@ -107,9 +115,9 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginTop="24dp"
-            android:text="@string/control"
-            android:padding="8dp"
             android:background="@drawable/blue_round_corner"
+            android:padding="8dp"
+            android:text="@string/control"
             android:textColor="@color/white" />
     </LinearLayout>
 

@@ -22,7 +22,7 @@ class DrScoreItem(
   }
 
   fun getIcon(): Int {
-    return if (isUpdate) R.drawable.ic_ok_11_d else R.drawable.ic_circle_grey_9_d
+    return if (isUpdate) R.drawable.ic_ok_11_d else R.drawable.ic_alert_error
   }
 
   enum class DrScoreItemType {
@@ -38,6 +38,7 @@ class DrScoreItem(
     boolean_social_channel_connected,
     number_services_added,
     number_products_added,
+    boolean_create_staff,
     boolean_add_bank_account,
     boolean_image_uploaded_to_gallery,
     boolean_create_custom_page,

@@ -118,10 +118,9 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
-                        android:layout_toRightOf="@id/english_button"
                         android:onClick="@{viewModel.eventHandler::onSetUpHindiVideoClick}"
                         android:padding="@dimen/_2sdp"
-                        android:text="@string/hindi" />/>
+                        android:text="@string/hindi" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/telugu_button"
@@ -129,7 +128,6 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
-                        android:layout_toRightOf="@id/hindi_button"
                         android:onClick="@{viewModel.eventHandler::onSetUpTeluguVideoClick}"
                         android:padding="@dimen/_2sdp"
                         android:text="@string/telugu" />
@@ -170,7 +168,6 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_4sdp"
-                        android:layout_toRightOf="@id/telugu_button"
                         android:onClick="@{viewModel.eventHandler::onSetUpKannadaVideoClick}"
                         android:padding="@dimen/_2sdp"
                         android:text="@string/kannada"

@@ -31,7 +31,7 @@
     <string name="signup_using_facebook">பேஸ்புக் பயன்படுத்தி பதிவுபெறுங்கள்</string> 
     <string name="_00Seconds">00s</string>
     <string name="seconds">Seconds</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="i_will_help_you_setup_and_manage_your_digital_business_on_boost_let_s_get_start_by_selecting_the_category_of_your_business">She will help you setup and manage the digital journey of your business.</string>
     <string name="hello_presignup">Hello.</string>
     <string name="let_s_create_your_boost_account">Let’s create your Boost account.</string>
@@ -46,4 +46,8 @@
     <string name="hi_i_am_ria">Meet Ria.</string>
     <string name="setup_business_profile">Setup business profile</string>
     <string name="forgot"><u>Forgot?</u></string>
+    <string name="browser">Browser</string>
+    <string name="login_cancel">Login cancel.</string>
+    <string name="signup_using_mobile">Signup using Mobile</string>
+
 </resources>

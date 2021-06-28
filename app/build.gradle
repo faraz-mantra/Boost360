@@ -19,6 +19,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.google.gms.google-services'
+
+// Apply the Crashlytics Gradle plugin
+apply plugin: 'com.google.firebase.crashlytics'
+
 googleServices { disableVersionCheck = false }
 
 repositories {
@@ -69,7 +73,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020087
+        versionCode 2020020092
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -141,7 +145,7 @@ android {
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
-            versionName "5.3.65"
+            versionName "6.0.1"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -181,8 +185,10 @@ dependencies {
     implementation files('libs/libraries/signpost-core-1.2.1.2.jar')
     implementation files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
     implementation project(':messagelibrary')
-    //presignup library
+    //presignup library old flow
     implementation project(path: ':presignup')
+    //presignup library new flow
+    implementation project(path: ':presignin')
     api project(path: ':dashboard')
 
     //upgrade library
@@ -196,6 +202,9 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }
+
+    implementation 'com.google.firebase:firebase-crashlytics:17.4.0'
+    implementation 'com.google.firebase:firebase-analytics:18.0.2'
 
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
@@ -217,6 +226,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 
 
 //    implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
@@ -279,12 +289,9 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
 
-    // Referral Library: invitereferrals
-//    implementation 'com.android.installreferrer:installreferrer:2.2'
-    implementation 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.5'
-//    implementation files('libs/libraries/AF-Android-SDK.jar'
+
     //AppsFlyer SDK
-//    implementation 'com.appsflyer:af-android-sdk:6.1.1'
-//    implementation 'com.android.installreferrer:installreferrer:2.1'
+    //implementation 'com.appsflyer:af-android-sdk:6.1.1'
+    //implementation files('libs/libraries/AF-Android-SDK.jar'
 
 }

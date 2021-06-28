@@ -11,9 +11,9 @@ import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
 import com.dashboard.databinding.FragmentWebsiteBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
 import com.dashboard.model.live.websiteItem.WebsiteDataResponse
-import com.dashboard.pref.BASE_IMAGE_URL
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.UserSessionManager
+import com.framework.pref.BASE_IMAGE_URL
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -22,6 +22,8 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.utils.fromHtml
+import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import java.util.*
 
 class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(), RecyclerItemClickListener {
@@ -42,10 +44,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     session = UserSessionManager(baseActivity)
     getWebsiteData()
     setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.businessAddress, binding?.contactDetail, binding?.businessTiming)
-    // TODO to change the event to only one
-    WebEngageController.trackEvent("Website Page", "pageview", session?.fpTag)
-    WebEngageController.trackEvent("Manage Content", "pageview", session?.fpTag)
-    WebEngageController.trackEvent("Manage Content", "screen_name", session?.fpTag)
+    WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   override fun onResume() {
@@ -119,6 +118,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
+      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
     }
   }
 

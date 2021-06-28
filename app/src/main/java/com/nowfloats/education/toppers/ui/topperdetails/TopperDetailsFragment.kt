@@ -115,7 +115,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
     private fun addUpdateTopperData() {
         if (!addUpdateTopper) {
             if (validate() && imageValidate()) {
-                showLoader("Loading Images")
+                showLoader(getString(R.string.loadin_images))
                 if (viewModel.getTestimonialImagePath() != null) {
                     viewModel.getToppersImagesUrl(viewModel.getProfileImagePath()!!, viewModel.getTestimonialImagePath()!!)
                 } else {
@@ -126,19 +126,19 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
             if (validate()) {
                 when {
                     viewModel.getProfileImagePath() != null && viewModel.getTestimonialImagePath() != null -> {
-                        showLoader("Updating Image")
+                        showLoader(getString(R.string.updating_image_))
                         viewModel.getToppersImagesUrl(viewModel.getProfileImagePath(), viewModel.getTestimonialImagePath())
                     }
                     viewModel.getProfileImagePath() != null -> {
-                        showLoader("Updating Image")
+                        showLoader(getString(R.string.updating_image_))
                         viewModel.getToppersImagesUrl(viewModel.getProfileImagePath(), null)
                     }
                     viewModel.getTestimonialImagePath() != null -> {
-                        showLoader("Updating Image")
+                        showLoader(getString(R.string.updating_image_))
                         viewModel.getToppersImagesUrl(null, viewModel.getTestimonialImagePath())
                     }
                     else -> {
-                        showLoader("Updating Topper")
+                        showLoader(getString(R.string.updating_image_))
                         viewModel.updateOurTopper(binding.toppersData as Data, null, null)
                     }
                 }
@@ -151,7 +151,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
             addTopperResponse.observe(viewLifecycleOwner, Observer {
                 hideLoader()
                 if (!it.isNullOrBlank()) {
-                    Toast.makeText(requireContext(), "Topper added successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.topper_added_successfully), Toast.LENGTH_SHORT).show()
                     (activity as ToppersActivity).popFragmentFromBackStack()
                 }
             })
@@ -165,7 +165,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
                 if (!it.isNullOrBlank()) {
                     if (it == SUCCESS) {
                         hideLoader()
-                        Toast.makeText(requireContext(), "Topper deleted successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.topper_deleted_successfully), Toast.LENGTH_SHORT).show()
                         (activity as ToppersActivity).popFragmentFromBackStack()
                     }
                 }
@@ -174,7 +174,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
             updateTopperResponse.observe(viewLifecycleOwner, Observer {
                 hideLoader()
                 if (!it.isNullOrBlank()) {
-                    Toast.makeText(requireContext(), "Topper updated successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.topper_updated_successfully), Toast.LENGTH_SHORT).show()
                     (activity as ToppersActivity).popFragmentFromBackStack()
                 }
             })
@@ -213,7 +213,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
                         viewModel.deleteOurTopper(topperData as Data)
                     }
                     else -> {
-                        Toast.makeText(requireContext(), "No candidate data found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.no_candidate_data_found), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -226,7 +226,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
 
     private fun imageValidate(): Boolean {
         if (viewModel.getProfileImagePath() == null) {
-            Toast.makeText(requireContext(), "Please select Topper Image", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.please_select_topper_image), Toast.LENGTH_SHORT).show()
             return false
         }
         return true
@@ -235,7 +235,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
     private fun validate(): Boolean {
         when {
             binding.userName.text.isNullOrBlank() -> {
-                binding.userName.error = "Enter valid Name"
+                binding.userName.error = getString(R.string.enter_valid_name)
                 binding.userName.requestFocus()
                 return false
             }
@@ -246,7 +246,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
 
         when {
             binding.userCourseName.text.isNullOrBlank() -> {
-                binding.userCourseName.error = "Enter valid course name"
+                binding.userCourseName.error = getString(R.string.enter_valid_course_name)
                 binding.userCourseName.requestFocus()
                 return false
             }
@@ -257,7 +257,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
 
         when {
             binding.userCourseType.text.isNullOrBlank() -> {
-                binding.userCourseType.error = "Enter valid course type"
+                binding.userCourseType.error = getString(R.string.enter_valid_course_type)
                 binding.userCourseType.requestFocus()
                 return false
             }
@@ -267,7 +267,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
         }
 
         if (!Utils.isConnectedToInternet(requireContext())) {
-            Toast.makeText(requireContext(), "No Internet!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
             return false
         }
         return true

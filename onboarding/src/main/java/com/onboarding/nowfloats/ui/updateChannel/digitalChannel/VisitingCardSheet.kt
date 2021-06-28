@@ -19,6 +19,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -43,7 +44,9 @@ import kotlin.collections.ArrayList
 
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
-open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
+open class VisitingCardSheet :
+    BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(),
+    RecyclerItemClickListener {
 
   private var shareChannelText: String? = null
   private var isWhatsApp: Boolean? = null
@@ -79,14 +82,22 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
           userDetail?.userName.isNullOrEmpty().not() -> userDetail?.userName
           else -> localSessionModel?.fpTag
         }
-        localSessionModel?.primaryNumber = if (localSessionModel?.primaryNumber.isNullOrEmpty().not()) localSessionModel?.primaryNumber else if (userDetail?.userMobile.isNullOrEmpty().not()) userDetail?.userMobile else ""
-        localSessionModel?.primaryEmail = if (localSessionModel?.primaryEmail.isNullOrEmpty().not()) localSessionModel?.primaryEmail else if (userDetail?.userEmail.isNullOrEmpty().not()) userDetail?.userEmail else ""
+        localSessionModel?.primaryNumber = when {
+          localSessionModel?.primaryNumber.isNullOrEmpty().not() -> localSessionModel?.primaryNumber
+          userDetail?.userMobile.isNullOrEmpty().not() -> userDetail?.userMobile
+          else -> ""
+        }
+        localSessionModel?.primaryEmail = when {
+          localSessionModel?.primaryEmail.isNullOrEmpty().not() -> localSessionModel?.primaryEmail
+          userDetail?.userEmail.isNullOrEmpty().not() -> userDetail?.userEmail
+          else -> ""
+        }
 
         val userProfile = ProfileProperties(userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
-        val cardData = CardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
-            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl, getIconCard())
-
+        val cardData = CardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location,
+            userProfile.userName?.capitalizeWords(), addPlus91(userProfile.userMobile), userProfile.userEmail,
+            localSessionModel?.businessType, localSessionModel?.websiteUrl, getIconCard())
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()))
@@ -97,7 +108,6 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TEN_ITEM.getLayout()))
-
         setAdapterCard(cardList)
       } else {
         showShortToast(it.message())
@@ -113,6 +123,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       popup.setOnMenuItemClickListener { menu ->
         if (menu.itemId == R.id.menu_edit_contact) {
           try {
+            WebEngageController.trackEvent(MY_BUSINESS_CARD_MENU_CONTACT, CLICK, TO_BE_ADDED)
             val contactInfo = Intent(baseActivity, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
             startActivity(contactInfo)
             baseActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -120,9 +131,10 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
             e.printStackTrace()
           }
         } else if (menu.itemId == R.id.menu_digital_channel) {
+          WebEngageController.trackEvent(MY_BUSINESS_CARD_MENU_DIGITAL_CHANNEL, CLICK, TO_BE_ADDED)
           baseActivity.startDigitalChannel(getBundle())
         }
-        dismiss()
+//        dismiss()
         true
       }
       popup.show()
@@ -150,7 +162,8 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       isUserInputEnabled = true
       adapter = adapterPager3
       binding?.dotIndicatorCard?.setViewPager2(this)
-      setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+      setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position)
+      }
       registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
           super.onPageSelected(position)
@@ -184,21 +197,22 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
     }
     val bitmap = binding?.pagerDigitalCard?.getChildAt(0)?.let { viewToBitmap(it) }
     try {
-      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 33, 0, bitmap.width - 66, bitmap.height) }
+      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 40, 0, bitmap.width - 80, bitmap.height) }
       val path = MediaStore.Images.Media.insertImage(baseActivity.contentResolver, cropBitmap, "boost_${Date().time}", null)
       val imageUri: Uri = Uri.parse(path)
       val waIntent = Intent(Intent.ACTION_SEND)
       waIntent.type = "image/*"
-      if (isWhatsApp) waIntent.setPackage("com.whatsapp")
+      if (isWhatsApp) waIntent.setPackage(getString(R.string.whatsapp_package))
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
-      baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
+      baseActivity.startActivity(Intent.createChooser(waIntent, resources.getString(R.string.share_your_business_card))
+      )
       dismiss()
       savePositionCard(cardPosition)
-      WebEngageController.trackEvent("Visiting Card Share", "visiting_card", localSessionModel?.fpTag ?: "")
+      WebEngageController.trackEvent(VISITING_CARD_SHARE, VISITING_CARD, localSessionModel?.fpTag ?: "")
       onBusinessCardAddedOrUpdated(true)
     } catch (e: Exception) {
-      showLongToast("Error sharing visiting card, please try again.")
+      showLongToast(getString(R.string.error_sharing_visiting_card_please_try_again))
       dismiss()
     }
   }
@@ -232,12 +246,12 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
     return bundle
   }
 
-  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray, ) {
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           shareCardWhatsApp(shareChannelText, this.isWhatsApp ?: false)
-        } else showShortToast("Permission denied to read your External storage")
+        } else showShortToast(getString(R.string.permission_denied_to_your_external_storage))
         return
       }
     }
@@ -246,7 +260,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
 fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
   try {
-    WebEngageController.trackEvent("Digital Channel Page", "startview", "");
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE_CLICK, START_VIEW, NO_EVENT_VALUE)
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()

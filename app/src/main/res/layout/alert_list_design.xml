@@ -5,8 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="6dp"
-    android:layout_marginLeft="6dp"
-    android:layout_marginRight="6dp"
+    android:layout_marginStart="6dp"
+    android:layout_marginEnd="6dp"
     android:background="@color/screen_bg">
 
     <androidx.cardview.widget.CardView
@@ -27,13 +27,13 @@
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
             android:paddingRight="14dp"
-            android:paddingLeft="11dp">
+            android:paddingStart="11dp">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="12dp">
+                android:layout_marginEnd="12dp">
 
                 <ImageView
                     android:id="@+id/storeDataIcon"
@@ -96,7 +96,7 @@
                         fontPath="Roboto-Light.ttf"
                         android:textSize="9sp"
                         android:text="@string/know_more"
-                        android:layout_gravity="right"
+                        android:layout_gravity="end"
                         android:id="@+id/created_date"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>

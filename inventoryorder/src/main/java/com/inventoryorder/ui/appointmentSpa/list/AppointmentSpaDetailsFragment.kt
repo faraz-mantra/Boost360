@@ -11,12 +11,10 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
-import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -42,12 +40,7 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.appointment.LocationBottomSheetDialog
 import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.*
 import com.inventoryorder.ui.order.INVOICE_URL
-import com.inventoryorder.ui.order.sheetOrder.CancelBottomSheetDialog
-import com.inventoryorder.ui.order.sheetOrder.ConfirmBottomSheetDialog
-import com.inventoryorder.ui.order.sheetOrder.DeliveredBottomSheetDialog
-import com.inventoryorder.ui.order.sheetOrder.RequestPaymentBottomSheetDialog
 import com.inventoryorder.ui.startFragmentOrderActivity
-import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -101,7 +94,7 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     try {
       startActivity(i)
     } catch (ex: ActivityNotFoundException) {
-      showShortToast("There are no email clients installed.")
+      showShortToast(getString(R.string.there_are_no_email_clients_installed))
     }
   }
 
@@ -116,7 +109,7 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
             isRefresh = true
             showShortToast(message)
           }
-        } else errorUi("Appointment detail empty.")
+        } else errorUi(getString(R.string.appointment_details_empty))
       } else errorUi(it.message())
     })
   }
@@ -126,7 +119,7 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     var count = 0
     if (orderItem?.Items.isNullOrEmpty().not()) {
       orderItem?.Items?.forEach {
-        viewModel?.getProductDetails(it.Product?._id)?.observeOnce(viewLifecycleOwner, Observer { it1 ->
+        viewModel?.getProductDetails(it.Product?._id)?.observeOnce(viewLifecycleOwner, { it1 ->
           count += 1
           val product = it1 as? ProductResponse
           if (count == orderItem?.Items?.size) {
@@ -150,7 +143,7 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
   private fun setDetails(order: OrderItem?) {
     val product = order?.firstItemForAptConsult()?.product()
     val extraDataSpa = order?.firstItemForAptConsult()?.getAptSpaExtraDetail()
-    binding?.textFromBookingValue?.text = "#${order?.ReferenceNumber}"
+    binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
     binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
     binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
@@ -169,13 +162,22 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     }
 
     binding?.textCustomerName?.text = order?.BuyerDetails?.ContactDetails?.FullName
-    binding?.textCustomerPhone?.text = order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber
-    binding?.textCustomerEmail?.text = order?.BuyerDetails?.ContactDetails?.EmailId
-
+    if (order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber.isNullOrEmpty()) {
+      binding?.textCustomerPhone?.gone()
+    }else{ binding?.textCustomerPhone?.visible()}
+    binding?.textCustomerPhone?.text = "Phone: ${order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber}"
+      if (order?.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty()) {
+          binding?.textCustomerEmail?.gone()
+      }else{ binding?.textCustomerEmail?.visible()}
+    binding?.textCustomerEmail?.text = "Email: ${order?.BuyerDetails?.ContactDetails?.EmailId}"
+    if (order?.BuyerDetails?.GSTIN ==null||order.BuyerDetails.GSTIN=="") {
+      binding?.ctvGstin?.gone()
+    }else binding?.ctvGstin?.visible()
+    binding?.ctvGstin?.text = "GSTIN: ${order?.BuyerDetails?.GSTIN as? String}"
     binding?.textPaymentStatusDropdown?.text = "${order?.PaymentDetails?.statusValue()}"
     binding?.textPaymentTypeDropdown?.text = "${order?.PaymentDetails?.methodValue()}"
 //    binding?.textServiceLocationDropdown?.text = "${order?.SellerDetails?.Address?.City?.capitalizeUtil()}"
-    binding?.textServiceLocationDropdown?.text = "Business"
+    binding?.textServiceLocationDropdown?.text = getString(R.string.business)
 
     order?.BuyerDetails?.let {
       val address = it.getFullAddressDetail()
@@ -270,9 +272,16 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
-    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
-      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+    menu.findItem(R.id.menu_item_invoice)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.menu_item_invoice -> {
+        startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
     }
   }
 

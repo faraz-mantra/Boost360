@@ -98,6 +98,7 @@
     <FrameLayout
         android:id="@+id/next"
         style="@style/ButtonStyle.Rounded"
+        android:layout_width="match_parent"
         android:layout_marginStart="@dimen/size_32"
         android:layout_marginEnd="@dimen/size_32"
         android:layout_marginBottom="@dimen/size_12"

@@ -45,6 +45,16 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.ADDED;
+import static com.framework.webengageconstant.EventLabelKt.ERROR_SUBSCRIBER;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_ADD_SUBSCRIBER;
+import static com.framework.webengageconstant.EventLabelKt.NEWSLETTER_SUBSCRIPTIONS;
+import static com.framework.webengageconstant.EventNameKt.ADD_SUBSCRIBER;
+import static com.framework.webengageconstant.EventNameKt.ADD_SUBSCRIBER_FAILED;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_NEWSLETTER_SUBSCRIPTIONS;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
+import static com.framework.webengageconstant.EventValueKt.TO_BE_ADDED;
+
 public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener, SubscribersAdapter.SubscriberInterfaceMethods {
 
 
@@ -67,7 +77,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WebEngageController.trackEvent("Clicked on newsletter subscriptions", "NEWSLETTER SUBSCRIPTIONS", "");
+        WebEngageController.trackEvent(CLICKED_ON_NEWSLETTER_SUBSCRIPTIONS, NEWSLETTER_SUBSCRIPTIONS, NO_EVENT_VALUE);
         MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
         setContentView(R.layout.activity_subscribers);
 
@@ -225,13 +235,13 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         mSubscriberApis.addSubscriber(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                WebEngageController.trackEvent("ADD SUBSCRIBER","Add: Subscriber",mSessionManager.getFpTag());
                 mProgressBar.setVisibility(View.GONE);
-                if (response.getStatus() == 200) {
+                if (response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) {
+                    WebEngageController.trackEvent(ADD_SUBSCRIBER,ADDED,TO_BE_ADDED);
                     mSubscriberList.clear();
                     mSubscriberAdapter.notifyDataSetChanged();
                     getSubscribersList();
-                    Toast.makeText(SubscribersActivity.this, email + " Successfully Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SubscribersActivity.this, email + getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
                     if (!isFinishing()) {
                         dialog.dismiss();
                     }
@@ -245,7 +255,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 Log.v("ggg", error.getMessage());
                 mProgressBar.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
-                WebEngageController.trackEvent("ADD SUBSCRIBER FAILED","Error: Subscriber",mSessionManager.getFpTag());
+                WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED,ERROR_SUBSCRIBER,mSessionManager.getFpTag());
             }
         });
     }

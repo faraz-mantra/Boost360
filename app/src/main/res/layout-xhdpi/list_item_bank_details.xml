@@ -18,8 +18,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Account Number"
+            android:layout_marginStart="10dp"
+            android:text="@string/account_number_"
             android:textColor="#383838"
             android:textSize="14sp" />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="Account Number"
+            android:hint="@string/account_number_"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -49,8 +49,8 @@
             fontPath="Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Bank Name"
+            android:layout_marginStart="10dp"
+            android:text="@string/bank_name_"
             android:textColor="#383838"
             android:textSize="14sp" />
 
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="Bank Name"
+            android:hint="@string/bank_name_"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -74,15 +74,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_5"
-        android:hint="IFSC Code"
+        android:hint="@string/ifsc_code"
         android:orientation="vertical">
 
         <TextView
             fontPath="Roboto-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="IFSC Code"
+            android:layout_marginStart="10dp"
+            android:text="@string/ifsc_code"
             android:textColor="#383838"
             android:textSize="14sp" />
 
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#383838"
             android:ellipsize="end"
-            android:hint="IFSC Code"
+            android:hint="@string/ifsc_code"
             android:inputType="textNoSuggestions"
             android:scrollHorizontally="true"
             android:singleLine="true"

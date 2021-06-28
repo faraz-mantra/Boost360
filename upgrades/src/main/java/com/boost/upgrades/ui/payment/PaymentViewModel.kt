@@ -1,14 +1,17 @@
 package com.boost.upgrades.ui.payment
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
 import com.boost.upgrades.utils.Utils
+import com.google.gson.Gson
 import com.razorpay.BaseRazorpay
 import com.razorpay.Razorpay
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,6 +19,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
 import org.json.JSONObject
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
 
 class PaymentViewModel : ViewModel() {
     private var _paymentMethods: MutableLiveData<JSONObject> = MutableLiveData()
@@ -114,5 +120,18 @@ class PaymentViewModel : ViewModel() {
                         })
         )
     }
+    fun loadPaymentLinkPriority(clientId: String, data: PaymentPriorityEmailRequestBody) {
+        CompositeDisposable().add(
+                ApiService.createPaymentThroughEmailPriority( data)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            _paymentUsingExterLinkResponse.postValue(it)
+                        }, {
+                            it.printStackTrace()
+                        })
+        )
+    }
+
 
 }

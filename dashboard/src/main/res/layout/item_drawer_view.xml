@@ -61,7 +61,7 @@
           android:background="@drawable/addons_store_new_bg_d"
           android:gravity="center"
           android:includeFontPadding="false"
-          android:text="NEW"
+          android:text="@string/new_content"
           android:textAllCaps="true"
           android:textColor="@color/white"
           android:textSize="12sp"

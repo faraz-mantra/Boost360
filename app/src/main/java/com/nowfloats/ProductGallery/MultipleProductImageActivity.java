@@ -241,7 +241,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
                     PackageManager.PERMISSION_GRANTED) {
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", MultipleProductImageActivity.this);
+                    Methods.showApplicationPermissions(getString(R.string.storage_permission), getString(R.string.we_need_this_permission_to_enable_image_upload), MultipleProductImageActivity.this);
                 } else {
                     ActivityCompat.requestPermissions(MultipleProductImageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, galleryReqId);
                 }
@@ -267,7 +267,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
                     PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                         ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", MultipleProductImageActivity.this);
+                    Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_this_permission_to_enable_capture_and_upload_images), MultipleProductImageActivity.this);
                 } else {
                     ActivityCompat.requestPermissions(MultipleProductImageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, mediaReqId);
                 }
@@ -413,7 +413,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
     List<ProductImageResponseModel> lsProductImages;
 
     private void displayImagesForProduct() {
-        progressDialog = ProgressDialog.show(this, "", "Please wait...");
+        progressDialog = ProgressDialog.show(this, "", getString(R.string.please_wait_));
         if (TextUtils.isEmpty(mProductId)) {
             refreshList(lsProductImages);
         } else {
@@ -430,7 +430,7 @@ public class MultipleProductImageActivity extends AppCompatActivity {
                     if (progressDialog != null && progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
-                    Toast.makeText(MultipleProductImageActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MultipleProductImageActivity.this, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                 }
             });
         }

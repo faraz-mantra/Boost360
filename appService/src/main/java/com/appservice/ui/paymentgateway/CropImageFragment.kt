@@ -91,7 +91,7 @@ class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewMode
         baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
         baseActivity.finish()
       } else {
-        Log.d("Cropped Image", result?.toString())
+        Log.d("Cropped Image", result?.toString()?:"")
         if (result?.uri != null) {
           Log.d("Cropped Image URI", result.uri.toString())
           val bundle = Bundle()

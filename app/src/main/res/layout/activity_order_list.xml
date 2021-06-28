@@ -19,7 +19,7 @@
             android:popupTheme="@style/MyCustomThemeLight"/>
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/search_view"
-            android:hint="Search by OrderId"
+            android:hint="@string/search_by_orderid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </FrameLayout>

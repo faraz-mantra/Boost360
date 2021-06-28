@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -97,7 +98,7 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
                                 editor.putString("keyboard_theme", Themes.LXX_DARK.toString());
                         }
                         editor.commit();
-                        Snackbar.make(view, "The theme has been applied!", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view, KoinBaseApplication.instance.getString(R.string.the_theme_is_applied), Snackbar.LENGTH_SHORT).show();
                         notifyDataSetChanged();
                     }
                     holder.clKeyboardTheme.setAlpha(1f);
