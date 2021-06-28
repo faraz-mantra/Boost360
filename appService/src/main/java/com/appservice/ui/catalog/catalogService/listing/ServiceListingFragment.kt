@@ -82,37 +82,38 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     private var isLastPageD = false
 
     companion object {
-        fun newInstance(): ServiceListingFragment {
-            return ServiceListingFragment()
-        }
-  companion object {
-    fun newInstance(isNonPhysicalExperience: Boolean?, currencyType: String?, fpId: String?, fpTag: String?, clientId: String?, externalSourceId: String?, applicationId: String?, userProfileId: String?): ServiceListingFragment {
-      val bundle = Bundle()
-      bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience!!)
-      bundle.putString(IntentConstant.CURRENCY_TYPE.name, "INR")
-      bundle.putString(IntentConstant.FP_ID.name, fpId)
-      bundle.putString(IntentConstant.FP_TAG.name, fpTag)
-      bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
-      bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
-      bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
-      bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
-      val serviceListingFragment = ServiceListingFragment()
-      serviceListingFragment.arguments = bundle
-      return serviceListingFragment
-    }
+      fun newInstance(): ServiceListingFragment {
+        return ServiceListingFragment()
+      }
 
+      fun newInstance(
+        isNonPhysicalExperience: Boolean?,
+        currencyType: String?,
+        fpId: String?,
+        fpTag: String?,
+        clientId: String?,
+        externalSourceId: String?,
+        applicationId: String?,
+        userProfileId: String?
+      ): ServiceListingFragment {
+        val bundle = Bundle()
+        bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience!!)
+        bundle.putString(IntentConstant.CURRENCY_TYPE.name, "INR")
+        bundle.putString(IntentConstant.FP_ID.name, fpId)
+        bundle.putString(IntentConstant.FP_TAG.name, fpTag)
+        bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
+        bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
+        bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
+        bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
+        val serviceListingFragment = ServiceListingFragment()
+        serviceListingFragment.arguments = bundle
+        return serviceListingFragment
+      }
         private const val STORAGE_CODE = 120
-        var shareType = false
-        var shareProduct: ItemsItem? = null
-    }
-    private const val STORAGE_CODE = 120
-    var shareType = 0
-    var shareProduct: ItemsItem? = null
-    fun newInstance(): ServiceListingFragment {
-      return ServiceListingFragment()
-    }
-  }
 
+    }
+  var shareType = false
+  var shareProduct: ItemsItem? = null
 
     override fun getLayout(): Int {
         return R.layout.fragment_service_listing
@@ -217,30 +218,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
             }
         }
     }
-  private fun setServiceDataItems(resultService: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
-    val listService = resultService?.data as? ArrayList<ItemsItem>
-    if (isSearchString.not()) {
-      onServiceAddedOrUpdated(listService?.size ?: 0)
-      if (isFirstLoad) finalList.clear()
-      if (listService.isNullOrEmpty().not()) {
-        removeLoader()
-        setEmptyView(View.GONE)
-        TOTAL_ELEMENTS = resultService?.paging?.count ?: 0
-        finalList.addAll(listService!!)
-        list.clear()
-        list.addAll(finalList)
-        isLastPageD = (finalList.size == TOTAL_ELEMENTS)
-        setAdapterNotify()
-//        setToolbarTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})")
-      } else if (isFirstLoad) setEmptyView(View.VISIBLE)
-    } else {
-      if (listService.isNullOrEmpty().not()) {
-        list.clear()
-        list.addAll(listService!!)
-        setAdapterNotify()
-      }
-    }
-  }
 
     private fun onServiceAddedOrUpdated(count: Int) {
         val instance = FirestoreManager
@@ -318,17 +295,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
   }
 
-  private fun startFilter(query: String?) {
-    when {
-      query.isNullOrEmpty().not() && query!!.length > 2 -> getListServiceFilterApi(searchString = query)
-      finalList.isNullOrEmpty().not() -> {
-        list.clear()
-        list.addAll(finalList)
-        setAdapterNotify()
-      }
-      else -> setEmptyView(View.VISIBLE)
-    }
-  }
 
     private fun setEmptyView(visibility: Int) {
         binding?.serviceListingEmpty?.root?.visibility = visibility

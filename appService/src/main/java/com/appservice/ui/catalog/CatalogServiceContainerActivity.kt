@@ -41,24 +41,15 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var serviceTimingFragment: ServiceTimingFragment? = null
   private var createCategoryFragment: CreateCategoryFragment? = null
   private var serviceListingFragment: ServiceListingFragment? = null
-    private var type: FragmentType? = null
-    private var serviceDetailFragment: ServiceDetailFragment? = null
-    private var serviceInformationFragment: ServiceInformationFragment? = null
-    private var productDetailFragment: ProductDetailFragment? = null
-    private var productInformationFragment: ProductInformationFragment? = null
-    private var weeklyAppointmentFragment: WeeklyAppointmentFragment? = null
-    private var serviceTimingFragment: ServiceTimingFragment? = null
-    private var createCategoryFragment: CreateCategoryFragment? = null
-    private var serviceListingFragment: ServiceListingFragment? = null
-    private var serviceCatalogHomeFragment: ServiceCatalogHomeFragment? = null
-    private var fragmentAppointmentSettings: FragmentAppointmentSettings? = null
-    private var fragmentCatalogSettings: FragmentCatalogSettings? = null
-    private var fragmentCustomerInvoiceSetup: FragmentCustomerInvoiceSetup? = null
-    private var fragmentCustomerPolicies: FragmentCustomerPolicies? = null
-    private var fragmentPaymentCollectionsSettings: FragmentPaymentCollectionsSettings? = null
-    private var fragmentAccountAddHome: FragmentAccountAddHome? = null
-    private var fragmentAddAccountDetails: FragmentAddAccountDetails? = null
-    private var fragmentEditAccountDetails: FragmentEditBankDetails? = null
+  private var serviceCatalogHomeFragment: ServiceCatalogHomeFragment? = null
+  private var fragmentAppointmentSettings: FragmentAppointmentSettings? = null
+  private var fragmentCatalogSettings: FragmentCatalogSettings? = null
+  private var fragmentCustomerInvoiceSetup: FragmentCustomerInvoiceSetup? = null
+  private var fragmentCustomerPolicies: FragmentCustomerPolicies? = null
+  private var fragmentPaymentCollectionsSettings: FragmentPaymentCollectionsSettings? = null
+  private var fragmentAccountAddHome: FragmentAccountAddHome? = null
+  private var fragmentAddAccountDetails: FragmentAddAccountDetails? = null
+  private var fragmentEditAccountDetails: FragmentEditBankDetails? = null
 
     override fun getLayout(): Int {
         return com.framework.R.layout.activity_fragment_container

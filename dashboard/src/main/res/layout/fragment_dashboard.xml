@@ -330,11 +330,6 @@
                       app:progressMode="false"
                       app:selectedDotColor="@color/grey_dark_2" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/cb_launch_offer_flow"
-                    style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
-                    android:text="Launch OfferFlow" />
               </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
