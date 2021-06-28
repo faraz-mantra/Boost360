@@ -23,6 +23,7 @@ import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.launch_darkly.LDManager
 import com.framework.pref.BASE_IMAGE_URL
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
@@ -116,6 +117,11 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
             )
           }
           if (data != null && data.actionItem.isNullOrEmpty().not()) {
+            // show only items required based upon launch darkly
+            val items = data.actionItem!!.filter { LDManager.showFeature(it.title, true)!! }
+            data.actionItem?.clear()
+            data.actionItem?.addAll(items)
+            // ******************************************
             data.actionItem!!.map { it2 ->
               if (it2.premiumCode.isNullOrEmpty()
                   .not() && session.checkIsPremiumUnlock(it2.premiumCode).not()
