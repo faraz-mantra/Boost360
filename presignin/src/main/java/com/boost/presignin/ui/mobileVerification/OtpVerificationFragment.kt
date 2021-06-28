@@ -1,5 +1,6 @@
 package com.boost.presignin.ui.mobileVerification
 
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -30,10 +31,13 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
+import com.framework.smsVerification.AppSignatureHashHelper
+import com.framework.smsVerification.SMSReceiver
+import com.framework.smsVerification.SmsManager
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
-class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>() {
+class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>(), SMSReceiver.OTPReceiveListener {
 
   private val TAG = OtpVerificationFragment::class.java.canonicalName;
   private var isCounterRunning = false
@@ -41,6 +45,7 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
   private lateinit var countDown: com.boost.presignin.timer.CountDownTimer
 
   private var resultLogin: VerificationRequestResult? = null
+
 
   companion object {
 
@@ -87,12 +92,23 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
     }
     binding?.verifyButton?.setOnClickListener { verify() }
     Handler().postDelayed({ onCodeSent() }, 500)
+
+
+    // init SMS Manager
+    SmsManager.initManager(activity?.baseContext!!, this);
   }
 
   override fun onResume() {
     super.onResume()
     if (this::countDown.isInitialized) countDown.resume()
+    SmsManager.register()
   }
+
+  override fun onPause() {
+    super.onPause()
+    SmsManager.unregister()
+  }
+
 
   private fun onCodeSent() {
     countDown = object : com.boost.presignin.timer.CountDownTimer(50 * 1000, 1000) {
@@ -182,5 +198,11 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
         binding?.wrongOtpErrorTv?.isVisible = true;
       }
     })
+  }
+
+  override fun onOTPReceived(otp: String?) {
+    binding?.pinTv?.setOTP(otp!!)
+    binding?.verifyButton?.isEnabled = otp != null && otp.length == 4
+    verify()
   }
 }
