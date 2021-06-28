@@ -19,9 +19,8 @@
             android:layout_height="20dp"
             android:visibility="gone"
             android:checked="false"
-            android:layout_marginEnd="10dp"
             android:layout_gravity="center"
-            android:layout_marginRight="10dp" />
+            android:layout_marginEnd="10dp" />
         <LinearLayout
             android:layout_width="0dp"
             android:orientation="vertical"

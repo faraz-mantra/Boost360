@@ -77,7 +77,7 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
                 if (!it.isNullOrBlank()) {
                     if (it == SUCCESS) {
                         hideLoader()
-                        Toast.makeText(requireContext(), "Faculty deleted successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.faculty_deleted_successfully), Toast.LENGTH_SHORT).show()
                         showLoader("Loading Faculty")
                         setDeleteFacultyLiveDataValue("")
                         viewModel.getOurFaculty()
@@ -116,7 +116,7 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
 
     override fun onDeleteClick(data: Any, position: Int) {
         facultyManagementAdapter.menuOption(position, false)
-        showLoader("Deleting Faculty")
+        showLoader(getString(R.string.deleting_faculty))
         viewModel.deleteOurFaculty(data as Data)
     }
 

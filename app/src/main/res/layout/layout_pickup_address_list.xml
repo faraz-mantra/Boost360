@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:text="PICKUP ADDRESS"
+                android:text="@string/pickup_address"
                 android:paddingStart="@dimen/margin_15"
                 android:paddingEnd="@dimen/margin_15"
                 android:paddingTop="10dp"
@@ -40,7 +40,7 @@
                 android:background="@android:color/transparent"
                 android:layout_gravity="end|center"
                 android:visibility="visible"
-                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
                 app:srcCompat="@drawable/ic_cancel" />
 
         </LinearLayout>
@@ -63,7 +63,7 @@
             android:layout_margin="@dimen/margin_15"
             android:gravity="center"
             android:background="@drawable/yellow_rectangle_background"
-            android:text="ADD NEW PICKUP ADDRESS"/>
+            android:text="@string/add_new_pickup_address"/>
 
     </LinearLayout>
 

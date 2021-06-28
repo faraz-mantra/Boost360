@@ -33,22 +33,22 @@ class PopUpWebViewFragment : DialogFragment() {
             savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.pop_up_web_view_fragment, container, false)
-        link = arguments!!.getString("link")
-        title = arguments!!.getString("title")
+        link = requireArguments().getString("link")?:""
+        title = requireArguments().getString("title")
         return root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if(arguments !=null && arguments!!.containsKey("title")){
-            browser_title.setText(arguments!!.getString("title"))
+        if(arguments !=null && requireArguments().containsKey("title")){
+            browser_title.text = requireArguments().getString("title")
         }
 
         if (link != null) {
-            webview.loadUrl(link)
+            webview.loadUrl(link!!)
         } else {
-            Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), getString(R.string.link_is_empty), Toast.LENGTH_LONG).show()
             dismiss()
         }
 

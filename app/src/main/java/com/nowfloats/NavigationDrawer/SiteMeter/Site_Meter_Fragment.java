@@ -66,6 +66,9 @@ import java.util.HashMap;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
+import static com.framework.webengageconstant.EventLabelKt.SITE_HEALTH;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_SITE_HEALTH;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -121,7 +124,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             @Override
             public void run() {
                 if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog = new ProgressDialog(requireActivity());
                     progressDialog.setCanceledOnTouchOutside(false);
                 }
                 progressDialog.setMessage(message);
@@ -204,11 +207,11 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
         if (!Util.isNullOrEmpty(url)) {
             String eol = System.getProperty("line.separator");
-            url = "Woohoo! We have a new website. Visit it at "
+            url = getString(R.string.woohoo_we_have_a_new_website_visit_it_at)
                     + eol + url.toLowerCase();
         } else {
             String eol = System.getProperty("line.separator");
-            url = "Woohoo! We have a new website. Visit it at "
+            url = getString(R.string.woohoo_we_have_a_new_website_visit_it_at)
                     + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
                     + activity.getResources().getString(R.string.tag_for_partners);
         }
@@ -216,7 +219,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, url);
-        startActivity(Intent.createChooser(intent, "Share with:"));
+        startActivity(Intent.createChooser(intent, getString(R.string.share_with)));
 //        Constants.websiteShared = true;
         session.setWebsiteshare(true);
     }
@@ -228,42 +231,42 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         //0
         siteData.clear();
         if (!(getResources().getString(R.string.buydomain_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(domain, "Buy/Link a Domain", "Give your business an identity", "+10%", false, 12));
+            siteData.add(new SiteMeterModel(domain, getString(R.string.buy_link_a_domain), getString(R.string.give_your_business_an_identity), getString(R.string.plus_ten_percent), false, 12));
         //1
         if (!(getResources().getString(R.string.phoneNumber_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(phone, "Phone Number", "Help customers to reach you instantly", "+5%", false, 5));
+            siteData.add(new SiteMeterModel(phone, getString(R.string.phone_number_), getString(R.string.help_customers_to_reach_you), getString(R.string.plus_five_percent), false, 5));
         //2
         if (!(getResources().getString(R.string.businessCategory_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(category, "Business Category", "Choose a business category", "+5%", false, 3));
+            siteData.add(new SiteMeterModel(category, getString(R.string.business_category_), getString(R.string.choose_a_business_category), getString(R.string.plus_five_percent), false, 3));
         //3
         if (!(getResources().getString(R.string.featuredImage_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(image, "Featured Image", "Add a relevant image", "+10%", false, 8));
+            siteData.add(new SiteMeterModel(image, getString(R.string.featured_image), getString(R.string.add_a_relevent_name), getString(R.string.plus_ten_percent), false, 8));
         //4
         if (!(getResources().getString(R.string.businessName_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(businessName, "Business Name", "Add business name", "+5%", false, 1));
+            siteData.add(new SiteMeterModel(businessName, getString(R.string.business_name_), getString(R.string.add_business_name), getString(R.string.plus_five_percent), false, 1));
         //5
         if (!(getResources().getString(R.string.businessdescription_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(description, "Business Description", "Describe your business", "+10%", false, 2));
+            siteData.add(new SiteMeterModel(description, getString(R.string.business_description), getString(R.string.describe_you_business), getString(R.string.plus_ten_percent), false, 2));
         //6
         if (!(getResources().getString(R.string.social_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(social, "Social Share", "Connect to Facebook and Twitter", "+10%", false, 11));
+            siteData.add(new SiteMeterModel(social, getString(R.string.social_share), getString(R.string.connect_to_fb_twitter), getString(R.string.plus_ten_percent), false, 11));
         //7
-        siteData.add(new SiteMeterModel(address, "Business Address", "Help your customers find you", "+10%", false, 6));
+        siteData.add(new SiteMeterModel(address, getString(R.string.business_address), getString(R.string.help_customer_to_find_you), getString(R.string.plus_ten_percent), false, 6));
         //8
         if (!(getResources().getString(R.string.email_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(email, "Email", "Add your email", "+5%", false, 4));
+            siteData.add(new SiteMeterModel(email, getString(R.string.email_), getString(R.string.add_your_email), getString(R.string.plus_five_percent), false, 4));
         //9
         if (!(getResources().getString(R.string.postUpdate_percentage).equals("0"))) {
             int val = getStorebizFloats() < 5 ? 20 - getStorebizFloats() * onUpdate : 20;
-            siteData.add(new SiteMeterModel(post, "Post 5 Updates", "Message regularly and relevantly", "+" + val + "%", false, 10));
+            siteData.add(new SiteMeterModel(post, getString(R.string.post_five_updates), getString(R.string.message_regularly_and_relatively), "+" + val + "%", false, 10));
         }
 
         //10
         if (!(getResources().getString(R.string.share_percentage).equals("0"))) {
-            siteData.add(new SiteMeterModel(logo, "Business Logo", "Add a business logo", "+5%", false, 9));
+            siteData.add(new SiteMeterModel(logo, getString(R.string.business_logo), getString(R.string.add_business_logo), getString(R.string.plus_five_percent), false, 9));
         }
         if (!(getResources().getString(R.string.business_hours).equals("0")))
-            siteData.add(new SiteMeterModel(businessHours, "Business Hours", "Display business timings", "+5%", false, 7));
+            siteData.add(new SiteMeterModel(businessHours, getString(R.string.business_hours_), getString(R.string.display_business_timings), getString(R.string.plus_five_percent), false, 7));
 
         Collections.sort(siteData, Collections.<SiteMeterModel>reverseOrder());
         //Collections.reverse(siteData);
@@ -390,7 +393,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             }
         }
 
-        WebEngageController.trackEvent("Clicked on site health", "SITE HEALTH", String.valueOf(siteMeterTotalWeight));
+        WebEngageController.trackEvent(CLICKED_ON_SITE_HEALTH, SITE_HEALTH, String.valueOf(siteMeterTotalWeight));
 
         activity.runOnUiThread(new Runnable() {
             @Override
@@ -473,7 +476,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                     ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
                 else {
                     DigitalChannelUtil.startDigitalChannel(activity, session);
-//                    Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(activity, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                 }
                     /*Intent in = new Intent(activity, Social_Sharing_Activity.class);
                     startActivity(in);
@@ -632,7 +635,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                 return;
         }
 
-        MaterialDialog mExpireDailog = new MaterialDialog.Builder(getActivity())
+        MaterialDialog mExpireDailog = new MaterialDialog.Builder(requireActivity())
                 .customView(R.layout.pop_up_restrict_post_message, false)
                 .backgroundColorRes(R.color.white)
                 .positiveText(callUsButtonText)

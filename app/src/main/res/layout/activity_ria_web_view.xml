@@ -23,10 +23,10 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="17sp"
-                android:layout_marginRight="10dp"
-                android:layout_alignParentRight="true"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="OPEN IN BROWSER"/>
+                android:text="@string/open_in_browser"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -37,7 +37,7 @@
         android:progressTint="@color/primaryColor"
         android:id="@+id/progressBar" />
 
-    <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
+    <WebView
         android:id="@+id/webview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >

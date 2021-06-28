@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.invitereferrals.invitereferrals.InviteReferralsApi;
 import com.nowfloats.Login.UserSessionManager;
+import com.thinksity.R;
 
 import org.json.JSONException;
 
@@ -39,7 +40,7 @@ public class ReferralTransActivity extends AppCompatActivity {
             );
             inviteReferralLogin();
         }else{
-            Toast.makeText(getApplicationContext(), "An unexpected error occured.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.an_unexpacted_error, Toast.LENGTH_LONG).show();
         }
         finish();
     }
@@ -52,10 +53,10 @@ public class ReferralTransActivity extends AppCompatActivity {
                 if(status.toLowerCase().equals("success")){
                     InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
                 }else{
-                    Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -12,6 +12,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.NetworkUtils
+import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Status
@@ -51,7 +52,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("Google My business page load", "GOOGLE MY BUSINESS", "")
+    WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_PAGE_LOAD, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
     checkIsUpdate()
     binding?.googleChannels?.post {
       (binding?.googleChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
@@ -79,8 +80,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
   }
 
   override fun setSavedData() {
-    val channelAccessToken = requestFloatsModel?.channelAccessTokens
-        ?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
+    val channelAccessToken = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
     setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
     requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
     this.channelAccessToken = channelAccessToken
@@ -96,8 +96,8 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
     super.onClick(v)
     when (v) {
       binding?.skip -> {
-        WebEngageController.trackEvent("Google My business click to skip", "GOOGLE MY BUSINESS","")
-        gotoNextScreen()
+        WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_CLICK_TO_SKIP, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
+        gotoNextScreen(true)
       }
       binding?.linkGoogle -> {
         if (channelAccessToken.isLinkedGoogleBusiness()) {
@@ -105,33 +105,21 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
         } else if (!NetworkUtils.isNetworkConnected()) {
           InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
         } else {
-          WebEngageController.trackEvent("Google My business click to connect", "GOOGLE MY BUSINESS","")
+          WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_CLICK_TO_CONNECT, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
           googleLoginCallback(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
         }
       }
     }
   }
 
-  private fun gotoNextScreen() {
-    if (channelAccessToken.isLinkedGoogleBusiness()) {
-      requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
-    }
+  private fun gotoNextScreen(isSkip: Boolean = false) {
+    if (channelAccessToken.isLinkedGoogleBusiness() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
     when {
-      channels.haveFacebookPage() -> {
-        gotoFacebookPage()
-      }
-      channels.haveFacebookShop() -> {
-        gotoFacebookShop()
-      }
-      channels.haveTwitterChannels() -> {
-        gotoTwitterDetails()
-      }
-      channels.haveWhatsAppChannels() -> {
-        gotoWhatsAppCallDetails()
-      }
-      else -> {
-        gotoBusinessApiCallDetails()
-      }
+      channels.haveFacebookPage() -> gotoFacebookPage()
+      channels.haveFacebookShop() -> gotoFacebookShop()
+      channels.haveTwitterChannels() -> gotoTwitterDetails()
+      channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()
+      else -> gotoBusinessApiCallDetails()
     }
   }
 
@@ -152,7 +140,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
   }
 
   private fun disconnectGooglePage() {
-    WebEngageController.trackEvent("Google My business click to disconnect", "GOOGLE MY BUSINESS","")
+    WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_CLICK_TO_DISCONNECT, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
     logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
     binding?.skip?.visible()
     binding?.googlePageSuccess?.maimView?.gone()
@@ -198,11 +186,11 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
     val singleItems = ArrayList<String>()
     locations?.forEach { it.locationName?.let { it1 -> singleItems.add(it1) } }
     var checkedItem = 0
-    AlertDialog.Builder(baseActivity, R.style.DialogTheme).setTitle("Select the location to map")
+    AlertDialog.Builder(baseActivity, R.style.DialogTheme).setTitle(getString(R.string.select_the_location_on_map))
         .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
           dialog.dismiss()
           val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
-          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Google my business and google maps connected", "DIGITAL CHANNELS", it) }
+          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_AND_GOOGLE_MAPS_CONNECTED, DIGITAL_CHANNELS, it) }
           setDataGoogle(result, responseAuth, data)
           setProfileDetails(data?.locationName?.capitalizeWords(), result?.photoUrl?.toString())
         }.setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
@@ -229,7 +217,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
   }
 
   override fun onGoogleLoginError(error: ApiException?) {
-    showLongToast("Google login error.")
+    showLongToast(getString(R.string.google_login_error))
   }
 
   override fun updateInfo() {

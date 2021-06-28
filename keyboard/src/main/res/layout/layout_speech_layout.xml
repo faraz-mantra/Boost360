@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:text="Listening..."
+        android:text="@string/listening"
         android:textSize="20sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

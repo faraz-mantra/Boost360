@@ -54,7 +54,7 @@ class TimePickerDialogFragment(
                     listener.onTimeSet(timePickerId, timeString)
                 }
                 else -> {
-                    Toast.makeText(requireContext(), "Please select time", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.please_select_time), Toast.LENGTH_SHORT).show()
                 }
             }
         }

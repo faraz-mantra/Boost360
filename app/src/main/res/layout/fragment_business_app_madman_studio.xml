@@ -54,14 +54,13 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:maxLines="1"
-                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:scrollHorizontally="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
                 android:text="@string/Madman_design_studio"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginStart="10dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,9 +75,10 @@
                 android:textSize="15sp"
                 android:padding="15dp"
                 android:layout_margin="10dp"
+                android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:background="@drawable/gray_round_corner"
-                android:text="COMING SOON"/>
+                android:text="@string/coming_soon"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -96,15 +96,12 @@
                 android:visibility="visible"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginRight="2.5dp"
                 android:layout_marginEnd="2.5dp"
                 android:id="@+id/preview_button"
                 android:layout_height="match_parent"
                 android:text="@string/android_app_preview"
-                android:drawableLeft="@drawable/business_white_eye"
-                android:paddingLeft="15dp"
-                android:layout_marginLeft="10dp" />
+                android:paddingStart="15dp"
+                android:layout_marginStart="10dp" />
 
             <Button
                 android:layout_width="0dp"
@@ -113,9 +110,7 @@
                 android:textSize="12sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginStart="2.5dp"
                 android:id="@+id/get_app_button"
                 android:drawableStart="@drawable/android_icon_white"
                 android:background="@drawable/black_round_corner"
@@ -123,9 +118,8 @@
                 android:layout_height="match_parent"
                 android:text="@string/interest"
                 android:textAllCaps="true"
-                android:paddingLeft="15dp"
-                android:layout_marginLeft="2.5dp"
-                android:drawableLeft="@drawable/android_icon_white" />
+                android:paddingStart="15dp"
+                android:layout_marginStart="2.5dp"/>
         </LinearLayout>
 
     </LinearLayout>

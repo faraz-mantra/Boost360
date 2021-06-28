@@ -13,8 +13,8 @@
         android:orientation="vertical"
         android:layout_centerInParent="true"
         android:background="@drawable/screen6"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="@dimen/pre_screen_linear_layout_top_margin"
         android:layout_marginBottom="20dp" >
 
@@ -48,7 +48,7 @@
 		        android:layout_gravity="center_horizontal"
 		        android:gravity="center_horizontal"
 		        android:layout_marginTop="@dimen/pre_screen_top_margin_text2"
-		        android:paddingLeft="@dimen/pre_s2_description_paddingLeft"
+		        android:paddingStart="@dimen/pre_s2_description_paddingLeft"
 		        android:paddingRight="@dimen/pre_s2_description_paddingRight"
                          />
             

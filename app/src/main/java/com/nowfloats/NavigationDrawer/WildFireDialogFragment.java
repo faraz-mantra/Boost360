@@ -63,23 +63,17 @@ public class WildFireDialogFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btn_apply:
-                SortType type;
-                switch (mRadioGroup.getCheckedRadioButtonId()){
-                    case R.id.rb_alphabetic:
-                        type = SortType.ALPHABETIC;
-                        break;
-                    case R.id.rb_clicks:
-                        type = SortType.CLICKS;
-                        break;
-                    default:
-                        return;
-                }
-                ((OnMenuDialogOptionSelection)mContext).onSortOptionSelect(type);
-                break;
-            default:
-                break;
+        if (view.getId() == R.id.btn_apply) {
+            SortType type;
+            int checkedRadioButtonId = mRadioGroup.getCheckedRadioButtonId();
+            if (checkedRadioButtonId == R.id.rb_alphabetic) {
+                type = SortType.ALPHABETIC;
+            } else if (checkedRadioButtonId == R.id.rb_clicks) {
+                type = SortType.CLICKS;
+            } else {
+                return;
+            }
+            ((OnMenuDialogOptionSelection) mContext).onSortOptionSelect(type);
         }
     }
 

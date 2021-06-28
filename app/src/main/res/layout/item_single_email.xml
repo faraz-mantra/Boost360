@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/open_sans"
-        android:text="contact@thinkwalls.net"
+        android:text="@string/contact_thinkwalls_net"
         android:textSize="@dimen/_12sdp" />
 
 </LinearLayout>

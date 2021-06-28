@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:background="@android:color/transparent">
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginBottom="@dimen/size_8"
             android:text="@string/edit_customer_address"
@@ -25,8 +23,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvSubTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginBottom="@dimen/size_8"
             android:text="@string/make_changes_to_the_customer_info"
@@ -41,8 +38,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/coordinatorLayoutBottomSheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:background="@drawable/bg_rounded_top_white_2"
             android:orientation="vertical"
             android:layout_marginTop="@dimen/size_10"
@@ -58,16 +54,14 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    style="@style/match_match"
                     android:orientation="vertical"
                     android:paddingStart="@dimen/size_20"
                     android:paddingTop="@dimen/size_20"
                     android:paddingEnd="@dimen/size_20">
 
                     <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrap_wrap"
                         android:text="@string/billing_address"
                         android:textColor="@color/black_3C3C3C"
                         app:fontFamily="@font/semi_bold"
@@ -79,8 +73,7 @@
 
                     <com.framework.views.customViews.CustomCheckBox
                         android:id="@+id/checkbox_address_same"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrap_wrap"
                         android:layout_marginTop="@dimen/size_16"
                         android:buttonTint="@color/orange"
                         android:visibility="gone"
@@ -93,14 +86,12 @@
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/lyt_shipping_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/match_wrap"
                         android:visibility="gone"
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/wrap_wrap"
                             android:layout_marginTop="@dimen/size_16"
                             android:text="@string/shipping_address"
                             android:textColor="@color/black_3C3C3C"
@@ -116,8 +107,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/btn_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:background="@color/white"
             android:gravity="end"
             android:orientation="horizontal"
@@ -128,35 +118,16 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
                 android:layout_marginEnd="@dimen/size_20"
-                android:padding="@dimen/size_4"
                 android:text="@string/cancel"
-                android:textAllCaps="true"
-                android:textColor="@color/orange"
-                app:fontFamily="@font/semi_bold"
-                app:textType="BODY_3" />
+                android:background="@color/white" />
 
             <com.framework.views.customViews.CustomButton
                 android:id="@+id/buttonDone"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/size_36"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/size_10"
-                android:background="@drawable/bg_rounded_yellow"
-                android:gravity="center"
-                android:paddingStart="@dimen/size_28"
-                android:paddingEnd="@dimen/size_28"
-                android:shadowRadius="0"
-                android:stateListAnimator="@null"
-                android:text="@string/save"
-                android:textAllCaps="true"
                 android:textColor="@color/white"
-                app:fontFamily="@font/bold"
-                app:textType="CAPTION"
-                tools:ignore="UnusedAttribute" />
+                style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                android:text="@string/save" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

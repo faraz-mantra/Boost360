@@ -12,6 +12,7 @@ import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.ui.history.HistoryFragment
 import com.boost.upgrades.ui.historydetails.HistoryDetailsFragment
 import com.boost.upgrades.ui.home.HomeFragment
+import com.boost.upgrades.ui.marketplace_offers.MarketPlaceOfferFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
@@ -73,6 +74,7 @@ class Constants {
         var COMPARE_FRAGMENT: String = ComparePackageFragment::class.java.getName()
         var FREEADDONS_FRAGMENT: String = FreeAddonsFragment::class.java.getName()
         var CHECKOUT_KYC_FRAGMENT: String = CheckoutKycFragment::class.java.getName()
+        var MARKET_OFFER_FRAGMENT: String = MarketPlaceOfferFragment::class.java.getName()
 
     }
 }

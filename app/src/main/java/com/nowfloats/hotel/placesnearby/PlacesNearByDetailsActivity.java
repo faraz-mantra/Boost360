@@ -130,7 +130,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
             @Override
             public void onClick(View v) {
                 if (path != null) {
-                    showLoader("Uploading Image.Please Wait...");
+                    showLoader(getString(R.string.uploading_image_please_wait));
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -231,7 +231,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
             @Override
             public void onClick(View v) {
                 if (ScreenType != null && ScreenType.equals("edit")) {
-                    showLoader("Deleting Record.Please Wait...");
+                    showLoader(getString(R.string.deleting_record));
                     deleteRecord(itemId);
                     return;
                 }
@@ -284,7 +284,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Added Place Details");
+                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, getString(R.string.successfully_added_placedetails));
                         onBackPressed();
                     }
 
@@ -337,7 +337,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Updated Place Details");
+                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, getString(R.string.successfully_updated_place_details));
                         finish();
                     }
 
@@ -345,7 +345,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                     public void failure(RetrofitError error) {
                         hideLoader();
                         if (error.getResponse().getStatus() == 200) {
-                            Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Updated Place Details");
+                            Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, getString(R.string.successfully_updated_place_details));
                             finish();
                         } else {
                             Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -361,7 +361,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
     private boolean validateInput() {
         if (placeName.getText().toString().isEmpty() || placeDescription.getText().toString().isEmpty()
                 || placeDistance.getText().toString().isEmpty() || placeAddress.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),getString( R.string.fields_are_empty), Toast.LENGTH_SHORT).show();
             hideLoader();
             return false;
         }
@@ -456,12 +456,12 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                         path = Methods.getPath(this, picUri);
                         updatePlaceProfileImage();
                     } else {
-                        Toast.makeText(this, "Something went wrong. Try Later!!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.something_went_wrong_try_later), Toast.LENGTH_LONG).show();
                     }
                 }
             }
         } catch (Exception e) {
-            Log.e("onActivityResult ->", "Failed ->" + e.getMessage());
+            Log.e("onActivityResult ->", getString(R.string.failed_) + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -479,7 +479,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                 }
             }
         } catch (Exception e) {
-            Log.e("uploadImageToServer ->", "Failed ->" + e.getMessage());
+            Log.e("uploadImageToServer ->", getString(R.string.failed_) + e.getMessage());
             e.printStackTrace();
         } catch (OutOfMemoryError E) {
             E.printStackTrace();
@@ -515,7 +515,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -526,7 +526,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this,  getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -548,10 +548,10 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader("Updating Record.Please Wait...");
+            showLoader(getString(R.string.updating_record_please_wait));
             updateExistingPlaceNearByAPI();
         } else {
-            showLoader("Creating Record.Please Wait...");
+            showLoader(getString(R.string.creating_record_please_wait));
             createNewPlaceNearByAPI();
             Methods.hideKeyboard(PlacesNearByDetailsActivity.this);
         }

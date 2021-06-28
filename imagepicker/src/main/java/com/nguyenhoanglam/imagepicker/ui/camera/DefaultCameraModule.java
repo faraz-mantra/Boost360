@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import androidx.core.content.FileProvider;
 
+import com.nguyenhoanglam.imagepicker.R;
 import com.nguyenhoanglam.imagepicker.helper.ImageHelper;
 import com.nguyenhoanglam.imagepicker.model.Config;
 
@@ -42,7 +43,7 @@ public class DefaultCameraModule implements CameraModule, Serializable {
     @Override
     public void getImage(final Context context, Intent intent, final OnImageReadyListener imageReadyListener) {
         if (imageReadyListener == null) {
-            throw new IllegalStateException("OnImageReadyListener must not be null");
+            throw new IllegalStateException(context.getResources().getString(R.string.on_ready_listner_must_not_be_null));
         }
 
         if (imagePath == null) {

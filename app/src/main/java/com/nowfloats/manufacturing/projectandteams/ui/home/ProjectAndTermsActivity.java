@@ -78,7 +78,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                     Intent projectIntent = new Intent(ProjectAndTermsActivity.this, ProjectActivity.class);
                     startActivity(projectIntent);
                 } else {
-                    Methods.showSnackBarNegative(ProjectAndTermsActivity.this, "No Internet Connection.");
+                    Methods.showSnackBarNegative(ProjectAndTermsActivity.this, getString(R.string.no_internet_connection));
                 }
             }
         });
@@ -90,7 +90,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                     Intent teamsIntent = new Intent(ProjectAndTermsActivity.this, TeamsActivity.class);
                     startActivity(teamsIntent);
                 } else {
-                    Methods.showSnackBarNegative(ProjectAndTermsActivity.this, "No Internet Connection.");
+                    Methods.showSnackBarNegative(ProjectAndTermsActivity.this, getString(R.string.no_internet_connection));
                 }
             }
         });
@@ -113,7 +113,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                 loadProjectsData();
                 loadTeamData();
             } else {
-                Methods.showSnackBarNegative(ProjectAndTermsActivity.this, "No Internet Connection.");
+                Methods.showSnackBarNegative(ProjectAndTermsActivity.this, getString(R.string.no_internet_connection));
             }
         }
     }

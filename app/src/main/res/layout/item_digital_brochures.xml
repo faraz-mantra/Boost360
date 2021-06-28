@@ -38,7 +38,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Updates"
+            android:text="@string/updates_"
             android:fontFamily="@font/open_sans"
             android:textColor="#4A4A4A"
             android:textSize="@dimen/_15sdp"/>
@@ -46,7 +46,7 @@
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Content ideas"
+            android:text="@string/content_ideas"
             android:textColor="#747474"
             android:textSize="@dimen/_10sdp"/>
     </LinearLayout>
@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="https://web.s-cdn.boostkit.dev/webaction-files/597c6bbfee786c8284e8d3bb_uploadpdf/13-ideas-to-update-better-content-5e2ac29940a98f00013766c1.pdf"
+            android:text="@string/https_web_s_cdn_boostkit_dev_webaction_files_597c6bbfee786c8284e8d3bb_uploadpdf_13_ideas_to_update_better_content_5e2ac29940a98f00013766c1_pdf"
             android:textColor="#4A90E2"
             android:fontFamily="@font/open_sans"
             android:textSize="@dimen/_9sdp"/>
@@ -110,14 +110,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:text="Edit"
+            android:text="@string/edit"
             android:textSize="@dimen/_12sdp"/>
 
         <TextView
             android:id="@+id/delete_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="@string/delete_"
             android:padding="@dimen/_10sdp"
             android:textAllCaps="true"
             android:textColor="@color/red"

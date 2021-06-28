@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAFAFA"
@@ -38,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/_2sdp"
-                android:hint="Enter Name" />
+                android:hint="@string/enter_name" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,7 +55,7 @@
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:text="Contact Number" />
+                        android:text="@string/contact_number" />
 
                     <EditText
                         android:id="@+id/contact_number"
@@ -65,9 +63,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:elevation="@dimen/_2sdp"
+                        android:hint="@string/contact_number"
                         android:inputType="phone"
-                        android:maxLength="10"
-                        android:hint="Contact Number" />
+                        android:maxLength="10" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -81,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:text="Table for" />
+                        android:text="@string/table_for" />
 
                     <!--                    <EditText-->
                     <!--                        android:id="@+id/table_count"-->
@@ -93,11 +91,11 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/edittext_bg_elevated"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:elevation="@dimen/_2sdp"
-                        android:layout_marginBottom="@dimen/_5sdp">
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@drawable/edittext_bg_elevated"
+                        android:elevation="@dimen/_2sdp">
 
                         <Spinner
                             android:id="@+id/table_count"
@@ -113,55 +111,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date"
                         android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_15sdp"/>
+                        android:text="@string/date_" />
+
                     <EditText
                         android:id="@+id/date_value"
+                        style="@style/EditTextCustomeStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/EditTextCustomeStyle"
-                        android:hint="00-00-0000"
-                        android:inputType="none"
-                        android:focusable="false"
                         android:layout_marginEnd="@dimen/_5sdp"
-                        android:textSize="@dimen/_12sdp"
                         android:drawableEnd="@drawable/ic_blue_calander"
-                        android:elevation="@dimen/_2sdp"/>
+                        android:elevation="@dimen/_2sdp"
+                        android:focusable="false"
+                        android:hint="@string/_00_00_0000"
+                        android:inputType="none"
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Time"
                         android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_15sdp"/>
+                        android:text="@string/time_" />
 
                     <EditText
                         android:id="@+id/time_value"
+                        style="@style/EditTextCustomeStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/EditTextCustomeStyle"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:hint="00:00 AM/PM"
+                        android:elevation="@dimen/_2sdp"
                         android:focusable="false"
-                        android:inputType="number"
-                        android:elevation="@dimen/_2sdp"/>
+                        android:hint="@string/_00_00_am_pm"
+                        android:inputType="number" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -171,7 +174,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:text="Message (Option)" />
+                android:text="@string/message_option" />
 
 
             <EditText
@@ -181,26 +184,26 @@
                 android:layout_height="@dimen/_70sdp"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"
-                android:hint="Enter your message"
+                android:hint="@string/enter_your_message"
                 android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/save_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/orange_button_click_effect"
-                android:fontFamily="@font/open_sans_semibold"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/orange_button_click_effect"
+                android:elevation="@dimen/_2sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:gravity="center"
-                android:text="save"
+                android:text="@string/save"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:elevation="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_40sdp"
-                android:layout_marginBottom="@dimen/_20sdp"/>
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </ScrollView>

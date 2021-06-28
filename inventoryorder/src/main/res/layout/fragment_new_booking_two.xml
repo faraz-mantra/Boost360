@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/match_match"
         android:background="@color/white">
 
         <androidx.core.widget.NestedScrollView
@@ -21,38 +20,34 @@
             app:layout_constraintVertical_bias="0.0">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/match_match"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/size_16"
                 android:paddingTop="@dimen/size_16">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:paddingStart="@dimen/size_4"
-                    android:text="Customer Information"
+                    android:text="@string/customer_information"
                     android:textColor="@color/orange"
                     app:fontFamily="@font/bold"
                     app:textType="BODY_3" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:layout_marginStart="@dimen/size_3"
                     android:layout_marginTop="@dimen/size_16"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textColor="@color/grey_text_color"
                     app:fontFamily="@font/regular"
                     app:textType="BODY_3" />
 
                 <com.framework.views.customViews.CustomTextField
                     android:id="@+id/eTName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:backgroundTint="@color/view_background_color"
-                    android:hint="Rahul Chaudhary"
+                    android:hint="@string/rahul_chaudhary"
                     android:inputType="textCapWords"
                     android:paddingTop="@dimen/size_8"
                     android:paddingBottom="@dimen/size_16"
@@ -62,42 +57,37 @@
                     tools:ignore="UnusedAttribute" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:layout_marginStart="@dimen/size_3"
                     android:layout_marginTop="@dimen/size_16"
-                    android:text="Phone number"
+                    android:text="@string/phone_number"
                     android:textColor="@color/grey_text_color"
                     app:fontFamily="@font/regular"
                     app:textType="BODY_3" />
 
                 <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    style="@style/match_wrap">
 
                     <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrap_wrap"
                         android:layout_marginTop="@dimen/size_8"
                         android:backgroundTint="@color/view_background_color"
                         android:paddingStart="@dimen/size_3"
                         android:paddingEnd="@dimen/size_1"
-                        android:text="+91 - "
+                        android:text="@string/_91"
                         android:textColor="@color/warm_grey_10"
                         app:textType="BODY_3" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/match_wrap"
                         android:orientation="horizontal">
 
                         <com.framework.views.customViews.CustomTextField
                             android:id="@+id/eTPhoneNumber"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            style="@style/match_wrap"
                             android:layout_marginStart="@dimen/size_5"
                             android:backgroundTint="@color/view_background_color"
-                            android:hint="XXXXXXXXXX"
+                            android:hint="@string/xxxxxxxxxx"
                             android:inputType="number"
                             android:maxLength="10"
                             android:paddingStart="@dimen/size_32"
@@ -114,11 +104,10 @@
 
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:layout_marginStart="@dimen/size_3"
                     android:layout_marginTop="@dimen/size_16"
-                    android:text="Email"
+                    android:text="@string/email"
                     android:inputType="none"
                     android:textColor="@color/grey_text_color"
                     app:fontFamily="@font/regular"
@@ -126,10 +115,9 @@
 
                 <com.framework.views.customViews.CustomTextField
                     android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:backgroundTint="@color/view_background_color"
-                    android:hint="rahul@cantech.co"
+                    android:hint="@string/rahul_cantech_co"
                     android:inputType="textEmailAddress"
                     android:paddingTop="@dimen/size_8"
                     android:paddingBottom="@dimen/size_16"
@@ -139,19 +127,17 @@
                     tools:ignore="UnusedAttribute" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:layout_marginStart="@dimen/size_3"
                     android:layout_marginTop="@dimen/size_16"
-                    android:text="Gender"
+                    android:text="@string/gender"
                     android:textColor="@color/grey_text_color"
                     app:fontFamily="@font/regular"
                     app:textType="BODY_3" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/llSelectGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:layout_marginTop="@dimen/size_8"
                     android:layout_marginEnd="@dimen/size_16"
                     android:orientation="horizontal">
@@ -162,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_4"
                         android:layout_weight="1"
-                        android:hint="Male"
+                        android:hint="@string/male"
                         android:textColor="@color/warm_grey_10"
                         android:textColorHint="@color/warm_grey_10"
                         app:fontFamily="@font/regular"
@@ -183,17 +169,15 @@
                     android:background="@color/view_background_color" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrap_wrap"
                     android:layout_marginTop="@dimen/size_24"
-                    android:text="Payment Mode"
+                    android:text="@string/payment_mode_capital"
                     android:textColor="@color/orange"
                     app:fontFamily="@ont/bold"
                     app:textType="BODY_3" />
 
                 <com.framework.views.customViews.CustomCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:layout_marginTop="@dimen/size_12"
                     android:layout_marginEnd="@dimen/size_16"
                     app:cardBackgroundColor="@color/white"
@@ -201,8 +185,7 @@
                     app:cardElevation="0dp">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/match_wrap"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
@@ -214,7 +197,7 @@
                             android:background="@color/light_grey"
                             android:gravity="center"
                             android:stateListAnimator="@null"
-                            android:text="online"
+                            android:text="@string/online"
                             android:textAllCaps="true"
                             android:textColor="@color/warm_grey_10"
                             app:fontFamily="@font/semi_bold"
@@ -228,7 +211,7 @@
                             android:background="@drawable/payment_bg_left"
                             android:gravity="center"
                             android:stateListAnimator="@null"
-                            android:text="Pay at clinic"
+                            android:text="@string/pay_at_clinic"
                             android:textAllCaps="true"
                             android:textColor="@color/primary_grey"
                             app:fontFamily="@font/semi_bold"
@@ -239,22 +222,19 @@
 
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/match_wrap"
                     android:layout_marginTop="@dimen/size_20"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
                     <com.framework.views.customViews.CustomCheckBox
                         android:id="@+id/sendPaymentLink"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrap_wrap"
                         app:buttonTint="@color/orange" />
 
                     <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Send payment link"
+                        style="@style/wrap_wrap"
+                        android:text="@string/send_payment_link"
                         android:textColor="@color/black"
                         app:fontFamily="@font/bold"
                         app:textType="CAPTION" />
@@ -270,8 +250,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_52"
             android:background="@color/white"
             android:orientation="vertical"
@@ -286,8 +265,7 @@
                 android:background="@drawable/up_shadow" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/match_match"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/size_16"
@@ -301,7 +279,7 @@
                     android:layout_marginStart="@dimen/size_16"
                     android:layout_weight="1"
                     android:includeFontPadding="false"
-                    android:text="BACK"
+                    android:text="@string/back"
                     android:textAllCaps="true"
                     android:textColor="@color/orange"
                     app:fontFamily="@font/bold"
@@ -317,7 +295,8 @@
                     android:background="@drawable/button_proceed"
                     android:gravity="center"
                     android:stateListAnimator="@null"
-                    android:text="CREATE BOOKING"
+                    android:text="@string/create_booking"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     app:textType="CAPTION"
                     tools:ignore="UnusedAttribute" />

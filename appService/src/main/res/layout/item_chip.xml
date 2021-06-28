@@ -4,7 +4,7 @@
   android:layout_height="wrap_content"
   android:fontFamily="@font/regular"
   android:gravity="center"
-  android:paddingLeft="@dimen/size_4"
+  android:paddingStart="@dimen/size_4"
   android:paddingRight="@dimen/size_4"
   android:textAppearance="?android:attr/textAppearance"
   android:textColor="@color/primary_text"

@@ -30,7 +30,7 @@ class PackageViewPagerAdapter(
     : RecyclerView.Adapter<PackageViewPagerAdapter.PagerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
-        val item = View.inflate(parent.getContext(), R.layout.package_item, null)
+        val item = View.inflate(parent.context, R.layout.package_item, null)
         val lp = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT

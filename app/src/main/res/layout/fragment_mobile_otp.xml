@@ -19,7 +19,7 @@
             android:id="@+id/im_back_button"
             android:layout_width="@dimen/image_width_login"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
             android:layout_marginTop="25dp"
             android:src="@drawable/back_button_2" />
 
@@ -28,7 +28,7 @@
             android:id="@+id/tv_headingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/open_sans_bold"
             android:text="Log in using mobile number"
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -50,8 +50,8 @@
                 android:id="@+id/userNameIcon"
                 android:layout_width="15dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="10dp"
                 android:src="@drawable/india_flag" />
 
             <EditText
@@ -90,9 +90,9 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_gravity="bottom|end"
-        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
         android:layout_marginTop="120dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="30dp"
         android:elevation="5dp"
         android:orientation="vertical"
@@ -120,7 +120,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 app:srcCompat="@drawable/ic_arrow_right_white" />
 
 

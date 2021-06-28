@@ -122,6 +122,9 @@
 
     <color name="customeNavyBlue">#9ABFFF</color>
     <color name="grey_e4e4e4">#e4e4e4</color>
+    <color name="gray_80000000">#80000000</color>
+    <color name="gray_9e9e9e">#9E9E9E</color>
 
-
+    <color name="ir_statusBarColor">@color/primaryColorDark</color>
+    <color name="ir_actionbarBackground">@color/primaryColor</color>
 </resources>

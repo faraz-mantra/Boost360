@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/margin_10"
+    android:paddingStart="@dimen/margin_10"
     android:paddingRight="@dimen/margin_10"
     android:paddingTop="@dimen/margin_10"
     android:paddingBottom="@dimen/margin_10"
@@ -22,14 +22,14 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_15"
+            android:layout_marginEnd="@dimen/margin_15"
             app:srcCompat="@drawable/ic_product_filled"/>
 
         <TextView
             android:id="@+id/label_item_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Physical Product"
+            android:text="@string/physical_product_"
             android:layout_toRightOf="@+id/iv_icon"
             android:textColor="@color/primaryTextColor"
             android:textSize="16sp"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_icon"
             android:layout_below="@+id/label_item_type"
-            android:text="Can be packaged and delivered to buyer. e.g. book, watch, toy, garment etc."
+            android:text="@string/can_be_packaged_and_delivered_to_buyer_e_g_book_watch_toy_garment_etc"
             android:textColor="@color/secondaryTextColor"
             android:textSize="14sp" />
 

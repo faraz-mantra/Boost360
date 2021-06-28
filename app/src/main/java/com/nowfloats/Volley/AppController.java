@@ -1,6 +1,7 @@
 package com.nowfloats.Volley;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -16,11 +17,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
+import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
+import com.invitereferrals.invitereferrals.IRInterfaces.IRTrackReferrerCode;
+import com.invitereferrals.invitereferrals.InviteReferralsApi;
 import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.framework.utils.AppsFlyerUtils;
@@ -103,8 +107,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     @Override
     public void onCreate() {
         super.onCreate();
-        BaseOrderApplication.instance = this;
 //        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
+        BaseOrderApplication.instance = this;
         BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
         BaseBoardingApplication.initModule(this);
@@ -112,11 +116,21 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppServiceApplication.initModule(this);
         AppDashboardApplication.instance = this;
         AppDashboardApplication.initModule(this);
+        AppPreSignInApplication.instance = this;
+        AppPreSignInApplication.initModule(this);
+        SharedPreferences pref =  BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
         initWebEngage();
-
+        //Invite Referral
         InviteReferralsApplication.register(this);
-//        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
-
+        if (!pref.getBoolean(Constants.IS_INSTALL_APP,false)) {
+            InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
+            InviteReferralsApi.getInstance(this).getReferrerCode(code -> {
+                editor.putBoolean(Constants.IS_INSTALL_APP, true);
+                editor.putString(Constants.REFER_CODE_APP, code);
+                editor.apply();
+            });
+        }
         //Koin
         KoinBaseApplication.initModule(this);
 //        ContextApplication.initSdk(this, this);
@@ -126,8 +140,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
         //AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
 
-        /* Init AppsFlyer SDK */
-        AppsFlyerUtils.initAppsFlyer(this, APPSFLAYER_DEV_KEY);
+        appsFlyerEvent(this);
 
         try {
             //Fabric.with(this, new Crashlytics());
@@ -165,7 +178,13 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             e.printStackTrace();
         }
 
+
         //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
+    }
+
+    private void appsFlyerEvent(AppController appController) {
+        /* Init AppsFlyer SDK */
+        AppsFlyerUtils.initAppsFlyer(appController, APPSFLAYER_DEV_KEY);
     }
 
     void initWebEngage() {

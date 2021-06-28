@@ -21,7 +21,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/gallery_cancel"
                 android:onClick="onClose"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:padding="7dp" />
 
             <ImageView
@@ -29,10 +29,10 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:src="@drawable/ic_menu_delete"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:padding="6dp"
                 android:onClick="onDelete"
-                android:layout_marginRight="10dp" />
+                android:layout_marginEnd="10dp" />
 
         </FrameLayout>
 
@@ -58,7 +58,7 @@
                 android:layout_gravity="bottom|center"
                 android:gravity="bottom|center"
                 android:orientation="horizontal"
-                android:paddingLeft="25dp"
+                android:paddingStart="25dp"
                 android:paddingRight="25dp">
 
                 <ImageView
@@ -78,7 +78,7 @@
                     android:text="1"
                     android:textSize="20sp"
                     android:layout_gravity="center"
-                    android:layout_marginRight="35dp"
+                    android:layout_marginEnd="35dp"
                     android:textColor="@color/white"/>
 
                 <TextView
@@ -99,15 +99,15 @@
                     android:textSize="20sp"
                     android:visibility="visible"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="35dp"
+                    android:layout_marginStart="35dp"
                     android:textColor="@color/white"/>
 
                 <ImageView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:id="@+id/next"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     android:padding="5dp"
                     android:onClick="onNextClick"
                     android:src="@drawable/ic_action_next_item"/>

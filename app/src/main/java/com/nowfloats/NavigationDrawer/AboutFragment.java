@@ -1,6 +1,5 @@
 package com.nowfloats.NavigationDrawer;
 
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -8,29 +7,35 @@ import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.boost.upgrades.UpgradeActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.EventKeysWL;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventLabelKt.NO_EVENT_LABLE;
+import static com.framework.webengageconstant.EventNameKt.ABOUT_BOOST_FAQS;
+import static com.framework.webengageconstant.EventNameKt.ABOUT_BOOST_FB_LIKE;
+import static com.framework.webengageconstant.EventNameKt.ABOUT_BOOST_PLAY_STORE_RATING;
+import static com.framework.webengageconstant.EventNameKt.ABOUT_BOOST_PRIVACY;
+import static com.framework.webengageconstant.EventNameKt.ABOUT_BOOST_TNC;
+import static com.framework.webengageconstant.EventNameKt.ABOUT_BOOST_TRAINING;
+import static com.framework.webengageconstant.EventNameKt.ABOUT_BOOST_TWITTER_LIKE;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -38,6 +43,7 @@ import com.thinksity.R;
 
 public class AboutFragment extends Fragment {
     private Context mContext;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,32 +78,32 @@ public class AboutFragment extends Fragment {
                 Intent intent = null;
                 switch(pos){
                     case 0:
-                        WebEngageController.trackEvent("ABOUT BOOST - TRAINING","null",null);
+                        WebEngageController.trackEvent(ABOUT_BOOST_TRAINING, EVENT_LABEL_NULL, NULL);
                         if(Constants.StoreWidgets.contains("MERCHANT_TRAINING")) {
                             intent = new Intent(mContext, Mobile_Site_Activity.class);
                             intent.putExtra("WEBSITE_NAME", getString(R.string.product_training_link));
                         } else {
                             MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                                     .title("Restricted Access")
-                                    .content("You need to buy the one-time pack for Boost Training and Certification.")
+                                    .content(R.string.you_need_to_buy_one_time_pack_for_boost_training)
                                     .build();
                             dialog.show();
                         }
                         break;
                     case 1:
-                        WebEngageController.trackEvent("ABOUT BOOST - FAQs","",null);
+                        WebEngageController.trackEvent(ABOUT_BOOST_FAQS, NO_EVENT_LABLE, NULL);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
                         intent.putExtra("WEBSITE_NAME",getString(R.string.setting_faq_url));
                         break;
                     case 2:
-                        WebEngageController.trackEvent("ABOUT BOOST - FB_LIKE","",null);
+                        WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, NO_EVENT_LABLE, NULL);
                         Methods.likeUsFacebook(mContext, "");
                         return;
                     case 3:
-                        WebEngageController.trackEvent("ABOUT BOOST - TWITTER_LIKE","",null);
+                        WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, NO_EVENT_LABLE, NULL);
                         intent = new Intent(Intent.ACTION_VIEW);
                         try {
-                            getActivity().getPackageManager().getPackageInfo("com.twitter.android", 0);
+                            getActivity().getPackageManager().getPackageInfo(getString(R.string.twitter_package), 0);
                             intent.setData(Uri.parse(Constants.TWITTER_ID_URL));
                         } catch (PackageManager.NameNotFoundException e1) {
                             intent.setData(Uri.parse(Constants.TWITTER_URL));
@@ -106,7 +112,7 @@ public class AboutFragment extends Fragment {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                         break;
                     case 4:
-                        WebEngageController.trackEvent("ABOUT BOOST - PLAY_STORE_RATING","",null);
+                        WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL);
                         Uri uri = Uri.parse("market://details?id=" + Constants.PACKAGE_NAME);
                         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                         goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -120,12 +126,12 @@ public class AboutFragment extends Fragment {
                         }
                         break;
                     case 5:
-                        WebEngageController.trackEvent("ABOUT BOOST - TNC","",null);
+                        WebEngageController.trackEvent(ABOUT_BOOST_TNC, NO_EVENT_LABLE, NULL);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
                         intent.putExtra("WEBSITE_NAME", getResources().getString(R.string.settings_tou_url));
                         break;
                     case 6:
-                        WebEngageController.trackEvent("ABOUT BOOST - PRIVACY","",null);
+                        WebEngageController.trackEvent(ABOUT_BOOST_PRIVACY, NO_EVENT_LABLE, NULL);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
                         intent.putExtra("WEBSITE_NAME", getResources().getString(R.string.settings_privacy_url));
                         break;

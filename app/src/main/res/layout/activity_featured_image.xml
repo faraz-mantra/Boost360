@@ -45,8 +45,8 @@
                         android:layout_height="200dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginRight="50dp"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="50dp"
                         android:layout_gravity="center"
                         app:contentPadding="15dp"
                         app:cardElevation="5dp"
@@ -64,7 +64,7 @@
                                 android:id="@+id/logoimageView"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitCenter"
                                 android:src="@drawable/logo_default_image"/>
 
                         </androidx.cardview.widget.CardView>
@@ -75,7 +75,7 @@
                         android:id="@+id/addLogoButton"
                         android:layout_width="150dp"
                         android:layout_height="35dp"
-                        android:text="CHANGE"
+                        android:text="@string/change"
                         android:layout_margin="10dp"
                         fontPath="Roboto-Medium.ttf"
                         android:layout_centerHorizontal="true"

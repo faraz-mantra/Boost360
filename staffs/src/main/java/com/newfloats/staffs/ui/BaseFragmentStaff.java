@@ -8,7 +8,7 @@ import com.newfloats.staffs.R;
 
 public class BaseFragmentStaff extends Fragment implements BaseStaffActivity.ToolBarAction {
     protected void launchFragment(Fragment fragment) {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         transaction.replace(R.id.container, fragment);
@@ -18,7 +18,7 @@ public class BaseFragmentStaff extends Fragment implements BaseStaffActivity.Too
 
     @Override
     public void onBackButtonClick() {
-        requireActivity().onBackPressed();
+        getActivity().onBackPressed();
     }
 
     @Override

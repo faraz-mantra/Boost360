@@ -42,6 +42,12 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     get() {
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
+
+  protected val prefReferral: SharedPreferences?
+    get() {
+      return baseActivity.getSharedPreferences(PreferenceConstant.PREF_NAME_REFERRAL, Context.MODE_PRIVATE)
+    }
+
   protected val userProfileId: String?
     get() {
       return pref?.getString(PreferenceConstant.USER_PROFILE_ID, "")
@@ -49,10 +55,6 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
   protected val clientId: String?
     get() {
       return pref?.getString(PreferenceConstant.CLIENT_ID, "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
-    }
-  protected val auth: String?
-    get() {
-      return pref?.getString(PreferenceConstant.AUTHORIZATION, "58ede4d4ee786c1604f6c535")
     }
 
   protected var requestFloatsModel: RequestFloatsModel? = null

@@ -22,7 +22,7 @@
         android:layout_toLeftOf="@+id/center"
         android:background="#77000000"
         android:paddingBottom="14dip"
-        android:paddingLeft="8dip"
+        android:paddingStart="8dip"
         android:paddingTop="14dip"
         android:text="Quick Contact"
         android:textColor="#FFFFFFFF"
@@ -38,7 +38,7 @@
         android:id="@+id/tabs"
         android:layout_width="wrap_content"
         android:layout_height="62dip"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/center"
         android:background="@drawable/background_tabs_diagonal"
         app:pstsDividerColor="#00000000"
@@ -50,7 +50,7 @@
         android:id="@+id/pager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/tabs"
         android:layout_toRightOf="@+id/center" />
 

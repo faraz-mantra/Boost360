@@ -58,7 +58,7 @@ public class ProductGalleryActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 MaterialDialog.Builder builder = new MaterialDialog.Builder(ProductGalleryActivity.this)
-                        .content(getString(R.string.delete) + " " + count + (count > 1 ? " products" : " product") + "?")
+                        .content(getString(R.string.delete_) + " " + count + (count > 1 ? " products" : " product") + "?")
                         .positiveText(getString(R.string.ok))
                         .negativeText(getString(R.string.cancel))
                         .positiveColorRes(R.color.primaryColor)

@@ -1,24 +1,28 @@
 package com.nowfloats.AccrossVerticals.domain.ui.DomainPurchased;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.AccrossVerticals.domain.ui.ExistingDomain.ExistingDomainFragment;
 import com.nowfloats.AccrossVerticals.domain.ui.NewDomain.NewDomainFragment;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DOMAIN_AND_EMAIL;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_BOOK_A_NEW_DOMAIN;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_HAVE_AN_EXISTING_DOMAIN;
+import static com.framework.webengageconstant.EventNameKt.DOMAIN_AND_EMAIL;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 
 public class DomainPurchasedFragment extends Fragment {
 
@@ -48,7 +52,7 @@ public class DomainPurchasedFragment extends Fragment {
         existDomainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("Clicked on have an existing domain", "DOMAIN & EMAIL", "null");
+                WebEngageController.trackEvent(CLICKED_ON_HAVE_AN_EXISTING_DOMAIN, EVENT_LABEL_DOMAIN_AND_EMAIL, NULL);
                 ((DomainEmailActivity) requireActivity()).addFragment(new ExistingDomainFragment(), "ExistingDomain");
             }
         });
@@ -56,7 +60,7 @@ public class DomainPurchasedFragment extends Fragment {
         newDomainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("DOMAIN & EMAIL", "Clicked on book a new domain", "null");
+                WebEngageController.trackEvent(DOMAIN_AND_EMAIL, CLICKED_ON_BOOK_A_NEW_DOMAIN, NULL);
                 ((DomainEmailActivity) requireActivity()).addFragment(new NewDomainFragment(), "NewDomain");
             }
         });
@@ -70,12 +74,12 @@ public class DomainPurchasedFragment extends Fragment {
 
         title = view.findViewById(R.id.title);
         backButton = view.findViewById(R.id.back_button);
-        title.setText("Website Domain");
+        title.setText(R.string.website_domain);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
     }

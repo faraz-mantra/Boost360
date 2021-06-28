@@ -166,7 +166,7 @@ public class NewPricingPlansActivity extends AppCompatActivity {
         if (materialProgress == null) {
             materialProgress = new MaterialDialog.Builder(this)
                     .widgetColorRes(R.color.accentColor)
-                    .content("Please Wait...")
+                    .content(getString(R.string.please_wait_))
                     .progress(true, 0)
                     .cancelable(false)
                     .build();
@@ -253,8 +253,8 @@ public class NewPricingPlansActivity extends AppCompatActivity {
                         }
                         if (!showTobeActivatedOn) {
                             String msg = "Thank you! \n" +
-                                    "The Payment ID for your transaction is " + paymentid + ". Your package will be activated within 24 hours. \n" +
-                                    "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                                    getString(R.string.the_payment_id_for_transaction_is) + paymentid + getString(R.string.your_package_will_be_activated_within) +
+                                    getString(R.string.you_can_reach_customer_support_at_ria_);
                             Methods.showDialog(NewPricingPlansActivity.this, status, msg);
                         }
                         getPricingPlanDetails();
@@ -264,8 +264,8 @@ public class NewPricingPlansActivity extends AppCompatActivity {
                             pollServerForStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn, pollCount + 1);
                         } else {
                             String msg = "Alert! \n" +
-                                    "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours. The Payment Request ID for your transaction is " + transactionId + " . \n" +
-                                    "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                                    getString(R.string.your_payment_is_pending_once_your_payment_is) + transactionId + " . \n" +
+                                    getString(R.string.you_can_reach_customer_support_at_ria_1860);
                             Methods.showDialog(NewPricingPlansActivity.this, status, msg);
                         }
 
@@ -280,7 +280,7 @@ public class NewPricingPlansActivity extends AppCompatActivity {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String msg = "Your PaymentId is: " + paymentid + ". Please Contact Customer Support.";
+                String msg = "Your PaymentId is: " + paymentid + getString(R.string.please_contact_customer_support);
                 materialProgress.dismiss();
                 Methods.showDialog(NewPricingPlansActivity.this, status, msg);
             }

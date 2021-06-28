@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="20dp" >
+                android:layout_marginStart="20dp" >
 
 
                 <com.nowfloats.CustomWidget.roboto_md_italic_16_primary_color
@@ -54,7 +54,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:textStyle="bold|italic"
-                    android:text="Search Queries" />
+                    android:text="@string/search_queries" />
 
                 <com.nowfloats.CustomWidget.roboto_lt_10_8c8c8c
                     android:id="@+id/search_query_header_text_2"
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="left"
-                    android:text="Search DateTime" />
+                    android:text="@string/search_datetime" />
 
             </LinearLayout>
 

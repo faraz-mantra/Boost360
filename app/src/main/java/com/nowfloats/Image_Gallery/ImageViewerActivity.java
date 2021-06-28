@@ -170,13 +170,13 @@ public class ImageViewerActivity extends AppCompatActivity
     public void onDelete(View view)
     {
         new AlertDialog.Builder(ImageViewerActivity.this)
-                .setMessage("Are you sure, you want to delete?")
-                .setPositiveButton("Yes", (dialog, which)-> {
+                .setMessage(getString(R.string.are_you_sure_you_want_to_delete))
+                .setPositiveButton(getString(R.string.yes), (dialog, which)-> {
 
                     deleteApiCall(adapter.images.get(position));
                     dialog.dismiss();
                 })
-                .setNegativeButton("No", (dialog, which)-> dialog.dismiss())
+                .setNegativeButton(getString(R.string.no), (dialog, which)-> dialog.dismiss())
                 .show();
     }
 
@@ -199,7 +199,7 @@ public class ImageViewerActivity extends AppCompatActivity
         }
 
         ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setMessage("Please Wait...");
+        dialog.setMessage(getString(R.string.please_wait_));
         dialog.setCancelable(false);
         dialog.show();
 
@@ -225,7 +225,7 @@ public class ImageViewerActivity extends AppCompatActivity
 
                 if(response.getStatus() == 200)
                 {
-                    Toast.makeText(getApplicationContext(), "Image Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.image_deleted_successfully), Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent();
                     intent.putExtra("POSITION", position);
@@ -242,7 +242,7 @@ public class ImageViewerActivity extends AppCompatActivity
                     dialog.dismiss();
                 }
 
-                Toast.makeText(getApplicationContext(), "Fail to Delete Image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.fail_to_delete_image), Toast.LENGTH_SHORT).show();
             }
         });
     }

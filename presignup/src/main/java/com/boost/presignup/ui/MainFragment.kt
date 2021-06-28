@@ -1,8 +1,6 @@
 package com.boost.presignup.ui
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
@@ -20,7 +18,7 @@ import com.boost.presignup.R
 import com.boost.presignup.datamodel.SharedViewModel
 import com.boost.presignup.locale.LocaleManager
 import com.boost.presignup.utils.WebEngageController
-import com.onboarding.nowfloats.managers.NavigatorManager
+import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 
 
@@ -186,38 +184,38 @@ class MainFragment : Fragment() {
                     setVolume(100)
                     muteState = false
                     root.mute_icon.setImageResource(R.drawable.ic_unmute)
-                    WebEngageController.trackEvent("PS_Clicked unmute Intro_video", "Video Unmuted", "")
+                    WebEngageController.trackEvent(PS_CLICKED_UNMUTE_INTRO_VIDEO, VIDEO_UNMUTED, NO_EVENT_VALUE)
                 } else {
                     setVolume(0)
                     muteState = true
                     root.mute_icon.setImageResource(R.drawable.ic_mute)
-                    WebEngageController.trackEvent("PS_Clicked Mute Intro_video", "Video Muted", "")
+                    WebEngageController.trackEvent(PS_CLICKED_MUTE_INTRO_VIDEO, VIDEO_MUTED, NO_EVENT_VALUE)
                 }
             }
         }
 
-        root.video_layout.setOnTouchListener (object : View.OnTouchListener {
+        root.video_layout.setOnTouchListener(object : View.OnTouchListener {
             @SuppressLint("ClickableViewAccessibility")
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 when (event?.action) {
-                    MotionEvent.ACTION_DOWN ->{
-                       initialDownX = event.x
+                    MotionEvent.ACTION_DOWN -> {
+                        initialDownX = event.x
                     }
                     MotionEvent.ACTION_UP -> {
                         initialUpX = event.x
                         val deltaX = initialUpX - initialDownX
-                        if (Math.abs(deltaX) > MIN_DISTANCE){
+                        if (Math.abs(deltaX) > MIN_DISTANCE) {
                             // Left to Right swipe action
                             if (initialUpX > initialDownX) {
-                                Log.e("Swipe >>>>>>>>","Left to Right swipe [Next]")
+                                Log.e("Swipe >>>>>>>>", "Left to Right swipe [Next]")
                             } else {
-                                Log.e("Swipe >>>>>>>>","Right to Left swipe [Previous]")
+                                Log.e("Swipe >>>>>>>>", "Right to Left swipe [Previous]")
                                 navToIntroScreen()
-                                WebEngageController.trackEvent("PS_Swiped on the Intro_video", "Video area swiped", "")
+                                WebEngageController.trackEvent(PS_SWIPED_ON_THE_INTRO_VIDEO, VIDEO_AREA_SWIPED, NO_EVENT_VALUE)
                             }
-                        }else{
-                            WebEngageController.trackEvent("PS_Clicked Intro_video area", "Video area clicked", "")
-                            if(root.videoPlayer.isPlaying){
+                        } else {
+                            WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_AREA, VIDEO_AREA_CLICKED, NO_EVENT_VALUE)
+                            if (root.videoPlayer.isPlaying) {
                                 root.play_pause_lottie.visibility = View.VISIBLE
                                 root.play_pause_lottie.playAnimation()
                                 videoCurrentPosition = root.videoPlayer.getCurrentPosition(); //stopPosition is an int
@@ -226,14 +224,14 @@ class MainFragment : Fragment() {
                                 if (::timer.isInitialized) {
                                     timer.cancel()
                                 }
-                                if(::checkvideo.isInitialized){
+                                if (::checkvideo.isInitialized) {
                                     checkvideo.cancel()
                                 }
-                                }else{
+                            } else {
                                 root.play_pause_lottie.visibility = View.GONE
                                 root.videoPlayer.seekTo(videoCurrentPosition);
                                 root.videoPlayer.start()
-                                WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+                                WebEngageController.trackEvent(PS_INTRO_VIDEO_STARTED, VIDEO_STARTED, NO_EVENT_VALUE)
                                 setVideoTimerCountDown()
                             }
                         }
@@ -254,7 +252,7 @@ class MainFragment : Fragment() {
 //            root.animation_view.visibility = View.GONE
 
         root.skip_video.setOnClickListener {
-            WebEngageController.trackEvent("PS_Clicked Intro_video skip", "Video skipped", "")
+            WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_SKIP, VIDEO_SKIPPED, NO_EVENT_VALUE)
             navToIntroScreen()
         }
 
@@ -264,9 +262,9 @@ class MainFragment : Fragment() {
         }
 
         root.introVideoSplash.setOnClickListener{
-            WebEngageController.trackEvent("PS_Intro Video Splash Clicked", "Start Intro Video", "")
+            WebEngageController.trackEvent(PS_INTRO_VIDEO_SPLASH_CLICKED, START_INTRO_VIDEO, NO_EVENT_VALUE)
             root.play_pause_lottie.visibility = View.GONE
-            WebEngageController.trackEvent("PS_Intro_Video Started", "Video started", "")
+            WebEngageController.trackEvent(PS_INTRO_VIDEO_STARTED, VIDEO_STARTED, NO_EVENT_VALUE)
             root.videoPlayer.start()
             root.videoPlayer.seekTo(0)
             root.introVideoSplash.visibility = View.GONE
@@ -275,6 +273,7 @@ class MainFragment : Fragment() {
             root.video_loading.visibility = View.VISIBLE
             checkVideoPlaying()
         }
+
         resetVideo()
 //        root.videoPlayer.start()
         viewModel.enableBottomView()
@@ -316,7 +315,7 @@ class MainFragment : Fragment() {
             }
 
             override fun onFinish() {
-                WebEngageController.trackEvent("PS_Intro_Video Failed to start", "6000", "")
+                WebEngageController.trackEvent(PS_INTRO_VIDEO_FAILED_TO_START, SIX_THOUSANDS, NO_EVENT_VALUE)
                 Log.e("Video not playing", "###################")
                 if (!root.videoPlayer.isPlaying) {
                     navToIntroScreen()
@@ -364,7 +363,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started english", "Video started", "")
+                    WebEngageController.trackEvent(PS_INTRO_VIDEO_STARTED_ENGLISH, VIDEO_STARTED, NO_EVENT_VALUE)
                 }
                 R.string.hindi -> {
                     setVideoURL(videoURLs.get(1), splashImageResources.get(1))
@@ -375,7 +374,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started hindi", "Video started", "")
+                    WebEngageController.trackEvent(PS_INTRO_VIDEO_STARTED_HINDI, VIDEO_STARTED, NO_EVENT_VALUE)
                 }
                 R.string.kannada -> {
                     setVideoURL(videoURLs.get(2), splashImageResources.get(2))
@@ -387,7 +386,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started kannada", "Video started", "")
+                    WebEngageController.trackEvent(PS_INTRO_VIDEO_STARTED_KANNADA, VIDEO_STARTED, NO_EVENT_VALUE)
                 }
                 R.string.telugu -> {
                     setVideoURL(videoURLs.get(3), splashImageResources.get(3))
@@ -399,7 +398,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started telugu", "Video started", "")
+                    WebEngageController.trackEvent(PS_INTRO_VIDEO_STARTED_TELUGU, VIDEO_STARTED, NO_EVENT_VALUE)
                 }
                 R.string.malayalam -> {
                     setVideoURL(videoURLs.get(4), splashImageResources.get(4))
@@ -411,7 +410,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started malayalam", "Video started", "")
+                    WebEngageController.trackEvent(PS_INTRO_VIDEO_STARTED_MALAYALAM, VIDEO_STARTED, NO_EVENT_VALUE)
                 }
                 R.string.tamil -> {
                     setVideoURL(videoURLs.get(5), splashImageResources.get(5))
@@ -423,7 +422,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started tamil", "Video started", "")
+                    WebEngageController.trackEvent(PS_INTRO_VIDEO_STARTED_TAMIL, VIDEO_STARTED, NO_EVENT_VALUE)
                 }
                 R.string.marathi -> {
                     setVideoURL(videoURLs.get(6), splashImageResources.get(6))
@@ -435,7 +434,7 @@ class MainFragment : Fragment() {
                     root.video_time.setText(initialTime + " " + getString(R.string.seconds))
                     root.video_loading.visibility = View.VISIBLE
                     root.videoPlayer.start()
-                    WebEngageController.trackEvent("PS_Intro_Video Started marathi", "Video started", "")
+                    WebEngageController.trackEvent(PS_INTRO_VIDEO_STARTED_MARATHI, VIDEO_STARTED, NO_EVENT_VALUE)
                 }
             }
         })

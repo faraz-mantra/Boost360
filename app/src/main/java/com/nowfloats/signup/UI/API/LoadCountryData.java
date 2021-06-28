@@ -63,7 +63,7 @@ public class LoadCountryData extends AsyncTask<Void, Integer, Void> {
 //                @Override
 //                public void onClick(View v) {
 //                    selectC();
-//                    //Util.hideInput(getActivity());
+//                    //Util.hideInput(requireActivity());
 //                }
 //            });
         }

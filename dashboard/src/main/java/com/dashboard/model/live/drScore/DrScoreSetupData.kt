@@ -12,7 +12,7 @@ data class DrScoreSetupData(
     var type: DrScoreType? = null,
     var percentage: Int? = null,
     var drScoreItem: ArrayList<DrScoreItem>? = null,
-) : BaseResponse(), AppBaseRecyclerViewItem {
+) : BaseResponse(), AppBaseRecyclerViewItem, Comparable<DrScoreSetupData> {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout()
 
@@ -21,11 +21,15 @@ data class DrScoreSetupData(
   }
 
   fun getRemainingPercentage(): String {
-    return if (percentage ?: 0 >= 100) "$percentage% completed" else if (percentage!! == 0) "Get Started" else  "${100 - (percentage ?: 0)}% remaining"
+    return if (percentage ?: 0 >= 100) "$percentage% completed" else if (percentage!! == 0) "Get Started" else "${100 - (percentage ?: 0)}% remaining"
   }
 
   fun getPendingText(): String? {
     return drScoreItem?.firstOrNull { !it.isUpdate }?.drScoreUiData?.title
+  }
+
+  fun getDrScoreData(): DrScoreUiData? {
+    return drScoreItem?.firstOrNull { !it.isUpdate }?.drScoreUiData
   }
 
   enum class DrScoreType(var id: String, var title: String, var icon: Int) {
@@ -40,6 +44,13 @@ data class DrScoreSetupData(
 
     companion object {
       fun fromId(value: String): DrScoreType? = values().firstOrNull { it.id.toLowerCase(Locale.ROOT) == value }
+    }
+  }
+
+  override fun compareTo(other: DrScoreSetupData): Int {
+    return when (other.percentage) {
+      100 -> -1
+      else -> 1
     }
   }
 }
@@ -57,7 +68,7 @@ fun DrScoreModel.getDrScoreData(drScoreUiList: ArrayList<DrScoreUiData>): ArrayL
       list.add(DrScoreSetupData(type, segment.getScore(), drScoreItemList))
     }
   }
-  return list
+  return ArrayList(list.sorted())
 }
 
 

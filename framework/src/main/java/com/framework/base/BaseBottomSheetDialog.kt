@@ -67,8 +67,8 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
             peekHeight = getScreenHeight()
           }
           state = getBottomSheetInitialState()
-          getSkipCollapse()?.let { it1 -> skipCollapsed = it1 }
-          getDraggable()?.let { it1 -> isDraggable = it1 }
+          isSkipCollapse()?.let { it1 -> skipCollapsed = it1 }
+          this@BaseBottomSheetDialog.isDraggable()?.let { it1 -> isDraggable = it1 }
         }
 //        ScreenUtils.instance.setWhiteNavigationBar(dialog)
         bottomSheet.parent.requestLayout()
@@ -76,6 +76,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
         e.printStackTrace()
       }
     }
+    isRemoveAnimation().let { dialog.window?.setWindowAnimations(-1) }
     return dialog
   }
 
@@ -156,15 +157,19 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     return BottomSheetBehavior.STATE_EXPANDED
   }
 
+  open fun isRemoveAnimation(): Boolean? {
+    return null
+  }
+
   open fun isPeekHeightSetMatch(): Boolean? {
     return null
   }
 
-  open fun getDraggable(): Boolean? {
+  open fun isDraggable(): Boolean? {
     return null
   }
 
-  open fun getSkipCollapse(): Boolean? {
+  open fun isSkipCollapse(): Boolean? {
     return null
   }
 

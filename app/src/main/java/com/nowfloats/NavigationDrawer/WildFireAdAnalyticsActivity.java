@@ -43,14 +43,14 @@ public class WildFireAdAnalyticsActivity extends AppCompatActivity {
 
     public final static String TYPE="wildfire_type",VALUE = "value";
     private GoogleWildFireAdapter.ChannelType channelType;
-    private int[] googleAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_avg_position,R.drawable.ic_first_page_cost,R.drawable.ic_top_page_cost};
-    private int[] googleAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_avg_position_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_top_page_cost_gray};
-    private int[] facebookAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_first_page_cost,R.drawable.ic_wildfire_reach};
-    private int[] facebookAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_wildfire_reach_gray};
-    private String[] googleAdAnalyticsTitles = {"Impressions","Avg. Position","First Page CPC","Top Page CPC"};
-    private String[] facebookAdAnalyticsTitles = {"Impressions","CTR","Reach"};
-    private String[] facebookContents={"Number of times your ad was shown","Click through rate","Number of people who saw your ad"};
-    private String[] googleContents ={"Number of times your ad was shown","Average position of ad on Google","First page click per cost","Top page click per cost"};
+    private final int[] googleAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_avg_position,R.drawable.ic_first_page_cost,R.drawable.ic_top_page_cost};
+    private final int[] googleAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_avg_position_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_top_page_cost_gray};
+    private final int[] facebookAdAnalyticsImages = {R.drawable.ic_eye,R.drawable.ic_first_page_cost,R.drawable.ic_wildfire_reach};
+    private final int[] facebookAdAnalyticsImagesGray = {R.drawable.ic_eye_gray,R.drawable.ic_first_page_cost_gray,R.drawable.ic_wildfire_reach_gray};
+    private final String[] googleAdAnalyticsTitles = {"Impressions","Avg. Position","First Page CPC","Top Page CPC"};
+    private final String[] facebookAdAnalyticsTitles = {"Impressions","CTR","Reach"};
+    private final String[] facebookContents={"Number of times your ad was shown","Click through rate","Number of people who saw your ad"};
+    private final String[] googleContents ={"Number of times your ad was shown","Average position of ad on Google","First page click per cost","Top page click per cost"};
     private WildFireKeyStatsModel googleModel;
     private FacebookWildFireDataModel facebookModel;
 
@@ -85,7 +85,7 @@ public class WildFireAdAnalyticsActivity extends AppCompatActivity {
         switch (channelType){
             case GOOGLE:
                 channelImage.setImageResource(R.drawable.ic_google_glass_logo);
-                title.setText("Keyword Analytics");
+                title.setText(R.string.keyboard_analytics);
                 googleModel = new Gson().fromJson(value,WildFireKeyStatsModel.class);
                 if (TextUtils.isDigitsOnly(googleModel.getClicks())) {
                     clickTv.setText(NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(googleModel.getClicks())));

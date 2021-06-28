@@ -4,18 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:background="@android:color/transparent">
 
     <com.framework.views.customViews.CustomTextView
         android:id="@+id/tvPick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_alignParentBottom="true"
         android:paddingStart="@dimen/size_20"
         android:paddingBottom="@dimen/size_8"
-        android:text="Pick inventory nature"
+        android:text="@string/pick_inventory_nature"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -27,8 +25,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/coordinatorLayoutBottomSheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:background="@drawable/bg_rounded_top_white_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
@@ -37,14 +34,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPick">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:orientation="vertical">
 
         <com.framework.views.viewgroups.BaseRecyclerView
             android:id="@+id/recyclerViewPickInventoryNature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="4"
             tools:listitem="@layout/item_bottom_sheet_pick_inventory_nature" />
@@ -55,8 +50,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/btn_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:gravity="end"
         android:orientation="horizontal"
         android:padding="@dimen/size_14"
@@ -67,34 +61,18 @@
 
       <com.framework.views.customViews.CustomTextView
           android:id="@+id/tvCancel"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
           android:layout_marginEnd="@dimen/size_10"
-          android:padding="@dimen/size_4"
-          android:text="Cancel"
-          android:textAllCaps="true"
-          android:textColor="@color/primary_grey"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_3" />
+          android:text="@string/cancel"
+          android:background="@color/white"
+         />
 
       <com.framework.views.customViews.CustomButton
           android:id="@+id/buttonDone"
-          android:layout_width="wrap_content"
-          android:layout_height="@dimen/size_36"
-          android:layout_gravity="center"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
           android:background="@drawable/button_proceed"
-          android:gravity="center"
-          android:paddingStart="@dimen/size_28"
-          android:paddingEnd="@dimen/size_28"
-          android:shadowRadius="0"
-          android:stateListAnimator="@null"
-          android:text="Done"
-          android:textAllCaps="true"
-          android:textColor="@color/white"
-          app:fontFamily="@font/bold"
-          app:textType="CAPTION"
-          tools:ignore="UnusedAttribute" />
+          android:text="@string/done"
+          android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

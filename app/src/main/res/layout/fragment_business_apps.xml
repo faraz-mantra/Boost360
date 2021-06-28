@@ -46,9 +46,8 @@
         android:padding="10dp"
         android:gravity="center"
         android:layout_marginBottom="15dp"
-        android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:id="@+id/customer_apps_get_store_link_button"
-        android:layout_marginLeft="15dp" />
+        android:layout_marginStart="15dp" />
 
 </RelativeLayout>

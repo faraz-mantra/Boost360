@@ -86,7 +86,7 @@
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">#383838</item>
         <item name="android:textColorHint">#B6B6B6</item>
-        <item name="android:layout_marginLeft">24dp</item>
+        <item name="android:layout_marginStart">24dp</item>
     </style>
 
     <style name="SignUp_EditText_Style_Ria" parent="Theme.AppCompat.Light.NoActionBar">
@@ -97,7 +97,7 @@
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">#383838</item>
         <item name="android:textColorHint">#B6B6B6</item>
-        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginStart">10dp</item>
     </style>
 
 
@@ -289,7 +289,7 @@
         <item name="android:layout_width">24dp</item>
         <item name="android:layout_height">24dp</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:layout_marginLeft">@dimen/margin_5</item>
+        <item name="android:layout_marginStart">@dimen/margin_5</item>
         <item name="srcCompat">@drawable/ic_info</item>
     </style>
 
@@ -303,7 +303,7 @@
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:paddingRight">10dp</item>
-        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingStart">10dp</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 

@@ -94,7 +94,7 @@ class DotProgressBar : FrameLayout {
   }
 
   fun isAnimationRunning(): Boolean {
-    return primaryAnimator!!.isRunning
+    return primaryAnimator?.isRunning ?: false
   }
 
   override fun setVisibility(visibility: Int) {

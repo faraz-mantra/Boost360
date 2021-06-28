@@ -12,7 +12,7 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:layout_gravity="left"-->
-<!--        android:gravity="left"-->
+<!--        android:gravity="start"-->
 <!--        android:layout_margin="10dp"-->
 <!--        android:text="@string/wordpress_plugin_script"-->
 <!--        android:textColor="#878787"  />-->
@@ -22,13 +22,13 @@
         fontPath="Roboto-Light.ttf"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="5dp"
         android:background="@color/background_grey"
         android:focusable="false"
         android:fontFamily="monospace"
         android:gravity="top|left"
-        android:hint="..."
+        android:hint="@string/hint___"
         android:inputType="textMultiLine"
         android:lines="15"
         android:overScrollMode="always"

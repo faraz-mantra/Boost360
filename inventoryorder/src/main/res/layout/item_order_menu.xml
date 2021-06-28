@@ -9,8 +9,7 @@
 
   <androidx.appcompat.widget.LinearLayoutCompat
     android:id="@+id/main_content"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/match_wrap"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
@@ -19,8 +18,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      style="@style/wrap_wrap"
       android:layout_marginTop="@dimen/size_12"
       android:layout_marginBottom="@dimen/size_12"
       android:textColor="@color/black_4a4a4a"

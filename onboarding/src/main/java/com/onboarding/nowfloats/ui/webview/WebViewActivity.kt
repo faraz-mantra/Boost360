@@ -33,7 +33,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     super.onCreateView()
     domainUrl = intent?.extras?.getString(IntentConstant.DOMAIN_URL.name) ?: ""
     if (domainUrl.isEmpty()) {
-      showShortToast("Invalid url.")
+      showShortToast(getString(R.string.invalid_url))
       return
     }
     loadData(domainUrl)

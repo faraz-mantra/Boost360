@@ -10,6 +10,7 @@ import android.os.Environment
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.inventoryorder.R
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -213,13 +214,13 @@ fun AppCompatActivity.startDownloadUri(url: String) {
     val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     val uri = Uri.parse(url)
     val request = DownloadManager.Request(uri)
-    request.setTitle(uri.path?.getFileName() ?: "boost_file")
-    request.setDescription("boost360 File")
+    request.setTitle(uri.path?.getFileName() ?: getString(R.string.boost_file))
+    request.setDescription(getString(R.string.boost_360_file))
     request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
     request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
     downloader.enqueue(request)
-    Toast.makeText(this, "Invoice downloading.. ", Toast.LENGTH_SHORT).show()
+    Toast.makeText(this, getString(R.string.invoice_downloading), Toast.LENGTH_SHORT).show()
   } catch (e: Exception) {
     e.printStackTrace()
   }

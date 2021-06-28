@@ -20,6 +20,9 @@ import com.inventoryorder.utils.WebEngageController
 import com.onboarding.nowfloats.model.CityDataModel
 import com.onboarding.nowfloats.ui.CitySearchDialog
 import java.util.regex.Pattern
+import com.framework.webengageconstant.CLICKED_ON_ADD_CUSTOMER
+import com.framework.webengageconstant.ORDERS
+import com.onboarding.nowfloats.extensions.capitalizeWords
 
 class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() {
 
@@ -39,7 +42,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on Add Customer", "ORDERS", it) }
+    fpTag?.let { WebEngageController.trackEvent(CLICKED_ON_ADD_CUSTOMER, ORDERS, it) }
     setOnClickListener(binding?.vwNext, binding?.textAddCustomerGstin, binding?.tvRemove, binding?.textGoBack,binding?.layoutBillingAddr?.editCity)
     createOrderRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
     setUpData()
@@ -178,7 +181,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
   }
 
   private fun setCityState(cityDataModel: CityDataModel) {
-    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName())
-    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName())
+    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName().capitalizeWords())
+    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName().capitalizeWords())
   }
 }

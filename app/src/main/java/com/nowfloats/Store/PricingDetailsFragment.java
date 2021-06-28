@@ -79,7 +79,7 @@ public class PricingDetailsFragment extends Fragment {
         rvAllPlanDetails = (RecyclerView) pricingView.findViewById(R.id.rv_all_plan_details);
         ivPackageLogo = (ImageView) pricingView.findViewById(R.id.iv_package_logo);
         if (mBasePackage == null) return pricingView;
-        Picasso.Builder builder = new Picasso.Builder(getActivity());
+        Picasso.Builder builder = new Picasso.Builder(requireActivity());
         builder.listener(new Picasso.Listener() {
             @Override
             public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
@@ -87,7 +87,7 @@ public class PricingDetailsFragment extends Fragment {
             }
         });
         builder.build().load(mBasePackage.getPrimaryImageUri()).into(ivPackageLogo);
-       /* Picasso.with(getActivity()).load(mBasePackage.getPrimaryImageUri()).placeholder(R.drawable.default_product_image).into(ivPackageLogo, new Callback() {
+       /* Picasso.with(requireActivity()).load(mBasePackage.getPrimaryImageUri()).placeholder(R.drawable.default_product_image).into(ivPackageLogo, new Callback() {
             @Override
             public void onSuccess() {
                 Log.v(PricingDetailsFragment.class.getName(), "success");
@@ -98,7 +98,7 @@ public class PricingDetailsFragment extends Fragment {
                 Log.v(PricingDetailsFragment.class.getName(), "failed");
             }
         });*/
-        mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>(), getActivity());
+        mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>(), requireActivity());
         prepareBasePackageDetails();
 
         rvAllPlanDetails.setAdapter(mRvAdapter);
@@ -181,7 +181,7 @@ public class PricingDetailsFragment extends Fragment {
     private void initiatePopupWindow(View image, String desc) {
         Rect location = locateView(image);
         if (location == null) return;
-        View layout1 = LayoutInflater.from(getActivity()).inflate(R.layout.layout_all_plan_description_popup_dialog, null);
+        View layout1 = LayoutInflater.from(requireActivity()).inflate(R.layout.layout_all_plan_description_popup_dialog, null);
         layout1.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         int position_x = location.centerX() - layout1.getMeasuredWidth();
@@ -189,8 +189,8 @@ public class PricingDetailsFragment extends Fragment {
         //if (popup == null) {
         try {
 
-            popup = new PopupWindow(getActivity());
-            View layout = LayoutInflater.from(getActivity()).inflate(R.layout.layout_all_plan_description_popup_dialog, null);
+            popup = new PopupWindow(requireActivity());
+            View layout = LayoutInflater.from(requireActivity()).inflate(R.layout.layout_all_plan_description_popup_dialog, null);
             popup.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.color.transparent));
             tvDesc = layout.findViewById(R.id.tv_plan_desc);
             tvDesc.setText(desc);

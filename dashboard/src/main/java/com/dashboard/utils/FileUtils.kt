@@ -210,7 +210,7 @@ class FileUtils(var context: Activity) {
       Log.e("File Path", "Path " + file.path)
       Log.e("File Size", "Size " + file.length())
     } catch (e: Exception) {
-      Log.e("Exception", e.message)
+      Log.e("Exception", e.message?:"")
     }
     return file.path
   }
@@ -257,7 +257,7 @@ class FileUtils(var context: Activity) {
       inputStream?.close()
       outputStream.close()
     } catch (e: Exception) {
-      Log.e("Exception", e.message)
+      Log.e("Exception", e.message?:"")
     }
     return output.path
   }

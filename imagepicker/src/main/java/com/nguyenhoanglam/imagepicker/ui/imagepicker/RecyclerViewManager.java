@@ -116,7 +116,7 @@ public class RecyclerViewManager {
 
     private void checkAdapterIsInitialized() {
         if (imageAdapter == null) {
-            throw new IllegalStateException("Must call setupAdapters first!");
+            throw new IllegalStateException(context.getResources().getString(R.string.must_call_setup_adapter_first));
         }
     }
 

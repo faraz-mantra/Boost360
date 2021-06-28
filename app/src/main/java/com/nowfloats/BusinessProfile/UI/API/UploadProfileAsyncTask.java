@@ -116,7 +116,7 @@ public class UploadProfileAsyncTask extends AsyncTask<Void, String, String> {
 						break;
 				}
             }
-            Methods.showSnackBarPositive(appcontext,"Changes are successfully updated");
+            Methods.showSnackBarPositive(appcontext,appcontext.getString(R.string.changes_are_successfully_updated));
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

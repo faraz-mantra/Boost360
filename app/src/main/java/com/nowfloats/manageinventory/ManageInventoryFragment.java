@@ -104,7 +104,7 @@ public class ManageInventoryFragment extends Fragment {
                     @Override
                     public void run() {
                         if (getActivity() != null)
-                            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -128,7 +128,7 @@ public class ManageInventoryFragment extends Fragment {
                                 }
                                 mTransactionCharge = profile.getData().get(0).getApplicableTxnCharge() + "%";
                             } else {
-                                throw new NullPointerException("Orders Count is Null");
+                                throw new NullPointerException(getString(R.string.order_count_is_null));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.framework.base.BaseResponse
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.webengageconstant.CATEGORY
+import com.framework.webengageconstant.PS_BUSINESS_CATEGORY_CLICK
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
@@ -97,7 +99,7 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
 
         //Business Category Event Tracker.
         category?.category_Name?.let {
-          WebEngageController.trackEvent("CHOOSE BUSINESS CATEGORY", "Category", it) }
+          WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, it) }
 
         binding?.next?.visible()
         baseAdapter?.notifyDataSetChanged()

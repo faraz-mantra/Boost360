@@ -21,8 +21,8 @@ data class BusinessSetupHighData(
 
   fun getData(score: Int, visitor: String, order: String, orderText: String = "Bookings", enquiry: String): ArrayList<BusinessSetupHighData> {
     val list = ArrayList<BusinessSetupHighData>()
-    list.add(BusinessSetupHighData(title1 = "Business\nSummary", siteVisitor = Specification("Unique visits", visitor, BusinessClickEvent.WEBSITE_VISITOR.name), booking = Specification("$orderText", order, BusinessClickEvent.ODER_APT.name), enquiry = Specification("Enquiries", enquiry, BusinessClickEvent.ENQUIRIES.name), type = ActiveViewType.IS_BUSINESS_UPDATE.name))
-    list.add(BusinessSetupHighData(title1 = "Digital Readiness Score: ", score = score, type = ActiveViewType.IS_PROGRESS.name))
+    list.add(BusinessSetupHighData(title1 = "Business\nSummary", siteVisitor = Specification("Unique visits", visitor, BusinessClickEvent.WEBSITE_VISITOR.name), booking = Specification(orderText, order, BusinessClickEvent.ODER_APT.name), enquiry = Specification("Enquiries", enquiry, BusinessClickEvent.ENQUIRIES.name), type = ActiveViewType.IS_BUSINESS_UPDATE.name))
+    list.add(BusinessSetupHighData(title1 = "Website Readiness Score: ", score = score, type = ActiveViewType.IS_PROGRESS.name))
     return list
   }
 

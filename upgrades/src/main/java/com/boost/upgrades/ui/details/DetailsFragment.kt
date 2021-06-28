@@ -44,6 +44,7 @@ import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.framework.webengageconstant.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -169,10 +170,11 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                     event_attributes.put("Addon Discounted Price", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
                     event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
                     event_attributes.put("Addon Validity", 1)
+                    event_attributes.put("Addon Feature Key", addonDetails!!.boost_widget_key)
                     addonDetails!!.target_business_usecase?.let { it1 -> event_attributes.put("Addon Tag", it1) }
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Addon added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
                     if(addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
-                        WebEngageController.trackEvent("Self branded payment gateway requested", "Self Branded Payment Gateway", "")
+                        WebEngageController.trackEvent(SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED , SELF_BRANDED_PAYMENT_GATEWAY, NO_EVENT_VALUE)
                     badgeNumber = badgeNumber + 1
                     badge121.setText(badgeNumber.toString())
                     badge121.visibility = View.VISIBLE
@@ -189,7 +191,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                   havent_bought_the_feature.visibility = View.INVISIBLE
                     itemInCartStatus = true
 
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature added to cart", "Feature_Key", singleWidgetKey!!)
+//                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART, FEATURE_KEY , event_attributes)
                 }
             }
         }
@@ -401,9 +403,12 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 xheader.text = addonDetails!!.description_title
                 abcText.text = addonDetails!!.description
                 review_layout.visibility = View.GONE
-
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details Loaded", "Feature_Details", addonDetails!!.boost_widget_key)
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details - " + addonDetails!!.boost_widget_key + " Loaded", "Feature_Details", addonDetails!!.boost_widget_key)
+                var event_attributes: HashMap<String, Any> = HashMap()
+                event_attributes.put("Feature details", addonDetails!!.description!!)
+                event_attributes.put("Feature Name", addonDetails!!.name!!)
+                event_attributes.put("Feature Key", addonDetails!!.boost_widget_key)
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED, Feature_Details, event_attributes,"")
+//                WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_DETAILS + addonDetails!!.boost_widget_key + " Loaded", Feature_Details, event_attributes)
 
             }
         })

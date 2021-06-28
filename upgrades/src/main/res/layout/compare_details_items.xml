@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="1.3sp"
-                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
                 android:maxLines="3"
                 android:ellipsize="end"
                 android:textStyle="bold"

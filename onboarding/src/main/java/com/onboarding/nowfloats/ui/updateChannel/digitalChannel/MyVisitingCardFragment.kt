@@ -99,8 +99,8 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
       } else showShortToast(it.message())
       hideProgress()
     })
-    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp("Business Card", true) }
-    binding?.shareOther?.setOnClickListener { shareCardWhatsApp("Business Card", false) }
+    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp(getString(R.string.business_card), true) }
+    binding?.shareOther?.setOnClickListener { shareCardWhatsApp(getString(R.string.business_card), false) }
   }
 
   private fun shareCardWhatsApp(messageCard: String?, isWhatsApp: Boolean) {
@@ -116,14 +116,14 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
       val imageUri: Uri = Uri.parse(path)
       val waIntent = Intent(Intent.ACTION_SEND)
       waIntent.type = "image/*"
-      if (isWhatsApp) waIntent.setPackage("com.whatsapp")
+      if (isWhatsApp) waIntent.setPackage(getString(R.string.whatsapp_package))
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
-      baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
+      baseActivity.startActivity(Intent.createChooser(waIntent, getString(R.string.share_your_business_card)))
       hideProgress()
       savePositionCard(cardPosition)
     } catch (e: Exception) {
-      showLongToast("Error sharing visiting card, please try again.")
+      showLongToast(getString(R.string.error_sharing_visiting_card_please_try_again))
       hideProgress()
     }
   }
@@ -133,7 +133,7 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           shareCardWhatsApp(this.messageCard, this.isWhatsApp ?: false)
-        } else showShortToast("Permission denied to read your External storage")
+        } else showShortToast(getString(R.string.permission_denied_to_read_your_external_storage))
         return
       }
     }

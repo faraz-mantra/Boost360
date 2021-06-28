@@ -241,13 +241,13 @@ class BookATableDetailsFragment : Fragment() {
                             Toast.makeText(requireContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
                             return
                         }
-                        Methods.showSnackBarPositive(requireActivity(), "Successfully Updated Book Table Details")
+                        Methods.showSnackBarPositive(requireActivity(), getString(R.string.successfully_updated_book_table_details))
                         requireActivity().onBackPressed()
                     }
 
                     override fun failure(error: RetrofitError) {
                         if (error.response.status == 200) {
-                            Methods.showSnackBarPositive(requireActivity(), "Successfully Updated Book Table Details")
+                            Methods.showSnackBarPositive(requireActivity(), getString(R.string.successfully_updated_book_table_details))
                             requireActivity().onBackPressed()
                         } else {
                             Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong))
@@ -288,7 +288,7 @@ class BookATableDetailsFragment : Fragment() {
 
                 override fun failure(error: RetrofitError) {
                     if (error.response.status == 200) {
-                        Methods.showSnackBarPositive(requireActivity(), "Successfully Deleted.")
+                        Methods.showSnackBarPositive(requireActivity(), getString(R.string.successfully_deleted_))
                         activity!!.onBackPressed()
                     } else {
                         Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong))

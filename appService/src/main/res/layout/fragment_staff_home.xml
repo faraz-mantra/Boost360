@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-    </data>
+  </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/staff_home"
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/staff_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/iv_think_illustration"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_staff_illustration"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.36" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tv_main_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/open_sans"
+      android:text="@string/what_services_you_give"
+      android:textColor="@color/gray_light_4"
+      android:textFontWeight="600"
+      android:textStyle="normal"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/iv_think_illustration"
+      app:layout_constraintVertical_bias="0.052"
+      app:textType="HEADING_5" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tv_subtitle"
+      style="@style/TextDescription"
+      android:text="@string/you_don_t_h"
+      android:textAlignment="center"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_main_title"
+      app:layout_constraintVertical_bias="0.061" />
+
+    <FrameLayout
+      android:id="@+id/btn_take_to_listing"
+      style="@style/ButtonStyle.Rounded.Solid"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
+      app:layout_constraintVertical_bias="0.079">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/iv_think_illustration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_staff_illustration"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.36" />
-
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_main_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:text="@string/what_services_you_give"
-            android:textColor="@color/gray_light_4"
-            android:textFontWeight="600"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_think_illustration"
-            app:layout_constraintVertical_bias="0.052"
-            app:textType="HEADING_5" />
-
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_subtitle"
-            style="@style/TextDescription"
-            android:text="@string/you_don_t_h"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textAlignment="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_main_title"
-            app:layout_constraintVertical_bias="0.061" />
-
-        <FrameLayout
-            android:id="@+id/btn_take_to_listing"
-            style="@style/ButtonStyle.Rounded.Solid"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
-            app:layout_constraintVertical_bias="0.079">
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="@string/take_me_to_service_listing"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textFontWeight="600"
-                app:textType="BODY_1" />
-        </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:text="@string/take_me_to_service_listing"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        app:textType="BODY_1" />
+    </FrameLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

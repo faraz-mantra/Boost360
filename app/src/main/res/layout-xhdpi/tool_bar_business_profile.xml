@@ -11,21 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="text"
+        android:text="@string/text"
         android:textColor="@color/white"
         android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:gravity="right"
+        android:gravity="end"
         android:orientation="horizontal">
 
         <com.nowfloats.CustomWidget.roboto_md_size_a1a1a1
             android:id="@+id/saveTextView"
             android:layout_width="50dp"
             android:layout_height="fill_parent"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:background="@drawable/button_click_effect"
             android:gravity="center_vertical|center"
             android:text="@string/tool_bar_save_text"

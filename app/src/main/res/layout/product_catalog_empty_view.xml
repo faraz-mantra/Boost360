@@ -31,7 +31,7 @@
                 android:gravity="center"
                 android:layout_below="@+id/iv_empty"
                 android:layout_marginTop="30dp"
-                android:text="You have no products listed on your site as of yet."/>
+                android:text="@string/you_have_no_products_listed_on_your_site_as_of_yet"/>
 
             <!--
             <ImageButton

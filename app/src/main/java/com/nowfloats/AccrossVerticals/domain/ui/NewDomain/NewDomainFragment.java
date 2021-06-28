@@ -38,6 +38,10 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DOMAIN_AND_EMAIL;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_CONFIRM_BOOK_A_NEW_DOMAIN;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
+
 public class NewDomainFragment extends Fragment {
 
     private NewDomainViewModel mViewModel;
@@ -77,13 +81,13 @@ public class NewDomainFragment extends Fragment {
         confirm_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("Clicked on confirm book a new domain", "Domain and Email", "");
+                WebEngageController.trackEvent(CLICKED_ON_CONFIRM_BOOK_A_NEW_DOMAIN, EVENT_LABEL_DOMAIN_AND_EMAIL, NO_EVENT_VALUE);
             }
         });
 //        domainSupportTypeSpinneer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(requireContext(),domainSupportType[position] , Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(),domainSupportType[position] , Toast.LENGTH_LONG).show();
 //            }
 //
 //            @Override
@@ -99,12 +103,12 @@ public class NewDomainFragment extends Fragment {
 
         title = view.findViewById(R.id.title);
         backButton = view.findViewById(R.id.back_button);
-        title.setText("Get a New Domain");
+        title.setText(R.string.get_a_new_domain);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
     }
@@ -142,20 +146,20 @@ public class NewDomainFragment extends Fragment {
                         }
 
                         //Creating the ArrayAdapter instance having the country list
-//                        ArrayAdapter aa = new ArrayAdapter(requireActivity(), R.layout.spinner_item_white_text, domainSupportType);
-                        ArrayAdapter aa = new ArrayAdapter(requireActivity(), R.layout.spinner_item_white_text, domainList);
+//                        ArrayAdapter aa = new ArrayAdapter(getActivity(), R.layout.spinner_item_white_text, domainSupportType);
+                        ArrayAdapter aa = new ArrayAdapter(getActivity(), R.layout.spinner_item_white_text, domainList);
                         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         //Setting the ArrayAdapter data on the Spinner
                         domainSupportTypeSpinneer.setAdapter(aa);
                     }else{
-                        Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     hideProgress();
-                    Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                 }
             });
 

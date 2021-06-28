@@ -2,6 +2,7 @@ package com.appservice.ui.paymentgateway
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
@@ -25,8 +26,10 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.Key_Preferences
 import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
 
 class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, WebBoostKitViewModel>() {
 
@@ -82,7 +85,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
 
   private fun checkInstaMojo() {
     showProgress()
-    viewModel?.getKycData(session.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getKycData(session?.auth_1,getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse
         if ((it.status == 200 || it.status == 201 || it.status == 202) && resp?.data.isNullOrEmpty().not()) {
@@ -156,7 +159,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
   private fun updateKycData() {
     val updateRequest = getUpdateRequest(dataKyc)
     showProgress()
-    viewModel?.updateKycData(session.auth_1, updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.updateKycData(session.auth_1,updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -215,16 +218,20 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
 
   fun startStorePage() {
     try {
+      showProgress("Loading. Please wait...")
       val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
       intent.putExtra("expCode", session.experienceCode)
       intent.putExtra("fpName", session.fpTag)
       intent.putExtra("fpid", session.fpId)
-      intent.putExtra("loginid", session.fpTag)
+      intent.putExtra("fpTag", session.fpTag)
+      intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
       intent.putExtra("email", session.fpEmail ?: "ria@nowfloats.com")
       intent.putExtra("mobileNo", session.fpNumber ?: "9160004303")
       intent.putExtra("profileUrl", session.fpLogo)
       intent.putExtra("buyItemKey", StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
       baseActivity.startActivity(intent)
+      Handler().postDelayed({ hideProgress() }, 1000)
     } catch (e: Exception) {
       showLongToast("Unable to start upgrade activity.")
     }

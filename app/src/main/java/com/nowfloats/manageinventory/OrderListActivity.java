@@ -257,7 +257,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         if (getIntent().hasExtra(Constants.ORDER_TYPE)) {
             showOrders(getIntent().getIntExtra(Constants.ORDER_TYPE, -1));
         } else {
-            showEmptyLayout("You don't have any Order");
+            showEmptyLayout(getString(R.string.you_do_not_have_any_order));
         }
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
@@ -451,52 +451,52 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         }
         switch (orderType) {
             case 0:
-                setTitle("Total Orders");
+                setTitle(getString(R.string.total_orders));
                 orderStatus = "";
-                emptyMsg = "You don't have Any Order";
+                emptyMsg = getString(R.string.you_dont_have_any_order);
                 mCurrSelectedView = findViewById(R.id.rl_total_orders);
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 1:
-                setTitle("Received Orders");
+                setTitle(getString(R.string.received_orders));
                 orderStatus = OrderStatus.PLACED;
-                emptyMsg = "You don't have any Received Order";
+                emptyMsg = getString(R.string.you_dont_have_received_orders);
                 mCurrSelectedView = findViewById(R.id.rl_received_orders);
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 2:
-                setTitle("Delivered Orders");
+                setTitle(getString(R.string.delivered_orders));
                 orderStatus = OrderStatus.COMPLETED;
-                emptyMsg = "You don't have any Successful Order";
+                emptyMsg = getString(R.string.you_dont_have_any_successfull_order);
                 mCurrSelectedView = findViewById(R.id.rl_successful_orders);
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 3:
-                setTitle("Cancelled Orders");
+                setTitle(getString(R.string.cancelled_orders));
                 orderStatus = OrderStatus.CANCELLED;
-                emptyMsg = "You don't have any Cancelled Order";
+                emptyMsg = getString(R.string.you_dont_have_cancelled_orders);
                 mCurrSelectedView = findViewById(R.id.rl_cancelled_orders);
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 4:
-                setTitle("Disputed Orders");
+                setTitle(getString(R.string.disputed_orders));
                 orderStatus = OrderStatus.ESCALATED;
-                emptyMsg = "You don't have any Disputed Order";
+                emptyMsg = getString(R.string.you_dont_have_disputed_order);
                 mCurrSelectedView = findViewById(R.id.rl_disputed_orders);
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 5:
-                setTitle("Abandoned Orders");
+                setTitle(getString(R.string.abandoned_orders));
                 orderStatus = OrderStatus.CANCELLED;
-                emptyMsg = "You don't have any Abandoned Order";
+                emptyMsg = getString(R.string.you_dont_have_abandoned_order);
                 mCurrSelectedView = findViewById(R.id.rl_abandoned_orders);
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
             case 6:
-                setTitle("Disputed Orders");
+                setTitle(getString(R.string.disputed_orders));
                 orderStatus = OrderStatus.ESCALATED;
                 mCurrSelectedView = findViewById(R.id.rl_disputed_orders);
-                emptyMsg = "You don't have any Disputed Order";
+                emptyMsg = getString(R.string.you_dont_have_any_disputed_order);
                 getOrders(mQuery, mSkip, LIMIT);
                 break;
         }
@@ -555,7 +555,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
 
         @Override
         public void failure(RetrofitError error) {
-            Toast.makeText(OrderListActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OrderListActivity.this, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
             pbLoading.setVisibility(View.GONE);
             showEmptyLayout(emptyMsg);
         }
@@ -626,7 +626,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(OrderListActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderListActivity.this, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
             }
         });
     }

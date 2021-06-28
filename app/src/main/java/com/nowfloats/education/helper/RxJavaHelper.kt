@@ -1,6 +1,8 @@
 package com.nowfloats.education.helper
 
 import android.util.Log
+import com.nowfloats.education.koindi.KoinBaseApplication
+import com.thinksity.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -22,20 +24,20 @@ inline fun <T> Observable<T>.processRequest(
                     },
                     { err ->
                         val message = getMessage(err)
-                        Log.e("RxJavaHelper", err.message)
+                        Log.e("RxJavaHelper", err.message?:"")
                         onError(message)
                     }
             )
 }
 
 fun getMessage(t: Throwable) = when (t) {
-    is IOException -> if (t.message == null) "Failed to connect to server." else t.message
-    is SocketTimeoutException -> if (t.message == null) "Request timeout." else t.message
+    is IOException -> if (t.message == null) KoinBaseApplication.instance.getString(R.string.failed_to_connect_to_server) else t.message
+    is SocketTimeoutException -> if (t.message == null) KoinBaseApplication.instance.getString(R.string.request_timeout) else t.message
     is HttpException -> {
         val err = t.response()?.errorBody()
-        if (t.code() == 401) "Session expired"
-        else if (t.code() == 400) "Bad Request"
-        else if (err == null) "Request failed."
+        if (t.code() == 401) KoinBaseApplication.instance.getString(R.string.session_expired)
+        else if (t.code() == 400) KoinBaseApplication.instance.getString(R.string.bad_request)
+        else if (err == null) KoinBaseApplication.instance.getString(R.string.request_failed_)
         else {
             try {
                 val jObjError = JSONObject(err.string())

@@ -41,7 +41,7 @@
             android:background="@android:color/transparent"
             android:layout_gravity="end|center"
             android:visibility="gone"
-            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_10"
             app:srcCompat="@drawable/ic_cancel" />
 
     </LinearLayout>

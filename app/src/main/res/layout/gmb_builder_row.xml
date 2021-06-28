@@ -19,9 +19,9 @@
         android:id="@+id/GMBAccountCheckBox"/>
 
     <TextView
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:textColor="#000"
-        android:text="Tanmay Majumdar"
+        android:text="@string/tanmay_majumdar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Account_name"/>

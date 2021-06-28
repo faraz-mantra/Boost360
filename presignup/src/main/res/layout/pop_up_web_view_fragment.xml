@@ -49,7 +49,7 @@
                 android:id="@+id/browser_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Browser"
+                android:text="@string/browser"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp"
                 android:maxLines="1"

@@ -10,11 +10,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
+import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
@@ -27,8 +29,14 @@ import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import es.dmoral.toasty.Toasty
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.package_fragment.*
 import java.text.NumberFormat
 import java.util.*
@@ -63,7 +71,8 @@ class PackageFragment : BaseFragment() {
     ): View? {
         root = inflater.inflate(R.layout.package_fragment, container, false)
 
-        val jsonString = arguments!!.getString("bundleData")
+        val jsonString = requireArguments().getString("bundleData")
+        Log.v("jsonString"," "+ jsonString)
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
         packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
         prefs = SharedPrefs(activity as UpgradeActivity)
@@ -80,7 +89,7 @@ class PackageFragment : BaseFragment() {
 
         package_title.setText(bundleData!!.name)
 
-        if(arguments!!.containsKey("showCartIcon")){
+        if(requireArguments().containsKey("showCartIcon")){
             package_cart_icon.visibility = View.INVISIBLE
             package_submit.visibility = View.GONE
         }
@@ -131,7 +140,7 @@ class PackageFragment : BaseFragment() {
                     event_attributes.put("Discounted Price", offeredBundlePrice)
                     event_attributes.put("Discount %", bundleData!!.overall_discount_percent)
                     bundleData!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
                     packageInCartStatus = true
                     package_submit.background = ContextCompat.getDrawable(
                             requireContext(),
@@ -214,6 +223,9 @@ class PackageFragment : BaseFragment() {
                     package_use_case.setText(bundleData!!.target_business_usecase)
 
                 }
+                var event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
+                event_attributes.put("Package Name", bundleData!!.name!!)
+                WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_BUNDLE_LOADED, PAGE_VIEW, event_attributes,"")
             }
         })
 

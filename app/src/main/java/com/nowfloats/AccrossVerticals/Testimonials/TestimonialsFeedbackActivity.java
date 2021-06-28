@@ -64,35 +64,41 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_TESTIMONIAL_ADDED;
+import static com.framework.webengageconstant.EventNameKt.TESTIMONIAL_ADDED;
+
+import static com.framework.webengageconstant.EventNameKt.TESTIMONIAL_UPDATED;
 import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity.allTestimonialType;
 import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
 
 public class TestimonialsFeedbackActivity extends AppCompatActivity implements TestimonialsFeedbackListener {
 
-  private static final int GALLERY_PHOTO = 2;
-  private static final int CAMERA_PHOTO = 1;
-  private final int gallery_req_id = 0;
-  private final int media_req_id = 1;
-  Uri imageUri;
-  String path = null;
-  String uploadedImageURL = "";
-  UserSessionManager session;
-  TestimonialData existingItemData = null;
-  EditText userNameText, reviewTitleText, reviewDescriptionText, profileDescEdt;
+    private TextView saveButton, descriptionCharCount;
+    private String ScreenType = "", itemId = "";
+    Uri imageUri;
+    String path = null;
+    String uploadedImageURL = "";
+    UserSessionManager session;
+    TestimonialData existingItemData = null;
+    EditText userNameText, reviewTitleText, reviewDescriptionText, profileDescEdt;
   LinearLayout profileDescView, reviewTitleView;
   TextView titleProfileDesc, isFillProfileDesc;
-  CardView imageLayout;
-  ImageView profileImage;
-  ImageButton removeProfileImage;
-  TextView reviewDescriptionLabel;
-  TextView reviewTitleLabel;
+    CardView imageLayout;
+    ImageView profileImage;
+    ImageButton removeProfileImage;
+    TextView reviewDescriptionLabel;
+    TextView reviewTitleLabel;
 
-  private String headerToken = "59c89bbb5d64370a04c9aea1";
-  private String testimonialType = "testimonials";
-  private TextView saveButton, descriptionCharCount;
-  private String ScreenType = "", itemId = "";
-  private ProgressDialog progressDialog;
-  private boolean isNewDataAdded = false;
+    private final int gallery_req_id = 0;
+    private final int media_req_id = 1;
+    private static final int GALLERY_PHOTO = 2;
+    private static final int CAMERA_PHOTO = 1;
+
+    private ProgressDialog progressDialog;
+    private boolean isNewDataAdded = false;
+    private String headerToken = "59c89bbb5d64370a04c9aea1";
+    private String testimonialType = "testimonials";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -125,27 +131,27 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     progressDialog = new ProgressDialog(this);
     progressDialog.setCancelable(false);
 
-    reviewDescriptionText.addTextChangedListener(new TextWatcher() {
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        reviewDescriptionText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-      }
+            }
 
-      @Override
-      public void onTextChanged(CharSequence s, int start, int before, int count) {
-        int tempCount = 200 - s.length();
-        descriptionCharCount.setText("(" + tempCount + " Characters)");
-      }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int tempCount = 200 - s.length();
+                descriptionCharCount.setText("(" + tempCount + " Characters)");
+            }
 
-      @Override
-      public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-      }
-    });
+            }
+        });
 
     saveButton.setOnClickListener(v -> {
       if (path != null) {
-        showLoader("Uploading Image.Please Wait...");
+          showLoader(getString(R.string.uploading_image_please_wait));
         new Handler().postDelayed(() -> uploadImageToServer(), 200);
       } else {
         uploadDataToServer();
@@ -189,13 +195,13 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     }
   }
 
-  public void setHeader() {
-    LinearLayout rightButton, backButton;
-    ImageView rightIcon;
-    TextView title;
+    public void setHeader() {
+        LinearLayout rightButton, backButton;
+        ImageView rightIcon;
+        TextView title;
 
-    Bundle extra = getIntent().getExtras();
-    ScreenType = extra.getString("ScreenState");
+        Bundle extra = getIntent().getExtras();
+        ScreenType = extra.getString("ScreenState");
 
     title = findViewById(R.id.title);
     backButton = findViewById(R.id.back_button);
@@ -206,7 +212,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
       rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
       rightButton.setOnClickListener(v -> {
         if (ScreenType != null && ScreenType.equals("edit")) {
-          showLoader("Deleting Record.Please Wait...");
+            showLoader(getString(R.string.deleting_record_please_wait));
           deleteRecord(itemId);
           return;
         }
@@ -255,7 +261,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
               Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
               return;
             }
-            WebEngageController.trackEvent("Testimonial added", "MANAGE CONTENT", session.getFpTag());
+              WebEngageController.trackEvent(TESTIMONIAL_ADDED, EVENT_LABEL_MANAGE_CONTENT, session.getFpTag());
             Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
             isNewDataAdded = true;
             onBackPressed();
@@ -357,7 +363,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
               Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
               return;
             }
-            WebEngageController.trackEvent("MANAGE CONTENT", "Testimonial added", session.getFpTag());
+              WebEngageController.trackEvent(TESTIMONIAL_UPDATED, EVENT_LABEL_TESTIMONIAL_ADDED, session.getFpTag());
             Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
             onBackPressed();
           }
@@ -366,7 +372,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
           public void failure(RetrofitError error) {
             hideLoader();
             if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
-              Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.successfully_updated_testimonials), Toast.LENGTH_LONG).show();
               onBackPressed();
             } else {
               Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
@@ -470,7 +476,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
             path = Methods.getPath(this, picUri);
             updatePlaceProfileImage();
           } else {
-            Toast.makeText(this, "Something went wrong. Try Later!!", Toast.LENGTH_LONG).show();
+              Toast.makeText(this, getString(R.string.something_went_wrong_try_later), Toast.LENGTH_LONG).show();
           }
         }
       }
@@ -528,7 +534,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
           hideLoader();
           if (response != null && response.getStatus() == 200) {
             Log.d("deletePlacesAround ->", response.getBody().toString());
-            Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+              Toast.makeText(getApplicationContext(), getString( R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
             onBackPressed();
           } else {
             Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
@@ -539,7 +545,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         public void failure(RetrofitError error) {
           hideLoader();
           if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
-            Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+              Toast.makeText(getApplicationContext(),getString( R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
             onBackPressed();
           } else {
             Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
@@ -562,10 +568,10 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
   private void uploadDataToServer() {
     if (ScreenType.equals("edit")) {
-      showLoader("Updating Record.Please Wait...");
+        showLoader(getString(R.string.updating_record_please_wait));
       updateExistingTestimonialsAPI();
     } else {
-      showLoader("Creating Record.Please Wait...");
+        showLoader(getString(R.string.creating_record_please_wait));
       createNewTestimonialsAPI();
       Methods.hideKeyboard(TestimonialsFeedbackActivity.this);
     }

@@ -25,7 +25,7 @@
             android:id="@+id/tv_theme_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dynamic"
+            android:text="@string/dynamic"
             android:layout_marginTop="15dp"
             android:textColor="@color/primary_color"
             android:textSize="18sp" />
@@ -34,7 +34,7 @@
             android:id="@+id/tv_theme_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(Recommended)"
+            android:text="@string/recommended"
             android:textSize="12sp"
             android:textColor="@color/light_black_color"
             android:visibility="visible" />
@@ -45,10 +45,10 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:text="We choose the theme that will work best for your business, keeping many factors in mind. By default this is the setting, because you should only focus on the content that will get the customers to your store." />
+            android:layout_marginStart="20dp"
+            android:text="@string/we_choose_the_theme_that_will_work_best_for_your_business_keeping_many_factors_in_mind_by_default_this_is_the_setting_because_you_should_only_focus_on_the_content_that_will_get_the_customers_to_your_store" />
 
         <TextView
             android:id="@+id/btn_set_look"
@@ -60,7 +60,7 @@
             android:layout_gravity="bottom"
             android:textColor="@drawable/yellow_btn_text_color"
             android:background="@drawable/rounded_yellow_selector_bg"
-            android:text="Set this look"
+            android:text="@string/set_this_look"
             android:textAllCaps="false" />
     </LinearLayout>
 </LinearLayout>

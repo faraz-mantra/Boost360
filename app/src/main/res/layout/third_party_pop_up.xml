@@ -10,19 +10,19 @@
         android:background="?android:selectableItemBackground"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Date"/>
+        android:text="@string/datev1"/>
     <TextView
         android:id="@+id/tvExpire"
         android:layout_width="match_parent"
         android:background="?android:selectableItemBackground"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Expiry"/>
+        android:text="@string/expiry"/>
     <TextView
         android:id="@+id/tvSource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
         android:padding="15dp"
-        android:text="Source"/>
+        android:text="@string/source"/>
 </LinearLayout>

@@ -8,14 +8,12 @@
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match_match"
     android:background="@color/grey_f9f9f9">
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/error"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:gravity="center"
       android:textColor="@color/scarlet_40"
       android:visibility="gone"
@@ -25,26 +23,22 @@
 
     <androidx.core.widget.NestedScrollView
       android:id="@+id/main_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:fillViewport="true">
 
       <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/match_match"
         android:background="@color/grey_f9f9f9">
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/card_date_range_selector"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           app:cardBackgroundColor="@color/white"
           app:cardElevation="@dimen/size_8"
           app:layout_constraintTop_toTopOf="parent">
 
           <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:paddingHorizontal="@dimen/size_16"
             android:paddingVertical="@dimen/size_12">
 
@@ -59,8 +53,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_month_date_range"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_8"
               android:includeFontPadding="false"
               android:text="@string/aug_sep_2020"
@@ -71,8 +64,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/btn_goto_current_week"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:text="@string/go_to_current_week"
               android:textAllCaps="true"
               android:textColor="@color/orange"
@@ -84,20 +76,17 @@
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/card_calendar_single_row"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           app:cardBackgroundColor="@color/white"
           app:cardElevation="@dimen/size_4"
           app:layout_constraintTop_toBottomOf="@id/card_date_range_selector">
 
           <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/match_wrap">
 
             <com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
               android:id="@+id/main_single_row_calendar"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               app:deselection="false"
               app:longPress="false"
               app:multiSelection="false" />
@@ -106,8 +95,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_doctor"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/select_doctor"
@@ -117,8 +105,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_doctor"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -136,8 +123,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_consultation_type"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginVertical="@dimen/size_10"
           android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
@@ -148,28 +134,25 @@
 
         <RadioGroup
           android:id="@+id/radio_group"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginStart="@dimen/size_10"
           android:layout_marginTop="@dimen/size_6"
           android:orientation="horizontal"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/tv_consultation_type">
 
-          <RadioButton
+          <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_in_clinic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:checked="true"
             android:text="@string/in_clinic"
             android:textColor="@drawable/radio_selected"
             android:textSize="16sp"
             app:buttonTint="@drawable/radio_selected" />
 
-          <RadioButton
+          <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_video_consultation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:checked="false"
             android:text="@string/video_consultation_camel_case"
@@ -182,8 +165,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_consulting_service"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/consulting_service"
           android:textColor="@color/warm_light"
@@ -192,8 +174,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_consulting_service"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -211,10 +192,9 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_time_text"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
-          android:text="Time Slot"
+          android:text="@string/time_slot"
           android:textColor="@color/warm_light"
           app:layout_constraintStart_toStartOf="@id/radio_group"
           app:layout_constraintTop_toBottomOf="@id/edt_consulting_service" />
@@ -222,8 +202,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_start_time"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -243,8 +222,7 @@
 
         <LinearLayout
           android:id="@+id/ll_consultation_timings"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:orientation="horizontal"
@@ -259,16 +237,14 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_gravity="start"
               android:text="@string/duration"
               android:textColor="@color/warm_light" />
 
             <com.framework.views.customViews.CustomEditText
               android:id="@+id/edt_duration"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
               android:clickable="true"
@@ -291,16 +267,14 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_gravity="start"
               android:text="@string/final_price"
               android:textColor="@color/warm_light" />
 
             <com.framework.views.customViews.CustomEditText
               android:id="@+id/edt_fees"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
               android:clickable="true"
@@ -318,8 +292,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/patient_name_camel_case"
           android:textColor="@color/warm_light"
@@ -328,8 +301,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_name"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -344,8 +316,7 @@
 
         <LinearLayout
           android:id="@+id/ll_gender_age"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginTop="@dimen/size_8"
           android:orientation="horizontal"
@@ -360,16 +331,14 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_gravity="start"
               android:text="@string/gender"
               android:textColor="@color/warm_light" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/edt_gender"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
               android:clickable="true"
@@ -392,16 +361,14 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              style="@style/wrap_wrap"
               android:layout_gravity="start"
               android:text="@string/age_years"
               android:textColor="@color/warm_light" />
 
             <com.framework.views.customViews.CustomEditText
               android:id="@+id/edt_age"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
               android:inputType="number"
@@ -418,8 +385,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_phone"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/patient_mobile_number"
           android:textColor="@color/warm_light"
@@ -428,8 +394,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_phone"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -445,8 +410,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_email"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          style="@style/wrap_wrap"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/patient_email_id_optional"
           android:textColor="@color/warm_light"
@@ -455,8 +419,7 @@
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_email"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
@@ -470,8 +433,7 @@
           app:layout_constraintTop_toBottomOf="@id/tv_patient_email" />
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_30"
           android:background="@color/white"
           android:orientation="vertical"
@@ -479,16 +441,14 @@
           app:layout_constraintTop_toBottomOf="@id/edt_patient_email">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:text="@string/create_appointment_note"
             android:textColor="@color/warm_grey_two"
             android:textSize="12sp" />
 
           <com.framework.views.customViews.CustomButton
             android:id="@+id/btn_create"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginTop="@dimen/size_12"
             android:background="@drawable/bg_button_rounded_blue"
             android:gravity="center"

@@ -102,7 +102,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
-                .content("Please Wait...")
+                .content(getString(R.string.please_wait_))
                 .progress(true, 0)
                 .cancelable(false)
                 .show();
@@ -155,7 +155,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 //                        initiatePaymentProcess(i, mInvoiceId);
 //                    }
                 }else {
-                    Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error in processing Amount");
+                    Methods.showSnackBarNegative(ProductCheckoutActivity.this, getString(R.string.error_in_processing_amount));
                 }
             }
         });
@@ -297,14 +297,14 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         ReceiveDraftInvoiceModel.KeyValuePair keyVal = mOpcDetails.get(0);
         if(keyVal.getValue()!=null){
             new AlertDialog.Builder(this)
-                    .setMessage("Please note that your package will be activated on " + keyVal.getValue() +". Are you sure you want to proceed?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setMessage(getString(R.string.please_note_that_your_package_will_be_activated) + keyVal.getValue() +getString(R.string.are_you_sure_want_to_proceed))
+                    .setPositiveButton(getString( R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             initiatePaymentProcess(i, mInvoiceId);
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString( R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -316,13 +316,13 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         }else {
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.dialog_to_be_activated_null_text))
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString( R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             initiatePaymentProcess(i, mInvoiceId);
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString( R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -335,7 +335,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
     private void updateDraftInvoice(String OPCCode) {
         if(Util.isNullOrEmpty(OPCCode)){
-            Methods.showSnackBarNegative(this, "Online Voucher can't be empty");
+            Methods.showSnackBarNegative(this, getString(R.string.online_voucher_cant_be_empty));
             return;
         }
         try {
@@ -345,14 +345,14 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             if (cursor.moveToFirst()){
                 fpUserProfileId = cursor.getString(cursor.getColumnIndex(DataBase.colloginId));
             }else {
-                showDialog("Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
+                showDialog("Alert!", getString(R.string.this_is_an_added_security_feature_to_protect_your_package_details_kindly_log_out_and_login_again_to_pay_for_this));
                 return;
             }
             UpdateDraftInvoiceModel updateDraftInvoiceModel;
             if(mInvoiceId!=null && fpUserProfileId!=null) {
                 updateDraftInvoiceModel = new UpdateDraftInvoiceModel(fpUserProfileId, OPCCode, mInvoiceId);
             }else {
-                Methods.showSnackBarNegative(this, "Unable to create Draft Invoice");
+                Methods.showSnackBarNegative(this, getString(R.string.unable_to_create_draft_invoice));
                 return;
             }
 
@@ -362,7 +362,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                 materialProgress.show();
             }
             if(updateDraftInvoiceModel==null){
-                Methods.showSnackBarNegative(this, "Unable to apply Coupon");
+                Methods.showSnackBarNegative(this, getString(R.string.unable_to_apply_coupon));
                 return;
             }
             StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
@@ -380,9 +380,9 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                                 mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
                                 mOpcDetails = receiveDraftInvoice.getResult().getOpcDetails();
                                 initializeVal(receiveDraftInvoice.getResult(), true);
-                                Methods.showSnackBarPositive(ProductCheckoutActivity.this, "Online voucher Applied Successfully");
+                                Methods.showSnackBarPositive(ProductCheckoutActivity.this, getString(R.string.online_voucher_applied_successfully));
                             }else {
-                                Methods.showSnackBarNegative(ProductCheckoutActivity.this, "The entered Online voucher is not valid for this product.");
+                                Methods.showSnackBarNegative(ProductCheckoutActivity.this, getString(R.string.the_entered_online_voucher_is_not_valid_for_this_product));
                             }
                         }else {
                             Methods.showSnackBarNegative(ProductCheckoutActivity.this, receiveDraftInvoice.getError().getErrorList().get(0).Key);
@@ -410,7 +410,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             if(materialProgress!=null && materialProgress.isShowing()){
                 materialProgress.dismiss();
             }
-            Toast.makeText(this, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_while_generating_invoice, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -437,7 +437,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
     private void initiatePaymentProcess(final Intent i, final String invoiceId) {
         if(mInvoiceId==null){
-            Toast.makeText(this, "Invalid Invoice", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.invalid_invoice), Toast.LENGTH_SHORT).show();
             return;
         }
         StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
@@ -485,11 +485,11 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                                 startActivityForResult(paddleIntent, PADDLE_REQUEST_CODE);
                                 break;
                             default:
-                                Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
+                                Methods.showSnackBarNegative(ProductCheckoutActivity.this, getString(R.string.error_while_processing_payment));
                         }
 
                     }else {
-                        Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
+                        Methods.showSnackBarNegative(ProductCheckoutActivity.this, getString(R.string.error_while_processing_payment));
                     }
                 }
 
@@ -498,7 +498,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                     if(materialProgress!=null && materialProgress.isShowing()){
                         materialProgress.dismiss();
                     }
-                    Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
+                    Methods.showSnackBarNegative(ProductCheckoutActivity.this, getString(R.string.error_while_processing_payment));
                 }
             });
         }
@@ -520,7 +520,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                 } else if (!Util.isNullOrEmpty(mSessionManager.getSourceClientId())) {
                     clientId = mSessionManager.getSourceClientId();
                 } else {
-                    Methods.showSnackBarNegative(this, "Can't Proceed for Payment");
+                    Methods.showSnackBarNegative(this, getString(R.string.can_t_proceed_for_payment));
                     return;
                 }
 
@@ -549,7 +549,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                 sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
                 sendDraftInvoiceModel.setOpc(null);
             }else {
-                showDialog("Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
+                showDialog("Alert!", getString(R.string.this_is_an_added_security_feature_to_protect_your_package_details_kindly_log_out_and_login_again_to_pay_for_this_package));
                 return;
             }
 

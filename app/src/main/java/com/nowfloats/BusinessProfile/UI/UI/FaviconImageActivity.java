@@ -43,6 +43,12 @@ import com.thinksity.databinding.ActivityFaviconImageBinding;
 
 import java.util.UUID;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_UPLOAD_FAVICON_IMAGE;
+import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventNameKt.FAVICON_IMAGE_ADDED;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_FAVICON_IMAGE;
+import static com.framework.webengageconstant.EventValueKt.NULL;
+
 public class FaviconImageActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload
 {
     Button uploadButton ;
@@ -166,11 +172,11 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
             private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
                 if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
                     MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
-                    WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
+                    WebEngageController.trackEvent(UPLOAD_FAVICON_IMAGE,EVENT_LABEL_UPLOAD_FAVICON_IMAGE,NULL);
                     cameraIntent();
                 }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
                     MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
-                    WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
+                    WebEngageController.trackEvent(UPLOAD_FAVICON_IMAGE,EVENT_LABEL_UPLOAD_FAVICON_IMAGE,NULL);
                     galleryIntent();
                 }
             }
@@ -321,7 +327,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
     public void uploadPrimaryPicture(String path)
     {
-        WebEngageController.trackEvent("Favicon Image added", "MANAGE CONTENT", session.getFpTag());
+        WebEngageController.trackEvent(FAVICON_IMAGE_ADDED, MANAGE_CONTENT, session.getFpTag());
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
 
         String s_uuid = UUID.randomUUID().toString();
@@ -345,7 +351,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
     @Override
     public void onPreUpload()
     {
-        dialog = ProgressDialog.show(this, "", "Uploading image...");
+        dialog = ProgressDialog.show(this, "", getString(R.string.uploading_image));
         dialog.setCancelable(false);
     }
 
@@ -354,7 +360,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
     {
         if(isSuccess)
         {
-            Methods.showSnackBarPositive(this, "Image updated successfully");
+            Methods.showSnackBarPositive(this, getString(R.string.image_updated_successfully));
 
             if(!TextUtils.isEmpty(response))
             {
@@ -380,7 +386,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
         else
         {
-            Methods.showSnackBarNegative(this, "Failed to Upload Image");
+            Methods.showSnackBarNegative(this, getString(R.string.failed_to_upload));
         }
 
         if(dialog != null && dialog.isShowing())

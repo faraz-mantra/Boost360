@@ -83,14 +83,15 @@
 
                 <RelativeLayout
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content">
+                  android:layout_height="wrap_content"
+                  android:visibility="gone">
 
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/country_code"
                     style="@style/Onboarding.TextFieldStyle"
                     android:layout_marginStart="@dimen/size_28"
                     android:layout_marginTop="@dimen/size_10"
-                    android:text="+91"
+                    android:text="@string/_91"
                     android:visibility="gone"
                     tools:visibility="visible" />
 
@@ -98,17 +99,21 @@
                     android:id="@+id/number"
                     style="@style/Onboarding.TextFieldStyle"
                     android:drawableStart="@drawable/ic_phone_focusable"
+                    android:focusable="false"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
                     android:hint="@string/business_contact_number"
                     android:inputType="phone"
                     android:maxLength="10"
                     tools:drawablePadding="@dimen/size_36" />
                 </RelativeLayout>
+
                 <com.framework.views.customViews.CustomTextField
-                    android:id="@+id/email"
-                    style="@style/Onboarding.TextFieldStyle"
-                    android:drawableStart="@drawable/ic_mail_focusable"
-                    android:hint="@string/enter_your_business_email"
-                    android:inputType="textEmailAddress" />
+                  android:id="@+id/email"
+                  style="@style/Onboarding.TextFieldStyle"
+                  android:drawableStart="@drawable/ic_mail_focusable"
+                  android:hint="@string/enter_your_business_email"
+                  android:inputType="textEmailAddress" />
               </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -137,6 +142,7 @@
     <FrameLayout
       android:id="@+id/next"
       style="@style/ButtonStyle.Rounded"
+      android:layout_width="match_parent"
       android:layout_marginStart="@dimen/size_32"
       android:layout_marginEnd="@dimen/size_32"
       android:layout_marginBottom="@dimen/size_16"
@@ -148,7 +154,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/text_btn"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"

@@ -44,6 +44,4 @@ class AppsFlyerUtils : AppsFlyerConversionListener {
     override fun onAttributionFailure(errorMessage: String) {
         Log.d(TAG, "error onAttributionFailure : $errorMessage")
     }
-
-
 }

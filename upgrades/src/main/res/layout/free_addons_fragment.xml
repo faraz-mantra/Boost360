@@ -85,7 +85,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp"
-                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_15sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
                 app:layout_constraintStart_toEndOf="@+id/addons_back"

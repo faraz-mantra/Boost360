@@ -19,6 +19,9 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_ALL_FEATURES_LOADED
+import com.framework.webengageconstant.ALL_FEATURES
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.google.android.material.snackbar.Snackbar
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.view_all_features_fragment.*
@@ -88,7 +91,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
             (activity as UpgradeActivity).onBackPressed()
         }
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE All_Features Loaded", "All_Features", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_ALL_FEATURES_LOADED, ALL_FEATURES, NO_EVENT_VALUE)
     }
 
     fun loadDataByType(categoryType: String?){

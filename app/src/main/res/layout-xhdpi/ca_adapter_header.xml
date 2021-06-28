@@ -15,10 +15,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginStart="@dimen/margin_20"
         android:background="@drawable/ca_section_header"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Expiry in 3 days"
+        android:text="@string/expiry_in_3_days"
         android:textColor="#fff" />
 </FrameLayout>

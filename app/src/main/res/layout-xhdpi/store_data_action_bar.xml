@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         fontPath="Roboto-Medium.ttf"
-        android:layout_marginRight="35dp"
+        android:layout_marginEnd="35dp"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"

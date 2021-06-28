@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -12,8 +11,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:gravity="center_vertical"
             android:paddingTop="@dimen/size_12"
             android:paddingBottom="@dimen/size_12"
@@ -27,8 +25,7 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/serviceName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_8"
                 android:text="@string/dentist"
                 android:textColor="@color/warm_light"

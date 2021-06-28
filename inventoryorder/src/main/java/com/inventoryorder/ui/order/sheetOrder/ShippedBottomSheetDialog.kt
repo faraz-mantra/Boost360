@@ -72,15 +72,15 @@ class ShippedBottomSheetDialog : BaseBottomSheetDialog<BottomSheetShippedOrderBi
           val name = binding?.tvDeliveryPersonName?.text?.toString() ?: ""
           val number = binding?.edtNumber?.text?.toString() ?: ""
           if (name.isEmpty()) {
-            showShortToast("Delivery person name can't be empty.")
+            showShortToast(getString(R.string.delivery_person_name_cant_be_empty))
             return
           }
           if (number.isEmpty()) {
-            showShortToast("Delivery person number can't be empty.")
+            showShortToast(getString(R.string.delivery_person_number_cant_be_empty))
             return
           }
           if (!isMobileNumberValid(number)) {
-            showShortToast("Invalid delivery person number.")
+            showShortToast(getString(R.string.invalid_delivery_person_number))
             return
           }
           request = MarkAsShippedRequest(orderId = orderItem?._id, shippedOn = date, deliveryProvider = deliveryProvider,
@@ -89,11 +89,11 @@ class ShippedBottomSheetDialog : BaseBottomSheetDialog<BottomSheetShippedOrderBi
           val id = binding?.edtConsignmentId?.text?.toString() ?: ""
           val url = binding?.edtTrackingUrl?.text?.toString() ?: ""
           if (id.isEmpty()) {
-            showShortToast("Consignment ID name can't be empty.")
+            showShortToast(getString(R.string.consignment_id_name_cant_be_empty))
             return
           }
           if (url.isEmpty()) {
-            showShortToast("Consignment tracking URL can't be empty.")
+            showShortToast(getString(R.string.consignment_tracking_url_cant_be_empty))
             return
           }
           request = MarkAsShippedRequest(orderId = orderItem?._id, shippedOn = date, deliveryProvider = deliveryProvider,

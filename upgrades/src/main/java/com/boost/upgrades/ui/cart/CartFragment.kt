@@ -37,7 +37,6 @@ import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.autorenew.AutoRenewSubsFragment
 import com.boost.upgrades.ui.checkoutkyc.CheckoutKycFragment
-import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
@@ -53,6 +52,7 @@ import com.boost.upgrades.utils.Constants.Companion.RENEW_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.DateUtils.parseDate
 import com.dashboard.model.live.coupon.CouponServiceModel
+import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -129,6 +129,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     var couponCode: String = ""
 
+    private var cartItems = ArrayList<String>()
+
+    private var cartFullItems = ArrayList<String>()
+
     companion object {
         fun newInstance() = CartFragment()
     }
@@ -145,7 +149,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
         prefs = SharedPrefs(activity as UpgradeActivity)
-        WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE CART")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
 
         return root
     }
@@ -276,7 +280,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
 
         back_button12.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Back", "", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_BACK, NO_EVENT_LABLE, NO_EVENT_VALUE)
             (activity as UpgradeActivity).onBackPressed()
         }
 
@@ -487,6 +491,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         if (validCouponCode != null) {
             couponCode = validCouponCode!!.coupon_key
             couponDiscountPercentage = validCouponCode!!.discount_percent
+        }
+        if (couponServiceModel != null) {
+            couponCode = couponServiceModel!!.coupon_key
+            couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!.toInt()
         }
         val purchaseOrders = ArrayList<PurchaseOrder>()
         val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -736,6 +744,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         if (validCouponCode != null) {
             couponCode = validCouponCode!!.coupon_key
             couponDiscountPercentage = validCouponCode!!.discount_percent
+        }
+        if (couponServiceModel != null) {
+            couponCode = couponServiceModel!!.coupon_key
+            couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!.toInt()
         }
         val purchaseOrders = ArrayList<PurchaseOrder>()
         val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -1027,10 +1039,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 for (items in it) {
                     if (items.item_type.equals("features")) {
                         couponDiwaliRedundant.clear()
-                        if(items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals("WILDFIRE") || items.feature_code.equals("DICTATE")){
-                            Log.v("couponDiwaliRedundant" , " "+ items.item_id)
+                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals("WILDFIRE") || items.feature_code.equals("DICTATE")) {
+                            Log.v("couponDiwaliRedundant", " " + items.item_id)
 //                            couponDiwaliRedundant.add(items.feature_code)
-                            couponDiwaliRedundant.put(items.feature_code,items.item_name)
+                            couponDiwaliRedundant.put(items.feature_code, items.item_name)
                         }
                         features.add(items)
                     } else if (items.item_type.equals("bundles")) {
@@ -1073,11 +1085,20 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 var event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("total amount", grandTotal)
                 event_attributes.put("cart size", it.size.toDouble())
+                it.forEach {
+                    if(it.boost_widget_key != null){
+                        cartFullItems!!.add(it.item_name!!)
+                    }else{
+                        cartFullItems!!.add(it.item_name!!)
+                    }
+
+                }
+                event_attributes.put("cart ids", Gson().toJson(cartFullItems))
 //                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
+                WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
 
             } else {
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")
+                WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, NO_EVENT_VALUE)
                 empty_cart.visibility = View.VISIBLE
                 cart_main_layout.visibility = View.GONE
                 Constants.COMPARE_CART_COUNT = 0
@@ -1141,11 +1162,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         viewModel.getLoaderStatus().observe(this, Observer {
             if (it) {
                 val status = viewModel.getAPIRequestStatus()
-                progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-                progressDialog.show()
+                showProgress(status?:"Please wait...")
             } else {
-                progressDialog.dismiss()
+                hideProgress()
             }
         })
 
@@ -1229,12 +1248,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         //getting all features
         viewModel.updateAllFeaturesResult().observe(this, Observer {
-            featuresList = it
+           if (it.isNullOrEmpty().not()) featuresList = it
         })
 
         //getting all bunles
         viewModel.updateAllBundlesResult().observe(this, Observer {
-            bundlesList = it
+          if (it.isNullOrEmpty().not()) bundlesList = it
         })
 
         //getting valid Coupon Code
@@ -1473,6 +1492,19 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     fun proceedToPayment(result: CreatePurchaseOrderResponse) {
+//        var cartItems: ArrayList<String>? =  null
+
+        cartList.forEach {
+//            if(it!!.item_id != null) it!!.item_id!! else it.boost_widget_key?.let { it1 -> cartItems?.add(it1) }
+
+            if(it.boost_widget_key != null){
+                cartItems!!.add(it.item_name!!)
+            }else{
+                cartItems!!.add(it.item_name!!)
+            }
+
+//            Log.v("proceedToPayment " , "item_id "+ it.item_id  + " boost "+ it.boost_widget_key + " "+cartItems!!.size)
+        }
         val paymentFragment = PaymentFragment.newInstance()
         val args = Bundle()
         args.putString("customerId", customerId)
@@ -1482,6 +1514,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         args.putString("email", (activity as UpgradeActivity).email)
         args.putString("currency", "INR")
         args.putString("contact", (activity as UpgradeActivity).mobileNo)
+        prefs.storeCardIds(cartItems)
+        prefs.storeCouponIds(couponCode)
         paymentFragment.arguments = args
         (activity as UpgradeActivity).addFragment(
                 paymentFragment,
@@ -1505,4 +1539,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     fun isRenewalListNotEmpty(): Boolean {
         return ::cartList.isInitialized && cartList.isNotEmpty() && ::renewalList.isInitialized && renewalList.isNotEmpty()
     }
+
+  private fun showProgress(message: String = "Please wait...") {
+    try {
+      if (!progressDialog.isShowing) {
+        progressDialog.setMessage(message)
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+      }
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+  }
+
+  private fun hideProgress() {
+    try {
+      if (progressDialog.isShowing) progressDialog.hide()
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+  }
 }

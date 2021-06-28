@@ -103,7 +103,7 @@ public class InstaMojoMainActivity extends AppCompatActivity {
         tvPhoneNumber.setText(" " +mOrderData.getPhNo());
 
         pd = new ProgressDialog(this);
-        pd.setMessage("Please Wait...");
+        pd.setMessage(getString(R.string.please_wait_));
         pd.setIndeterminate(true);
         pd.setCancelable(false);
 

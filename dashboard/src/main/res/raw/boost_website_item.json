@@ -32,6 +32,13 @@
           "premiumCode": ""
         },
         {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
           "title": "Custom Pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -47,6 +54,13 @@
           "title": "Service Catalogue",
           "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
           "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
           "isLock": false,
           "premiumCode": ""
         },
@@ -91,6 +105,13 @@
           "premiumCode": ""
         },
         {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
           "title": "Updates & News",
           "desc": "Add updates like product launches, new trends, offers etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -127,6 +148,13 @@
           "title": "Course Catalogue",
           "desc": "Add and manage courses on your website catalogue. This will make it easier for students to browse and request admission online.",
           "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
           "isLock": false,
           "premiumCode": ""
         },
@@ -192,6 +220,13 @@
           "premiumCode": ""
         },
         {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
           "title": "Updates, News & Events",
           "desc": "Regularly add updates like offers, festival updates, events etc to your website.",
           "type": "latest_update_tips",
@@ -253,6 +288,13 @@
           "premiumCode": ""
         },
         {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
           "title": "Updates & News",
           "desc": "Add updates like new product launches, new trends, offers etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -307,6 +349,13 @@
           "premiumCode": ""
         },
         {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
           "title": "Updates & Tips",
           "desc": "Add updates like recipes, food pairings, offers, events etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -343,6 +392,13 @@
           "title": "Service Catalogue",
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
           "isLock": false,
           "premiumCode": ""
         },
@@ -387,6 +443,13 @@
           "premiumCode": ""
         },
         {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
           "title": "Updates & Tips",
           "desc": "Add updates like new services, DIY tips, offers, events etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -423,6 +486,13 @@
           "title": "Service Catalogue",
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website Style Customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
           "isLock": false,
           "premiumCode": ""
         },

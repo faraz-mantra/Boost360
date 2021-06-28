@@ -199,7 +199,7 @@
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:padding="@dimen/_10sdp"
-                android:text="Edit"
+                android:text="@string/edit"
                 android:textSize="@dimen/_12sdp" />
 
             <TextView
@@ -210,7 +210,7 @@
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:padding="@dimen/_10sdp"
-                android:text="Delete"
+                android:text="@string/delete_"
                 android:textAllCaps="true"
                 android:textColor="@color/red"
                 android:textSize="@dimen/_12sdp" />

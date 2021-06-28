@@ -20,6 +20,15 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.ACCOUNT_NOT_FOUND;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_LOGIN_WITHOUT_BUSINESS_PROFILE;
+import static com.framework.webengageconstant.EventLabelKt.LOGGED_IN;
+import static com.framework.webengageconstant.EventLabelKt.LOGIN_ERROR;
+import static com.framework.webengageconstant.EventNameKt.LOGIN_FAILED;
+import static com.framework.webengageconstant.EventNameKt.LOGIN_SUCCESSFUL;
+import static com.framework.webengageconstant.EventNameKt.LOGIN_WITHOUT_BUSINESS_PROFILE;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
+import static com.framework.webengageconstant.EventValueKt.PLEASE_CHECK_YOUR_CREDENTIALS;
 import static com.nowfloats.util.Constants.clientId;
 
 /**
@@ -90,7 +99,7 @@ public class API_Login {
                         else{
                             //BOost Login
                             session.storeIsThinksity("false");
-                            WebEngageController.trackEvent("LOGIN_SUCCESSFUL","Logged in",fpId);
+                            WebEngageController.trackEvent(LOGIN_SUCCESSFUL,LOGGED_IN,fpId);
 //                            session.storeIsRestricted(response_Data.isRestricted);
                             session.storeISEnterprise(response_Data.isEnterprise);
                             DataBase dataBase = new DataBase(appContext);
@@ -103,17 +112,17 @@ public class API_Login {
                         apiInterface.authenticationStatus("Success");
                     }
                     else if(response_Data.loginId != null) {
-                        WebEngageController.trackEvent("Login Without Business Profile","Login Without Business Profile",appContext.getString(R.string.check_your_crediential));
+                        WebEngageController.trackEvent(LOGIN_WITHOUT_BUSINESS_PROFILE,EVENT_LABEL_LOGIN_WITHOUT_BUSINESS_PROFILE,PLEASE_CHECK_YOUR_CREDENTIALS);
                         session.setUserProfileId(response_Data.loginId);
                         apiInterface.authenticationStatus("Partial");
                     } else {
                         apiInterface.authenticationFailure("true");
-                        WebEngageController.trackEvent("LOGIN_FAILED","Account not found","");
+                        WebEngageController.trackEvent(LOGIN_FAILED,ACCOUNT_NOT_FOUND,NO_EVENT_VALUE);
                     }
                 } catch (Exception e) {
                     apiInterface.authenticationFailure("true");
                     e.printStackTrace();
-                    WebEngageController.trackEvent("LOGIN_FAILED","Login error",e.toString());
+                    WebEngageController.trackEvent(LOGIN_FAILED,LOGIN_ERROR,e.toString());
                 }
             }
 
@@ -125,7 +134,7 @@ public class API_Login {
                 }
                 apiInterface.authenticationFailure("true");
                 Methods.showSnackBarNegative(appContext, networkError.toString());
-                WebEngageController.trackEvent("LOGIN_FAILED","Login error",networkError.toString());
+                WebEngageController.trackEvent(LOGIN_FAILED,LOGIN_ERROR,networkError.toString());
             }
         });
     }

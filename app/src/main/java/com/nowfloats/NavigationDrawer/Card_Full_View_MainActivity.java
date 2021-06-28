@@ -30,6 +30,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventNameKt.DELETE_AN_UPDATE;
+
 public class Card_Full_View_MainActivity extends AppCompatActivity implements Home_View_Card_Delete.CardRefresh {
 
     PageAdapter pageAdapter;
@@ -115,7 +118,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                             @Override
                             public void onPositive(MaterialDialog dialog) {
                             MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW_DELETE, null);
-                                WebEngageController.trackEvent("DELETE AN UPDATE","null",null);
+                                WebEngageController.trackEvent(DELETE_AN_UPDATE,EVENT_LABEL_NULL,null);
 
                                 try {
                                     cardId = getMessageList(isDashboard).get(viewPager.getCurrentItem())._id;
@@ -131,7 +134,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                                     obj.execute();
 
                                     pd = ProgressDialog.show(Card_Full_View_MainActivity.this, null,
-                                            "Deleting Message . . . ");
+                                            getString(R.string.deleting_message));
                                     pd.setCancelable(false);
                                 } catch (JSONException e) {
                                     e.printStackTrace();

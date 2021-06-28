@@ -431,12 +431,12 @@ public class CustomerAssistantService extends Service {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "0001")
                 .setSmallIcon(R.drawable.app_launcher2)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_launcher))
-                .setContentText("You have new notifications")
+                .setContentText(getString(R.string.you_have_new_notifications))
                 .setContentTitle(getString(R.string.app_name))
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setColor(ContextCompat.getColor(this, R.color.primaryColor))
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("You have new notifications"))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(getString(R.string.you_have_new_notifications)))
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
         return notificationBuilder.build();
     }

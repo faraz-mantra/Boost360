@@ -12,6 +12,8 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.NetworkUtils
 import com.framework.utils.PreferencesUtils
+import com.framework.webengageconstant.DIGITAL_CHANNELS
+import com.framework.webengageconstant.FACEBOOK_SHOP_DISCONNECTED
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
 import com.nowfloats.facebook.constants.FacebookPermissions
@@ -99,31 +101,36 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.skip -> gotoNextScreen()
+      binding?.skip -> gotoNextScreen(true)
       binding?.linkFacebook -> {
         if (channelAccessToken.isLinked()) {
           gotoNextScreen()
         } else if (!NetworkUtils.isNetworkConnected()) {
           InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
-        } else loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list, FacebookPermissions.public_profile))
+        } else loginWithFacebook(this,
+            listOf(
+                FacebookPermissions.email,
+                FacebookPermissions.public_profile,
+                FacebookPermissions.read_insights,
+                FacebookPermissions.pages_show_list,
+                FacebookPermissions.pages_manage_cta,
+                FacebookPermissions.ads_management,
+                FacebookPermissions.pages_read_engagement,
+                FacebookPermissions.pages_manage_posts,
+                FacebookPermissions.pages_read_user_content,
+                FacebookPermissions.pages_manage_metadata,
+                FacebookPermissions.catalog_management
+            ))
       }
     }
   }
 
-  private fun gotoNextScreen() {
-    if (channelAccessToken.isLinked()) {
-      requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
-    }
+  private fun gotoNextScreen(isSkip: Boolean = false) {
+    if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
     when {
-      channels.haveTwitterChannels() -> {
-        gotoTwitterDetails()
-      }
-      channels.haveWhatsAppChannels() -> {
-        gotoWhatsAppCallDetails()
-      }
-      else -> {
-        gotoBusinessApiCallDetails()
-      }
+      channels.haveTwitterChannels() -> gotoTwitterDetails()
+      channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()
+      else -> gotoBusinessApiCallDetails()
     }
   }
 
@@ -170,7 +177,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
-    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook shop connected", "DIGITAL CHANNELS", it) }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(FACEBOOK_SHOP_DISCONNECTED, DIGITAL_CHANNELS, it) }
     val binding = binding?.facebookPageSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()
@@ -189,7 +196,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
   private fun disconnectFacebookPage() {
     logoutFacebook()
-    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook shop disconnected", "DIGITAL CHANNELS", it) }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(FACEBOOK_SHOP_DISCONNECTED, DIGITAL_CHANNELS, it) }
     binding?.skip?.visible()
     binding?.facebookPageSuccess?.maimView?.gone()
     this.binding?.title?.text = resources.getString(R.string.shop_section_on_your_fb_page)

@@ -100,8 +100,8 @@ public class ManageProductActivity extends BaseActivity
     private void confirm()
     {
         new MaterialDialog.Builder(this)
-                .title("Information not saved!")
-                .content("You have unsaved information. Do you still want to close?")
+                .title(R.string.information_not_saved)
+                .content(R.string.you_have_unsaved_information_do_you_still_want_to_close)
                 .positiveText(getString(R.string.no))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeText(getString(R.string.yes))

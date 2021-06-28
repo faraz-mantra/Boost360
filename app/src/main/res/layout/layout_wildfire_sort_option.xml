@@ -14,7 +14,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sort By"
+        android:text="@string/sort_by"
         android:textColor="@color/gray_light"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:text="Alphabetical Order (A-Z)" />
+            android:text="@string/alphabetical_order_a_z" />
 
         <RadioButton
             android:id="@+id/rb_clicks"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:text="Number of Clicks" />
+            android:text="@string/number_of_clicks" />
 
     </RadioGroup>
 
@@ -59,7 +59,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/ria_positive_btn"
         android:padding="10dp"
-        android:text="APPLY"
+        android:text="@string/apply_"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="18sp"

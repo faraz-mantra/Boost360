@@ -33,10 +33,13 @@ import com.appservice.staffs.widgets.ExperienceBottomSheet
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.firestore.FirestoreManager
+import com.framework.webengageconstant.*
 import java.io.ByteArrayOutputStream
 
 class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffViewModel>() {
@@ -190,6 +193,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
         updateStaffTimings()
+        WebEngageController.trackEvent(STAFF_PROFILE_UPDATED, ADDED, NO_EVENT_VALUE)
       } else showShortToast(it?.errorMessage() ?: getString(R.string.something_went_wrong))
     })
 
@@ -230,7 +234,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     } else if (!this::yearOfExperience.isInitialized || yearOfExperience.equals("null", ignoreCase = true)) {
       showLongToast(getString(R.string.select_year_of_experience))
       return false
-    }else if (staffDetails?.serviceIds.isNullOrEmpty()) {
+    } else if (staffDetails?.serviceIds.isNullOrEmpty()) {
       showLongToast(getString(R.string.error_select_service))
       return false
     }
@@ -260,13 +264,22 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
   private fun createStaffProfile() {
     showProgress()
-    viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, Observer { t ->
+    viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
       if (t.isSuccess()) {
         addStaffTimings((t as StaffCreateProfileResponse).result)
         showShortToast(getString(R.string.profile_created))
+        onStaffAddedOrUpdated()
+        WebEngageController.trackEvent(STAFF_PROFILE_CREATE, ADDED, NO_EVENT_VALUE)
       } else showShortToast(getString(R.string.something_went_wrong))
       hideProgress()
     })
+  }
+
+  private fun onStaffAddedOrUpdated() {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
+    instance.getDrScoreData()?.metricdetail?.boolean_create_staff =true
+    instance.updateDocument()
   }
 
   private fun updateStaffTimings() {
@@ -276,7 +289,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     }
     showProgress(getString(R.string.staff_timings_updating))
     val request = StaffTimingAddUpdateRequest(staffId = staffDetails?.id, workTimings = this.staffDetails?.timings)
-    viewModel?.updateStaffTiming(request)?.observeOnce(viewLifecycleOwner, Observer{
+    viewModel?.updateStaffTiming(request)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if (it?.isSuccess() == true) {
         Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
@@ -303,7 +316,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   private fun addStaffTimings(staffId: String?) {
     if (staffDetails?.timings == null) staffDetails?.timings = AppointmentModel.getDefaultTimings()
     showProgress(getString(R.string.staff_timing_add))
-    viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id ?: staffId, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, Observer{
+    viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id ?: staffId, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if (it.isSuccess()) {
         Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))

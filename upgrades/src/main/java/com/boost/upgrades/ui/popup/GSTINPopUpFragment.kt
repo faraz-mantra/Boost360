@@ -14,6 +14,9 @@ import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.Utils.isValidGSTIN
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_GSTIN_LOADED
+import com.framework.webengageconstant.GSTIN
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.gstin_popup.*
 
@@ -62,7 +65,7 @@ class GSTINPopUpFragment : DialogFragment(){
                 dialog!!.dismiss()
             }
         }
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE GSTIN Loaded", "GSTIN", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_GSTIN_LOADED, GSTIN, NO_EVENT_VALUE)
 
     }
 

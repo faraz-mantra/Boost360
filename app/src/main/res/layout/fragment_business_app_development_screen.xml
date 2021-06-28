@@ -10,16 +10,16 @@
         android:layout_weight="1"
         android:gravity="center"
         android:paddingStart="20dp"
-        android:paddingLeft="20dp"
         android:paddingEnd="20dp"
         android:orientation="vertical"
-        android:layout_height="0dp"
-        android:paddingRight="20dp">
+        android:layout_height="0dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_height="wrap_content">
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -27,7 +27,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
-                    android:text="A"
+                    android:text="@string/a"
                     android:visibility="gone"
                     android:gravity="bottom"
                     android:id="@+id/textcharacter"
@@ -59,18 +59,16 @@
                 android:orientation="vertical"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/anim_parent"
-                android:layout_marginStart="10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp">
+                android:layout_marginStart="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:drawablePadding="5dp"
-                    android:drawableStart="@drawable/android_green"
                     android:id="@+id/android_app"
                     android:text="@string/android_app"
-                    android:drawableLeft="@drawable/android_green" />
+                    app:drawableStartCompat="@drawable/android_green" />
                 <TextView
                     android:id="@+id/app_name"
                     android:layout_width="wrap_content"
@@ -82,7 +80,7 @@
                     android:scrollHorizontally="true"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:layout_margin="5dp"
-                    android:text="Thinking Ink" />
+                    android:text="@string/thinking_ink" />
 
                 <ImageView
                     android:id="@+id/background_image_view"
@@ -122,23 +120,19 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:paddingStart="5dp"
             android:layout_gravity="center_vertical"
             android:textSize="12sp"
             android:visibility="gone"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginStart="2.5dp"
             android:id="@+id/site_health"
             android:drawableStart="@drawable/site_health"
             android:background="@color/business_button_black"
             android:textColor="@color/white"
             android:layout_height="match_parent"
             android:text="@string/increase_our_site_health"
-            android:drawableLeft="@drawable/site_health"
-            android:paddingLeft="15dp"
-            android:layout_marginLeft="2.5dp" />
+            android:paddingStart="15dp"
+            android:layout_marginStart="2.5dp" />
     </LinearLayout>
 </LinearLayout>

@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="2dp">
+        android:layout_marginStart="2dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="21dp">
+                android:layout_marginStart="21dp">
 
         <LinearLayout
             android:id="@+id/businessNameLayout"
@@ -79,7 +79,7 @@
             <EditText
                 android:id="@+id/editText_businessName"
                 style="@style/SignUp_EditText_Style"
-                android:layout_marginLeft="33dp"
+                android:layout_marginStart="33dp"
                 android:inputType="textCapWords"
                 android:textColorHint="#4D4D4D"
                 android:hint="@string/business__address"/>
@@ -104,7 +104,7 @@
                 <EditText
                     android:id="@+id/editText_contactInformation"
                     style="@style/SignUp_EditText_Style"
-                    android:layout_marginLeft="33dp"
+                    android:layout_marginStart="33dp"
                     android:textColorHint="#4D4D4D"
                     android:inputType="textCapWords"
                     android:hint="@string/contact__info"/>
@@ -126,7 +126,7 @@
                     <EditText
                         android:id="@+id/editText_businessHours"
                         style="@style/SignUp_EditText_Style"
-                        android:layout_marginLeft="33dp"
+                        android:layout_marginStart="33dp"
                         android:textColorHint="#4D4D4D"
                         android:inputType="textCapWords"
                         android:hint="@string/title_activity_business__hours_"/>
@@ -149,7 +149,7 @@
                         android:id="@+id/editText_businessLogo"
                         style="@style/SignUp_EditText_Style"
                         android:textColorHint="#4D4D4D"
-                        android:layout_marginLeft="33dp"
+                        android:layout_marginStart="33dp"
                         android:inputType="textCapWords"
                         android:hint="@string/title_activity_business__logo_"/>
                 </LinearLayout>
@@ -171,7 +171,7 @@
                         android:id="@+id/editText_socialSharing"
                         style="@style/SignUp_EditText_Style"
                         android:textColorHint="#4D4D4D"
-                        android:layout_marginLeft="33dp"
+                        android:layout_marginStart="33dp"
                         android:inputType="textCapWords"
                         android:hint="@string/title_activity_social__sharing_"/>
                 </LinearLayout>

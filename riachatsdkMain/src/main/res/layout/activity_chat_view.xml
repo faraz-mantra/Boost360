@@ -34,7 +34,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginStart="@dimen/margin_10"
                     android:src="@drawable/ria_circle_image"
                     android:visibility="visible" />
 
@@ -48,7 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="bottom"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:gravity="center"
                         android:text="Ria"
                         android:textColor="@color/white"
@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginStart="3dp"
                         android:text="is typing..."
                         android:textColor="@color/white"
                         android:textStyle="italic"
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_10"
                     android:alpha="0.5"
                     android:fontFamily="sans-serif"
                     android:text="@string/login"
@@ -121,9 +121,9 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="70dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/scroll_down_shape"
             android:paddingTop="5dp"
             android:src="@drawable/ic_keyboard_arrow_down_black_40dp"
@@ -180,8 +180,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:maxLines="1" />
 
                 <AutoCompleteTextView
@@ -194,7 +194,7 @@
                     android:imeOptions="actionDone"
                     android:maxLines="5"
                     android:minHeight="40dp"
-                    android:paddingLeft="15dp"
+                    android:paddingStart="15dp"
                     android:paddingRight="10dp"
                     android:textColorHint="#406f6f6f"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor"
@@ -205,8 +205,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="@dimen/margin_10"
                     android:maxLines="1" />
 
                 <ImageView
@@ -215,11 +215,11 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginStart="@dimen/margin_10"
                     android:background="@drawable/send_btn_bg"
                     android:paddingBottom="@dimen/margin_8"
-                    android:paddingLeft="@dimen/margin_8"
+                    android:paddingStart="@dimen/margin_8"
                     android:paddingRight="@dimen/margin_12"
                     android:paddingTop="@dimen/margin_8"
                     android:src="@drawable/ic_send_message_btn" />

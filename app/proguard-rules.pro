@@ -75,8 +75,9 @@
 -dontwarn com.webengage.sdk.android.**
 -dontwarn rx.*
 -keep class com.nowfloats.Store.Model.** { *; }
+-keep class com.nowfloats.manageinventory.models.** { *; }
 -keep class com.nowfloats.NavigationDrawer.model.** { *; }
--keep class com.nowfloats.NavigationDrawer.model.** { *; }
+-keep class com.nowfloats.AccrossVerticals.API.model.** { *; }
 -keep class com.nowfloats.Login.Model.** { *; }
 -keep class com.nowfloats.Business_Enquiries.Model.** { *; }
 -keep class com.nowfloats.BusinessProfile.UI.Model.** { *; }
@@ -85,6 +86,7 @@
 -keep class com.nowfloats.Product_Gallery.Model.** { *; }
 -keep class com.nowfloats.NotificationCenter.Model.** { *; }
 -keep class com.nowfloats.CustomPage.Model.**{ *; }
+-keep class com.boost.presignin.model.**{ *; }
 -keep class sun.misc.Unsafe { *; }
 -keepattributes Signature
 
@@ -360,6 +362,7 @@
 -keeppackagenames com.resources
 -keeppackagenames com.inventoryorder
 -keeppackagenames com.boost.presignup
+-keeppackagenames com.boost.presignin
 
 -keep class com.onboarding.** { *; }
 -keep class com.dashboard.** { *; }
@@ -373,6 +376,9 @@
 -keep class com.appservice.model.** { <fields>; }
 -keep class com.appservice.staffs.model.** { <fields>; }
 -keep class com.boost.presignup.datamodel.** { <fields>; }
+-keep class com.appservice.ui.model.** { <fields>; }
+-keep class com.inventoryorder.ui.tutorials.model.** { <fields>; }
+-keep class com.boost.presignin.model.** { <fields>; }
 
 ## New progard rule
 

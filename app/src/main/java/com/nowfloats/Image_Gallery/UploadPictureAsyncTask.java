@@ -146,9 +146,9 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
     protected void onPreExecute() {
 
         if (!isSilent && (delImg == false)) {
-            pd = ProgressDialog.show(appContext, "", "Uploading image...");
+            pd = ProgressDialog.show(appContext, "", appContext.getString(R.string.uploadingimage));
             //	pd.setCancelable(true);
-            BoostLog.d("ILUD Upload Asynctask", "Uploading Image");
+            BoostLog.d("ILUD Upload Asynctask", appContext.getString(R.string.uploading_image));
         } else {
             //pd= ProgressDialog.show(appContext, "Please wait ...", "Downloading Image ...", true);
             //pd.setCancelable(false);

@@ -93,7 +93,7 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
       binding?.confirm -> this.dismiss()
       binding?.dismiss -> this.dismiss()
       binding?.clickHelp -> callHelpLineNumber()
-      binding?.disableBtn, binding?.optInOutBtn -> showLongToast("Coming soon...")
+      binding?.disableBtn, binding?.optInOutBtn -> showLongToast(getString(R.string.coming_soon))
       binding?.disconnectBtn -> {
         channelModel?.let { onClickedDisconnect(it) }
         this.dismiss()
@@ -112,7 +112,7 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
         baseActivity.startActivity(intent)
       } else requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
     } catch (e: ActivityNotFoundException) {
-      showLongToast("Error in your phone call!")
+      showLongToast(getString(R.string.error_in_your_phone_call))
     }
   }
 

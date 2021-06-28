@@ -80,6 +80,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
   override fun customTheme(): Int? {
     return when (type) {
+      FragmentType.REVIEW_SPA_DETAILS-> R.style.AppThemeReviewAndConfirm
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2,
       -> R.style.AppTheme_Order_create
@@ -176,7 +177,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       -> getString(R.string.appointment_details)
       FragmentType.ORDER_DETAIL_VIEW,
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
-      -> "# XXXXXXX"
+      -> getString(R.string.hash_xxxxxxxx)
       FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking)
       FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.new_apppointment_camel_case)

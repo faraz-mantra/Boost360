@@ -11,6 +11,7 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -224,7 +225,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
         override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
           WebEngageController.initiateUserLogin(response.body()?.Result?.LoginId)
           WebEngageController.setUserContactAttributes(email, userMobile, personName, response.body()?.Result?.ClientId)
-          WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
+          WebEngageController.trackEvent(PS_ACCOUNT_CREATION_SUCCESS, ACCOUNT_CREATION_SUCCESS, NO_EVENT_VALUE)
 //          SmartLookController.setUserAttributes(email, userMobile, personName, response.body()?.Result?.ClientId)
           listener.onSuccess(response.body(), loginKey)
         }
@@ -271,7 +272,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
               }
               WebEngageController.initiateUserLogin(response.loginId)
               WebEngageController.setUserContactAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName,response.sourceClientId)
-              WebEngageController.trackEvent("PS_Login Success", "Login Success", "")
+              WebEngageController.trackEvent(PS_LOGIN_SUCCESS, LOGIN_SUCCESS, NO_EVENT_VALUE)
 //              SmartLookController.setUserAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName,response.sourceClientId)
               listener.onSuccess(response)
             } catch (e: Exception) {

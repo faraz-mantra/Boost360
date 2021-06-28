@@ -4,14 +4,12 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/match_wrap"
     android:background="@android:color/transparent">
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
       android:text="@string/remove_item"
@@ -25,8 +23,7 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tvSubTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_8"
       android:text="@string/make_changes_to_the_customer_info"
@@ -41,8 +38,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/coordinatorLayoutBottomSheet"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginTop="@dimen/size_10"
       android:background="@drawable/bg_rounded_top_white_2"
       android:orientation="vertical"
@@ -52,30 +48,26 @@
       app:layout_constraintTop_toBottomOf="@+id/tvSubTitle">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:layout_marginBottom="@dimen/size_5"
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:fontFamily="@font/regular"
-          android:text="Do you want to remove the item name from the list? "
+          android:text="@string/do_you_want_to_remove_the_item_name_from_the_list"
           android:textColor="@color/black_4a4a4a"
           android:layout_margin="@dimen/size_20"
           app:textType="BODY_1" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/partner_edt_view"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:orientation="vertical"
           android:visibility="gone">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_16"
             android:text="@string/consignment_id"
@@ -84,8 +76,7 @@
 
           <com.framework.views.customViews.CustomTextField
             android:id="@+id/edt_consignment_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
@@ -98,8 +89,7 @@
             tools:ignore="UnusedAttribute" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_16"
             android:text="@string/consignment_tracking_url_provided_by_vendor"
@@ -108,8 +98,7 @@
 
           <com.framework.views.customViews.CustomTextField
             android:id="@+id/edt_tracking_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
@@ -127,8 +116,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/btn_bottom"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      style="@style/match_wrap"
       android:layout_marginEnd="@dimen/size_6"
       android:background="@color/white"
       android:gravity="end"
@@ -139,35 +127,19 @@
       app:layout_constraintStart_toStartOf="parent">
 
       <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tvCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="@dimen/size_20"
-        android:padding="@dimen/size_4"
-        android:text="@string/cancel"
-        android:textAllCaps="true"
-        android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/semi_bold"
-        app:textType="BODY_3" />
+          android:id="@+id/tvCancel"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:layout_marginEnd="@dimen/size_20"
+          android:background="@color/white"
+          android:text="@string/cancel"
+          android:textColor="@color/black_4a4a4a" />
 
       <com.framework.views.customViews.CustomButton
-        android:id="@+id/buttonDone"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_36"
-        android:layout_gravity="center"
-        android:background="@drawable/bg_rounded_red"
-        android:gravity="center"
-        android:paddingStart="@dimen/size_28"
-        android:paddingEnd="@dimen/size_28"
-        android:shadowRadius="0"
-        android:stateListAnimator="@null"
-        android:text="@string/yes_remove"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        app:fontFamily="@font/bold"
-        app:textType="CAPTION"
-        tools:ignore="UnusedAttribute" />
+          android:id="@+id/buttonDone"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:background="@drawable/bg_rounded_red"
+          android:text="@string/yes_remove"
+          android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:layout_marginRight="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
             android:orientation="vertical">
 
             <ImageView
@@ -138,8 +138,8 @@
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:layout_marginStart="@dimen/icon_left_margin"
+                    android:layout_marginEnd="@dimen/icon_right_margin"
                     android:padding="6dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/lock_widget"

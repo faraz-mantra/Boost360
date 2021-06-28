@@ -19,8 +19,8 @@
             android:id="@+id/productLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="5dp"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
@@ -78,7 +78,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info"
                     android:visibility="gone" />
@@ -109,7 +109,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info"
                     android:visibility="gone" />
@@ -144,7 +144,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info"
                     android:visibility="gone" />
@@ -176,7 +176,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info"
                     android:visibility="gone" />
@@ -208,7 +208,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info"
                     android:visibility="gone" />
@@ -262,7 +262,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:onClick="onHintClicked"
                         android:src="@drawable/icon_info" />
                 </LinearLayout>
@@ -294,7 +294,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:onClick="onHintClicked"
                         android:src="@drawable/icon_info" />
                 </LinearLayout>
@@ -326,7 +326,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:onClick="onHintClicked"
                         android:src="@drawable/icon_info"
                         android:visibility="gone" />
@@ -362,7 +362,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info"
                     android:visibility="gone" />
@@ -396,7 +396,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info"
                     android:visibility="gone" />
@@ -428,7 +428,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info"
                     android:visibility="gone" />
@@ -460,7 +460,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:onClick="onHintClicked"
                     android:src="@drawable/icon_info"
                     android:visibility="gone" />
@@ -477,8 +477,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
                     android:singleLine="true"
                     android:text="@string/product_detail_availability"
                     android:textColor="@color/product_price"
@@ -488,14 +488,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:gravity="right">
+                    android:layout_marginEnd="5dp"
+                    android:gravity="end">
 
                     <Switch
                         android:id="@+id/switchView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
+                        android:layout_gravity="end"
                         android:checked="true"
                         android:textColorHighlight="@color/product_price" />
                 </LinearLayout>
@@ -520,8 +520,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
                     android:singleLine="true"
                     android:text="@string/product_detail_free_shipping"
                     android:textColor="@color/product_price"
@@ -531,14 +531,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:gravity="right">
+                    android:layout_marginEnd="5dp"
+                    android:gravity="end">
 
                     <Switch
                         android:id="@+id/sv_free_shipping"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
+                        android:layout_gravity="end"
                         android:checked="false"
                         android:textColorHighlight="@color/product_price" />
                 </LinearLayout>
@@ -557,8 +557,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/btn_bg"
                 android:text="Calculate Shipping Charges"
                 android:textColor="@color/white"
@@ -571,8 +571,8 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/red_btn_bg"
                 android:elevation="5dp"
                 android:text="@string/product_detail_delete_btn_text"

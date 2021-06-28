@@ -85,7 +85,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             if (product != null && product.productType != null)
                 type = product.productType;
             else type = "products";
-            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/ type, "Adding to Catalogue");
+            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/ type, getString(R.string.adding_to_catalogue));
         }
         binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(product), "MANAGE_PRODUCT"));
         addInfoButtonListener();
@@ -199,7 +199,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     }
 
     private void addInfoButtonListener() {
-        binding.ibInfoProductType.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Defining product type makes it easier to categorize the <variable product verb> and helps your customers easily find what they are looking for.", binding.ibInfoProductType));
+        binding.ibInfoProductType.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.defining_product_type_makes_it_easier_to), binding.ibInfoProductType));
     }
 
 

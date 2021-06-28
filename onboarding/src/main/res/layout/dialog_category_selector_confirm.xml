@@ -43,6 +43,7 @@
           android:paddingEnd="@dimen/size_16"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
           tools:alpha="1">
@@ -79,6 +80,7 @@
             android:layout_marginEnd="@dimen/size_16"
             android:layout_marginBottom="@dimen/size_32"
             android:alpha="0"
+            android:gravity="center"
             android:text="@string/confirm"
             tools:alpha="1" />
 

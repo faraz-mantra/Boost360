@@ -4,20 +4,17 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match_match"
     android:background="@color/white">
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      style="@style/match_match"
       android:gravity="center"
       android:visibility="gone">
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/match_match"
         android:gravity="center"
         android:textColor="@color/scarlet_40"
         android:visibility="gone"
@@ -40,15 +37,13 @@
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/match_match"
         android:background="@color/white"
         android:orientation="vertical"
         android:visibility="visible">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:background="@drawable/booking_successful_gradient"
           android:orientation="vertical"
           android:paddingBottom="@dimen/size_60">
@@ -61,22 +56,20 @@
             app:srcCompat="@drawable/ic_booking_successfull" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size_16"
-            android:text="Booking Successful"
+            android:text="@string/booking_successful"
             android:textColor="@color/white"
             app:fontFamily="@font/bold"
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_order_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size_16"
-            android:text="#889201"
+            android:text="@string/_889201"
             android:textColor="@color/white"
             app:fontFamily="@font/bold"
             app:textType="HEADING_6" />
@@ -85,8 +78,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          style="@style/match_wrap"
           android:layout_gravity="center"
           android:layout_marginStart="@dimen/size_40"
           android:layout_marginTop="@dimen/size_30"
@@ -98,8 +90,7 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/serviceName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:drawableStart="@drawable/ic_general_consultation"
             android:drawablePadding="@dimen/size_28"
             android:text="General Consultation"
@@ -109,12 +100,11 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_start_time_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_24"
             android:drawableStart="@drawable/ic_appointment_date_nd_time"
             android:drawablePadding="@dimen/size_28"
-            android:text="27 May 2020, 01:00 PM"
+            android:text="@string/_27_may_2020_01_00_pm"
             android:textColor="@color/warm_grey_10"
             app:fontFamily="@font/bold"
             app:textType="CAPTION" />
@@ -122,34 +112,31 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_24"
             android:drawableStart="@drawable/ic_person_details"
             android:drawablePadding="@dimen/size_28"
-            android:text="Rahul Chaudhary"
+            android:text="@string/rahul_chaudhary"
             android:textColor="@color/warm_grey_10"
             app:fontFamily="@font/bold"
             app:textType="CAPTION" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_44"
             android:layout_marginTop="@dimen/size_12"
-            android:text="+91 9013268178"
+            android:text="@string/_91_9013268178"
             android:textColor="@color/warm_grey_10"
             app:fontFamily="@font/bold"
             app:textType="CAPTION" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_44"
             android:layout_marginTop="@dimen/size_10"
-            android:text="rahulchaudhary86@gmail.com"
+            android:text="@string/rahulchaudhary86_gmail_com"
             android:textColor="@color/warm_grey_10"
             app:fontFamily="@font/bold"
             app:textType="CAPTION" />
@@ -169,7 +156,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/size_50"
       android:gravity="center"
-      android:text="Home"
+      android:text="@string/home"
       android:textColor="@color/colorPrimary"
       app:fontFamily="@font/bold"
       app:layout_constraintBottom_toBottomOf="parent"

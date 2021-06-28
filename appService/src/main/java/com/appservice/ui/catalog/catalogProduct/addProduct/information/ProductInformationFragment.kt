@@ -31,9 +31,9 @@ import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.observeOnce
 import com.framework.imagepicker.ImagePicker
+import com.framework.webengageconstant.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-
 
 class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
@@ -66,15 +66,14 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("Product other information catalogue load", "PRODUCT CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent(PRODUCT_INFORMATION_CATALOGUE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
 
-    setOnClickListener(
-            binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock,
-            binding?.civIncreaseStock)
+    setOnClickListener(binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock, binding?.civIncreaseStock)
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
-    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
+    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
+        ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
     specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
     if (isEdit == true) {
@@ -257,8 +256,8 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       }
       binding?.btnConfirm -> validateAnnGoBack()
       binding?.btnClickPhoto -> openImagePicker()
-      binding?.civDecreseStock -> when{
-        availableStock>0 ->{
+      binding?.civDecreseStock -> when {
+        availableStock > 0 -> {
           availableStock--
           binding?.ctvCurrentStock?.text = availableStock.toString()
 
@@ -303,7 +302,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
     val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>)
-            ?: ArrayList()
+        ?: ArrayList()
     when {
 //      secondaryImage.isNullOrEmpty() -> {
 //        showLongToast("Please select at least one secondary image.")
@@ -326,7 +325,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 //        return
 //      }
       else -> {
-        WebEngageController.trackEvent("Other information confirm", "SERVICE CATALOGUE ADD/UPDATE", "")
+        WebEngageController.trackEvent(PRODUCT_INFORMATION_CONFIRM, CLICK, NO_EVENT_VALUE)
 //        product?.category = serviceCategory
         product?.brandName = brand
 //        product?.tags = tagList
@@ -410,11 +409,12 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       RecyclerViewActionType.IMAGE_CLEAR_CLICK.ordinal -> {
         val data = item as? FileModel
         if (isEdit == true && data?.pathUrl.isNullOrEmpty().not()) {
-          val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl } ?: return
+          val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl }
+              ?: return
           showProgress(resources.getString(R.string.removing_image))
           val request = ProductImageDeleteRequest()
           request.setQueryData(dataImage.id)
-          viewModel?.deleteProductImage(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
+          viewModel?.deleteProductImage(request)?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
@@ -462,10 +462,10 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-            .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
-            .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
-              baseActivity.finish()
-              d.dismiss()
-            }.show()
+        .setTitle(resources.getString(R.string.information_not_saved)).setMessage(resources.getString(R.string.you_have_unsaved_info))
+        .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
+          baseActivity.finish()
+          d.dismiss()
+        }.show()
   }
 }

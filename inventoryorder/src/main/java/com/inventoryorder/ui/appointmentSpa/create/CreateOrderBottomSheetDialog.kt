@@ -47,6 +47,7 @@ class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) : Bas
         onClicked(currentSelectedItem!!, orderBottomSheet)
         dismiss()
       }
+      binding?.tvCancel -> dismiss()
     }
   }
 

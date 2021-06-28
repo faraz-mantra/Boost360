@@ -50,7 +50,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="6dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:gravity="right|top">
         <TextView
             android:id="@+id/alert_count_textview"

@@ -10,7 +10,7 @@
   <androidx.appcompat.widget.LinearLayoutCompat
     android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size_94"
+    android:layout_height="@dimen/size_90"
     android:clickable="true"
     android:focusable="true"
     android:layout_marginStart="@dimen/size_14"
@@ -33,7 +33,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/size_10"
-      android:layout_marginEnd="@dimen/size_10"
+      android:layout_marginEnd="@dimen/size_4"
       android:layout_weight="1"
       app:textType="BODY_1"
       android:textColor="@color/light_blue_grey"
@@ -42,7 +42,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="@dimen/size_10"
+      android:layout_marginEnd="@dimen/size_4"
       android:gravity="center"
       android:orientation="vertical">
 
@@ -53,16 +53,17 @@
         android:orientation="horizontal">
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/txt_symbol"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_marginEnd="@dimen/size_6"
-          android:includeFontPadding="false"
-          android:paddingTop="@dimen/size_6"
-          android:text="INR"
-          android:textColor="@color/black_4a4a4a"
-          app:fontFamily="@font/regular"
-          app:textType="CAPTION" />
+            android:id="@+id/txt_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/size_6"
+            android:includeFontPadding="false"
+            android:paddingTop="@dimen/size_6"
+            android:text="@string/inr"
+            android:textAllCaps="true"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/regular"
+            app:textType="CAPTION" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/txt_amount"

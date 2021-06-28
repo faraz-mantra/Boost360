@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="@dimen/margin_10"
-    android:paddingLeft="@dimen/margin_30"
+    android:paddingStart="@dimen/margin_30"
     android:paddingRight="@dimen/margin_30"
     android:paddingTop="@dimen/margin_20">
 
@@ -33,7 +33,7 @@
                     android:background="@drawable/bg_overlay_sam_circle"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="J"
+                    android:text="@string/j"
                     android:textColor="#80000000"
                     android:textSize="@dimen/medium_text_size" />
             </LinearLayout>
@@ -42,7 +42,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_10"
             android:orientation="vertical">
 
 
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:text="+91 84932987498"
+                    android:text="@string/_91_84932987498"
                     android:textColor="#80000000"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -65,9 +65,8 @@
                     android:id="@+id/tvExpiryDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_2"
+                    android:layout_marginStart="@dimen/margin_2"
                     android:fontFamily="sans-serif-light"
-                    android:text="fjilsdjkfgjfidjgkfjdkgjkdfjkgjdfkjgkdjfg"
                     android:textColor="#80000000"
                     android:textSize="12sp"
                     android:textStyle="italic" />
@@ -82,7 +81,6 @@
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-light"
                 android:maxLines="2"
-                android:text="fhsdhkjfhskjd nlkfnlksdjflk nlfkjlkjsdnf nfkjhsdjkfhnjkf fnksdjkf"
                 android:textColor="#80000000"
                 android:textSize="14sp" />
 
@@ -93,11 +91,11 @@
         android:id="@+id/tvViewMore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginTop="@dimen/margin_10"
         android:fontFamily="sans-serif"
-        android:gravity="right"
-        android:text="VIEW DETAILS"
+        android:gravity="end"
+        android:text="@string/view_details"
         android:textStyle="bold"
         android:textColor="@color/primary"
         android:textSize="12sp" />

@@ -586,7 +586,7 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
                         Toast.makeText(Contact_Info_Activity.this, getString(R.string.number_already_exists), Toast.LENGTH_SHORT).show();
                         //Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                     } else if (!model.isOTPSent()) {
-                        Toast.makeText(Contact_Info_Activity.this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Contact_Info_Activity.this, R.string.please_enter_valid_mobile_number, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -611,9 +611,9 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
         dialog = new MaterialDialog.Builder(this)
                 .customView(view, false)
                 //.titleColorRes(R.color.primary_color)
-                .title("Change Primary Number")
-                .negativeText("Cancel")
-                .positiveText("Verify & Send OTP")
+                .title(R.string.change_primary_number)
+                .negativeText(R.string.cancel)
+                .positiveText(R.string.verify_and_send_otp)
                 .autoDismiss(false)
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
@@ -1547,7 +1547,7 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
                     changePrimary(number);
                 } else {
                     hideProgressbar();
-                    Toast.makeText(Contact_Info_Activity.this, "Please enter valid OTP", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Contact_Info_Activity.this, getString(R.string.please_enter_valid_otp), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -1597,7 +1597,7 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
                 MixPanelController.track(MixPanelController.PRIMARY_NUMBER_CHANGE, null);
                 session.storeFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM, number);
                 primaryNumber.setText(number);
-                Methods.showSnackBarPositive(Contact_Info_Activity.this, "Primary number changed successfully");
+                Methods.showSnackBarPositive(Contact_Info_Activity.this, getString(R.string.primary_number_changed_successfully));
             }
 
             @Override

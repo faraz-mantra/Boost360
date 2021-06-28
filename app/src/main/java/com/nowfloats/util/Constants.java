@@ -291,6 +291,10 @@ public class Constants {
     public static final String PREF_NOTI_ORDERS = "noti_orders";
     public static final String SYNCED = "synced";
 
+    // for referral
+    public static String PREF_NAME_REFERRAL = "nowfloatsPrefsReferral";
+    public static String IS_INSTALL_APP = "isInstallApp";
+    public static String REFER_CODE_APP = "referCodeApp";
 
     public static final String REQUEST_URL = "https://api.twitter.com/oauth/request_token";
     public static final String ACCESS_URL = "https://api.twitter.com/oauth/access_token";

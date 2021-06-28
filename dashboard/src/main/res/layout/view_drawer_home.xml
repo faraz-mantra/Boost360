@@ -17,12 +17,12 @@
     <LinearLayout
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_weight="1" />
+      android:layout_weight=".5" />
 
     <LinearLayout
       android:layout_width="0dp"
       android:layout_height="match_parent"
-      android:layout_weight="9"
+      android:layout_weight="9.5"
       android:background="@color/white"
       android:orientation="vertical">
 
@@ -81,7 +81,9 @@
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Test"
+                android:paddingStart="@dimen/size_2"
+                android:paddingEnd="@dimen/size_2"
+                tools:text="Test"
                 android:textColor="@color/white"
                 app:fontFamily="@font/bold"
                 app:textType="BODY_1" />
@@ -90,13 +92,15 @@
                 android:id="@+id/txt_domain_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_2"
+                android:layout_marginStart="@dimen/size_1"
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
+                android:paddingStart="@dimen/size_2"
                 android:paddingTop="@dimen/size_1"
+                android:paddingEnd="@dimen/size_2"
                 android:paddingBottom="@dimen/size_1"
-                android:text="@string/www_sravansclinic_com"
+                tools:text="@string/www_sravansclinic_com"
                 android:textColor="@color/white"
                 app:textType="CAPTION" />
             </LinearLayout>
@@ -153,14 +157,15 @@
                 android:id="@+id/txt_site_helth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_2"
                 android:layout_weight="1"
-                android:gravity="end"
+                android:gravity="end|center_vertical"
                 android:includeFontPadding="false"
+                android:maxLines="1"
                 android:text="@string/dr_score"
                 android:textAlignment="gravity"
-                android:textColor="@color/accent_dark"
+                android:textColor="@color/light_green_3"
                 app:autoSizeMaxTextSize="12sp"
-                android:maxLines="1"
                 app:autoSizeMinTextSize="8sp"
                 app:autoSizeStepGranularity="1sp"
                 app:autoSizeTextType="uniform" />
@@ -171,6 +176,7 @@
               style="@style/CustomProgressBar"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_5"
+              android:progressDrawable="@drawable/ic_progress_bar_high_grey"
               android:layout_marginTop="@dimen/size_6"
               android:max="100"
               tools:progress="50" />

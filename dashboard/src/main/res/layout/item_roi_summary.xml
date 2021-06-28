@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/size_1"
             android:includeFontPadding="false"
-            android:text="₹"
+            android:text="@string/indian_rupee"
             android:textColor="@color/black_4a4a4a"
             app:fontFamily="@font/regular"
             app:textType="OVERLINE" />
@@ -91,7 +91,7 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="2"
-            android:text="1,579"
+            android:text="@string/_1_579"
             android:textColor="@color/black_4a4a4a"
             android:textSize="28sp"
             app:fontFamily="@font/barlow_regular" />

@@ -12,7 +12,7 @@ import java.util.*
 class ReviewViewPagerAdapter(val list: ArrayList<Review>) : RecyclerView.Adapter<ReviewViewPagerAdapter.PagerVH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerVH {
-        val item = View.inflate(parent.getContext(), R.layout.snippet_items, null)
+        val item = View.inflate(parent.context, R.layout.snippet_items, null)
         val lp = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT

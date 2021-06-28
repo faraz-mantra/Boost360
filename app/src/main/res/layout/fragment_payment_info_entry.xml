@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:textSize="16sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="Bank Account Details"
             android:textColor="@color/white"
             android:layout_height="wrap_content" />
@@ -28,7 +28,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:tint="@color/white"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_close_black_24dp"/>
     </LinearLayout>
@@ -109,7 +109,7 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
                 android:buttonTint="@color/primary"
                 android:textColor="@color/gray"
                 android:text="Current"/>
@@ -144,7 +144,7 @@
         android:layout_height="40dp"
         android:text="Save Details"
         android:textColor="@color/white"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
         android:paddingRight="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"

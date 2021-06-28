@@ -370,7 +370,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         query.put("height", height);
         query.put("weight", weight);
 
-        progressDialog.setMessage("Please Wait...");
+        progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
 
         Constants.restAdapter.create(ProductGalleryInterface.class)

@@ -79,7 +79,7 @@ dependencies {
 
     //glide
     api 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
     api('com.github.bumptech.glide:okhttp3-integration:4.9.0') {
         exclude group: 'glide-parent'
     }
@@ -122,4 +122,14 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-firestore-ktx:22.0.2'
+
+    // Referral Library: invitereferrals
+    api 'com.android.installreferrer:installreferrer:2.1'
+    api 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.7'
+
+    //webengage analytics
+    api 'com.webengage:android-sdk:3.+'
+
+    //exoplayer
+    api 'com.google.android.exoplayer:exoplayer:2.11.3'
 }

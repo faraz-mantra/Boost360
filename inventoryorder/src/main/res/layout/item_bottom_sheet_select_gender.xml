@@ -4,25 +4,22 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/match_wrap"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/size_16">
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/ivGenderSelected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:layout_marginStart="@dimen/size_2"
             app:srcCompat="@drawable/ic_option_unselected" />
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvSelectGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/wrap_wrap"
             android:paddingStart="@dimen/size_30"
-            android:text="Male"
+            android:text="@string/male"
             android:textColor="@color/grey_text_color"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />

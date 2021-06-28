@@ -19,6 +19,10 @@ import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
+import static com.framework.webengageconstant.EventLabelKt.ORDER_ANALYTICS;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_ORDER_ANALYTICS;
+import static com.framework.webengageconstant.EventValueKt.NULL;
+
 public class OrderAnalyticsActivity extends AppCompatActivity {
 
     String svc_code;
@@ -27,7 +31,7 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_analytics);
         MixPanelController.track(MixPanelController.ORDER_ANALYTICS, null);
-        WebEngageController.trackEvent("Clicked on order analytics", "ORDER ANALYTICS", "null");
+        WebEngageController.trackEvent(CLICKED_ON_ORDER_ANALYTICS, ORDER_ANALYTICS, NULL);
         UserSessionManager session = new UserSessionManager(getApplicationContext(), OrderAnalyticsActivity.this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

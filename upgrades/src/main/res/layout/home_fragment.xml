@@ -82,7 +82,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/lato"
                         android:text="ADD-ONS STORE"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
@@ -414,8 +414,8 @@
                         android:textColor="#FFB900"
                         android:textFontWeight="600"
                         android:textAllCaps="true"
-                        android:layout_marginLeft="@dimen/_4sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:textSize="@dimen/txt_12sp"/>
                 </LinearLayout>
 
@@ -1153,6 +1153,7 @@
                             android:background="@color/transparent" />
 
                         <LinearLayout
+                            android:id="@+id/ll_refer_banner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imagexx"
@@ -1163,70 +1164,30 @@
                             android:padding="@dimen/_5sdp">
 
                             <ImageView
-                                android:layout_width="160dp"
-                                android:layout_height="80dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_margin="8dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/refer_asset"
+                                android:src="@drawable/ic_referral_banner"
                                 android:textSize="@dimen/txt_14sp" />
-
-                            <!--                            <LinearLayout-->
-                            <!--                                android:layout_width="70dp"-->
-                            <!--                                android:layout_height="70dp"-->
-                            <!--                                android:layout_below="@+id/imagexx"-->
-                            <!--                                android:layout_centerHorizontal="true"-->
-                            <!--                                android:layout_margin="@dimen/_10sdp"-->
-                            <!--                                android:background="@drawable/all_side_medium_curve_bg"-->
-                            <!--                                android:elevation="@dimen/_4sdp"-->
-                            <!--                                android:gravity="center">-->
-
-                            <!--                                <ImageView-->
-                            <!--                                    android:layout_width="60dp"-->
-                            <!--                                    android:layout_height="60dp"-->
-                            <!--                                    android:layout_margin="8dp"-->
-                            <!--                                    android:scaleType="centerCrop"-->
-                            <!--                                    android:src="@drawable/boost_360_insignia"-->
-                            <!--                                    android:textSize="@dimen/txt_14sp" />-->
-
-
-                            <!--                            </LinearLayout>-->
-
-                            <!--                            <LinearLayout-->
-                            <!--                                android:layout_width="70dp"-->
-                            <!--                                android:layout_height="70dp"-->
-                            <!--                                android:layout_below="@+id/imagexx"-->
-                            <!--                                android:layout_centerHorizontal="true"-->
-                            <!--                                android:layout_margin="@dimen/_10sdp"-->
-                            <!--                                android:background="@drawable/all_side_medium_curve_bg"-->
-                            <!--                                android:elevation="@dimen/_4sdp"-->
-                            <!--                                android:gravity="center">-->
-
-                            <!--                                <ImageView-->
-                            <!--                                    android:layout_width="60dp"-->
-                            <!--                                    android:layout_height="60dp"-->
-                            <!--                                    android:scaleType="centerCrop"-->
-                            <!--                                    android:src="@drawable/chat_icon"-->
-                            <!--                                    android:textSize="@dimen/txt_14sp" />-->
-
-                            <!--                            </LinearLayout>-->
 
                         </LinearLayout>
 
 
                         <RelativeLayout
+                            android:id="@+id/rl_refer_content"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/imagexx"
+                            android:layout_below="@id/ll_refer_banner"
                             android:layout_margin="@dimen/_5sdp"
-                            android:paddingTop="@dimen/_15sdp">
+                            >
 
                             <TextView
                                 android:id="@+id/textView6"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:layout_marginTop="@dimen/_25sdp"
-                                android:text="Refer Boost with your friends"
+                                android:text="Invite your friends to Boost 360!"
                                 android:textColor="#FF9F00"
                                 android:textSize="@dimen/txt_18sp"
                                 android:textStyle="bold" />
@@ -1242,7 +1203,7 @@
                                 android:gravity="center"
                                 android:minLines="2"
                                 android:padding="8dp"
-                                android:text="and use Website Chatbot to help your customer reach you better for a month absolutely FREE"
+                                android:text="Refer a friend today and both of you will receive special discounts when they signup."
                                 android:textColor="#4a4a4a"
                                 android:textSize="@dimen/_10sdp" />
 
@@ -1254,6 +1215,7 @@
                                 android:layout_marginStart="32dp"
                                 android:layout_marginTop="9dp"
                                 android:layout_marginEnd="32dp"
+                                android:visibility="gone"
                                 android:background="@drawable/invitation_code_bg"
                                 android:padding="1dp">
 
@@ -1318,7 +1280,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/footer"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
+                    android:layout_height="@dimen/_70sdp"
                     android:layout_below="@+id/bottom_box">
 
                     <TextView
@@ -1331,16 +1293,38 @@
                         android:fontFamily="@font/open_sans"
                         android:textColor="#747474"
                         android:textSize="@dimen/txt_11sp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
+                    <TextView
+                        android:id="@+id/refer_and_earn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/orange_button_click_effect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_20sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:text="Refer Now"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                     <LinearLayout
                         android:id="@+id/share_fb_1"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:gravity="center"
                         android:padding="@dimen/_5sdp"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@id/end_guideline_vertical"
                         app:layout_constraintEnd_toStartOf="@id/middle_guideline"
                         app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -1358,6 +1342,7 @@
                         android:layout_height="0dp"
                         android:gravity="center"
                         android:padding="@dimen/_5sdp"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@id/end_guideline_vertical"
                         app:layout_constraintEnd_toEndOf="@id/end_guideline"
                         app:layout_constraintStart_toStartOf="@id/middle_guideline"
@@ -1378,6 +1363,7 @@
                         android:padding="@dimen/_20sdp"
                         android:text="Read how referral works"
                         android:textColor="#747474"
+                        android:visibility="gone"
                         android:textSize="@dimen/txt_10sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

@@ -63,6 +63,10 @@ import java.util.List;
 
 import retrofit.RetrofitError;
 
+import static com.framework.webengageconstant.EventLabelKt.ORDER_ANALYTICS;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_ORDER_ANALYTICS;
+import static com.framework.webengageconstant.EventValueKt.NULL;
+
 public class OrderSummaryActivity extends AppCompatActivity {
 
     private ImageView spinner;
@@ -82,7 +86,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary);
-        WebEngageController.trackEvent("Clicked on order analytics", "ORDER ANALYTICS", "null");
+        WebEngageController.trackEvent(CLICKED_ON_ORDER_ANALYTICS, ORDER_ANALYTICS, NULL);
         MixPanelController.track(MixPanelController.ORDER_ANALYTICS, null);
         initView();
         initBarChart();
@@ -492,7 +496,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         if (materialProgress == null) {
             materialProgress = new MaterialDialog.Builder(this)
                     .widgetColorRes(R.color.accentColor)
-                    .content("Please Wait...")
+                    .content(R.string.please_wait_)
                     .progress(true, 0)
                     .cancelable(false)
                     .build();

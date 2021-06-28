@@ -71,7 +71,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        return new Dialog(getActivity());
+        return new Dialog(requireActivity());
     }
 
     @Override

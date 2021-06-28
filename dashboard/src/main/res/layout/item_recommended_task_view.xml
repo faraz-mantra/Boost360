@@ -39,7 +39,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:text="@string/use_tools_improve_business"
-        android:textColor="@color/black_4a4a4a"
+        android:textColor="@color/warm_grey"
         app:textType="CAPTION" />
     </LinearLayout>
 

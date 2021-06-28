@@ -17,6 +17,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.utils.ValidationUtils
+import com.framework.webengageconstant.*
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -75,7 +76,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on video consultations", "CONSULTATIONS", it) }
+    WebEngageController.trackEvent(CONSULTATION_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
@@ -86,7 +87,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
     if (isFirst || isSearch) binding?.progress?.visible()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSellerOrdersFilter( request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
       if (it.error is NoNetworkException) {
         errorView(resources.getString(R.string.internet_connection_not_available))
@@ -109,7 +110,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             setAdapterNotify(orderList)
           } else {
             setHasOptionsMenu(false)
-            errorView("No video consultation available.")
+            errorView(getString(R.string.no_video_consultation_available))
           }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
@@ -120,12 +121,12 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
           else {
             setHasOptionsMenu(false)
-            errorView("No video consultation available.")
+            errorView(getString(R.string.no_video_consultation_available))
           }
         }
       } else {
         setHasOptionsMenu(false)
-        errorView(it.message ?: "No video consultation available.")
+        errorView(it.message ?:getString(R.string.no_video_consultation_available))
       }
     })
   }

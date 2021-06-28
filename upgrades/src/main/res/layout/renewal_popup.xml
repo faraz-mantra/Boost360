@@ -59,7 +59,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:paddingLeft="@dimen/_12sdp"
+                android:paddingStart="@dimen/_12sdp"
 
                 android:text="Auto-renew (using credit card)"
                 android:textColor="@color/common_text_color"
@@ -74,7 +74,7 @@
                 android:text="Your next auto-renewal date will be 12th july 2020. You can disable auto renewal of any feature/package at anytime."
                 android:textSize="@dimen/_10sdp"
                 android:textColor="#747474"
-                android:layout_marginLeft="@dimen/_24sdp"/>
+                android:layout_marginStart="@dimen/_24sdp"/>
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/actionRemindRenew"
@@ -85,7 +85,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:paddingLeft="@dimen/_12sdp"
+                android:paddingStart="@dimen/_12sdp"
                 android:text="Remind me to renew"
                 android:textColor="@color/common_text_color"
                 android:textSize="@dimen/_12sdp" />
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_24sdp"
+                android:layout_marginStart="@dimen/_24sdp"
                 android:text="We’ll send renewal reminder SMS and emailer 7 day prior to the day of expiry."
                 android:textSize="@dimen/_10sdp"
                 android:textColor="#747474"/>

@@ -105,16 +105,14 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.llayout_wildfire:
-                if (getActivity() != null && mTopUpDialog == null) {
-                    mTopUpDialog = new TopUpDialog(getActivity());
-                }
-                mTopUpDialog.getTopUpPricing(TopUpDialog.TopUpType.WildFire.name());
-                break;
-            case R.id.llayout_know_more:
-                sendEmailForWildFire();
-                break;
+        int id = view.getId();
+        if (id == R.id.llayout_wildfire) {
+            if (getActivity() != null && mTopUpDialog == null) {
+                mTopUpDialog = new TopUpDialog(getActivity());
+            }
+            mTopUpDialog.getTopUpPricing(TopUpDialog.TopUpType.WildFire.name());
+        } else if (id == R.id.llayout_know_more) {
+            sendEmailForWildFire();
         }
     }
     private void sendEmailForWildFire(){
@@ -122,11 +120,11 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
         MixPanelController.track(MixPanelController.REQUEST_FOR_WILDFIRE_PLAN,null);
         UserSessionManager manager = new UserSessionManager(mContext,getActivity());
         ArrayList<String> emailsList = new ArrayList<String>(2);
-        emailsList.add("pranav.venuturumilli@nowfloats.com");
-        emailsList.add("wildfire.team@nowfloats.com");
+        emailsList.add(getString(R.string.pranav_email));
+        emailsList.add(getString(R.string.wildfire_email));
         MailModel model = new MailModel(Constants.clientId,
-               "Hi, <br>The client with FP Tag <b>\" "+manager.getFpTag()+" \"</b> has requested a meeting to understand the WildFire plan. Please take it up on priority.",
-                 "Important: WildFire meeting is requested by"+manager.getFpTag(),
+               getString(R.string.client_with_fp_tag)+manager.getFpTag()+getString(R.string.has_requested_a_meeting),
+                 getString(R.string.wildfire_meeting_is_requested)+manager.getFpTag(),
                  emailsList);
         StoreInterface anInterface = Constants.restAdapter.create(StoreInterface.class);
         anInterface.mail(model, new Callback<String>() {
@@ -134,7 +132,7 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
             public void success(String s, Response response) {
                 hideProgress();
                 if (response.getStatus() == 200 && !TextUtils.isEmpty(s)){
-                    Methods.materialDialog(getActivity(),"Request For WildFire Plan","Your meeting request has been sent successfully.");
+                    Methods.materialDialog(getActivity(),getString(R.string.request_for_wildfire_plan),getString(R.string.your_meeting_request_has_been_sent));
                 }else{
                     Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
                 }
@@ -143,7 +141,7 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
             @Override
             public void failure(RetrofitError error) {
                 hideProgress();
-                Methods.showSnackBarNegative(getActivity(),"Server error");
+                Methods.showSnackBarNegative(getActivity(),getString(R.string.server_error));
             }
         });
 

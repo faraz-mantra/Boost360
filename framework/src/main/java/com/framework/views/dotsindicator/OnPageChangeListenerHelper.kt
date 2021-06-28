@@ -1,10 +1,10 @@
 package com.framework.views.dotsindicator
 
-abstract class OnPageChangeListenerHelper {
+public abstract class OnPageChangeListenerHelper {
   private var lastLeftPosition: Int = -1
   private var lastRightPosition: Int = -1
 
-  internal abstract val pageCount: Int
+   abstract val pageCount: Int
 
   fun onPageScrolled(position: Int, positionOffset: Float) {
     var offset = (position + positionOffset)
@@ -40,8 +40,8 @@ abstract class OnPageChangeListenerHelper {
     lastRightPosition = rightPosition
   }
 
-  internal abstract fun onPageScrolled(selectedPosition: Int, nextPosition: Int,
+   abstract fun onPageScrolled(selectedPosition: Int, nextPosition: Int,
                                        positionOffset: Float)
 
-  internal abstract fun resetPosition(position: Int)
+   abstract fun resetPosition(position: Int)
 }
