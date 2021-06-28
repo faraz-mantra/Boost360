@@ -130,11 +130,11 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         try {
             val json_contact: JSONObject = JSONObject(data)
             var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
-            var i:Int = 0
-            var size:Int = jsonarray_info.length()
-            for (i in 0.. size-1) {
-                var json_objectdetail: JSONObject =jsonarray_info.getJSONObject(i)
-                if(json_objectdetail.getString("experience_code") == expCode){
+            var i: Int = 0
+            var size: Int = jsonarray_info.length()
+            for (i in 0..size - 1) {
+                var json_objectdetail: JSONObject = jsonarray_info.getJSONObject(i)
+                if (json_objectdetail.getString("experience_code") == expCode) {
                     categoryResult.postValue(json_objectdetail.getString("category_Name"))
                 }
             }
@@ -403,7 +403,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                 promoList.addAll(marketplaceOffersFilter)
                                                 promoBannersList.postValue(promoList)
                                                 var marketOfferData = arrayListOf<MarketOfferModel>()
-                                                for (item in marketplaceOffersFilter){
+                                                for (item in marketplaceOffersFilter) {
                                                     marketOfferData.add(MarketOfferModel(
                                                             item.coupon_code,
                                                             item.extra_information,
@@ -436,7 +436,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                         }
                                                         .subscribe()
 
-                                            }else{
+                                            } else {
                                                 promoBannersList.postValue(promoList)
                                             }
 
@@ -455,6 +455,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                     },
                                     {
                                         Log.e("GetAllFeatures", "error" + it.message)
+                                        Log.e("GetAllFeatures", "error" + it.localizedMessage)
                                         updatesLoader.postValue(false)
                                     }
                             )
@@ -610,7 +611,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
-    fun addItemToCart(updatesModel: FeaturesModel, minMonth: Int) {
+    fun addItemToCart1(updatesModel: FeaturesModel, minMonth: Int) {
         updatesLoader.postValue(true)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
@@ -648,7 +649,86 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 .subscribe()
     }
 
-    fun addItemToCartPackage(cartItem: CartModel) {
+    fun addItemToCart(updatesModel: FeaturesModel, minMonth: Int) {
+        updatesLoader.postValue(true)
+        val discount = 100 - updatesModel.discount_percent
+        val paymentPrice = (discount * updatesModel.price) / 100.0
+        val cartItem = CartModel(
+                updatesModel.feature_id,
+                updatesModel.boost_widget_key,
+                updatesModel.feature_code,
+                updatesModel.name,
+                updatesModel.description,
+                updatesModel.primary_image,
+                paymentPrice,
+                updatesModel.price.toDouble(),
+                updatesModel.discount_percent,
+                1,
+                minMonth,
+                "features",
+                updatesModel.extended_properties
+        )
+
+        CompositeDisposable().add(
+                AppDatabase.getInstance(getApplication())!!
+                        .cartDao()
+                        .checkCartFeatureTableKeyExist()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            if (it == 1) {
+                                Completable.fromAction {
+                                    AppDatabase.getInstance(getApplication())!!.cartDao().emptyCart()
+                                }
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnError {
+                                            //in case of error
+                                        }
+                                        .doOnComplete {
+                                            Completable.fromAction {
+                                                AppDatabase.getInstance(getApplication())!!.cartDao()
+                                                        .insertToCart(cartItem)
+                                            }
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .doOnComplete {
+                                                        getCartItems()
+                                                        updatesLoader.postValue(false)
+                                                    }
+                                                    .doOnError {
+                                                        updatesError.postValue(it.message)
+                                                        updatesLoader.postValue(false)
+                                                    }
+                                                    .subscribe()
+                                        }
+                                        .subscribe()
+                            }else{
+                                Completable.fromAction {
+                                    AppDatabase.getInstance(getApplication())!!.cartDao()
+                                            .insertToCart(cartItem)
+                                }
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnComplete {
+                                            getCartItems()
+                                            updatesLoader.postValue(false)
+                                        }
+                                        .doOnError {
+                                            updatesError.postValue(it.message)
+                                            updatesLoader.postValue(false)
+                                        }
+                                        .subscribe()
+                            }
+                        }, {
+//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                        })
+        )
+
+
+    }
+
+    fun addItemToCartPackage1(cartItem: CartModel) {
         updatesLoader.postValue(true)
         Completable.fromAction {
             AppDatabase.getInstance(getApplication())!!.cartDao()
@@ -665,6 +745,40 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 }
                 .subscribe()
     }
+
+    fun addItemToCartPackage(cartItem: CartModel) {
+        Log.v("addItemToCartPackage", " " + cartItem.boost_widget_key + " " + cartItem.boost_widget_key)
+        updatesLoader.postValue(true)
+
+
+        Completable.fromAction {
+            AppDatabase.getInstance(getApplication())!!.cartDao().emptyCart()
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError {
+                    //in case of error
+                }
+                .doOnComplete {
+                    Completable.fromAction {
+                        AppDatabase.getInstance(getApplication())!!.cartDao()
+                                .insertToCart(cartItem)
+                    }
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnComplete {
+                                getCartItems()
+                                updatesLoader.postValue(false)
+                            }
+                            .doOnError {
+                                updatesError.postValue(it.message)
+                                updatesLoader.postValue(false)
+                            }
+                            .subscribe()
+                }
+                .subscribe()
+    }
+
 
     fun emptyCouponTable() {
         Completable.fromAction {

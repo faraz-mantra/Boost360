@@ -110,7 +110,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
   }
 
   private fun createAccessTokenAuth() {
-    showProgress()
+    showProgress(getString(R.string.business_setup_process))
     WebEngageController.trackEvent(PS_REGISTRATION_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
     val request = AccessTokenRequest(authToken = authToken?.authenticationToken, clientId = clientId, fpId = authToken?.floatingPointId)
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
@@ -164,7 +164,6 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session!!).storeFPDetails(response)
-        if (response.accountManagerId.isNullOrEmpty().not()) session?.userProfileId = response.accountManagerId
         startService()
         startDashboard()
       } else {
@@ -194,16 +193,17 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
     val widList = ArrayList<PurchasedWidget>()
     floatsRequest?.categoryDataModel?.sections?.forEach {
       it.getWidList().forEach { key ->
-        val widget = PurchasedWidget(widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
-            isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
-            consumptionConstraint = ConsumptionConstraint("DAYS", 30), images = ArrayList(),
-            expiry = PurchasedExpiry("YEARS", 10))
+        val widget = PurchasedWidget(
+          widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
+          isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+          consumptionConstraint = ConsumptionConstraint("DAYS", 30), images = ArrayList(),
+          expiry = PurchasedExpiry("YEARS", 10)
+        )
         widList.add(widget)
       }
     }
-    if (responsePlan?.isSuccess() == true && responsePlan.data.isNullOrEmpty().not()) {
-      val response = responsePlan.data?.get(0)!!
-      response.widgetKeys?.forEach { key ->
+    if (responsePlan?.data != null) {
+      responsePlan.data.widgetKeys?.forEach { key ->
         val widgetN = widList.find { it.widgetKey.equals(key) }
         if (widgetN != null) {
           widgetN.consumptionConstraint?.metricValue = 15
@@ -211,14 +211,16 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
           widgetN.expiry?.value = 15
         } else {
           widList.add(
-              PurchasedWidget(widgetKey = key, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
-                  isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
-                  consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
-                  expiry = PurchasedExpiry("DAYS", 15))
+            PurchasedWidget(
+              widgetKey = key, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
+              isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+              consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
+              expiry = PurchasedExpiry("DAYS", 15)
+            )
           )
         }
       }
-      response.extraProperties?.forEach { keyValue ->
+      responsePlan.data.extraProperties?.forEach { keyValue ->
         val widgetN2 = widList.find { it.widgetKey.equals(keyValue.widget) }
         if (widgetN2 != null) {
           widgetN2.consumptionConstraint?.metricValue = 15
@@ -226,10 +228,12 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
           widgetN2.expiry?.value = keyValue.value
         } else {
           widList.add(
-              PurchasedWidget(widgetKey = keyValue.widget, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
-                  isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
-                  consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
-                  expiry = PurchasedExpiry("DAYS", keyValue.value))
+            PurchasedWidget(
+              widgetKey = keyValue.widget, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
+              isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+              consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
+              expiry = PurchasedExpiry("DAYS", keyValue.value)
+            )
           )
         }
       }

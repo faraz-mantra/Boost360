@@ -20,6 +20,7 @@ import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,8 @@ public class Image_Gallery_Fragment extends Fragment implements
 
   private final int gallery_req_id = 6;
 
+  ArrayList<String> purchasedWidgetList = new ArrayList<String>();
+
   @Override
   public void onResume() {
     super.onResume();
@@ -128,7 +131,10 @@ public class Image_Gallery_Fragment extends Fragment implements
     } else {
       emptyGalleryLayout.setVisibility(View.GONE);
     }
-
+    Bundle bundle = activity.getIntent().getExtras();
+    if (bundle != null) {
+      purchasedWidgetList = bundle.getStringArrayList("userPurchsedWidgets");
+    }
     gvImages.setAdapter(otherImagesAdapter);
 
     GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
@@ -145,7 +151,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     if (gvImages != null) {
       gvImages.invalidateViews();
       if (otherImagesAdapter != null) otherImagesAdapter.notifyDataSetChanged();
-      if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0) emptyGalleryLayout.setVisibility(View.GONE);
+      if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0) {emptyGalleryLayout.setVisibility(View.GONE);}
     }
     ArrayList<String> serverImage = Constants.storeSecondaryImages;
     onImageGalleryAddedOrUpdated(serverImage != null && !serverImage.isEmpty());

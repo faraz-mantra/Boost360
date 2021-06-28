@@ -27,46 +27,46 @@ import java.io.File
 
 class DashboardViewModel : BaseViewModel() {
 
-    fun getCategories(context: Context): LiveData<BaseResponse> {
-        return CategoryRepository.getCategories(context).toLiveData()
-    }
+  fun getCategories(context: Context): LiveData<BaseResponse> {
+    return CategoryRepository.getCategories(context).toLiveData()
+  }
 
-    @Deprecated("NFX token API")
-    fun getChannelsAccessToken(nowfloatsId: String?): LiveData<BaseResponse> {
-        return ChannelRepository.getChannelsAccessToken(nowfloatsId).toLiveData()
-    }
+  @Deprecated("NFX token API")
+  fun getChannelsAccessToken(nowfloatsId: String?): LiveData<BaseResponse> {
+    return ChannelRepository.getChannelsAccessToken(nowfloatsId).toLiveData()
+  }
 
-    fun getChannelsAccessTokenStatus(nowfloatsId: String?): LiveData<BaseResponse> {
-        return ChannelRepository.getChannelsStatus(nowfloatsId).toLiveData()
-    }
+  fun getChannelsAccessTokenStatus(nowfloatsId: String?): LiveData<BaseResponse> {
+    return ChannelRepository.getChannelsStatus(nowfloatsId).toLiveData()
+  }
 
-    fun getChannelsInsight(nowfloatsId: String?, identifier: String?): LiveData<BaseResponse> {
-        return ChannelRepository.getChannelsInsights(nowfloatsId, identifier).toLiveData()
-    }
+  fun getChannelsInsight(nowfloatsId: String?, identifier: String?): LiveData<BaseResponse> {
+    return ChannelRepository.getChannelsInsights(nowfloatsId, identifier).toLiveData()
+  }
 
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(request = getJsonRequest(request),auth = auth).toLiveData()
+    return WhatsAppRepository.getWhatsappBusiness(request = getJsonRequest(request), auth = auth).toLiveData()
   }
 
-    fun nfxProcess(request: NFXProcessRequest?): LiveData<BaseResponse> {
-        return ChannelRepository.nfxProcess(request).toLiveData()
-    }
-
-    fun getBizFloatMessage(request: Map<String, String>): LiveData<BaseResponse> {
-        return ApiTwoWithFloatRepository.getBizFloatMessage(request).toLiveData()
-    }
-
-  fun fpOnboardingUpdate(request: OnBoardingUpdateModel?): LiveData<BaseResponse> {
-    return KitWebActionRepository.fpOnboardingUpdate(request).toLiveData()
+  fun nfxProcess(request: NFXProcessRequest?): LiveData<BaseResponse> {
+    return ChannelRepository.nfxProcess(request).toLiveData()
   }
 
-    fun getNotificationCount(clientId: String?, fpId: String?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.getNotificationCount(clientId, fpId).toLiveData()
-    }
+  fun getBizFloatMessage(request: Map<String, String>): LiveData<BaseResponse> {
+    return ApiTwoWithFloatRepository.getBizFloatMessage(request).toLiveData()
+  }
 
-    fun getNavDashboardData(context: Context): LiveData<BaseResponse> {
-        return WithFloatRepository.getNavDashboardData(context).toLiveData()
-    }
+//  fun fpOnboardingUpdate(request: OnBoardingUpdateModel?): LiveData<BaseResponse> {
+//    return KitWebActionRepository.fpOnboardingUpdate(request).toLiveData()
+//  }
+
+  fun getNotificationCount(clientId: String?, fpId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getNotificationCount(clientId, fpId).toLiveData()
+  }
+
+  fun getNavDashboardData(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getNavDashboardData(context).toLiveData()
+  }
 
   fun getSearchAnalytics(fpTag: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
     return DevBoostKitRepository.getSearchAnalytics(fpTag, startDate, endDate).toLiveData()
@@ -108,8 +108,8 @@ class DashboardViewModel : BaseViewModel() {
     return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId, request).toLiveData()
   }
 
-  fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
-    return ApiWithFloatRepository.getUserSummary(clientId, fpIdParent, scope, startDate, endDate).toLiveData()
+  fun getUserSummary(fpTag: String?, clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getUserSummary(fpTag, clientId, fpIdParent, scope, startDate, endDate).toLiveData()
   }
 
   fun getSubscriberCount(fpTag: String?, clientId: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
@@ -128,29 +128,13 @@ class DashboardViewModel : BaseViewModel() {
     return UploadImageRepository.putUploadSecondaryImage(request).toLiveData()
   }
 
-    fun putUploadBusinessLogo(
-        clientId: String?,
-        fpId: String?,
-        reqType: String?,
-        reqId: String?,
-        totalChunks: String?,
-        currentChunkNumber: String?,
-        file: RequestBody?
-    ): LiveData<BaseResponse> {
-        return com.dashboard.rest.repository.WithFloatTwoRepository.uploadBusinessLogo(
-            clientId,
-            fpId,
-            reqType,
-            reqId,
-            totalChunks,
-            currentChunkNumber,
-            file
-        ).toLiveData()
-    }
+  fun putUploadBusinessLogo(clientId: String?, fpId: String?, reqType: String?, reqId: String?, totalChunks: String?, currentChunkNumber: String?, file: RequestBody?): LiveData<BaseResponse> {
+    return com.dashboard.rest.repository.WithFloatTwoRepository.uploadBusinessLogo(clientId, fpId, reqType, reqId, totalChunks, currentChunkNumber, file).toLiveData()
+  }
 
-    fun getUpgradePremiumBanner(website_id: String? = "5e7a3cf46e0572000109a5b2"): LiveData<BaseResponse> {
-        return DevBoostKitRepository.getUpgradePremiumBanner(website_id = website_id).toLiveData()
-    }
+  fun getUpgradePremiumBanner(website_id: String? = "5e7a3cf46e0572000109a5b2"): LiveData<BaseResponse> {
+    return DevBoostKitRepository.getUpgradePremiumBanner(website_id = website_id).toLiveData()
+  }
 
   fun getUpgradeDashboardBanner(website_id: String? = "5fd88e1fb456eb000133ad31"): LiveData<BaseResponse> {
     return DevBoostKitRepository.getUpgradeDashboardBanner(website_id = website_id).toLiveData()

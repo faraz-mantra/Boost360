@@ -9,6 +9,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.interfaces.MoreBanksListener
+import com.boost.upgrades.interfaces.UpiPayListener
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
@@ -27,6 +29,13 @@ class UPIPopUpFragement : DialogFragment() {
     lateinit var razorpay: Razorpay
 
     var validatingStatus = false
+
+    companion object {
+        lateinit var listener: UpiPayListener
+        fun newInstance(upiPayListener: UpiPayListener) = UPIPopUpFragement().apply {
+            listener = upiPayListener
+        }
+    }
 
     override fun onStart() {
         super.onStart()
@@ -99,7 +108,8 @@ class UPIPopUpFragement : DialogFragment() {
         val data = JSONObject()
         data.put("method", "upi")
         data.put("vpa", upi_popup_value.text.toString())
-        viewModel.UpdateUPIPaymentData(data)
+//        viewModel.UpdateUPIPaymentData(data)
+        listener.upiSelected(data)
         dialog!!.dismiss()
         clearData()
     }
