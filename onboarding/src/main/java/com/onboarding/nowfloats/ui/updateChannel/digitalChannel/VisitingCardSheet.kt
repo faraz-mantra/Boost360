@@ -44,9 +44,7 @@ import kotlin.collections.ArrayList
 
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
-open class VisitingCardSheet :
-    BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(),
-    RecyclerItemClickListener {
+open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
   private var shareChannelText: String? = null
   private var isWhatsApp: Boolean? = null

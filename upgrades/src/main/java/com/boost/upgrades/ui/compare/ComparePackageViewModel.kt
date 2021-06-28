@@ -274,7 +274,7 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
             )
         }*/
     }
-    fun addItemToCartPackage(cartItem: CartModel) {
+    fun addItemToCartPackage1(cartItem: CartModel) {
         updatesLoader.postValue(true)
         Completable.fromAction {
             AppDatabase.getInstance(getApplication())!!.cartDao()
@@ -290,5 +290,37 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
                     updatesLoader.postValue(false)
                 }
                 .subscribe()
+    }
+
+    fun addItemToCartPackage(cartItem: CartModel) {
+        updatesLoader.postValue(true)
+
+        Completable.fromAction {
+            AppDatabase.getInstance(getApplication())!!.cartDao().emptyCart()
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError {
+                    //in case of error
+                }
+                .doOnComplete {
+                    Completable.fromAction {
+                        AppDatabase.getInstance(getApplication())!!.cartDao()
+                                .insertToCart(cartItem)
+                    }
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnComplete {
+                                updatesLoader.postValue(false)
+                            }
+                            .doOnError {
+                                updatesError.postValue(it.message)
+                                updatesLoader.postValue(false)
+                            }
+                            .subscribe()
+                }
+                .subscribe()
+
+
     }
 }

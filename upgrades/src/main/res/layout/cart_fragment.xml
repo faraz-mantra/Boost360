@@ -194,6 +194,7 @@
                 android:src="@drawable/cart_status"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -423,24 +424,14 @@
                         app:srcCompat="@mipmap/ic_calendar" />
 
                     <TextView
-                        android:id="@+id/months_validity"
+                        android:id="@+id/months_validity1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingStart="@dimen/_10sdp"
-                      android:text="1 months"
+                      android:text="Select Validity (months)"
                       android:textColor="@color/common_text_color"
                         android:fontFamily="@font/open_sans_semibold"/>
-
-                    <TextView
-                        android:id="@+id/months_validity_edit_inc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:textSize="@dimen/_20sdp"
-                        android:text=" + "
-                        android:textColor="#009688" />
-
                     <TextView
                         android:id="@+id/months_validity_edit_dsc"
                         android:layout_width="wrap_content"
@@ -449,6 +440,29 @@
                         android:textSize="@dimen/_20sdp"
                         android:text=" -- "
                         android:textColor="#F44336" />
+
+                    <EditText
+                        android:id="@+id/months_validity"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:gravity="center"
+                        android:ems="2"
+                        android:maxLength="2"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@color/globalLight"
+                        android:text="0"
+                        android:textSize="@dimen/_13sdp"
+                        android:textCursorDrawable="@null"
+                        android:background="@drawable/et_validity"/>
+                    <TextView
+                        android:id="@+id/months_validity_edit_inc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:textSize="@dimen/_20sdp"
+                        android:text=" + "
+                        android:textColor="#009688" />
 
                 </LinearLayout>
 
@@ -722,7 +736,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:text="Cart amount"
+                        android:text="Cart total"
                         android:padding="@dimen/_5sdp"
                         android:textColor="@color/common_text_color" />
 
@@ -738,20 +752,42 @@
                         android:textColor="@color/common_text_color" />
 
                     <TextView
-                        android:id="@+id/coupon_discount_title"
+                        android:id="@+id/igst_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/cart_amount_title"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
-                        android:text="Coupon discount"
+                        android:text="IGST (18%)"
+                        android:textColor="@color/common_text_color" />
+
+                    <TextView
+                        android:id="@+id/igst_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cart_amount_title"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="@dimen/_5sdp"
+                        tools:text="₹30"
+                        android:text="₹0"
+                        android:textColor="@color/common_text_color" />
+
+                    <TextView
+                        android:id="@+id/coupon_discount_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/igst_title"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Discount"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
                         android:id="@+id/coupon_discount_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/cart_amount_value"
+                        android:layout_below="@id/igst_title"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
@@ -759,10 +795,57 @@
                         android:textColor="#0068e0" />
 
                     <LinearLayout
+                        android:id="@+id/gstin_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_below="@id/coupon_discount_title">
+
+                        <TextView
+                            android:id="@+id/gstin_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_5sdp"
+                            android:text="GSTIN (optional)"
+                            android:textColor="@color/common_text_color"
+                            android:fontFamily="@font/open_sans"/>
+                        <TextView
+                            android:id="@+id/gstin_remove"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:padding="@dimen/_5sdp"
+                            android:text="REMOVE"
+                            android:layout_alignParentEnd="true"
+                            android:visibility="gone"
+                            android:textAllCaps="true"
+                            android:textColor="@color/app_text_yellow"
+                            android:fontFamily="@font/open_sans"
+                            tools:visibility="visible"/>
+
+                        <TextView
+                            android:id="@+id/enter_gstin_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp"
+                            android:text="ADD"
+                            android:textColor="@color/app_text_yellow" />
+
+                        <TextView
+                            android:id="@+id/entered_gstin_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp"
+                            android:textColor="@color/common_text_color"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/tan_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/coupon_discount_title">
+                        android:layout_below="@id/gstin_layout">
 
                     <TextView
                         android:id="@+id/tan_title"
@@ -774,13 +857,28 @@
                         android:textColor="@color/common_text_color"
                         android:fontFamily="@font/open_sans"/>
 
+                        <TextView
+                            android:id="@+id/tan_remove"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:padding="@dimen/_5sdp"
+                            android:text="REMOVE"
+                            android:layout_alignParentEnd="true"
+                            android:visibility="gone"
+                            android:textAllCaps="true"
+                            android:textColor="@color/app_text_yellow"
+                            android:fontFamily="@font/open_sans"
+                            tools:visibility="visible"/>
+
                     <TextView
                         android:id="@+id/enter_tan_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_5sdp"
-                        android:text="Enter number"
-                        android:textColor="#0068e0" />
+                        android:text="Add"
+                        android:textAllCaps="true"
+                        android:textColor="@color/app_text_yellow" />
 
                     <TextView
                         android:id="@+id/entered_tan_number"
@@ -791,7 +889,7 @@
                         android:visibility="gone" />
                     </LinearLayout>
 
-                    <TextView
+                   <!-- <TextView
                         android:id="@+id/igst_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -833,7 +931,7 @@
                         android:padding="@dimen/_5sdp"
                         tools:text="₹890"
                         android:text="₹0"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color" />-->
 
                 </RelativeLayout>
 
@@ -861,7 +959,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
                         android:paddingStart="@dimen/_5sdp"
-                        android:text="Total"
+                        android:text="To Pay"
+                        android:textAllCaps="true"
                         android:textSize="@dimen/_12sdp"
                         android:textColor="@color/common_text_color"
                         app:layout_constraintStart_toStartOf="parent"

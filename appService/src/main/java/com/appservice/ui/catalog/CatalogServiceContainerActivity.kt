@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.appointment.ui.*
 import com.appservice.base.AppBaseActivity
+import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.ui.catalog.catalogProduct.addProduct.ProductDetailFragment
 import com.appservice.ui.catalog.catalogProduct.addProduct.information.ProductInformationFragment
@@ -30,6 +31,16 @@ import com.framework.views.customViews.CustomToolbar
 
 open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
+  private var type: FragmentType? = null
+  private var fragment: AppBaseFragment<*, *>? = null
+  private var serviceDetailFragment: ServiceDetailFragment? = null
+  private var serviceInformationFragment: ServiceInformationFragment? = null
+  private var productDetailFragment: ProductDetailFragment? = null
+  private var productInformationFragment: ProductInformationFragment? = null
+  private var weeklyAppointmentFragment: WeeklyAppointmentFragment? = null
+  private var serviceTimingFragment: ServiceTimingFragment? = null
+  private var createCategoryFragment: CreateCategoryFragment? = null
+  private var serviceListingFragment: ServiceListingFragment? = null
     private var type: FragmentType? = null
     private var serviceDetailFragment: ServiceDetailFragment? = null
     private var serviceInformationFragment: ServiceInformationFragment? = null

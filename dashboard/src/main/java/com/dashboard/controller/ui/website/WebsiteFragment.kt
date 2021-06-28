@@ -1,6 +1,12 @@
 package com.dashboard.controller.ui.website
 
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat.getColor
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -11,26 +17,32 @@ import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
 import com.dashboard.databinding.FragmentWebsiteBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
 import com.dashboard.model.live.websiteItem.WebsiteDataResponse
-import com.framework.pref.BASE_IMAGE_URL
-import com.framework.pref.Key_Preferences
-import com.framework.pref.UserSessionManager
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.pref.BASE_IMAGE_URL
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.utils.ContentSharing
 import com.framework.utils.fromHtml
-import com.framework.webengageconstant.PAGE_VIEW
 import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
+import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
+
 
 class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null
-
+  private  var websiteLink: String?=null
+  private  var businessName: String?=null
+  private  var businessContact: String?=null
   override fun getLayout(): Int {
     return R.layout.fragment_website
   }
@@ -43,8 +55,12 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     getWebsiteData()
-    setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.businessAddress, binding?.contactDetail, binding?.businessTiming)
+    setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile, binding?.websiteThemeCustomization, binding?.businessTiming)
     WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
+    this.session = UserSessionManager(requireActivity())
+    this.websiteLink = fromHtml("<u>${session?.getDomainName()}</u>").toString()
+    businessName = session?.fPName!!
+    businessContact = session?.fPPrimaryContactNumber?:""
   }
 
   override fun onResume() {
@@ -54,11 +70,14 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
 
   private fun setUserData() {
     val desc = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
-    binding?.txtDesc?.text = if (desc.isNullOrEmpty().not()) desc else ""
+    binding?.txtDesc?.apply {
+      if (desc.isNullOrEmpty().not()) visible() else invisible()
+      text = desc
+    }
     binding?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName()}</u>")
-    var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
-    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri!!.contains("http").not()) {
+    var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
+    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
     binding?.imgProfileLogo?.apply {
@@ -164,11 +183,50 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     super.onClick(v)
     when (v) {
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
-      binding?.btnProfileLogo -> baseActivity.startFeatureLogo(session)
+      binding?.btnProfileLogo -> baseActivity.startBusinessLogo(session)
       binding?.editProfile -> baseActivity.startBusinessProfileDetailEdit(session)
-      binding?.businessAddress -> baseActivity.startBusinessAddress(session)
-      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
+      binding?.websiteThemeCustomization -> baseActivity.startWebsiteTheme(session)
+//      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
       binding?.businessTiming -> baseActivity.startBusinessHours(session)
     }
+
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    inflater.inflate(R.menu.menu_website_theme,menu)
+//    val actionView = menu.findItem(R.id.menu_whatsapp_share)
+//    val view = actionView.actionView
+//    view.setOnClickListener {  this.onOptionsItemSelected(actionView)}
+    super.onCreateOptionsMenu(menu, inflater)
+  }
+
+  override fun onPrepareOptionsMenu(menu: Menu) {
+    val alertMenuItem = menu.findItem(R.id.menu_whatsapp_share)
+    val rootView = alertMenuItem.actionView as LinearLayoutCompat
+    rootView.setOnClickListener { onOptionsItemSelected(alertMenuItem)  }
+
+    super.onPrepareOptionsMenu(menu)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when(item.itemId){
+      R.id.menu_more->{
+        ContentSharing.shareWebsiteTheme(
+          requireActivity(),
+          businessName!!,
+          websiteLink!!,
+          businessContact!!)
+      }
+      R.id.menu_whatsapp_share->{
+        ContentSharing.shareWebsiteTheme(
+          requireActivity(),
+          businessName!!,
+          websiteLink!!,
+          businessContact!!
+        ,isWhatsApp = true)
+      }
+    }
+    return super.onOptionsItemSelected(item)
+
   }
 }

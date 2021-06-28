@@ -11,9 +11,9 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/size_16"
     android:layout_marginTop="@dimen/size_2"
     android:layout_marginEnd="@dimen/size_16"
-    android:layout_marginStart="@dimen/size_16"
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="@color/white"
@@ -89,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_4f4f4f"
+            android:textFontWeight="600"
             app:textType="HEADING_6"
             tools:text="Business profile setup" />
 
@@ -97,6 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/red_light_1"
+            android:textFontWeight="600"
             app:textType="BODY_1"
             tools:text="40% remaining" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -118,14 +120,14 @@
           android:background="@color/light_grey_2" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/btn_add_item_start"
           android:layout_width="match_parent"
           android:layout_height="@dimen/size_42"
-          android:clickable="true"
-          android:focusable="true"
-          android:id="@+id/btn_add_item_start"
           android:layout_gravity="center_vertical"
           android:layout_marginStart="@dimen/size_14"
-          android:layout_marginEnd="@dimen/size_14">
+          android:layout_marginEnd="@dimen/size_14"
+          android:clickable="true"
+          android:focusable="true">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/btn_title"
@@ -133,8 +135,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:textAllCaps="true"
             android:maxLines="1"
+            android:textAllCaps="true"
             android:textColor="@color/black_4a4a4a"
             app:autoSizeMaxTextSize="16sp"
             app:autoSizeMinTextSize="8sp"
