@@ -31,6 +31,8 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.appreview.NFAppReviewManager
+import com.framework.autoupdate.NFAutoUpdateManager
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
@@ -103,6 +105,19 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+
+    // to test the in app review
+    testInAppReview()
+    // to test the in app auto updates
+    testInAppUpdates()
+  }
+
+  private fun testInAppReview(){
+    NFAppReviewManager.requestReview(this)
+  }
+
+  private fun testInAppUpdates(){
+    NFAutoUpdateManager.checkUpdate(this)
   }
 
   private fun UserSessionManager.initializeWebEngageLogin() {
