@@ -294,6 +294,7 @@ fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: 
 fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(POST_UPDATE_MESSAGE_PAGE_CLICK, CLICK, TO_BE_ADDED)
+//    startUpdateFragmentActivity(com.appservice.constant.FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT)
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Create_Message_Activity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

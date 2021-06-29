@@ -281,6 +281,7 @@ const val BUSINESS_PROFILE_CREATION_INITIATED = "Business Profile Creation Initi
 const val BUSINESS_PROFILE_CREATION_FAILED = "Business Profile Creation Failed"
 const val BUSINESS_PROFILE_CREATION_SUCCESSFUL = "Business Profile Creation Successful"
 const val EVENT_NAME_UPDATE = "UPDATE"
+const val EVENT_NAME_UPDATE_PAGE = "UPDATE LIST PAGE LOAD"
 const val APPLY_COUPON = "Apply_Coupon"
 const val POST_AN_UPDATE = "POST AN UPDATE"
 const val SUBSCRIBER_SHARING_ACTIVATED = "SUBSCRIBER SHARING ACTIVATED"

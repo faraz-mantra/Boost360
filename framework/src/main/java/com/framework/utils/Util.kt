@@ -11,11 +11,13 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import com.framework.views.customViews.CustomTextView
-import androidx.appcompat.app.AppCompatActivity
 import java.text.NumberFormat
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
   var lastClickTime: Long = 0
@@ -42,6 +44,10 @@ fun Activity.showKeyBoard(view: View?) {
   }
 }
 
+fun hasHTMLTags(text: String): Boolean {
+  val matcher: Matcher = Pattern.compile("<(\"[^\"]*\"|'[^']*'|[^'\">])*>").matcher(text)
+  return matcher.find()
+}
 fun fromHtml(html: String?): Spanned? {
   return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
   else Html.fromHtml(html)

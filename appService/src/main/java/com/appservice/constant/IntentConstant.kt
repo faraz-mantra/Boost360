@@ -1,6 +1,7 @@
 package com.appservice.constant
 
 enum class IntentConstant {
+  OBJECT_DATA,
   IS_UPDATED,
   CLIENT_ID,
   USER_PROFILE_ID,
