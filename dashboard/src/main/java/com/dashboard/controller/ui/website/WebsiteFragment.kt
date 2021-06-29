@@ -117,8 +117,9 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
             )
           }
           if (data != null && data.actionItem.isNullOrEmpty().not()) {
+            LDManager.getALlFlags()
             // show only items required based upon launch darkly
-            val items = data.actionItem!!.filter { LDManager.showFeature(it.title, true)!! }
+            val items = data.actionItem!!.filter { LDManager.showFeature(it.type, true)!! }
             data.actionItem?.clear()
             data.actionItem?.addAll(items)
             // ******************************************

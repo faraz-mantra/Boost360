@@ -85,6 +85,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         return R.layout.activity_dashboard
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        LDManager.close()
+    }
+
     override fun onCreateView() {
         super.onCreateView()
         session = UserSessionManager(this)

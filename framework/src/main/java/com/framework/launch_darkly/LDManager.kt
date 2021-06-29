@@ -31,7 +31,7 @@ object LDManager {
 
     private fun buildUser(uniqueKey: String, email: String? = "") {
         user = LDUser.Builder(uniqueKey)
-                .email(email)
+                .email("nitin@cantech.co")
                 .build()
     }
 
@@ -40,9 +40,24 @@ object LDManager {
     }
 
     fun showFeature(key: String? = "", default: Boolean? = true): Boolean? {
-        ldClient?.let { return it.boolVariation(key!!, default!!) }
+        ldClient?.let {
+            val b = it.boolVariation(key!!, default!!)
+            Log.d(TAG, "Value of boolean verification $key is" + b);
+            return b
+        }
         Log.e(TAG, "Launch Darkly Manager is not initialized yet")
         return default
+    }
+
+    fun getALlFlags(){
+        val map = ldClient?.allFlags()
+        Log.d(TAG, "All Flags $map");
+    }
+
+    fun close(){
+        ldClient?.let {
+            it.close()
+        }
     }
 
 }
