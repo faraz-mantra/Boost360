@@ -15,7 +15,7 @@ open class AppServiceApplication : BaseApplication() {
 
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
-      BaseApplication.instance = application
+      BaseApplication.initModule(application)
       PreferencesUtils.initSharedPreferences(application)
       apiInitialize()
     }
