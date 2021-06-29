@@ -42,6 +42,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         val lastPosition: Int? = binding?.introViewpager?.adapter?.itemCount?.minus(1)
         val mCurrentPosition = binding?.introViewpager?.currentItem ?: 0
         val isLast = (mCurrentPosition == lastPosition)
+        if (mCurrentPosition>=lastPosition?.minus(2)?:0){
+          binding?.btnCreate?.text = getString(R.string.psn_login_now)
+        }else{
+          binding?.btnCreate?.text = getString(R.string.psn_get_started)
+        }
         binding?.introViewpager?.setCurrentItem(if (isLast) 0 else mCurrentPosition + 1, isLast.not())
         nextPageTimer()
       }
@@ -89,6 +94,17 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
       }
     }
+    binding?.introViewpager?.registerOnPageChangeCallback(object :
+      ViewPager2.OnPageChangeCallback() {
+      override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+        if (position>=items.size-2){
+          binding?.btnCreate?.setText(R.string.psn_login_now)
+        }else{
+          binding?.btnCreate?.setText(R.string.psn_get_started)
+        }
+      }
+    })
   }
 
   private fun setNextPage() {

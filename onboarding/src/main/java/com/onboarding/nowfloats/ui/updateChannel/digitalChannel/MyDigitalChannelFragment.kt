@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import com.framework.base.BaseResponse
@@ -108,6 +105,13 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     progress = ProgressChannelDialog.newInstance()
     updateRequestGetChannelData()
     binding?.syncBtn?.setOnClickListener { syncChannels() }
+    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)){
+      binding?.disconnectedBg?.setBackgroundColor(getColor(R.color.colorAccent))
+      binding?.connectedBg?.setBackgroundColor(getColor(R.color.colorAccent))
+      baseActivity.getToolbar()?.setBackgroundColor(getColor(R.color.colorAccent))
+      baseActivity.window.statusBarColor = getColor(R.color.colorAccent)
+      baseActivity.getToolbar()?.getTitleTextView()?.gravity = Gravity.START
+    }
   }
 
   private fun updateRequestGetChannelData() {
@@ -305,8 +309,14 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun changeView(isConnect: Boolean) {
-    (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
-    (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
+    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)){
+      (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.colorAccent)
+      (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.colorAccent)
+    }else{
+      (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
+      (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
+    }
+
     binding?.disconnectedBg?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.viewConnect?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.connectedRiya?.visibility = if (isConnect) View.VISIBLE else View.GONE
