@@ -21,7 +21,7 @@ object NFWebEngageController {
     if (BaseApplication.instance.packageName != "com.jio.online") {
       val trackEvent: MutableMap<String, Any> = HashMap()
       trackEvent["event_name"] = event_name!!
-      trackEvent["fptag/event_value"] = event_value
+      trackEvent["fptag/event_value"] = event_value!!
       trackEvent["event_label"] = event_label
       if (event_label.equals("rev")) {
         trackEvent["revenue"] = event_value
