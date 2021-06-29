@@ -4,6 +4,7 @@ import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.updateBusiness.BusinessUpdateResponse
+import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -61,6 +62,23 @@ interface WithFloatTwoRemoteData {
     @Query("totalChunks") totalChunks: Int?,
     @Query("currentChunkNumber") currentChunkNumber: Int?,
     @Query("productId") productId: String?,
+    @Body requestBody: RequestBody?,
+  ): Observable<Response<String>>
+
+ @PUT(EndPoints.PUT_BIZ_MESSAGE)
+  fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
+
+  @Headers("Accept: application/json", "Content-Type: application/octet-stream")
+  @PUT(EndPoints.PUT_BIZ_IMAGE)
+  fun putBizImageUpdate(
+    @Query("clientId") clientId: String?,
+    @Query("requestType") requestType: String?,
+    @Query("requestId") requestId: String?,
+    @Query("totalChunks") totalChunks: Int?,
+    @Query("currentChunkNumber") currentChunkNumber: Int?,
+    @Query("socialParmeters") socialParmeters: String?,
+    @Query("bizMessageId") bizMessageId: String?,
+    @Query("sendToSubscribers") sendToSubscribers: Boolean?,
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 }

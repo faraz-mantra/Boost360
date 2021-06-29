@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="@style/wrap_wrap"
+  android:paddingEnd="@dimen/size_10"
+  tools:ignore="RtlSymmetry">
+
+  <com.framework.views.customViews.CustomTextView
+    android:id="@+id/button_post"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/size_36"
+    android:paddingStart="@dimen/size_16"
+    android:paddingEnd="@dimen/size_16"
+    android:text="POST"
+    android:gravity="center"
+    android:fontFamily="@font/semi_bold"
+    android:textColor="@color/white"
+    tools:textColor="@color/black_4a4a4a"
+    app:textType="HEADING_6" />
+</LinearLayout>

@@ -565,7 +565,22 @@
   <string name="current_selection">Current selection</string>
   <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="latest_update_data_not_found">Latest update data not found!</string>
-
+  <string name="update_regularly_keep_customers_informed_brand">Update regularly to keep your customers informed about your brand</string>
+  <string name="post_an_update_n">Post An Update</string>
+  <string name="send_to_subscribers">Send to Subscribers</string>
+  <string name="enable">Enable</string>
+  <string name="unable_to_send_website_updates_to_subscribers">Enable this feature to send website updates to your subscribers via email.</string>
+  <string name="speech_prompt">Say something&#8230;</string>
+  <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+  <string name="do_you_want_to_save_this_update_as_draft">Do you want to save this update as draft?</string>
+  <string name="null_string_exception">Don\'t enter empty updates</string>
+  <string name="html_tags_exception">Sorry, you can\'t enter HTML tags</string>
+  <string name="twitter_disabled">Twitter Disabled</string>
+  <string name="twitter_enabled">Twitter Enabled</string>
+  <string name="facebook_page_disabled">Facebook Page Disabled</string>
+  <string name="facebook_page_enabled">Facebook Page Enabled</string>
+  <string name="fb_disabled">Facebook Disabled</string>
+  <string name="fb_enabled">Facebook Enabled</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

@@ -5,11 +5,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.appservice.R
-import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentTestimonialAddEditBinding
 import com.appservice.model.SessionData
-import com.appservice.viewmodel.TestimonialViewModel
-import com.framework.models.BaseViewModel
 
 class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAddEditBinding>() {
 
