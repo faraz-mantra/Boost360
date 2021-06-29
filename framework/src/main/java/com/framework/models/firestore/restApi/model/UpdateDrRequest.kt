@@ -10,7 +10,7 @@ data class UpdateDrRequest(
   var clientId: String? = null,
   @SerializedName("fp_tag")
   var fpTag: String? = null,
-  @SerializedName("Key")
+  @SerializedName("key")
   var key: String? = null,
   @SerializedName("value")
   var value: Any? = null
