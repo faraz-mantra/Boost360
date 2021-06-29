@@ -382,4 +382,9 @@
       <enum name="mirror" value="2" />
     </attr>
   </declare-styleable>
+  <declare-styleable name="ReadMoreTextView">
+    <attr name="readMoreMaxLine" format="integer" />
+    <attr name="readMoreText" format="string|reference" />
+    <attr name="readMoreColor" format="color|reference" />
+  </declare-styleable>
 </resources>
