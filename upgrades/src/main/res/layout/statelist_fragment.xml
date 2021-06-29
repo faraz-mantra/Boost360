@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:textFontWeight="700"
-                    android:text="Place of delivery"
+                    android:text="Place of supply"
                     android:textSize="@dimen/txt_15sp"
                     android:textColor="@color/app_text_yellow"
                     app:layout_constraintStart_toStartOf="parent"

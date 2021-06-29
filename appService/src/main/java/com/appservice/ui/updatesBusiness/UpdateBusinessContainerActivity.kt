@@ -81,7 +81,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.UPDATE_BUSINESS_FRAGMENT -> getLatestUpdatesTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
-      FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT ->"Business Add"
+      FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> getString(R.string.post_an_update_n)
       else -> super.getToolbarTitle()
     }
   }

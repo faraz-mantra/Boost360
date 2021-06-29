@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.FragmentType
+import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.BusinesUpdateListFragmentBinding
 import com.appservice.model.updateBusiness.BusinessUpdateResponse
@@ -22,6 +24,7 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.model.ItemsItem
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
@@ -29,6 +32,9 @@ import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
+import com.framework.webengageconstant.EVENT_NAME_UPDATE
+import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.model.ordersdetails.OrderItem
 import java.util.*
 
@@ -36,7 +42,6 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
 
   private val STORAGE_CODE = 120
 
-  private var session: UserSessionManager? = null
   private var adapterUpdate: AppBaseRecyclerViewAdapter<UpdateFloat>? = null
   private val listFloat: ArrayList<UpdateFloat> = arrayListOf()
 
@@ -65,10 +70,13 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
 
   override fun onCreateView() {
     super.onCreateView()
-    session = UserSessionManager(baseActivity)
+    WebEngageController.trackEvent(EVENT_NAME_UPDATE_PAGE, PAGE_VIEW, sessionLocal.fpTag)
     showProgress()
     scrollPagingListener()
     listUpdateApi(offSet = offSet)
+    binding?.btnAdd?.setOnClickListener {
+      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT)
+    }
   }
 
   private fun scrollPagingListener() {
@@ -130,7 +138,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     val map = HashMap<String?, String?>()
     map["clientId"] = clientId
     map["skipBy"] = skipBy.toString()
-    map["fpId"] = session?.fPID ?: ""
+    map["fpId"] = sessionLocal?.fPID ?: ""
     return map
   }
 
@@ -154,6 +162,8 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
       RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal, RecyclerViewActionType.UPDATE_OTHER_SHARE.ordinal,
       RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal -> shareUpdate(item, actionType)
       RecyclerViewActionType.UPDATE_BUSINESS_CLICK.ordinal -> {
+        val float = item as? UpdateFloat ?: return
+        startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT,Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, float) })
       }
     }
   }
@@ -166,16 +176,16 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
       }
       return
     }
-    val subDomain = if (isService(session?.fP_AppExperienceCode)) "all-services" else "all-products"
+    val subDomain = if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
     when (actionType) {
       RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal -> {
-        shareUpdates(baseActivity, float.message ?: "", float.url, session?.getDomainName() + "/" + subDomain, session?.userPrimaryMobile ?: "", true, false, float.imageUri)
+        shareUpdates(baseActivity, float.message ?: "", float.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", true, false, float.imageUri)
       }
       RecyclerViewActionType.UPDATE_OTHER_SHARE.ordinal -> {
-        shareUpdates(baseActivity, float.message ?: "", float.url, session?.getDomainName() + "/" + subDomain, session?.userPrimaryMobile ?: "", false, false, float.imageUri)
+        shareUpdates(baseActivity, float.message ?: "", float.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", false, false, float.imageUri)
       }
       RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal -> {
-        shareUpdates(baseActivity, float.message ?: "", float.url, session?.getDomainName() + "/" + subDomain, session?.userPrimaryMobile ?: "", false, true, float.imageUri)
+        shareUpdates(baseActivity, float.message ?: "", float.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", false, true, float.imageUri)
       }
     }
   }

@@ -3,6 +3,7 @@ package com.framework.analytics
 import android.util.Log
 import com.appsflyer.AppsFlyerLib
 import com.framework.BaseApplication
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.webengage.sdk.android.Analytics
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
@@ -15,11 +16,11 @@ object NFWebEngageController {
   private val TAG = "NFController"
 
 
-  fun trackEvent(event_name: String, event_label: String, event_value: String) {
+  fun trackEvent(event_name: String, event_label: String, event_value: String?= NO_EVENT_VALUE) {
     if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
       val trackEvent: MutableMap<String, Any> = HashMap()
-      trackEvent["event_name"] = event_name
+      trackEvent["event_name"] = event_name!!
       trackEvent["fptag/event_value"] = event_value
       trackEvent["event_label"] = event_label
       if (event_label.equals("rev")) {

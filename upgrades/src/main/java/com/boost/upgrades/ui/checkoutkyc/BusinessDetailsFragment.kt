@@ -224,22 +224,40 @@ class BusinessDetailsFragment : DialogFragment() {
                 business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
             }
 
-            if (!isValidMobile(business_contact_number.text.toString()) /*|| !isValidMobile(user_contact_number.text.toString())*/) {
+            if(business_contact_number.text.isEmpty()){
                 business_contact_number.setBackgroundResource(R.drawable.et_validity_error)
-                Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG).show()
+                Toasty.error(requireContext(), "Please enter Mobile no.", Toast.LENGTH_LONG).show()
                 return false
             }else{
-                business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
-            }
-            if (!isValidMail(business_email_address.text.toString()) /*|| !isValidMail(user_email_address.text.toString())*/) {
-                business_email_address.setBackgroundResource(R.drawable.et_validity_error)
-                Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG).show()
-                return false
-            }else{
-                business_email_address.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+                if (!isValidMobile(business_contact_number.text.toString())) {
+                    business_contact_number.setBackgroundResource(R.drawable.et_validity_error)
+                    Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG).show()
+                    return false
+                }else{
+                    business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+                }
             }
 
-            Log.v("business_name_value1", " "+ business_name_value.text.toString())
+            Log.v("business_name_value1", " "+ business_contact_number.text.toString())
+
+
+            Log.v("business_name_value2", " "+ business_email_address.text.toString())
+            if(business_email_address.text.isEmpty()){
+                business_email_address.setBackgroundResource(R.drawable.et_validity_error)
+                Toasty.error(requireContext(), "Please enter Email ID", Toast.LENGTH_LONG).show()
+                return false
+            }else{
+                if (!isValidMail(business_email_address.text.toString())) {
+                    business_email_address.setBackgroundResource(R.drawable.et_validity_error)
+                    Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG).show()
+                    return false
+                }else{
+                    business_email_address.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+                }
+            }
+
+
+            Log.v("business_name_value3", " "+ business_name_value.text.toString())
             if (business_name_value.text.isEmpty()) {
                 business_name_value.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Entered Business name is not valid!!", Toast.LENGTH_LONG).show()
@@ -247,6 +265,7 @@ class BusinessDetailsFragment : DialogFragment() {
             }else{
                 business_name_value.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
             }
+
             if (business_address.text.isEmpty()) {
                 business_address.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Entered Business address is not valid!!", Toast.LENGTH_LONG).show()
@@ -262,11 +281,28 @@ class BusinessDetailsFragment : DialogFragment() {
             return false
         }
 
+        if (!isValidMail(business_email_address.text.toString())) {
+            business_email_address.setBackgroundResource(R.drawable.et_validity_error)
+            Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG).show()
+            return false
+        }else{
+            business_email_address.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+        }
+
+        if (!isValidMobile(business_contact_number.text.toString())) {
+            business_contact_number.setBackgroundResource(R.drawable.et_validity_error)
+            Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG).show()
+            return false
+        }else{
+            business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+        }
+
         /*if (!confirm_checkbox.isChecked) {
             Toasty.error(requireContext(), "Accept the Agreement!!", Toast.LENGTH_LONG).show()
             return false
         }*/
         return true
+//        return false
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -408,12 +444,6 @@ class BusinessDetailsFragment : DialogFragment() {
             dismiss()
         })
 
-        viewModel.cityValueResult().observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if(it != null){
-//                business_city_name.setText(it)
-            }
-
-        })
 
         viewModel.stateResult().observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it != null){

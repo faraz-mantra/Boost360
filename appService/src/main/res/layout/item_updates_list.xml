@@ -28,15 +28,17 @@
         android:scaleType="centerCrop"
         tools:srcCompat="@drawable/placeholder_image_n" />
 
-      <com.framework.views.customViews.CustomTextView
+      <com.framework.views.customViews.ReadMoreTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_14"
         android:layout_marginVertical="@dimen/size_10"
-        android:textColor="@color/black_4a4a4a"
         android:fontFamily="@font/regular"
-        app:textType="HEADING_6"
+        android:includeFontPadding="false"
+        android:textColor="@color/black_4a4a4a"
+        app:readMoreMaxLine="4"
+        app:textType="BODY_1"
         tools:text="This is an update" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
