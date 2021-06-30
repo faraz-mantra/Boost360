@@ -357,7 +357,8 @@
   <string name="error_getting_service_timing">Error while getting the service timing.</string>
   <string name="update">UPDATE</string>
   <string name="profile_updated">profile updated</string>
-  <string name="something_went_wrong">something went wrong</string>
+  <string name="something_went_wrong">Something went wrong</string>
+  <string name="error_delete_failed_try_again">Item not deleted, please try again!</string>
   <string name="enter_staff_name">Enter Staff Name</string>
   <string name="select_staff_gender">Select Staff Gender</string>
   <string name="please_add_specialization">Please add specialization</string>
@@ -453,6 +454,7 @@
   <string name="no_staff_member_listed_yet">No staff member listed yet</string>
   <string name="share_">Share:</string>
   <string name="view_on_website">VIEW ON WEBSITE</string>
+  <string name="successfully_deleted">Successfully deleted</string>
   <string name="successfully_saved">Successfully Saved</string>
   <string name="successfully_update">Successfully Updated</string>
   <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>
@@ -573,6 +575,7 @@
   <string name="speech_prompt">Say something&#8230;</string>
   <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
   <string name="do_you_want_to_save_this_update_as_draft">Do you want to save this update as draft?</string>
+  <string name="are_you_sure_want_to_delete">Are you sure?</string>
   <string name="null_string_exception">Don\'t enter empty updates</string>
   <string name="html_tags_exception">Sorry, you can\'t enter HTML tags</string>
   <string name="twitter_disabled">Twitter Disabled</string>

@@ -59,21 +59,21 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT,FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT,FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT ,FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT-> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
   }
@@ -82,6 +82,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.UPDATE_BUSINESS_FRAGMENT -> getLatestUpdatesTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> getString(R.string.post_an_update_n)
+      FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ""
       else -> super.getToolbarTitle()
     }
   }
@@ -102,6 +103,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.UPDATE_BUSINESS_FRAGMENT -> UpdatesBusinessFragment.newInstance()
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> AddUpdateBusinessFragment.newInstance()
+      FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> DetailUpdateBusinessFragment.newInstance()
       else -> UpdatesBusinessFragment.newInstance()
     }
   }

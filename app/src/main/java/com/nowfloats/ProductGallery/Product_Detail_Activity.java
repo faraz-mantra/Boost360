@@ -84,7 +84,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_UPDATE;
-import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_UPDATE_CREATE;
 
 /**
  * Created by guru on 09-06-2015.
@@ -182,7 +182,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(ACTION);
 
-        WebEngageController.trackEvent(EVENT_NAME_UPDATE, EVENT_LABEL_UPDATE, session.getFpTag());
+        WebEngageController.trackEvent(EVENT_NAME_UPDATE_CREATE, EVENT_LABEL_UPDATE, session.getFpTag());
         PorterDuffColorFilter color = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         save.setColorFilter(color);
 

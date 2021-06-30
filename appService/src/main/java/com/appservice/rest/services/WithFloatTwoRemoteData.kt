@@ -4,6 +4,7 @@ import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.updateBusiness.BusinessUpdateResponse
+import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
 import io.reactivex.Observable
@@ -65,8 +66,14 @@ interface WithFloatTwoRemoteData {
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
- @PUT(EndPoints.PUT_BIZ_MESSAGE)
+  @PUT(EndPoints.PUT_BIZ_MESSAGE)
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
+
+  @GET(EndPoints.GET_BIZ_WEB_UPDATE_BY_ID)
+  fun getBizWebMessage(@Path("id") id: String?, @Query("clientId") clientId: String?): Observable<Response<ResponseBody>>
+
+  @HTTP(method = "DELETE", path = EndPoints.DELETE_BIZ_MESSAGE_UPDATE, hasBody = true)
+  fun deleteBizMessageUpdate(@Body request: DeleteBizMessageRequest?): Observable<Response<ResponseBody>>
 
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.PUT_BIZ_IMAGE)

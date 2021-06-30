@@ -5,6 +5,7 @@ import com.appservice.base.rest.AppBaseRepository
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
+import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.WithFloatsApiTwoClient
@@ -86,6 +87,13 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun putBizMessageUpdate(request: PostUpdateTaskRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.putBizMessageUpdate(request), TaskCode.PUT_BIZ_MESSAGE_UPDATE)
+  }
+
+  fun getBizWebMessage( id: String?,clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getBizWebMessage(id,clientId), TaskCode.GET_BIZ_MESSAGE_WEB)
+  }
+  fun deleteBizMessageUpdate(request: DeleteBizMessageRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.deleteBizMessageUpdate(request), TaskCode.DELETE_BIZ_MESSAGE_UPDATE)
   }
 
   fun putBizImageUpdate(

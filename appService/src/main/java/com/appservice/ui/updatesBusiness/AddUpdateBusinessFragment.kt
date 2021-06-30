@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.appservice.R
@@ -84,7 +85,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     super.onCreateView()
     updateFloat = arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as? UpdateFloat
     isUpdate = updateFloat != null && updateFloat!!.id.isNullOrEmpty().not()
-    WebEngageController.trackEvent(EVENT_NAME_UPDATE, PAGE_VIEW, sessionLocal.fpTag)
+    WebEngageController.trackEvent(EVENT_NAME_UPDATE_CREATE, PAGE_VIEW, sessionLocal.fpTag)
     setOnClickListener(
       binding?.btnCamera, binding?.btnEditPhoto, binding?.btnFpStatus, binding?.btnFpPageStatus, binding?.btnGoogleVoice,
       binding?.btnRemovePhoto, binding?.btnSubscription, binding?.btnTwitter
@@ -149,7 +150,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       }
       binding?.btnSubscription -> {
         if (!sessionLocal.getBooleanDetails(isFirstTimeSendToSubscriber)) {
-          MaterialAlertDialogBuilder(baseActivity)
+          AlertDialog.Builder(baseActivity)
             .setTitle(R.string.send_to_subscribers)
             .setMessage(R.string.unable_to_send_website_updates_to_subscribers)
             .setPositiveButton(R.string.enable) { _: DialogInterface, _: Int ->
@@ -302,6 +303,9 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
   }
 
   private fun onBackResult() {
+    val intent = Intent()
+    intent.putExtra(IntentConstant.IS_UPDATED.name, true)
+    baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
     baseActivity.finish()
   }
 
@@ -312,7 +316,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
   }
 
   fun onBackPress() {
-    MaterialAlertDialogBuilder(baseActivity)
+    AlertDialog.Builder(baseActivity)
       .setCancelable(false)
       .setMessage(R.string.do_you_want_to_save_this_update_as_draft)
       .setPositiveButton(R.string.save) { dialog: DialogInterface, _: Int ->
