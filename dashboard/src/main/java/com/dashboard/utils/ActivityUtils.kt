@@ -272,8 +272,8 @@ fun AppCompatActivity.startNotification(session: UserSessionManager) {
 
 fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
   WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-//  startUpdateFragmentActivity(com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT)
-  startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
+  startUpdateFragmentActivity(com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT)
+//  startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
 }
 
 fun AppCompatActivity.startOldSiteMeter(session: UserSessionManager) {
@@ -294,10 +294,10 @@ fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: 
 fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(POST_UPDATE_MESSAGE_PAGE_CLICK, CLICK, TO_BE_ADDED)
-//    startUpdateFragmentActivity(com.appservice.constant.FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Create_Message_Activity"))
-    startActivity(webIntent)
-    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    startUpdateFragmentActivity(com.appservice.constant.FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT)
+//    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Create_Message_Activity"))
+//    startActivity(webIntent)
+//    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }

@@ -1,6 +1,7 @@
 package com.appservice.ui.updatesBusiness
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -23,19 +24,15 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.model.ItemsItem
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
-import com.framework.webengageconstant.EVENT_NAME_UPDATE
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
-import com.inventoryorder.model.ordersdetails.OrderItem
 import java.util.*
 
 class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
@@ -75,7 +72,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     scrollPagingListener()
     listUpdateApi(offSet = offSet)
     binding?.btnAdd?.setOnClickListener {
-      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT)
+      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
     }
   }
 
@@ -125,12 +122,13 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
         }
       } else adapterUpdate?.notifyDataSetChanged()
 
-    } else showShortToast(getString(R.string.latest_update_data_not_found))
+    } else if (listFloat.isEmpty()) showShortToast(getString(R.string.latest_update_data_not_found))
     hideProgress()
   }
 
   override fun onFailure(it: BaseResponse) {
     super.onFailure(it)
+    hideProgress()
     removeLoader()
   }
 
@@ -138,7 +136,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     val map = HashMap<String?, String?>()
     map["clientId"] = clientId
     map["skipBy"] = skipBy.toString()
-    map["fpId"] = sessionLocal?.fPID ?: ""
+    map["fpId"] = sessionLocal.fPID ?: ""
     return map
   }
 
@@ -163,7 +161,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
       RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal -> shareUpdate(item, actionType)
       RecyclerViewActionType.UPDATE_BUSINESS_CLICK.ordinal -> {
         val float = item as? UpdateFloat ?: return
-        startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT,Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, float) })
+        startUpdateFragmentActivity(FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT, Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, float) }, isResult = true)
       }
     }
   }
@@ -192,6 +190,15 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+      val isRefresh = data?.getBooleanExtra(IntentConstant.IS_UPDATED.name,false) ?: false
+      if (isRefresh) {
+        showProgress()
+        listFloat.clear()
+        offSet = PaginationScrollListener.PAGE_START
+        listUpdateApi(offSet = offSet)
+      }
+    }
   }
 }
 
