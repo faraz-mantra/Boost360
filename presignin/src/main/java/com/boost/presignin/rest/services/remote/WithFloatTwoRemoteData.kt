@@ -45,7 +45,7 @@ interface WithFloatTwoRemoteData {
   fun getFpDetailsByPhone(@Query("number") number: Long?, @Query(value = "clientId") clientId: String?): Observable<Response<Any>>
 
   @GET(EndPoints.SEND_OTP_INDIA)
-  fun sendOtpIndia(@Query("mobileNumber") number: Long?, @Query("messageTemplate") messageTemplate: String? = "Your Boost 360 verification code is [OTP] . Code valid for 10 minutes only, one-time use. Please DO NOT share this OTP with anyone to ensure account's security.", @Query(value = "clientId") clientId: String?): Observable<Response<ResponseBody>>
+  fun sendOtpIndia(@Query("mobileNumber") number: Long?, @Query("messageTemplate") messageTemplate: String? = "Your one time Boost 360 verification code is [OTP]. The code is valid for 10 minutes, Please DO NOT share this code with anyone.£HASH1234", @Query(value = "clientId") clientId: String?): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.VERIFY_OTP)
   fun verifyOtp(
