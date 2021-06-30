@@ -17,7 +17,7 @@ open class BaseBoardingApplication : BaseApplication() {
 
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
-      BaseApplication.instance = application
+      BaseApplication.initModule(application)
       PreferencesUtils.initSharedPreferences(application)
       TwitterConfigHelper.debug(true)
       TwitterConfigHelper.initialize(application)
