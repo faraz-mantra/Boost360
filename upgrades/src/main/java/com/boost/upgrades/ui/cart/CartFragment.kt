@@ -429,11 +429,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                    default_validity_months++
                 if(default_validity_months == 1){
                     default_validity_months = default_validity_months+ 2
-                }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
-                    default_validity_months = default_validity_months+ 12
+                }else if(default_validity_months >= 12 && default_validity_months < 60){
+                    if(default_validity_months % 12 == 0 ){
+                        default_validity_months = default_validity_months+ 12
+                    }else{
+                        default_validity_months = default_validity_months + ((12 - default_validity_months % 12)  )
+                    }
+//        default_validity_months = default_validity_months+ 12
                 }else{
-                    if(default_validity_months < 60)
-                        default_validity_months = default_validity_months+ 3
+                    if(default_validity_months < 60){
+                        if(default_validity_months % 3 == 0){
+                            default_validity_months = default_validity_months+ 3
+                        }else if(default_validity_months % 3 == 1){
+                            default_validity_months = default_validity_months+ 2
+                        }else if(default_validity_months % 3 == 2){
+                            default_validity_months = default_validity_months+ 1
+                        }
+                    }
+//                        default_validity_months = default_validity_months+ 3
                 }
 //                months_validity.text = default_validity_months.toString() + " months"
                 months_validity.setText(default_validity_months.toString())
@@ -453,11 +466,27 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                if (default_validity_months < 12){
     if(default_validity_months == 1){
         default_validity_months = default_validity_months+ 2
-    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
-        default_validity_months = default_validity_months+ 12
+//    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
+    }else if(default_validity_months >= 12 && default_validity_months < 60){
+        if(default_validity_months % 12 == 0 ){
+            default_validity_months = default_validity_months+ 12
+        }else{
+//            Log.v("validity_calculator", " "+ (default_validity_months - default_validity_months % 12)  + " "+default_validity_months + " "+ (default_validity_months % 12) )
+            default_validity_months = default_validity_months + ((12 - default_validity_months % 12)  )
+        }
+//        default_validity_months = default_validity_months+ 12
     }else{
-        if(default_validity_months < 60)
-          default_validity_months = default_validity_months+ 3
+//        if(default_validity_months < 60)
+            if(default_validity_months < 60 && default_validity_months < 12 ){
+                if(default_validity_months % 3 == 0){
+                    default_validity_months = default_validity_months+ 3
+                }else if(default_validity_months % 3 == 1){
+                    default_validity_months = default_validity_months+ 2
+                }else if(default_validity_months % 3 == 2){
+                    default_validity_months = default_validity_months+ 1
+                }
+            }
+//          default_validity_months = default_validity_months+ 3
     }
 
 //            default_validity_months++
@@ -482,10 +511,25 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             if (!bundles_in_cart) {
                 if (default_validity_months > 1) {
 //                    default_validity_months--
-                    if(default_validity_months > 12 && default_validity_months % 12 == 0){
-                        default_validity_months = default_validity_months - 12
+//                    if(default_validity_months > 12 && default_validity_months % 12 == 0){
+                    if(default_validity_months > 12){
+//                        default_validity_months = default_validity_months - 12
+                        if(default_validity_months % 12 == 0 ){
+                            default_validity_months = default_validity_months - 12
+                        }else{
+                            default_validity_months = default_validity_months - (( default_validity_months % 12)  )
+                        }
                     }else{
-                        default_validity_months = default_validity_months - 3
+//                        default_validity_months = default_validity_months - 3
+                        if(default_validity_months <= 12 ){
+                            if(default_validity_months % 3 == 0){
+                                default_validity_months = default_validity_months - 3
+                            }else if(default_validity_months % 3 == 1){
+                                default_validity_months = default_validity_months - 1
+                            }else if(default_validity_months % 3 == 2){
+                                default_validity_months = default_validity_months - 2
+                            }
+                        }
                     }
                     if(default_validity_months < 1){
                         default_validity_months = 1
@@ -508,10 +552,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     months_validity.setText (default_validity_months.toString())
             }else if (bundles_in_cart) {
             if (default_validity_months > package_validity_months) {
-                if(default_validity_months > 12 && default_validity_months % 12 == 0){
-                    default_validity_months = default_validity_months - 12
+                if(default_validity_months > 12){
+//                        default_validity_months = default_validity_months - 12
+                    if(default_validity_months % 12 == 0 ){
+                        default_validity_months = default_validity_months - 12
+                    }else{
+                        default_validity_months = default_validity_months - (( default_validity_months % 12)  )
+                    }
                 }else{
-                    default_validity_months = default_validity_months - 3
+//                    default_validity_months = default_validity_months - 3
+                    if(default_validity_months <= 12 ){
+                        if(default_validity_months % 3 == 0){
+                            default_validity_months = default_validity_months - 3
+                        }else if(default_validity_months % 3 == 1){
+                            default_validity_months = default_validity_months - 1
+                        }else if(default_validity_months % 3 == 2){
+                            default_validity_months = default_validity_months - 2
+                        }
+                    }
                 }
 
                 if(default_validity_months < 1){
@@ -605,6 +663,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
     }
 
     private fun createCartStateRenewal(renewalItems: List<CartModel>?) {
+        Log.v("createPurchaseOrder2"," "+ renewalItems.toString())
         val widgetList = arrayListOf<com.boost.upgrades.data.renewalcart.Widget>()
         renewalItems?.forEach { widgetList.add(com.boost.upgrades.data.renewalcart.Widget(it.item_id, it.boost_widget_key)) }
 
@@ -618,7 +677,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                 RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
                         widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
                         dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY), endDate = DateUtils.getAmountDate((activity as UpgradeActivity).deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY))
-        Log.v("allPurchasedWidgets"," "+ request1);
+        Log.v("allPurchasedWidgets"," "+ request1)
         val ac = (activity as UpgradeActivity)
         if (ac.isBackCart.not() && (ac.isDeepLink || ac.isOpenCardFragment)) {
             val currentDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY)
@@ -674,7 +733,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
     }
 
     private fun createPurchaseOrder(cartStateId: String?) {
-        Log.v("createPurchaseOrder", " "+ "createPurchaseOrder");
+        Log.v("createPurchaseOrder1", " "+ "createPurchaseOrder");
         var couponCode: String? = null
         var couponDiscountPercentage: Int = 0
         if (validCouponCode != null) {
@@ -1492,7 +1551,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                 Log.v("redeemCouponResult" ," "+ it.coupon_key + " "+ it.couponDiscountAmt)
                 if (it != null) {
                     //clear stored cartOrderInfo
-//                    prefs.storeCartOrderInfo(null)
+                    prefs.storeCartOrderInfo(null)
 
                     //save coupon Details
 //                    prefs.storeApplyedCouponDetails(it)
@@ -1702,7 +1761,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
 
     fun proceedToPayment(result: CreatePurchaseOrderResponse) {
 //        var cartItems: ArrayList<String>? =  null
-
+        Log.v("createPurchaseOrder3"," "+ result.toString())
         cartList.forEach {
 //            if(it!!.item_id != null) it!!.item_id!! else it.boost_widget_key?.let { it1 -> cartItems?.add(it1) }
 
@@ -1763,7 +1822,8 @@ Log.v("package_validity_months", " "+ package_validity_months)
 
   private fun hideProgress() {
     try {
-      if (progressDialog.isShowing) progressDialog.hide()
+//      if (progressDialog.isShowing) progressDialog.hide()
+      if (progressDialog.isShowing) progressDialog.cancel()
     } catch (e: Exception) {
       e.printStackTrace()
     }

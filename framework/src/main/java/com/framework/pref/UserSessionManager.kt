@@ -562,12 +562,16 @@ class UserSessionManager(var activity: Context) {
     editor.putBoolean(key.trim { it <= ' ' }, value).apply()
   }
 
+  fun getBooleanDetails(key: String?): Boolean {
+    return pref.getBoolean(key, false)
+  }
+
   fun storeIntDetails(key: String, value: Int) {
     editor.putInt(key.trim { it <= ' ' }, value).apply()
   }
 
-  fun getBooleanDetails(key: String?): Boolean {
-    return pref.getBoolean(key, false)
+  fun getIntDetails(key: String?): Int {
+    return pref.getInt(key, 0)
   }
 
   fun storeFPDetails(key: String, value: String?) {

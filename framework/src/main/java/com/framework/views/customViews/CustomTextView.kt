@@ -8,7 +8,7 @@ import com.framework.R
 import com.framework.enums.TextType.values
 import com.framework.enums.setTextStyle
 
-class CustomTextView : AppCompatTextView {
+open class CustomTextView : AppCompatTextView {
 
   constructor(context: Context) : super(context) {
     setCustomAttrs(context, null)
@@ -18,7 +18,7 @@ class CustomTextView : AppCompatTextView {
     setCustomAttrs(context, attrs)
   }
 
-  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
+  constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
     setCustomAttrs(context, attrs)
   }
 

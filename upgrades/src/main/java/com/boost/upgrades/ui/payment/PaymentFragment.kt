@@ -26,8 +26,7 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerI
 import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.upgrades.data.api_model.customerId.get.Result
 import com.boost.upgrades.datamodule.SingleNetBankData
-import com.boost.upgrades.interfaces.BusinessDetailListener
-import com.boost.upgrades.interfaces.PaymentListener
+import com.boost.upgrades.interfaces.*
 import com.boost.upgrades.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.popup.*
@@ -65,7 +64,8 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener {
+class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
+    MoreBanksListener,UpiPayListener,EmailPopupListener,AddCardListener {
 
     lateinit var root: View
     private lateinit var viewModel: PaymentViewModel
@@ -184,42 +184,77 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                 WebEngageController.trackEvent(ADDONS_MARKETPLACE_ADD_NEW_CARD_CLICK , ADDONS_MARKETPLACE_ADD_NEW_CARD, NO_EVENT_VALUE)
                 val args = Bundle()
                 args.putString("customerId", cartCheckoutData.getString("customerId"))
-                addCardPopUpFragement.arguments = args
-                addCardPopUpFragement.show((activity as UpgradeActivity).supportFragmentManager, ADD_CARD_POPUP_FRAGMENT)
+//                addCardPopUpFragement.arguments = args
+//                addCardPopUpFragement.show((activity as UpgradeActivity).supportFragmentManager, ADD_CARD_POPUP_FRAGMENT)
+
+                val addCardFragement = AddCardPopUpFragement.newInstance(this)
+                addCardFragement.arguments = args
+                addCardFragement.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    ADD_CARD_POPUP_FRAGMENT
+                )
+                payment_submit.visibility = View.VISIBLE
             }else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+//                payment_main_layout.fullScroll(View.FOCUS_FORWARD)
+                payment_main_layout.smoothScrollTo(0,0)
             }
         }
 
         show_more_bank.setOnClickListener {
+            if(paymentProceedFlag){
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_SHOW_MORE_BANK_CLICK , ADDONS_MARKETPLACE_SHOW_MORE_BANK, NO_EVENT_VALUE)
-            netBankingPopUpFragement.show(
+            /*netBankingPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     NETBANKING_POPUP_FRAGMENT
+            )*/
+            val netBankingFragement = NetBankingPopUpFragement.newInstance(this)
+            netBankingFragement.show(
+                (activity as UpgradeActivity).supportFragmentManager,
+                NETBANKING_POPUP_FRAGMENT
             )
+            payment_submit.visibility = View.VISIBLE
+        }else{
+                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_main_layout.smoothScrollTo(0,0)
+            }
         }
 
         add_upi_layout.setOnClickListener {
             if(paymentProceedFlag){
                 WebEngageController.trackEvent(ADDONS_MARKETPLACE_UPI_CLICK, ADDONS_MARKETPLACE_UPI, NO_EVENT_VALUE)
-                upiPopUpFragement.show(
+               /* upiPopUpFragement.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    UPI_POPUP_FRAGMENT
+                )*/
+                val upiFragment = UPIPopUpFragement.newInstance(this)
+                upiFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     UPI_POPUP_FRAGMENT
                 )
+                payment_submit.visibility = View.VISIBLE
             }else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_main_layout.smoothScrollTo(0,0)
             }
         }
 
         add_external_email.setOnClickListener {
             if(paymentProceedFlag){
                 WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK, ADDONS_MARKETPLACE_PAYMENT_LINK , NO_EVENT_VALUE)
-                externalEmailPopUpFragement.show(
+                /*externalEmailPopUpFragement.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    EXTERNAL_EMAIL_POPUP_FRAGMENT
+                )*/
+                val emailPopUpFragement = ExternalEmailPopUpFragement.newInstance(this)
+                emailPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     EXTERNAL_EMAIL_POPUP_FRAGMENT
                 )
+                payment_submit.visibility = View.VISIBLE
             }else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_main_layout.smoothScrollTo(0,0)
             }
         }
 
@@ -264,7 +299,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
             )
         }*/
         if(!prefs.getGstRegistered()){
-            business_gstin_missing.text = "Not Registered with GST"
+            business_gstin.text = "Have a GST number?"
+//            business_gstin_missing.text = "Not Registered with GST"
+            business_gstin_missing.text = "No"
         }
         WebEngageController.trackEvent( ADDONS_MARKETPLACE_PAYMENT_SCREEN_LOADED, PAYMENT_SCREEN, NO_EVENT_VALUE)
     }
@@ -286,6 +323,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
             Log.i("netBankingObserver >", it.toString())
             paymentData = it
             payThroughRazorPay()
+//            payThroughRazorPayMoreBanks()
         })
 
         viewModel.upiPaymentData().observe(this, Observer {
@@ -321,31 +359,128 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
         viewModel.getCustomerInfoResult().observe(viewLifecycleOwner, Observer {
             createCustomerInfoRequest = it.Result
             if (createCustomerInfoRequest != null) {
-                if (createCustomerInfoRequest!!.BusinessDetails != null) {
-                    business_mobile_value.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
-                    business_email_value.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
+
+                /*Starts*/
+//                if(session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")){
+//
+//                    if (createCustomerInfoRequest!!.BusinessDetails != null) {
+//                        if(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null){
+//                            business_mobile_value.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
+//                        }
+//                    }
+//                }else{
+//                    business_mobile_value.text = session?.userPrimaryMobile
+//                }
+//
+//                if(session?.fPEmail == null || session?.fPEmail.equals("") ){
+//                    if (createCustomerInfoRequest!!.BusinessDetails != null) {
+//                    if(createCustomerInfoRequest!!.BusinessDetails!!.Email != null){
+//                        business_email_value.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
+//                    }
+//                    }
+//
+//                }else{
+//                    business_email_value.setText(session?.fPEmail)
+//                }
+
+//                if(session?.fPName == null || session?.fPName.equals("") ){
+//                    if (createCustomerInfoRequest!!.Name != null ) {
+//                        business_name_value.setText(createCustomerInfoRequest!!.Name)
+//                    }else{
+//                        business_name_value.visibility = View.INVISIBLE
+//                        business_name_missing.visibility = View.VISIBLE
+//                    }
+//                }else{
+//                    business_name_value.setText(session?.fPName)
+//                    business_name_value.visibility = View.VISIBLE
+//                    business_name_value.text = session?.fPName
+//                    if(createCustomerInfoRequest!!.Name == null || createCustomerInfoRequest!!.Name!!.length < 1){
+//                        paymentProceedFlag = false
+//                    }
+//                }
+
+//                if(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).equals("") ){
+//                    if (createCustomerInfoRequest!!.AddressDetails.Line1 != null /*&& createCustomerInfoRequest!!.AddressDetails?.Line1.toString().length > 0*/) {
+//                        business_address_value.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+//                    }else{
+//                        business_address_value.visibility = View.INVISIBLE
+//                        business_address_missing.visibility = View.VISIBLE
+//                    }
+//                }else{
+//                    business_address_value.visibility = View.VISIBLE
+//                    business_address_value.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
+//                    if(createCustomerInfoRequest!!.AddressDetails!!.Line1 == null){
+//                        paymentProceedFlag = false
+//                    }
+//                }
+                /*Ends*/
+
+/*starts one*/
+
+
+
                     if(createCustomerInfoRequest!!.BusinessDetails!!.Email != null){
                         business_email_value.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
-                    }else if((session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL)) != null){
-                            business_email_value.setText(session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL))
+                    }else if(session?.fPEmail != null || session?.fPEmail.equals("") ){
+                        business_email_value.setText(session?.fPEmail)
                     }
 
                     if(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null){
                         business_mobile_value.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
-                    }else if((session?.getFPDetails(Key_Preferences.PRIMARY_NUMBER)) != null){
-                        business_mobile_value.setText(session?.getFPDetails(Key_Preferences.PRIMARY_NUMBER))
+                    }else if(session?.userPrimaryMobile != null || session?.userPrimaryMobile.equals("")){
+                        business_mobile_value.text = session?.userPrimaryMobile
+                    }
+
+                if (createCustomerInfoRequest!!.Name != null ) {
+                    business_name_value.setText(createCustomerInfoRequest!!.Name)
+                }else{
+                    if(session?.fPName == null || session?.fPName.equals("") ){
+                        business_name_value.visibility = View.INVISIBLE
+                        business_name_missing.visibility = View.VISIBLE
+                }else{
+                    business_name_value.visibility = View.VISIBLE
+                    business_name_value.text = session?.fPName
+                    if(createCustomerInfoRequest!!.Name == null || createCustomerInfoRequest!!.Name!!.length < 1){
+                        paymentProceedFlag = false
                     }
                 }
+
+                }
+
+                if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
+                    business_address_value.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+                }else{
+                    if(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null ||
+                        session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).equals("") ){
+                        business_address_value.visibility = View.INVISIBLE
+                        business_address_missing.visibility = View.VISIBLE
+                    }else{
+                        business_address_value.visibility = View.VISIBLE
+                        business_address_value.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
+                        if(createCustomerInfoRequest!!.AddressDetails!!.Line1 == null){
+                            paymentProceedFlag = false
+                        }
+                    }
+
+
+                }
+
+/*ends one*/
+
+
                 Log.v("createCustomerInfoG", " "+ createCustomerInfoRequest!!.TaxDetails?.GSTIN)
                 Log.v("createCustomerInfoA", " "+ createCustomerInfoRequest!!.AddressDetails?.Line1)
                 Log.v("createCustomerInfoN", " "+ createCustomerInfoRequest!!.Name)
                 Log.v("createCustomerInfoS", " "+ createCustomerInfoRequest!!.AddressDetails!!.State)
-                if (createCustomerInfoRequest!!.Name != null ) {
+                Log.v("createCustomerInfoS", " "+ createCustomerInfoRequest!!.AddressDetails!!.State)
+                Log.v("createCustomerInfoE", " "+ session?.fPEmail)
+                Log.v("createCustomerInfoE", " "+ session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL))
+               /* if (createCustomerInfoRequest!!.Name != null ) {
                     business_name_value.setText(createCustomerInfoRequest!!.Name)
                 }else{
                     business_name_value.visibility = View.INVISIBLE
                     business_name_missing.visibility = View.VISIBLE
-                }
+                }*/
 
                 if (createCustomerInfoRequest!!.TaxDetails?.GSTIN != null /*|| createCustomerInfoRequest!!.TaxDetails?.GSTIN.equals("")*/ ) {
                     business_gstin_value.setText(createCustomerInfoRequest!!.TaxDetails.GSTIN)
@@ -354,15 +489,15 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                     business_gstin_missing.visibility = View.VISIBLE
                 }
 
-                if (createCustomerInfoRequest!!.AddressDetails.Line1 != null /*&& createCustomerInfoRequest!!.AddressDetails?.Line1.toString().length > 0*/) {
+                /*if (createCustomerInfoRequest!!.AddressDetails.Line1 != null *//*&& createCustomerInfoRequest!!.AddressDetails?.Line1.toString().length > 0*//*) {
                     business_address_value.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
                 }else{
                     business_address_value.visibility = View.INVISIBLE
                     business_address_missing.visibility = View.VISIBLE
-                }
+                }*/
 
                 if (createCustomerInfoRequest!!.AddressDetails != null) {
-//                    business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.City)
+                    business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
                 }
 
                 if(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber == null){
@@ -372,13 +507,14 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                         business_mobile_missing.visibility = View.GONE
 //                    business_mobile_missing.visibility = View.GONE
                 }
-                if(createCustomerInfoRequest!!.Name == null || createCustomerInfoRequest!!.Name!!.length < 1){
+                /*if(createCustomerInfoRequest!!.Name == null || createCustomerInfoRequest!!.Name!!.length < 1){
                     business_name_missing.visibility = View.VISIBLE
                     paymentProceedFlag = false
                 }else{
                     business_name_missing.visibility = View.GONE
+                    business_name_value.setText(createCustomerInfoRequest!!.Name)
+                }*/
 
-                }
                 if(createCustomerInfoRequest!!.BusinessDetails!!.Email == null){
                     business_email_missing.visibility = View.VISIBLE
                     paymentProceedFlag = false
@@ -398,19 +534,34 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                 }else{
                     business_gstin_value.visibility = View.VISIBLE
                     business_gstin_missing.visibility = View.GONE
+                    business_gstin.text = "GSTIN"
                 }
 
                 if(!prefs.getGstRegistered()){
                     business_gstin_missing.visibility = View.VISIBLE
-                    business_gstin_missing.text = "Not Registered with GST"
+//                    business_gstin_missing.text = "Not Registered with GST"
+                    business_gstin.text = "Have a GST number?"
+                    business_gstin_missing.text = "No"
                     business_gstin_value.visibility = View.INVISIBLE
                 }
 
-                if(createCustomerInfoRequest!!.AddressDetails!!.Line1 == null){
+                /*if(createCustomerInfoRequest!!.AddressDetails!!.Line1 == null){
                     business_address_missing.visibility = View.VISIBLE
                     paymentProceedFlag = false
                 }else{
                     business_address_missing.visibility = View.GONE
+                }*/
+
+
+                if(createCustomerInfoRequest!!.AddressDetails!!.State == null || createCustomerInfoRequest!!.AddressDetails!!.State.equals("string")){
+                    business_supply_place_missing.visibility = View.VISIBLE
+                    business_supply_place_value.visibility = View.INVISIBLE
+                    paymentProceedFlag = false
+                }else{
+                    business_supply_place_value.visibility = View.VISIBLE
+                    business_supply_place_missing.visibility = View.GONE
+                    business_supply_place.setTextColor(resources.getColor(R.color.common_text_color))
+                    business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
                 }
 
                 if(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null &&
@@ -424,13 +575,30 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                     business_button_separator.visibility = View.GONE
                     edit_business_details.visibility = View.VISIBLE
                     if(createCustomerInfoRequest!!.Name == null || createCustomerInfoRequest!!.AddressDetails.State == null ||
-                        createCustomerInfoRequest!!.AddressDetails.Line1 == null){
+                        createCustomerInfoRequest!!.AddressDetails.Line1 == null || createCustomerInfoRequest!!.AddressDetails!!.State.equals("string")){
                         paymentProceedFlag = false
+                        edit_business_details.visibility = View.GONE
                         business_button_layout.visibility = View.VISIBLE
                         all_business_button.visibility = View.VISIBLE
+                        if(createCustomerInfoRequest!!.TaxDetails?.GSTIN == null){
+                            business_gstin_missing.visibility = View.VISIBLE
+                            business_gstin.text = "Have a GST number?"
+                            business_gstin_missing.text = "No"
+                            business_gstin_value.visibility = View.INVISIBLE
+                            prefs.storeGstRegistered(false)
+                        }
                     }else{
                         paymentProceedFlag = true
+                        edit_business_details.visibility = View.VISIBLE
                         business_button_layout.visibility = View.GONE
+//                        payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg)
+                        if(createCustomerInfoRequest!!.TaxDetails?.GSTIN == null){
+                            business_gstin_missing.visibility = View.VISIBLE
+                            business_gstin.text = "Have a GST number?"
+                            business_gstin_missing.text = "No"
+                            business_gstin_value.visibility = View.INVISIBLE
+                            prefs.storeGstRegistered(false)
+                        }
                     }
                 }else{
                     business_button_layout.visibility = View.VISIBLE
@@ -459,7 +627,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                         business_address_value.visibility = View.INVISIBLE
                         business_address_missing.visibility = View.VISIBLE
                     }
-                    if(createCustomerInfoRequest!!.AddressDetails.State == null){
+                    if(createCustomerInfoRequest!!.AddressDetails.State == null || createCustomerInfoRequest!!.AddressDetails!!.State.equals("string") ){
                         paymentProceedFlag = false
                         business_supply_place.setTextColor(resources.getColor(R.color.global_red))
                         business_supply_place_value.visibility = View.INVISIBLE
@@ -478,15 +646,17 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
         viewModel.getCustomerInfoStateResult().observe(viewLifecycleOwner, Observer {
             customerInfoState = it
             if(!customerInfoState){
-
+Log.v("getCustomerInfoM"," "+ session?.fPPrimaryContactNumber)
+Log.v("getCustomerInfoE"," "+ session?.fPEmail)
+Log.v("getCustomerInfoN"," "+ session?.fPName)
 //                if(session?.getFPDetails(Key_Preferences.PRIMARY_NUMBER) == null || session?.getFPDetails(Key_Preferences.PRIMARY_NUMBER).equals("")){
-                if(session?.fPPrimaryContactNumber == null || session?.fPPrimaryContactNumber.equals("")){
+                if(session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")){
                     business_mobile_missing.visibility = View.VISIBLE
                     business_mobile_value.visibility = View.INVISIBLE
                     paymentProceedFlag = false
                 }else{
                     business_mobile_value.visibility = View.VISIBLE
-                    business_mobile_value.text = session?.fPPrimaryContactNumber
+                    business_mobile_value.text = session?.userPrimaryMobile
                 }
 
 //                if(session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL) == null || session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL).equals("") ){
@@ -499,15 +669,35 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                     business_email_value.text = session?.fPEmail
                 }
 
-                business_gstin.setTextColor(resources.getColor(R.color.global_red))
+                if(session?.fPName == null || session?.fPName.equals("") ){
+                    business_name_missing.visibility = View.VISIBLE
+                    business_name_value.visibility = View.INVISIBLE
+                    paymentProceedFlag = false
+                }else{
+                    business_name_value.visibility = View.VISIBLE
+                    business_name_value.text = session?.fPName
+                }
+
+                if(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).equals("") ){
+                    business_address_missing.visibility = View.VISIBLE
+                    business_address_value.visibility = View.INVISIBLE
+                    paymentProceedFlag = false
+                }else{
+                    business_address_value.visibility = View.VISIBLE
+                    business_address_value.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
+                }
+
+//                business_gstin.setTextColor(resources.getColor(R.color.global_red))
                 business_gstin_value.visibility = View.INVISIBLE
                 business_gstin_missing.visibility = View.VISIBLE
+                business_gstin_missing.text = "No"
+                business_gstin.text = "Have a GST number?"
 
                 business_supply_place.setTextColor(resources.getColor(R.color.global_red))
                 business_supply_place_value.visibility = View.INVISIBLE
                 business_supply_place_missing.visibility = View.VISIBLE
 
-                business_address.setTextColor(resources.getColor(R.color.global_red))
+                /*business_address.setTextColor(resources.getColor(R.color.global_red))
                 business_address_value.visibility = View.INVISIBLE
                 business_address_missing.visibility = View.VISIBLE
 
@@ -521,7 +711,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
 
                 business_mobile.setTextColor(resources.getColor(R.color.global_red))
                 business_mobile_value.visibility = View.INVISIBLE
-                business_mobile_missing.visibility = View.VISIBLE
+                business_mobile_missing.visibility = View.VISIBLE*/
 
                 business_supply_place_missing.visibility = View.VISIBLE
                 business_supply_place_value.visibility = View.INVISIBLE
@@ -564,8 +754,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                 all_business_button.visibility = View.GONE
                 business_supply_place_missing.visibility = View.GONE
                 edit_business_details.visibility = View.VISIBLE
+                business_supply_place.setTextColor(resources.getColor(R.color.common_text_color))
 //                business_supply_place_value.text = it
-                loadCustomerInfo()
+//                loadCustomerInfo()
 //                (activity as UpgradeActivity).prefs.storeInitialLoadMarketPlace(false)
             } else {
                 Toasty.error(requireContext(), "Something went wrong. Try Later!!", Toast.LENGTH_LONG).show()
@@ -579,6 +770,15 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
                 business_gstin.setTextColor(resources.getColor(R.color.common_text_color))
                 business_gstin.visibility = View.INVISIBLE
                 business_gstin_missing.visibility = View.VISIBLE
+            }
+        })
+
+        viewModel.getBusinessPopup().observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if(it){
+                val businessFragment = BusinessDetailsFragment.newInstance(this)
+//                businessFragment.dismiss()
+//                businessFragment.fragmentManager?.beginTransaction()?.remove(businessFragment)
+                fragmentManager?.beginTransaction()?.remove(businessFragment)
             }
         })
     }
@@ -638,6 +838,32 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
         }
     }
 
+    fun payThroughRazorPayMoreBanks() {
+        try {
+            for (key in cartCheckoutData.keys()) {
+                if (key != "customerId" && key != "transaction_id") {
+                    paymentData.put(key, cartCheckoutData.get(key))
+                }
+            }
+            var firebaseAnalytics = Firebase.analytics
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO, null)
+            val razorPayWebViewBank = RazorPayWebView.newInstance()
+            val args = Bundle()
+            args.putString("data", paymentData.toString())
+            razorPayWebView.arguments = args
+            razorPayWebViewBank.arguments = args
+
+            //RazorPay web
+
+            razorPayWebViewBank.show((activity as UpgradeActivity).supportFragmentManager, RAZORPAY_WEBVIEW_POPUP_FRAGMENT)
+
+            paymentData = JSONObject()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     fun initializeCardRecycler() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 1)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -653,42 +879,61 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
         Glide.with(requireContext()).load(netbankingList.get(0).bankImage).into(axis_bank_image)
         axis_bank_layout.setOnClickListener {
             Log.v("axis_bank_layout"," "+ paymentProceedFlag )
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(0).bankCode)
-            else
+                payment_submit.visibility = View.VISIBLE
+            } else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_main_layout.smoothScrollTo(0,0)
+            }
         }
 
         Glide.with(requireContext()).load(netbankingList.get(1).bankImage).into(icici_bank_image)
         icici_bank_layout.setOnClickListener {
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(1).bankCode)
-            else
+                payment_submit.visibility = View.VISIBLE
+            } else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_main_layout.smoothScrollTo(0,0)
+            }
+
         }
 
         Glide.with(requireContext()).load(netbankingList.get(2).bankImage).into(hdfc_bank_image)
         hdfc_bank_layout.setOnClickListener {
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(2).bankCode)
-            else
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_submit.visibility = View.VISIBLE
+            }else{
+            payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_main_layout.smoothScrollTo(0,0)
+        }
+
         }
 
         Glide.with(requireContext()).load(netbankingList.get(3).bankImage).into(citi_bank_image)
         citi_bank_layout.setOnClickListener {
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(3).bankCode)
-            else
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_submit.visibility = View.VISIBLE
+            } else{
+            payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_main_layout.smoothScrollTo(0,0)
+        }
+
         }
 
         Glide.with(requireContext()).load(netbankingList.get(4).bankImage).into(sbi_bank_image)
         sbi_bank_layout.setOnClickListener {
-            if(paymentProceedFlag)
+            if(paymentProceedFlag){
                 netbankingSelected(netbankingList.get(4).bankCode)
-            else
+                payment_submit.visibility = View.VISIBLE
+            }else{
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_main_layout.smoothScrollTo(0,0)
+            }
+
         }
 
 
@@ -732,8 +977,10 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
             item.put("wallet", data);
             paymentData = item
             payThroughRazorPay()
+            payment_submit.visibility = View.VISIBLE
         }else{
             payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+            payment_main_layout.smoothScrollTo(0,0)
         }
     }
 
@@ -780,6 +1027,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
         order_total_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
         payment_total_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
         items_cost.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
+        paymentBannerAmount.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
     }
 
     private fun loadCustomerInfo() {
@@ -789,7 +1037,28 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener 
     override fun backListener(flag: Boolean) {
         Log.v("backListener", " "+ flag)
         loadCustomerInfo()
+//       loadData()
+    }
 
+    override fun moreBankSelected(data: JSONObject) {
+        paymentData = data
+        payThroughRazorPay()
+    }
+
+    override fun upiSelected(data: JSONObject) {
+        Log.i("upiSelected >", data.toString())
+        paymentData = data
+        payThroughRazorPay()
+    }
+
+    override fun emailSelected(data: JSONObject) {
+        paymentData = data
+        payViaPaymentLink()
+    }
+
+    override fun cardSelected(data: JSONObject) {
+        paymentData = data
+        payThroughRazorPay()
     }
 
 }
