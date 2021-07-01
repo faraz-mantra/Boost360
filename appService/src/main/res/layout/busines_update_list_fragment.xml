@@ -40,5 +40,32 @@
       android:indeterminate="true"
       android:theme="@style/progressBar"
       android:visibility="gone" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/empty_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="@dimen/size_20"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="@string/message_soon"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="HEADING_6" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_2"
+        android:gravity="center"
+        android:text="@string/Message_empty"
+        app:textType="BODY_1" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
