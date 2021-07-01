@@ -122,15 +122,15 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
   private fun initializeSocial() {
     if (sessionLocal.facebookName.isNullOrEmpty().not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)) {
       fbStatusEnabled = true
-      binding?.btnFpStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1))
+      binding?.btnFpStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1))
     }
     if (sessionLocal.facebookPage.isNullOrEmpty().not() && sessionLocal.getIntDetails("fbPageStatus") == 1) {
       fbPageStatusEnable = true
-      binding?.btnFpPageStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1))
+      binding?.btnFpPageStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1))
     }
     if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
       twitterSharingEnabled = true
-      binding?.btnTwitter?.setTintColor(ContextCompat.getColor(baseActivity, if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1))
+      binding?.btnTwitter?.setTintColor(ContextCompat.getColor(baseActivity, if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1))
     }
   }
 
@@ -171,14 +171,14 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       binding?.btnFpStatus -> {
         if (sessionLocal.facebookName.isNullOrEmpty().not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)) {
           fbStatusEnabled = fbStatusEnabled.not()
-          binding?.btnFpStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1))
+          binding?.btnFpStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1))
           showShortToast(getString(if (fbStatusEnabled) R.string.fb_enabled else R.string.fb_disabled))
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnFpPageStatus -> {
         if (sessionLocal.facebookPage.isNullOrEmpty().not() && sessionLocal.getIntDetails("fbPageStatus") == 1) {
           fbPageStatusEnable = fbPageStatusEnable.not()
-          binding?.btnFpPageStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1))
+          binding?.btnFpPageStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1))
           if (fbPageStatusEnable) WebEngageController.trackEvent(FB_PAGE_SHARING_ACTIVATED, HAS_CLICKED_FB_PAGE_SHARING_ON, sessionLocal.fpTag)
           showShortToast(getString(if (fbPageStatusEnable) R.string.facebook_page_enabled else R.string.facebook_page_disabled))
         } else baseActivity.startDigitalChannel(sessionLocal)
@@ -186,7 +186,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       binding?.btnTwitter -> {
         if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
           twitterSharingEnabled = twitterSharingEnabled.not()
-          binding?.btnTwitter?.setTintColor(ContextCompat.getColor(baseActivity, if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1))
+          binding?.btnTwitter?.setTintColor(ContextCompat.getColor(baseActivity, if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1))
           if (twitterSharingEnabled) WebEngageController.trackEvent(TWITTER_SHARING_ACTIVATED, HAS_CLICKED_TWITTER_SHARING_ON, sessionLocal.fpTag)
           showShortToast(getString(if (twitterSharingEnabled) R.string.twitter_enabled else R.string.twitter_disabled))
         } else baseActivity.startDigitalChannel(sessionLocal)
