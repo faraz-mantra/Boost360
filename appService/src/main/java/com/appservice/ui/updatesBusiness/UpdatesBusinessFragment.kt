@@ -105,6 +105,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   private fun listUpdateApi(offSet: Int) {
+    binding?.emptyView?.gone()
     hitApi(viewModel?.getMessageUpdates(getRequestUpdate(offSet)), R.string.latest_update_data_not_found)
   }
 
@@ -122,12 +123,13 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
         }
       } else adapterUpdate?.notifyDataSetChanged()
 
-    } else if (listFloat.isEmpty()) showShortToast(getString(R.string.latest_update_data_not_found))
+    } else if (listFloat.isEmpty()) binding?.emptyView?.visible()
     hideProgress()
   }
 
   override fun onFailure(it: BaseResponse) {
     super.onFailure(it)
+    binding?.emptyView?.visible()
     hideProgress()
     removeLoader()
   }
@@ -191,7 +193,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
-      val isRefresh = data?.getBooleanExtra(IntentConstant.IS_UPDATED.name,false) ?: false
+      val isRefresh = data?.getBooleanExtra(IntentConstant.IS_UPDATED.name, false) ?: false
       if (isRefresh) {
         showProgress()
         listFloat.clear()

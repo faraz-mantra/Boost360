@@ -584,6 +584,9 @@
   <string name="facebook_page_enabled">Facebook Page Enabled</string>
   <string name="fb_disabled">Facebook Disabled</string>
   <string name="fb_enabled">Facebook Enabled</string>
+  <string name="message_soon">Start talking about your business, now!</string>
+  <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
+
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
