@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/customImageView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_no_product_stencil"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.151"
+            app:layout_constraintWidth_percent="0.65" />
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_add_service_subheading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_30"
+            android:gravity="center"
+            android:stateListAnimator="@null"
+            android:text="@string/looks_like_you_haven_t_added_any_testimonials_with_the_feature_you_can_showcase_your_customer_reviews_and_highlight_their_experience_on_the_homepage_of_your_website"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customImageView2"
+            app:layout_constraintVertical_bias="0.039" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/cb_add_testimonial"
+            style="@style/ButtonStyle.Rounded.Solid"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_36"
+            android:layout_marginHorizontal="@dimen/size_60"
+            android:gravity="center"
+            android:stateListAnimator="@null"
+            android:text="@string/add_now"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_add_service_subheading"
+            app:layout_constraintVertical_bias="0.1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

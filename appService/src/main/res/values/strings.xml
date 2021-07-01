@@ -584,6 +584,8 @@
   <string name="facebook_page_enabled">Facebook Page Enabled</string>
   <string name="fb_disabled">Facebook Disabled</string>
   <string name="fb_enabled">Facebook Enabled</string>
+    <string name="add_now">Add Now</string>
+  <string name="looks_like_you_haven_t_added_any_testimonials_with_the_feature_you_can_showcase_your_customer_reviews_and_highlight_their_experience_on_the_homepage_of_your_website">Looks like you haven’t added any testimonials. With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website.</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
