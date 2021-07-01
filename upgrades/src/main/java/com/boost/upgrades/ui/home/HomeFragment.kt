@@ -56,6 +56,7 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
@@ -99,6 +100,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     var offeredBundlePrice = 0
     var originalBundlePrice = 0
     var featuresList: List<FeaturesModel>? = null
+    private var session: UserSessionManager? = null
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -132,6 +134,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         localStorage = LocalStorage.getInstance(requireContext())!!
         cart_list = localStorage.getCartItems()
         prefs = SharedPrefs(activity as UpgradeActivity)
+        session = UserSessionManager(requireActivity())
         return root
     }
 
