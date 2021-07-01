@@ -1,9 +1,7 @@
 package com.boost.presignin.ui.mobileVerification
 
-import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
@@ -14,27 +12,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
 import com.boost.presignin.R
-import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
-import com.boost.presignin.databinding.FragmentFpListBinding
 import com.boost.presignin.databinding.FragmentOtpVerificationBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.model.login.VerifyOtpResponse
 import com.boost.presignin.ui.AccountNotFoundActivity
-import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.boost.presignin.views.otptextview.OTPListener
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
-import com.framework.smsVerification.AppSignatureHashHelper
 import com.framework.smsVerification.SMSReceiver
 import com.framework.smsVerification.SmsManager
-import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
 class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>(), SMSReceiver.OTPReceiveListener {
@@ -201,8 +193,6 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
   }
 
   override fun onOTPReceived(otp: String?) {
-    binding?.pinTv?.setOTP(otp!!)
-    binding?.verifyButton?.isEnabled = otp != null && otp.length == 4
-    verify()
+    binding?.pinTv?.post { binding?.pinTv?.setOTP(otp ?: "") }
   }
 }
