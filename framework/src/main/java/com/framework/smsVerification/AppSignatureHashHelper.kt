@@ -9,8 +9,7 @@ import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
-class AppSignatureHashHelper(context: Context?) :
-    ContextWrapper(context) {// Get all package details
+class AppSignatureHashHelper(context: Context?) : ContextWrapper(context) {// Get all package details
  
     val appSignatures: ArrayList<String>
         get() {
