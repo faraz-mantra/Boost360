@@ -5,5 +5,6 @@ enum class BusinessFeatureEnum(name: String) {
     INVENTORY_SERVICE("SERVICES"),
     UPDATES("UPDATES"),
     PHOTOS("PHOTOS"),
+    STAFF("STAFF"),
     BUSINESS_CARD("BUSINESS CARD")
 }

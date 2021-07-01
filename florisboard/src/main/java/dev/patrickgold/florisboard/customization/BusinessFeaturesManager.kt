@@ -171,12 +171,15 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   fun showSelectedBusinessFeature(businessFeatureEnum: BusinessFeatureEnum) {
     this.currentSelectedFeature = businessFeatureEnum
     this.listenerRequest = null
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.view?.apply {
+      if (isStaffVisible(session?.fP_AppExperienceCode ?: "")) visible() else gone()
+    }
     if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
       Timber.i("Please do login")
       binding.textView.text = mContext.getString(R.string.please_login)
       binding.pleaseLoginCard.visible()
       binding.pleaseLoginCard.setOnClickListener { MethodUtils.startBoostActivity(mContext) }
-    } else if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
+    } else if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") != true) {
       if (MethodUtils.isOnline(mContext)) {
         binding.pleaseLoginCard.gone()
         binding.businessFeatureProgress.visible()
@@ -202,6 +205,20 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
             this.photosSet.clear()
             this.adapterPhoto.clearList()
             viewModel.getPhotos(session?.fPID ?: "")
+          }
+          BusinessFeatureEnum.STAFF -> {
+            if (session?.getStoreWidgets()?.contains("STAFFPROFILE") == true) {
+
+            } else {
+              binding.textView.text = mContext.getString(R.string.staff_not_added_plan)
+              binding.pleaseLoginCard.visible()
+              binding.businessFeatureProgress.gone()
+              binding.pleaseLoginCard.setOnClickListener {
+                if (binding.textView.text.equals(mContext.getString(R.string.staff_not_added_plan))) {
+                  MethodUtils.startStaffActivity(mContext)
+                }
+              }
+            }
           }
           BusinessFeatureEnum.BUSINESS_CARD -> {
             visibleSelectType(isIV = true)

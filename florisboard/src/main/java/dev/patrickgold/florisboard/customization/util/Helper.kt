@@ -11,6 +11,13 @@ fun getProductType(category_code: String?): String {
   }
 }
 
+fun isStaffVisible(category_code: String?):Boolean {
+  return when (category_code) {
+    "SPA", "SAL", "SVC" -> true
+    else -> false
+  }
+}
+
 fun UserSessionManager.getIconCard(): Int {
   return when (this.fP_AppExperienceCode?.toUpperCase(Locale.ROOT)) {
     "DOC" -> com.onboarding.nowfloats.R.drawable.ic_business_card_doctor_hospital_d

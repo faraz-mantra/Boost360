@@ -408,6 +408,6 @@
   <string name="share_with_text">Share with text</string>
   <string name="change_layout">Change layout</string>
   <string name="keyboard_not_added_plan">Boost keyboard is not added in your current plan.</string>
-
+  <string name="staff_not_added_plan">Staff is not added in your current plan.</string>
 
 </resources>

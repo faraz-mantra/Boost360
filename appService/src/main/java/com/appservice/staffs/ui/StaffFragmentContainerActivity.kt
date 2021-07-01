@@ -86,7 +86,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   override fun onCreate(savedInstanceState: Bundle?) {
     when (intent.extras) {
       null -> fragmentType = FragmentType.STAFF_HOME_FRAGMENT
-      else -> intent?.extras?.getInt(FRAGMENT_TYPE)?.let { fragmentType = FragmentType.values()[it] }
+      else -> intent?.extras?.getString(FRAGMENT_TYPE)?.let { fragmentType = FragmentType.valueOf(it) }
     }
     super.onCreate(savedInstanceState)
   }
@@ -245,6 +245,6 @@ fun AppCompatActivity.startStaffFragmentActivity(type: FragmentType, bundle: Bun
 }
 
 fun Intent.setFragmentType(type: FragmentType): Intent {
-  return this.putExtra(FRAGMENT_TYPE, type.ordinal)
+  return this.putExtra(FRAGMENT_TYPE, type.name)
 }
 

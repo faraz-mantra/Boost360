@@ -26,12 +26,12 @@
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_marginTop="@dimen/smartbar_button_margin"
-        android:layout_marginBottom="@dimen/smartbar_button_margin"
         android:layout_marginEnd="@dimen/smartbar_button_margin"
+        android:layout_marginBottom="@dimen/smartbar_button_margin"
         android:background="@null"
         android:paddingTop="@dimen/smartbar_button_padding"
-        android:paddingBottom="@dimen/smartbar_button_padding"
         android:paddingEnd="@dimen/smartbar_button_padding"
+        android:paddingBottom="@dimen/smartbar_button_padding"
         android:scaleType="fitXY"
         android:src="@drawable/business_feature_quick_actions"
         tools:ignore="RtlSymmetry" />
@@ -92,6 +92,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PHOTOS" />
+
+      <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="4"
+        android:text="STAFF" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"

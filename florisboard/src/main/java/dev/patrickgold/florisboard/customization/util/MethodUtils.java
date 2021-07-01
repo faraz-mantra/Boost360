@@ -75,6 +75,20 @@ public class MethodUtils {
     }
   }
 
+  public static void startStaffActivity(Context mContext) {
+    try {
+      PackageManager packageManager = mContext.getPackageManager();
+      if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
+        Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
+      }
+      Intent intent = new Intent(mContext, Class.forName("com.appservice.staffs.ui.StaffFragmentContainerActivity"));
+      intent.putExtra("FRAGMENT_TYPE", "STAFF_PROFILE_LISTING_FRAGMENT");
+      mContext.startActivity(intent);
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
   private static boolean isPackageInstalled(String packagename, PackageManager manager) {
     try {
       manager.getPackageInfo(packagename, 0);
