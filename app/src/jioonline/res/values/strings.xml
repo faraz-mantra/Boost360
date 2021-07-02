@@ -12,7 +12,7 @@
   <string name="title_activity_business__logo_">Business Logo</string>
   <string name="title_activity_social__sharing_">Social Sharing</string>
   <string name="title_activity_login__main">Welcome Back</string>
-  <string name="primary_number">Primary Number (To communicate with NowFloats)</string>
+  <string name="primary_number">Primary Number (To communicate with JioOnline)</string>
   <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
   <string name="ps_sc2_lbl1">Instant Website</string>
   <string name="ps_sc2_lbl2">Creation</string>
@@ -28,10 +28,10 @@
   <string name="ps_sc6_lbl1">Generate Business</string>
   <string name="ps_sc6_lbl2">Leads</string>
   <string name="ps_sc8_lbl1">Premium features in</string>
-  <string name="ps_sc8_lbl2">NOWFLOATS</string>
+  <string name="ps_sc8_lbl2">JioOnline</string>
   <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
   <string name="ps_sc8_lbl4">Store</string>
-  <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233.</string>
+  <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at businesscare@jio.com or call us at 1860&#8211;123&#8211;1233.</string>
 
   <string name="website_report_description">Learn how to make JioOnline work for you.</string>
   <string name="learn_how_boost_360_work">Learn how to make JioOnline work for you.</string>
@@ -59,8 +59,8 @@
   <string name="setting_logout">Logout</string>
   <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
   <string name="currency_text">INR</string>
-  <string name="email_change_level">If you wish to change email address, please contact ria@nowfloats.com</string>
-  <string name="business_category_change_level">If you wish to change business category, please contact ria@nowfloats.com</string>
+  <string name="email_change_level">If you wish to change email address, please contact businesscare@jio.com</string>
+  <string name="business_category_change_level">If you wish to change business category, please contact businesscare@jio.com</string>
   <!-- Deep Linking URLs  -->
 
   <string name="deeplink_update">update</string>
@@ -320,25 +320,25 @@
   <string name="pre_signup_screen_six_text">Let customers contact you directly \nand reply to them instantly!</string>
   <string name="pre_signup_screen_seven_text">Get additional features \nfor your business website \nfrom the in-app Store..</string>
   <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
-  <string name="presignup_login_text">Already have a NowFloats site?</string>
+  <string name="presignup_login_text">Already have a JioOnline site?</string>
 
   <string name="onboarding_screen_1_title">Congratulations!</string>
   <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
   <string name="onboarding_screen_3_title">Discovery is Revenue</string>
   <string name="onboarding_screen_2_title">Content is King</string>
-  <string name="primary_contact_number_message">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
+  <string name="primary_contact_number_message">Please drop us a line at businesscare@jio.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
 
   <string name="your_site_health">Your Site Health</string>
 
   <!--this part is for FAQ harcoded strings -->
   <string-array name="faqmain">
     <item>WELCOME TO THE ONLINE WORLD</item>
-    <item>WHAT\'S NOWFLOATS</item>
+    <item>WHAT\'S JioOnline</item>
     <item>UPDATING CONTENT</item>
     <item>ENGAGING CUSTOMERS</item>
-    <item>NOWFLOATS APPS, WEB, SMS</item>
-    <item>NOWFLOATS DISCOVERY METHOD</item>
-    <item>GROWING YOUR BUSINESS WITH NOWFLOATS</item>
+    <item>JioOnline APPS, WEB, SMS</item>
+    <item>JioOnline DISCOVERY METHOD</item>
+    <item>GROWING YOUR BUSINESS WITH JioOnline</item>
     <item>NOT A FIRST TIME WEBSITE CREATOR?</item>
     <item>PLANS</item>
     <item>OTHER INFO</item>
@@ -391,7 +391,7 @@
   <string name="boost_payment_gateway">JioOnline payment gateway</string>
   <string name="payment_gateway_not_added_please_add_first">JioOnline Payment gateway not added, please add first.</string>
   <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your JioOnline website are processed through this payment gateway instead of default JioOnline Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
-  <string name="in_case_of_any_concerns">In case of any concerns, you can write to ria@nowfloats.com. JioOnline Care Team is available during business hours.</string>
+  <string name="in_case_of_any_concerns">In case of any concerns, you can write to businesscare@jio.com. JioOnline Care Team is available during business hours.</string>
   <string name="open_boost">Open JioOnline</string>
   <string name="boost_lite_boost_pro_boost_custom">jioOnline Lite, jioOnline Pro, jioOnline Custom</string>
   <string name="your_nowfloats_website_runs_on_your_base_pack_once_your_base_pack_expires_all_your_features_and_functions_will_be_disabled_and_you_won_t_be_able_to_update_any_content">Your jioOnline website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.</string>
@@ -412,7 +412,7 @@
   <string name="a_boost_service_which_ensures_a_secure_payment_and_safe_delivery_of_this_product">A JioOnline service which ensures a secure payment and safe delivery of this product</string>
   <string name="boost_doesn_t_buy_any_premium_domain">*JioOnline doesn’t buy any premium domain.</string>
   <string name="enter_the_domain_you_want_to_be_booked_amp_mapped_to_your_boost_business_website"><![CDATA[Enter the domain you want to be booked & mapped to your JioOnline business website.]]></string>
-  <string name="awesome_nyou_are_using_nowfloats_boost">Awesome,\nyou are using NowFloats JioOnline!</string>
+  <string name="awesome_nyou_are_using_nowfloats_boost">Awesome,\nyou are using JioOnline!</string>
   <string name="showcase_tripadvisor_ratings_on_your_boost_business_website">Showcase Tripadvisor Ratings on your JioOnline business website.</string>
   <string name="note_boost_will_automatically_create_a_commerce_enabled_website_e_g_cairo_nowfloats_com_for_your_business_as_you_start_adding_content_on_boost_the_website_gets_updated_instantly_helping_your_business_get_visibility_across_all_search_engines">NOTE: JioOnline will automatically create a commerce-enabled website (e.g. cairo.nowfloats.com) for your business. As you start adding content on JioOnline, the website gets updated instantly helping your business get visibility across all search engines.</string>
   <string name="your_domain_will_be_automatically_renewed_based_on_your_active_boost_package" translatable="false">Your domain will be automatically renewed based on your active JioOnline package</string>
@@ -429,7 +429,7 @@
   <string name="boost_bubble">JioOnline Bubble</string>
   <string name="social_media_connect_prompt">Please allow JioOnline to connect with your social media accounts. You will be able to sync your content automatically across channels, and also track all the analytics / customer interactions here.</string>
   <string name="image_gallery_instructions_2" translatable="false">Number of images you can upload depends upon the JioOnline plan you’ve picked.</string>
-  <string name="update_nowfloats_app">You are using an old version of NowFloats JioOnline. Update the app to get new features and enhancements</string>
+  <string name="update_nowfloats_app">You are using an old version of JioOnline. Update the app to get new features and enhancements</string>
   <string name="facebook_chat_note" translatable="false"><b>Note:</b> Messages sent and received from\nFacebook via JioOnline will only be visible.</string>
   <string name="all_boost_add_ons">All JioOnline add-ons</string>
   <string name="search_boost_add_ons">Search JioOnline add-ons</string>
@@ -488,12 +488,12 @@
   </string-array>
 
   <string-array name="dictate_parent_2">
-    <item><![CDATA[<b>For which plans can the NowFloats Dictate be used?</b><br />NowFloats Dictate can be used for JioOnline Lite customers.]]></item>
+    <item><![CDATA[<b>For which plans can the JioOnline Dictate be used?</b><br />JioOnline Dictate can be used for JioOnline Lite customers.]]></item>
   </string-array>
 
   <string-array name="delivery_points">
-    <item>If you have an existing website with an integrated payment gateway you can choose to integrate that with your product catalog. To accept payments via your NowFloats JioOnline website, please add the relevant links to each one of your products via the Buy Online option in your NowFloats JioOnline product catalog.</item>
-    <item>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the NowFloats Product catalogue.</item>
+    <item>If you have an existing website with an integrated payment gateway you can choose to integrate that with your product catalog. To accept payments via your JioOnline website, please add the relevant links to each one of your products via the Buy Online option in your JioOnline product catalog.</item>
+    <item>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the JioOnline Product catalogue.</item>
   </string-array>
 
   <string-array name="payment_method_messages">
@@ -540,7 +540,7 @@
   <string name="registration_complete_subheading"> business is successfully setup on JioOnline</string>
 
   <string-array name="on_boarding_description">
-    <item>Hey, this is your JioOnline dashboard. Visit our <a href="https://www.getboost360.com/FAQ">FAQ</a> section for more information.</item>
+    <item>Hey, this is your JioOnline dashboard. Visit our <a href="https://www.jio.com/business/JioOnline-terms-and-conditions">FAQ</a> section for more information.</item>
     <item>Site health indicates readiness of your account for online discovery. These basic factors ensure that your business is optimised to attract new customers online.</item>
     <item>Now you are ready for getting discovered online. Your potential customers will lookout for more information. Take a look at these tips to add an "About Us".</item>
     <item>Your potential customers are looking for your catalog online. Showcase it to them, to increase your revenues.</item>
@@ -563,13 +563,13 @@
   <string name="boost_360_tnc_presignup">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
   <string name="settings_tou_url">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
   <string name="settings_privacy_url">https://www.jio.com/business/JioOnline-privacy-policy</string>
-  <string name="setting_faq_url">https://www.getboost360.com/faqs/</string>
-  <string name="boost_360_faqs">https://www.getboost360.com/faqs/</string>
-  <string name="onboarding_about_product_url">https://www.getboost360.com/how-it-works</string>
+  <string name="setting_faq_url">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="boost_360_faqs">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="onboarding_about_product_url">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
 
-  <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
-  <string name="settings_about_us_link">https://www.getboost360.com/about-us/</string>
-  <string name="product_training_link">https://calendly.com/boost360-ria/training</string>
+  <string name="settings_facebook_like_link">https://www.facebook.com</string>
+  <string name="settings_about_us_link">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="product_training_link">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
   <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.jio.online</string>
 
   <string name="ria_customer_mail">businesscare@jio.com</string>
@@ -579,10 +579,10 @@
   <string name="website_domain_name">.bizdigital.com</string>
   <string name="boost_360_tag_domain">bizdigital.com</string>
   <string name="nowfloats.com">.bizdigital.com</string>
-  <string name="testmanage_nowfloats_com">testmanage.nowfloats.com</string>
-  <string name="email_id_to_request_plans">lead@nowfloats.com</string>
-  <string name="pranav_email">pranav.venuturumilli@nowfloats.com</string>
-  <string name="wildfire_email">wildfire.team@nowfloats.com</string>
+  <string name="testmanage_nowfloats_com">businesscare@jio.com</string>
+  <string name="email_id_to_request_plans">businesscare@jio.com</string>
+  <string name="pranav_email">businesscare@jio.com</string>
+  <string name="wildfire_email">businesscare@jio.com</string>
   <string name="signin_nowfloats_com">.bizdigital.com</string>
 
   <string name="get_boost_360_tnc">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
