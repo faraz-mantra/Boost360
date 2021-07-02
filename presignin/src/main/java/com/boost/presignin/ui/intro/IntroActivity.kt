@@ -94,17 +94,17 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
       }
     }
-    binding?.introViewpager?.registerOnPageChangeCallback(object :
-      ViewPager2.OnPageChangeCallback() {
-      override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-        super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-        if (position>=items.size-2){
-          binding?.btnCreate?.setText(R.string.psn_login_now)
-        }else{
-          binding?.btnCreate?.setText(R.string.psn_get_started)
-        }
-      }
-    })
+//    binding?.introViewpager?.registerOnPageChangeCallback(object :
+//      ViewPager2.OnPageChangeCallback() {
+//      override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//        super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+//        if (position>=items.size-2){
+//          binding?.btnCreate?.setText(R.string.psn_login_now)
+//        }else{
+//          binding?.btnCreate?.setText(R.string.psn_get_started)
+//        }
+//      }
+//    })
   }
 
   private fun setNextPage() {
