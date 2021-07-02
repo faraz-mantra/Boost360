@@ -96,14 +96,14 @@
       "isUpLineShow": false,
       "navType": "NAV_ABOUT_BOOST",
       "title": "About JioOnline"
-    },
-    {
-      "isBottomLineShow": false,
-      "isLockShow": false,
-      "isNewBtnShow": false,
-      "isUpLineShow": false,
-      "navType": "NAV_REFER_FRIEND",
-      "title": "Refer and Earn"
     }
+//    {
+//      "isBottomLineShow": false,
+//      "isLockShow": false,
+//      "isNewBtnShow": false,
+//      "isUpLineShow": false,
+//      "navType": "NAV_REFER_FRIEND",
+//      "title": "Refer and Earn"
+//    }
   ]
 }
