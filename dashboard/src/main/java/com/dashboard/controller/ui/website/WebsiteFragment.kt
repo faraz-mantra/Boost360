@@ -81,7 +81,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private fun setUserData() {
     val desc = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
     binding?.txtDesc?.apply {
-      if (desc.isNullOrEmpty().not()) visible() else invisible()
+      if (desc.isNullOrEmpty().not()) visible() else gone()
       text = desc
     }
     binding?.txtBusinessName?.text =
