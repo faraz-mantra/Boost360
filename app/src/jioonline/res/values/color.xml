@@ -29,7 +29,7 @@
     <color name="website_toolbar_color">#EC008C</color>
     <color name="website_button_lite">@color/white</color>
     <color name="website_button_tint">@color/white</color>
-    <color name="website_toolbar_color_lite">#FFC5E7</color>
+    <color name="website_toolbar_color_lite">#F9E6F2</color>
     <color name="text_color_light_white">@color/colorPrimaryDarkBlue</color>
     <color name="text_color_light_white_gray">@color/black_4a4a4a</color>
     <color name="website_desc">@color/black_4a4a4a</color>

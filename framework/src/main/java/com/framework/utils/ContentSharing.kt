@@ -28,11 +28,11 @@ class ContentSharing {
       if (price.isNullOrBlank().not()){
         templateBuilder.append("🏷️ *Price:* Rs.$price").append("\n")
       }
-      if (orderAppointment.isBlank().not()&&link.isNullOrBlank().not()){
-        templateBuilder.append("👉🏼 *Place your $orderAppointment here:* $link").append("\n")
-      }
       if (vmn.isNullOrBlank().not()){
-        templateBuilder.append("📞 Feel free to call $vmn if you need any help. ")
+        templateBuilder.append("📞 Feel free to call $vmn if you need any help. ").append("\n")
+      }
+      if (orderAppointment.isBlank().not()&&link.isNullOrBlank().not()){
+        templateBuilder.append("👉🏼 *Place your $orderAppointment here:* $link")
       }
       share(activity, shareText = templateBuilder.toString(), imageUri = imageUri, isWhatsApp = isWhatsApp, isFb = isFb)
     }
