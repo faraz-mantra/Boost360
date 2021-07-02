@@ -200,4 +200,5 @@
   <string name="choose_primary_font">Choose Primary Font</string>
   <string name="choose_secondary_font">Choose Secondary Font</string>
   <string name="boost_360_faqs">https://www.getboost360.com/faqs/</string>
+    <string name="share_on_more_website">Share on more</string>
 </resources>
