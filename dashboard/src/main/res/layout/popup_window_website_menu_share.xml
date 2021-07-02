@@ -35,7 +35,7 @@
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
-                android:text="Share on more"
+                android:text="@string/share_on_more_website"
                 android:textColor="@color/gray_4e4e4e"
                 android:textSize="14sp" />
 
