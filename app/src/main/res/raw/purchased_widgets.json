@@ -1,0 +1,356 @@
+[
+  {
+    "featureKey": "APPOINTMENTENGINE",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "CALLTRACKER",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [
+      {
+        "Key": "PoolId",
+        "Value": "59580c762a2aa143ac98fabb"
+      }
+    ],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "CONTACTDETAILS",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": "BUSINESS-IDENTITY"
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2071-02-20T04:29:17"
+  },
+  {
+    "featureKey": "CUSTOMERSUPPORT",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": ""
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "2"
+      },
+      {
+        "Key": "GROUP",
+        "Value": ""
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "2"
+      }
+    ],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2022-02-20T16:59:29"
+  },
+  {
+    "featureKey": "DEFAULTSSL",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2070-02-20T04:29:17"
+  },
+  {
+    "featureKey": "DOMAINPURCHASE",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": "BUSINESS-IDENTITY"
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "EMAILACCOUNTS",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": ""
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "2"
+      }
+    ],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "FBLIKEBOX",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": "SOCIAL-MARKETING"
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2071-02-20T04:29:17"
+  },
+  {
+    "featureKey": "FEATUREDIMAGE",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2070-02-20T04:29:17"
+  },
+  {
+    "featureKey": "IMAGEGALLERY",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": ""
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2071-02-20T04:29:17"
+  },
+  {
+    "featureKey": "IVR",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "LATESTUPDATES",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": ""
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "MEDIAMANAGEMENT",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2070-02-20T04:29:17"
+  },
+  {
+    "featureKey": "PACKAGE-PROPERTIES",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [
+      {
+        "Key": "Category",
+        "Value": "MEDICAL - GENERAL"
+      },
+      {
+        "Key": "WebTemplateId",
+        "Value": "59d74e153872831a6483491e"
+      },
+      {
+        "Key": "WebTemplateType",
+        "Value": "7"
+      }
+    ],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "PAYMENTGATEWAY",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2071-02-20T04:29:17"
+  },
+  {
+    "featureKey": "PRODUCTCATALOGUE",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": ""
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2071-02-20T04:29:17"
+  },
+  {
+    "featureKey": "RIASUPPORTTEAM",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": "VIRTUAL-ASSISTANTS"
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "SITESENSE",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": ""
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2071-02-20T04:29:17"
+  },
+  {
+    "featureKey": "SOCIALSHARE",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": "SOCIAL-MARKETING"
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "SUBSCRIPTION",
+    "featureType": 0,
+    "featureState": 7,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": ""
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "2"
+      },
+      {
+        "Key": "LIMIT",
+        "Value": "500"
+      }
+    ],
+    "createdDate": "2020-02-20T16:59:29",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2021-02-20T16:59:29"
+  },
+  {
+    "featureKey": "TIMINGS",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": "BUSINESS-IDENTITY"
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2071-02-20T04:29:17"
+  },
+  {
+    "featureKey": "TOB",
+    "featureType": 0,
+    "featureState": 1,
+    "properties": [
+      {
+        "Key": "GROUP",
+        "Value": ""
+      },
+      {
+        "Key": "PRIORITY",
+        "Value": "1"
+      }
+    ],
+    "createdDate": "2020-02-20T04:29:17",
+    "activatedDate": "2021-06-15T04:31:30.21",
+    "expiryDate": "2071-02-20T04:29:17"
+  }
+]

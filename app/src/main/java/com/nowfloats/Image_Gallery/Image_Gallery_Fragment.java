@@ -33,6 +33,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.framework.models.firestore.FirestoreManager;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.nowfloats.Image_Gallery.model.PurchaseWidgets;
 import com.nowfloats.Login.GetGalleryImagesAsyncTask_Interface;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
@@ -140,7 +143,9 @@ public class Image_Gallery_Fragment extends Fragment implements
     GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
     gallery.setGalleryInterfaceListener(this);
     gallery.execute();
-
+    String jsonString = "";
+    PurchaseWidgets dataResponse = new Gson().fromJson("", new TypeToken<PurchaseWidgets>() {
+    }.getType());
   }
 
   @Override
