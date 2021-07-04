@@ -43,12 +43,14 @@ import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.marketplace_offers.MarketPlaceOfferFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
+import com.boost.upgrades.ui.packages.PackageFragmentNew
 import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MARKET_OFFER_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.NEW_PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.HorizontalMarginItemDecoration
@@ -1090,16 +1092,16 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
         WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
 
-        val packageFragment = PackageFragment.newInstance()
+      /*  val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
         packageFragment.arguments = args
-        (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
-/*        val packageFragment = NewPackageFragment.newInstance()
+        (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)*/
+        val packageFragment = PackageFragmentNew.newInstance()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
         packageFragment.arguments = args
-        (activity as UpgradeActivity).addFragment(packageFragment, NEW_PACKAGE_FRAGMENT)*/
+        (activity as UpgradeActivity).addFragment(packageFragment, NEW_PACKAGE_FRAGMENT)
     }
 
     override fun onPromoBannerClicked(item: PromoBanners?) {
