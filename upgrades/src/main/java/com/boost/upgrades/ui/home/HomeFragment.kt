@@ -1132,6 +1132,79 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         } else {
             if (!item!!.cta_bundle_identifier.isNullOrBlank()) {
                 if (item!!.cta_bundle_identifier != null) {
+                    if(item.cta_bundle_identifier.contains("#")){
+
+                        var cataCategoryIdentifier = item.cta_bundle_identifier.trim().split("#").toTypedArray()
+                        var bundleCategory = cataCategoryIdentifier.get(0)
+                        var bundleID = cataCategoryIdentifier.get(1)
+                        if((activity as UpgradeActivity).experienceCode.equals(bundleCategory)){
+                            CompositeDisposable().add(
+                                AppDatabase.getInstance(requireActivity().application)!!
+                                    .bundlesDao()
+                                    .checkBundleKeyExist(bundleID)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe({
+                                        if (it == 1) {
+                                            CompositeDisposable().add(
+                                                AppDatabase.getInstance(requireActivity().application)!!
+                                                    .bundlesDao()
+                                                    .getBundleItemById(bundleID)
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe({
+                                                        var selectedBundle: Bundles? = null
+                                                        var item = it
+                                                        val temp = Gson().fromJson<List<IncludedFeature>>(
+                                                            item.included_features,
+                                                            object :
+                                                                TypeToken<List<IncludedFeature>>() {}.type
+                                                        )
+                                                        selectedBundle = Bundles(
+                                                            bundleID,
+                                                            temp,
+                                                            item.min_purchase_months,
+                                                            item.name,
+                                                            item.overall_discount_percent,
+                                                            PrimaryImage(item.primary_image),
+                                                            item.target_business_usecase,
+                                                            Gson().fromJson<List<String>>(
+                                                                item.exclusive_to_categories,
+                                                                object : TypeToken<List<String>>() {}.type
+                                                            ),
+                                                            null,
+                                                            item.desc
+                                                        )
+                                                        val packageFragment = PackageFragment.newInstance()
+                                                        val args = Bundle()
+                                                        args.putString(
+                                                            "bundleData",
+                                                            Gson().toJson(selectedBundle)
+                                                        )
+                                                        packageFragment.arguments = args
+                                                        (activity as UpgradeActivity).addFragment(
+                                                            packageFragment,
+                                                            PACKAGE_FRAGMENT
+                                                        )
+
+                                                    }, {
+                                                        it.printStackTrace()
+                                                    })
+                                            )
+                                        } else {
+                                            Toasty.error(
+                                                requireContext(),
+                                                "Bundle Not Available To This Account",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+                                    }, {
+                                        it.printStackTrace()
+                                    })
+                            )
+                        }
+                        Log.d("bundleCategory", " bundleCategory: "+ bundleCategory + " bundleID: "+ bundleID + " "+ (activity as UpgradeActivity).experienceCode)
+                    }else{
                     CompositeDisposable().add(
                         AppDatabase.getInstance(requireActivity().application)!!
                             .bundlesDao()
@@ -1198,6 +1271,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                             })
                     )
                 }
+                }
             } else {
                 if (!item!!.cta_web_link.isNullOrBlank()) {
                     if (item!!.cta_web_link != null) {
@@ -1214,10 +1288,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     }
                 } else if (!item.coupon_code.isNullOrBlank() || !item.cta_offer_identifier.isNullOrBlank()) {
                     if (item.coupon_code != null || item.cta_offer_identifier != null) {
-                        Log.v(
-                            "cta_offer_identifier",
-                            " " + item.coupon_code + " " + item.title + " " + item.cta_offer_identifier
-                        )
                         CompositeDisposable().add(
                             AppDatabase.getInstance(requireActivity().application)!!
                                 .marketOffersDao()
