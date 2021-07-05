@@ -12,6 +12,7 @@ import com.appservice.holder.StaffExperienceViewHolder
 import com.appservice.holder.StaffFilterViewHolder
 import com.appservice.holder.StaffListingViewHolder
 import com.appservice.holder.StaffServiceViewHolder
+import com.appservice.ui.testimonial.newflow.holder.TestimonialListingHolder
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
@@ -36,6 +37,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       STAFF_LISTING_VIEW -> StaffListingViewHolder(binding as RecyclerItemStaffListingBinding)
       STAFF_FILTER_VIEW -> StaffFilterViewHolder(binding as RecyclerItemStaffFilterBinding)
       SERVICE_LISTING_VIEW -> ServiceListingViewHolder(binding as RecyclerItemServiceListingBinding)
+      TESTIMONIAL_LISTING_VIEW -> TestimonialListingHolder(binding as RecyclerItemTestimonialListingBinding)
     }
   }
 

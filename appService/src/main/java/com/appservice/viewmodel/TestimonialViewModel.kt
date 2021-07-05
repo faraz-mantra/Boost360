@@ -5,10 +5,11 @@ import com.appservice.model.account.AccountCreateRequest
 import com.appservice.model.account.BankAccountDetailsN
 import com.appservice.model.account.testimonial.addEdit.DeleteTestimonialRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
-import com.appservice.rest.repository.BoostKitDevRepository
-import com.appservice.rest.repository.RazorRepository
-import com.appservice.rest.repository.WithFloatRepository
-import com.appservice.rest.repository.WithFloatTwoRepository
+import com.appservice.rest.repository.*
+import com.appservice.ui.testimonial.newflow.model.DataItem
+import com.appservice.ui.testimonial.newflow.model.DeleteTestimonialRequestNew
+import com.appservice.ui.testimonial.newflow.model.TestimonialListingRequest
+import com.appservice.ui.testimonial.newflow.model.UpdateTestimonialImage
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -36,4 +37,28 @@ class TestimonialViewModel : BaseViewModel() {
   fun deleteTestimonials(token: String?, testimonialType: String?, body: DeleteTestimonialRequest?): LiveData<BaseResponse> {
     return BoostKitDevRepository.deleteTestimonials(token, testimonialType, body).toLiveData()
   }
+
+  fun getTestimonialListing(testimonialListingRequest: TestimonialListingRequest?):LiveData<BaseResponse>{
+    return NowFloatsRepository.getTestimonialListing(request = testimonialListingRequest).toLiveData()
+  }
+  fun getTestimonialDetails(testimonialId: String?):LiveData<BaseResponse>{
+    return NowFloatsRepository.getTestimonialDetails(id = testimonialId).toLiveData()
+  }
+  fun createTestimonial(request: DataItem?):LiveData<BaseResponse>{
+    return NowFloatsRepository.createTestimonial(request = request).toLiveData()
+  }
+  fun deleteTestimonial(request: DeleteTestimonialRequestNew?):LiveData<BaseResponse>{
+    return NowFloatsRepository.deleteTestimonial(id = request).toLiveData()
+  }
+  fun deleteTestimonialImage(request: DeleteTestimonialRequestNew?):LiveData<BaseResponse>{
+    return NowFloatsRepository.deleteTestimonialImage(id  = request).toLiveData()
+  }
+  fun updateTestimonial(request: DataItem?):LiveData<BaseResponse>{
+    return NowFloatsRepository.updateTestimonial(request  = request).toLiveData()
+  }
+  fun updateTestimonialImage(request: UpdateTestimonialImage?):LiveData<BaseResponse>{
+    return NowFloatsRepository.updateTestimonialImage(request  = request).toLiveData()
+  }
+
+
 }

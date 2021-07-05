@@ -1,15 +1,16 @@
-package com.appservice.ui.testimonial
+package com.appservice.ui.testimonial.newflow.base
 
 import androidx.databinding.ViewDataBinding
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.PreferenceConstant
+import com.appservice.ui.testimonial.newflow.add.TestimonialAddEditFragment
+import com.appservice.ui.testimonial.newflow.list.TestimonialListFragment
 import com.appservice.viewmodel.TestimonialViewModel
 import com.framework.exceptions.IllegalFragmentTypeException
 
-open class BaseTestimonialFragment<binding : ViewDataBinding> : AppBaseFragment<binding, TestimonialViewModel>() {
-
-
+open class BaseTestimonialFragment<binding : ViewDataBinding> :
+  AppBaseFragment<binding, TestimonialViewModel>() {
   val fpId: String?
     get() {
       return pref?.getString(PreferenceConstant.KEY_FP_ID, "")

@@ -92,15 +92,15 @@ class ServiceViewModelV1 : BaseViewModel() {
   }
 
   fun addServiceTiming(request: AddServiceTimingRequest?): LiveData<BaseResponse> {
-    return StaffNowFloatsRepository.addServiceTiming(request).toLiveData()
+    return NowFloatsRepository.addServiceTiming(request).toLiveData()
   }
 
   fun updateServiceTiming(request: AddServiceTimingRequest?): LiveData<BaseResponse> {
-    return StaffNowFloatsRepository.updateServiceTiming(request).toLiveData()
+    return NowFloatsRepository.updateServiceTiming(request).toLiveData()
   }
 
   fun getServiceTiming(request: String?): LiveData<BaseResponse> {
-    return StaffNowFloatsRepository.getServiceTiming(request).toLiveData()
+    return NowFloatsRepository.getServiceTiming(request).toLiveData()
   }
 
 //  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {

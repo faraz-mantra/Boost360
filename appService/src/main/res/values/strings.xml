@@ -390,6 +390,7 @@
   <string name="weekly_appointment">Weekly appointment schedule</string>
   <string name="categories">Categories</string>
   <string name="services">Services</string>
+  <string name="testimonial">Testimonial</string>
   <string name="you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video">You don’t have any service added to your digital catalog as of yet. Watch video</string>
   <string name="add_services_to_your_catalog">Add services to your catalog</string>
   <string name="add_a_service">Add a service</string>
@@ -586,6 +587,22 @@
   <string name="fb_enabled">Facebook Enabled</string>
     <string name="add_now">Add Now</string>
   <string name="looks_like_you_haven_t_added_any_testimonials_with_the_feature_you_can_showcase_your_customer_reviews_and_highlight_their_experience_on_the_homepage_of_your_website">Looks like you haven’t added any testimonials. With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website.</string>
+    <string name="customer_name">Customer Name*</string>
+  <string name="customer_designation">Customer Designation*</string>
+  <string name="enter_company_designation_title">Enter Company/Designation Title</string>
+    <string name="testimonial_title_">Testimonial Title*</string>
+  <string name="enter_testimonial_title">Enter Testimonial Title</string>
+  <string name="customer_s_review">Customer’s Review*</string>
+  <string name="enter_your_review_here">Enter your Review here</string>
+    <string name="please_enter_name">please enter name.</string>
+  <string name="please_enter_designation">please enter designation</string>
+  <string name="please_enter_title">please enter title.</string>
+  <string name="please_enter_review">please_enter_review</string>
+    <string name="testimonial_created">Testimonial created.</string>
+    <string name="image_is_deleted">Image is deleted</string>
+  <string name="unable_to_delete_image">Unable to delete image</string>
+  <string name="image_uploaded_successfully">Image uploaded successfully.</string>
+  <string name="error_while_uploading_image">Error while uploading image.</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

@@ -2,16 +2,21 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
+import com.appservice.model.account.testimonial.addEdit.DeleteTestimonialRequest
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.StaffNowFloatsApiClient
 import com.appservice.rest.services.StaffNowFloatsRemoteData
 import com.appservice.model.staffModel.*
+import com.appservice.ui.testimonial.newflow.model.DataItem
+import com.appservice.ui.testimonial.newflow.model.DeleteTestimonialRequestNew
+import com.appservice.ui.testimonial.newflow.model.TestimonialListingRequest
+import com.appservice.ui.testimonial.newflow.model.UpdateTestimonialImage
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object StaffNowFloatsRepository : AppBaseRepository<StaffNowFloatsRemoteData, AppBaseLocalService>() {
+object NowFloatsRepository : AppBaseRepository<StaffNowFloatsRemoteData, AppBaseLocalService>() {
     override fun getRemoteDataSourceClass(): Class<StaffNowFloatsRemoteData> {
         return StaffNowFloatsRemoteData::class.java
     }
@@ -73,4 +78,28 @@ object StaffNowFloatsRepository : AppBaseRepository<StaffNowFloatsRemoteData, Ap
         return makeRemoteRequest(remoteDataSource.getServiceTimings(serviceId), TaskCode.GET_SERVICE_TIMING)
 
     }
+
+    fun getTestimonialListing(request: TestimonialListingRequest?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.fetchTestimonialList(request), TaskCode.GET_TESTIMONIAL_LISTING)
+    }
+
+    fun getTestimonialDetails(id: String?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.getTestimonialData(id), TaskCode.GET_TESTIMONIAL_DETAILS)
+    }
+    fun createTestimonial(request: DataItem?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.createTestimonial(request), TaskCode.ADD_TESTIMONIAL)
+    }
+    fun updateTestimonial(request: DataItem?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.createTestimonial(request), TaskCode.UPDATE_TESTIMONIAL)
+    }
+    fun deleteTestimonial(id: DeleteTestimonialRequestNew?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.deleteTestimonial(id), TaskCode.DELETE_TESTIMONIAL)
+    }
+    fun deleteTestimonialImage(id: DeleteTestimonialRequestNew?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.deleteTestimonialImage(id), TaskCode.DELETE_TESTIMONIAL_IMAGE)
+    }
+    fun updateTestimonialImage(request: UpdateTestimonialImage?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.updateTestimonialImage(request = request), TaskCode.UPDATE_TESTIMONIAL_IMAGE)
+    }
+
 }

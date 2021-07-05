@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@drawable/rounded_stroke_grey"
+        android:orientation="vertical"
+        android:padding="@dimen/size_8"
+        android:layout_marginHorizontal="@dimen/size_8">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_customer_name"
+                style="@style/StaffProfileTextContent"
+                android:layout_marginStart="@dimen/size_8"
+                android:text="@string/customer_name"
+                app:layout_constraintStart_toEndOf="@+id/civ_testimonial_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_customer_designation"
+                style="@style/StaffProfileTextContent"
+                android:layout_marginStart="@dimen/size_8"
+                android:text="@string/customer_name"
+                app:layout_constraintStart_toEndOf="@+id/civ_testimonial_image"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_customer_name" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_customer_review"
+                style="@style/TextStaffProfileHeadings"
+                android:layout_marginStart="@dimen/size_8"
+                android:text="@string/customer_name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/civ_testimonial_image" />
+
+            <com.framework.views.roundedimageview.RoundedImageView
+                android:id="@+id/civ_testimonial_image"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="@dimen/size_80"
+                android:background="@color/white"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder_image_n"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_border_color="@color/tw__light_gray"
+                app:riv_border_width="1.5dp"
+                app:riv_corner_radius="@dimen/size_4"
+                app:riv_mutate_background="true"
+                app:riv_oval="false" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/riv_delete_testimonial"
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                android:layout_gravity="end"
+                app:layout_constraintVertical_bias="0"
+                android:src="@drawable/ic_delete_testimonial"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/riv_edit_testimonial"
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                app:layout_constraintVertical_bias="0"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/size_8"
+                android:src="@drawable/ic_edit_testimonial"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/riv_delete_testimonial"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_customer_description"
+            style="@style/TextStaffProfileHeadings"
+            android:layout_marginTop="@dimen/size_8"
+            tools:text="@string/customer_name"
+            app:layout_constraintStart_toEndOf="@+id/civ_testimonial_image"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_customer_review" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

@@ -59,6 +59,14 @@ object EndPoints {
   const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
   const val GET_SEARCH_LISTING = "/Service/v1/GetSearchListings"
 
+  //TODO testimonial listing nowfloats api
+  const val GET_TESTIMONIAL_LISTING = "testimonial/v1/GetListing"
+  const val GET_TESTIMONIAL_DETAILS = "testimonial/v1/GetDetails"
+  const val CREATE_TESTIMONIAL_POST = "testimonial/v1/Create"
+  const val UPDATE_TESTIMONIAL_POST = "testimonial/v1/Update"
+  const val UPDATE_TESTIMONIAL_IMAGE_POST = "testimonial/v1/UpdateImage"
+  const val DELETE_TESTIMONIAL_POST = "testimonial/v1/Delete"
+  const val DELETE_TESTIMONIAL_IMAGE_POST = "testimonial/v1/DeleteImage"
 
   //TODO NFX API 2 WITH FLOAT
   const val RAZOR_API_BASE = "https://ifsc.razorpay.com/"

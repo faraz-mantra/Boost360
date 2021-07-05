@@ -17,6 +17,7 @@ import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
+import com.appservice.ui.testimonial.newflow.base.startTestimonialFragmentActivity
 import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
@@ -376,9 +377,13 @@ fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Bool
   try {
     val text = if (isAdd) ADD_TESTIMONIAL_PAGE else TESTIMONIAL_PAGE
     WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
-    webIntent.putExtra("IS_ADD", isAdd)
-    startActivity(webIntent)
+//    val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
+//
+//    webIntent.putExtra("IS_ADD", isAdd)
+//    startActivity(webIntent)
+    if (isAdd)
+    startTestimonialFragmentActivity(com.appservice.constant.FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT)
+    else startTestimonialFragmentActivity(com.appservice.constant.FragmentType.TESTIMONIAL_LIST_FRAGMENT)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
