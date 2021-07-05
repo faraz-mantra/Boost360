@@ -75,22 +75,26 @@
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:tag="0"
         android:visibility="gone" />
 
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:tag="1"
         android:text="SERVICES" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:tag="2"
         android:text="UPDATES" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:tag="3"
         android:text="PHOTOS" />
 
       <com.google.android.material.tabs.TabItem
@@ -102,6 +106,7 @@
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:tag="5"
         android:text="BUSINESS CARD" />
     </com.google.android.material.tabs.TabLayout>
 

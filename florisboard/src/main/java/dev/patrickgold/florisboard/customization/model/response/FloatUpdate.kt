@@ -58,7 +58,11 @@ data class FloatUpdate(
   }
 
   fun getLoaderItem(): FloatUpdate {
-    this.recyclerViewItem =  FeaturesEnum.LOADER.ordinal
+    this.recyclerViewItem = FeaturesEnum.LOADER.ordinal
     return this
+  }
+
+  fun getMessageLength(): String? {
+    return if (this.message?.length ?: 0 > 200) this.message?.substring(0, 200) else this.message
   }
 }

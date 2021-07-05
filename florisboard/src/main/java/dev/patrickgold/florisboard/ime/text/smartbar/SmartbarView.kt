@@ -228,8 +228,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
   }
 
   private fun setupTabLayout() {
-    (binding.businessFeatureTabLayout.getChildAt(0) as ViewGroup)
-      .getChildAt(0).visibility = GONE
+    (binding.businessFeatureTabLayout.getChildAt(0) as ViewGroup).getChildAt(0).visibility = GONE
 
     binding.businessFeatureTabLayout.addOnTabSelectedListener(this)
   }

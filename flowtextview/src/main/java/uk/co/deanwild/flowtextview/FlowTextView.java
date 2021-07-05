@@ -86,6 +86,7 @@ public class FlowTextView extends RelativeLayout {
         mTextPaint.density = getResources().getDisplayMetrics().density;
         mTextPaint.setTextSize(mTextsize);
         mTextPaint.setColor(mTextColor);
+        mTextPaint.setColor(mTextColor);
         mLinkPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mLinkPaint.density = getResources().getDisplayMetrics().density;
         mLinkPaint.setTextSize(mTextsize);

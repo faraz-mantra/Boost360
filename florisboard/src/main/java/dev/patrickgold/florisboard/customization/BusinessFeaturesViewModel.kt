@@ -11,12 +11,12 @@ import dev.patrickgold.florisboard.customization.model.response.Photo
 import dev.patrickgold.florisboard.customization.model.response.Product
 import dev.patrickgold.florisboard.customization.model.response.Updates
 import dev.patrickgold.florisboard.customization.model.response.shareUser.ShareUserDetailResponse
-import dev.patrickgold.florisboard.customization.network.repository.BusinessFeatureRepository
+import dev.patrickgold.florisboard.customization.model.response.staff.DataItem
+import dev.patrickgold.florisboard.customization.model.response.staff.GetStaffListingRequest
+import dev.patrickgold.florisboard.customization.model.response.staff.StaffListingResponse
+import dev.patrickgold.florisboard.customization.model.response.staff.StaffResult
 import dev.patrickgold.florisboard.customization.network.GetGalleryImagesAsyncTask
-import dev.patrickgold.florisboard.customization.network.repository.BoostFloatRepository
-import dev.patrickgold.florisboard.customization.network.repository.NfxFloatRepository
-import dev.patrickgold.florisboard.customization.network.repository.WebActionBoostRepository
-import dev.patrickgold.florisboard.customization.util.Constants
+import dev.patrickgold.florisboard.customization.network.repository.*
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -53,7 +53,7 @@ class BusinessFeaturesViewModel {
     job = CoroutineScope(Dispatchers.IO).launch {
       val products = BusinessFeatureRepository.getAllProducts(fpTag, clientId, skipBy, identifierType)
       withContext(Dispatchers.Main) {
-        if (products.isSuccessful) _products.postValue(products.body()?: arrayListOf())
+        if (products.isSuccessful) _products.postValue(products.body() ?: arrayListOf())
         else _error.value = "Inventory getting error!"
       }
     }
@@ -149,6 +149,22 @@ class BusinessFeaturesViewModel {
           }
         }
       }, fpId)
+    }
+  }
+
+  private val _staff = MutableLiveData<StaffResult>()
+  val staff: LiveData<StaffResult>
+    get() = _staff
+
+  fun getStaffList(request: GetStaffListingRequest?) {
+    job?.cancel()
+    job = CoroutineScope(Dispatchers.IO).launch {
+      val staffResponse = NowFloatRepository.fetchStaffList(request)
+      withContext(Dispatchers.Main) {
+        if (staffResponse.isSuccessful) {
+          _staff.value = staffResponse.body()?.result?:StaffResult()
+        } else _error.value = "Staff getting error!"
+      }
     }
   }
 }

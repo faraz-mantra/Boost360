@@ -45,6 +45,9 @@ import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.adapter.SharedAdapter
 import dev.patrickgold.florisboard.customization.model.response.*
+import dev.patrickgold.florisboard.customization.model.response.staff.DataItem
+import dev.patrickgold.florisboard.customization.model.response.staff.FilterBy
+import dev.patrickgold.florisboard.customization.model.response.staff.GetStaffListingRequest
 import dev.patrickgold.florisboard.customization.util.*
 import dev.patrickgold.florisboard.customization.util.MethodUtils.getImageUri
 import dev.patrickgold.florisboard.customization.util.PaginationScrollListener.Companion.PAGE_SIZE
@@ -73,10 +76,12 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private var florisBoard: FlorisBoard? = null
   private var session: UserSessionManager? = null
   private lateinit var currentSelectedFeature: BusinessFeatureEnum
+  private var tagPosition: Int = 0
 
   private lateinit var adapterProductService: SharedAdapter<Product>
   private lateinit var adapterUpdates: SharedAdapter<FloatUpdate>
   private lateinit var adapterPhoto: SharedAdapter<Photo>
+  private lateinit var adapterStaff: SharedAdapter<DataItem>
   private lateinit var adapterBusinessCard: SharedAdapter<DigitalCardDataKeyboard>
   private var listenerRequest: RequestListener<Bitmap>? = null
 
@@ -114,6 +119,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     this.adapterUpdates = SharedAdapter(arrayListOf(), this)
     this.adapterPhoto = SharedAdapter(arrayListOf(), this)
     this.adapterBusinessCard = SharedAdapter(arrayListOf(), this)
+    this.adapterStaff = SharedAdapter(arrayListOf(), this)
     // initialize business features views
     this.binding = BusinessFeaturesLayoutBinding.bind(inputView.findViewById(R.id.business_features))
 
@@ -125,11 +131,19 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       it.adapter = this.adapterUpdates
       (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListenerProduct(it1) }
     }
+
     binding.viewPagerProfile.also {
       it.adapter = this.adapterBusinessCard
       it.offscreenPageLimit = 3
       it.setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
     }
+
+    binding.staffRvList.also {
+      it.layoutManager = GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false)
+      it.adapter = this.adapterStaff
+      (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListenerProduct(it1, false) }
+    }
+
     binding.rvListPhotos.also {
       it.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
       it.adapter = this.adapterPhoto
@@ -138,9 +152,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     apiObserveServiceProduct()
     apiObserveUpdates()
     apiObservePhotos()
+    apiObserveStaff()
   }
 
-  private fun RecyclerView.paginationListenerProduct(layoutManager: LinearLayoutManager) {
+  private fun RecyclerView.paginationListenerProduct(layoutManager: LinearLayoutManager, isPagerSnap: Boolean = true) {
     val listenerProduct = object : PaginationScrollListener(layoutManager) {
       override fun loadMoreItems() {
         if (!isLastPageD) {
@@ -149,10 +164,13 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           offSet += limit
           if (this@BusinessFeaturesManager::currentSelectedFeature.isInitialized && currentSelectedFeature == BusinessFeatureEnum.UPDATES) {
             adapterUpdates.addLoadingFooter(FloatUpdate().getLoaderItem())
-            viewModel.getUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpId, mContext.getString(R.string.client_id), offSet, limit)
-          } else {
+            viewModel.getUpdates(session?.fPID, clientId, offSet, limit)
+          } else if (currentSelectedFeature == BusinessFeatureEnum.INVENTORY_SERVICE) {
             adapterProductService.addLoadingFooter(Product().getLoaderItem())
-            viewModel.getProducts(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).fpTag, mContext.getString(R.string.client_id), offSet, "SINGLE")
+            viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
+          } else if (currentSelectedFeature == BusinessFeatureEnum.STAFF) {
+            adapterStaff.addLoadingFooter(DataItem().getLoaderItem())
+            viewModel.getStaffList(getFilterRequest(offSet, limit))
           }
         }
       }
@@ -164,29 +182,31 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       override val isLoading: Boolean
         get() = isLoadingD
     }
-    PagerSnapHelper().attachToRecyclerView(this)
+    if (isPagerSnap) PagerSnapHelper().attachToRecyclerView(this)
     addOnScrollListener(listenerProduct)
   }
 
-  fun showSelectedBusinessFeature(businessFeatureEnum: BusinessFeatureEnum) {
+  fun showSelectedBusinessFeature(tagPosition: Int, businessFeatureEnum: BusinessFeatureEnum) {
+    this.tagPosition = tagPosition
     this.currentSelectedFeature = businessFeatureEnum
     this.listenerRequest = null
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout
     SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.view?.apply {
       if (isStaffVisible(session?.fP_AppExperienceCode ?: "")) visible() else gone()
     }
-    if (!SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).isLoggedIn) {
+    if (session?.isUserLoggedIn == false) {
       Timber.i("Please do login")
       binding.textView.text = mContext.getString(R.string.please_login)
       binding.pleaseLoginCard.visible()
       binding.pleaseLoginCard.setOnClickListener { MethodUtils.startBoostActivity(mContext) }
-    } else if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") != true) {
+    } else if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
       if (MethodUtils.isOnline(mContext)) {
         binding.pleaseLoginCard.gone()
         binding.businessFeatureProgress.visible()
         errorObserveListener()
         when (businessFeatureEnum) {
           BusinessFeatureEnum.INVENTORY_SERVICE -> {
-            SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = getProductType(session?.fP_AppExperienceCode ?: "")
+            SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(tagPosition)?.text = getProductType(session?.fP_AppExperienceCode ?: "")
             visibleSelectType(isI = true)
             initializePaging()
             this.adapterProductService.clearList()
@@ -206,9 +226,19 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
             this.adapterPhoto.clearList()
             viewModel.getPhotos(session?.fPID ?: "")
           }
+          BusinessFeatureEnum.BUSINESS_CARD -> {
+            visibleSelectType(isIV = true)
+            this.adapterBusinessCard.clearList()
+            if (messageBusiness.isEmpty() && _connectedChannels.isEmpty()) getChannelAccessToken(true)
+            businessCardDataLoad()
+          }
           BusinessFeatureEnum.STAFF -> {
+            visibleSelectType(isV = true)
             if (session?.getStoreWidgets()?.contains("STAFFPROFILE") == true) {
-
+              initializePaging()
+              this.adapterStaff.clearList()
+              binding.staffRvList.removeAllViewsInLayout()
+              viewModel.getStaffList(getFilterRequest(offSet, limit))
             } else {
               binding.textView.text = mContext.getString(R.string.staff_not_added_plan)
               binding.pleaseLoginCard.visible()
@@ -219,12 +249,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
                 }
               }
             }
-          }
-          BusinessFeatureEnum.BUSINESS_CARD -> {
-            visibleSelectType(isIV = true)
-            this.adapterBusinessCard.clearList()
-            if (messageBusiness.isEmpty() && _connectedChannels.isEmpty()) getChannelAccessToken(true)
-            businessCardDataLoad()
           }
           else -> {
           }
@@ -245,12 +269,13 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     }
   }
 
-  private fun visibleSelectType(isI: Boolean = false, isII: Boolean = false, isIII: Boolean = false, isIV: Boolean = false) {
+  private fun visibleSelectType(isI: Boolean = false, isII: Boolean = false, isIII: Boolean = false, isIV: Boolean = false, isV: Boolean = false) {
     binding.productShareRvList.visibility = if (isI) View.VISIBLE else View.GONE
     binding.updateRvList.visibility = if (isII) View.VISIBLE else View.GONE
     binding.clSelectionLayout.visibility = if (isIII) View.VISIBLE else View.GONE
     binding.rvListPhotos.visibility = if (isIII) View.VISIBLE else View.GONE
     binding.businessCardView.visibility = if (isIV) View.VISIBLE else View.GONE
+    binding.staffRvList.visibility = if (isV) View.VISIBLE else View.GONE
   }
 
   private fun errorObserveListener() {
@@ -285,6 +310,21 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         else this.adapterProductService.addItems(it)
         TOTAL_ELEMENTS = this.adapterProductService.getListData().size
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")} (${this.adapterProductService.getListData().size})"
+      } else Timber.i("List from api came empty")
+    }
+  }
+
+  private fun apiObserveStaff() {
+    viewModel.staff.observeForever {
+      Timber.i("updates - $it.")
+      binding.businessFeatureProgress.gone()
+      this.adapterStaff.removeLoaderN()
+      if (it.data.isNullOrEmpty().not()) {
+        TOTAL_ELEMENTS = it.paging?.count ?: 0
+        if (isFirstPage) this.adapterStaff.notifyNewList(it.data!!)
+        else this.adapterStaff.addItems(it.data!!)
+        isLastPageD = (this.adapterStaff.getListData().size == TOTAL_ELEMENTS)
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = "STAFF (${it.paging?.count})"
       } else Timber.i("List from api came empty")
     }
   }
@@ -664,6 +704,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   fun EditorInfo.getImageSupport(): Boolean {
     val mimeTypes: Array<String> = EditorInfoCompat.getContentMimeTypes(this)
     return mimeTypes.any { ClipDescription.compareMimeTypes(it, "image/*") }
+  }
+
+  fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
+    return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), session?.fpTag, "")
   }
 
   fun getBindingRoot(): View {

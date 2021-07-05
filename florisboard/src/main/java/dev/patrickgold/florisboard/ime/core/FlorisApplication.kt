@@ -20,11 +20,8 @@ import androidx.multidex.MultiDexApplication
 import com.framework.BaseApplication
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.crashutility.CrashUtility
-import dev.patrickgold.florisboard.customization.network.client.BusinessFeatureApiClient
 import dev.patrickgold.florisboard.customization.network.EndPoints
-import dev.patrickgold.florisboard.customization.network.client.BoostFloatApiClient
-import dev.patrickgold.florisboard.customization.network.client.NfxFloatApiClient
-import dev.patrickgold.florisboard.customization.network.client.WebActionBoostApiClient
+import dev.patrickgold.florisboard.customization.network.client.*
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -52,6 +49,7 @@ class FlorisApplication : BaseApplication() {
     @JvmStatic
     fun apiInitialize() {
       BusinessFeatureApiClient.shared.init(EndPoints.BUSINESS_FEATURE_BASE_URL)
+      NowFloatApiClient.shared.init(EndPoints.API_NOW_FLOATS_BASE)
       BoostFloatApiClient.shared.init(EndPoints.BOOST_FLOATS_BASE_URL)
       NfxFloatApiClient.shared.init(EndPoints.NFX_FLOAT_BASE_URL)
       WebActionBoostApiClient.shared.init(EndPoints.WEB_ACTION_BASE_URL)

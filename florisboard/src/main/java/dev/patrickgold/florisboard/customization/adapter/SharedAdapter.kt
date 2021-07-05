@@ -36,6 +36,7 @@ open class SharedAdapter<T : BaseRecyclerItem?>(val list: ArrayList<T>, val list
       FeaturesEnum.VISITING_CARD_EIGHT_ITEM -> VisitingCardEightViewHolder(view as ItemVisitingCardEightBinding, listener)
       FeaturesEnum.VISITING_CARD_NINE_ITEM -> VisitingCardNineViewHolder(view as ItemVisitingCardNineBinding, listener)
       FeaturesEnum.VISITING_CARD_TEN_ITEM -> VisitingCardTenViewHolder(view as ItemVisitingCardTenBinding, listener)
+      FeaturesEnum.STAFF_LISTING_VIEW -> StaffProfileViewHolder(view as ItemStaffProfileBinding, listener)
     }
   }
 

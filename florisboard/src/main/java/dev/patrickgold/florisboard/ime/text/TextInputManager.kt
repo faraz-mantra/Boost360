@@ -289,7 +289,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     setActiveKeyboardMode(keyboardMode)
     smartbarView?.updateSmartbarState()
     if (keyboardMode == KeyboardMode.BUSINESS_FEATURES) {
-      businessFeaturesManager.showSelectedBusinessFeature(BusinessFeatureEnum.values()[SmartbarView.getSmartViewBinding().businessFeatureTabLayout.selectedTabPosition])
+      val tabPos = SmartbarView.getSmartViewBinding().businessFeatureTabLayout.selectedTabPosition
+      businessFeaturesManager.showSelectedBusinessFeature(tabPos, BusinessFeatureEnum.values()[tabPos])
     }
   }
 
@@ -821,12 +822,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
   }
 
   override fun onTabSelected(tab: TabLayout.Tab?) {
-    if (showFeatureUI) {
-      setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES)
-    } else {
-      setActiveKeyboardMode(KeyboardMode.CHARACTERS)
-    }
-    tab?.position?.let { BusinessFeatureEnum.values()[it] }?.let { businessFeaturesManager.showSelectedBusinessFeature(it) }
+    if (showFeatureUI) setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES) else setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+    val tabPosition = tab?.position
+    tabPosition?.let { BusinessFeatureEnum.values()[it] }?.let { businessFeaturesManager.showSelectedBusinessFeature(tabPosition, it) }
   }
 
   override fun onTabUnselected(tab: TabLayout.Tab?) {

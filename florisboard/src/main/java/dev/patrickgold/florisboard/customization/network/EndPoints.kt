@@ -19,5 +19,9 @@ object EndPoints {
     const val BOOST_FLOATS_BASE_URL = "https://boost.nowfloats.com"
     const val MERCHANT_PROFILE = "/Home/MerchantProfileStatus"
 
+    //API NOW FLOATS
+    const val API_NOW_FLOATS_BASE = "https://api.nowfloats.com/"
+    const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
+
 }
 

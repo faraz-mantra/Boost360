@@ -81,7 +81,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         binding?.ctvAboutHeading?.text = "About ${staffDetails?.name}"
         binding?.ctvAboutStaff?.text = staffDetails?.description
         binding?.civStaffProfileImg?.let { activity?.glideLoad(it, staffDetails?.image ?: "", R.drawable.placeholder_image) }
-        binding?.ctvSpecialization?.text = staffDetails?.specialisations?.get(0)?.value
+        binding?.ctvSpecialization?.text = staffDetails?.getSpecialization()
         if (staffDetails?.isAvailable == false) showInactiveProfile()
         fetchServices()
         setTimings()

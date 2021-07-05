@@ -50,4 +50,9 @@ data class StaffDetailsResult(
 
     @field:SerializedName("Name")
     val name: String? = null,
-) : Serializable
+) : Serializable{
+
+    fun getSpecialization():String{
+       return if (specialisations.isNullOrEmpty().not()) specialisations?.first()?.value!! else ""
+    }
+}

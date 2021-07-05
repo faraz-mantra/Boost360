@@ -18,7 +18,8 @@ enum class FeaturesEnum {
   VISITING_CARD_SEVEN_ITEM,
   VISITING_CARD_EIGHT_ITEM,
   VISITING_CARD_NINE_ITEM,
-  VISITING_CARD_TEN_ITEM;
+  VISITING_CARD_TEN_ITEM,
+  STAFF_LISTING_VIEW;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -38,6 +39,7 @@ enum class FeaturesEnum {
       VISITING_CARD_EIGHT_ITEM -> com.onboarding.nowfloats.R.layout.item_visiting_card_eight
       VISITING_CARD_NINE_ITEM -> com.onboarding.nowfloats.R.layout.item_visiting_card_nine
       VISITING_CARD_TEN_ITEM -> com.onboarding.nowfloats.R.layout.item_visiting_card_ten
+      STAFF_LISTING_VIEW -> R.layout.item_staff_profile
     }
   }
 }

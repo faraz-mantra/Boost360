@@ -5,16 +5,12 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.framework.utils.DateUtils.KEYBOARD_DISPLAY_DATE
 import com.framework.utils.DateUtils.getDate
-import com.framework.views.customViews.CustomButton
-import com.framework.views.customViews.CustomImageView
-import com.framework.views.customViews.CustomTextView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.FloatUpdate
 import dev.patrickgold.florisboard.databinding.AdapterItemUpdateBinding
-import dev.patrickgold.florisboard.databinding.PaginationLoaderKeyboardBinding
 
 class FloatUpdateViewHolder(binding: AdapterItemUpdateBinding, val listener: OnItemClickListener?) : BaseRecyclerViewHolder<AdapterItemUpdateBinding>(binding) {
 
@@ -28,7 +24,7 @@ class FloatUpdateViewHolder(binding: AdapterItemUpdateBinding, val listener: OnI
     }
     binding.tvDescription.textColor = ContextCompat.getColor(binding.root.context, R.color.black_4a4a4a)
     binding.tvDescription.setTextSize(28F)
-    binding.tvDescription.text = float.message
+    binding.tvDescription.text = float.getMessageLength()
     val timeString = (float.createdOn?.subSequence(float.createdOn?.indexOf("(")!! + 1, float.createdOn?.length!! - 2) as String).toLong()
     binding.ctvDateTime.text = getDate(timeString, KEYBOARD_DISPLAY_DATE)
     binding.btnShare.setOnClickListener { listener?.onItemClick(position, float) }

@@ -1,14 +1,9 @@
 package dev.patrickgold.florisboard.customization.viewholder
 
 import android.graphics.Paint
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.views.customViews.CustomTextView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder

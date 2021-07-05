@@ -1,27 +1,26 @@
-package com.appservice.model.staffModel
+package dev.patrickgold.florisboard.customization.model.response.staff
 
-import com.appservice.constant.RecyclerViewItemType
-import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
+import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
+import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
 import java.io.Serializable
 
-data class GetStaffListingResponse(
+data class StaffListingResponse(
 
     @field:SerializedName("StatusCode")
     val statusCode: Int? = null,
-
     @field:SerializedName("Result")
-    val result: Result? = null,
+    val result: StaffResult? = null,
 ) : Serializable, BaseResponse()
 
 
-data class Result(
+data class StaffResult(
     @field:SerializedName("Paging")
     val paging: Paging? = null,
     @field:SerializedName("Data")
     val data: ArrayList<DataItem>? = null,
-) : Serializable, BaseResponse()
+) : Serializable
 
 data class DataItem(
     @field:SerializedName("Timings")
@@ -44,16 +43,16 @@ data class DataItem(
     val image: String? = null,
     @field:SerializedName("Name")
     val name: String? = null,
-) : Serializable, BaseResponse(), AppBaseRecyclerViewItem {
+) : Serializable, BaseRecyclerItem() {
 
-  var recyclerViewItem = RecyclerViewItemType.STAFF_LISTING_VIEW.getLayout()
+  var recyclerViewItem = FeaturesEnum.STAFF_LISTING_VIEW.ordinal
 
   override fun getViewType(): Int {
     return recyclerViewItem
   }
 
   fun getLoaderItem(): DataItem {
-    this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
+    this.recyclerViewItem = FeaturesEnum.LOADER.ordinal
     return this
   }
 }
@@ -65,5 +64,5 @@ data class Paging(
     val limit: Int? = null,
     @field:SerializedName("Count")
     val count: Int? = null,
-) : Serializable, BaseResponse()
+) : Serializable
 

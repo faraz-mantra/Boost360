@@ -65,10 +65,12 @@
             android:layout_toEndOf="@+id/card_thumbnail"
             android:drawableStart="@drawable/ic_clock"
             android:drawablePadding="@dimen/size_2"
+            android:paddingTop="@dimen/size_3"
+            app:textType="CAPTION"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
-            android:text="@string/_90_min"
-            android:textColor="#828282" />
+            tools:text="@string/_90_min"
+            android:textColor="@color/grey_dark_2" />
 
         </uk.co.deanwild.flowtextview.FlowTextView>
 
@@ -81,7 +83,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
-
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/buttonMakeOffer"

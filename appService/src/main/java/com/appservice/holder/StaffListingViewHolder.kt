@@ -16,7 +16,7 @@ class StaffListingViewHolder(binding: RecyclerItemStaffListingBinding) : AppBase
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val data = item as DataItem
         binding.ctvName.text = "${data.name}"
-        binding.civImage.let { activity?.glideLoad(it, data.image.toString(), R.drawable.placeholder_image_n) }
+        binding.civImage.let { activity?.glideLoad(it, data.image?:"", R.drawable.placeholder_image_n) }
         val specialisationsItem: ArrayList<String> = ArrayList()
         data.specialisations?.forEach { specialisationsItem.add(it.value!!) }
         binding.ctvSpecialization.text = specialisationsItem.joinToString(separator = ",")

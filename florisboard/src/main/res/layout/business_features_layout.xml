@@ -223,6 +223,22 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/staff_rv_list"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:clipToPadding="false"
+      android:orientation="vertical"
+      app:spanCount="2"
+      android:paddingStart="@dimen/size_16"
+      android:paddingEnd="@dimen/size_16"
+      android:visibility="gone"
+      app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
     <RelativeLayout
       android:id="@+id/business_card_view"
       android:layout_width="match_parent"
