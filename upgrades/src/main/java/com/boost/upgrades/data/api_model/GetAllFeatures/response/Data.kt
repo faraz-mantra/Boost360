@@ -1,5 +1,6 @@
 package com.boost.upgrades.data.api_model.GetAllFeatures.response
 
+import android.util.Log
 import com.google.gson.annotations.SerializedName
 import java.util.*
 import kotlin.collections.ArrayList
@@ -76,7 +77,11 @@ fun ArrayList<PromoBanners>.promoMarketOfferFilter(expCode: String?,fpTag: Strin
                 if (it.exclusive_to_categories.isNullOrEmpty().not()) {
                         if (it.exclusive_to_categories!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == expCode?.toLowerCase() } != null) list.add(it)
                 }else if(it.exclusive_to_customers.isNullOrEmpty().not()){
-                        if (it.exclusive_to_customers!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == fpTag?.toLowerCase() } != null) list.add(it)
+                        if (it.exclusive_to_customers!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == fpTag?.toLowerCase() } != null){
+                                list.add(it)
+                        }
+                }else if(it.exclusive_to_categories.isNullOrEmpty()){
+                        list.add(it)
                 }
         }
         return list
