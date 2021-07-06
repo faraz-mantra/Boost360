@@ -603,6 +603,8 @@
   <string name="unable_to_delete_image">Unable to delete image</string>
   <string name="image_uploaded_successfully">Image uploaded successfully.</string>
   <string name="error_while_uploading_image">Error while uploading image.</string>
+    <string name="unable_to_create_testimonial">Unable to create testimonial</string>
+  <string name="unable_to_update_testimonial">Unable to update testimonial</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

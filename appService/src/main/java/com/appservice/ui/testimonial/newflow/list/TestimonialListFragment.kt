@@ -29,16 +29,15 @@ import java.util.*
 
 class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>(),
   RecyclerItemClickListener {
-  private val list: ArrayList<com.appservice.ui.testimonial.newflow.model.DataItem> = arrayListOf()
-  private val finalList: ArrayList<com.appservice.ui.testimonial.newflow.model.DataItem> =
+  private val list: ArrayList<DataItem> = arrayListOf()
+  private val finalList: ArrayList<DataItem> =
     arrayListOf()
-
   /* Paging */
   private var isLoadingD = false
   private var TOTAL_ELEMENTS = 0
   private var offSet: Int = PaginationScrollListener.PAGE_START
   private var limit: Int = PaginationScrollListener.PAGE_SIZE
-  private var adapterTestimonial: AppBaseRecyclerViewAdapter<com.appservice.ui.testimonial.newflow.model.DataItem>? =
+  private var adapterTestimonial: AppBaseRecyclerViewAdapter<DataItem>? =
     null
   private var isLastPageD = false
   private var isEdit: Boolean = false
@@ -60,7 +59,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
     super.onCreateView()
     //limit: Int?,offset:Int?,fpTag:String?,fpId:String
     layoutManagerN = LinearLayoutManager(baseActivity)
-    getListTestimonialFilterApi()
+    getListTestimonialFilterApi(isFirst = true)
     layoutManagerN?.let { scrollPagingListener(it) }
     setOnClickListener(binding?.testimonialEmpty?.cbAddTestimonial)
 
@@ -128,7 +127,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
         if (!isLastPageD) {
           isLoadingD = true
           adapterTestimonial?.addLoadingFooter(
-            com.appservice.ui.testimonial.newflow.model.DataItem().getLoaderItem()
+            DataItem().getLoaderItem()
           )
           offSet += limit
           getListTestimonialFilterApi(offSet = offSet, limit = limit)

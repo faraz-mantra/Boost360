@@ -21,6 +21,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.pref.UserSessionManager
 import java.io.ByteArrayOutputStream
 
 class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAddEditBinding>() {
@@ -46,6 +47,7 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
 
   override fun onCreateView() {
     this.dataItem = arguments?.getSerializable(IntentConstant.TESTIMONIAL_DATA.name) as? DataItem
+    sessionLocal = UserSessionManager(requireActivity())
     isEdit = dataItem != null
     if (isEdit) {
       setData(dataItem?.testimonialId)
@@ -76,14 +78,9 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
     if (dataItem?.profileImage?.imageId.isNullOrEmpty().not()) {
       binding?.rivDeleteImage?.visible()
       binding?.rivChangeImage?.visible()
-      binding?.civTestimonialImage?.let {
-        baseActivity.glideLoad(
-          it,
-          dataItem?.profileImage?.actualImage,
-          R.drawable.placeholder_image
-        )
+      setImage(listOf(dataItem?.profileImage?.tileImage!!))
       }
-    } else {
+     else {
       binding?.rivDeleteImage?.gone()
     }
     binding?.etvDesignation?.setText(dataItem?.reviewerTitle)
@@ -107,7 +104,12 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
       }
     }
   }
-
+  private fun finishAndGoBack() {
+    val intent = Intent()
+    intent.putExtra(IntentConstant.IS_UPDATED.name, true)
+    requireActivity().setResult(AppCompatActivity.RESULT_OK, intent)
+    requireActivity().finish()
+  }
   private fun updateCreateProfile() {
     showProgress()
     if (isEdit) {
@@ -116,9 +118,10 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
         when (it.isSuccess()) {
           true -> {
             showShortToast(getString(R.string.updated))
-
+            finishAndGoBack()
           }
           else -> {
+            showShortToast(getString(R.string.unable_to_update_testimonial))
 
           }
         }
@@ -129,9 +132,10 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
         when (it.isSuccess()) {
           true -> {
             showShortToast(getString(R.string.testimonial_created))
+            finishAndGoBack()
           }
           else -> {
-
+    showShortToast(getString(R.string.unable_to_create_testimonial))
           }
         }
       })
