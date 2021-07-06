@@ -22,9 +22,7 @@ class StaffProfileViewHolder(binding: ItemStaffProfileBinding, val listener: OnI
       text = data.name?.capitalize(Locale.ROOT)
       paintFlags = Paint.UNDERLINE_TEXT_FLAG
     }
-    val specialisationsItem: ArrayList<String> = ArrayList()
-    data.specialisations?.forEach { specialisationsItem.add(it.value!!) }
-    binding.titleType.text = specialisationsItem.joinToString(separator = ",")
+    binding.titleType.text = data.specialData()
     if (item.isAvailable == true) {
       binding.btnShare.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blue_accent_10))
       binding.btnShare.setTextColor(ContextCompat.getColor(binding.root.context, R.color.accent_blue))

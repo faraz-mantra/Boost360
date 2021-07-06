@@ -511,23 +511,29 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   override fun onItemClick(pos: Int, item: BaseRecyclerItem) {
     when (currentSelectedFeature) {
-      BusinessFeatureEnum.UPDATES -> {
-        shareUpdates(item)
-      }
-      BusinessFeatureEnum.INVENTORY_SERVICE -> {
-        onClickedShareInventory(item)
-      }
-      BusinessFeatureEnum.PHOTOS -> {
-        onPhotoSelected(item)
-      }
-      BusinessFeatureEnum.BUSINESS_CARD -> {
-        Timber.i("pos - $pos item = $item")
-      }
+      BusinessFeatureEnum.UPDATES -> shareUpdates(item)
+      BusinessFeatureEnum.INVENTORY_SERVICE -> onClickedShareInventory(item)
+      BusinessFeatureEnum.PHOTOS -> onPhotoSelected(item)
+      BusinessFeatureEnum.STAFF -> shareStaff(item)
+      BusinessFeatureEnum.BUSINESS_CARD -> Timber.i("pos - $pos item = $item")
       else -> {
       }
     }
   }
 
+
+  private fun shareStaff(item: BaseRecyclerItem) {
+    val staff = item as? DataItem
+    if (NetworkUtils.isNetworkConnected()) {
+      val shareText = String.format(
+        "\uD83D\uDC81 *%s*%s\n\n%s",
+        staff?.name,
+        "\n${if (staff?.description.isNullOrEmpty()) "" else "_" + staff?.description + "_"}",
+        if (staff?.specialData().isNullOrEmpty()) "" else "*Specialization*:\n_${staff?.specialData()}_"
+      )
+      pathToUriGet(staff?.image, shareText, BusinessFeatureEnum.STAFF)
+    } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+  }
 
   private fun shareUpdates(item: BaseRecyclerItem) {
     val float = item as? FloatUpdate
@@ -540,7 +546,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun onClickedShareInventory(item: BaseRecyclerItem) {
     val product = item as? Product
     if (NetworkUtils.isNetworkConnected()) {
-      val shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n", product?.name?.trim { it <= ' ' }, product?.description,
+      val shareText = String.format("*%s*\n*%s* %s\n\n-------------\n%s\n", product?.name?.trim { it <= ' ' },
         "${product?.getProductDiscountedPriceOrPrice()}", "${if (product?.discountAmount?.toDoubleOrNull() ?: 0.0 != 0.0) "~${product?.getProductPrice()}~" else ""}", product?.description?.trim { it <= ' ' })
       pathToUriGet(product?.imageUri, shareText, BusinessFeatureEnum.INVENTORY_SERVICE)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()

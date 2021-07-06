@@ -243,8 +243,7 @@ class UserSessionManager(var activity: Context) {
 
   fun getStoreWidgets(): List<String>? {
     val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
-//    return (if (str.isNullOrEmpty()) ArrayList() else convertStringToList(str))
-    return arrayListOf("STAFFPROFILE","BOOSTKEYBOARD")
+    return (if (str.isNullOrEmpty()) ArrayList() else convertStringToList(str))
   }
 
   val sourceClientId: String?
