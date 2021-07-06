@@ -237,6 +237,8 @@ import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienc
 import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
 import static com.nowfloats.util.Constants.facebookPageDescription;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
+import static com.thinksity.Specific.CONTACT_EMAIL_ID;
+import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 //import com.nfx.leadmessages.ReadMessages;
 
@@ -1596,12 +1598,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     if (session.getFPEmail() != null) {
       intent.putExtra("email", session.getFPEmail());
     } else {
-      intent.putExtra("email", "ria@nowfloats.com");
+      intent.putExtra("email", CONTACT_EMAIL_ID);
     }
     if (session.getFPPrimaryContactNumber() != null) {
       intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
     } else {
-      intent.putExtra("mobileNo", "9160004303");
+      intent.putExtra("mobileNo", CONTACT_PHONE_ID);
     }
     if (buyItemKey != null && !buyItemKey.isEmpty()) intent.putExtra("buyItemKey", buyItemKey);
     intent.putExtra("profileUrl", session.getFPLogo());

@@ -8,7 +8,7 @@
     <string name="twitter_consumer_key" translatable="false">4CiUg5gcIbvYre8XjGd8GsElV</string>
     <string name="twitter_consumer_secret" translatable="false">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
 <!--    <string name="google_map_key" translatable="false">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>-->
-    <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string>
+    <string name="google_map_key" translatable="false">AIzaSyDsG-pWLEeACWxWJqHEu6-wGx5YXFzU5oE</string>
     <string name="app_name">Thinksity</string>
     <string name="action_settings">Settings</string>
     <string name="syncing_with_gmb" translatable="false">Syncing with Google My Business</string>
@@ -866,6 +866,8 @@
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
     <string name="interest">I\'m interested</string>
     <string name="contact_us_number">18601231233</string>
+    <string name="contact_us_number_n">1860-123-1233</string>
+    <string name="riya_boost_360_app">ria@boost360.app</string>
     <string name="message_soon">Start talking about your business, now!</string>
     <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
     <string name="store">Pricing Plans</string>
@@ -1751,6 +1753,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="add_ons">Add-ons</string>
     <string name="subscriptions">Newsletter Subscriptions</string>
     <string name="shared_user_label">NowFloatsBoost</string>
+    <string name="shared_user_key">com.nowfloats.kb.boostapp.sharedkey</string>
     <string name="business_apps">Business Apps</string>
 
     <string-array name="about_tab_items">
@@ -3048,10 +3051,15 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="choose_image">Choose Image</string>
     <string name="add_featured_image">ADD FEATURED IMAGE</string>
     <string name="logo_updated_successfully">Logo uploaded successfully.</string>
+    <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my Boost website’s web address/URL.</string>
+    <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make Boost website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
     <string name="add_logo">Add Logo</string>
   <string name="business_timings">Business Timings</string>
-
+    <string name="enable_boost_keyboard">Enable Boost Keyboard</string>
+    <string name="enter_the_domain_you_own_and_select_an_option_to_let_us_know_how_you_want_you_your_domain_to_be_mapped_to_this_boost_website">Enter the domain you own and select an option to let us know how you want you your domain to be mapped to this Boost website.</string>
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
 <!--    <string name="ir_statusBarColor">#ffb900</string>-->
+    <string name="ria_customer_mail">ria@nowfloats.com</string>
+    <string name="ria_customer_number">9160004303</string>
 
 </resources>

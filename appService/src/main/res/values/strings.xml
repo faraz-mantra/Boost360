@@ -588,6 +588,9 @@
   <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
 
 
+  <string name="done_">Done</string>
+  <string name="payment_gateway_not_added_please_add_first">Boost Payment gateway not added, please add first.</string>
+  <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your Boost website are processed through this payment gateway instead of default Boost Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>

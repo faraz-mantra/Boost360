@@ -171,7 +171,7 @@
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Details"
                         android:textAllCaps="true"
-                        android:textColor="#FFB900"
+                        android:textColor="@color/addons_text_color"
                         android:textFontWeight="800"
                         android:textSize="@dimen/txt_10sp" />
                 </LinearLayout>

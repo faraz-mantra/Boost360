@@ -27,6 +27,8 @@ googleServices { disableVersionCheck = false }
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
 }
 allprojects {
     apply plugin: 'maven'
@@ -146,7 +148,11 @@ android {
             versionName "6.0.3"
             applicationId "com.biz2.nowfloats"
             dimension "default"
-            buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
+        }
+        jioonline {
+            versionName "1.0.0"
+            applicationId "com.jio.online"
+            dimension "default"
         }
     }
     packagingOptions {
@@ -286,6 +292,8 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
     //AppsFlyer SDK

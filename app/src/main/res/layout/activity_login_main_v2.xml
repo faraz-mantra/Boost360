@@ -18,7 +18,7 @@
       android:id="@+id/im_back_button"
       android:layout_width="40dp"
       android:layout_height="40dp"
-      android:layout_marginStart="4dp"
+      android:layout_marginLeft="4dp"
       android:layout_marginTop="20dp"
       android:padding="10dp"
       android:src="@drawable/back_button_2" />
@@ -28,11 +28,11 @@
       android:id="@+id/tv_headingText"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginStart="14dp"
+      android:layout_marginLeft="14dp"
       android:layout_marginTop="10dp"
       android:fontFamily="@font/open_sans_bold"
-      android:text="@string/ready_to_log_in"
-      android:textColor="@color/yellow"
+      android:text="Ready to Log in?"
+      android:textColor="@color/login_title"
       android:textSize="30sp" />
 
     <ScrollView
@@ -59,7 +59,7 @@
             android:id="@+id/ll_1"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -67,8 +67,8 @@
               android:id="@+id/userNameIcon"
               android:layout_width="15dp"
               android:layout_height="wrap_content"
-              android:layout_marginStart="14dp"
-              android:layout_marginEnd="10dp"
+              android:layout_marginLeft="14dp"
+              android:layout_marginRight="10dp"
               android:src="@drawable/person_placeholder" />
 
             <EditText
@@ -92,9 +92,9 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/ll_1"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/yellow" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/login_input_underline" />
 
         </RelativeLayout>
 
@@ -108,7 +108,7 @@
             android:id="@+id/ll_2"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -116,8 +116,8 @@
               android:id="@+id/passwordIcon"
               android:layout_width="15dp"
               android:layout_height="wrap_content"
-              android:layout_marginStart="14dp"
-              android:layout_marginEnd="10dp"
+              android:layout_marginLeft="14dp"
+              android:layout_marginRight="10dp"
               android:src="@drawable/password_placeholder" />
 
             <LinearLayout
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:fontFamily="@font/open_sans"
-                android:text="@string/forgot"
+                android:text="Forgot?"
                 android:textColor="#4a4a4a" />
             </LinearLayout>
           </LinearLayout>
@@ -158,9 +158,9 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/ll_2"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/yellow" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/login_input_underline" />
         </RelativeLayout>
 
         <Button
@@ -170,7 +170,7 @@
           android:layout_marginTop="40dp"
           android:background="@color/primaryColor"
           android:elevation="5dp"
-          android:text="@string/log_in_heading"
+          android:text="LOG IN"
           android:textSize="6sp"
           android:visibility="gone" />
 
@@ -179,13 +179,13 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
-          android:layout_marginStart="4dp"
+          android:layout_marginLeft="4dp"
           android:layout_marginTop="50dp"
-          android:layout_marginEnd="4dp"
-          android:elevation="5dp"
+          android:layout_marginRight="4dp"
+          app:cardElevation="@dimen/_1sdp"
           android:orientation="vertical"
           app:cardBackgroundColor="@color/primaryColor"
-          app:cardCornerRadius="24dp">
+          app:cardCornerRadius="@dimen/_4sdp">
 
           <TextView
             android:layout_width="wrap_content"
@@ -236,7 +236,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="@string/via_facebook"
+                android:text="Via Facebook"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -274,7 +274,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="@string/via_google"
+                android:text="Via Google"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
             </LinearLayout>
@@ -290,8 +290,8 @@
           android:layout_marginTop="30dp"
           android:layout_marginBottom="20dp"
           android:backgroundTint="#fff"
-          app:cardCornerRadius="25dp"
-          app:cardElevation="2dp"
+          app:cardCornerRadius="@dimen/_4sdp"
+          app:cardElevation="@dimen/_1sdp"
           app:cardUseCompatPadding="true">
 
           <LinearLayout
@@ -299,9 +299,9 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:paddingStart="@dimen/_20sdp"
-            android:paddingTop="@dimen/_10sdp"
+            android:paddingTop="@dimen/_8sdp"
             android:paddingEnd="@dimen/_20sdp"
-            android:paddingBottom="@dimen/_10sdp">
+            android:paddingBottom="@dimen/_8sdp">
 
             <ImageView
               android:layout_width="20dp"
@@ -314,7 +314,7 @@
               android:layout_gravity="center"
               android:layout_marginStart="@dimen/_10sdp"
               android:fontFamily="@font/open_sans_bold"
-              android:text="@string/via_mobile_otp"
+              android:text="Via Mobile OTP"
               android:textColor="#4a4a4a"
               android:textStyle="bold" />
           </LinearLayout>

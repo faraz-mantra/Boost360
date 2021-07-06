@@ -1,5 +1,10 @@
 <resources>
   <string name="app_name">Resources</string>
-    <string name="appointment_type">Appointment Type</string>
+  <string name="appointment_type">Appointment Type</string>
   <string name="pick_a_type_of_appointment_from_the_options_below">Pick a type of appointment from the options below</string>
+  <string name="contact_us_number">18601231233</string>
+  <string name="boost_360_tnc_presignup">https://www.getboost360.com/tnc?src=android&amp;stage=presignup</string>
+  <string name="boost_360_tag_domain">nowfloats.com</string>
+  <string name="ria_customer_mail">ria@nowfloats.com</string>
+  <string name="ria_customer_number">9160004303</string>
 </resources>

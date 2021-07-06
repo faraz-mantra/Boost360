@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,6 +66,8 @@ public class OrderAnalyticsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_order_analytics, container, false);
         pieChart = root.findViewById(R.id.pieChart);
+        pieChart.setCenterTextColor(ContextCompat.getColor(getActivity(),R.color.colorAccent));
+        pieChart.setNoDataTextColor(ContextCompat.getColor(getActivity(),R.color.colorAccent));
         tvTitle = root.findViewById(R.id.tvTitle);
         rvLegend = root.findViewById(R.id.rvLegend);
         mFormat = new DecimalFormat("#########");

@@ -40,7 +40,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:background="#FF9F00"
+                android:background="@color/addons_toolbar"
                 android:contentInsetStart="0dp"
                 android:contentInsetEnd="0dp"
                 app:contentInsetEnd="0dp"
@@ -225,7 +225,7 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:text="@string/view_my_add_ons"
-                    android:textColor="#ffb900"
+                    android:textColor="@color/addons_text_color"
                     android:textSize="@dimen/txt_16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -411,7 +411,7 @@
                         android:fontFamily="@font/open_sans"
                         android:text="Compare"
                         android:textStyle="bold"
-                        android:textColor="#FFB900"
+                        android:textColor="@color/addons_text_color"
                         android:textFontWeight="600"
                         android:textAllCaps="true"
                         android:layout_marginStart="@dimen/_4sdp"
@@ -523,7 +523,7 @@
                     android:fontFamily="@font/open_sans"
                     android:textStyle="bold"
                     android:textAllCaps="false"
-                    android:textColor="#FFB900"
+                    android:textColor="@color/addons_text_color"
                     android:textFontWeight="600"
                     android:textSize="@dimen/txt_16sp" />
             </LinearLayout>
@@ -1051,7 +1051,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:text="Website Chatbot"
-                            android:textColor="#FFB900"
+                            android:textColor="@color/addons_text_color"
                             android:textSize="@dimen/txt_9sp"
                             android:textStyle="bold" />
 
@@ -1188,7 +1188,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:text="Invite your friends to Boost 360!"
-                                android:textColor="#FF9F00"
+                                android:layout_marginTop="@dimen/_25sdp"
+                                android:textColor="@color/addons_toolbar"
                                 android:textSize="@dimen/txt_18sp"
                                 android:textStyle="bold" />
 
@@ -1454,7 +1455,7 @@
                         android:paddingEnd="@dimen/_30sdp"
                         android:paddingBottom="@dimen/_10sdp"
                         android:text="Share your feedback"
-                        android:textColor="#FFB900"
+                        android:textColor="@color/addons_text_color"
                         android:textStyle="bold"
                         android:textSize="@dimen/txt_13sp"
                         android:textFontWeight="700"/>

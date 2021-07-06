@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/vw_search_bar"
       style="@style/match_wrap"
-      android:background="@color/orange"
+      android:background="@color/colorPrimary"
       android:paddingStart="@dimen/size_20"
       android:paddingEnd="@dimen/size_20"
       android:paddingBottom="@dimen/size_20"

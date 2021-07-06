@@ -19,6 +19,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -53,6 +54,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   override fun onCreateView() {
     hideToolBar()
     super.onCreateView()
+    baseActivity.window.statusBarColor = getColor(R.color.website_toolbar_color)
     session = UserSessionManager(baseActivity)
     getWebsiteData()
     setOnClickListener(
@@ -79,7 +81,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private fun setUserData() {
     val desc = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
     binding?.txtDesc?.apply {
-      if (desc.isNullOrEmpty().not()) visible() else invisible()
+      if (desc.isNullOrEmpty().not()) visible() else gone()
       text = desc
     }
     binding?.txtBusinessName?.text =
@@ -234,7 +236,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     }
     binding?.txtOpenClose?.text =
       resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
-    binding?.ellipseOpenClose?.setTintColor(
+    binding?.txtOpenClose?.setTextColor( if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_F40000))
+    binding?.ellipseOpenClose?.setColorFilter(
       getColor(
         baseActivity,
         if (isOpen) R.color.green_light else R.color.red_F40000

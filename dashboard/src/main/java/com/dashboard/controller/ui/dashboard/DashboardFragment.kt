@@ -3,12 +3,14 @@ package com.dashboard.controller.ui.dashboard
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.*
 import android.net.Uri
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide
@@ -189,23 +191,28 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getPremiumBanner() {
-    setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
-    setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
-    viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
-      val response = it as? DashboardPremiumBannerResponse
-      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val data = response.data?.get(0)
-        if (data?.academyBanners.isNullOrEmpty().not()) {
-          saveDataAcademy(data?.academyBanners!!)
-          setDataRiaAcademy(data.academyBanners!!)
+    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+      setDataMarketBanner(ArrayList())
+      setDataRiaAcademy(ArrayList())
+    } else {
+      setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
+      setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
+      viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
+        val response = it as? DashboardPremiumBannerResponse
+        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+          val data = response.data?.get(0)
+          if (data?.academyBanners.isNullOrEmpty().not()) {
+            saveDataAcademy(data?.academyBanners!!)
+            setDataRiaAcademy(data.academyBanners!!)
+          }
+          if (data?.marketplaceBanners.isNullOrEmpty().not()) {
+            val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
+            saveDataMarketPlace(marketBannerFilter)
+            setDataMarketBanner(marketBannerFilter)
+          }
         }
-        if (data?.marketplaceBanners.isNullOrEmpty().not()) {
-          val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
-          saveDataMarketPlace(marketBannerFilter)
-          setDataMarketBanner(marketBannerFilter)
-        }
-      }
-    })
+      })
+    }
   }
 
   private fun refreshData() {
@@ -274,8 +281,33 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
         }
-      } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
+        setTopBackgroundView(isHighDrScore)
+      } else {
+        if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true))
+          (baseActivity as? DashboardActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimary)
+        showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
+      }
     })
+  }
+
+  private fun setTopBackgroundView(isHigh: Boolean) {
+    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+      val colorD = if (isHigh) R.color.dashboard_high_score_pink else R.color.white_smoke_1
+      (baseActivity as? DashboardActivity)?.changeTheme(colorD, colorD, isHigh.not())
+      binding?.viewBgInner?.setTintColor(ContextCompat.getColor(baseActivity, colorD))
+      binding?.viewBgOuter?.setImageResource(if (isHigh) R.drawable.ic_fill_bg else R.drawable.ic_fill_bg_primary)
+      binding?.txtBusinessName?.setTextColor(ContextCompat.getColor(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a))
+      binding?.txtDomainName?.apply {
+        setTextColor(ContextCompat.getColor(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a))
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+          compoundDrawableTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a)
+        }
+      }
+      binding?.ctvImproveScore?.setTextColor(getColor(R.color.colorAccent))
+      binding?.btnVisitingCard?.background = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_btn_round_blue_stroke else R.drawable.ic_btn_round_white_stroke)
+      binding?.txtVisitingCard?.setTextColor(ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.white))
+      binding?.txtNotification?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.accent_light_red else R.color.red_light_1)
+    }
   }
 
   private fun visibleViewHighLow(isHigh: Boolean) {
@@ -632,7 +664,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun marketPlaceBannerClick(data: DashboardMarketplaceBanner) {
     if (data.ctaWebLink.isNullOrEmpty().not()) {
-      if (data.ctaWebLink!!.contains("com.biz2.nowfloats.keyboard.home")) {
+      if (data.ctaWebLink!!.contains("com.jio.online.keyboard.home")) {
         WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, DEEP_LINK, NO_EVENT_VALUE)
         val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
         if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
@@ -862,7 +894,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS_CLICK)
       GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(session, "MAP_VISITS", WEBSITE_REPORT_ADDRESS_VISITS_CLICK)
       GrowthStatsData.GrowthType.NEWSLETTER_SUBSCRIPTION -> baseActivity.startSubscriber(session)
-//      GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
+      GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
     }
   }
 

@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/all_side_curve_percentage_bg"
                     tools:text="0%"
-                    android:textColor="@color/common_text_color"
+                    android:textColor="@color/addons_text_color"
                     android:textSize="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_7sdp"/>
 

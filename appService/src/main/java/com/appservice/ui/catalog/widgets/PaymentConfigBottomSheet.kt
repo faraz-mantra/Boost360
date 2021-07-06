@@ -49,7 +49,7 @@ class PaymentConfigBottomSheet : BaseBottomSheetDialog<BottomShettPaymentConfigu
           paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
           binding?.rbExternalUrl?.isChecked = false
           binding?.rbBoostPaymentGateway?.isChecked = binding?.rbBoostPaymentGateway?.isChecked?.not() ?: false
-        } else showLongToast("Boost Payment gateway not added, please add first.")
+        } else showLongToast(getString(R.string.payment_gateway_not_added_please_add_first))
       }
       binding?.vwExternalUrl -> {
         paymentType = CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value

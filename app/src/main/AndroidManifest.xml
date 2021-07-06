@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  package="com.thinksity"
-  android:sharedUserId="com.nowfloats.kb.boostapp.sharedkey"
-  android:sharedUserLabel="@string/shared_user_label">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.thinksity"
+    android:sharedUserId="@string/shared_user_key"
+    android:sharedUserLabel="@string/shared_user_label">
 
   <permission
     android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -782,7 +782,7 @@
     </activity> <!-- PreSignUp module -->
     <activity
       android:name="com.boost.presignup.SplashActivity"
-      android:label="@string/title_activity_splash_screen_"
+      android:label="@string/app_name"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Splash"

@@ -749,8 +749,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
   }
 
   private void showBusinessProfileCreationStartScreen(String userProfileId) {
-//    WebEngageController.initiateUserLogin(userProfileId);
-//    WebEngageController.setUserContactInfoProperties(session);
+    WebEngageController.initiateUserLogin(userProfileId);
+    WebEngageController.setUserContactInfoProperties(session);
 
     Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
     signupConfirmationPage.putExtra("profileUrl", "");

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.dashboard.AppDashboardApplication
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
@@ -267,12 +268,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           toolbarPropertySet(pos)
         }
       }
-      3 -> {
-        val dataAddOns = welcomeData?.get(2)
-        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
-        else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
-
-      }
+//      3 -> {
+//        val dataAddOns = welcomeData?.get(2)
+//        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
+//        else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+//
+//      }
     }
   }
 
@@ -302,14 +303,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       1 -> showToolbar(getString(R.string.my_website))
       2 -> showToolbar(getString(R.string.my_enquiry))
       else -> {
-        changeTheme(R.color.colorPrimary, R.color.colorPrimary)
+        if (packageName.equals("com.jio.online", ignoreCase = true).not()) changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         getToolbar()?.apply { visibility = View.GONE }
       }
     }
   }
 
   private fun showToolbar(title: String) {
-    changeTheme(R.color.black_4a4a4a, R.color.black_4a4a4a)
+    changeTheme(R.color.black_4a4a4a_jio, R.color.black_4a4a4a_jio,false)
     getToolbar()?.apply {
       visibility = View.VISIBLE
       setTitle(title)
@@ -324,8 +325,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
-      3 -> checkWelcomeShowScreen(pos)
-      4 -> {
+//      3 -> checkWelcomeShowScreen(pos)
+      3 -> {
         binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
         WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
       }
@@ -486,8 +487,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
 
 fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
-  val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+  var rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
+  if(rootAliasUri.isNullOrEmpty().not()){
+    rootAliasUri = rootAliasUri?.replace("http://", "https://")
+  }
+  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.${AppDashboardApplication.instance.resources.getString(R.string.boost_360_tag_domain)}"
   return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
     return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
     else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
