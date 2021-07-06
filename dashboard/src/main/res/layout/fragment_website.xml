@@ -80,7 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4"
+            tools:layout_editor_absoluteX="0dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/main_content"
@@ -104,8 +105,8 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@drawable/bg_rounded_stroke_website">
+                        android:background="@drawable/bg_rounded_stroke_website"
+                        android:orientation="vertical">
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
@@ -197,12 +198,12 @@
                                 android:id="@+id/txt_desc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="end"
                                 android:layout_marginTop="@dimen/size_8"
+                                android:ellipsize="end"
                                 android:includeFontPadding="false"
                                 android:maxLines="2"
-                                android:visibility="visible"
                                 android:textColor="@color/website_desc"
+                                android:visibility="visible"
                                 app:textType="CAPTION"
                                 tools:text="Dr. Shravans clinic is located in Jubilee Hills, Hyderabad. The clinic was establised in 2006 and is one of the most..." />
 
@@ -213,15 +214,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/size_36"
                             android:layout_gravity="bottom"
-                            android:layout_marginBottom="1dp"
                             android:layout_marginStart="1dp"
+                            android:layout_marginTop="@dimen/size_10"
                             android:layout_marginEnd="1dp"
+                            android:layout_marginBottom="1dp"
                             android:background="@drawable/bg_rounded_bottom"
                             android:backgroundTint="@color/website_button_tint"
                             android:fontFamily="@font/semi_bold"
                             android:gravity="center_vertical"
                             android:paddingStart="@dimen/size_10"
-                            android:layout_marginTop="@dimen/size_10"
                             android:text="@string/business_profile"
                             android:textAllCaps="true"
                             android:textColor="@color/text_color_light_white"
@@ -331,12 +332,14 @@
                             app:textType="CAPTION"
                             tools:targetApi="p" />
 
-                        <com.framework.views.customViews.CustomImageView
+                        <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/ellipse_open_close"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/size_20"
+                            android:layout_height="@dimen/size_20"
                             android:layout_marginEnd="@dimen/size_14"
-                            app:srcCompat="@drawable/ic_ellipse_website_d" />
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/green_dot_json" />
 
                         <com.framework.views.customViews.CustomImageView
                             android:layout_width="wrap_content"
@@ -354,12 +357,12 @@
                         android:focusable="true"
                         android:foreground="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/size_12">
+                        android:orientation="horizontal">
 
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/size_12"
                             android:layout_weight="1"
                             android:fontFamily="@font/semi_bold"
                             android:maxLines="2"
@@ -368,24 +371,17 @@
                             android:textColor="@color/text_color_light_white"
                             tools:targetApi="p" />
 
-                        <com.framework.views.customViews.CustomTextView
+                        <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/text_new"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/size_10"
-                            android:background="@drawable/bg_rounded_accent_6"
-                            android:gravity="center"
-                            android:paddingHorizontal="@dimen/size_8"
-                            android:paddingVertical="@dimen/size_2"
-                            android:text="@string/new_"
-                            android:textColor="@color/white"
-                            android:textSize="10sp"
-                            app:textAllCaps="true" />
-
-
+                            android:layout_width="@dimen/size_90"
+                            android:layout_height="@dimen/size_45"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/new_badge" />
                         <com.framework.views.customViews.CustomImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/size_12"
                             app:srcCompat="@drawable/ic_arrow_trans_website_d" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>

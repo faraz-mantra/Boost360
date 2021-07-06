@@ -236,7 +236,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     }
     binding?.txtOpenClose?.text =
       resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
-    binding?.ellipseOpenClose?.setTintColor(
+    binding?.txtOpenClose?.setTextColor( if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_F40000))
+    binding?.ellipseOpenClose?.setColorFilter(
       getColor(
         baseActivity,
         if (isOpen) R.color.green_light else R.color.red_F40000
