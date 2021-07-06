@@ -147,14 +147,6 @@ fun CustomImageView.rotateImage(isExpanded: Boolean) {
   }
 }
 
-fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
-  var lastClickTime: Long = 0
-  this.setOnClickListener {
-    if (SystemClock.elapsedRealtime() - lastClickTime < blockInMillis) return@setOnClickListener
-    lastClickTime = SystemClock.elapsedRealtime()
-    listener.onClick(this)
-  }
-}
 
 fun NestedScrollView.scrollToTopBottom(image: CustomImageView) {
   val lastChild = getChildAt(childCount - 1)

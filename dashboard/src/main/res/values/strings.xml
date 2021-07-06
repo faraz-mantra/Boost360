@@ -197,4 +197,6 @@
   <string name="active">Active</string>
   <string name="inactive">Inactive</string>
   <string name="update_business_image">Update Business Logo</string>
+    <string name="choose_primary_font">Choose Primary Font</string>
+  <string name="choose_secondary_font">Choose Secondary Font</string>
 </resources>

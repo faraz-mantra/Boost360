@@ -60,27 +60,27 @@
           app:textType="HEADING_6" />
 
         <RadioGroup
-            android:id="@+id/radioGroup"
-            style="@style/match_wrap"
-            android:layout_marginTop="@dimen/size_10"
-            android:orientation="vertical">
+          android:id="@+id/radioGroup"
+          style="@style/match_wrap"
+          android:layout_marginTop="@dimen/size_10"
+          android:orientation="vertical">
 
           <com.framework.views.customViews.CustomRadioButton
-              android:id="@+id/radio_feedback"
-              style="@style/RadioButtonStyle"
-              android:buttonTint="@color/colorAccent"
-              android:checked="true"
-              android:text="@string/yes_send_feedback_link"
-              android:textColor="@color/black_4a4a4a" />
+            android:id="@+id/radio_feedback"
+            style="@style/RadioButtonStyle"
+            android:buttonTint="@color/colorAccent"
+            android:checked="true"
+            android:text="@string/yes_send_feedback_link"
+            android:textColor="@color/black_4a4a4a" />
 
 
           <com.framework.views.customViews.CustomRadioButton
-              android:id="@+id/radio_no_feedback"
-              style="@style/RadioButtonStyle"
-              android:layout_marginTop="@dimen/size_4"
-              android:buttonTint="@color/colorAccent"
-              android:text="@string/no_don_t_need_any_feedback"
-              android:textColor="@color/black_4a4a4a" />
+            android:id="@+id/radio_no_feedback"
+            style="@style/RadioButtonStyle"
+            android:layout_marginTop="@dimen/size_4"
+            android:buttonTint="@color/colorAccent"
+            android:text="@string/no_don_t_need_any_feedback"
+            android:textColor="@color/black_4a4a4a" />
 
         </RadioGroup>
 
@@ -150,18 +150,19 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent">
 
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancel"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:layout_marginEnd="@dimen/size_10"
-          android:background="@color/white"
-          android:text="@string/go_back" />
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_20"
+        android:text="@string/go_back"
+        android:textColor="@color/white" />
+
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:text="@string/confirmed_delivered"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:text="@string/confirmed_delivered"
+        android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

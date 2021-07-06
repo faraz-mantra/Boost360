@@ -50,6 +50,14 @@
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Pre.Signin"
       android:windowSoftInputMode="adjustPan" />
+
+    <receiver
+      android:name="com.framework.smsVerification.SMSReceiver"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+      </intent-filter>
+    </receiver>
   </application>
 
 </manifest>

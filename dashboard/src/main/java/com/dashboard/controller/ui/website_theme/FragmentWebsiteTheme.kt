@@ -131,9 +131,13 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
     if (this.primaryItem != null) {
       binding?.ctfPrimaryFont?.setText("${this.primaryItem?.description} ${if (this.primaryItem?.defaultFont == true) "(default)" else ""}")
+    }else{
+      binding?.ctfPrimaryFont?.setText(getString(R.string.choose_primary_font))
     }
     if (this.secondaryItem != null) {
       binding?.ctfSecondaryFont?.setText("${this.secondaryItem?.description} ${if (this.secondaryItem?.defaultFont == true) "(default)" else ""}")
+    }else{
+      binding?.ctfSecondaryFont?.setText(getString(R.string.choose_secondary_font))
     }
   }
 

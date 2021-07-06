@@ -30,7 +30,7 @@
           android:layout_height="wrap_content"
           android:drawablePadding="@dimen/size_4"
           android:includeFontPadding="false"
-          android:text="Payment Configuration"
+          android:text="@string/payment_configuration"
           android:textColor="@color/white"
           app:fontFamily="@font/semi_bold"
           app:textType="HEADING_4"
@@ -41,7 +41,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:includeFontPadding="false"
-          android:text="Select, how you want to receive money for your bookings."
+          android:text="@string/select_how_you_want_to_receive_money_for_your_bookings"
           android:textColor="@color/white"
           android:textSize="12sp"
           app:fontFamily="@font/italic"
@@ -153,7 +153,7 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="My custom payment gateway"
+              android:text="@string/my_custom_payment_gateway"
               android:textColor="@color/black_2A2A2A"
               android:textSize="19sp"
               app:fontFamily="@font/semi_bold" />
@@ -162,7 +162,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="Get direct payment in your bank account instantly"
+              android:text="@string/get_direct_payment_in_your_bank_account_instantly"
               android:textColor="@color/black_4a4a4a"
               android:textSize="12sp"
               app:fontFamily="@font/regular" />
@@ -243,7 +243,7 @@
           android:gravity="center"
           android:background="@null"
           android:stateListAnimator="@null"
-          android:text="Cancel"
+          android:text="@string/cancel"
           android:textAllCaps="true"
           android:textColor="@color/pinkish_grey"
           app:textType="HEADING_6" />
@@ -256,7 +256,7 @@
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:stateListAnimator="@null"
-          android:text="Done"
+          android:text="@string/done"
           android:textAllCaps="true"
           android:textColor="@color/white"
           app:textType="HEADING_6" />
