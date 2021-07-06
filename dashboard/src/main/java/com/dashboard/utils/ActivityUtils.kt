@@ -467,8 +467,8 @@ fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
 
 fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: Boolean = false) {
   try {
-    WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.boost.presignup.PreSignUpActivity"))
+    WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, START_VIEW, TO_BE_ADDED)
+    val webIntent = Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
     if (isClearTask) webIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
