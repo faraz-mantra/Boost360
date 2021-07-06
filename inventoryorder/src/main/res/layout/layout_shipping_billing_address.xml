@@ -32,7 +32,7 @@
       android:textColor="@color/black_4a4a4a"
       app:fontFamily="@font/regular"
       app:textType="CAPTION"
-      tools:text="24/10 City Center, B-Zone, Kolkata, West Bengal - 100023" />
+      tools:text="24/10 City Center, B-Zone, Kolkata, West Bengal - 100023 dsadasiusdjabsfhabfdajhfbaskjfbadsjkfdbasdjhfbadfhjbdajfhadbfjhabfhasjbfads" />
 
 
     <com.framework.views.customViews.CustomTextView

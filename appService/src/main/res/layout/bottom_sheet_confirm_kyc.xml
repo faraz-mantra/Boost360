@@ -23,7 +23,7 @@
         android:id="@+id/tv_branch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please confirm below info"
+        android:text="@string/please_confirm_below_info"
         android:textColor="@color/greyish_brown"
         app:fontFamily="@font/semi_bold"
         app:textType="CAPTION" />
@@ -32,7 +32,7 @@
         android:id="@+id/tv_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Information once confirmed\nwill be sent for internal verification!"
+        android:text="@string/information_once_confirmed_nwill_be_sent_for_internal_verification"
         android:textColor="@color/colorAccent"
         app:textType="HEADING_4" />
 
@@ -194,7 +194,7 @@
         android:layout_marginTop="@dimen/size_40"
         android:gravity="center"
         android:paddingVertical="@dimen/size_14"
-        android:text="Confirm and Submit"
+        android:text="@string/confirm_and_submit"
         android:textAllCaps="true"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent" />
@@ -208,7 +208,7 @@
         android:background="@drawable/rounded_refresh_btn"
         android:gravity="center"
         android:paddingVertical="@dimen/size_14"
-        android:text="Cancel and Review"
+        android:text="@string/cancel_and_review"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"

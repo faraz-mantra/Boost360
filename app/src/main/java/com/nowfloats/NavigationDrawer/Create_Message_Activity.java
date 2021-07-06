@@ -69,7 +69,6 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
-import com.nowfloats.util.EventKeys;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -98,7 +97,7 @@ import static com.framework.webengageconstant.EventLabelKt.HAS_CLICKED_SUBSCRIBE
 import static com.framework.webengageconstant.EventLabelKt.HAS_CLICKED_TWITTER_SHARING_ON;
 import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventNameKt.ADDED_PHOTO_IN_UPDATE;
-import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_UPDATE_CREATE;
 import static com.framework.webengageconstant.EventNameKt.FB_PAGE_SHARING_ACTIVATED;
 import static com.framework.webengageconstant.EventNameKt.POST_AN_UPDATE;
 import static com.framework.webengageconstant.EventNameKt.POST_AN_UPDATE_CANCLED;
@@ -175,7 +174,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     title_card = findViewById(R.id.title_card);
     message_card = findViewById(R.id.message_card_view);
     ivSpeakUpdate = findViewById(R.id.iv_speak_update);
-    WebEngageController.trackEvent(EVENT_NAME_UPDATE, PAGE_VIEW, session.getFpTag());
+    WebEngageController.trackEvent(EVENT_NAME_UPDATE_CREATE, PAGE_VIEW, session.getFpTag());
     TextView shareText = findViewById(R.id.shareTextView);
     tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
     if (session.getISEnterprise().equals("true")) {

@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/size_5"
-            android:text="Current selection" />
+            android:text="@string/current_selection" />
 
         <LinearLayout
             android:id="@+id/bottom_view"
@@ -42,7 +42,7 @@
                 android:id="@+id/ctv_product_count"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/size_8"
-                android:text="4 products under this category" />
+                android:text="@string/_4_products_under_this_category" />
 
             <com.framework.views.customViews.CustomImageView
                 android:layout_width="wrap_content"

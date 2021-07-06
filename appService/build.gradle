@@ -40,5 +40,4 @@ android {
 dependencies {
     api project(path: ':resources')
     api project(path: ':inventoryorder')
-
 }
