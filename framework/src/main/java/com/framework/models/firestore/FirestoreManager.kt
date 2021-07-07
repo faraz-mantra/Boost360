@@ -10,6 +10,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.framework.base.BaseResponse
+import com.framework.models.firestore.restApi.model.CreateDrRequest
+import com.framework.models.firestore.restApi.model.UpdateDrRequest
+import com.framework.models.firestore.restApi.repository.DrScoreRepository
 import com.framework.models.toLiveData
 import io.reactivex.Observable
 import com.google.gson.reflect.TypeToken
@@ -77,9 +80,9 @@ object FirestoreManager {
   fun updateDrScoreIfNull() {
     if (this.model == null) {
       this.model = DrScoreModel()
-      val docRef = getDocumentReference()
-      updateDocument(docRef, this.model.serializeToMap())
-//      if (this.fpTag.isNotEmpty()) DrScoreRepository.createDrScoreData(CreateDrRequest(fpTag = this.fpTag)).apiCreateUpdate()
+//      val docRef = getDocumentReference()
+//      updateDocument(docRef, this.model.serializeToMap())
+      if (this.fpTag.isNotEmpty()) DrScoreRepository.createDrScoreData(CreateDrRequest(fpTag = this.fpTag)).apiCreateUpdate()
     }
   }
 
@@ -100,13 +103,13 @@ object FirestoreManager {
 
   fun updateDocument() {
     if (this.model != null && !TextUtils.isEmpty(this.model?.client_id) && this.model?.metricdetail?.currentValueUpdate != null) {
-      updateDocument(getDocumentReference(), this.model.serializeToMap())
-//      DrScoreRepository.updateDrScoreData(
-//        UpdateDrRequest(
-//          this.model?.client_id, this.model?.fp_tag, this.model?.metricdetail?.currentValueUpdate?.key,
-//          this.model?.metricdetail?.currentValueUpdate?.value
-//        )
-//      ).apiCreateUpdate()
+//      updateDocument(getDocumentReference(), this.model.serializeToMap())
+      DrScoreRepository.updateDrScoreData(
+        UpdateDrRequest(
+          this.model?.client_id, this.model?.fp_tag, this.model?.metricdetail?.currentValueUpdate?.key,
+          this.model?.metricdetail?.currentValueUpdate?.value
+        )
+      ).apiCreateUpdate()
     }
   }
 
@@ -130,6 +133,7 @@ object FirestoreManager {
   fun Observable<BaseResponse>.apiCreateUpdate() {
     this.toLiveData().observeForever {
       if (it.isSuccess()) {
+        readDrScoreDocument()
         Log.d("apiCreateUpdate", "Success: ${it.anyResponse?.toString()}")
       } else Log.d("apiCreateUpdate", "error: ${it.message()}")
     }

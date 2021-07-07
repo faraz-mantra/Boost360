@@ -1151,10 +1151,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="your_name">Your Name</string>
-    <string name="business_name">Business Name</string>
+    <string name="business_name">Business name</string>
     <string name="post_on_website">Post to your website</string>
-    <string name="business_category">Business Category</string>
-    <string name="business_description">Business Description</string>
+    <string name="business_category">Business category</string>
+    <string name="business_description">Business description</string>
     <string name="login">Login</string>
     <string name="tweet">Tweet</string>
     <string name="logout">Logout</string>
@@ -2745,7 +2745,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="business_category_">Business Category</string>
     <string name="business_name_">Business Name</string>
     <string name="social_share">Social Share</string>
-    <string name="business_address">Business Address</string>
+    <string name="business_address">Business address</string>
     <string name="post_five_updates">Post 5 Updates</string>
     <string name="message_regularly_and_relatively">Message regularly and relevantly</string>
     <string name="add_business_logo">Add a business logo</string>

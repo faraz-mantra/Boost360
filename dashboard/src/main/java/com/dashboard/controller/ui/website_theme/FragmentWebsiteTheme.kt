@@ -348,7 +348,6 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
         TypeSuccess.DISCARD.name -> {
           websiteThemePublishBottomSheet.dismiss()
           WebEngageController.trackEvent(WEBSITE_STYLE_CANCEL, CLICK, NO_EVENT_VALUE)
-
           }
           TypeSuccess.PUBLISH_CHANGES.name -> {
             websiteThemePublishBottomSheet.dismiss()

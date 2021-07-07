@@ -95,15 +95,6 @@ fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholde
   }
 }
 
-fun Context.glideLoad(mImageView: CustomImageView, imgID: Int){
-  try {
-    Glide.with(this).load(imgID).override(600, 600).into(mImageView);
-  }catch (e:Exception){
-    e.printStackTrace()
-  }
-}
-
-
 fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false) {
   try {
     val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)

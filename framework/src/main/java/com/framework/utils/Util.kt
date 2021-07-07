@@ -2,6 +2,7 @@ package com.framework.utils
 
 import android.app.Activity
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.graphics.ColorFilter
 import android.os.Build
 import android.os.SystemClock
 import android.text.*
@@ -11,8 +12,15 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.views.customViews.CustomTextView
 import java.text.NumberFormat
 import java.util.*
@@ -108,4 +116,13 @@ fun AppCompatActivity.getNavigationBarHeight(): Int {
   return if (resourceId > 0 && !hasMenuKey) {
     resources.getDimensionPixelSize(resourceId)
   } else 0
+}
+fun LottieAnimationView.changeLayersColor(
+  @ColorRes colorRes: Int
+) {
+  val color = ContextCompat.getColor(context, colorRes)
+  val filter = SimpleColorFilter(color)
+  val keyPath = KeyPath("**")
+  val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
+  addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
 }

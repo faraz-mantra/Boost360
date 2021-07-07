@@ -75,7 +75,7 @@
   <string name="perform_online_business">How your business has performed online.</string>
   <string name="website_report_description">Learn how to make Boost 360 work for you.</string>
   <string name="share_business_card">Share Business card</string>
-  <string name="website_pages_and_widgets">Website pages and widgets</string>
+  <string name="website_pages_and_widgets">Website Pages and Widgets</string>
   <string name="for_better_engagement_and_traffic_desc">Update regularly for better engagement and traffic.</string>
   <string name="press_again_exit">Press again to exit</string>
   <string name="download_file_banner">Downloading the file...</string>
@@ -137,7 +137,7 @@
   <string name="the_font_you_want_to_change_as_secondary">The font you want to change as secondary.</string>
   <string name="save">Save</string>
   <string name="save_changes">Save Changes</string>
-  <string name="website_style_customisation">Website customisation</string>
+  <string name="website_style_customisation">Website Customisation</string>
   <string name="error_while_getting_website_theme">Error while getting website theme.</string>
   <string name="your_theme_update_published">Your changes are saved successfully published and live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="unable_to_get_primary_fonts">Unable to get primary fonts</string>
@@ -170,7 +170,7 @@
   <string name="add_featured_image">Add Featured Image</string>
   <string name="what_this">What’ this?</string>
   <string name="business_name">Business name</string>
-  <string name="business_category">Business Category</string>
+  <string name="business_category">Business category</string>
   <string name="services_business">Services business</string>
   <string name="customise_colour">Customise colour</string>
   <string name="business_description">Business description</string>
@@ -178,7 +178,7 @@
   <string name="digital_channels">Digital channels</string>
   <string name="connected">Connected</string>
   <string name="not_connected">Not connected</string>
-  <string name="business_profile_">Business profile</string>
+  <string name="business_profile_">Business Profile</string>
   <string name="save_business_name">Save Business Name</string>
   <string name="business_description_">Business Description</string>
   <string name="save_description">Save description</string>

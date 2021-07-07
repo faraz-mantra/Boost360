@@ -324,7 +324,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/size_10"
-                            android:maxLines="2"
                             android:text="@string/open_now"
                             android:textColor="@color/white_green_light"
                             android:textFontWeight="400"
@@ -376,6 +375,7 @@
                             android:layout_width="@dimen/size_90"
                             android:layout_height="@dimen/size_45"
                             app:lottie_autoPlay="true"
+                            android:layout_marginEnd="-30dp"
                             app:lottie_loop="true"
                             app:lottie_rawRes="@raw/new_badge" />
                         <com.framework.views.customViews.CustomImageView

@@ -142,6 +142,7 @@
                     android:id="@+id/btn_fb"
                     android:layout_width="@dimen/size_36"
                     android:layout_height="@dimen/size_36"
+                    android:visibility="gone"
                     android:layout_marginStart="@dimen/size_4"
                     android:padding="@dimen/size_3"
                     app:srcCompat="@drawable/ic_facebook_service" />
