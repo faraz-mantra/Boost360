@@ -20,7 +20,6 @@ import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
 import com.appservice.model.accountDetails.AccountDetailsResponse
 import com.appservice.model.accountDetails.BankAccountDetails
-import com.appservice.model.auth_3
 import com.appservice.model.deviceId
 import com.appservice.model.pickUpAddress.PickUpAddressResponse
 import com.appservice.model.pickUpAddress.PickUpData

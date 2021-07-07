@@ -172,7 +172,7 @@
           android:id="@+id/ctv_business_category"
           style="@style/BusinessProfileTextField"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
-          android:drawableEnd="@drawable/ic_lock_business"
+          android:drawableEnd="@drawable/ic_lock_business_n"
           android:textColor="@color/primary_grey_light"
           tools:text="@string/services_business" />
 

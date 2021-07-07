@@ -32,7 +32,6 @@ import com.framework.utils.hasHTMLTags
 import com.framework.utils.showKeyBoard
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

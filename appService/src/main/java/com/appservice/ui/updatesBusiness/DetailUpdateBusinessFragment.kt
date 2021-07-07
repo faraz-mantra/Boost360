@@ -33,7 +33,6 @@ import com.framework.webengageconstant.DELETE
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_DELETE
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_DETAIL_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.json.JSONArray
 import org.json.JSONObject
 

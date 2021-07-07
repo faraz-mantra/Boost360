@@ -3,7 +3,6 @@ package com.dashboard.controller.ui.dashboard
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.graphics.*
 import android.net.Uri
 import android.os.Handler
@@ -206,7 +205,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (getDrScoreData()?.drs_segment.isNullOrEmpty()) readDrScoreDocument()
     refreshData()
   }
-
+  private fun getPremiumBanner() {
   if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
     setDataMarketBanner(ArrayList())
     setDataRiaAcademy(ArrayList())
@@ -1022,7 +1021,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (type) {
       QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
-      QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonialsession, true)
+      QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
       QuickActionItem.QuickActionType.ADD_STAFF_PROFILE -> baseActivity.startAddStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,

@@ -30,28 +30,23 @@ import com.framework.views.roundedimageview.RoundedImageView
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 fun View.getRequestOptionImage(placeholder: Int): RequestOptions {
-  return RequestOptions().priority(Priority.IMMEDIATE).placeholder(placeholder).error(placeholder)
-    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-    .override(width, height).skipMemoryCache(true).dontAnimate().dontTransform()
-    .encodeFormat(Bitmap.CompressFormat.PNG).format(DecodeFormat.DEFAULT)
+  return RequestOptions().priority(Priority.IMMEDIATE).placeholder(placeholder).error(placeholder).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    .override(width, height).skipMemoryCache(true).dontAnimate().dontTransform().encodeFormat(Bitmap.CompressFormat.PNG).format(DecodeFormat.DEFAULT)
 }
 
 fun Context.glideLoad(mImageView: CustomImageView?, url: String?) {
   if (mImageView == null) return
-  Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA)
-    .into(mImageView)
+  Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
+}
+fun Context.glideLoad(mImageView: CustomImageView?, resourceId: Int?) {
+  if (mImageView == null) return
+  Glide.with(this).load(resourceId).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
 }
 
-fun Context.glideLoad(
-  mImageView: CircularImageView,
-  url: String?,
-  placeholder: Int?,
-  isCrop: Boolean = false
-) {
+fun Context.glideLoad(mImageView: CircularImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   try {
     if (url.isNullOrEmpty()) return
-    val glide = Glide.with(this).load(url).skipMemoryCache(true)
-      .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     placeholder?.let { glide.placeholder(it) }
     if (isCrop) glide.centerCrop()
     glide.into(mImageView)
@@ -64,23 +59,16 @@ fun Context.glideLoad(
 fun Context.glideLoad(mImageView: RoundedImageView?, url: String?) {
   try {
     if (mImageView == null) return
-    Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA)
-      .into(mImageView)
+    Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
   } catch (e: Exception) {
     Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
 }
 
-fun Context.glideLoad(
-  mImageView: RoundedImageView,
-  url: String?,
-  placeholder: Int?,
-  isCrop: Boolean = false
-) {
+fun Context.glideLoad(mImageView: RoundedImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   try {
     if (url.isNullOrEmpty()) return
-    val glide = Glide.with(this).load(url).skipMemoryCache(true)
-      .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     placeholder?.let { glide.placeholder(it) }
     if (isCrop) glide.centerCrop()
     glide.into(mImageView)
@@ -89,16 +77,10 @@ fun Context.glideLoad(
   }
 }
 
-fun Context.glideLoad(
-  mImageView: CustomImageView,
-  url: String?,
-  placeholder: Int?,
-  isCrop: Boolean = false
-) {
+fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   try {
     if (url.isNullOrEmpty()) return
-    val glide = Glide.with(this).load(url).skipMemoryCache(true).thumbnail(0.1f)
-      .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    val glide = Glide.with(this).load(url).skipMemoryCache(true).thumbnail(0.1f).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     placeholder?.let { glide.placeholder(it) }
     if (isCrop) glide.centerCrop()
     glide.into(mImageView)
@@ -116,22 +98,6 @@ fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholde
     Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
 }
-
-fun Activity.glideLoad(
-  mImageView: CustomImageView,
-  url: String,
-  placeholder: Int,
-  isCenterCrop: Boolean = false,
-  isLoadBitmap: Boolean = false
-) {
-fun Context.glideLoad(mImageView: CustomImageView, imgID: Int){
-  try {
-    Glide.with(this).load(imgID).override(600, 600).into(mImageView);
-  }catch (e:Exception){
-    e.printStackTrace()
-  }
-}
-
 
 fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false) {
   try {
