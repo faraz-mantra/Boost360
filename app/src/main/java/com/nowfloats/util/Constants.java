@@ -59,10 +59,7 @@ public class Constants {
     public static final int CAMERA_PHOTO = 1888;
     public static final String SMS_OTP_RECEIVER = "sms_otp_receiver";
     public static String clientIdThinksity = "217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D";
-
-    public static String clientId = Specific.clientId2;
     public static String clientId_ORDER = "AC16E0892F2F45388F439FDE9F6F3FB5C31F0FAA628D40CD9814A79D8841397D";
-
     public static String GMBClientId = "534180772998-29dvjja8u2lnaklmrdnne776i2gosi4c.apps.googleusercontent.com";
 
     public static String GMBCallbackUrl = "https://mybusiness.googleapis.com/v4/accounts";
@@ -220,39 +217,7 @@ public class Constants {
     public static String UserId = "";
     public static Typeface hel_bold, hel_roman;
     public static String PREF_NAME = "nowfloatsPrefs";
-    public static String clientIdThinksity = "217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D";
     public static String clientId = Specific.clientId2;
-    public static String clientId_ORDER = "AC16E0892F2F45388F439FDE9F6F3FB5C31F0FAA628D40CD9814A79D8841397D";
-    public static String GMBClientId = "534180772998-29dvjja8u2lnaklmrdnne776i2gosi4c.apps.googleusercontent.com";
-    public static String GMBCallbackUrl = "https://mybusiness.googleapis.com/v4/accounts";
-    public static String NFXUpdateAcessToken = "https://nfx.withfloats.com/dataexchange/v1/updateAccessTokens";
-    public static String NFXProcessUrl = "https://nfx.withfloats.com/dataexchange/v1/process";
-    public static String GMBScope = "https://www.googleapis.com/auth/plus.business.manage";
-    public static String NFXgetAcessToken = "https://nfx.withfloats.com/dataexchange/v1/getAccessTokens";
-    public static String GMBgetLocationUrl = "https://mybusiness.googleapis.com/v4/accounts/";
-    public static String LogTag = "android23235616";
-    public static String UPLOAD_TO_S3_ENDPOINT = "https://6psfkele8l.execute-api.ap-south-1.amazonaws.com";
-    public static String deviceId = "123456789";
-    public static String clientId4 = "731EBAB8596648E79882096E4733E7173B314BECC649423DB67897BF8CC596EC";
-    public static String clientId3 = "A816E08AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F51770E46AD86";
-    public static String clientId2 = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
-    public static String clientId1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
-    public static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmtfDikZcbWSvq3f+pEsAL5KQCNy3X96j++Z1PnjvidpJCEe0/S1xdPs4CfT3JkeQl7SNps/9cPu3EuOOFdx76QPpAqlqXHMKMwM9H+ikx5iUWPSilRjwLfJNjbJZT2xpuI6k32VyHhqLyU4rR95nrAPTGrocyyV1jtTFSYt77YZew8YfeePlcB2STLP3Ookho37Ah1QovelfdaG5ZNWz5OPYKnificSPyYjioYkfUmpnUJvN0INYMGFKefhfPtWPx5UCiQp15A6ir4wH0wVL3/QksonIb0JMiXpuXvWuggNb1AqEtdiPuBTleU5GovKL+HToKjwQu8NSuJsb3EacIwIDAQAB";
-    public static Purchase lastPurchase = null;
-    public static String GOOGLE_API_KEY = "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
-    public static String teleCountry = "in";
-    public static DisplayMetrics DISPLAY_METRICS = null;
-    public static Boolean hasStoreData = false;
-    public static Boolean hasSearchData = false;
-    public static int FontSizeT = 13;
-    public static int FontSizeE = 16;
-    public static String prevDataDirectory = "NowFloatsBiz";
-    public static String dataDirectory = "NowFloatsBoost";
-    public static String[] days = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
-    public static Map<String, String> Currency_Country_Map = new HashMap<String, String>();
-    public static ArrayList<String> currencyArray = new ArrayList<>();
-    public static Activity app = null;
-    public static Activity home = null;
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
     public static String NFX_DEV_NOWFLOATS = "http://nfx.nowfloatsdev.com";

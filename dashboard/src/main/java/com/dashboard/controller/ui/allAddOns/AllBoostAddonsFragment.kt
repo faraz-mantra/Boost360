@@ -232,8 +232,7 @@ fun businessAddOnsClick(
     ManageBusinessData.BusinessType.featured_image_video -> baseActivity.startFeatureLogo(session)
     ManageBusinessData.BusinessType.business_hours -> baseActivity.startBusinessHours(session)
     ManageBusinessData.BusinessType.doctor_profile,
-    ManageBusinessData.BusinessType.faculty_profiles_d,
-    -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+    ManageBusinessData.BusinessType.faculty_profiles_d, -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
     ManageBusinessData.BusinessType.contact_details -> baseActivity.startBusinessInfoEmail(session)
     ManageBusinessData.BusinessType.content_sync_acros_channels -> session?.let {
       baseActivity.startDigitalChannel(

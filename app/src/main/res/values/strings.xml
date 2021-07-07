@@ -3052,7 +3052,6 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="logo_updated_successfully">Logo uploaded successfully.</string>
     <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my Boost website’s web address/URL.</string>
     <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make Boost website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
-    <string name="add_logo">Add Logo</string>
   <string name="add_logo">Add Logo</string>
     <string name="enable_boost_keyboard">Enable Boost Keyboard</string>
     <string name="enter_the_domain_you_own_and_select_an_option_to_let_us_know_how_you_want_you_your_domain_to_be_mapped_to_this_boost_website">Enter the domain you own and select an option to let us know how you want you your domain to be mapped to this Boost website.</string>

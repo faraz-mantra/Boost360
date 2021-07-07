@@ -3,10 +3,7 @@ package com.inventoryorder.holders
 import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.view.View
-import com.framework.extensions.gone
-import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
-import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemBookingDetailsBinding
 import com.inventoryorder.model.ordersdetails.ItemN
