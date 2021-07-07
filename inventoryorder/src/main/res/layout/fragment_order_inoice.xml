@@ -6,8 +6,7 @@
 
   </data>
 
-  <androidx.coordinatorlayout.widget.CoordinatorLayout
-    style="@style/match_match">
+  <androidx.coordinatorlayout.widget.CoordinatorLayout style="@style/match_match">
 
     <LinearLayout
       style="@style/match_match"

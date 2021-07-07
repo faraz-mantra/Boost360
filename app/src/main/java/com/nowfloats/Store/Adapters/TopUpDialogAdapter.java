@@ -1,11 +1,12 @@
 package com.nowfloats.Store.Adapters;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Store.Model.PackageDetails;
 import com.thinksity.R;
@@ -23,21 +24,23 @@ public class TopUpDialogAdapter extends RecyclerView.Adapter<TopUpDialogAdapter.
     private List<PackageDetails> packages;
     private int selectedPos = 0;
     private onItemClickListener listener;
-    public TopUpDialogAdapter(List<PackageDetails> packages){
+
+    public TopUpDialogAdapter(List<PackageDetails> packages) {
         this.packages = packages;
     }
+
     @Override
     public MyTopUpDialogHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_top_up_dialog_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_top_up_dialog_item, parent, false);
         return new MyTopUpDialogHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyTopUpDialogHolder holder, int position) {
         holder.nameTv.setText(packages.get(position).getName());
-        holder.priceTv.setText(String.format("%s %s",packages.get(position).getCurrencyCode(), NumberFormat.getInstance(Locale.US).format(packages.get(position).getPrice())));
+        holder.priceTv.setText(String.format("%s %s", packages.get(position).getCurrencyCode(), NumberFormat.getInstance(Locale.US).format(packages.get(position).getPrice())));
         holder.radioButton.setChecked(position == selectedPos);
-        holder.itemView.setBackgroundResource(position%2 == 0 ? R.color.fafafa : R.color.white);
+        holder.itemView.setBackgroundResource(position % 2 == 0 ? R.color.fafafa : R.color.white);
     }
 
     @Override
@@ -49,11 +52,16 @@ public class TopUpDialogAdapter extends RecyclerView.Adapter<TopUpDialogAdapter.
         this.listener = listener;
     }
 
+    public interface onItemClickListener {
+        void onItemClick(String id);
+    }
+
     class MyTopUpDialogHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView nameTv, priceTv;
         private RadioButton radioButton;
         private View itemView;
+
         MyTopUpDialogHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
@@ -66,7 +74,7 @@ public class TopUpDialogAdapter extends RecyclerView.Adapter<TopUpDialogAdapter.
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.rb_plan:
                 case R.id.tv_plan_name:
                     radioButton.setChecked(true);
@@ -77,8 +85,5 @@ public class TopUpDialogAdapter extends RecyclerView.Adapter<TopUpDialogAdapter.
             }
 
         }
-    }
-    public interface onItemClickListener{
-        void onItemClick(String id);
     }
 }

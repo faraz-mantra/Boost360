@@ -7,7 +7,8 @@ import android.os.AsyncTask
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
-class GetLatLngFromAddress(private val contextRef: Context?, val listener: Listener) : AsyncTask<String, Context, LatLng>() {
+class GetLatLngFromAddress(private val contextRef: Context?, val listener: Listener) :
+  AsyncTask<String, Context, LatLng>() {
 
   override fun onPreExecute() {
     super.onPreExecute()

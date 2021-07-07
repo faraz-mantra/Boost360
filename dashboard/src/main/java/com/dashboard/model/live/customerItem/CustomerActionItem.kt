@@ -7,24 +7,24 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class CustomerActionItem(
-    @SerializedName("title")
-    var title: String? = null,
-    @SerializedName("type")
-    var type: String? = null,
-    @SerializedName("isLock")
-    var isLock: Boolean? = null,
-    @SerializedName("premiumCode")
-    var premiumCode: String? = null,
-    @SerializedName("orderCount")
-    var orderCount: String? = null,
-    @SerializedName("consultCount")
-    var consultCount: String? = null,
-    @SerializedName("customerCalls")
-    var customerCalls: String? = null,
-    @SerializedName("messageCount")
-    var messageCount: String? = null,
-    @SerializedName("subscriptionCount")
-    var subscriptionCount: String? = null,
+  @SerializedName("title")
+  var title: String? = null,
+  @SerializedName("type")
+  var type: String? = null,
+  @SerializedName("isLock")
+  var isLock: Boolean? = null,
+  @SerializedName("premiumCode")
+  var premiumCode: String? = null,
+  @SerializedName("orderCount")
+  var orderCount: String? = null,
+  @SerializedName("consultCount")
+  var consultCount: String? = null,
+  @SerializedName("customerCalls")
+  var customerCalls: String? = null,
+  @SerializedName("messageCount")
+  var messageCount: String? = null,
+  @SerializedName("subscriptionCount")
+  var subscriptionCount: String? = null,
 ) : Serializable, AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_ENQUIRIES_ITEM_VIEW.getLayout()
@@ -35,7 +35,8 @@ data class CustomerActionItem(
   fun getCountValue(): String? {
     return when (IconType.fromName(type)) {
       IconType.customer_orders,
-      IconType.in_clinic_appointments, -> orderCount
+      IconType.in_clinic_appointments,
+      -> orderCount
       IconType.video_consultations -> consultCount
       IconType.patient_customer_calls -> customerCalls
       IconType.patient_customer_messages -> messageCount
@@ -53,7 +54,8 @@ data class CustomerActionItem(
     customer_orders(R.drawable.in_clinic_appointments);
 
     companion object {
-      fun fromName(name: String?): IconType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
+      fun fromName(name: String?): IconType? =
+        values().firstOrNull { it.name.equals(name, ignoreCase = true) }
     }
   }
 }

@@ -1,9 +1,11 @@
 package com.android.inputmethod.keyboard.top.services;
 
 import android.content.Context;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.AttributeSet;
 
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ public class CategoriesRecyclerView extends RecyclerView {
             /*if(slash.equals("giphy") || slash.equals("foursquare"))
                 this.mCategoriesResults = RCategory.categoriesHashMap.get(slash);
             else*/
-                this.mCategoriesResults = new ArrayList<>();
+            this.mCategoriesResults = new ArrayList<>();
             getAdapter().setItems(this.mCategoriesResults);
         }
         if (this.mCategoriesResults == null) {

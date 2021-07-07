@@ -16,10 +16,9 @@ import io.separ.neural.inputmethod.indic.settings.Settings;
  */
 
 public class NeuralApplication extends Application {
+    private static final String QUEUE_SERVICE_REQUEST = "QUEUE_SERVICE_REQUEST";
     private static NeuralApplication mInstance;
     private static TaskQueue mServiceQueue;
-
-    private static final String QUEUE_SERVICE_REQUEST = "QUEUE_SERVICE_REQUEST";
 
     public static TaskQueue getNetworkTaskQueue() {
         if (mServiceQueue == null) {
@@ -32,15 +31,6 @@ public class NeuralApplication extends Application {
         return mServiceQueue;
     }
 
-    public void onCreate() {
-        super.onCreate();
-        mInstance = this;
-        Settings.init(this);
-        Fresco.initialize(this, ImagePipelineConfig.newBuilder(this).setDownsampleEnabled(true).build());
-
-        JniUtils.loadNativeLibrary();
-    }
-
     public static NeuralApplication getInstance() {
         return mInstance;
     }
@@ -48,5 +38,14 @@ public class NeuralApplication extends Application {
     public static boolean isKeyboardEnabledAndSet(Context context) {
         InputMethodManager mImm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         return UncachedInputMethodManagerUtils.isThisImeEnabled(context, mImm) && UncachedInputMethodManagerUtils.isThisImeCurrent(context, mImm);
+    }
+
+    public void onCreate() {
+        super.onCreate();
+        mInstance = this;
+        Settings.init(this);
+        Fresco.initialize(this, ImagePipelineConfig.newBuilder(this).setDownsampleEnabled(true).build());
+
+        JniUtils.loadNativeLibrary();
     }
 }

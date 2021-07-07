@@ -10,8 +10,18 @@ import java.util.ArrayList;
 /**
  * Created by NowFloats on 7/21/2016.
  */
-public class SyncMessageModel implements Parcelable{
+public class SyncMessageModel implements Parcelable {
 
+    public static final Creator<SyncMessageModel> CREATOR = new Creator<SyncMessageModel>() {
+
+        public SyncMessageModel createFromParcel(Parcel in) {
+            return new SyncMessageModel(in);
+        }
+
+        public SyncMessageModel[] newArray(int size) {
+            return new SyncMessageModel[size];
+        }
+    };
     public ArrayList<FloatsMessageModel> floats;
 
     public SyncMessageModel(Parcel in) {
@@ -28,15 +38,4 @@ public class SyncMessageModel implements Parcelable{
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeTypedList(floats);
     }
-
-    public static final Creator<SyncMessageModel> CREATOR = new Creator<SyncMessageModel>() {
-
-        public SyncMessageModel createFromParcel(Parcel in) {
-            return new SyncMessageModel(in);
-        }
-
-        public SyncMessageModel[] newArray(int size) {
-            return new SyncMessageModel[size];
-        }
-    };
 }

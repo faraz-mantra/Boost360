@@ -86,27 +86,26 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     public final static int twitterWeight = 10;
     public final static int logoWeight = 5;
     public final static int firstUpdatesWeight = 5;
+    public final static int onUpdate = 4;
+    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
+    private static final String DOMAIN_SUCCESS_STATUS = "17";
+    public final int domain = 11, phone = 4, category = 2, image = 7, businessName = 0, description = 1,
+            social = 10, address = 5, email = 3, post = 9, logo = 8, businessHours = 6;
     int siteMeterTotalWeight = 0;
     boolean fiveUpdatesDone = false;
-    public final static int onUpdate = 4;
     UserSessionManager session;
     private RecyclerView recyclerView;
     private SiteMeterAdapter adapter;
-
     private ProgressBar progressBar;
     private TextView meterReading;
     private ArrayList<SiteMeterModel> siteData = new ArrayList<>();
-    public final int domain = 11, phone = 4, category = 2, image = 7, businessName = 0, description = 1,
-            social = 10, address = 5, email = 3, post = 9, logo = 8, businessHours = 6;
     private Activity activity;
-    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
     private SharedPreferences mSharedPreferences, pref;
     private DomainApiService domainApiService;
-
     private ProgressDialog progressDialog;
     private boolean isAlreadyCalled = false, isDomainDetailsAvali;
-    private Integer storebizFloats;
     //private ScaleInAnimationAdapter scaleAdapter;
+    private Integer storebizFloats;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,7 +143,6 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             }
         });
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -600,7 +598,6 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         }
     }
 
-
     private void showExpiryDialog(int showDialog) {
 
         String callUsButtonText, cancelButtonText, dialogTitle, dialogMessage;
@@ -683,6 +680,12 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 
 
     /*
+     ************************************* DOMAIN BOOKING PROCESS ***********************************
+     *
+     *
+     */
+
+    /*
      * Domain Details Param
      */
     private HashMap<String, String> getDomainDetailsParam() {
@@ -690,15 +693,6 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         offersParam.put("clientId", Constants.clientId);
         return offersParam;
     }
-
-
-    /*
-     ************************************* DOMAIN BOOKING PROCESS ***********************************
-     *
-     *
-     */
-
-    private static final String DOMAIN_SUCCESS_STATUS = "17";
 
     /*
      * After getting domain details follow below steps
@@ -814,15 +808,6 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-
-    private enum DialogFrom {
-        DOMAIN_AVAILABLE,
-        CONTACTS_AND_EMAIL_REQUIRED,
-        CATEGORY_REQUIRED,
-        ADDRESS_REQUIRED,
-        DEFAULT
-    }
-
     private void showCustomDialog(String title, String message, String postiveBtn, String negativeBtn,
                                   final DialogFrom dialogFrom) {
 
@@ -887,5 +872,13 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
         if (storebizFloats != null)
             return storebizFloats;
         else return HomeActivity.StorebizFloats.size();
+    }
+
+    private enum DialogFrom {
+        DOMAIN_AVAILABLE,
+        CONTACTS_AND_EMAIL_REQUIRED,
+        CATEGORY_REQUIRED,
+        ADDRESS_REQUIRED,
+        DEFAULT
     }
 }

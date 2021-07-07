@@ -21,10 +21,12 @@ public class FacebookChatApis {
 
     static String ENDPOINT = "https://nfxmessenger.withfloats.com";
     static final RestAdapter adapter = new RestAdapter.Builder()/*.setLog(new AndroidLog("ggg")).setLogLevel(RestAdapter.LogLevel.FULL)*/.setEndpoint(ENDPOINT).build();
-    public static FacebookApis getFacebookChatApis(){
+
+    public static FacebookApis getFacebookChatApis() {
         return adapter.create(FacebookApis.class);
     }
-    public interface FacebookApis{
+
+    public interface FacebookApis {
         @GET("/api/messages")
         void getAllUsers(@Query("identifier") String identifier, @Query("nowfloats_id") String fpId, Callback<FacebookChatUsersModel> response);
 

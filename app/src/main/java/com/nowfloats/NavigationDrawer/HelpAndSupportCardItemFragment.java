@@ -63,26 +63,26 @@ import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 public class HelpAndSupportCardItemFragment extends Fragment implements View.OnClickListener {
 
-  private Context mContext;
-  private RiaSupportModel riaSupportModel;
-  private UserSessionManager sessionManager;
-  public static String RIA_MODEL_DATA = "ria_model_data";
-  private boolean is_premium_support = false;
+    public static String RIA_MODEL_DATA = "ria_model_data";
+    private Context mContext;
+    private RiaSupportModel riaSupportModel;
+    private UserSessionManager sessionManager;
+    private boolean is_premium_support = false;
 
-  public static Fragment getInstance(Bundle b) {
-    HelpAndSupportCardItemFragment frag = new HelpAndSupportCardItemFragment();
-    frag.setArguments(b);
-    return frag;
-  }
-
-  @Override
-  public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      riaSupportModel = new Gson().fromJson(getArguments().getString(RIA_MODEL_DATA), RiaSupportModel.class);
+    public static Fragment getInstance(Bundle b) {
+        HelpAndSupportCardItemFragment frag = new HelpAndSupportCardItemFragment();
+        frag.setArguments(b);
+        return frag;
     }
-    sessionManager = new UserSessionManager(mContext, getActivity());
-  }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            riaSupportModel = new Gson().fromJson(getArguments().getString(RIA_MODEL_DATA), RiaSupportModel.class);
+        }
+        sessionManager = new UserSessionManager(mContext, getActivity());
+    }
 
   @Override
   public void onAttach(Context context) {
@@ -90,163 +90,163 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
     mContext = context;
   }
 
-  @Nullable
-  @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_card_help_and_support, container, false);
-  }
-
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    if (!isAdded()) return;
-
-    if (Constants.StoreWidgets.contains("CUSTOMERSUPPORT")) {
-      is_premium_support = true;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_card_help_and_support, container, false);
     }
 
-    ImageView personImage = view.findViewById(R.id.img_person);
-    EditText emailTv = view.findViewById(R.id.tv_person_email);
-    EditText numberTv = view.findViewById(R.id.tv_person_number);
-    EditText nameTv = view.findViewById(R.id.tv_person_name);
-    TextView slaTv = view.findViewById(R.id.sla_text);
-    RelativeLayout chatActionBtn = view.findViewById(R.id.btn_chat_action);
-    RelativeLayout callActionBtn = view.findViewById(R.id.btn_call_option);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (!isAdded()) return;
 
-    emailTv.setOnClickListener(this);
-    numberTv.setOnClickListener(this);
+        if (Constants.StoreWidgets.contains("CUSTOMERSUPPORT")) {
+            is_premium_support = true;
+        }
 
-    view.findViewById(R.id.btn_faqs).setOnClickListener(this);
-    view.findViewById(R.id.btn_my_tickets).setOnClickListener(this);
+        ImageView personImage = view.findViewById(R.id.img_person);
+        EditText emailTv = view.findViewById(R.id.tv_person_email);
+        EditText numberTv = view.findViewById(R.id.tv_person_number);
+        EditText nameTv = view.findViewById(R.id.tv_person_name);
+        TextView slaTv = view.findViewById(R.id.sla_text);
+        RelativeLayout chatActionBtn = view.findViewById(R.id.btn_chat_action);
+        RelativeLayout callActionBtn = view.findViewById(R.id.btn_call_option);
 
-    WebEngageController.trackEvent(is_premium_support ? SUPPORT_VIEWED_PREMIUM : SUPPORT_VIEWED, SUPPORT_SCREEN_LOADED, NULL);
+        emailTv.setOnClickListener(this);
+        numberTv.setOnClickListener(this);
 
-    nameTv.setText(riaSupportModel.getName());
-    if (is_premium_support)
-      numberTv.setText(getString(R.string.contact_us_number_n));
-    else
-      numberTv.setText("xxx-xxx-xxxx");
+        view.findViewById(R.id.btn_faqs).setOnClickListener(this);
+        view.findViewById(R.id.btn_my_tickets).setOnClickListener(this);
 
-    if (is_premium_support)
-      emailTv.setText(getString(R.string.riya_boost_360_app));
-    else
-      emailTv.setText(riaSupportModel.getEmail());
+        WebEngageController.trackEvent(is_premium_support ? SUPPORT_VIEWED_PREMIUM : SUPPORT_VIEWED, SUPPORT_SCREEN_LOADED, NULL);
 
-    chatActionBtn.setOnClickListener(this);
-    callActionBtn.setOnClickListener(this);
+        nameTv.setText(riaSupportModel.getName());
+        if (is_premium_support)
+            numberTv.setText(getString(R.string.contact_us_number_n));
+        else
+            numberTv.setText("xxx-xxx-xxxx");
 
-    if (is_premium_support) {
-      (view.findViewById(R.id.chat_option_lock)).setVisibility(View.GONE);
-      (view.findViewById(R.id.call_option_lock)).setVisibility(View.GONE);
-      slaTv.setText("* Response time SLA - 1 hour *");
-    } else
-      slaTv.setText("* Response time SLA - 72 hours *");
-  }
+        if (is_premium_support)
+            emailTv.setText(getString(R.string.riya_boost_360_app));
+        else
+            emailTv.setText(riaSupportModel.getEmail());
 
-  private void showPremiumAddOnDialog() {
-    MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-        .title(R.string.upgrade_to_premium_support)
-        .content(R.string.you_are_currently_on_the_default_support_plan)
-        .positiveText(getString(R.string.save_data))
-        .negativeText(R.string.later)
-        .positiveColorRes(R.color.primaryColor)
-        .negativeColorRes(R.color.gray_40)
-        .callback(new MaterialDialog.ButtonCallback() {
-          @Override
-          public void onNegative(MaterialDialog dialog) {
-            super.onNegative(dialog);
-            dialog.dismiss();
-          }
+        chatActionBtn.setOnClickListener(this);
+        callActionBtn.setOnClickListener(this);
 
-          @Override
-          public void onPositive(MaterialDialog dialog) {
-            ProgressDialog progressDialog = new ProgressDialog(requireContext());
-            String status = getString(R.string.loading_please_wait);
-            progressDialog.setMessage(status);
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-            UserSessionManager session = new UserSessionManager(getContext(), getActivity());
-            Intent intent = new Intent(getActivity(), UpgradeActivity.class);
-            intent.putExtra("expCode", session.getFP_AppExperienceCode());
-            intent.putExtra("fpName", session.getFPName());
-            intent.putExtra("fpid", session.getFPID());
-            intent.putExtra("fpTag", session.getFpTag());
-            intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-            intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-            if (session.getFPEmail() != null) {
-              intent.putExtra("email", session.getFPEmail());
-            } else {
-              intent.putExtra("email", CONTACT_EMAIL_ID);
-            }
-            if (session.getFPPrimaryContactNumber() != null) {
-              intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
-            } else {
-              intent.putExtra("mobileNo", CONTACT_PHONE_ID);
-            }
-            intent.putExtra("profileUrl", session.getFPLogo());
-            intent.putExtra("buyItemKey", "CUSTOMERSUPPORT");
-            startActivity(intent);
-            new Handler().postDelayed(() -> {
-              progressDialog.dismiss();
-            }, 1000);
-          }
-        }).build();
-    dialog.show();
-  }
-
-  @Override
-  public void onClick(View view) {
-    switch (view.getId()) {
-      case R.id.btn_chat_action:
-        WebEngageController.trackEvent(SUPPORT_CHAT, CHAT_OPTION_IN_ACCOUNT, NULL);
         if (is_premium_support) {
-          DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-          Date dateobj = new Date();
-
-          if (sessionManager != null) {
-            VisitorInfo visitorInfo = new VisitorInfo.Builder()
-                .name(sessionManager.getFPName())
-                .email(sessionManager.getFPEmail())
-                .phoneNumber(sessionManager.getFPPrimaryContactNumber())
-                .note("FPTag: " + sessionManager.getFpTag() + "\n\nUserId: " + sessionManager.getUserProfileId() + "\nUserContact: " + sessionManager.getUserProfileMobile())
-                .build();
-            ZopimChat.setVisitorInfo(visitorInfo);
-          }
-
-          startActivity(new Intent(WebEngage.getApplicationContext(), ZopimChatActivity.class));
+            (view.findViewById(R.id.chat_option_lock)).setVisibility(View.GONE);
+            (view.findViewById(R.id.call_option_lock)).setVisibility(View.GONE);
+            slaTv.setText("* Response time SLA - 1 hour *");
         } else
-          showPremiumAddOnDialog();
-        break;
-      case R.id.tv_person_email:
-        WebEngageController.trackEvent(SUPPORT_EMAIL, EMAIL_OPTION_IN_ACCOUNT, NULL);
-        Methods.sendEmail(mContext, new String[]{riaSupportModel.getEmail()}, getString(R.string.need_help_with_boost) + sessionManager.getFpTag() + " , " + sessionManager.getFP_AppExperienceCode() + "]");
-        break;
-      case R.id.tv_person_number:
-        if (is_premium_support) {
-          WebEngageController.trackEvent(SUPPORT_DIRECT_AGENT_CALL, DIRECT_AGENT_CALL_OPTION_IN_ACCOUNT, NULL);
-          Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
-        } else {
-          showPremiumAddOnDialog();
-        }
-        break;
-      case R.id.btn_call_option:
-        if (is_premium_support) {
-          WebEngageController.trackEvent(SUPPORT_CALL, CALL_SUPPORT_OPTION_IN_ACCOUNT, NULL);
-          Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
-        } else {
-          showPremiumAddOnDialog();
-        }
-        break;
-      case R.id.btn_my_tickets:
-        WebEngageController.trackEvent(SUPPORT_VIEW_TICKETS, VIEW_MY_SUPPORT_TICKETS, NULL);
-        RequestListActivity.builder()
-            .show(mContext);
-        break;
-      case R.id.btn_faqs:
-        WebEngageController.trackEvent(SUPPORT_LEARN, LEARN_HOW_TO_USE, NULL);
-        HelpCenterActivity.builder()
-            .show(mContext);
-        break;
+            slaTv.setText("* Response time SLA - 72 hours *");
     }
-  }
+
+    private void showPremiumAddOnDialog() {
+        MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                .title(R.string.upgrade_to_premium_support)
+                .content(R.string.you_are_currently_on_the_default_support_plan)
+                .positiveText(getString(R.string.save_data))
+                .negativeText(R.string.later)
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.gray_40)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        ProgressDialog progressDialog = new ProgressDialog(requireContext());
+                        String status = getString(R.string.loading_please_wait);
+                        progressDialog.setMessage(status);
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+                        Intent intent = new Intent(getActivity(), UpgradeActivity.class);
+                        intent.putExtra("expCode", session.getFP_AppExperienceCode());
+                        intent.putExtra("fpName", session.getFPName());
+                        intent.putExtra("fpid", session.getFPID());
+                        intent.putExtra("fpTag", session.getFpTag());
+                        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
+                        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+                        if (session.getFPEmail() != null) {
+                            intent.putExtra("email", session.getFPEmail());
+                        } else {
+                            intent.putExtra("email", CONTACT_EMAIL_ID);
+                        }
+                        if (session.getFPPrimaryContactNumber() != null) {
+                            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+                        } else {
+                            intent.putExtra("mobileNo", CONTACT_PHONE_ID);
+                        }
+                        intent.putExtra("profileUrl", session.getFPLogo());
+                        intent.putExtra("buyItemKey", "CUSTOMERSUPPORT");
+                        startActivity(intent);
+                        new Handler().postDelayed(() -> {
+                            progressDialog.dismiss();
+                        }, 1000);
+                    }
+                }).build();
+        dialog.show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_chat_action:
+                WebEngageController.trackEvent(SUPPORT_CHAT, CHAT_OPTION_IN_ACCOUNT, NULL);
+                if (is_premium_support) {
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    Date dateobj = new Date();
+
+                    if (sessionManager != null) {
+                        VisitorInfo visitorInfo = new VisitorInfo.Builder()
+                                .name(sessionManager.getFPName())
+                                .email(sessionManager.getFPEmail())
+                                .phoneNumber(sessionManager.getFPPrimaryContactNumber())
+                                .note("FPTag: " + sessionManager.getFpTag() + "\n\nUserId: " + sessionManager.getUserProfileId() + "\nUserContact: " + sessionManager.getUserProfileMobile())
+                                .build();
+                        ZopimChat.setVisitorInfo(visitorInfo);
+                    }
+
+                    startActivity(new Intent(WebEngage.getApplicationContext(), ZopimChatActivity.class));
+                } else
+                    showPremiumAddOnDialog();
+                break;
+            case R.id.tv_person_email:
+                WebEngageController.trackEvent(SUPPORT_EMAIL, EMAIL_OPTION_IN_ACCOUNT, NULL);
+                Methods.sendEmail(mContext, new String[]{riaSupportModel.getEmail()}, getString(R.string.need_help_with_boost) + sessionManager.getFpTag() + " , " + sessionManager.getFP_AppExperienceCode() + "]");
+                break;
+            case R.id.tv_person_number:
+                if (is_premium_support) {
+                    WebEngageController.trackEvent(SUPPORT_DIRECT_AGENT_CALL, DIRECT_AGENT_CALL_OPTION_IN_ACCOUNT, NULL);
+                    Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
+                } else {
+                    showPremiumAddOnDialog();
+                }
+                break;
+            case R.id.btn_call_option:
+                if (is_premium_support) {
+                    WebEngageController.trackEvent(SUPPORT_CALL, CALL_SUPPORT_OPTION_IN_ACCOUNT, NULL);
+                    Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
+                } else {
+                    showPremiumAddOnDialog();
+                }
+                break;
+            case R.id.btn_my_tickets:
+                WebEngageController.trackEvent(SUPPORT_VIEW_TICKETS, VIEW_MY_SUPPORT_TICKETS, NULL);
+                RequestListActivity.builder()
+                        .show(mContext);
+                break;
+            case R.id.btn_faqs:
+                WebEngageController.trackEvent(SUPPORT_LEARN, LEARN_HOW_TO_USE, NULL);
+                HelpCenterActivity.builder()
+                        .show(mContext);
+                break;
+        }
+    }
 }

@@ -6,9 +6,7 @@ import android.os.Handler
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
@@ -25,8 +23,9 @@ import com.framework.utils.hideKeyBoard
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
-class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewModel>() {
+//AppSignatureHash:- (Debug: m1jzE0DG9Z5) (Release: W5izmPg6WcR)
 
+class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewModel>() {
 
   companion object {
     private val PHONE_NUMBER = "phone_number"
@@ -65,7 +64,6 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
         override fun handleOnBackPressed() {
           binding?.phoneEt?.clearFocus()
           goBack()
-
         }
       })
 
@@ -86,9 +84,9 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     val constraint = binding?.root as? ConstraintLayout
     binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
       if (hasFocus) {
-        binding?.divider?.setBackgroundColor(getColor(R.color.colorAccent))
+        binding?.divider?.setBackgroundColor(getColor(R.color.black_4a4a4a))
       } else {
-        binding?.divider?.setBackgroundColor(getColor(R.color.graycacaca))
+        binding?.divider?.setBackgroundColor(getColor(R.color.pinkish_grey))
       }
 
     }

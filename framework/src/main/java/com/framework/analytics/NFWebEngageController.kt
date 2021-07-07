@@ -39,7 +39,6 @@ object NFWebEngageController {
       }
     }
   }
-
   fun trackEvent(event_name: String, event_label: String, event_value: HashMap<String, Any>) {
     if (!BaseApplication.isInitialised()) return
     if (BaseApplication.instance.packageName != "com.jio.online") {
@@ -65,6 +64,7 @@ object NFWebEngageController {
       }
     }
   }
+
 
   fun trackEventLoad(event_name: String, event_label: String, event_value: HashMap<String, Any>, value: String) {
     if (!BaseApplication.isInitialised()) return
@@ -159,47 +159,48 @@ object NFWebEngageController {
     }
   }
 
-  fun setCategory(userCategory: String?) {
-    if (!BaseApplication.isInitialised()) return
-    if (BaseApplication.instance.packageName != "com.jio.online") {
-      try {
-        if (!userCategory.isNullOrEmpty()) {
-          weUser.setAttribute("Category", userCategory)
-
-          //Firebase Analytics User Property.
-          FirebaseAnalyticsUtilsHelper.setUserProperty("Category", userCategory)
-
-          //AppsFlyer User Property
-          val params = HashMap<String, Any>()
-          params["Category"] = userCategory
-          AppsFlyerLib.getInstance().setAdditionalData(params)
-        }
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
-    }
-  }
-
-  fun setFPTag(fpTag: String) {
-    if (!BaseApplication.isInitialised()) return
-    if (BaseApplication.instance.packageName != "com.jio.online") {
-      try {
-        if (fpTag == null) return;
-        Log.d(TAG, "Setting FP Tag" + fpTag)
-        weUser.setAttribute("fpTag", fpTag)
+fun setCategory(userCategory: String?) {
+  if (!BaseApplication.isInitialised()) return
+  if (BaseApplication.instance.packageName != "com.jio.online") {
+    try {
+      if (!userCategory.isNullOrEmpty()) {
+        weUser.setAttribute("Category", userCategory)
 
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag)
+        FirebaseAnalyticsUtilsHelper.setUserProperty("Category", userCategory)
 
         //AppsFlyer User Property
-        val params = java.util.HashMap<String, Any>()
-        params["fpTag"] = fpTag
+        val params = HashMap<String, Any>()
+        params["Category"] = userCategory
         AppsFlyerLib.getInstance().setAdditionalData(params)
-      } catch (e: java.lang.Exception) {
-        e.printStackTrace()
       }
+    } catch (e: Exception) {
+      e.printStackTrace()
     }
   }
+}
+
+
+fun setFPTag(fpTag: String) {
+  if (!BaseApplication.isInitialised()) return
+  if (BaseApplication.instance.packageName != "com.jio.online") {
+    try {
+      if (fpTag == null) return;
+      Log.d(TAG, "Setting FP Tag" + fpTag)
+      weUser.setAttribute("fpTag", fpTag)
+
+      //Firebase Analytics User Property.
+      FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag)
+
+      //AppsFlyer User Property
+      val params = java.util.HashMap<String, Any>()
+      params["fpTag"] = fpTag
+      AppsFlyerLib.getInstance().setAdditionalData(params)
+    } catch (e: java.lang.Exception) {
+      e.printStackTrace()
+    }
+  }
+}
 
   fun logout() {
     if (!BaseApplication.isInitialised()) return

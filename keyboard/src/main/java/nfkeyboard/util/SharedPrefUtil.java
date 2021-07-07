@@ -14,6 +14,7 @@ public class SharedPrefUtil {
     private SharedPreferences sBoostPref;
     private Context context;
     private static SharedPrefUtil sPrefUtil;
+    private SharedPreferences sBoostPref;
 
     private SharedPrefUtil() {
 

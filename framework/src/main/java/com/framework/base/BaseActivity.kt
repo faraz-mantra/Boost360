@@ -24,7 +24,8 @@ import com.framework.views.customViews.CustomToolbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : AppCompatActivity(), View.OnClickListener {
+abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
+  AppCompatActivity(), View.OnClickListener {
 
   protected var TAG = this.javaClass.simpleName
   protected var navigator: Navigator? = null

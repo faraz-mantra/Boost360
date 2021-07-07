@@ -5,7 +5,7 @@ package com.nowfloats.signup.UI.Model;
  */
 public class Primary_Number_Validation_Model {
 
-    public Boolean isPrimaryNumberValid ;
+    public Boolean isPrimaryNumberValid;
 
 
 }

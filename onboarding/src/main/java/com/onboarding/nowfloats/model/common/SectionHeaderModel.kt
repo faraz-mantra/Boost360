@@ -9,6 +9,7 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 class SectionHeaderModel : AppBaseRecyclerViewItem {
 
   var text: CharSequence? = null
+
   @ColorInt
   var textColor: Int? = null
   var typeface: Typeface? = null
@@ -22,11 +23,11 @@ class SectionHeaderModel : AppBaseRecyclerViewItem {
 }
 
 fun SectionHeaderModel.Companion.getInstance(
-    text: CharSequence? = null,
-    @ColorInt textColor: Int? = null,
-    typeface: Typeface? = null,
-    gravity: Int? = null,
-    textType: TextType? = null,
+  text: CharSequence? = null,
+  @ColorInt textColor: Int? = null,
+  typeface: Typeface? = null,
+  gravity: Int? = null,
+  textType: TextType? = null,
 ): SectionHeaderModel {
   val model = SectionHeaderModel()
   model.text = text

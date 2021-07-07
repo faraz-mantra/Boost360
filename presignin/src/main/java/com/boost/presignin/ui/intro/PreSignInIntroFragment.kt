@@ -52,7 +52,11 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
 
     if (position == 0) {
       binding?.presiginIntroImg?.setOnClickListener {
-        WebEngageController.trackEvent(PS_INTRO_VIDEO_SPLASH_CLICKED, START_INTRO_VIDEO, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(
+          PS_INTRO_VIDEO_SPLASH_CLICKED,
+          START_INTRO_VIDEO,
+          NO_EVENT_VALUE
+        )
         binding?.videoViewContainer?.isVisible = true;
         binding?.introImgContainer?.isVisible = false;
         binding?.progressBar?.isVisible = true
@@ -90,7 +94,11 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
           true
         }
         binding?.videoViewContainer?.setOnClickListener {
-          WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_AREA, VIDEO_AREA_CLICKED, NO_EVENT_VALUE)
+          WebEngageController.trackEvent(
+            PS_CLICKED_INTRO_VIDEO_AREA,
+            VIDEO_AREA_CLICKED,
+            NO_EVENT_VALUE
+          )
           if (binding?.videoView?.isPlaying == true) {
             binding?.videoView?.pause()
             binding?.playPauseLottie?.isVisible = true
@@ -130,30 +138,31 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     try {
       val duration = mediaPlayer?.duration ?: 0
       val currentTime = mediaPlayer?.currentPosition ?: 0;
-      timer = object : com.boost.presignin.timer.CountDownTimer((duration - currentTime).toLong(), 1000) {
-        override fun onTick(millisUntilFinished: Long) {
-          val videoDuration = (millisUntilFinished / 1000).toInt()
-          binding?.videoTime?.post {
-            if (videoDuration == 0) {
-              timer?.cancel()
-              binding?.videoTime?.text =
-                String.format(getString(R.string.intro_video_time), "00")
-            } else {
-              binding?.videoTime?.text =
-                String.format(getString(R.string.intro_video_time), videoDuration)
+      timer =
+        object : com.boost.presignin.timer.CountDownTimer((duration - currentTime).toLong(), 1000) {
+          override fun onTick(millisUntilFinished: Long) {
+            val videoDuration = (millisUntilFinished / 1000).toInt()
+            binding?.videoTime?.post {
+              if (videoDuration == 0) {
+                timer?.cancel()
+                binding?.videoTime?.text =
+                  String.format(getString(R.string.intro_video_time), "00")
+              } else {
+                binding?.videoTime?.text =
+                  String.format(getString(R.string.intro_video_time), videoDuration)
+              }
+            }
+          }
+
+          override fun onFinish() {
+            Log.e("videoCompleted", "&&&&&&&&&&&&&")
+            binding?.introImgContainer?.post {
+              binding?.introImgContainer?.isVisible = true
+              binding?.videoViewContainer?.isVisible = false
+              binding?.progressBar?.isVisible = false
             }
           }
         }
-
-        override fun onFinish() {
-          Log.e("videoCompleted", "&&&&&&&&&&&&&")
-          binding?.introImgContainer?.post {
-            binding?.introImgContainer?.isVisible = true
-            binding?.videoViewContainer?.isVisible = false
-            binding?.progressBar?.isVisible = false
-          }
-        }
-      }
       timer?.start()
     } catch (e: Exception) {
       Log.e("TimerCountDown", e.localizedMessage)

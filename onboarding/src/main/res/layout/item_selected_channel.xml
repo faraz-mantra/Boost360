@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-        <com.framework.views.customViews.CustomCardView
-            style="@style/Onboarding.Registration.FormHeaderCardStyle"
-            android:layout_marginStart="@dimen/size_5"
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_marginEnd="@dimen/size_5"
-            android:layout_marginBottom="@dimen/size_16">
+    <com.framework.views.customViews.CustomCardView
+      style="@style/Onboarding.Registration.FormHeaderCardStyle"
+      android:layout_marginStart="@dimen/size_5"
+      android:layout_marginTop="@dimen/size_16"
+      android:layout_marginEnd="@dimen/size_5"
+      android:layout_marginBottom="@dimen/size_16">
 
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/image"
-                style="@style/Onboarding.Registration.FormHeaderImageStyle"
-                app:srcCompat="@drawable/ic_google_n" />
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/image"
+        style="@style/Onboarding.Registration.FormHeaderImageStyle"
+        app:srcCompat="@drawable/ic_google_n" />
 
-        </com.framework.views.customViews.CustomCardView>
+    </com.framework.views.customViews.CustomCardView>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

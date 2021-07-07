@@ -8,58 +8,58 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class LocalStorage(context: Context) {
-    private val sharedPreferences: SharedPreferences
-    private var editor: SharedPreferences.Editor? = null
-    private val INITIAL_LOAD_DATA = "INITIAL_LOAD_DATA"
-    private val CART_ITEMS = "CART_ITEMS"
+  private val sharedPreferences: SharedPreferences
+  private var editor: SharedPreferences.Editor? = null
+  private val INITIAL_LOAD_DATA = "INITIAL_LOAD_DATA"
+  private val CART_ITEMS = "CART_ITEMS"
 
-    fun setInitialLoad(updatesModel: List<WidgetModel>) {
-        editor = sharedPreferences!!.edit()
-        editor!!.putString(INITIAL_LOAD_DATA, Gson().toJson(updatesModel))
-        editor!!.apply()
+  fun setInitialLoad(updatesModel: List<WidgetModel>) {
+    editor = sharedPreferences!!.edit()
+    editor!!.putString(INITIAL_LOAD_DATA, Gson().toJson(updatesModel))
+    editor!!.apply()
+  }
+
+  fun getInitialLoad(): List<WidgetModel>? {
+    val gson = Gson()
+    var initDataModel: List<WidgetModel>?
+    val data = sharedPreferences.getString(INITIAL_LOAD_DATA, null)
+
+    initDataModel =
+      gson.fromJson(data, object : TypeToken<List<WidgetModel>?>() {}.type)
+    return initDataModel
+  }
+
+  fun addCartItem(updatesModel: WidgetModel) {
+    var items = getCartItems() as MutableList<WidgetModel>?
+    if (items == null) {
+      var item: MutableList<WidgetModel> = ArrayList()
+      item.add(updatesModel)
+      editor = sharedPreferences!!.edit()
+      editor!!.putString(CART_ITEMS, Gson().toJson(item))
+      editor!!.apply()
+    } else {
+      items.add(updatesModel)
+      editor = sharedPreferences!!.edit()
+      editor!!.putString(CART_ITEMS, Gson().toJson(items))
+      editor!!.apply()
     }
+  }
 
-    fun getInitialLoad(): List<WidgetModel>? {
-        val gson = Gson()
-        var initDataModel: List<WidgetModel>?
-        val data = sharedPreferences.getString(INITIAL_LOAD_DATA, null)
+  fun setCartItem(list: List<WidgetModel>) {
+    editor = sharedPreferences!!.edit()
+    editor!!.putString(CART_ITEMS, Gson().toJson(list))
+    editor!!.apply()
+  }
 
-        initDataModel =
-            gson.fromJson(data, object : TypeToken<List<WidgetModel>?>() {}.type)
-        return initDataModel
-    }
+  fun getCartItems(): List<WidgetModel>? {
+    val gson = Gson()
+    var initDataModel: List<WidgetModel>?
+    val data = sharedPreferences.getString(CART_ITEMS, null)
 
-    fun addCartItem(updatesModel: WidgetModel) {
-        var items = getCartItems() as MutableList<WidgetModel>?
-        if (items == null) {
-            var item: MutableList<WidgetModel> = ArrayList()
-            item.add(updatesModel)
-            editor = sharedPreferences!!.edit()
-            editor!!.putString(CART_ITEMS, Gson().toJson(item))
-            editor!!.apply()
-        } else {
-            items.add(updatesModel)
-            editor = sharedPreferences!!.edit()
-            editor!!.putString(CART_ITEMS, Gson().toJson(items))
-            editor!!.apply()
-        }
-    }
-
-    fun setCartItem(list: List<WidgetModel>) {
-        editor = sharedPreferences!!.edit()
-        editor!!.putString(CART_ITEMS, Gson().toJson(list))
-        editor!!.apply()
-    }
-
-    fun getCartItems(): List<WidgetModel>? {
-        val gson = Gson()
-        var initDataModel: List<WidgetModel>?
-        val data = sharedPreferences.getString(CART_ITEMS, null)
-
-        initDataModel =
-            gson.fromJson(data, object : TypeToken<List<WidgetModel>?>() {}.type)
-        return initDataModel
-    }
+    initDataModel =
+      gson.fromJson(data, object : TypeToken<List<WidgetModel>?>() {}.type)
+    return initDataModel
+  }
 
 //    var userToken: String?
 //        get() = sharedPreferences.getString(USER_TOKEN_KEY, null)
@@ -236,21 +236,21 @@ class LocalStorage(context: Context) {
 //        return editor.commit()
 //    }
 
-    companion object {
-        private var instance: LocalStorage? = null
-        fun getInstance(context: Context): LocalStorage? {
-            if (instance == null) {
-                synchronized(LocalStorage::class.java) {
-                    if (instance == null) {
-                        instance = LocalStorage(context)
-                    }
-                }
-            }
-            return instance
+  companion object {
+    private var instance: LocalStorage? = null
+    fun getInstance(context: Context): LocalStorage? {
+      if (instance == null) {
+        synchronized(LocalStorage::class.java) {
+          if (instance == null) {
+            instance = LocalStorage(context)
+          }
         }
+      }
+      return instance
     }
+  }
 
-    init {
-        sharedPreferences = context.getSharedPreferences(USER_PREFERENCES, Context.MODE_PRIVATE)
-    }
+  init {
+    sharedPreferences = context.getSharedPreferences(USER_PREFERENCES, Context.MODE_PRIVATE)
+  }
 }

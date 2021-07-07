@@ -14,10 +14,15 @@ object TwitterConfigHelper {
 
   fun initialize(context: Context) {
     val config = TwitterConfig.Builder(context)
-            .logger(DefaultLogger(Log.DEBUG))
-            .twitterAuthConfig(TwitterAuthConfig("4CiUg5gcIbvYre8XjGd8GsElV", "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9"))
-            .debug(debug)
-            .build()
+      .logger(DefaultLogger(Log.DEBUG))
+      .twitterAuthConfig(
+        TwitterAuthConfig(
+          "4CiUg5gcIbvYre8XjGd8GsElV",
+          "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9"
+        )
+      )
+      .debug(debug)
+      .build()
     Twitter.initialize(config)
   }
 

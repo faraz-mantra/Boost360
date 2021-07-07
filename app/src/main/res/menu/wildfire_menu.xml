@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/item_filter"
-        android:icon="@drawable/ic_filter_hole"
-        android:title="@string/filter_by"
-        app:showAsAction="always"/>
-    <item
-        android:title="sort"
-        android:id="@+id/item_sort"
-        android:icon="@drawable/icon_sort_white"
-        app:showAsAction="always"/>
-    <item
-        android:id="@+id/item_search"
-        android:title="@string/search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:icon="@drawable/icon_search_white"
-        app:showAsAction="always|collapseActionView"/>
+  <item
+    android:id="@+id/item_filter"
+    android:icon="@drawable/ic_filter_hole"
+    android:title="@string/filter_by"
+    app:showAsAction="always" />
+  <item
+    android:id="@+id/item_sort"
+    android:icon="@drawable/icon_sort_white"
+    android:title="sort"
+    app:showAsAction="always" />
+  <item
+    android:id="@+id/item_search"
+    android:icon="@drawable/icon_search_white"
+    android:title="@string/search"
+    app:actionViewClass="androidx.appcompat.widget.SearchView"
+    app:showAsAction="always|collapseActionView" />
 
 </menu>

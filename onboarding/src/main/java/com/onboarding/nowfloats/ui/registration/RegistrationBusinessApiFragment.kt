@@ -49,7 +49,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
+class RegistrationBusinessApiFragment :
+  BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
 
   private var list = ArrayList<ProcessApiSyncModel>()
   private val connectedChannels = ArrayList<ChannelModel>()
@@ -69,9 +70,20 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.next, binding?.retry, binding?.supportCustomer)
-    binding?.categoryImage?.setImageDrawable(requestFloatsModel?.categoryDataModel?.getImage(baseActivity))
-    binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, baseActivity.theme))
-    if (requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) floatingPointId = requestFloatsModel?.floatingPointId!!
+    binding?.categoryImage?.setImageDrawable(
+      requestFloatsModel?.categoryDataModel?.getImage(
+        baseActivity
+      )
+    )
+    binding?.categoryImage?.setTintColor(
+      ResourcesCompat.getColor(
+        resources,
+        R.color.white,
+        baseActivity.theme
+      )
+    )
+    if (requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) floatingPointId =
+      requestFloatsModel?.floatingPointId!!
     setProcessApiSyncModel()
     setApiProcessAdapter(list)
     apiHitBusiness()
@@ -100,7 +112,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
 
   private fun setProcessApiSyncModel() {
     val channels = this.channels
-    val connectedChannelsAccessTokens = requestFloatsModel?.getConnectedAccessToken()?.map { it.getType() }
+    val connectedChannelsAccessTokens =
+      requestFloatsModel?.getConnectedAccessToken()?.map { it.getType() }
     val connectedWhatsApp = requestFloatsModel?.channelActionDatas?.firstOrNull()
 
     for (channel in channels) {
@@ -118,30 +131,35 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     }
     list.clear()
     if (requestFloatsModel?.isUpdate == true) {
-      if (connectedChannels.isNullOrEmpty()) backToDigitalChannelUpdate() else list.addAll(ProcessApiSyncModel().getDataStartUpdate(connectedChannels))
+      if (connectedChannels.isNullOrEmpty()) backToDigitalChannelUpdate() else list.addAll(
+        ProcessApiSyncModel().getDataStartUpdate(connectedChannels)
+      )
     } else {
       list.addAll(ProcessApiSyncModel().getDataStart(connectedChannels))
     }
-    binding?.title?.text = resources.getString(if (requestFloatsModel?.isUpdate == false) R.string.processing_your_business_information else R.string.processing_your_digital_channel)
+    binding?.title?.text =
+      resources.getString(if (requestFloatsModel?.isUpdate == false) R.string.processing_your_business_information else R.string.processing_your_digital_channel)
   }
 
   private fun putCreateBusinessOnboarding(dotProgressBar: DotProgressBar) {
     if (checkFpCreate().not()) {
       val request = getBusinessRequest()
       isSyncCreateFpApi = true
-      viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) {
-          if (it.stringResponse.isNullOrEmpty().not()) {
-            connectedChannels.forEach { it1 ->
-              it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
-            }
-            floatingPointId = it.stringResponse ?: ""
-            saveFpCreateData()
-            setReferralCode(floatingPointId)
-            apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
-          } else updateError("Floating point return null", it.status, "CREATE")
-        } else updateError(it.error?.localizedMessage, it.status, "CREATE")
-      })
+      viewModel?.putCreateBusinessOnboarding(userProfileId, request)
+        ?.observeOnce(viewLifecycleOwner, {
+          if (it.isSuccess()) {
+            if (it.stringResponse.isNullOrEmpty().not()) {
+              connectedChannels.forEach { it1 ->
+                it1.status =
+                  takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
+              }
+              floatingPointId = it.stringResponse ?: ""
+              saveFpCreateData()
+              setReferralCode(floatingPointId)
+              apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
+            } else updateError("Floating point return null", it.status, "CREATE")
+          } else updateError(it.error?.localizedMessage, it.status, "CREATE")
+        })
     } else apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
   }
 
@@ -149,7 +167,13 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     if (prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, "").isNullOrEmpty().not()) {
       var email = pref?.getString(PreferenceConstant.PERSON_EMAIL, "")
       if (email.isNullOrEmpty().not()) email = requestFloatsModel?.contactInfo?.email
-      InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, ""), floatingPointId)
+      InviteReferralsApi.getInstance(baseActivity).tracking(
+        "register",
+        email,
+        0,
+        prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, ""),
+        floatingPointId
+      )
       prefReferral?.edit()?.apply {
         putString(PreferenceConstant.REFER_CODE_APP, "")
         apply()
@@ -166,7 +190,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   private fun checkFpCreate(): Boolean {
     if (floatingPointId.isNotEmpty()) {
       connectedChannels.forEach { it1 ->
-        it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
+        it1.status =
+          takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
       }
       return true
     }
@@ -175,39 +200,63 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
 
   private fun apiProcessChannelWhatsApp(dotProgressBar: DotProgressBar, floatingPointId: String) {
     if (requestFloatsModel?.channelActionDatas.isNullOrEmpty().not()) {
-      val dataRequest = UpdateChannelActionDataRequest(requestFloatsModel?.channelActionDatas?.firstOrNull(), requestFloatsModel?.getWebSiteId())
-      viewModel?.postUpdateWhatsappRequest(dataRequest,WA_KEY)
-          ?.observeOnce(viewLifecycleOwner, {
-            if (it.isSuccess()) {
-              requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(WHATS_APP_CONNECTED, DIGITAL_CHANNELS, it) }
-              connectedChannels.forEach { it1 ->
-                it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
-              }
-              apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
-            } else {
-              connectedChannels.forEach { it1 ->
-                it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()).not() }?.let { ProcessApiSyncModel.SyncStatus.ERROR.name }
-              }
-              updateError(it.error?.localizedMessage, it.status, "CHANNELS")
+      val dataRequest = UpdateChannelActionDataRequest(
+        requestFloatsModel?.channelActionDatas?.firstOrNull(),
+        requestFloatsModel?.getWebSiteId()
+      )
+      viewModel?.postUpdateWhatsappRequest(dataRequest, WA_KEY)
+        ?.observeOnce(viewLifecycleOwner, {
+          if (it.isSuccess()) {
+            requestFloatsModel?.fpTag?.let {
+              WebEngageController.trackEvent(
+                WHATS_APP_CONNECTED,
+                DIGITAL_CHANNELS,
+                it
+              )
             }
-          })
+            connectedChannels.forEach { it1 ->
+              it1.status =
+                takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
+            }
+            apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
+          } else {
+            connectedChannels.forEach { it1 ->
+              it1.status =
+                takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()).not() }?.let { ProcessApiSyncModel.SyncStatus.ERROR.name }
+            }
+            updateError(it.error?.localizedMessage, it.status, "CHANNELS")
+          }
+        })
     } else apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
   }
 
-  private fun apiProcessChannelAccessTokens(dotProgressBar: DotProgressBar, floatingPointId: String) {
+  private fun apiProcessChannelAccessTokens(
+    dotProgressBar: DotProgressBar,
+    floatingPointId: String
+  ) {
     if (requestFloatsModel?.getConnectedAccessToken().isNullOrEmpty().not()) {
       if (clientId != null) {
         var index = 0
         requestFloatsModel?.getConnectedAccessToken()?.forEach { channelAccessToken ->
           var isBreak = false
-          viewModel?.updateChannelAccessToken(UpdateChannelAccessTokenRequest(channelAccessToken, clientId!!, floatingPointId))?.observeOnce(viewLifecycleOwner, Observer {
+          viewModel?.updateChannelAccessToken(
+            UpdateChannelAccessTokenRequest(
+              channelAccessToken,
+              clientId!!,
+              floatingPointId
+            )
+          )?.observeOnce(viewLifecycleOwner, Observer {
             index += 1
             if (it.status == 200 || it.status == 201 || it.status == 202) {
-              if (requestFloatsModel?.getConnectedAccessToken()?.size == index) apiBusinessActivatePlan(dotProgressBar, floatingPointId)
+              if (requestFloatsModel?.getConnectedAccessToken()?.size == index) apiBusinessActivatePlan(
+                dotProgressBar,
+                floatingPointId
+              )
             } else {
               isBreak = true
               connectedChannels.forEach { it1 ->
-                it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType() || ChannelType.WAB == it1.getType()).not() }?.let { ProcessApiSyncModel.SyncStatus.ERROR.name }
+                it1.status =
+                  takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType() || ChannelType.WAB == it1.getType()).not() }?.let { ProcessApiSyncModel.SyncStatus.ERROR.name }
               }
               updateError(it.error?.localizedMessage, it.status, "CHANNELS")
             }
@@ -230,11 +279,16 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           list.addAll(ProcessApiSyncModel().getDataErrorChannelsUpdate(connectedChannels))
         } else list.addAll(ProcessApiSyncModel().getDataErrorChannels(connectedChannels))
       }
-      "PLAN_ACTIVATION" -> list.addAll(ProcessApiSyncModel().getDataErrorActivatePlan(connectedChannels))
+      "PLAN_ACTIVATION" -> list.addAll(
+        ProcessApiSyncModel().getDataErrorActivatePlan(
+          connectedChannels
+        )
+      )
     }
     apiProcessAdapter?.notify(list)
     binding?.errorView?.visible()
-    binding?.errorApi?.text = if (message.isNullOrEmpty().not()) "$message: $status" else "Connection error: $status"
+    binding?.errorApi?.text =
+      if (message.isNullOrEmpty().not()) "$message: $status" else "Connection error: $status"
     binding?.next?.gone()
   }
 
@@ -272,29 +326,45 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       binding?.next?.alpha = 1F
       binding?.textBtn?.visibility = View.VISIBLE
 
-      binding?.textBtn?.text = resources.getString(if (requestFloatsModel?.isUpdate == true) R.string.digital_channel else R.string.start_your_digital_journey)
+      binding?.textBtn?.text =
+        resources.getString(if (requestFloatsModel?.isUpdate == true) R.string.digital_channel else R.string.start_your_digital_journey)
       binding?.container?.setBackgroundResource(R.drawable.bg_card_blue)
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        binding?.category?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.white)
+        binding?.category?.backgroundTintList =
+          ContextCompat.getColorStateList(baseActivity, R.color.white)
       binding?.title?.setTextColor(getColor(R.color.white))
       binding?.title?.text = resources.getString(
-          if (requestFloatsModel?.isUpdate == false)
-            R.string.business_information_completed
-          else R.string.digital_channel_completed
+        if (requestFloatsModel?.isUpdate == false)
+          R.string.business_information_completed
+        else R.string.digital_channel_completed
       )
       binding?.categoryImage?.setTintColor(getColor(R.color.dodger_blue_two))
       apiProcessAdapter?.notify(list)
     }
   }
 
-  private fun getRequestPurchasedOrder(floatingPointId: String, responsePlan: Plan15DaysResponse?): ActivatePurchasedOrderRequest {
+  private fun getRequestPurchasedOrder(
+    floatingPointId: String,
+    responsePlan: Plan15DaysResponse?
+  ): ActivatePurchasedOrderRequest {
     val widList = java.util.ArrayList<PurchasedWidget>()
     requestFloatsModel?.categoryDataModel?.getEmptySections()?.forEach {
       it.getWidList().forEach { key ->
-        val widget = PurchasedWidget(widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
-            isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
-            consumptionConstraint = ConsumptionConstraint("DAYS", 30), images = java.util.ArrayList(),
-            expiry = PurchasedExpiry("YEARS", 10))
+        val widget = PurchasedWidget(
+          widgetKey = key,
+          name = it.title,
+          quantity = 1,
+          desc = it.desc,
+          recurringPaymentFrequency = "MONTHLY",
+          isCancellable = true,
+          isRecurringPayment = true,
+          discount = 0.0,
+          price = 0.0,
+          netPrice = 0.0,
+          consumptionConstraint = ConsumptionConstraint("DAYS", 30),
+          images = java.util.ArrayList(),
+          expiry = PurchasedExpiry("YEARS", 10)
+        )
         widList.add(widget)
       }
     }
@@ -309,10 +379,21 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           widgetN.expiry?.value = 15
         } else {
           widList.add(
-              PurchasedWidget(widgetKey = key, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
-                  isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
-                  consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = java.util.ArrayList(),
-                  expiry = PurchasedExpiry("DAYS", 15))
+            PurchasedWidget(
+              widgetKey = key,
+              name = "",
+              quantity = 1,
+              desc = "",
+              recurringPaymentFrequency = "MONTHLY",
+              isCancellable = true,
+              isRecurringPayment = true,
+              discount = 0.0,
+              price = 0.0,
+              netPrice = 0.0,
+              consumptionConstraint = ConsumptionConstraint("DAYS", 15),
+              images = java.util.ArrayList(),
+              expiry = PurchasedExpiry("DAYS", 15)
+            )
           )
         }
       }
@@ -324,15 +405,31 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           widgetN2.expiry?.value = keyValue.value
         } else {
           widList.add(
-              PurchasedWidget(widgetKey = keyValue.widget, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
-                  isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
-                  consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = java.util.ArrayList(),
-                  expiry = PurchasedExpiry("DAYS", keyValue.value))
+            PurchasedWidget(
+              widgetKey = keyValue.widget,
+              name = "",
+              quantity = 1,
+              desc = "",
+              recurringPaymentFrequency = "MONTHLY",
+              isCancellable = true,
+              isRecurringPayment = true,
+              discount = 0.0,
+              price = 0.0,
+              netPrice = 0.0,
+              consumptionConstraint = ConsumptionConstraint("DAYS", 15),
+              images = java.util.ArrayList(),
+              expiry = PurchasedExpiry("DAYS", keyValue.value)
+            )
           )
         }
       }
     }
-    return ActivatePurchasedOrderRequest(com.framework.pref.clientId, floatingPointId, "EXTENSION", widList)
+    return ActivatePurchasedOrderRequest(
+      com.framework.pref.clientId,
+      floatingPointId,
+      "EXTENSION",
+      widList
+    )
   }
 
   private fun setApiProcessAdapter(list: ArrayList<ProcessApiSyncModel>?) {
@@ -346,7 +443,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
   }
-
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
@@ -368,6 +464,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     }
   }
 
+
   override fun getViewModelClass(): Class<BusinessCreateViewModel> {
     return BusinessCreateViewModel::class.java
   }
@@ -387,12 +484,15 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.email = requestFloatsModel?.contactInfo?.getEmailN()
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
-    createRequest.fbPageName = requestFloatsModel?.getConnectedAccessToken()?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
+    createRequest.fbPageName = requestFloatsModel?.getConnectedAccessToken()
+      ?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
     createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     createRequest.appExperienceCode = requestFloatsModel?.categoryDataModel?.experience_code
-    createRequest.whatsAppNumber = requestFloatsModel?.channelActionDatas?.firstOrNull()?.getNumberWithCode()
+    createRequest.whatsAppNumber =
+      requestFloatsModel?.channelActionDatas?.firstOrNull()?.getNumberWithCode()
     createRequest.whatsAppNotificationOptIn = requestFloatsModel?.whatsappEntransactional ?: false
-    createRequest.boostXWebsiteUrl = "www.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+    createRequest.boostXWebsiteUrl =
+      "www.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
     return createRequest
   }
 
@@ -400,7 +500,10 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     val bundle = Bundle()
     bundle.putBoolean(PreferenceConstant.IS_UPDATE, true)
     bundle.putBoolean(PreferenceConstant.IS_START_ACTIVITY, true)
-    bundle.putString(PreferenceConstant.GET_FP_EXPERIENCE_CODE, requestFloatsModel?.categoryDataModel?.experienceCode())
+    bundle.putString(
+      PreferenceConstant.GET_FP_EXPERIENCE_CODE,
+      requestFloatsModel?.categoryDataModel?.experienceCode()
+    )
     bundle.putString(PreferenceConstant.KEY_FP_ID, requestFloatsModel?.floatingPointId)
     bundle.putString(PreferenceConstant.GET_FP_DETAILS_TAG, requestFloatsModel?.fpTag)
     bundle.putString(PreferenceConstant.WEBSITE_URL, requestFloatsModel?.websiteUrl)
@@ -409,7 +512,10 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   }
 
   fun isDigitalChannel(): Boolean {
-    return if ((binding?.textBtn?.visibility == View.VISIBLE) && binding?.textBtn?.text == resources.getString(R.string.digital_channel)) {
+    return if ((binding?.textBtn?.visibility == View.VISIBLE) && binding?.textBtn?.text == resources.getString(
+        R.string.digital_channel
+      )
+    ) {
       backToDigitalChannelUpdate()
       true
     } else false

@@ -25,7 +25,8 @@ import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 
-class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBinding, BaseViewModel>() {
+class DigitalChannelInfoDialog :
+  BaseDialogFragment<DialogDigitalChannelInfoBinding, BaseViewModel>() {
 
   private var channelModel: ChannelModel? = null
   var onClickedDisconnect: (channel: ChannelModel) -> Unit = { }
@@ -36,7 +37,8 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
 
   override fun onCreateView() {
     binding?.container?.post {
-      val fabObservable = (binding?.container?.fadeIn(300L)?.mergeWith(binding?.imageCard?.fadeIn(300L)))
+      val fabObservable =
+        (binding?.container?.fadeIn(300L)?.mergeWith(binding?.imageCard?.fadeIn(300L)))
           ?.andThen(binding?.title?.fadeIn(100L)?.mergeWith(binding?.desc?.fadeIn(100L)))
           ?.andThen(binding?.confirm?.fadeIn(50L))
       if (channelModel == null) return@post
@@ -58,21 +60,33 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
 
       binding?.title?.text = when {
         channelModel!!.isWhatsAppChannel() -> {
-          channelModel?.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+          channelModel?.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }
+            ?.let { it } ?: channelModel?.getName()
         }
         channelModel!!.isGoogleSearch() -> {
-          channelModel?.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+          channelModel?.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it }
+            ?: channelModel?.getName()
         }
         channelModel!!.isGoogleBusinessChannel() -> {
-          channelModel?.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+          channelModel?.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it }
+            ?: channelModel?.getName()
 //          channelModel?.channelAccessToken?.LocationName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
         }
         else -> {
           if ((channelModel!!.isFacebookShop() || channelModel!!.isFacebookPage())) {
-            val profilePicture = FacebookGraphManager.getProfilePictureUrl(channelModel?.channelAccessToken?.userAccountId ?: "")
-            binding?.picture?.let { baseActivity.glideLoad(it, profilePicture, R.drawable.ic_user3) }
+            val profilePicture = FacebookGraphManager.getProfilePictureUrl(
+              channelModel?.channelAccessToken?.userAccountId ?: ""
+            )
+            binding?.picture?.let {
+              baseActivity.glideLoad(
+                it,
+                profilePicture,
+                R.drawable.ic_user3
+              )
+            }
           }
-          channelModel?.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+          channelModel?.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it }
+            ?: channelModel?.getName()
         }
       }
 
@@ -80,7 +94,15 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
       binding?.image?.setImageDrawable(channelModel?.getDrawable(activity))
       binding?.title?.underlineText(0, (binding?.title?.text ?: "").length - 1)
     }
-    setOnClickListener(binding?.confirm, binding?.disconnectBtn, binding?.disableBtn, binding?.title, binding?.dismiss, binding?.clickHelp, binding?.optInOutBtn)
+    setOnClickListener(
+      binding?.confirm,
+      binding?.disconnectBtn,
+      binding?.disableBtn,
+      binding?.title,
+      binding?.dismiss,
+      binding?.clickHelp,
+      binding?.optInOutBtn
+    )
   }
 
   fun setChannels(channelModel: ChannelModel?) {
@@ -103,7 +125,6 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
       }
     }
   }
-
   private fun callHelpLineNumber() {
     try {
       val intent = Intent(Intent.ACTION_CALL)
@@ -116,14 +137,21 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
     }
   }
 
+
   private fun openBrowser() {
     var url: String? = null
     if (channelModel != null) {
-      if (channelModel!!.isTwitterChannel() && channelModel?.channelAccessToken?.userAccountName.isNullOrEmpty().not()) {
+      if (channelModel!!.isTwitterChannel() && channelModel?.channelAccessToken?.userAccountName.isNullOrEmpty()
+          .not()
+      ) {
         url = "https://twitter.com/${channelModel?.channelAccessToken?.userAccountName?.trim()}"
-      } else if (channelModel!!.isFacebookPage() && channelModel?.channelAccessToken?.userAccountId.isNullOrEmpty().not()) {
+      } else if (channelModel!!.isFacebookPage() && channelModel?.channelAccessToken?.userAccountId.isNullOrEmpty()
+          .not()
+      ) {
         url = "https://www.facebook.com/${channelModel?.channelAccessToken?.userAccountId}"
-      } else if (channelModel!!.isGoogleSearch() && channelModel?.websiteUrl.isNullOrEmpty().not()) {
+      } else if (channelModel!!.isGoogleSearch() && channelModel?.websiteUrl.isNullOrEmpty()
+          .not()
+      ) {
         url = channelModel?.websiteUrl
       }
     }

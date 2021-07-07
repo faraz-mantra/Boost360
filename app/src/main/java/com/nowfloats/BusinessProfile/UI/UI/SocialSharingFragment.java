@@ -124,74 +124,61 @@ import static com.framework.webengageconstant.EventNameKt.WHATSAPPFORBUSINESS;
 public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int PAGE_NO_FOUND = 404;
     private static final int FB_PAGE_CREATION = 101;
-    private GMBHandler gmbHandler;
-    int size = 0;
-    private String TAG = Constants.LogTag;
-    boolean[] checkedPages;
-
-    private AlertDialog alertDialog;
-    UserSessionManager session;
-
+    private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
+    private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
     private final int LIGHT_HOUSE_EXPIRE = 0;
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
-
-    TextView connectTextView, topFeatureTextView;
-    //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
-    private SharedPreferences pref = null;
-    private SharedPreferences.Editor prefsEditor;
-    private ImageView facebookHome;
-    private ImageView facebookPage;
-    private ImageView twitter;
-
-    private ImageView ivFbPageAutoPull;
-
-    private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
-    private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox, gmbCheckBox;
-    private CheckBox facebookautopost;
-    ArrayList<String> items;
-    private int numberOfUpdates = 0;
-    private boolean numberOfUpdatesSelected = false;
-
-    private SharedPreferences mTwitterPreferences = null;
-    private ProgressDialog progressDialog = null;
-    private int mNewPosition = -1;
-
-
-    //Rahul Twitter
-
-
     private final int FBTYPE = 0;
     private final int FBPAGETYPE = 1;
     private final int TWITTERTYPE = 2;
     private final int FB_DECTIVATION = 3;
+    private final int FB_PAGE_DEACTIVATION = 4;
+    private final int TWITTER_DEACTIVATION = 11;
+    private final int FROM_AUTOPOST = 1;
+    private final int FROM_FB_PAGE = 0;
+    int size = 0;
+    boolean[] checkedPages;
+    UserSessionManager session;
+    TextView connectTextView, topFeatureTextView;
+    ArrayList<String> items;
+    Handler handler = new Handler();
+    FragmentSocialSharingBinding binding;
+    private GMBHandler gmbHandler;
+    private String TAG = Constants.LogTag;
+    private AlertDialog alertDialog;
+    //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
+    private SharedPreferences pref = null;
+    private SharedPreferences.Editor prefsEditor;
+
+
+    //Rahul Twitter
+    private ImageView facebookHome;
+    private ImageView facebookPage;
+    private ImageView twitter;
+    private ImageView ivFbPageAutoPull;
+    private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
+    private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox, gmbCheckBox;
+    private CheckBox facebookautopost;
+    private int numberOfUpdates = 0;
+    private boolean numberOfUpdatesSelected = false;
+    private SharedPreferences mTwitterPreferences = null;
+    private ProgressDialog progressDialog = null;
+    private int mNewPosition = -1;
     private GoogleSignInOptions googleSignInOptions;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInClient googleSignInClient;
-    private final int FB_PAGE_DEACTIVATION = 4;
-    private final int TWITTER_DEACTIVATION = 11;
-    private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
-    private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
-    private final int FROM_AUTOPOST = 1;
-    private final int FROM_FB_PAGE = 0;
-
-
     private CallbackManager callbackManager;
     private TextView arrowTextView;
     private TwitterConnection twitterConnection;
     private String fpPageName;
-    Handler handler = new Handler();
-
-    private WhatsAppBusinessNumberModel numberModel;
 
 //    private int lastGoogleAccounts = 0;
-
+    private WhatsAppBusinessNumberModel numberModel;
     private boolean isWebsiteEnabled = true;
     private boolean isFacebookEnabled = true;
     private boolean isTwitterEnabled = true;
     private boolean isOthersEnabled = true;
-
-    FragmentSocialSharingBinding binding;
     private MaterialDialog dialog, progressbar;
 
     private String phoneCountryCode;
@@ -200,7 +187,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             FacebookSdk.setIsDebugEnabled(true);
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         }
@@ -353,7 +340,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                     gmbHandler.removeUser(SocialSharingFragment.this);
                     gmbSignOutUserfromGoogle(true);
-                    WebEngageController.trackEvent(GMB, DISCONNECT_GMB , session.getFpTag());
+                    WebEngageController.trackEvent(GMB, DISCONNECT_GMB, session.getFpTag());
 
                 }
             }
@@ -489,17 +476,13 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             }
         });
 
-        binding.whatsappCheckbox.setOnClickListener(v->
+        binding.whatsappCheckbox.setOnClickListener(v ->
         {
-            if(binding.whatsappCheckbox.isChecked())
-            {
+            if (binding.whatsappCheckbox.isChecked()) {
                 binding.whatsappCheckbox.setChecked(false);
                 showWhatsAppNumberDialog();
                 WebEngageController.trackEvent(WHATSAPPFORBUSINESS, CONNECT_WHATSAPP_FOR_BUSINESS, session.getFpTag());
-            }
-
-            else
-            {
+            } else {
                 WaUpdateDataModel update = new WaUpdateDataModel();
                 update.setQuery(String.format("{_id:'%s'}", numberModel.getId()));
 
@@ -518,10 +501,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
 
-    private void initProgressBar()
-    {
-        if(progressbar == null)
-        {
+    private void initProgressBar() {
+        if (progressbar == null) {
             progressbar = new MaterialDialog.Builder(getActivity())
                     .autoDismiss(false)
                     .progress(true, 0)
@@ -529,19 +510,15 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         }
     }
 
-    private void showProgressbar(String content)
-    {
-        if (progressbar != null && !progressbar.isShowing())
-        {
+    private void showProgressbar(String content) {
+        if (progressbar != null && !progressbar.isShowing()) {
             progressbar.setContent(content);
             progressbar.show();
         }
     }
 
-    private void hideProgressbar()
-    {
-        if (progressbar != null && progressbar.isShowing())
-        {
+    private void hideProgressbar() {
+        if (progressbar != null && progressbar.isShowing()) {
             progressbar.dismiss();
         }
     }
@@ -1795,8 +1772,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     @Override
                     public void success(WebActionModel<WhatsAppBusinessNumberModel> model, Response response) {
 
-                        if (model != null && model.getData() != null && model.getData().size() > 0)
-                        {
+                        if (model != null && model.getData() != null && model.getData().size() > 0) {
                             numberModel = model.getData().get(0);
                             String whatsAppNumber = numberModel.getWhatsAppNumber() == null ? "" : numberModel.getWhatsAppNumber();
                             binding.tvWhatsappNumber.setText(phoneCountryCode.concat(" ").concat(whatsAppNumber));
@@ -1805,8 +1781,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }
 
                     @Override
-                    public void failure(RetrofitError error)
-                    {
+                    public void failure(RetrofitError error) {
 
                     }
                 });
@@ -1830,8 +1805,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         binding.tvWhatsappNumber.setText(addDataModel.getActionData().getWhatsAppNumber());
                         binding.whatsappCheckbox.setChecked(true);
 
-                        if(dialog != null && dialog.isShowing())
-                        {
+                        if (dialog != null && dialog.isShowing()) {
                             dialog.dismiss();
                         }
 
@@ -1840,8 +1814,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }
 
                     @Override
-                    public void failure(RetrofitError error)
-                    {
+                    public void failure(RetrofitError error) {
                         Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_add_whatsapp));
                     }
                 });
@@ -1858,8 +1831,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     @Override
                     public void success(String model, Response response) {
 
-                        if(numberModel != null)
-                        {
+                        if (numberModel != null) {
                             numberModel.setWhatsAppNumber(phoneCountryCode.concat(" ").concat(number));
                         }
 
@@ -1871,23 +1843,17 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }
 
                     @Override
-                    public void failure(RetrofitError error)
-                    {
-                        if(error.getResponse().getStatus() == 200)
-                        {
-                            if(numberModel != null)
-                            {
+                    public void failure(RetrofitError error) {
+                        if (error.getResponse().getStatus() == 200) {
+                            if (numberModel != null) {
                                 numberModel.setWhatsAppNumber(phoneCountryCode.concat(" ").concat(number));
                             }
 
                             binding.tvWhatsappNumber.setText(R.string.inactive);
                             binding.whatsappCheckbox.setChecked(false);
 
-                            Methods.showSnackBarPositive(getActivity(),  getString(R.string.whats_app_deactivated));
-                        }
-
-                        else
-                        {
+                            Methods.showSnackBarPositive(getActivity(), getString(R.string.whats_app_deactivated));
+                        } else {
                             Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_deactivate_whats_app));
                         }
 
@@ -1896,8 +1862,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 });
     }
 
-    private void showWhatsAppNumberDialog()
-    {
+    private void showWhatsAppNumberDialog() {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_whatsapp_number, null);
         final EditText number = view.findViewById(R.id.editText);
 
@@ -1909,12 +1874,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
                 .positiveColorRes(R.color.primary_color)
-                .onPositive((dialog, which)-> {
+                .onPositive((dialog, which) -> {
 
                     String numText = number.getText().toString().trim();
 
-                    if (numText.length() >= 6)
-                    {
+                    if (numText.length() >= 6) {
                         WhatsAppBusinessNumberModel whatsAppBusinessNumberModel = new WhatsAppBusinessNumberModel();
                         whatsAppBusinessNumberModel.setWhatsAppNumber(numText);
 
@@ -1923,14 +1887,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         dataModel.setActionData(whatsAppBusinessNumberModel);
 
                         addWhatsAppNumber(dataModel);
-                    }
-
-                    else
-                    {
+                    } else {
                         Toast.makeText(getActivity(), getResources().getString(R.string.enter_password_6to12_char), Toast.LENGTH_SHORT).show();
                     }
                 })
-                .onNegative((dialog, which)-> dialog.dismiss()).show();
+                .onNegative((dialog, which) -> dialog.dismiss()).show();
 
         //final TextView positive = materialDialog.getActionButton(DialogAction.POSITIVE);
         //positive.setTextColor(ContextCompat.getColor(getActivity(), R.color.gray_transparent));

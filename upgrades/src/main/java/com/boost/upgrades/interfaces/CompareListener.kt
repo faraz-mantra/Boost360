@@ -8,6 +8,6 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.YoutubeVideoModel
 
 interface CompareListener {
-    fun onPackageClicked(item: Bundles?)
-    fun onLearnMoreClicked(item: Bundles?)
+  fun onPackageClicked(item: Bundles?)
+  fun onLearnMoreClicked(item: Bundles?)
 }

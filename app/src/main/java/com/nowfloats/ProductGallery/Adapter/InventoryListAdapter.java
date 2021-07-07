@@ -1,8 +1,10 @@
 package com.nowfloats.ProductGallery.Adapter;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +30,7 @@ public class InventoryListAdapter extends ArrayAdapter<WebAction> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         WebAction webAction = getItem(position);
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.inventory_list_row_layout, parent, false);
         }
 

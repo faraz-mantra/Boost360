@@ -6,7 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,39 +32,20 @@ import java.util.regex.Pattern;
 
 public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Business_Queries_Enterprise_Adapter.MyViewHolder> {
 
-    private ArrayList<CardData> peopleDataSet;
-    Entity_model data;
-    private Context appContext ;
     final HashMap<String, SoftReference<Bitmap>> _cache = null;
+    Entity_model data;
     PorterDuffColorFilter whiteLabelFilter;
     String headerValue;
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView fromTextView;
-        TextView dateTextView;
-        TextView queryTextView;
-        TextView contactText;
-        LinearLayout entityLayout;
-        FrameLayout contactButton;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            this.fromTextView = (TextView) itemView.findViewById(R.id.fromTextView);
-            this.dateTextView = (TextView) itemView.findViewById(R.id.enquiry_dateTextView);
-            this.queryTextView = (TextView) itemView.findViewById(R.id.queryTexView);
-            this.contactText = (TextView) itemView.findViewById(R.id.contactText);
-            this.contactButton = (FrameLayout) itemView.findViewById(R.id.contactButton);
-            this.entityLayout = (LinearLayout)itemView.findViewById(R.id.entity_layout);
-        }
-    }
+    private ArrayList<CardData> peopleDataSet;
+    private Context appContext;
 
     public Business_Queries_Enterprise_Adapter(Context context) {
-        appContext = context ;
+        appContext = context;
         whiteLabelFilter = new PorterDuffColorFilter(appContext.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.MULTIPLY);
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.business_enquires_cards_layout, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
@@ -85,11 +68,11 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
 //        queryTextView.setTypeface(myCustomFontLight);
 //        contactText.setTypeface(myCustomFont);
 
-        BoostLog.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizEnterpriseQueries.size());
+        BoostLog.d("$$$$$$", "Biz Data : " + listPosition + " Data : " + Constants.StorebizEnterpriseQueries.size());
         data = Constants.StorebizEnterpriseQueries.get(listPosition);
 
         try {
-            String email =data.Phone;
+            String email = data.Phone;
             Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
             Matcher m = p.matcher(email);
             boolean matchFound = m.matches();
@@ -100,14 +83,14 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
                 contactText.setText(appContext.getResources().getString(R.string.email));
                 fromTextView.setText(data.Phone);
                 holder.setIsRecyclable(false);
-            }else {
-                fromTextView.setText("+"+Constants.StoreCountryCode+data.Phone);
+            } else {
+                fromTextView.setText("+" + Constants.StoreCountryCode + data.Phone);
             }
             dateTextView.setText(data.CreatedDate);
 
             Log.d("DATE_FORMAT_CHECK", data.CreatedDate);
 
-            queryTextView.setText("\""+data.Message+"\"");
+            queryTextView.setText("\"" + data.Message + "\"");
             holder.setIsRecyclable(false);
 
             holder.contactButton.setOnClickListener(new View.OnClickListener() {
@@ -118,20 +101,20 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
                     Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
                     Matcher m = p.matcher(headerValue);
                     boolean matchFound = m.matches();
-                    if(matchFound){
+                    if (matchFound) {
 
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                 "mailto", headerValue, null));
                         appContext.startActivity(Intent.createChooser(emailIntent, appContext.getResources().getString(R.string.send_email)));
 
-                    }else{
+                    } else {
                         Intent call = new Intent(Intent.ACTION_DIAL);
-                        call.setData(Uri.parse("tel:"+headerValue));
+                        call.setData(Uri.parse("tel:" + headerValue));
                         appContext.startActivity(call);
                     }
                 }
             });
-            BoostLog.d("Adapter Data","Adapter Data : "+data.Phone+" , "+data.CreatedDate);
+            BoostLog.d("Adapter Data", "Adapter Data : " + data.Phone + " , " + data.CreatedDate);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -139,10 +122,28 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
 
     }
 
-
     @Override
     public int getItemCount() {
 
         return Constants.StorebizEnterpriseQueries.size();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView fromTextView;
+        TextView dateTextView;
+        TextView queryTextView;
+        TextView contactText;
+        LinearLayout entityLayout;
+        FrameLayout contactButton;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            this.fromTextView = (TextView) itemView.findViewById(R.id.fromTextView);
+            this.dateTextView = (TextView) itemView.findViewById(R.id.enquiry_dateTextView);
+            this.queryTextView = (TextView) itemView.findViewById(R.id.queryTexView);
+            this.contactText = (TextView) itemView.findViewById(R.id.contactText);
+            this.contactButton = (FrameLayout) itemView.findViewById(R.id.contactButton);
+            this.entityLayout = (LinearLayout) itemView.findViewById(R.id.entity_layout);
+        }
     }
 }

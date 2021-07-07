@@ -16,54 +16,42 @@ public class TaxDetail {
     private Double value;
 
     /**
-     *
-     * @return
-     * The amountType
+     * @return The amountType
      */
     public Integer getAmountType() {
         return amountType;
     }
 
     /**
-     *
-     * @param amountType
-     * The AmountType
+     * @param amountType The AmountType
      */
     public void setAmountType(Integer amountType) {
         this.amountType = amountType;
     }
 
     /**
-     *
-     * @return
-     * The key
+     * @return The key
      */
     public String getKey() {
         return key;
     }
 
     /**
-     *
-     * @param key
-     * The Key
+     * @param key The Key
      */
     public void setKey(String key) {
         this.key = key;
     }
 
     /**
-     *
-     * @return
-     * The value
+     * @return The value
      */
     public Double getValue() {
         return value;
     }
 
     /**
-     *
-     * @param value
-     * The Value
+     * @param value The Value
      */
     public void setValue(Double value) {
         this.value = value;

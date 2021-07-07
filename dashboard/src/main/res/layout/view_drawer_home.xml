@@ -84,10 +84,10 @@
                 android:maxLines="1"
                 android:paddingStart="@dimen/size_2"
                 android:paddingEnd="@dimen/size_2"
-                tools:text="Test"
                 android:textColor="@color/white"
                 app:fontFamily="@font/bold"
-                app:textType="BODY_1" />
+                app:textType="BODY_1"
+                tools:text="Test" />
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/txt_domain_name"
@@ -101,9 +101,9 @@
                 android:paddingTop="@dimen/size_1"
                 android:paddingEnd="@dimen/size_2"
                 android:paddingBottom="@dimen/size_1"
-                tools:text="@string/www_sravansclinic_com"
                 android:textColor="@color/white"
-                app:textType="CAPTION" />
+                app:textType="CAPTION"
+                tools:text="@string/www_sravansclinic_com" />
             </LinearLayout>
 
 
@@ -177,9 +177,9 @@
               style="@style/CustomProgressBar"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_5"
-              android:progressDrawable="@drawable/ic_progress_bar_high_grey"
               android:layout_marginTop="@dimen/size_6"
               android:max="100"
+              android:progressDrawable="@drawable/ic_progress_bar_high_grey"
               tools:progress="50" />
           </LinearLayout>
 

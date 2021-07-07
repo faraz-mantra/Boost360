@@ -3,7 +3,9 @@ package com.nowfloats.riachatsdk.fragments;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,18 +28,6 @@ public class CustomDialogFragment extends DialogFragment {
 
     private OnResultReceive mResultListener;
 
-    public enum DialogFrom {
-        CREATE_MY_SITE,
-        SKIP,
-        BACK_PRESS,
-        BACK_PRESS_LOGIN,
-        NO_INTERNET,
-        COUNTRY_CODE,
-        COUNTRY_CODE_SKIP,
-        SKIP_LOGIN,
-        DEFAULT
-    }
-
     public static CustomDialogFragment newInstance(final DialogFrom dialogFrom) {
 
         CustomDialogFragment fragment = new CustomDialogFragment();
@@ -48,7 +38,6 @@ public class CustomDialogFragment extends DialogFragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +46,6 @@ public class CustomDialogFragment extends DialogFragment {
             from = (DialogFrom) getArguments().get(ARG_FROM);
         }
     }
-
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -220,7 +208,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mResultListener == null ) return;
+                        if (mResultListener == null) return;
                         mResultListener.navigateToHome();
                     }
                 });
@@ -228,7 +216,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNeg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mResultListener == null ) return;
+                        if (mResultListener == null) return;
                         mResultListener.finishActivity();
 
                     }
@@ -253,7 +241,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mResultListener == null ) return;
+                        if (mResultListener == null) return;
                         mResultListener.dismissPopup();
                     }
                 });
@@ -261,7 +249,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNeg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mResultListener == null ) return;
+                        if (mResultListener == null) return;
                         mResultListener.navigateToHome();
 
                     }
@@ -290,7 +278,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mResultListener == null ) return;
+                        if (mResultListener == null) return;
                         mResultListener.dismissPopup();
                     }
                 });
@@ -298,7 +286,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNeg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mResultListener == null ) return;
+                        if (mResultListener == null) return;
                         mResultListener.dismissPopup();
 
                     }
@@ -323,7 +311,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mResultListener == null ) return;
+                        if (mResultListener == null) return;
                         mResultListener.dismissPopup();
                     }
                 });
@@ -331,7 +319,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNeg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mResultListener == null ) return;
+                        if (mResultListener == null) return;
                         mResultListener.skipNode();
 
                     }
@@ -342,7 +330,7 @@ public class CustomDialogFragment extends DialogFragment {
         }
 
         try {
-            if(getDialog().getWindow() != null) {
+            if (getDialog().getWindow() != null) {
                 getDialog().getWindow().setBackgroundDrawableResource(R.drawable.place_pick_dialog_bg);
             }
         } catch (Exception e) {
@@ -357,6 +345,23 @@ public class CustomDialogFragment extends DialogFragment {
         mResultListener = onResultReceive;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+    }
+
+    public enum DialogFrom {
+        CREATE_MY_SITE,
+        SKIP,
+        BACK_PRESS,
+        BACK_PRESS_LOGIN,
+        NO_INTERNET,
+        COUNTRY_CODE,
+        COUNTRY_CODE_SKIP,
+        SKIP_LOGIN,
+        DEFAULT
+    }
+
     public interface OnResultReceive {
         void createmysite();
 
@@ -369,10 +374,5 @@ public class CustomDialogFragment extends DialogFragment {
         void skipNode();
 
         void finishActivity();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-
     }
 }

@@ -332,14 +332,14 @@
                             app:textType="CAPTION"
                             tools:targetApi="p" />
 
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:id="@+id/ellipse_open_close"
-                            android:layout_width="@dimen/size_20"
-                            android:layout_height="@dimen/size_20"
-                            android:layout_marginEnd="@dimen/size_14"
-                            app:lottie_autoPlay="true"
-                            app:lottie_loop="true"
-                            app:lottie_rawRes="@raw/green_dot_json" />
+            <com.airbnb.lottie.LottieAnimationView
+              android:id="@+id/ellipse_open_close"
+              android:layout_width="@dimen/size_20"
+              android:layout_height="@dimen/size_20"
+              android:layout_marginEnd="@dimen/size_14"
+              app:lottie_autoPlay="true"
+              app:lottie_loop="true"
+              app:lottie_rawRes="@raw/green_dot_json" />
 
                         <com.framework.views.customViews.CustomImageView
                             android:layout_width="wrap_content"
@@ -371,20 +371,22 @@
                             android:textColor="@color/text_color_light_white"
                             tools:targetApi="p" />
 
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:id="@+id/text_new"
-                            android:layout_width="@dimen/size_90"
-                            android:layout_height="@dimen/size_45"
-                            app:lottie_autoPlay="true"
-                            app:lottie_loop="true"
-                            app:lottie_rawRes="@raw/new_badge" />
-                        <com.framework.views.customViews.CustomImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/size_12"
-                            app:srcCompat="@drawable/ic_arrow_trans_website_d" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-                </androidx.appcompat.widget.LinearLayoutCompat>
+            <com.airbnb.lottie.LottieAnimationView
+              android:id="@+id/text_new"
+              android:layout_width="@dimen/size_90"
+              android:layout_height="@dimen/size_45"
+              android:layout_marginEnd="-30dp"
+              app:lottie_autoPlay="true"
+              app:lottie_loop="true"
+              app:lottie_rawRes="@raw/new_badge" />
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/size_12"
+              app:srcCompat="@drawable/ic_arrow_trans_website_d" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"

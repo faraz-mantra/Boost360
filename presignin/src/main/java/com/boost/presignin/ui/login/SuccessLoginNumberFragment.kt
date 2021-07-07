@@ -42,7 +42,9 @@ class SuccessLoginNumberFragment : AuthBaseFragment<FragmentSuccessLoginBinding>
   }
 
   override fun authTokenData(): AuthTokenDataItem? {
-    return if (resultLogin()?.authTokens.isNullOrEmpty().not()) resultLogin()?.authTokens!![0] else null
+    return if (resultLogin()?.authTokens.isNullOrEmpty()
+        .not()
+    ) resultLogin()?.authTokens!![0] else null
   }
 
   override fun onCreateView() {

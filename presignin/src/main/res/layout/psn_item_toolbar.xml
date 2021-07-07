@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:layout_width="@dimen/_26sdp"
-        android:layout_height="@dimen/_26sdp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/psn_back_shape"
-        android:padding="@dimen/_8sdp"
-        android:id="@+id/back_iv"
-        android:src="@drawable/ic_back_arrow_left" />
+  <ImageView
+    android:id="@+id/back_iv"
+    android:layout_width="@dimen/_26sdp"
+    android:layout_height="@dimen/_26sdp"
+    android:layout_gravity="center_vertical"
+    android:layout_marginStart="16dp"
+    android:background="@drawable/psn_back_shape"
+    android:padding="@dimen/_8sdp"
+    android:src="@drawable/ic_back_arrow_left" />
 
 
-    <ImageView
-        app:tint="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_55sdp"
-        android:layout_gravity="end"
-        android:layout_marginStart="16dp"
-        android:id="@+id/psn_right_icon"
-        android:layout_marginEnd="16dp"
-        android:padding="@dimen/_8sdp" />
+  <ImageView
+    android:id="@+id/psn_right_icon"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/_55sdp"
+    android:layout_gravity="end"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:padding="@dimen/_8sdp"
+    app:tint="@color/white" />
 
 </merge>

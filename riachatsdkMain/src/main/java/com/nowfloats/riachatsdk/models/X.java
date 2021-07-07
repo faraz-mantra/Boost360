@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class X implements Serializable{
+public class X implements Serializable {
 
     @SerializedName("StartLimit")
     @Expose

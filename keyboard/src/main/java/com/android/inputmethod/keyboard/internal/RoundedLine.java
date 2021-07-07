@@ -21,27 +21,26 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 public final class RoundedLine {
+    private static final double RADIAN_TO_DEGREE = 180.0d / Math.PI;
+    private static final double RIGHT_ANGLE = Math.PI / 2.0d;
     private final RectF mArc1 = new RectF();
     private final RectF mArc2 = new RectF();
     private final Path mPath = new Path();
-
-    private static final double RADIAN_TO_DEGREE = 180.0d / Math.PI;
-    private static final double RIGHT_ANGLE = Math.PI / 2.0d;
 
     /**
      * Make a rounded line path
      *
      * @param p1x the x-coordinate of the start point.
      * @param p1y the y-coordinate of the start point.
-     * @param r1 the radius at the start point
+     * @param r1  the radius at the start point
      * @param p2x the x-coordinate of the end point.
      * @param p2y the y-coordinate of the end point.
-     * @param r2 the radius at the end point
+     * @param r2  the radius at the end point
      * @return an instance of {@link Path} that holds the result rounded line, or an instance of
      * {@link Path} that holds an empty path if the start and end points are equal.
      */
     public Path makePath(final float p1x, final float p1y, final float r1,
-            final float p2x, final float p2y, final float r2) {
+                         final float p2x, final float p2y, final float r2) {
         mPath.rewind();
         final double dx = p2x - p1x;
         final double dy = p2y - p1y;
@@ -60,10 +59,10 @@ public final class RoundedLine {
         final double aa = a - (RIGHT_ANGLE + ar);
         // The end angle of trail cap arc at P2.
         final double ab = a + (RIGHT_ANGLE + ar);
-        final float cosa = (float)Math.cos(aa);
-        final float sina = (float)Math.sin(aa);
-        final float cosb = (float)Math.cos(ab);
-        final float sinb = (float)Math.sin(ab);
+        final float cosa = (float) Math.cos(aa);
+        final float sina = (float) Math.sin(aa);
+        final float cosb = (float) Math.cos(ab);
+        final float sinb = (float) Math.sin(ab);
         // Closing point of arc at P1.
         final float p1ax = p1x + r1 * cosa;
         final float p1ay = p1y + r1 * sina;
@@ -77,8 +76,8 @@ public final class RoundedLine {
         final float p2bx = p2x + r2 * cosb;
         final float p2by = p2y + r2 * sinb;
         // Start angle of the trail arcs.
-        final float angle = (float)(aa * RADIAN_TO_DEGREE);
-        final float ar2degree = (float)(ar * 2.0d * RADIAN_TO_DEGREE);
+        final float angle = (float) (aa * RADIAN_TO_DEGREE);
+        final float ar2degree = (float) (ar * 2.0d * RADIAN_TO_DEGREE);
         // Sweep angle of the trail arc at P1.
         final float a1 = -180.0f + ar2degree;
         // Sweep angle of the trail arc at P2.

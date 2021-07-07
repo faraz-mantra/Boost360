@@ -30,6 +30,8 @@ import io.separ.neural.inputmethod.indic.define.ProductionFlags;
  * than its limit
  */
 public final class SuggestionResults extends TreeSet<SuggestedWordInfo> {
+    private static final SuggestedWordInfoComparator sSuggestedWordInfoComparator =
+            new SuggestedWordInfoComparator();
     public final Locale mLocale;
     public final ArrayList<SuggestedWordInfo> mRawSuggestions;
     // TODO: Instead of a boolean , we may want to include the context of this suggestion results,
@@ -38,12 +40,12 @@ public final class SuggestionResults extends TreeSet<SuggestedWordInfo> {
     private final int mCapacity;
 
     public SuggestionResults(final Locale locale, final int capacity,
-            final boolean isBeginningOfSentence) {
+                             final boolean isBeginningOfSentence) {
         this(locale, sSuggestedWordInfoComparator, capacity, isBeginningOfSentence);
     }
 
     private SuggestionResults(final Locale locale, final Comparator<SuggestedWordInfo> comparator,
-            final int capacity, final boolean isBeginningOfSentence) {
+                              final int capacity, final boolean isBeginningOfSentence) {
         super(comparator);
         mLocale = locale;
         mCapacity = capacity;
@@ -82,7 +84,4 @@ public final class SuggestionResults extends TreeSet<SuggestedWordInfo> {
             return o1.mWord.compareTo(o2.mWord);
         }
     }
-
-    private static final SuggestedWordInfoComparator sSuggestedWordInfoComparator =
-            new SuggestedWordInfoComparator();
 }

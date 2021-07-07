@@ -36,14 +36,14 @@ public class WebActionsUpdate implements IUpdate {
     @Override
     public CharSequence toUpdateString() {
         StringBuilder updateBuilder = new StringBuilder();
-        for (Map.Entry<String, WebActionUpdateValue> entry: updateMap.entrySet()) {
-            if(entry.getValue().getClass().getName().equals(String.class.getName())) {
+        for (Map.Entry<String, WebActionUpdateValue> entry : updateMap.entrySet()) {
+            if (entry.getValue().getClass().getName().equals(String.class.getName())) {
                 updateBuilder.append(String.format("%s: '%s',", entry.getKey(), entry.getValue() + ""));
             } else {
                 updateBuilder.append(String.format("%s: %s,", entry.getKey(), entry.getValue() + ""));
             }
         }
-        updateBuilder.delete(updateBuilder.length()-2, updateBuilder.length()-1);
+        updateBuilder.delete(updateBuilder.length() - 2, updateBuilder.length() - 1);
         return String.format("{$set:{%s}}", updateBuilder.toString());
     }
 }

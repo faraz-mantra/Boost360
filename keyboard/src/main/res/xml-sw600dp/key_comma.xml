@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -18,38 +17,31 @@
 */
 -->
 
-<merge
-    xmlns:latin="http://schemas.android.com/apk/res-auto"
->
-    <switch>
-        <case
-            latin:mode="url"
-        >
-            <Key
-                latin:keySpec="/"
-                latin:keyStyle="settingsMoreKeysStyle" />
-        </case>
-        <case
-            latin:mode="email"
-        >
-            <Key
-                latin:keySpec="\@"
-                latin:keyStyle="settingsMoreKeysStyle" />
-        </case>
-        <case
-            latin:languageCode="fa">
-            <Key
-                latin:keySpec="،"
-                latin:moreKeys="!text/morekeys_tablet_comma,%"
-                latin:keyHintLabel="!text/keyhintlabel_tablet_comma"
-                latin:keyLabelFlags="hasPopupHint"
-                latin:keyStyle="settingsMoreKeysStyle" />
-        </case>
-        <default>
-            <Key
-                latin:keySpec="!text/keyspec_comma"
-                latin:keyLabelFlags="hasPopupHint"
-                latin:keyStyle="emojiKeyStyle"/>
-        </default>
-    </switch>
+<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
+  <switch>
+    <case latin:mode="url">
+      <Key
+        latin:keySpec="/"
+        latin:keyStyle="settingsMoreKeysStyle" />
+    </case>
+    <case latin:mode="email">
+      <Key
+        latin:keySpec="\@"
+        latin:keyStyle="settingsMoreKeysStyle" />
+    </case>
+    <case latin:languageCode="fa">
+      <Key
+        latin:keyHintLabel="!text/keyhintlabel_tablet_comma"
+        latin:keyLabelFlags="hasPopupHint"
+        latin:keySpec="،"
+        latin:keyStyle="settingsMoreKeysStyle"
+        latin:moreKeys="!text/morekeys_tablet_comma,%" />
+    </case>
+    <default>
+      <Key
+        latin:keyLabelFlags="hasPopupHint"
+        latin:keySpec="!text/keyspec_comma"
+        latin:keyStyle="emojiKeyStyle" />
+    </default>
+  </switch>
 </merge>

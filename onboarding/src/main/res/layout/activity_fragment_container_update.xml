@@ -35,9 +35,9 @@
         android:background="@android:color/transparent"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/white"
-        app:tabTextColor="@color/white"
         app:tabMode="fixed"
-        app:tabTextAppearance="@style/TextAppearance" />
+        app:tabTextAppearance="@style/TextAppearance"
+        app:tabTextColor="@color/white" />
     </LinearLayout>
 
     <androidx.viewpager2.widget.ViewPager2

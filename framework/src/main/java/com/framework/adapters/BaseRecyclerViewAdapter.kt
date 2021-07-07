@@ -8,7 +8,10 @@ import androidx.annotation.LayoutRes
 import com.framework.models.BaseRecyclerViewItem
 import com.framework.viewholders.BaseViewHolder
 
-abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(context: Context, protected var list: ArrayList<T>) : androidx.recyclerview.widget.RecyclerView.Adapter<BaseViewHolder>() {
+abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
+  context: Context,
+  protected var list: ArrayList<T>
+) : androidx.recyclerview.widget.RecyclerView.Adapter<BaseViewHolder>() {
   private var inflater: LayoutInflater = LayoutInflater.from(context)
 
   var itemClickListener: RecyclerViewItemClickListener? = null

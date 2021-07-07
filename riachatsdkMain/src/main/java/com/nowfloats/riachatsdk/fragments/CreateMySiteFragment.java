@@ -3,7 +3,9 @@ package com.nowfloats.riachatsdk.fragments;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,10 +55,6 @@ public class CreateMySiteFragment extends DialogFragment {
         mResultListener = onResultReceive;
     }
 
-    public interface OnResultReceive {
-        void OnResult();
-    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new Dialog(getActivity());
@@ -94,7 +92,7 @@ public class CreateMySiteFragment extends DialogFragment {
         tvBusinessName.setText(mDataMap.get("[~BUSINESS_NAME]"));
         tvPhoneNumber.setText(mDataMap.get("[~PHONE]"));
         tvCategory.setText(mDataMap.get("[~BUSINESS_CATEGORY]"));
-        tvAddress.setText(mDataMap.get("[~STREET_ADDRESS]") +","+ mDataMap.get("[~CITY]") +","+ mDataMap.get("[~COUNTRY]"));
+        tvAddress.setText(mDataMap.get("[~STREET_ADDRESS]") + "," + mDataMap.get("[~CITY]") + "," + mDataMap.get("[~COUNTRY]"));
         tvWebsiteURL.setText(mDataMap.get("[~WEBSITE_URL]"));
         tvEmailAddress.setText(mDataMap.get("[~EMAIL]"));
 
@@ -113,6 +111,10 @@ public class CreateMySiteFragment extends DialogFragment {
         }
 
         return v;
+    }
+
+    public interface OnResultReceive {
+        void OnResult();
     }
 
 }

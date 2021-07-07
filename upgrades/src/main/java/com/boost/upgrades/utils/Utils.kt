@@ -28,16 +28,17 @@ object Utils {
   //getting retrofit instance
   fun getRetrofit(): Retrofit {
     return Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(ScalarsConverterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .build()
+      .baseUrl(BASE_URL)
+      .addConverterFactory(ScalarsConverterFactory.create())
+      .addConverterFactory(GsonConverterFactory.create())
+      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+      .build()
   }
 
   fun hideSoftKeyboard(activity: Activity) {
     try {
-      val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+      val inputMethodManager =
+        activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
       inputMethodManager.hideSoftInputFromWindow(activity.currentFocus?.windowToken, 0)
     } catch (e: Exception) {
       Log.e(Utils::class.java.name, e?.localizedMessage ?: "")
@@ -46,7 +47,8 @@ object Utils {
 
   fun isConnectedToInternet(context: Context): Boolean {
     val connectivity = context.getSystemService(
-        Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+      Context.CONNECTIVITY_SERVICE
+    ) as ConnectivityManager
     val info = connectivity.allNetworkInfo
     for (i in info.indices)
       if (info[i].state == NetworkInfo.State.CONNECTED) return true
@@ -73,7 +75,7 @@ object Utils {
       val listPersonType = object : TypeToken<List<GetAllWidgets>>() {}.type
       data = gson.fromJson(jsonString, listPersonType)
     } catch (ex: Exception) {
-        Log.e(Utils::class.java.name, ex?.localizedMessage ?: "")
+      Log.e(Utils::class.java.name, ex?.localizedMessage ?: "")
       return null
     }
     return data
@@ -112,20 +114,21 @@ object Utils {
 
   fun isValidMail(email: String): Boolean {
     return Pattern.compile(
-        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-            "\\@" +
-            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-            "(" +
-            "\\." +
-            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-            ")+"
+      "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+          "\\@" +
+          "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+          "(" +
+          "\\." +
+          "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+          ")+"
     ).matcher(email).matches()
   }
 
   fun isValidMobile(phone: String): Boolean {
     return Pattern.compile(
-        "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
-        .matcher(phone).matches()
+      "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$"
+    )
+      .matcher(phone).matches()
   }
 
   fun monthRange(): ArrayList<String> {
@@ -143,8 +146,8 @@ object Utils {
   }
 
   fun yearRange(
-      startYear: Int,
-      endYear: Int
+    startYear: Int,
+    endYear: Int
   ): ArrayList<String> {
     var cur = startYear
     val stop = endYear
@@ -211,13 +214,13 @@ object Utils {
     return json
   }
 
-  fun filterBraces(cartids: String): String{
-    var cartid = cartids.replace("[","").replace("]","")
+  fun filterBraces(cartids: String): String {
+    var cartid = cartids.replace("[", "").replace("]", "")
     return cartid
   }
 
-  fun filterQuotes(coupon: String): String{
-    var couponid = coupon.replace("\"","")
+  fun filterQuotes(coupon: String): String {
+    var couponid = coupon.replace("\"", "")
     return couponid
   }
 }

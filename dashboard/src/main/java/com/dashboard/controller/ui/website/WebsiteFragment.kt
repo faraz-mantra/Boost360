@@ -1,10 +1,18 @@
 package com.dashboard.controller.ui.website
 
+import android.graphics.ColorFilter
 import android.os.Build
 import android.view.*
 import android.widget.PopupWindow
+import androidx.annotation.ColorRes
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -28,13 +36,15 @@ import com.framework.pref.BASE_IMAGE_URL
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.utils.ContentSharing
+import com.framework.utils.changeLayersColor
 import com.framework.utils.fromHtml
 import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
 
-class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(), RecyclerItemClickListener {
+class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(),
+  RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null
@@ -236,15 +246,11 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     }
     binding?.txtOpenClose?.text =
       resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
-    binding?.txtOpenClose?.setTextColor( if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_F40000))
-    binding?.ellipseOpenClose?.setColorFilter(
-      getColor(
-        baseActivity,
-        if (isOpen) R.color.green_light else R.color.red_F40000
-      )
-    )
+    binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_F40000))
+    binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_F40000)
 
   }
+
 
   override fun onClick(v: View) {
     super.onClick(v)

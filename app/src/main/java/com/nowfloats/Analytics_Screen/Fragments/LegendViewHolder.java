@@ -1,6 +1,7 @@
 package com.nowfloats.Analytics_Screen.Fragments;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.TextView;
 

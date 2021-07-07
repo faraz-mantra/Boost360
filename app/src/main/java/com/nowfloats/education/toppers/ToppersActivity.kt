@@ -21,122 +21,125 @@ import com.thinksity.R
 import java.util.*
 
 class ToppersActivity : AppCompatActivity() {
-    private var progressDialog: ProgressDialog? = null
-    private val hmPrices = HashMap<String, Int>()
-    var session: UserSessionManager? = null
-    private val toolbar: Toolbar? = null
-    private var currentFragment: Fragment? = null
-    private var fragmentManager: FragmentManager? = null
-    private var fragmentTransaction: FragmentTransaction? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_toppers)
-        initializeView()
-        initView()
+  private var progressDialog: ProgressDialog? = null
+  private val hmPrices = HashMap<String, Int>()
+  var session: UserSessionManager? = null
+  private val toolbar: Toolbar? = null
+  private var currentFragment: Fragment? = null
+  private var fragmentManager: FragmentManager? = null
+  private var fragmentTransaction: FragmentTransaction? = null
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_toppers)
+    initializeView()
+    initView()
+  }
+
+  private fun initView() {
+    supportFragmentManager.addOnBackStackChangedListener {
+      val currentFragment = supportFragmentManager.findFragmentById(R.id.mainFrame)
+      if (currentFragment != null) {
+        val tag = currentFragment.tag
+        Log.e("tag", ">>>$tag")
+      } else {
+        finish()
+      }
     }
+  }
 
-    private fun initView() {
-        supportFragmentManager.addOnBackStackChangedListener {
-            val currentFragment = supportFragmentManager.findFragmentById(R.id.mainFrame)
-            if (currentFragment != null) {
-                val tag = currentFragment.tag
-                Log.e("tag", ">>>$tag")
-            } else {
-                finish()
-            }
-        }
+  private fun initializeView() {
+    session = UserSessionManager(this, this)
+
+    if (com.nowfloats.util.Constants.StoreWidgets.contains(Constants.TOPPER_FEATURE)) {
+      addFragment(ToppersFragment.newInstance(), TOPPERS_FRAGMENT)
+    } else {
+      val unlockFeatureModel = UnlockFeatureModel(
+        buyItemKey = Constants.TOPPER_FEATURE,
+        titleFeatureName = getString(R.string.our_toppers),
+        featureDescription = getString(R.string.our_toppers_feature_description)
+      )
+      addFragment(
+        UnlockFeatureFragment.newInstance(session, unlockFeatureModel),
+        Constants.UNLOCK_FEATURE_FRAGMENT
+      )
     }
+  }
 
-    private fun initializeView() {
-        session = UserSessionManager(this, this)
-
-        if (com.nowfloats.util.Constants.StoreWidgets.contains(Constants.TOPPER_FEATURE)) {
-            addFragment(ToppersFragment.newInstance(), TOPPERS_FRAGMENT)
-        } else {
-            val unlockFeatureModel = UnlockFeatureModel(
-                    buyItemKey = Constants.TOPPER_FEATURE,
-                    titleFeatureName = getString(R.string.our_toppers),
-                    featureDescription = getString(R.string.our_toppers_feature_description)
-            )
-            addFragment(UnlockFeatureFragment.newInstance(session, unlockFeatureModel), Constants.UNLOCK_FEATURE_FRAGMENT)
-        }
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    if (item.itemId == android.R.id.home) {
+      onBackPressed()
+      overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+      return true
     }
+    return super.onOptionsItemSelected(item)
+  }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressed()
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+  fun showLoader(message: String?) {
+    runOnUiThread {
+      if (progressDialog == null) {
+        progressDialog = ProgressDialog(applicationContext)
+        progressDialog!!.setCanceledOnTouchOutside(false)
+      }
+      progressDialog!!.setMessage(message)
+      progressDialog!!.show()
     }
+  }
 
-    fun showLoader(message: String?) {
-        runOnUiThread {
-            if (progressDialog == null) {
-                progressDialog = ProgressDialog(applicationContext)
-                progressDialog!!.setCanceledOnTouchOutside(false)
-            }
-            progressDialog!!.setMessage(message)
-            progressDialog!!.show()
-        }
+  fun hideLoader() {
+    runOnUiThread {
+      if (progressDialog != null && progressDialog!!.isShowing) {
+        progressDialog!!.dismiss()
+      }
     }
+  }
 
-    fun hideLoader() {
-        runOnUiThread {
-            if (progressDialog != null && progressDialog!!.isShowing) {
-                progressDialog!!.dismiss()
-            }
-        }
-    }
+  fun addFragment(fragment: Fragment?, fragmentTag: String?) {
+    currentFragment = fragment
+    fragmentManager = supportFragmentManager
+    fragmentTransaction = fragmentManager!!.beginTransaction()
+    fragmentTransaction!!.replace(R.id.mainFrame, fragment as Fragment, fragmentTag)
+    fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+    fragmentTransaction!!.addToBackStack(fragmentTag)
+    fragmentTransaction!!.commit()
+  }
 
-    fun addFragment(fragment: Fragment?, fragmentTag: String?) {
-        currentFragment = fragment
-        fragmentManager = supportFragmentManager
-        fragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction!!.replace(R.id.mainFrame, fragment as Fragment, fragmentTag)
-        fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        fragmentTransaction!!.addToBackStack(fragmentTag)
-        fragmentTransaction!!.commit()
-    }
+  fun replaceFragment(fragment: Fragment?, fragmentTag: String?) {
+    popFragmentFromBackStack()
+    addFragment(fragment, fragmentTag)
+  }
 
-    fun replaceFragment(fragment: Fragment?, fragmentTag: String?) {
+  fun setHeaderText(value: String?) {
+    headerText!!.text = value
+  }
+
+  fun popFragmentFromBackStack() {
+    fragmentManager!!.popBackStack()
+  }
+
+  override fun onBackPressed() {
+    performBackPressed()
+  }
+
+  private fun performBackPressed() {
+    try {
+      if (supportFragmentManager.backStackEntryCount > 1) {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.mainFrame)
+        val tag = currentFragment!!.tag
+        Log.e("back pressed tag", ">>>\$tag")
         popFragmentFromBackStack()
-        addFragment(fragment, fragmentTag)
+      } else {
+        super.onBackPressed()
+      }
+    } catch (e: Exception) {
+      e.printStackTrace()
     }
+  }
 
-    fun setHeaderText(value: String?) {
-        headerText!!.text = value
-    }
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+  }
 
-    fun popFragmentFromBackStack() {
-        fragmentManager!!.popBackStack()
-    }
-
-    override fun onBackPressed() {
-        performBackPressed()
-    }
-
-    private fun performBackPressed() {
-        try {
-            if (supportFragmentManager.backStackEntryCount > 1) {
-                val currentFragment = supportFragmentManager.findFragmentById(R.id.mainFrame)
-                val tag = currentFragment!!.tag
-                Log.e("back pressed tag", ">>>\$tag")
-                popFragmentFromBackStack()
-            } else {
-                super.onBackPressed()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    companion object {
-        var headerText: TextView? = null
-    }
+  companion object {
+    var headerText: TextView? = null
+  }
 }

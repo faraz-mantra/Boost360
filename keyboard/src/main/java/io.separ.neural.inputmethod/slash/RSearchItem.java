@@ -27,46 +27,25 @@ public class RSearchItem {
     private String title;
     private String uid;
     private String uri;
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public void setImage(RImage image) {
-        this.image = image;
-    }
-
     private String url;
     private CharSequence previewUrl;
     private String correctService;
     private String anyOutput;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
     public String getTitle() {
         return title;
     }
 
-    public void setDisplayType(String displayType) {
-        this.displayType = displayType;
-    }
-
-    public void setOutput(String output) {
-        this.output = output;
-    }
-
-    public void setService(String service) {
-        this.service = service;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getOutput() {
         return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
     }
 
     public void setUid(String uid) {
@@ -77,20 +56,40 @@ public class RSearchItem {
         return previewUrl;
     }
 
+    public void setPreviewUrl(String previewUrl) {
+        this.previewUrl = previewUrl;
+    }
+
     public RImage getImage() {
         return image;
+    }
+
+    public void setImage(RImage image) {
+        this.image = image;
     }
 
     public String getSubtitle() {
         return subtitle;
     }
 
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
     public RDetail getDetail() {
         return detail;
     }
 
+    public void setDetail(RDetail detail) {
+        this.detail = detail;
+    }
+
     public String getDisplayType() {
         return displayType;
+    }
+
+    public void setDisplayType(String displayType) {
+        this.displayType = displayType;
     }
 
     public String getCorrectService() {
@@ -99,6 +98,10 @@ public class RSearchItem {
 
     public String getService() {
         return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
     }
 
     public String getSlashShort() {
@@ -113,11 +116,7 @@ public class RSearchItem {
         return url;
     }
 
-    public void setPreviewUrl(String previewUrl) {
-        this.previewUrl = previewUrl;
-    }
-
-    public void setDetail(RDetail detail) {
-        this.detail = detail;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

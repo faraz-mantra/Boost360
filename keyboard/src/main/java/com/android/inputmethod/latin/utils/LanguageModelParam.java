@@ -59,14 +59,14 @@ public final class LanguageModelParam {
 
     // Constructor for unigram. TODO: support shortcuts
     public LanguageModelParam(final CharSequence word, final int unigramProbability,
-            final int timestamp) {
+                              final int timestamp) {
         this(null /* word0 */, word, unigramProbability, Dictionary.NOT_A_PROBABILITY, timestamp);
     }
 
     // Constructor for unigram and bigram.
     public LanguageModelParam(final CharSequence word0, final CharSequence word1,
-            final int unigramProbability, final int bigramProbability,
-            final int timestamp) {
+                              final int unigramProbability, final int bigramProbability,
+                              final int timestamp) {
         mTargetWord = word1;
         mWord0 = (word0 == null) ? null : StringUtils.toCodePointArray(word0);
         mWord1 = StringUtils.toCodePointArray(word1);

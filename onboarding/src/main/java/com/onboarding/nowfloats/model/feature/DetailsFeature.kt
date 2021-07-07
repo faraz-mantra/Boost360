@@ -4,13 +4,14 @@ import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 
 data class DetailsFeature(
-    val title: String? = null,
-    val desc: String? = null,
+  val title: String? = null,
+  val desc: String? = null,
 ) : AppBaseRecyclerViewItem, Parcelable {
 
   constructor(parcel: Parcel) : this(
-      parcel.readString(),
-      parcel.readString())
+    parcel.readString(),
+    parcel.readString()
+  )
 
   override fun getViewType(): Int {
     return RecyclerViewItemType.FEATURE_DETAILS_BOTTOM_SHEET_ITEM.getLayout()

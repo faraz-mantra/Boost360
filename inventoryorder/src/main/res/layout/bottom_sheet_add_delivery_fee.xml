@@ -64,8 +64,7 @@
             android:id="@+id/lyt_shipping_address"
             style="@style/match_wrap"
             android:background="@drawable/ic_rectangle_light_black_outline"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"

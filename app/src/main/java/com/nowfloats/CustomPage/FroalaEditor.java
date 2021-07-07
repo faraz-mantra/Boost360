@@ -44,36 +44,6 @@ import jp.wasabeef.richeditor.Utils;
 
 public class FroalaEditor extends WebView {
 
-    public enum Type {
-        BOLD,
-        ITALIC,
-        SUBSCRIPT,
-        SUPERSCRIPT,
-        STRIKETHROUGH,
-        UNDERLINE,
-        H1,
-        H2,
-        H3,
-        H4,
-        H5,
-        H6
-    }
-
-    public interface OnTextChangeListener {
-
-        void onTextChange(String text);
-    }
-
-    public interface OnDecorationStateListener {
-
-        void onStateChangeListener(String text, List<Type> types);
-    }
-
-    public interface AfterInitialLoadListener {
-
-        void onAfterInitialLoad(boolean isReady);
-    }
-
     private static final String SETUP_HTML = "file:///android_asset/editor.html";
     private static final String CALLBACK_SCHEME = "re-callback://";
     private static final String STATE_SCHEME = "re-state://";
@@ -82,15 +52,12 @@ public class FroalaEditor extends WebView {
     private OnTextChangeListener mTextChangeListener;
     private OnDecorationStateListener mDecorationStateListener;
     private AfterInitialLoadListener mLoadListener;
-
     public FroalaEditor(Context context) {
         this(context, null);
     }
-
     public FroalaEditor(Context context, AttributeSet attrs) {
         this(context, attrs, android.R.attr.webViewStyle);
     }
-
     @SuppressLint("SetJavaScriptEnabled")
     public FroalaEditor(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -177,6 +144,10 @@ public class FroalaEditor extends WebView {
         ta.recycle();
     }
 
+    public String getHtml() {
+        return mContents;
+    }
+
     public void setHtml(String contents) {
         if (contents == null) {
             contents = "";
@@ -187,10 +158,6 @@ public class FroalaEditor extends WebView {
             // No handling
         }
         mContents = contents;
-    }
-
-    public String getHtml() {
-        return mContents;
     }
 
     public void setEditorFontColor(int color) {
@@ -411,6 +378,36 @@ public class FroalaEditor extends WebView {
         } else {
             loadUrl(trigger);
         }
+    }
+
+    public enum Type {
+        BOLD,
+        ITALIC,
+        SUBSCRIPT,
+        SUPERSCRIPT,
+        STRIKETHROUGH,
+        UNDERLINE,
+        H1,
+        H2,
+        H3,
+        H4,
+        H5,
+        H6
+    }
+
+    public interface OnTextChangeListener {
+
+        void onTextChange(String text);
+    }
+
+    public interface OnDecorationStateListener {
+
+        void onStateChangeListener(String text, List<Type> types);
+    }
+
+    public interface AfterInitialLoadListener {
+
+        void onAfterInitialLoad(boolean isReady);
     }
 
     final class MyWebChromeClient extends WebChromeClient {

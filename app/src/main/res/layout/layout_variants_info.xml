@@ -1,84 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto" >
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+  <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.nowfloats.ProductGallery.ManageProductFragment">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:id="@+id/layout_product_property"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.nowfloats.ProductGallery.ManageProductFragment">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+        <TextView
+          style="@style/ProductLabelTextStyle"
+          android:text="@string/key_property" />
 
-            <LinearLayout
-                android:id="@+id/layout_product_property"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10"
-                android:orientation="horizontal" >
+        <ImageButton
+          android:id="@+id/ib_info_product_property"
+          style="@style/ProductHelpButtonStyle" />
 
-                <TextView
-                    style="@style/ProductLabelTextStyle"
-                    android:text="@string/key_property" />
+      </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/ib_info_product_property"
-                    style="@style/ProductHelpButtonStyle" />
+      <include
+        android:id="@+id/layout_key_specification"
+        layout="@layout/recycler_item_product_specification_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5" />
 
-            </LinearLayout>
+      <LinearLayout
+        android:id="@+id/layout_product_specification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:orientation="horizontal">
 
-            <include
-                android:id="@+id/layout_key_specification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_5"
-                layout="@layout/recycler_item_product_specification_input" />
+        <TextView
+          style="@style/ProductLabelTextStyle"
+          android:text="@string/other_specification" />
 
-            <LinearLayout
-                android:id="@+id/layout_product_specification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10"
-                android:orientation="horizontal" >
+        <ImageButton
+          android:id="@+id/ib_info_product_specification"
+          style="@style/ProductHelpButtonStyle" />
 
-                <TextView
-                    style="@style/ProductLabelTextStyle"
-                    android:text="@string/other_specification" />
+      </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/ib_info_product_specification"
-                    style="@style/ProductHelpButtonStyle" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/product_specification_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/product_specification_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-            <Button
-                android:id="@+id/button_add_property"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:minWidth="120dp"
-                android:textColor="@color/primaryColor"
-                android:textSize="12sp"
-                android:textAllCaps="false"
-                android:layout_marginTop="@dimen/margin_15"
-                android:background="@drawable/button_rectangle"
-                android:text="@string/add_property"/>
+      <Button
+        android:id="@+id/button_add_property"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="@dimen/margin_15"
+        android:background="@drawable/button_rectangle"
+        android:minWidth="120dp"
+        android:text="@string/add_property"
+        android:textAllCaps="false"
+        android:textColor="@color/primaryColor"
+        android:textSize="12sp" />
 
-        </LinearLayout>
+    </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+  </androidx.core.widget.NestedScrollView>
 
 </layout>

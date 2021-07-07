@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.speech.SpeechRecognizer;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -58,6 +59,10 @@ import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
  */
 
 public class ManageKeyboardView extends FrameLayout implements ItemClickListener, SpeechRecognitionResultInterface, ApiCallToKeyboardViewInterface, GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
+    boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
+    String iconPressedColor = "#ffffff";
+    String tabsColor = "#212121";
+    String backgroundColor = "#212121";
     private KeyboardViewBaseImpl mKeyboardView;
     private Context mContext;
     private RecyclerView mRecyclerView, recyclerViewPhotos;
@@ -77,13 +82,8 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
             selectedImages = new ArrayList<>(),
             detailsList = new ArrayList<>();
     private int mEmojiTabLastSelectedIndex = -1;
-    boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
     private Button shareBtn, deselectBtn;
     private UrlToBitmapInterface urlToBitmapInterface;
-
-    String iconPressedColor = "#ffffff";
-    String tabsColor = "#212121";
-    String backgroundColor = "#212121";
     private ViewPager emojisPager;
     private SnapHelper snapHelper = new PagerSnapHelper();
 
@@ -173,7 +173,7 @@ public class ManageKeyboardView extends FrameLayout implements ItemClickListener
 
             }
         });
-       // objectAnimator.start();
+        // objectAnimator.start();
     }
 
     public void clearResources() {

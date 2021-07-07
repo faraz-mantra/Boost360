@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -19,12 +18,7 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:state_focused="true"
-        android:color="@color/setup_step_background" />
-    <item
-        android:state_pressed="true"
-        android:color="@color/setup_step_background" />
-    <item
-        android:color="@color/setup_text_action" />
+  <item android:color="@color/setup_step_background" android:state_focused="true" />
+  <item android:color="@color/setup_step_background" android:state_pressed="true" />
+  <item android:color="@color/setup_text_action" />
 </selector>

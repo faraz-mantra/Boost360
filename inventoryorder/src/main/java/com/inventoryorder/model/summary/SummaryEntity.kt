@@ -10,14 +10,14 @@ const val USER_WEBSITE_REPORT = "USER_WEBSITE_REPORT"
 const val USER_MY_ENQUIRIES = "USER_MY_ENQUIRIES"
 
 data class SummaryEntity(
-    @SerializedName("NoOfMessages")
-    var noOfMessages: Int? = null,
-    @SerializedName("NoOfSubscribers")
-    var noOfSubscribers: Int? = null,
-    @SerializedName("NoOfUniqueViews")
-    var noOfUniqueViews: Int? = null,
-    @SerializedName("NoOfViews")
-    var noOfViews: Int? = null,
+  @SerializedName("NoOfMessages")
+  var noOfMessages: Int? = null,
+  @SerializedName("NoOfSubscribers")
+  var noOfSubscribers: Int? = null,
+  @SerializedName("NoOfUniqueViews")
+  var noOfUniqueViews: Int? = null,
+  @SerializedName("NoOfViews")
+  var noOfViews: Int? = null,
 ) : Serializable {
 
   fun getNoOfMessages(): String {

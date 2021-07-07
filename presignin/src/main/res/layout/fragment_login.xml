@@ -67,8 +67,8 @@
       style="@style/material_button_style"
       android:layout_marginTop="28dp"
       android:enabled="false"
-      android:textAllCaps="true"
       android:text="@string/psn_login_to_boost_360"
+      android:textAllCaps="true"
       app:layout_constraintTop_toBottomOf="@+id/pass_et"
       tools:ignore="MissingConstraints" />
 

@@ -7,5 +7,8 @@ import java.util.ArrayList;
  */
 public class CustomPageEvent {
     public ArrayList<CustomPageModel> model;
-    public CustomPageEvent(ArrayList<CustomPageModel> model){this.model = model;}
+
+    public CustomPageEvent(ArrayList<CustomPageModel> model) {
+        this.model = model;
+    }
 }

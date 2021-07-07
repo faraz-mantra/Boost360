@@ -74,62 +74,60 @@ import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
 
 public class TestimonialsFeedbackActivity extends AppCompatActivity implements TestimonialsFeedbackListener {
 
-    private TextView saveButton, descriptionCharCount;
-    private String ScreenType = "", itemId = "";
+    private static final int GALLERY_PHOTO = 2;
+    private static final int CAMERA_PHOTO = 1;
+    private final int gallery_req_id = 0;
+    private final int media_req_id = 1;
     Uri imageUri;
     String path = null;
     String uploadedImageURL = "";
     UserSessionManager session;
     TestimonialData existingItemData = null;
     EditText userNameText, reviewTitleText, reviewDescriptionText, profileDescEdt;
-  LinearLayout profileDescView, reviewTitleView;
-  TextView titleProfileDesc, isFillProfileDesc;
+    LinearLayout profileDescView, reviewTitleView;
+    TextView titleProfileDesc, isFillProfileDesc;
     CardView imageLayout;
     ImageView profileImage;
     ImageButton removeProfileImage;
     TextView reviewDescriptionLabel;
     TextView reviewTitleLabel;
-
-    private final int gallery_req_id = 0;
-    private final int media_req_id = 1;
-    private static final int GALLERY_PHOTO = 2;
-    private static final int CAMERA_PHOTO = 1;
-
+    private TextView saveButton, descriptionCharCount;
+    private String ScreenType = "", itemId = "";
     private ProgressDialog progressDialog;
     private boolean isNewDataAdded = false;
     private String headerToken = "59c89bbb5d64370a04c9aea1";
     private String testimonialType = "testimonials";
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_testimonials_feedback);
-    setHeader();
-    initialization();
-    getHeaderAuthToken();
-    Log.v("experincecode", " " + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY) + " " + session.getFPID() + " " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " " + session.getFpTag());
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_testimonials_feedback);
+        setHeader();
+        initialization();
+        getHeaderAuthToken();
+        Log.v("experincecode", " " + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY) + " " + session.getFPID() + " " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " " + session.getFpTag());
+    }
 
 
-  void initialization() {
-    saveButton = (TextView) findViewById(R.id.save_review);
-    session = new UserSessionManager(this, this);
-    userNameText = findViewById(R.id.user_name);
-    reviewTitleText = findViewById(R.id.review_title);
-    reviewDescriptionText = findViewById(R.id.review_description);
-    imageLayout = findViewById(R.id.card_primary_image);
-    titleProfileDesc = findViewById(R.id.title_img_desc);
-    isFillProfileDesc = findViewById(R.id.is_fill_img_desc);
-    profileDescView = findViewById(R.id.img_desc_view);
-    reviewTitleView = findViewById(R.id.review_title_view);
-    profileDescEdt = findViewById(R.id.img_desc);
-    profileImage = findViewById(R.id.iv_primary_image);
-    removeProfileImage = findViewById(R.id.ib_remove_product_image);
-    descriptionCharCount = findViewById(R.id.description_char_count);
-    reviewDescriptionLabel = findViewById(R.id.reviewDescriptionLabel);
-    reviewTitleLabel = findViewById(R.id.reviewTitleLabel);
-    progressDialog = new ProgressDialog(this);
-    progressDialog.setCancelable(false);
+    void initialization() {
+        saveButton = (TextView) findViewById(R.id.save_review);
+        session = new UserSessionManager(this, this);
+        userNameText = findViewById(R.id.user_name);
+        reviewTitleText = findViewById(R.id.review_title);
+        reviewDescriptionText = findViewById(R.id.review_description);
+        imageLayout = findViewById(R.id.card_primary_image);
+        titleProfileDesc = findViewById(R.id.title_img_desc);
+        isFillProfileDesc = findViewById(R.id.is_fill_img_desc);
+        profileDescView = findViewById(R.id.img_desc_view);
+        reviewTitleView = findViewById(R.id.review_title_view);
+        profileDescEdt = findViewById(R.id.img_desc);
+        profileImage = findViewById(R.id.iv_primary_image);
+        removeProfileImage = findViewById(R.id.ib_remove_product_image);
+        descriptionCharCount = findViewById(R.id.description_char_count);
+        reviewDescriptionLabel = findViewById(R.id.reviewDescriptionLabel);
+        reviewTitleLabel = findViewById(R.id.reviewTitleLabel);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
 
         reviewDescriptionText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -149,51 +147,52 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
             }
         });
 
-    saveButton.setOnClickListener(v -> {
-      if (path != null) {
-          showLoader(getString(R.string.uploading_image_please_wait));
-        new Handler().postDelayed(() -> uploadImageToServer(), 200);
-      } else {
-        uploadDataToServer();
-      }
-    });
+        saveButton.setOnClickListener(v -> {
+            if (path != null) {
+                showLoader(getString(R.string.uploading_image_please_wait));
+                new Handler().postDelayed(() -> uploadImageToServer(), 200);
+            } else {
+                uploadDataToServer();
+            }
+        });
 
-    imageLayout.setOnClickListener(v -> showDialogToGetImage());
-    removeProfileImage.setOnClickListener(v -> {
-      profileImage.setImageDrawable(null);
-      removeProfileImage.setVisibility(View.GONE);
-      uploadedImageURL = "";
-      path = null;
-    });
+        imageLayout.setOnClickListener(v -> showDialogToGetImage());
+        removeProfileImage.setOnClickListener(v -> {
+            profileImage.setImageDrawable(null);
+            removeProfileImage.setVisibility(View.GONE);
+            uploadedImageURL = "";
+            path = null;
+        });
 
-    if (ScreenType != null && ScreenType.equals("edit")) {
-      displayData();
+        if (ScreenType != null && ScreenType.equals("edit")) {
+            displayData();
+        }
+
+        reviewTitleLabel.setText(getReviewSecondTitle(session.getFP_AppExperienceCode()));
+        reviewDescriptionLabel.setText(getDescTitle(session.getFP_AppExperienceCode()));
+
     }
 
-    reviewTitleLabel.setText(getReviewSecondTitle(session.getFP_AppExperienceCode()));
-    reviewDescriptionLabel.setText(getDescTitle(session.getFP_AppExperienceCode()));
+    public void displayData() {
+        existingItemData = new Gson().fromJson(getIntent().getStringExtra("data"), TestimonialData.class);
+        itemId = existingItemData.getId();
+        if (existingItemData.getProfileimage() != null)
+            uploadedImageURL = existingItemData.getProfileimage().getUrl();
+        reviewTitleView.setVisibility(isReviewSecondValue(session.getFP_AppExperienceCode()));
+        reviewTitleText.setText(getReviewSecondValue(existingItemData, session.getFP_AppExperienceCode()));
+        userNameText.setText(existingItemData.getUsername());
+        reviewDescriptionText.setText(existingItemData.getDescription());
 
-  }
+        profileDescView.setVisibility(isProfileDescShow(session.getFP_AppExperienceCode()));
+        profileDescEdt.setText(getProfileDescValue(existingItemData, session.getFP_AppExperienceCode()));
+        titleProfileDesc.setText(getTitleProfileDesc(session.getFP_AppExperienceCode()));
+        isFillProfileDesc.setVisibility(isProfileDescFill(session.getFP_AppExperienceCode()));
 
-  public void displayData() {
-    existingItemData = new Gson().fromJson(getIntent().getStringExtra("data"), TestimonialData.class);
-    itemId = existingItemData.getId();
-    if (existingItemData.getProfileimage() != null) uploadedImageURL = existingItemData.getProfileimage().getUrl();
-    reviewTitleView.setVisibility(isReviewSecondValue(session.getFP_AppExperienceCode()));
-    reviewTitleText.setText(getReviewSecondValue(existingItemData, session.getFP_AppExperienceCode()));
-    userNameText.setText(existingItemData.getUsername());
-    reviewDescriptionText.setText(existingItemData.getDescription());
-
-    profileDescView.setVisibility(isProfileDescShow(session.getFP_AppExperienceCode()));
-    profileDescEdt.setText(getProfileDescValue(existingItemData, session.getFP_AppExperienceCode()));
-    titleProfileDesc.setText(getTitleProfileDesc(session.getFP_AppExperienceCode()));
-    isFillProfileDesc.setVisibility(isProfileDescFill(session.getFP_AppExperienceCode()));
-
-    if (!uploadedImageURL.isEmpty()) {
-      Glide.with(TestimonialsFeedbackActivity.this).load(uploadedImageURL).into(profileImage);
-      removeProfileImage.setVisibility(View.VISIBLE);
+        if (!uploadedImageURL.isEmpty()) {
+            Glide.with(TestimonialsFeedbackActivity.this).load(uploadedImageURL).into(profileImage);
+            removeProfileImage.setVisibility(View.VISIBLE);
+        }
     }
-  }
 
     public void setHeader() {
         LinearLayout rightButton, backButton;
@@ -203,449 +202,449 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         Bundle extra = getIntent().getExtras();
         ScreenType = extra.getString("ScreenState");
 
-    title = findViewById(R.id.title);
-    backButton = findViewById(R.id.back_button);
-    rightButton = findViewById(R.id.right_icon_layout);
-    rightIcon = findViewById(R.id.right_icon);
-    if (ScreenType.equals("edit")) {
-      title.setText("Edit testimonial");
-      rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
-      rightButton.setOnClickListener(v -> {
-        if (ScreenType != null && ScreenType.equals("edit")) {
-            showLoader(getString(R.string.deleting_record_please_wait));
-          deleteRecord(itemId);
-          return;
-        }
-        onBackPressed();
-      });
-    } else {
-      title.setText("Add a testimonial");
-    }
-
-    backButton.setOnClickListener(v -> onBackPressed());
-  }
-
-  public void showDialogToGetImage() {
-    final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
-    imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
-  }
-
-  private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
-    if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
-      cameraIntent();
-    } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
-      galleryIntent();
-    }
-  }
-
-  void createNewTestimonialsAPI() {
-    try {
-      if (validateInput()) {
-        ActionData actionData = getActionData(session.getFP_AppExperienceCode());
-        AddTestimonialsData request = new AddTestimonialsData();
-        request.setWebsiteId(session.getFpTag());
-        request.setActionData(actionData);
-        Log.v("addTest", " " + session.getFpTag());
-        APIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
-            .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setLog(new AndroidLog("ggg"))
-            .build()
-            .create(APIInterfaces.class);
-
-        APICalls.addTestimonials(headerToken, testimonialType, request, new Callback<String>() {
-          @Override
-          public void success(String s, Response response) {
-            hideLoader();
-            if (response.getStatus() != 200) {
-              Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
-              return;
-            }
-              WebEngageController.trackEvent(TESTIMONIAL_ADDED, EVENT_LABEL_MANAGE_CONTENT, session.getFpTag());
-            Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
-            isNewDataAdded = true;
-            onBackPressed();
-          }
-
-          @Override
-          public void failure(RetrofitError error) {
-            Log.v("addTestimonial", " message: " + error.getMessage() + " error: " + error);
-            hideLoader();
-            Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
-          }
-        });
-
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-  }
-
-  private ActionData getActionData(String fp_appExperienceCode) {
-    ActionData actionData = new ActionData();
-    String name = userNameText.getText().toString();
-    String desc = reviewDescriptionText.getText().toString();
-    String review = reviewTitleText.getText().toString();
-    String profileDesc = profileDescEdt.getText().toString();
-    switch (fp_appExperienceCode) {
-      case "HOT":
-        actionData.setCustomerName(name);
-        actionData.setTestimonial(desc);
-        actionData.setCity(review);
-        ProfileImagee placeImage = new ProfileImagee();
-        placeImage.setUrl(uploadedImageURL);
-        placeImage.setDescription(profileDesc);
-        actionData.setProfileImage(placeImage);
-        break;
-      case "DOC":
-      case "HOS":
-      case "EDU":
-      case "SVC":
-      case "RTL":
-        actionData.setUsername(name);
-        actionData.setDescription(desc);
-        Profileimage placeImageDH = new Profileimage();
-        placeImageDH.setUrl(uploadedImageURL);
-        placeImageDH.setDescription(profileDesc);
-        actionData.setProfileimage(placeImageDH);
-        break;
-      case "CAF":
-        actionData.setName(name);
-        actionData.setText(desc);
-        ProfileImagee placeImageC = new ProfileImagee();
-        placeImageC.setUrl(uploadedImageURL);
-        placeImageC.setDescription(profileDesc);
-        actionData.setImg(placeImageC);
-        break;
-      case "SPA":
-      case "SAL":
-        actionData.setName(name);
-        actionData.setTitle(review);
-        actionData.setOurStory(desc);
-        Profileimage placeImageSP = new Profileimage();
-        placeImageSP.setUrl(uploadedImageURL);
-        placeImageSP.setDescription(profileDesc);
-        actionData.setProfileimage(placeImageSP);
-        break;
-      case "MFG":
-      default:
-        actionData.setUsername(name);
-        actionData.setTitle(review);
-        actionData.setDescription(desc);
-        Profileimage placeImageD = new Profileimage();
-        placeImageD.setUrl(uploadedImageURL);
-        placeImageD.setDescription(profileDesc);
-        actionData.setProfileimage(placeImageD);
-        break;
-    }
-    return actionData;
-  }
-
-  void updateExistingTestimonialsAPI() {
-    try {
-      if (validateInput()) {
-        ActionData actionData = getActionData(session.getFP_AppExperienceCode());
-        UpdateTestimonialsData requestBody = new UpdateTestimonialsData();
-        requestBody.setQuery("{_id:'" + existingItemData.getId() + "'}");
-        requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
-        APIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
-            .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setLog(new AndroidLog("ggg"))
-            .build()
-            .create(APIInterfaces.class);
-        APICalls.updateTestimonials(headerToken, testimonialType, requestBody, new Callback<String>() {
-          @Override
-          public void success(String s, Response response) {
-            hideLoader();
-            if (response.getStatus() != 200) {
-              Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
-              return;
-            }
-              WebEngageController.trackEvent(TESTIMONIAL_UPDATED, EVENT_LABEL_TESTIMONIAL_ADDED, session.getFpTag());
-            Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
-            onBackPressed();
-          }
-
-          @Override
-          public void failure(RetrofitError error) {
-            hideLoader();
-            if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
-                Toast.makeText(getApplicationContext(), getString(R.string.successfully_updated_testimonials), Toast.LENGTH_LONG).show();
-              onBackPressed();
-            } else {
-              Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
-            }
-          }
-        });
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-  }
-
-  private boolean validateInput() {
-    if (!(userNameText.getText().toString().isEmpty() || reviewTitleText.getText().toString().isEmpty() || reviewDescriptionText.getText().toString().isEmpty()) ||
-        !(isProfileDescFill(session.getFP_AppExperienceCode()) == View.VISIBLE && profileDescEdt.getText().toString().isEmpty())) {
-      return true;
-    } else {
-      Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
-      hideLoader();
-      return false;
-    }
-  }
-
-  public void cameraIntent() {
-    try {
-      // use standard intent to capture an image
-      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-          PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
-          PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-            media_req_id);
-        return;
-      }
-      Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-      // Ensure that there's a camera activity to handle the intent
-      if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-        // Create the File where the photo should go
-        File photoFile = null;
-        try {
-          photoFile = createImageFile();
-        } catch (IOException ex) {
-          ex.printStackTrace();
-        }
-        // Continue only if the File was successfully created
-        if (photoFile != null) {
-          Uri photoURI = FileProvider.getUriForFile(this, Constants.PACKAGE_NAME + ".provider", photoFile);
-          takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-          startActivityForResult(takePictureIntent, CAMERA_PHOTO);
-        }
-      }
-
-    } catch (ActivityNotFoundException e) {
-      String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-      Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, errorMessage);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  private File createImageFile() throws IOException {
-    // Create an image file name
-    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-    String imageFileName = "JPEG_" + timeStamp + "_";
-    File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-    File image = File.createTempFile(
-        imageFileName,  /* prefix */
-        ".jpg",         /* suffix */
-        storageDir      /* directory */
-    );
-    // Save a file: path for use with ACTION_VIEW intents
-    path = image.getAbsolutePath();
-    return image;
-  }
-
-  public void galleryIntent() {
-    try {
-      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
-        return;
-      }
-      Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-      startActivityForResult(i, GALLERY_PHOTO);
-    } catch (ActivityNotFoundException anfe) {
-      // display an error message
-      String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-      Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, errorMessage);
-    }
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    try {
-      if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
-        updatePlaceProfileImage();
-      } else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
-        {
-          Uri picUri = data.getData();
-          if (picUri != null) {
-            path = Methods.getPath(this, picUri);
-            updatePlaceProfileImage();
-          } else {
-              Toast.makeText(this, getString(R.string.something_went_wrong_try_later), Toast.LENGTH_LONG).show();
-          }
-        }
-      }
-    } catch (Exception e) {
-      Log.e("onActivityResult ->", "Failed ->" + e.getMessage());
-      e.printStackTrace();
-    }
-  }
-
-  public void uploadImageToServer() {
-    try {
-      if (validateInput()) {
-        String fname = "Testimonials" + System.currentTimeMillis();
-        if (!Util.isNullOrEmpty(path)) {
-          if (!TextUtils.isEmpty(path)) {
-            uploadedImageURL = new UploadProfileImage(TestimonialsFeedbackActivity.this, this, path, fname).execute().get();
-          }
-        } else {
-          Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getResources().getString(R.string.select_image_upload));
-        }
-      }
-    } catch (Exception e) {
-      Log.e("uploadImageToServer ->", "Failed ->" + e.getMessage());
-      e.printStackTrace();
-    } catch (OutOfMemoryError E) {
-      E.printStackTrace();
-      System.gc();
-    }
-  }
-
-  public void updatePlaceProfileImage() {
-    if (path != null) {
-      Glide.with(TestimonialsFeedbackActivity.this).load(path).into(profileImage);
-      removeProfileImage.setVisibility(View.VISIBLE);
-    }
-  }
-
-  private void deleteRecord(String itemId) {
-    try {
-      DeleteTestimonialsData requestBody = new DeleteTestimonialsData();
-      requestBody.setQuery("{_id:'" + itemId + "'}");
-      requestBody.setUpdateValue("{$set : {IsArchived: true }}");
-      requestBody.setMulti(true);
-      APIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(new AndroidLog("ggg"))
-          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
-          .build()
-          .create(APIInterfaces.class);
-
-      APICalls.deleteTestimonials(headerToken, testimonialType, requestBody, new Callback<String>() {
-        @Override
-        public void success(String data, Response response) {
-          hideLoader();
-          if (response != null && response.getStatus() == 200) {
-            Log.d("deletePlacesAround ->", response.getBody().toString());
-              Toast.makeText(getApplicationContext(), getString( R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
-            onBackPressed();
-          } else {
-            Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
-          }
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-          hideLoader();
-          if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
-              Toast.makeText(getApplicationContext(),getString( R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
-            onBackPressed();
-          } else {
-            Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
-          }
-        }
-      });
-
-    } catch (Exception e) {
-      hideLoader();
-      e.printStackTrace();
-    }
-  }
-
-
-  @Override
-  public void uploadImageURL(String url) {
-    uploadedImageURL = url;
-    uploadDataToServer();
-  }
-
-  private void uploadDataToServer() {
-    if (ScreenType.equals("edit")) {
-        showLoader(getString(R.string.updating_record_please_wait));
-      updateExistingTestimonialsAPI();
-    } else {
-        showLoader(getString(R.string.creating_record_please_wait));
-      createNewTestimonialsAPI();
-      Methods.hideKeyboard(TestimonialsFeedbackActivity.this);
-    }
-  }
-
-  private void showLoader(final String message) {
-    runOnUiThread(() -> {
-      if (progressDialog == null) {
-        progressDialog = new ProgressDialog(getApplicationContext());
-        progressDialog.setCanceledOnTouchOutside(false);
-      }
-      progressDialog.setMessage(message);
-      progressDialog.show();
-    });
-  }
-
-  private void hideLoader() {
-    runOnUiThread(() -> {
-      if (progressDialog != null && progressDialog.isShowing()) {
-        progressDialog.dismiss();
-      }
-    });
-  }
-
-  @Override
-  public void onBackPressed() {
-    Intent data = new Intent();
-    data.putExtra("IS_REFRESH", isNewDataAdded);
-    setResult(RESULT_OK, data);
-    super.onBackPressed();
-  }
-
-  private void getHeaderAuthToken() {
-    try {
-      APIInterfaces APICalls = new RestAdapter.Builder().setEndpoint("https://developer.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build().create(APIInterfaces.class);
-      Log.v("newvlue", " " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " " + session.getFpTag());
-      APICalls.getHeaderAuthorizationtoken(session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID), session.getFpTag(), new Callback<GetTokenData>() {
-        @Override
-        public void success(GetTokenData s, Response response) {
-          Log.v("experincecode1", " " + s.getToken() + " " + response.getReason() + " " + response.getBody());
-          int status = response.getStatus();
-          if ((status == 200 || status == 201 || status == 202) && s != null) {
-
-            if (s.getWebActions() != null && !s.getWebActions().isEmpty()) {
-              loopBreak:
-              for (WebActionsItem action : s.getWebActions()) {
-                for (String type : allTestimonialType) {
-                  if (action.getName().equalsIgnoreCase(type)) {
-                    testimonialType = action.getName();
-                    break loopBreak;
-                  }
+        title = findViewById(R.id.title);
+        backButton = findViewById(R.id.back_button);
+        rightButton = findViewById(R.id.right_icon_layout);
+        rightIcon = findViewById(R.id.right_icon);
+        if (ScreenType.equals("edit")) {
+            title.setText("Edit testimonial");
+            rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
+            rightButton.setOnClickListener(v -> {
+                if (ScreenType != null && ScreenType.equals("edit")) {
+                    showLoader(getString(R.string.deleting_record_please_wait));
+                    deleteRecord(itemId);
+                    return;
                 }
-              }
+                onBackPressed();
+            });
+        } else {
+            title.setText("Add a testimonial");
+        }
+
+        backButton.setOnClickListener(v -> onBackPressed());
+    }
+
+    public void showDialogToGetImage() {
+        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
+    }
+
+    private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+        if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+            cameraIntent();
+        } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
+            galleryIntent();
+        }
+    }
+
+    void createNewTestimonialsAPI() {
+        try {
+            if (validateInput()) {
+                ActionData actionData = getActionData(session.getFP_AppExperienceCode());
+                AddTestimonialsData request = new AddTestimonialsData();
+                request.setWebsiteId(session.getFpTag());
+                request.setActionData(actionData);
+                Log.v("addTest", " " + session.getFpTag());
+                APIInterfaces APICalls = new RestAdapter.Builder()
+                        .setEndpoint("https://webaction.api.boostkit.dev")
+                        .setLogLevel(RestAdapter.LogLevel.FULL)
+                        .setLog(new AndroidLog("ggg"))
+                        .build()
+                        .create(APIInterfaces.class);
+
+                APICalls.addTestimonials(headerToken, testimonialType, request, new Callback<String>() {
+                    @Override
+                    public void success(String s, Response response) {
+                        hideLoader();
+                        if (response.getStatus() != 200) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        WebEngageController.trackEvent(TESTIMONIAL_ADDED, EVENT_LABEL_MANAGE_CONTENT, session.getFpTag());
+                        Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
+                        isNewDataAdded = true;
+                        onBackPressed();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.v("addTestimonial", " message: " + error.getMessage() + " error: " + error);
+                        hideLoader();
+                        Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
+                    }
+                });
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private ActionData getActionData(String fp_appExperienceCode) {
+        ActionData actionData = new ActionData();
+        String name = userNameText.getText().toString();
+        String desc = reviewDescriptionText.getText().toString();
+        String review = reviewTitleText.getText().toString();
+        String profileDesc = profileDescEdt.getText().toString();
+        switch (fp_appExperienceCode) {
+            case "HOT":
+                actionData.setCustomerName(name);
+                actionData.setTestimonial(desc);
+                actionData.setCity(review);
+                ProfileImagee placeImage = new ProfileImagee();
+                placeImage.setUrl(uploadedImageURL);
+                placeImage.setDescription(profileDesc);
+                actionData.setProfileImage(placeImage);
+                break;
+            case "DOC":
+            case "HOS":
+            case "EDU":
+            case "SVC":
+            case "RTL":
+                actionData.setUsername(name);
+                actionData.setDescription(desc);
+                Profileimage placeImageDH = new Profileimage();
+                placeImageDH.setUrl(uploadedImageURL);
+                placeImageDH.setDescription(profileDesc);
+                actionData.setProfileimage(placeImageDH);
+                break;
+            case "CAF":
+                actionData.setName(name);
+                actionData.setText(desc);
+                ProfileImagee placeImageC = new ProfileImagee();
+                placeImageC.setUrl(uploadedImageURL);
+                placeImageC.setDescription(profileDesc);
+                actionData.setImg(placeImageC);
+                break;
+            case "SPA":
+            case "SAL":
+                actionData.setName(name);
+                actionData.setTitle(review);
+                actionData.setOurStory(desc);
+                Profileimage placeImageSP = new Profileimage();
+                placeImageSP.setUrl(uploadedImageURL);
+                placeImageSP.setDescription(profileDesc);
+                actionData.setProfileimage(placeImageSP);
+                break;
+            case "MFG":
+            default:
+                actionData.setUsername(name);
+                actionData.setTitle(review);
+                actionData.setDescription(desc);
+                Profileimage placeImageD = new Profileimage();
+                placeImageD.setUrl(uploadedImageURL);
+                placeImageD.setDescription(profileDesc);
+                actionData.setProfileimage(placeImageD);
+                break;
+        }
+        return actionData;
+    }
+
+    void updateExistingTestimonialsAPI() {
+        try {
+            if (validateInput()) {
+                ActionData actionData = getActionData(session.getFP_AppExperienceCode());
+                UpdateTestimonialsData requestBody = new UpdateTestimonialsData();
+                requestBody.setQuery("{_id:'" + existingItemData.getId() + "'}");
+                requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
+                APIInterfaces APICalls = new RestAdapter.Builder()
+                        .setEndpoint("https://webaction.api.boostkit.dev")
+                        .setLogLevel(RestAdapter.LogLevel.FULL)
+                        .setLog(new AndroidLog("ggg"))
+                        .build()
+                        .create(APIInterfaces.class);
+                APICalls.updateTestimonials(headerToken, testimonialType, requestBody, new Callback<String>() {
+                    @Override
+                    public void success(String s, Response response) {
+                        hideLoader();
+                        if (response.getStatus() != 200) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        WebEngageController.trackEvent(TESTIMONIAL_UPDATED, EVENT_LABEL_TESTIMONIAL_ADDED, session.getFpTag());
+                        Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
+                        onBackPressed();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        hideLoader();
+                        if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.successfully_updated_testimonials), Toast.LENGTH_LONG).show();
+                            onBackPressed();
+                        } else {
+                            Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
+                        }
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private boolean validateInput() {
+        if (!(userNameText.getText().toString().isEmpty() || reviewTitleText.getText().toString().isEmpty() || reviewDescriptionText.getText().toString().isEmpty()) ||
+                !(isProfileDescFill(session.getFP_AppExperienceCode()) == View.VISIBLE && profileDescEdt.getText().toString().isEmpty())) {
+            return true;
+        } else {
+            Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
+            hideLoader();
+            return false;
+        }
+    }
+
+    public void cameraIntent() {
+        try {
+            // use standard intent to capture an image
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                        media_req_id);
+                return;
+            }
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this, Constants.PACKAGE_NAME + ".provider", photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
+                }
             }
 
-            headerToken = s.getToken();
-          } else {
-            Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
-            headerToken = "";
-          }
+        } catch (ActivityNotFoundException e) {
+            String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
+            Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, errorMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        @Override
-        public void failure(RetrofitError error) {
-          Log.v("experincecode2", " " + error.getBody() + " " + error.getMessage());
-          Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-          Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
-        }
-      });
-    } catch (Exception e) {
-      Log.v("experincecode3", " " + e.getMessage() + " " + e.getStackTrace());
-      Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-      e.printStackTrace();
     }
-  }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        path = image.getAbsolutePath();
+        return image;
+    }
+
+    public void galleryIntent() {
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
+                return;
+            }
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(i, GALLERY_PHOTO);
+        } catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
+            Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, errorMessage);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
+                updatePlaceProfileImage();
+            } else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
+                {
+                    Uri picUri = data.getData();
+                    if (picUri != null) {
+                        path = Methods.getPath(this, picUri);
+                        updatePlaceProfileImage();
+                    } else {
+                        Toast.makeText(this, getString(R.string.something_went_wrong_try_later), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("onActivityResult ->", "Failed ->" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void uploadImageToServer() {
+        try {
+            if (validateInput()) {
+                String fname = "Testimonials" + System.currentTimeMillis();
+                if (!Util.isNullOrEmpty(path)) {
+                    if (!TextUtils.isEmpty(path)) {
+                        uploadedImageURL = new UploadProfileImage(TestimonialsFeedbackActivity.this, this, path, fname).execute().get();
+                    }
+                } else {
+                    Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getResources().getString(R.string.select_image_upload));
+                }
+            }
+        } catch (Exception e) {
+            Log.e("uploadImageToServer ->", "Failed ->" + e.getMessage());
+            e.printStackTrace();
+        } catch (OutOfMemoryError E) {
+            E.printStackTrace();
+            System.gc();
+        }
+    }
+
+    public void updatePlaceProfileImage() {
+        if (path != null) {
+            Glide.with(TestimonialsFeedbackActivity.this).load(path).into(profileImage);
+            removeProfileImage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void deleteRecord(String itemId) {
+        try {
+            DeleteTestimonialsData requestBody = new DeleteTestimonialsData();
+            requestBody.setQuery("{_id:'" + itemId + "'}");
+            requestBody.setUpdateValue("{$set : {IsArchived: true }}");
+            requestBody.setMulti(true);
+            APIInterfaces APICalls = new RestAdapter.Builder()
+                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLog(new AndroidLog("ggg"))
+                    .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+                    .build()
+                    .create(APIInterfaces.class);
+
+            APICalls.deleteTestimonials(headerToken, testimonialType, requestBody, new Callback<String>() {
+                @Override
+                public void success(String data, Response response) {
+                    hideLoader();
+                    if (response != null && response.getStatus() == 200) {
+                        Log.d("deletePlacesAround ->", response.getBody().toString());
+                        Toast.makeText(getApplicationContext(), getString(R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
+                        onBackPressed();
+                    } else {
+                        Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    hideLoader();
+                    if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
+                        onBackPressed();
+                    } else {
+                        Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            hideLoader();
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void uploadImageURL(String url) {
+        uploadedImageURL = url;
+        uploadDataToServer();
+    }
+
+    private void uploadDataToServer() {
+        if (ScreenType.equals("edit")) {
+            showLoader(getString(R.string.updating_record_please_wait));
+            updateExistingTestimonialsAPI();
+        } else {
+            showLoader(getString(R.string.creating_record_please_wait));
+            createNewTestimonialsAPI();
+            Methods.hideKeyboard(TestimonialsFeedbackActivity.this);
+        }
+    }
+
+    private void showLoader(final String message) {
+        runOnUiThread(() -> {
+            if (progressDialog == null) {
+                progressDialog = new ProgressDialog(getApplicationContext());
+                progressDialog.setCanceledOnTouchOutside(false);
+            }
+            progressDialog.setMessage(message);
+            progressDialog.show();
+        });
+    }
+
+    private void hideLoader() {
+        runOnUiThread(() -> {
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent data = new Intent();
+        data.putExtra("IS_REFRESH", isNewDataAdded);
+        setResult(RESULT_OK, data);
+        super.onBackPressed();
+    }
+
+    private void getHeaderAuthToken() {
+        try {
+            APIInterfaces APICalls = new RestAdapter.Builder().setEndpoint("https://developer.api.boostkit.dev")
+                    .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build().create(APIInterfaces.class);
+            Log.v("newvlue", " " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " " + session.getFpTag());
+            APICalls.getHeaderAuthorizationtoken(session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID), session.getFpTag(), new Callback<GetTokenData>() {
+                @Override
+                public void success(GetTokenData s, Response response) {
+                    Log.v("experincecode1", " " + s.getToken() + " " + response.getReason() + " " + response.getBody());
+                    int status = response.getStatus();
+                    if ((status == 200 || status == 201 || status == 202) && s != null) {
+
+                        if (s.getWebActions() != null && !s.getWebActions().isEmpty()) {
+                            loopBreak:
+                            for (WebActionsItem action : s.getWebActions()) {
+                                for (String type : allTestimonialType) {
+                                    if (action.getName().equalsIgnoreCase(type)) {
+                                        testimonialType = action.getName();
+                                        break loopBreak;
+                                    }
+                                }
+                            }
+                        }
+
+                        headerToken = s.getToken();
+                    } else {
+                        Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
+                        headerToken = "";
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.v("experincecode2", " " + error.getBody() + " " + error.getMessage());
+                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
+                }
+            });
+        } catch (Exception e) {
+            Log.v("experincecode3", " " + e.getMessage() + " " + e.getStackTrace());
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
 }

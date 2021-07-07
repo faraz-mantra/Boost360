@@ -14,5 +14,5 @@ interface AssuredWithFloatRemoteData {
   fun getPickUpAddress(@Query("websiteId") fpId: String?): Observable<Response<PickUpAddressResponse>>
 
   @GET(EndPoints.GET_PRODUCT_INFORMATION_FETCH)
-  fun getProductInfoFetch( @Query("sellerId") fpTag: String?): Observable<Response<PickUpAddressResponse>>
+  fun getProductInfoFetch(@Query("sellerId") fpTag: String?): Observable<Response<PickUpAddressResponse>>
 }

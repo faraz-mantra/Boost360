@@ -49,8 +49,8 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
   }
 
   override fun onCreateView(
-      inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?,
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
   ): View? {
 
     adapter = BookTableAdapter(ArrayList(), this)
@@ -102,7 +102,10 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
         val arg = Bundle()
         arg.putString("ScreenState", "new")
         bookATableDetailsFragment.arguments = arg
-        (activity as BookATableActivity).addFragment(bookATableDetailsFragment, "BOOK_A_TABLE_DETAILS_FRAGMENT")
+        (activity as BookATableActivity).addFragment(
+          bookATableDetailsFragment,
+          "BOOK_A_TABLE_DETAILS_FRAGMENT"
+        )
       }
     }
 
@@ -119,16 +122,20 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
       val query = JSONObject()
       query.put("WebsiteId", session!!.getFpTag())
       val APICalls = RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(AndroidLog("ggg"))
-          .build()
-          .create(RestaurantsAPIInterfaces::class.java)
+        .setEndpoint("https://webaction.api.boostkit.dev")
+        .setLogLevel(RestAdapter.LogLevel.FULL)
+        .setLog(AndroidLog("ggg"))
+        .build()
+        .create(RestaurantsAPIInterfaces::class.java)
 
       APICalls.getBookTable(query, 0, 1000, object : Callback<GetBookTableData?> {
         override fun success(getBookTableData: GetBookTableData?, response: Response) {
           if (getBookTableData == null || response.status != 200) {
-            Toast.makeText(requireContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+              requireContext(),
+              getString(R.string.something_went_wrong),
+              Toast.LENGTH_SHORT
+            ).show()
             return
           }
           dataList = getBookTableData.Data
@@ -163,7 +170,10 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
     arg.putString("ScreenState", "edit")
     arg.putString("data", Gson().toJson(data));
     bookATableDetailsFragment.arguments = arg
-    (activity as BookATableActivity).addFragment(bookATableDetailsFragment, "BOOK_A_TABLE_DETAILS_FRAGMENT")
+    (activity as BookATableActivity).addFragment(
+      bookATableDetailsFragment,
+      "BOOK_A_TABLE_DETAILS_FRAGMENT"
+    )
   }
 
   override fun deleteOptionClicked(data: Data) {
@@ -171,35 +181,47 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
     adapter.notifyDataSetChanged()
     try {
       val requestBody = DeleteBookTableData(
-          "{_id:'" + data._id + "'}",
-          "{\$set : {IsArchived: true }}"
+        "{_id:'" + data._id + "'}",
+        "{\$set : {IsArchived: true }}"
       )
 
       val APICalls = RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(AndroidLog("ggg"))
-          .setConverter(GsonConverter(GsonBuilder().setLenient().create()))
-          .build()
-          .create(RestaurantsAPIInterfaces::class.java)
+        .setEndpoint("https://webaction.api.boostkit.dev")
+        .setLogLevel(RestAdapter.LogLevel.FULL)
+        .setLog(AndroidLog("ggg"))
+        .setConverter(GsonConverter(GsonBuilder().setLenient().create()))
+        .build()
+        .create(RestaurantsAPIInterfaces::class.java)
 
       APICalls.deleteBookTable(requestBody, object : Callback<String?> {
         override fun success(data: String?, response: Response) {
           if (response != null && response.status == 200) {
             Log.d("deletePlacesAround ->", response.body.toString())
-            Methods.showSnackBarPositive(requireActivity(), getString(R.string.successfully_deleted_))
+            Methods.showSnackBarPositive(
+              requireActivity(),
+              getString(R.string.successfully_deleted_)
+            )
             loadData()
           } else {
-            Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong))
+            Methods.showSnackBarNegative(
+              requireActivity(),
+              getString(R.string.something_went_wrong)
+            )
           }
         }
 
         override fun failure(error: RetrofitError) {
           if (error.response.status == 200) {
-            Methods.showSnackBarPositive(requireActivity(), getString(R.string.successfully_deleted_))
+            Methods.showSnackBarPositive(
+              requireActivity(),
+              getString(R.string.successfully_deleted_)
+            )
             loadData()
           } else {
-            Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong))
+            Methods.showSnackBarNegative(
+              requireActivity(),
+              getString(R.string.something_went_wrong)
+            )
           }
         }
       })

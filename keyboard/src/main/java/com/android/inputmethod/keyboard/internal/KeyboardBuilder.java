@@ -119,9 +119,9 @@ import io.separ.neural.inputmethod.indic.R;
 
 // TODO: Write unit tests for this class.
 public class KeyboardBuilder<KP extends KeyboardParams> {
+    public static final String TAG_KEY_STYLE = "key-style";
     private static final String BUILDER_TAG = "Keyboard.Builder";
     private static final boolean DEBUG = false;
-
     // Keyboard XML Tags
     private static final String TAG_KEYBOARD = "Keyboard";
     private static final String TAG_ROW = "Row";
@@ -133,20 +133,18 @@ public class KeyboardBuilder<KP extends KeyboardParams> {
     private static final String TAG_SWITCH = "switch";
     private static final String TAG_CASE = "case";
     private static final String TAG_DEFAULT = "default";
-    public static final String TAG_KEY_STYLE = "key-style";
-
     private static final int DEFAULT_KEYBOARD_COLUMNS = 10;
     private static final int DEFAULT_KEYBOARD_ROWS = 6;
-
+    private static final String SPACES = "                                             ";
     protected final KP mParams;
     protected final Context mContext;
     protected final Resources mResources;
-
     private int mCurrentY = 0;
     private KeyboardRow mCurrentRow = null;
     private boolean mLeftEdge;
     private boolean mTopEdge;
     private Key mRightEdgeKey = null;
+    private int mIndent;
 
     public KeyboardBuilder(final Context context, final KP params) {
         mContext = context;
@@ -157,6 +155,62 @@ public class KeyboardBuilder<KP extends KeyboardParams> {
 
         params.GRID_WIDTH = res.getInteger(R.integer.config_keyboard_grid_width);
         params.GRID_HEIGHT = res.getInteger(R.integer.config_keyboard_grid_height);
+    }
+
+    private static String spaces(final int count) {
+        return (count < SPACES.length()) ? SPACES.substring(0, count) : SPACES;
+    }
+
+    private static boolean matchInteger(final TypedArray a, final int index, final int value) {
+        // If <case> does not have "index" attribute, that means this <case> is wild-card for
+        // the attribute.
+        return !a.hasValue(index) || a.getInt(index, 0) == value;
+    }
+
+    private static boolean matchBoolean(final TypedArray a, final int index, final boolean value) {
+        // If <case> does not have "index" attribute, that means this <case> is wild-card for
+        // the attribute.
+        return !a.hasValue(index) || a.getBoolean(index, false) == value;
+    }
+
+    private static boolean matchString(final TypedArray a, final int index, final String value) {
+        // If <case> does not have "index" attribute, that means this <case> is wild-card for
+        // the attribute.
+        return !a.hasValue(index)
+                || StringUtils.containsInArray(value, a.getString(index).split("\\|"));
+    }
+
+    private static boolean matchTypedValue(final TypedArray a, final int index, final int intValue,
+                                           final String strValue) {
+        // If <case> does not have "index" attribute, that means this <case> is wild-card for
+        // the attribute.
+        final TypedValue v = a.peekValue(index);
+        if (v == null) {
+            return true;
+        }
+        if (ResourceUtils.isIntegerValue(v)) {
+            return intValue == a.getInt(index, 0);
+        }
+        return ResourceUtils.isStringValue(v) && StringUtils.containsInArray(strValue, a.getString(index).split("\\|"));
+    }
+
+    private static boolean isIconDefined(final TypedArray a, final int index,
+                                         final KeyboardIconsSet iconsSet) {
+        if (!a.hasValue(index)) {
+            return true;
+        }
+        final String iconName = a.getString(index);
+        final int iconId = KeyboardIconsSet.getIconId(iconName);
+        return iconsSet.getIconDrawable(iconId) != null;
+    }
+
+    private static String textAttr(final String value, final String name) {
+        return value != null ? String.format(" %s=%s", name, value) : "";
+    }
+
+    private static String booleanAttr(final TypedArray a, final int index, final String name) {
+        return a.hasValue(index)
+                ? String.format(" %s=%s", name, a.getBoolean(index, false)) : "";
     }
 
     public void setAutoGenerate(final KeysCache keysCache) {
@@ -191,13 +245,6 @@ public class KeyboardBuilder<KP extends KeyboardParams> {
 
     public Keyboard build() {
         return new Keyboard(mParams);
-    }
-
-    private int mIndent;
-    private static final String SPACES = "                                             ";
-
-    private static String spaces(final int count) {
-        return (count < SPACES.length()) ? SPACES.substring(0, count) : SPACES;
     }
 
     private void startTag(final String format, final Object... args) {
@@ -728,49 +775,6 @@ public class KeyboardBuilder<KP extends KeyboardParams> {
         }
     }
 
-    private static boolean matchInteger(final TypedArray a, final int index, final int value) {
-        // If <case> does not have "index" attribute, that means this <case> is wild-card for
-        // the attribute.
-        return !a.hasValue(index) || a.getInt(index, 0) == value;
-    }
-
-    private static boolean matchBoolean(final TypedArray a, final int index, final boolean value) {
-        // If <case> does not have "index" attribute, that means this <case> is wild-card for
-        // the attribute.
-        return !a.hasValue(index) || a.getBoolean(index, false) == value;
-    }
-
-    private static boolean matchString(final TypedArray a, final int index, final String value) {
-        // If <case> does not have "index" attribute, that means this <case> is wild-card for
-        // the attribute.
-        return !a.hasValue(index)
-                || StringUtils.containsInArray(value, a.getString(index).split("\\|"));
-    }
-
-    private static boolean matchTypedValue(final TypedArray a, final int index, final int intValue,
-                                           final String strValue) {
-        // If <case> does not have "index" attribute, that means this <case> is wild-card for
-        // the attribute.
-        final TypedValue v = a.peekValue(index);
-        if (v == null) {
-            return true;
-        }
-        if (ResourceUtils.isIntegerValue(v)) {
-            return intValue == a.getInt(index, 0);
-        }
-        return ResourceUtils.isStringValue(v) && StringUtils.containsInArray(strValue, a.getString(index).split("\\|"));
-    }
-
-    private static boolean isIconDefined(final TypedArray a, final int index,
-                                         final KeyboardIconsSet iconsSet) {
-        if (!a.hasValue(index)) {
-            return true;
-        }
-        final String iconName = a.getString(index);
-        final int iconId = KeyboardIconsSet.getIconId(iconName);
-        return iconsSet.getIconDrawable(iconId) != null;
-    }
-
     private boolean parseDefault(final XmlPullParser parser, final KeyboardRow row,
                                  final boolean skip) throws XmlPullParserException, IOException {
         if (DEBUG) startTag("<%s>", TAG_DEFAULT);
@@ -857,14 +861,5 @@ public class KeyboardBuilder<KP extends KeyboardParams> {
         row.advanceXPos(width);
         mLeftEdge = false;
         mRightEdgeKey = null;
-    }
-
-    private static String textAttr(final String value, final String name) {
-        return value != null ? String.format(" %s=%s", name, value) : "";
-    }
-
-    private static String booleanAttr(final TypedArray a, final int index, final String name) {
-        return a.hasValue(index)
-                ? String.format(" %s=%s", name, a.getBoolean(index, false)) : "";
     }
 }

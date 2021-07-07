@@ -60,7 +60,7 @@ public class DomainNotPurchaseFragment extends Fragment {
         });
     }
 
-    public void setHeader(View view){
+    public void setHeader(View view) {
         LinearLayout backButton;
         TextView title;
 
@@ -104,7 +104,7 @@ public class DomainNotPurchaseFragment extends Fragment {
         startActivity(intent);
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
-        },1000);
+        }, 1000);
     }
 
 }

@@ -38,6 +38,9 @@ import io.separ.neural.inputmethod.indic.R;
  * @attr ref R.styleable#MainKeyboardView_gestureRecognitionSpeedThreshold
  */
 public final class GestureStrokeRecognitionParams {
+    // Default GestureStrokeRecognitionPoints parameters.
+    public static final GestureStrokeRecognitionParams DEFAULT =
+            new GestureStrokeRecognitionParams();
     // Static threshold for gesture after fast typing
     public final int mStaticTimeThresholdAfterFastTyping; // msec
     // Static threshold for starting gesture detection
@@ -55,10 +58,6 @@ public final class GestureStrokeRecognitionParams {
     // Parameters for gesture recognition
     public final int mRecognitionMinimumTime; // msec
     public final float mRecognitionSpeedThreshold; // keyWidth/sec
-
-    // Default GestureStrokeRecognitionPoints parameters.
-    public static final GestureStrokeRecognitionParams DEFAULT =
-            new GestureStrokeRecognitionParams();
 
     private GestureStrokeRecognitionParams() {
         // These parameter values are default and intended for testing.

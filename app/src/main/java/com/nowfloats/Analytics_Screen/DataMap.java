@@ -10,14 +10,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class DataMap implements Map<String, Object>{
+public class DataMap implements Map<String, Object> {
 
 
     Map map = null;
-    public DataMap()
-    {
-        map  = new LinkedHashMap<String,Object>();
+
+    public DataMap() {
+        map = new LinkedHashMap<String, Object>();
     }
+
     @Override
     public void clear() {
         // TODO Auto-generated method stub
@@ -28,8 +29,7 @@ public class DataMap implements Map<String, Object>{
     public boolean containsKey(Object key) {
 
         boolean flag = false;
-        if(map.containsKey(key))
-        {
+        if (map.containsKey(key)) {
             flag = true;
         }
 
@@ -39,8 +39,7 @@ public class DataMap implements Map<String, Object>{
     @Override
     public boolean containsValue(Object value) {
         boolean flag = false;
-        if(map.containsValue(value))
-        {
+        if (map.containsValue(value)) {
             flag = true;
         }
 
@@ -58,8 +57,7 @@ public class DataMap implements Map<String, Object>{
     public Object get(Object key) {
         // TODO Auto-generated method stub
         Object tmp = null;
-        if(map.containsKey(key))
-        {
+        if (map.containsKey(key)) {
             tmp = map.get(key);
         }
         return tmp;
@@ -70,8 +68,7 @@ public class DataMap implements Map<String, Object>{
     public boolean isEmpty() {
         // TODO Auto-generated method stub
         boolean flag = false;
-        if(map.size()==0)
-        {
+        if (map.size() == 0) {
             flag = true;
         }
         return false;
@@ -86,8 +83,7 @@ public class DataMap implements Map<String, Object>{
     @Override
     public Object put(String key, Object value) {
         // TODO Auto-generated method stub
-        if(!map.containsKey(key))
-        {
+        if (!map.containsKey(key)) {
             map.put(key, value);
         }
 
@@ -119,8 +115,7 @@ public class DataMap implements Map<String, Object>{
         return map.values();
     }
 
-    public Object get(int index)
-    {
+    public Object get(int index) {
         return (new ArrayList<String>(map.values())).get(index);
     }
 

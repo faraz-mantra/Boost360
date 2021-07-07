@@ -8,8 +8,8 @@ import java.util.*
 const val MESSAGE_FLOAT_DATA = "MESSAGE_FLOAT_DATA"
 
 data class MessageModel(
-    var floats: ArrayList<FloatsMessageModel>? = null,
-    var moreFloatsAvailable: Boolean = false,
+  var floats: ArrayList<FloatsMessageModel>? = null,
+  var moreFloatsAvailable: Boolean = false,
 ) : BaseResponse(), Serializable {
 
   fun getMessageFloatData(): MessageModel? {

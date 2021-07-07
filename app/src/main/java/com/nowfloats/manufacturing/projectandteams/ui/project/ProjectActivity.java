@@ -43,10 +43,10 @@ import retrofit.converter.GsonConverter;
 
 public class ProjectActivity extends AppCompatActivity implements ProjectActivityListener {
 
-    private RecyclerView recyclerView;
-    private ProjectAdapter adapter;
     UserSessionManager session;
     List<Data> dataList;
+    private RecyclerView recyclerView;
+    private ProjectAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,9 +114,9 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
     @Override
     protected void onResume() {
         super.onResume();
-        if(Utils.isNetworkConnected(this)) {
+        if (Utils.isNetworkConnected(this)) {
             loadData();
-        }else{
+        } else {
             Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.no_internet_connection));
         }
     }
@@ -166,7 +166,7 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
                 public void success(String data, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(ProjectActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(ProjectActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.something_went_wrong));
@@ -175,10 +175,10 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(error.getResponse().getStatus() == 200){
-                        Methods.showSnackBarPositive(ProjectActivity.this,  getString(R.string.successfully_deleted_));
+                    if (error.getResponse().getStatus() == 200) {
+                        Methods.showSnackBarPositive(ProjectActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
-                    }else {
+                    } else {
                         Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.something_went_wrong));
                     }
                 }

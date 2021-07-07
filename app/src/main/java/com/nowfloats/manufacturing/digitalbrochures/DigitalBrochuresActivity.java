@@ -51,14 +51,14 @@ import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 public class DigitalBrochuresActivity extends AppCompatActivity implements DigitalBrochuresListener {
 
-    private ProgressDialog progressDialog;
-    public UserSessionManager session;
     public static TextView headerText;
+    public UserSessionManager session;
     RelativeLayout emptyLayout;
     RecyclerView recyclerView;
     List<Data> dataList;
     DigitalBrochuresAdapter adapter;
     TextView buyButton;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

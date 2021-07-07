@@ -66,10 +66,10 @@ import static java.lang.String.format;
 
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface, PresignupManager.SignUpLoginHandler {
     public static ProgressDialog pd;
-    private UserSessionManager session;
-    private com.framework.pref.UserSessionManager sessionMain;
     Bus bus;
     LottieAnimationView animationView;
+    private UserSessionManager session;
+    private com.framework.pref.UserSessionManager sessionMain;
     private String loginCheck = null, deepLink;
     private String deepLinkViewType = "", deepLinkFpId = "", deepLinkDay = "", deepLinkFpTag = "";
     private Thread mThread;
@@ -208,7 +208,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             public void success(AccessTokenResponse data, Response response) {
                 if ((response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) && data != null && data.getResult() != null) {
                     TokenResult res = data.getResult();
-                    if(res != null && (res.getRefreshToken() == null || res.getRefreshToken().isEmpty())){
+                    if (res != null && (res.getRefreshToken() == null || res.getRefreshToken().isEmpty())) {
                         res.setRefreshToken(refreshToken);
                     }
                     saveAccessTokenAuth1(sessionMain, res);

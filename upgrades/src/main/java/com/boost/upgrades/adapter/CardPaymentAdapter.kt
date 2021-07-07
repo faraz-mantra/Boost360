@@ -14,57 +14,57 @@ import com.boost.upgrades.utils.Utils.hideSoftKeyboard
 
 
 class CardPaymentAdapter(val activity: FragmentActivity, itemList: List<WidgetModel>?) :
-    RecyclerView.Adapter<CardPaymentAdapter.upgradeViewHolder>(), View.OnClickListener {
+  RecyclerView.Adapter<CardPaymentAdapter.upgradeViewHolder>(), View.OnClickListener {
 
-    private var list = ArrayList<WidgetModel>()
-    private lateinit var context: Context
+  private var list = ArrayList<WidgetModel>()
+  private lateinit var context: Context
 
-    init {
-        this.list = itemList as ArrayList<WidgetModel>
+  init {
+    this.list = itemList as ArrayList<WidgetModel>
+  }
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
+    val itemView = LayoutInflater.from(parent?.context).inflate(
+      R.layout.card_payment_item, parent, false
+    )
+    context = itemView.context
+
+
+    itemView.setOnClickListener(this)
+    return upgradeViewHolder(itemView)
+  }
+
+  override fun getItemCount(): Int {
+    return list.size
+  }
+
+  override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+
+    holder.view.visibility = View.GONE
+    holder.cardCVV.setOnEditorActionListener { v, actionId, event ->
+      if (actionId == EditorInfo.IME_ACTION_DONE) {
+        holder.cardCVV.clearFocus()
+        hideSoftKeyboard(activity)
+      }
+      return@setOnEditorActionListener false
     }
+  }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
-        val itemView = LayoutInflater.from(parent?.context).inflate(
-            R.layout.card_payment_item, parent, false
-        )
-        context = itemView.context
+  override fun onClick(v: View?) {
 
+  }
 
-        itemView.setOnClickListener(this)
-        return upgradeViewHolder(itemView)
-    }
+  fun addupdates(upgradeModel: List<WidgetModel>) {
+    val initPosition = list.size
+    list.clear()
+    list.addAll(upgradeModel)
+    notifyItemRangeInserted(initPosition, list.size)
+  }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+  class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-
-        holder.view.visibility = View.GONE
-        holder.cardCVV.setOnEditorActionListener { v, actionId, event ->
-            if(actionId == EditorInfo.IME_ACTION_DONE){
-                holder.cardCVV.clearFocus()
-                hideSoftKeyboard(activity)
-            }
-            return@setOnEditorActionListener false
-        }
-    }
-
-    override fun onClick(v: View?) {
-
-    }
-
-    fun addupdates(upgradeModel: List<WidgetModel>) {
-        val initPosition = list.size
-        list.clear()
-        list.addAll(upgradeModel)
-        notifyItemRangeInserted(initPosition, list.size)
-    }
-
-    class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        var view = itemView.findViewById<View>(R.id.card_payment_addons_view)!!
-        var cardCVV = itemView.findViewById<EditText>(R.id.card_cvv)!!
+    var view = itemView.findViewById<View>(R.id.card_payment_addons_view)!!
+    var cardCVV = itemView.findViewById<EditText>(R.id.card_cvv)!!
 //
 //        private var context: Context = itemView.context
 //
@@ -72,5 +72,5 @@ class CardPaymentAdapter(val activity: FragmentActivity, itemList: List<WidgetMo
 //        fun upgradeListItem(updateModel: UpdatesModel) {
 //
 //        }
-    }
+  }
 }

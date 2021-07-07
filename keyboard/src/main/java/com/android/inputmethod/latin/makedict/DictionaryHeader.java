@@ -23,10 +23,6 @@ import com.android.inputmethod.latin.makedict.FormatSpec.FormatOptions;
  * Class representing dictionary header.
  */
 public final class DictionaryHeader {
-    public final int mBodyOffset;
-    public final DictionaryOptions mDictionaryOptions;
-    public final FormatOptions mFormatOptions;
-
     // Note that these are corresponding definitions in native code in latinime::HeaderPolicy
     // and latinime::HeaderReadWriteUtils.
     // TODO: Standardize the key names and bump up the format version, taking care not to
@@ -47,9 +43,12 @@ public final class DictionaryHeader {
     public static final String MAX_UNIGRAM_COUNT_KEY = "MAX_UNIGRAM_COUNT";
     public static final String MAX_BIGRAM_COUNT_KEY = "MAX_BIGRAM_COUNT";
     public static final String ATTRIBUTE_VALUE_TRUE = "1";
+    public final int mBodyOffset;
+    public final DictionaryOptions mDictionaryOptions;
+    public final FormatOptions mFormatOptions;
 
     public DictionaryHeader(final int headerSize, final DictionaryOptions dictionaryOptions,
-            final FormatOptions formatOptions) throws UnsupportedFormatException {
+                            final FormatOptions formatOptions) throws UnsupportedFormatException {
         mDictionaryOptions = dictionaryOptions;
         mFormatOptions = formatOptions;
         mBodyOffset = formatOptions.mVersion < FormatSpec.VERSION4 ? headerSize : 0;

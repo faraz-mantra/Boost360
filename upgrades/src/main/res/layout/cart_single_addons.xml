@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/addons_profile_image"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:src="@drawable/ic_phone_call_missed"
-        android:layout_margin="@dimen/_15sdp"
-        app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  <ImageView
+    android:id="@+id/addons_profile_image"
+    android:layout_width="@dimen/_30sdp"
+    android:layout_height="@dimen/_30sdp"
+    android:layout_margin="@dimen/_15sdp"
+    android:src="@drawable/ic_phone_call_missed"
+    app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"
+    app:layout_constraintEnd_toStartOf="@id/addons_remove"
+    app:layout_constraintStart_toEndOf="@id/addons_profile_image"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+      android:id="@+id/addons_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/open_sans_semibold"
+      android:text="Missed Call IVR"
+      android:textColor="@color/common_text_color"
+      android:textSize="@dimen/_10sdp"
+      app:layout_constraintTop_toBottomOf="@id/package_blossom_pack_layout" />
 
     <LinearLayout
-        android:layout_width="0dp"
+      android:id="@+id/addons_amount_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical">
+
+      <TextView
+        android:id="@+id/cart_item_discount"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/addons_remove"
-        app:layout_constraintStart_toEndOf="@id/addons_profile_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:orientation="vertical">
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:background="@drawable/all_side_curve_percentage_bg"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textColor="@color/common_text_color"
+        android:textSize="@dimen/_6sdp"
+        tools:text="60%" />
 
-        <TextView
-            android:id="@+id/addons_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="Missed Call IVR"
-            android:textColor="@color/common_text_color"
-            android:textSize="@dimen/_10sdp"
-            app:layout_constraintTop_toBottomOf="@id/package_blossom_pack_layout" />
+      <TextView
+        android:id="@+id/cart_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:textColor="#0068e0"
+        android:textSize="@dimen/_8sdp"
+        tools:text="₹101/month" />
 
-        <LinearLayout
-            android:id="@+id/addons_amount_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/cart_item_discount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/all_side_curve_percentage_bg"
-                android:fontFamily="@font/open_sans_semibold"
-                android:layout_marginEnd="@dimen/_5sdp"
-                tools:text="60%"
-                android:textColor="@color/common_text_color"
-                android:textSize="@dimen/_6sdp" />
-
-            <TextView
-                android:id="@+id/cart_item_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_5sdp"
-                tools:text="₹101/month"
-                android:textSize="@dimen/_8sdp"
-                android:textColor="#0068e0" />
-
-            <TextView
-                android:id="@+id/cart_item_orig_cost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_5sdp"
-                tools:text="₹299/month"
-                android:textSize="@dimen/_8sdp"
-                android:textColor="#9b9b9b" />
-
-        </LinearLayout>
+      <TextView
+        android:id="@+id/cart_item_orig_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:textColor="#9b9b9b"
+        android:textSize="@dimen/_8sdp"
+        tools:text="₹299/month" />
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/addons_remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
-        app:srcCompat="@drawable/ic_close"
-        app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  </LinearLayout>
 
-    <View
-        android:id="@+id/cart_single_addons_bottom_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_3sdp"
-        android:background="@drawable/view_dot_lines_bg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="@dimen/_10sdp"/>
+  <ImageView
+    android:id="@+id/addons_remove"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10sdp"
+    app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/ic_close" />
+
+  <View
+    android:id="@+id/cart_single_addons_bottom_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_3sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:background="@drawable/view_dot_lines_bg"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

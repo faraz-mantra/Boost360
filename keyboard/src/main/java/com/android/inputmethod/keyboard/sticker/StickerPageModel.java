@@ -14,21 +14,21 @@ public class StickerPageModel {
     @NonNull
     private final String name;
 
-    int getIconAttr(){
+    public StickerPageModel(@NonNull String name, @AttrRes int iconAttr, @NonNull String[] pack) {
+        this.name = name;
+        this.iconAttr = iconAttr;
+        this.pack = pack;
+    }
+
+    int getIconAttr() {
         return iconAttr;
     }
 
-    String[] getPack(){
+    String[] getPack() {
         return pack;
     }
 
-    String getName(){
+    String getName() {
         return name;
-    }
-
-    public StickerPageModel(@NonNull String name, @AttrRes int iconAttr, @NonNull String[] pack) {
-        this.name = name;
-        this.iconAttr  = iconAttr;
-        this.pack   = pack;
     }
 }

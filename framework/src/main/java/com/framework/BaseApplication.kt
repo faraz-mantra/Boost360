@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.framework.models.firestore.restApi.DrScoreApiClient
+import com.framework.models.firestore.restApi.EndPoints.DR_SCORE_BASE
 
 open class BaseApplication : MultiDexApplication() {
 
@@ -16,6 +18,12 @@ open class BaseApplication : MultiDexApplication() {
 
   companion object {
     lateinit var instance: Application
+
+    @JvmStatic
+    fun initModule(application: MultiDexApplication) {
+      this.instance = application
+      DrScoreApiClient.shared.init(DR_SCORE_BASE)
+    }
     fun isInitialised() = ::instance.isInitialized
   }
 
@@ -23,5 +31,4 @@ open class BaseApplication : MultiDexApplication() {
     MultiDex.install(this)
     super.attachBaseContext(base)
   }
-
 }

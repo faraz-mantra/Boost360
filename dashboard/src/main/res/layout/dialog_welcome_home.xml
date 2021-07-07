@@ -34,22 +34,22 @@
         tools:srcCompat="@drawable/ic_website_content_d" />
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_26"
         android:gravity="center"
-        android:id="@+id/title"
-        android:textSize="24sp"
         android:textColor="@color/colorAccent"
+        android:textSize="24sp"
         app:fontFamily="@font/bold"
-       tools:text="Add-ons to make your website more powerful" />
+        tools:text="Add-ons to make your website more powerful" />
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_26"
         android:gravity="center"
-        android:id="@+id/desc"
         app:textType="HEADING_6"
         tools:text="You can explore and purchase add-ons for your website starting at ₹50/month." />
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -70,9 +70,9 @@
         android:layout_marginBottom="@dimen/size_40"
         android:background="@drawable/bg_rounded_10"
         android:gravity="center"
-        tools:text="@string/get_started"
         android:textAllCaps="true"
-        app:textType="HEADING_6" />
+        app:textType="HEADING_6"
+        tools:text="@string/get_started" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

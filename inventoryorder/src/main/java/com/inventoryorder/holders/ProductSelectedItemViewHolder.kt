@@ -16,23 +16,29 @@ import com.inventoryorder.model.orderRequest.ItemsItem
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class ProductSelectedItemViewHolder(binding: ItemProductsAddedBinding) : AppBaseRecyclerViewHolder<ItemProductsAddedBinding>(binding) {
+class ProductSelectedItemViewHolder(binding: ItemProductsAddedBinding) :
+  AppBaseRecyclerViewHolder<ItemProductsAddedBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = (item as? ItemsItem) ?: return
     binding.view.visibility = if (position == 0) View.GONE else View.VISIBLE
-    if (data.productDetails?.imageUri.isNullOrEmpty().not()) activity?.glideLoad(binding.itemImage, data.productDetails?.imageUri, R.drawable.placeholder_image_n)
+    if (data.productDetails?.imageUri.isNullOrEmpty().not()) activity?.glideLoad(
+      binding.itemImage,
+      data.productDetails?.imageUri,
+      R.drawable.placeholder_image_n
+    )
     else binding.itemImage.setImageResource(R.drawable.placeholder_image_n)
 
-    val currency=data.productDetails?.getCurrencyCodeValue()?: "INR"
+    val currency = data.productDetails?.getCurrencyCodeValue() ?: "INR"
     binding.tvProductName.text = data.productDetails?.name ?: ""
     binding.tvProductPrice.text = "$currency ${data?.productDetails?.getPayablePrice()}"
     binding.tvProductQuantity.text = " x ${data.quantity}"
     binding.tvTotalItemPrice.text = "$currency ${data.getPayablePriceAmount()}"
     if (data.getActualPriceAmount() > 0.0) {
       binding.tvActualPrice.visible()
-      binding.tvActualPrice.text = fromHtml("<strike>$currency ${data.getActualPriceAmount()}</strike>")
+      binding.tvActualPrice.text =
+        fromHtml("<strike>$currency ${data.getActualPriceAmount()}</strike>")
     } else binding.tvActualPrice.gone()
     if (data.productDetails?.getDiscountPercentage() ?: 0.0 > 0.0) {
       binding.tvDiscount.visible()
@@ -48,10 +54,15 @@ class ProductSelectedItemViewHolder(binding: ItemProductsAddedBinding) : AppBase
     val height = LinearLayout.LayoutParams.WRAP_CONTENT
     val focusable = true
     val popupWindow = PopupWindow(popupView, width, height, focusable)
-    val textRemoveItem = popupWindow.contentView.findViewById<MaterialTextView>(R.id.text_remove_item)
+    val textRemoveItem =
+      popupWindow.contentView.findViewById<MaterialTextView>(R.id.text_remove_item)
     textRemoveItem.setOnClickListener {
       popupWindow.dismiss()
-      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.PRODUCT_SELECTED_ITEM_OPTIONS_REMOVE.ordinal)
+      listener?.onItemClick(
+        adapterPosition,
+        data,
+        RecyclerViewActionType.PRODUCT_SELECTED_ITEM_OPTIONS_REMOVE.ordinal
+      )
     }
     popupWindow.showAsDropDown(view, 0, -60)
   }

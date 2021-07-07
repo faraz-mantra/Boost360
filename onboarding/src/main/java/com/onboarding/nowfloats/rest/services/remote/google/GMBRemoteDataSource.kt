@@ -15,10 +15,16 @@ import retrofit2.http.Path
 interface GMBRemoteDataSource {
 
   @GET(EndPoints.GET_GMB_ACCOUNT_LOCATIONS)
-  fun getAccountLocations(@Header("Authorization") auth: String?, @Path("user_id") user_id: String?): Observable<Response<AccountLocationResponse>>
+  fun getAccountLocations(
+    @Header("Authorization") auth: String?,
+    @Path("user_id") user_id: String?
+  ): Observable<Response<AccountLocationResponse>>
 
   @GET(EndPoints.GET_GMB_ACCOUNT)
-  fun getAccount(@Header("Authorization") auth: String?, @Path("user_id") user_id: String?): Observable<Response<AccountData>>
+  fun getAccount(
+    @Header("Authorization") auth: String?,
+    @Path("user_id") user_id: String?
+  ): Observable<Response<AccountData>>
 
   @GET(EndPoints.GET_GMB_ACCOUNT_LIST)
   fun getAccountList(@Header("Authorization") auth: String?): Observable<Response<AccountListResponse>>

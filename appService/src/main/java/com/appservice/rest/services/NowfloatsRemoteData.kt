@@ -27,43 +27,50 @@ interface NowfloatsRemoteData {
 
   @GET(EndPoints.GET_SERVICE_DETAILS)
   fun getServiceDetails(
-      @Query("serviceId") serviceId: String?,
+    @Query("serviceId") serviceId: String?,
   ): Observable<Response<ServiceDetailResponse>>
 
   @GET(EndPoints.GET_SEARCH_LISTING)
   fun getServiceSearchListing(
-      @Query("fpTag") fpTag: String?,
-      @Query("fpId") fpId: String?,
-      @Query("searchString") searchString: String?,
-      @Query("offset") offset: Int?,
-      @Query("limit") limit: Int?,
+    @Query("fpTag") fpTag: String?,
+    @Query("fpId") fpId: String?,
+    @Query("searchString") searchString: String?,
+    @Query("offset") offset: Int?,
+    @Query("limit") limit: Int?,
   ): Observable<Response<ServiceSearchListingResponse>>
 
   @POST(EndPoints.GET_SERVICE_LISTING)
   fun getServiceListing(
-      @Body request: ServiceListingRequest,
+    @Body request: ServiceListingRequest,
   ): Observable<Response<ServiceListingResponse>>
 
   @HTTP(method = "POST", path = EndPoints.DELETE_SERVICE_V1, hasBody = true)
   fun deleteService(@Body request: DeleteServiceRequest?): Observable<Response<ServiceV1BaseResponse>>
 
   @GET(EndPoints.GET_TAGS)
-  fun getTags(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?): Observable<Response<List<String>>>
+  fun getTags(
+    @Query("clientId") clientId: String?,
+    @Query("fpId") fpId: String?
+  ): Observable<Response<List<String>>>
 
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.ADD_IMAGE)
   fun addUpdateImageProductService(
-      @Query("clientId") clientId: String?,
-      @Query("requestType") requestType: String?,
-      @Query("requestId") requestId: String?,
-      @Query("totalChunks") totalChunks: Int?,
-      @Query("currentChunkNumber") currentChunkNumber: Int?,
-      @Query("productId") productId: String?,
-      @Body requestBody: RequestBody?,
+    @Query("clientId") clientId: String?,
+    @Query("requestType") requestType: String?,
+    @Query("requestId") requestId: String?,
+    @Query("totalChunks") totalChunks: Int?,
+    @Query("currentChunkNumber") currentChunkNumber: Int?,
+    @Query("productId") productId: String?,
+    @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
   @GET(EndPoints.GET_NOTIFICATION)
-  fun getNotificationCount(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?, @Query("isRead") isRead: Boolean = false): Observable<Response<Any>>
+  fun getNotificationCount(
+    @Query("clientId") clientId: String?,
+    @Query("fpId") fpId: String?,
+    @Query("isRead") isRead: Boolean = false
+  ): Observable<Response<Any>>
 
   @POST(EndPoints.CREATE_PRODUCT)
   fun createProduct(@Body request: CatalogProduct?): Observable<Response<String>>
@@ -84,13 +91,13 @@ interface NowfloatsRemoteData {
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.ADD_IMAGE)
   fun addUpdateImageProduct(
-      @Query("clientId") clientId: String?,
-      @Query("requestType") requestType: String?,
-      @Query("requestId") requestId: String?,
-      @Query("totalChunks") totalChunks: Int?,
-      @Query("currentChunkNumber") currentChunkNumber: Int?,
-      @Query("productId") productId: String?,
-      @Body requestBody: RequestBody?,
+    @Query("clientId") clientId: String?,
+    @Query("requestType") requestType: String?,
+    @Query("requestId") requestId: String?,
+    @Query("totalChunks") totalChunks: Int?,
+    @Query("currentChunkNumber") currentChunkNumber: Int?,
+    @Query("productId") productId: String?,
+    @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Created by RAJA on 20-06-2016.
  */
 public class Alerts {
+    public ArrayList<Notification_data> NotificationData = new ArrayList<>();
     private String ID;
     private String channel;
     private String createdOn;
@@ -19,7 +20,6 @@ public class Alerts {
     private String sendOn;
     private String isRead;
     private String isTargetAchieved;
-    public ArrayList<Notification_data> NotificationData = new ArrayList<>();
 
     public String getID() {
         return ID;
@@ -35,7 +35,7 @@ public class Alerts {
     }
 
     public Alerts setNotificationData(ArrayList<Notification_data> notificationData) {
-        for (Notification_data notification:notificationData) {
+        for (Notification_data notification : notificationData) {
             NotificationData.add(notification);
         }
         return this;

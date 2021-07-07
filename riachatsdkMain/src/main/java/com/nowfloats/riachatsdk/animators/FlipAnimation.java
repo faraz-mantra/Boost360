@@ -5,19 +5,28 @@ package com.nowfloats.riachatsdk.animators;
  */
 
 import android.animation.ObjectAnimator;
+
 import androidx.annotation.NonNull;
+
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 public class FlipAnimation {
 
-    public FlipAnimation with(@NonNull View view) {
-        this.view = view;
-        return this;
-    }
+    public static final int RESTART = 1;
+    public static final int REVERSE = 2;
+    public static final int INFINITE = -1;
+    private int duration = 3600;
+    private int repeatCount = INFINITE;
+    private View view;
 
     public static FlipAnimation create() {
         return new FlipAnimation();
+    }
+
+    public FlipAnimation with(@NonNull View view) {
+        this.view = view;
+        return this;
     }
 
     public void start() {
@@ -31,14 +40,6 @@ public class FlipAnimation {
         animation.start();
 
     }
-
-    private int duration = 3600;
-    private int repeatCount = INFINITE;
-    private View view;
-
-    public static final int RESTART = 1;
-    public static final int REVERSE = 2;
-    public static final int INFINITE = -1;
 
     public FlipAnimation setDuration(int duration) {
         this.duration = duration;

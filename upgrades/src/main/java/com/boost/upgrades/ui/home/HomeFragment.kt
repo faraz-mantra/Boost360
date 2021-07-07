@@ -43,12 +43,14 @@ import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.marketplace_offers.MarketPlaceOfferFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
+import com.boost.upgrades.ui.packages.PackageFragmentNew
 import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MARKET_OFFER_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.NEW_PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.HorizontalMarginItemDecoration
@@ -56,6 +58,7 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
@@ -99,29 +102,41 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
   var offeredBundlePrice = 0
   var originalBundlePrice = 0
   var featuresList: List<FeaturesModel>? = null
+  private var session: UserSessionManager? = null
 
   companion object {
     fun newInstance() = HomeFragment()
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     root = inflater.inflate(R.layout.home_fragment, container, false)
     homeViewModelFactory = HomeViewModelFactory(requireNotNull(requireActivity().application))
 
-    viewModel = ViewModelProviders.of(requireActivity(), homeViewModelFactory).get(HomeViewModel::class.java)
+    viewModel = ViewModelProviders.of(requireActivity(), homeViewModelFactory)
+      .get(HomeViewModel::class.java)
     upgradeAdapter = UpgradeAdapter((activity as UpgradeActivity), ArrayList())
-    addonsCategoryAdapter = AddonsCategoryAdapter((activity as UpgradeActivity), ArrayList(), this)
+    addonsCategoryAdapter =
+      AddonsCategoryAdapter((activity as UpgradeActivity), ArrayList(), this)
     videosListAdapter = VideosListAdapter(ArrayList(), this)
-    partnerViewPagerAdapter = PartnerViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
-    bannerViewPagerAdapter = BannerViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
-    packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
-    featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), (activity as UpgradeActivity), this)
+    partnerViewPagerAdapter =
+      PartnerViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
+    bannerViewPagerAdapter =
+      BannerViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
+    packageViewPagerAdapter =
+      PackageViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
+    featureDealsAdapter =
+      FeatureDealsAdapter(ArrayList(), ArrayList(), (activity as UpgradeActivity), this)
     //request retrofit instance
     ApiService = getRetrofit().create(ApiInterface::class.java)
     progressDialog = ProgressDialog(requireContext())
     localStorage = LocalStorage.getInstance(requireContext())!!
     cart_list = localStorage.getCartItems()
     prefs = SharedPrefs(activity as UpgradeActivity)
+    session = UserSessionManager(requireActivity())
     return root
   }
 
@@ -177,18 +192,33 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
       }
     }
 
-    viewModel.getCategoriesFromAssetJson(requireActivity(), (activity as UpgradeActivity).experienceCode)
+    viewModel.getCategoriesFromAssetJson(
+      requireActivity(),
+      (activity as UpgradeActivity).experienceCode
+    )
 
     share_refferal_code_btn.setOnClickListener {
-      WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, GENERIC, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(
+        ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED,
+        GENERIC,
+        NO_EVENT_VALUE
+      )
       val sendIntent = Intent()
       sendIntent.action = Intent.ACTION_SEND
-      sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.referral_text_1) + fpRefferalCode)
+      sendIntent.putExtra(
+        Intent.EXTRA_TEXT,
+        getString(R.string.referral_text_1) + fpRefferalCode
+      )
       sendIntent.type = "text/plain"
       try {
         startActivity(sendIntent)
       } catch (ex: ActivityNotFoundException) {
-        Toasty.error(requireContext(), "Failed to share the referral code. Please try again.", Toast.LENGTH_SHORT, true).show()
+        Toasty.error(
+          requireContext(),
+          "Failed to share the referral code. Please try again.",
+          Toast.LENGTH_SHORT,
+          true
+        ).show()
       }
     }
 
@@ -264,21 +294,31 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     view_my_addons.setOnClickListener {
       val args = Bundle()
-      args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+      args.putStringArrayList(
+        "userPurchsedWidgets",
+        arguments?.getStringArrayList("userPurchsedWidgets")
+      )
       (activity as UpgradeActivity).addFragmentHome(
-              MyAddonsFragment.newInstance(),
-              MYADDONS_FRAGMENT, args
+        MyAddonsFragment.newInstance(),
+        MYADDONS_FRAGMENT, args
       )
     }
 
 
     all_recommended_addons.setOnClickListener {
-      WebEngageController.trackEvent(CLICKED_VIEW_ALL_RECOMMENDED_ADD_ONS, ADDONS_MARKETPLACE, NULL)
+      WebEngageController.trackEvent(
+        CLICKED_VIEW_ALL_RECOMMENDED_ADD_ONS,
+        ADDONS_MARKETPLACE,
+        NULL
+      )
       val args = Bundle()
-      args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+      args.putStringArrayList(
+        "userPurchsedWidgets",
+        arguments?.getStringArrayList("userPurchsedWidgets")
+      )
       (activity as UpgradeActivity).addFragmentHome(
-              ViewAllFeaturesFragment.newInstance(),
-              VIEW_ALL_FEATURE, args
+        ViewAllFeaturesFragment.newInstance(),
+        VIEW_ALL_FEATURE, args
       )
     }
 
@@ -287,37 +327,49 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         progressDialog.hide()
       }
       val args = Bundle()
-      args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+      args.putStringArrayList(
+        "userPurchsedWidgets",
+        arguments?.getStringArrayList("userPurchsedWidgets")
+      )
       (activity as UpgradeActivity).addFragmentHome(
-              MyAddonsFragment.newInstance(),
-              MYADDONS_FRAGMENT, args
+        MyAddonsFragment.newInstance(),
+        MYADDONS_FRAGMENT, args
       )
     } else if (arguments?.getString("screenType") == "recommendedAddOns") {
       if (progressDialog.isShowing) {
         progressDialog.hide()
       }
       val args = Bundle()
-      args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+      args.putStringArrayList(
+        "userPurchsedWidgets",
+        arguments?.getStringArrayList("userPurchsedWidgets")
+      )
       (activity as UpgradeActivity).addFragmentHome(
-              ViewAllFeaturesFragment.newInstance(),
-              VIEW_ALL_FEATURE, args
+        ViewAllFeaturesFragment.newInstance(),
+        VIEW_ALL_FEATURE, args
       )
     } else if (arguments?.getString("screenType") == "comparePackageSelection") {
       if (progressDialog.isShowing) {
         progressDialog.hide()
       }
       val args = Bundle()
-      args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
-      (activity as UpgradeActivity).addFragmentHome(
-              ComparePackageFragment.newInstance(),
-              COMPARE_FRAGMENT, args
+      args.putStringArrayList(
+        "userPurchsedWidgets",
+        arguments?.getStringArrayList("userPurchsedWidgets")
       )
-    }else if (arguments?.getString("screenType") == "packageBundle") {
+      (activity as UpgradeActivity).addFragmentHome(
+        ComparePackageFragment.newInstance(),
+        COMPARE_FRAGMENT, args
+      )
+    } else if (arguments?.getString("screenType") == "packageBundle") {
       if (progressDialog.isShowing) {
         progressDialog.hide()
       }
       val args = Bundle()
-      Log.v("getPackageItem", " "+ arguments?.getString("buyItemKey") + " "+ arguments?.getString("screenType"))
+      Log.v(
+        "getPackageItem",
+        " " + arguments?.getString("buyItemKey") + " " + arguments?.getString("screenType")
+      )
 //            args.putString("packageIdentifier", arguments?.getString("buyItemKey"))
       getPackageItem(arguments?.getString("buyItemKey"))
 
@@ -326,12 +378,19 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
               PackageFragment.newInstance(),
               PACKAGE_FRAGMENT, args
       )*/
-    }else if (arguments?.getString("screenType") == "promoBanner") {
+    } else if (arguments?.getString("screenType") == "promoBanner") {
       if (progressDialog.isShowing) {
         progressDialog.hide()
       }
 
       getItemPromoBanner(arguments?.getString("buyItemKey"))
+    } else if (arguments?.getString("screenType") == "expertContact") {
+      if (progressDialog.isShowing) {
+        progressDialog.hide()
+      }
+      callExpertContact(prefs.getExpertContact())
+
+
     }
 
     //chat bot view button clicked
@@ -358,16 +417,23 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         i.data = Uri.parse(feedBackLink)
         startActivity(i)
       } else {
-        Toasty.error(requireContext(), "Feedback Service Not Available. Try Later..", Toast.LENGTH_LONG).show()
+        Toasty.error(
+          requireContext(),
+          "Feedback Service Not Available. Try Later..",
+          Toast.LENGTH_LONG
+        ).show()
       }
     }
 
     package_compare_layout.setOnClickListener {
       val args = Bundle()
-      args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+      args.putStringArrayList(
+        "userPurchsedWidgets",
+        arguments?.getStringArrayList("userPurchsedWidgets")
+      )
       (activity as UpgradeActivity).addFragmentHome(
-              ComparePackageFragment.newInstance(),
-              COMPARE_FRAGMENT, args
+        ComparePackageFragment.newInstance(),
+        COMPARE_FRAGMENT, args
       )
     }
 
@@ -458,7 +524,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
       viewModel.setCurrentExperienceCode(code, fpTag!!)
     }
 
-    viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid, (activity as UpgradeActivity).experienceCode, (activity as UpgradeActivity).fpTag)
+    viewModel.loadUpdates(
+      (activity as UpgradeActivity).fpid!!,
+      (activity as UpgradeActivity).clientid,
+      (activity as UpgradeActivity).experienceCode,
+      (activity as UpgradeActivity).fpTag
+    )
   }
 
   @SuppressLint("FragmentLiveDataObserve")
@@ -486,18 +557,26 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
       val list = arrayListOf<Bundles>()
       for (item in it) {
-        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-        list.add(Bundles(
-                item.bundle_id,
-                temp,
-                item.min_purchase_months,
-                item.name,
-                item.overall_discount_percent,
-                PrimaryImage(item.primary_image),
-                item.target_business_usecase,
-                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                null, item.desc
-        ))
+        val temp = Gson().fromJson<List<IncludedFeature>>(
+          item.included_features,
+          object : TypeToken<List<IncludedFeature>>() {}.type
+        )
+        list.add(
+          Bundles(
+            item.bundle_id,
+            temp,
+            item.min_purchase_months,
+            item.name,
+            item.overall_discount_percent,
+            PrimaryImage(item.primary_image),
+            item.target_business_usecase,
+            Gson().fromJson<List<String>>(
+              item.exclusive_to_categories,
+              object : TypeToken<List<String>>() {}.type
+            ),
+            null, item.desc
+          )
+        )
       }
       if (list.size > 0) {
         if (shimmer_view_package.isShimmerStarted) {
@@ -518,18 +597,26 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     viewModel.getBackAllBundles().observe(this, androidx.lifecycle.Observer {
       val list = arrayListOf<Bundles>()
       for (item in it) {
-        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-        list.add(Bundles(
-                item.bundle_id,
-                temp,
-                item.min_purchase_months,
-                item.name,
-                item.overall_discount_percent,
-                PrimaryImage(item.primary_image),
-                item.target_business_usecase,
-                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                null, item.desc
-        ))
+        val temp = Gson().fromJson<List<IncludedFeature>>(
+          item.included_features,
+          object : TypeToken<List<IncludedFeature>>() {}.type
+        )
+        list.add(
+          Bundles(
+            item.bundle_id,
+            temp,
+            item.min_purchase_months,
+            item.name,
+            item.overall_discount_percent,
+            PrimaryImage(item.primary_image),
+            item.target_business_usecase,
+            Gson().fromJson<List<String>>(
+              item.exclusive_to_categories,
+              object : TypeToken<List<String>>() {}.type
+            ),
+            null, item.desc
+          )
+        )
       }
       if (list.size > 0) {
         package_layout.visibility = View.VISIBLE
@@ -645,18 +732,26 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
           if (list.size > 0) {
             val listItem = arrayListOf<Bundles>()
             for (item in list) {
-              val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-              listItem.add(Bundles(
-                      item.bundle_id,
-                      temp,
-                      item.min_purchase_months,
-                      item.name,
-                      item.overall_discount_percent,
-                      PrimaryImage(item.primary_image),
-                      item.target_business_usecase,
-                      Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                      null, item.desc
-              ))
+              val temp = Gson().fromJson<List<IncludedFeature>>(
+                item.included_features,
+                object : TypeToken<List<IncludedFeature>>() {}.type
+              )
+              listItem.add(
+                Bundles(
+                  item.bundle_id,
+                  temp,
+                  item.min_purchase_months,
+                  item.name,
+                  item.overall_discount_percent,
+                  PrimaryImage(item.primary_image),
+                  item.target_business_usecase,
+                  Gson().fromJson<List<String>>(
+                    item.exclusive_to_categories,
+                    object : TypeToken<List<String>>() {}.type
+                  ),
+                  null, item.desc
+                )
+              )
             }
             if (list.size > 0) {
 //                        updatePackageViewPager(listItem)
@@ -678,13 +773,18 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
       Log.e("getYoutubeVideoDetails", it.toString())
       val expertConnectDetails = it
       if (it.is_online) {
+        prefs.storeExpertContact(it.contact_number)
         callnow_layout.visibility = View.VISIBLE
         callnow_image.visibility = View.VISIBLE
         callnow_title.setText(it.line1)
         callnow_desc.setText(it.line2)
         call_shedule_layout.visibility = View.GONE
         callnow_button.setOnClickListener {
-          WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXPERT_SPEAK, CLICK, NO_EVENT_VALUE)
+          WebEngageController.trackEvent(
+            ADDONS_MARKETPLACE_EXPERT_SPEAK,
+            CLICK,
+            NO_EVENT_VALUE
+          )
           val callIntent = Intent(Intent.ACTION_DIAL)
           callIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
           startActivity(Intent.createChooser(callIntent, "Call by:"))
@@ -697,7 +797,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         call_shedule_desc.setText(it.line2)
         if (it.offline_message != null) {
           val spannableString = SpannableString(it.offline_message)
-          spannableString.setSpan(ForegroundColorSpan(resources.getColor(R.color.navy_blue)), 0, 18, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+          spannableString.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.navy_blue)),
+            0,
+            18,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+          )
           call_schedule_timinig.setText(spannableString)
         }
       }
@@ -773,7 +878,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
   fun updateAddonCategoryRecycler(list: List<FeaturesModel>) {
     val addonsCategoryTypes = arrayListOf<String>()
     for (singleFeaturesModel in list) {
-      if (singleFeaturesModel.target_business_usecase != null && !addonsCategoryTypes.contains(singleFeaturesModel.target_business_usecase)) {
+      if (singleFeaturesModel.target_business_usecase != null && !addonsCategoryTypes.contains(
+          singleFeaturesModel.target_business_usecase
+        )
+      ) {
         addonsCategoryTypes.add(singleFeaturesModel.target_business_usecase!!)
       }
     }
@@ -903,9 +1011,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     banner_viewpager.offscreenPageLimit = 4
     banner_indicator.setViewPager2(banner_viewpager)
     val itemDecoration = HorizontalMarginItemDecoration(
-            requireContext(),
+      requireContext(),
 //                        R.dimen.viewpager_current_item_horizontal_margin
-            R.dimen.viewpager_current_item_horizontal_margin1
+      R.dimen.viewpager_current_item_horizontal_margin1
     )
     banner_viewpager.addItemDecoration(itemDecoration)
 
@@ -958,8 +1066,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     feature_deals_viewpager.setPageTransformer(SimplePageTransformer())
 
     val itemDecoration = HorizontalMarginItemDecoration(
-            requireContext(),
-            R.dimen.viewpager_current_item_horizontal_margin
+      requireContext(),
+      R.dimen.viewpager_current_item_horizontal_margin
     )
     feature_deals_viewpager.addItemDecoration(itemDecoration)
   }
@@ -984,16 +1092,16 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
     WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
 
-    val packageFragment = PackageFragment.newInstance()
+    /*  val packageFragment = PackageFragment.newInstance()
+      val args = Bundle()
+      args.putString("bundleData", Gson().toJson(item))
+      packageFragment.arguments = args
+      (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)*/
+    val packageFragment = PackageFragmentNew.newInstance()
     val args = Bundle()
     args.putString("bundleData", Gson().toJson(item))
     packageFragment.arguments = args
-    (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
-/*        val packageFragment = NewPackageFragment.newInstance()
-        val args = Bundle()
-        args.putString("bundleData", Gson().toJson(item))
-        packageFragment.arguments = args
-        (activity as UpgradeActivity).addFragment(packageFragment, NEW_PACKAGE_FRAGMENT)*/
+    (activity as UpgradeActivity).addFragment(packageFragment, NEW_PACKAGE_FRAGMENT)
   }
 
   override fun onPromoBannerClicked(item: PromoBanners?) {
@@ -1002,8 +1110,16 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     item?.let { event_attributes.put("title", it.title) }
 //        (activity as UpgradeActivity).experienceCode?.let { event_attributes.put("category", it) }
 //        (activity as UpgradeActivity).fpTag?.let { event_attributes.put("customer", it) }
-    if (event_attributes.isEmpty()) WebEngageController.trackEvent(ADDONS_MARKETPLACE_PROMO_BANNER, CLICK, NO_EVENT_VALUE)
-    else WebEngageController.trackEvent(ADDONS_MARKETPLACE_PROMO_BANNER, CLICK, event_attributes)
+    if (event_attributes.isEmpty()) WebEngageController.trackEvent(
+      ADDONS_MARKETPLACE_PROMO_BANNER,
+      CLICK,
+      NO_EVENT_VALUE
+    )
+    else WebEngageController.trackEvent(
+      ADDONS_MARKETPLACE_PROMO_BANNER,
+      CLICK,
+      event_attributes
+    )
     if (!item!!.cta_feature_key.isNullOrBlank()) {
       if (item!!.cta_feature_key != null) {
         val details = DetailsFragment.newInstance()
@@ -1016,53 +1132,148 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     } else {
       if (!item!!.cta_bundle_identifier.isNullOrBlank()) {
         if (item!!.cta_bundle_identifier != null) {
-          CompositeDisposable().add(
-                  AppDatabase.getInstance(requireActivity().application)!!
+          if (item.cta_bundle_identifier.contains("#")) {
+
+            var cataCategoryIdentifier = item.cta_bundle_identifier.trim().split("#").toTypedArray()
+            var bundleCategory = cataCategoryIdentifier.get(0)
+            var bundleID = cataCategoryIdentifier.get(1)
+            if ((activity as UpgradeActivity).experienceCode.equals(bundleCategory)) {
+              CompositeDisposable().add(
+                AppDatabase.getInstance(requireActivity().application)!!
+                  .bundlesDao()
+                  .checkBundleKeyExist(bundleID)
+                  .subscribeOn(Schedulers.io())
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe({
+                    if (it == 1) {
+                      CompositeDisposable().add(
+                        AppDatabase.getInstance(requireActivity().application)!!
                           .bundlesDao()
-                          .checkBundleKeyExist(item!!.cta_bundle_identifier)
+                          .getBundleItemById(bundleID)
                           .subscribeOn(Schedulers.io())
                           .observeOn(AndroidSchedulers.mainThread())
                           .subscribe({
-                            if (it == 1) {
-                              CompositeDisposable().add(
-                                      AppDatabase.getInstance(requireActivity().application)!!
-                                              .bundlesDao()
-                                              .getBundleItemById(item!!.cta_bundle_identifier)
-                                              .subscribeOn(Schedulers.io())
-                                              .observeOn(AndroidSchedulers.mainThread())
-                                              .subscribe({
-                                                var selectedBundle: Bundles? = null
-                                                var item = it
+                            var selectedBundle: Bundles? = null
+                            var item = it
+                            val temp = Gson().fromJson<List<IncludedFeature>>(
+                              item.included_features,
+                              object :
+                                TypeToken<List<IncludedFeature>>() {}.type
+                            )
+                            selectedBundle = Bundles(
+                              bundleID,
+                              temp,
+                              item.min_purchase_months,
+                              item.name,
+                              item.overall_discount_percent,
+                              PrimaryImage(item.primary_image),
+                              item.target_business_usecase,
+                              Gson().fromJson<List<String>>(
+                                item.exclusive_to_categories,
+                                object : TypeToken<List<String>>() {}.type
+                              ),
+                              null,
+                              item.desc
+                            )
+                            val packageFragment = PackageFragment.newInstance()
+                            val args = Bundle()
+                            args.putString(
+                              "bundleData",
+                              Gson().toJson(selectedBundle)
+                            )
+                            packageFragment.arguments = args
+                            (activity as UpgradeActivity).addFragment(
+                              packageFragment,
+                              PACKAGE_FRAGMENT
+                            )
 
-                                                val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                                                selectedBundle = Bundles(
-                                                        item.bundle_id,
-                                                        temp,
-                                                        item.min_purchase_months,
-                                                        item.name,
-                                                        item.overall_discount_percent,
-                                                        PrimaryImage(item.primary_image),
-                                                        item.target_business_usecase,
-                                                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                                        null,
-                                                        item.desc)
-                                                val packageFragment = PackageFragment.newInstance()
-                                                val args = Bundle()
-                                                args.putString("bundleData", Gson().toJson(selectedBundle))
-                                                packageFragment.arguments = args
-                                                (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
-
-                                              }, {
-                                                it.printStackTrace()
-                                              })
-                              )
-                            } else {
-                              Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
-                            }
                           }, {
                             it.printStackTrace()
                           })
-          )
+                      )
+                    } else {
+                      Toasty.error(
+                        requireContext(),
+                        "Bundle Not Available To This Account",
+                        Toast.LENGTH_LONG
+                      ).show()
+                    }
+                  }, {
+                    it.printStackTrace()
+                  })
+              )
+            }
+            Log.d(
+              "bundleCategory",
+              " bundleCategory: " + bundleCategory + " bundleID: " + bundleID + " " + (activity as UpgradeActivity).experienceCode
+            )
+          } else {
+            CompositeDisposable().add(
+              AppDatabase.getInstance(requireActivity().application)!!
+                .bundlesDao()
+                .checkBundleKeyExist(item!!.cta_bundle_identifier)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                  if (it == 1) {
+                    CompositeDisposable().add(
+                      AppDatabase.getInstance(requireActivity().application)!!
+                        .bundlesDao()
+                        .getBundleItemById(item!!.cta_bundle_identifier)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                          var selectedBundle: Bundles? = null
+                          var item = it
+
+                          val temp = Gson().fromJson<List<IncludedFeature>>(
+                            item.included_features,
+                            object :
+                              TypeToken<List<IncludedFeature>>() {}.type
+                          )
+                          selectedBundle = Bundles(
+                            item.bundle_id,
+                            temp,
+                            item.min_purchase_months,
+                            item.name,
+                            item.overall_discount_percent,
+                            PrimaryImage(item.primary_image),
+                            item.target_business_usecase,
+                            Gson().fromJson<List<String>>(
+                              item.exclusive_to_categories,
+                              object : TypeToken<List<String>>() {}.type
+                            ),
+                            null,
+                            item.desc
+                          )
+                          val packageFragment = PackageFragment.newInstance()
+                          val args = Bundle()
+                          args.putString(
+                            "bundleData",
+                            Gson().toJson(selectedBundle)
+                          )
+                          packageFragment.arguments = args
+                          (activity as UpgradeActivity).addFragment(
+                            packageFragment,
+                            PACKAGE_FRAGMENT
+                          )
+
+                        }, {
+                          it.printStackTrace()
+                        })
+                    )
+                  } else {
+                    Toasty.error(
+                      requireContext(),
+                      "Bundle Not Available To This Account",
+                      Toast.LENGTH_LONG
+                    ).show()
+                  }
+                }, {
+                  it.printStackTrace()
+                })
+            )
+          }
         }
       } else {
         if (!item!!.cta_web_link.isNullOrBlank()) {
@@ -1074,47 +1285,55 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             args.putString("link", item!!.cta_web_link)
             webViewFragment.arguments = args
             (activity as UpgradeActivity).addFragment(
-                    webViewFragment,
-                    Constants.WEB_VIEW_FRAGMENT
+              webViewFragment,
+              Constants.WEB_VIEW_FRAGMENT
             )
           }
         } else if (!item.coupon_code.isNullOrBlank() || !item.cta_offer_identifier.isNullOrBlank()) {
           if (item.coupon_code != null || item.cta_offer_identifier != null) {
-//Log.v("coupon_code", " "+ item.coupon_code + " "+ item.title)
             CompositeDisposable().add(
-                    AppDatabase.getInstance(requireActivity().application)!!
-                            .marketOffersDao()
+              AppDatabase.getInstance(requireActivity().application)!!
+                .marketOffersDao()
 //                                        .getMarketOffersByCouponCode(item!!.coupon_code)
 //                                        .getMarketOffersByCouponCode(if(item!!.coupon_code != null ) item.coupon_code else item.cta_offer_identifier )
-                            .getMarketOffersById(item.cta_offer_identifier )
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnError {  }
-                            .subscribe({
-                              var selectedMarketOfferModel: MarketPlaceOffers? = null
-                              var item = it
+                .getMarketOffersById(item.cta_offer_identifier)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError { }
+                .subscribe({
+                  var selectedMarketOfferModel: MarketPlaceOffers? = null
+                  var item = it
 
-                              selectedMarketOfferModel = MarketPlaceOffers( coupon_code = item.coupon_code,
-                                      extra_information = item.extra_information!!,
-                                      createdon = item.createdon!!,
-                                      updatedon = item.updatedon!!,
-                                      _kid = item._kid!!,
-                                      websiteid = item.websiteid!!,
-                                      isarchived = item.isarchived!!,
-                                      expiry_date = item.expiry_date!!,
-                                      title = item.title!!,
-                                      exclusive_to_categories = Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                      image = PrimaryImage(item.image),
-                              )
-                              val marketPlaceOfferFragment = MarketPlaceOfferFragment.newInstance()
-                              val args = Bundle()
-                              args.putString("marketOffersData", Gson().toJson(selectedMarketOfferModel))
-                              marketPlaceOfferFragment.arguments = args
-                              (activity as UpgradeActivity).addFragment(marketPlaceOfferFragment, MARKET_OFFER_FRAGMENT)
+                  selectedMarketOfferModel = MarketPlaceOffers(
+                    coupon_code = item.coupon_code,
+                    extra_information = item.extra_information!!,
+                    createdon = item.createdon!!,
+                    updatedon = item.updatedon!!,
+                    _kid = item._kid!!,
+                    websiteid = item.websiteid!!,
+                    isarchived = item.isarchived!!,
+                    expiry_date = item.expiry_date!!,
+                    title = item.title!!,
+//                                      exclusive_to_categories = Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                    exclusive_to_categories = arrayListOf(),
+                    image = PrimaryImage(item.image),
+                  )
+                  val marketPlaceOfferFragment =
+                    MarketPlaceOfferFragment.newInstance()
+                  val args = Bundle()
+                  args.putString(
+                    "marketOffersData",
+                    Gson().toJson(selectedMarketOfferModel)
+                  )
+                  marketPlaceOfferFragment.arguments = args
+                  (activity as UpgradeActivity).addFragment(
+                    marketPlaceOfferFragment,
+                    MARKET_OFFER_FRAGMENT
+                  )
 
-                            }, {
-                              it.printStackTrace()
-                            })
+                }, {
+                  it.printStackTrace()
+                })
             )
           }
         }
@@ -1184,7 +1403,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
   }
 
   override fun onPartnerZoneClicked(item: PartnerZone?) {
-    WebEngageController.trackEvent(PARTNER_S_PROMO_BANNERS_CLICKED, CLICK, item?.title ?: NO_EVENT_VALUE)
+    WebEngageController.trackEvent(
+      PARTNER_S_PROMO_BANNERS_CLICKED,
+      CLICK,
+      item?.title ?: NO_EVENT_VALUE
+    )
     Log.i("onPartnerZoneClicked >>", item.toString())
     if (item!!.cta_feature_key.isNullOrEmpty().not()) {
 
@@ -1196,37 +1419,44 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     } else if (item.cta_bundle_identifier.isNullOrEmpty().not()) {
       CompositeDisposable().add(
-              AppDatabase.getInstance(requireActivity().application)!!
-                      .bundlesDao()
-                      .checkBundleKeyExist(item!!.cta_bundle_identifier)
-                      .subscribeOn(Schedulers.io())
-                      .observeOn(AndroidSchedulers.mainThread())
-                      .subscribe({
-                        if (it == 1) {
-                          CompositeDisposable().add(
-                                  AppDatabase.getInstance(requireActivity().application)!!
-                                          .bundlesDao()
-                                          .getBundleItemById(item!!.cta_bundle_identifier)
-                                          .subscribeOn(Schedulers.io())
-                                          .observeOn(AndroidSchedulers.mainThread())
-                                          .subscribe({
+        AppDatabase.getInstance(requireActivity().application)!!
+          .bundlesDao()
+          .checkBundleKeyExist(item!!.cta_bundle_identifier)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe({
+            if (it == 1) {
+              CompositeDisposable().add(
+                AppDatabase.getInstance(requireActivity().application)!!
+                  .bundlesDao()
+                  .getBundleItemById(item!!.cta_bundle_identifier)
+                  .subscribeOn(Schedulers.io())
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe({
 
-                                            val packageFragment = PackageFragment.newInstance()
-                                            val args = Bundle()
-                                            args.putString("bundleData", Gson().toJson(it))
-                                            packageFragment.arguments = args
-                                            (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
+                    val packageFragment = PackageFragment.newInstance()
+                    val args = Bundle()
+                    args.putString("bundleData", Gson().toJson(it))
+                    packageFragment.arguments = args
+                    (activity as UpgradeActivity).addFragment(
+                      packageFragment,
+                      PACKAGE_FRAGMENT
+                    )
 
-                                          }, {
-                                            it.printStackTrace()
-                                          })
-                          )
-                        } else {
-                          Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
-                        }
-                      }, {
-                        it.printStackTrace()
-                      })
+                  }, {
+                    it.printStackTrace()
+                  })
+              )
+            } else {
+              Toasty.error(
+                requireContext(),
+                "Bundle Not Available To This Account",
+                Toast.LENGTH_LONG
+              ).show()
+            }
+          }, {
+            it.printStackTrace()
+          })
       )
     } else if (item.cta_web_link.isNullOrEmpty().not()) {
 
@@ -1236,8 +1466,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
       args.putString("link", item!!.cta_web_link)
       webViewFragment.arguments = args
       (activity as UpgradeActivity).addFragment(
-              webViewFragment,
-              Constants.WEB_VIEW_FRAGMENT
+        webViewFragment,
+        Constants.WEB_VIEW_FRAGMENT
       )
     }
   }
@@ -1252,8 +1482,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
   override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
     if (item != null) {
-      WebEngageController.trackEvent(FEATURE_DEALS_ADD_CART_CLICKED, ADDONS_MARKETPLACE, item.name
-              ?: NO_EVENT_VALUE)
+      WebEngageController.trackEvent(
+        FEATURE_DEALS_ADD_CART_CLICKED, ADDONS_MARKETPLACE, item.name
+          ?: NO_EVENT_VALUE
+      )
       viewModel.addItemToCart(item, minMonth)
     }
   }
@@ -1262,17 +1494,24 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     val viewallFeatures = ViewAllFeaturesFragment.newInstance()
     val args = Bundle()
     args.putString("categoryType", categoryType)
-    args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+    args.putStringArrayList(
+      "userPurchsedWidgets",
+      arguments?.getStringArrayList("userPurchsedWidgets")
+    )
     viewallFeatures.arguments = args
     (activity as UpgradeActivity).addFragment(
-            viewallFeatures,
-            VIEW_ALL_FEATURE
+      viewallFeatures,
+      VIEW_ALL_FEATURE
     )
   }
 
   override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-    WebEngageController.trackEvent(VIDEO_GALLERY_CLICKED, CLICK, videoItem.title ?: NO_EVENT_VALUE)
-    Log.i("onPlayYouTubeVideo", videoItem.youtube_link?:"")
+    WebEngageController.trackEvent(
+      VIDEO_GALLERY_CLICKED,
+      CLICK,
+      videoItem.title ?: NO_EVENT_VALUE
+    )
+    Log.i("onPlayYouTubeVideo", videoItem.youtube_link ?: "")
     val link: List<String> = videoItem.youtube_link!!.split('/')
     videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
 //    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
@@ -1296,58 +1535,81 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         }
 
         CompositeDisposable().add(
-                AppDatabase.getInstance(requireActivity().application)!!
-                        .featuresDao()
-                        .getallFeaturesInList(itemIds)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                  featuresList = it
-                                  var bundleMonthlyMRP = 0
-                                  val minMonth: Int = if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
+          AppDatabase.getInstance(requireActivity().application)!!
+            .featuresDao()
+            .getallFeaturesInList(itemIds)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+              {
+                featuresList = it
+                var bundleMonthlyMRP = 0
+                val minMonth: Int =
+                  if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
-                                  for (singleItem in it) {
-                                    for (item in item!!.included_features) {
-                                      if (singleItem.feature_code == item.feature_code) {
-                                        bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
-                                      }
-                                    }
-                                  }
+                for (singleItem in it) {
+                  for (item in item!!.included_features) {
+                    if (singleItem.feature_code == item.feature_code) {
+                      bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                    }
+                  }
+                }
 
-                                  offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
-                                  originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
 
-                                  if (item!!.overall_discount_percent > 0)
-                                    offeredBundlePrice = originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100)
-                                  else
-                                    offeredBundlePrice = originalBundlePrice
+                if (item!!.overall_discount_percent > 0)
+                  offeredBundlePrice =
+                    originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100)
+                else
+                  offeredBundlePrice = originalBundlePrice
 
-                                  //clear cartOrderInfo from SharedPref to requestAPI again
-                                  prefs.storeCartOrderInfo(null)
-                                  viewModel.addItemToCartPackage(CartModel(
-                                          item!!._kid,
-                                          null,
-                                          null,
-                                          item!!.name,
-                                          "",
-                                          item!!.primary_image!!.url,
-                                          offeredBundlePrice.toDouble(),
-                                          originalBundlePrice.toDouble(),
-                                          item!!.overall_discount_percent,
-                                          1,
-                                          if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
-                                          "bundles",
-                                          null
-                                  ))
-                                  val event_attributes: HashMap<String, Any> = HashMap()
-                                  item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
-                                  item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
-                                  event_attributes.put("Package Price", originalBundlePrice)
-                                  event_attributes.put("Discounted Price", offeredBundlePrice)
-                                  event_attributes.put("Discount %", item!!.overall_discount_percent)
-                                  item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                                  WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART, ADDED, event_attributes)
+                //clear cartOrderInfo from SharedPref to requestAPI again
+                prefs.storeCartOrderInfo(null)
+                viewModel.addItemToCartPackage(
+                  CartModel(
+                    item!!._kid,
+                    null,
+                    null,
+                    item!!.name,
+                    "",
+                    item!!.primary_image!!.url,
+                    offeredBundlePrice.toDouble(),
+                    originalBundlePrice.toDouble(),
+                    item!!.overall_discount_percent,
+                    1,
+                    if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                    "bundles",
+                    null
+                  )
+                )
+                val event_attributes: HashMap<String, Any> = HashMap()
+                item!!.name?.let { it1 ->
+                  event_attributes.put(
+                    "Package Name",
+                    it1
+                  )
+                }
+                item!!.target_business_usecase?.let { it1 ->
+                  event_attributes.put(
+                    "Package Tag",
+                    it1
+                  )
+                }
+                event_attributes.put("Package Price", originalBundlePrice)
+                event_attributes.put("Discounted Price", offeredBundlePrice)
+                event_attributes.put("Discount %", item!!.overall_discount_percent)
+                item!!.min_purchase_months?.let { it1 ->
+                  event_attributes.put(
+                    "Validity",
+                    it1
+                  )
+                }
+                WebEngageController.trackEvent(
+                  ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART,
+                  ADDED,
+                  event_attributes
+                )
 //                packageInCartStatus = true
 //                package_submit.background = ContextCompat.getDrawable(
 //                        requireContext(),
@@ -1355,17 +1617,17 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 //                )
 //                package_submit.setTextColor(Color.parseColor("#bbbbbb"))
 //                package_submit.setText(getString(R.string.added_to_cart))
-                                  badgeNumber = badgeNumber + 1
+                badgeNumber = badgeNumber + 1
 //                badge121.setText(badgeNumber.toString())
 //                badge121.visibility = View.VISIBLE
-                                  Constants.CART_VALUE = badgeNumber
-                                  viewModel.getCartItems()
-                                },
-                                {
-                                  it.printStackTrace()
+                Constants.CART_VALUE = badgeNumber
+                viewModel.getCartItems()
+              },
+              {
+                it.printStackTrace()
 
-                                }
-                        )
+              }
+            )
         )
 
 
@@ -1739,21 +2001,26 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
   override fun backComparePress() {
     if (prefs.getCompareState() == 1) {
       prefs.storeCompareState(0)
-      val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+      val pref =
+        requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
       val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
       var code: String = (activity as UpgradeActivity).experienceCode!!
       if (!code.equals("null", true)) {
         viewModel.setCurrentExperienceCode(code, fpTag!!)
       }
 
-      viewModel.loadPackageUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
+      viewModel.loadPackageUpdates(
+        (activity as UpgradeActivity).fpid!!,
+        (activity as UpgradeActivity).clientid
+      )
     }
   }
 
   fun startReferralView() {
     try {
       WebEngageController.trackEvent(REFER_A_FRIEND_CLICK, CLICK, TO_BE_ADDED)
-      val webIntent = Intent(activity, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
+      val webIntent =
+        Intent(activity, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
       startActivity(webIntent)
 //            overridePendingTransition(0, 0)
     } catch (e: ClassNotFoundException) {
@@ -1761,229 +2028,295 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
   }
 
-  fun getPackageItem(packageIdentifier: String?){
+  fun getPackageItem(packageIdentifier: String?) {
     if (packageIdentifier.isNullOrEmpty().not()) {
       CompositeDisposable().add(
-              AppDatabase.getInstance(requireActivity().application)!!
-                      .bundlesDao()
-                      .checkBundleKeyExist(packageIdentifier!!)
-                      .subscribeOn(Schedulers.io())
-                      .observeOn(AndroidSchedulers.mainThread())
-                      .subscribe({
-                        if (it == 1) {
-                          CompositeDisposable().add(
-                                  AppDatabase.getInstance(requireActivity().application)!!
-                                          .bundlesDao()
-                                          .getBundleItemById(packageIdentifier)
-                                          .subscribeOn(Schedulers.io())
-                                          .observeOn(AndroidSchedulers.mainThread())
-                                          .subscribe({
+        AppDatabase.getInstance(requireActivity().application)!!
+          .bundlesDao()
+          .checkBundleKeyExist(packageIdentifier!!)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe({
+            if (it == 1) {
+              CompositeDisposable().add(
+                AppDatabase.getInstance(requireActivity().application)!!
+                  .bundlesDao()
+                  .getBundleItemById(packageIdentifier)
+                  .subscribeOn(Schedulers.io())
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe({
 
 
-                                            Log.v("getPackageItem1", " "+ it.bundle_id)
+                    Log.v("getPackageItem1", " " + it.bundle_id)
 
-                                            var selectedBundle: Bundles? = null
-                                            var item = it
+                    var selectedBundle: Bundles? = null
+                    var item = it
 
-                                            val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                                            selectedBundle = Bundles(
-                                                    item.bundle_id,
-                                                    temp,
-                                                    item.min_purchase_months,
-                                                    item.name,
-                                                    item.overall_discount_percent,
-                                                    PrimaryImage(item.primary_image),
-                                                    item.target_business_usecase,
-                                                    Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                                    null,
-                                                    item.desc)
+                    val temp = Gson().fromJson<List<IncludedFeature>>(
+                      item.included_features,
+                      object : TypeToken<List<IncludedFeature>>() {}.type
+                    )
+                    selectedBundle = Bundles(
+                      item.bundle_id,
+                      temp,
+                      item.min_purchase_months,
+                      item.name,
+                      item.overall_discount_percent,
+                      PrimaryImage(item.primary_image),
+                      item.target_business_usecase,
+                      Gson().fromJson<List<String>>(
+                        item.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                      ),
+                      null,
+                      item.desc
+                    )
 
-                                            val packageFragment = PackageFragment.newInstance()
-                                            val args = Bundle()
-                                            args.putString("bundleData", Gson().toJson(selectedBundle))
-                                            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
-                                            packageFragment.arguments = args
+                    val packageFragment = PackageFragment.newInstance()
+                    val args = Bundle()
+                    args.putString("bundleData", Gson().toJson(selectedBundle))
+                    args.putStringArrayList(
+                      "userPurchsedWidgets",
+                      arguments?.getStringArrayList("userPurchsedWidgets")
+                    )
+                    packageFragment.arguments = args
 //                                                        (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
 
-                                            (activity as UpgradeActivity).addFragmentHome(
-                                                    PackageFragment.newInstance(),
-                                                    PACKAGE_FRAGMENT, args
-                                            )
+                    (activity as UpgradeActivity).addFragmentHome(
+                      PackageFragment.newInstance(),
+                      PACKAGE_FRAGMENT, args
+                    )
 //                                                        bundleData = Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type)
 //                                                        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type))
 
-                                          }, {
-                                            it.printStackTrace()
-                                          })
-                          )
-                        } else {
-                          Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
-                        }
-                      }, {
-                        it.printStackTrace()
-                      })
+                  }, {
+                    it.printStackTrace()
+                  })
+              )
+            } else {
+              Toasty.error(
+                requireContext(),
+                "Bundle Not Available To This Account",
+                Toast.LENGTH_LONG
+              ).show()
+            }
+          }, {
+            it.printStackTrace()
+          })
       )
     }
   }
 
-  fun getItemPromoBanner(item: String?){
+  fun getItemPromoBanner(item: String?) {
     if (item.isNullOrEmpty().not()) {
       CompositeDisposable().add(
-              AppDatabase.getInstance(requireActivity().application)!!
-                      .bundlesDao()
-                      .checkBundleKeyExist(item!!)
-                      .subscribeOn(Schedulers.io())
-                      .observeOn(AndroidSchedulers.mainThread())
-                      .subscribe({
-                        if (it == 1) {
-                          CompositeDisposable().add(
-                                  AppDatabase.getInstance(requireActivity().application)!!
-                                          .bundlesDao()
-                                          .getBundleItemById(item)
-                                          .subscribeOn(Schedulers.io())
-                                          .observeOn(AndroidSchedulers.mainThread())
-                                          .subscribe({
+        AppDatabase.getInstance(requireActivity().application)!!
+          .bundlesDao()
+          .checkBundleKeyExist(item!!)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe({
+            if (it == 1) {
+              CompositeDisposable().add(
+                AppDatabase.getInstance(requireActivity().application)!!
+                  .bundlesDao()
+                  .getBundleItemById(item)
+                  .subscribeOn(Schedulers.io())
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe({
 
 
-                                            Log.v("getItemPromoBanner1", " "+ item)
+                    Log.v("getItemPromoBanner1", " " + item)
 
-                                            var selectedBundle: Bundles? = null
-                                            var item = it
+                    var selectedBundle: Bundles? = null
+                    var item = it
 
-                                            val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                                            selectedBundle = Bundles(
-                                                    item.bundle_id,
-                                                    temp,
-                                                    item.min_purchase_months,
-                                                    item.name,
-                                                    item.overall_discount_percent,
-                                                    PrimaryImage(item.primary_image),
-                                                    item.target_business_usecase,
-                                                    Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                                    null,
-                                                    item.desc)
+                    val temp = Gson().fromJson<List<IncludedFeature>>(
+                      item.included_features,
+                      object : TypeToken<List<IncludedFeature>>() {}.type
+                    )
+                    selectedBundle = Bundles(
+                      item.bundle_id,
+                      temp,
+                      item.min_purchase_months,
+                      item.name,
+                      item.overall_discount_percent,
+                      PrimaryImage(item.primary_image),
+                      item.target_business_usecase,
+                      Gson().fromJson<List<String>>(
+                        item.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                      ),
+                      null,
+                      item.desc
+                    )
 
-                                            val packageFragment = PackageFragment.newInstance()
-                                            val args = Bundle()
-                                            args.putString("bundleData", Gson().toJson(selectedBundle))
-                                            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
-                                            packageFragment.arguments = args
+                    val packageFragment = PackageFragment.newInstance()
+                    val args = Bundle()
+                    args.putString("bundleData", Gson().toJson(selectedBundle))
+                    args.putStringArrayList(
+                      "userPurchsedWidgets",
+                      arguments?.getStringArrayList("userPurchsedWidgets")
+                    )
+                    packageFragment.arguments = args
 //                                                        (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
 
-                                            (activity as UpgradeActivity).addFragmentHome(
-                                                    PackageFragment.newInstance(),
-                                                    PACKAGE_FRAGMENT, args
-                                            )
+                    (activity as UpgradeActivity).addFragmentHome(
+                      PackageFragment.newInstance(),
+                      PACKAGE_FRAGMENT, args
+                    )
 //                                                        bundleData = Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type)
 //                                                        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type))
 
-                                          }, {
-                                            it.printStackTrace()
-                                          })
-                          )
-                        } else {
-                          CompositeDisposable().add(
-                                  AppDatabase.getInstance(requireActivity().application)!!
-                                          .featuresDao()
-                                          .checkFeatureTableKeyExist(item!!)
-                                          .subscribeOn(Schedulers.io())
-                                          .observeOn(AndroidSchedulers.mainThread())
-                                          .subscribe({
-                                            if (it == 1) {
-                                              Log.v("getItemPromoBanner2", " "+ item)
-                                              CompositeDisposable().add(
-                                                      AppDatabase.getInstance(requireActivity().application)!!
-                                                              .featuresDao()
-                                                              .getFeaturesItemByFeatureCode(item)
-                                                              .subscribeOn(Schedulers.io())
-                                                              .observeOn(AndroidSchedulers.mainThread())
-                                                              .subscribe({
+                  }, {
+                    it.printStackTrace()
+                  })
+              )
+            } else {
+              CompositeDisposable().add(
+                AppDatabase.getInstance(requireActivity().application)!!
+                  .featuresDao()
+                  .checkFeatureTableKeyExist(item!!)
+                  .subscribeOn(Schedulers.io())
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe({
+                    if (it == 1) {
+                      Log.v("getItemPromoBanner2", " " + item)
+                      CompositeDisposable().add(
+                        AppDatabase.getInstance(requireActivity().application)!!
+                          .featuresDao()
+                          .getFeaturesItemByFeatureCode(item)
+                          .subscribeOn(Schedulers.io())
+                          .observeOn(AndroidSchedulers.mainThread())
+                          .subscribe({
 
-                                                                val details = DetailsFragment.newInstance()
-                                                                val args = Bundle()
-                                                                args.putString("itemId", it.feature_code)
-                                                                details.arguments = args
-                                                                (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
+                            val details = DetailsFragment.newInstance()
+                            val args = Bundle()
+                            args.putString("itemId", it.feature_code)
+                            details.arguments = args
+                            (activity as UpgradeActivity).addFragment(
+                              details,
+                              Constants.DETAILS_FRAGMENT
+                            )
 //
 
-                                                              }, {
-                                                                it.printStackTrace()
-                                                              })
-                                              )
-                                            } else {
-                                              Log.v("getItemPromoBanner3", " "+ item)
-                                              CompositeDisposable().add(
-                                                      AppDatabase.getInstance(requireActivity().application)!!
-                                                              .marketOffersDao()
-                                                              .checkOffersTableKeyExist(item!!)
-                                                              .subscribeOn(Schedulers.io())
-                                                              .observeOn(AndroidSchedulers.mainThread())
-                                                              .subscribe({
-                                                                if (it == 1) {
-                                                                  CompositeDisposable().add(
-                                                                          AppDatabase.getInstance(requireActivity().application)!!
-                                                                                  .marketOffersDao()
-                                                                                  .getMarketOffersById(item)
-                                                                                  .subscribeOn(Schedulers.io())
-                                                                                  .observeOn(AndroidSchedulers.mainThread())
-                                                                                  .subscribe({
+                          }, {
+                            it.printStackTrace()
+                          })
+                      )
+                    } else {
+                      Log.v("getItemPromoBanner3", " " + item)
+                      CompositeDisposable().add(
+                        AppDatabase.getInstance(requireActivity().application)!!
+                          .marketOffersDao()
+                          .checkOffersTableKeyExist(item!!)
+                          .subscribeOn(Schedulers.io())
+                          .observeOn(AndroidSchedulers.mainThread())
+                          .subscribe({
+                            if (it == 1) {
+                              CompositeDisposable().add(
+                                AppDatabase.getInstance(
+                                  requireActivity().application
+                                )!!
+                                  .marketOffersDao()
+                                  .getMarketOffersById(item)
+                                  .subscribeOn(Schedulers.io())
+                                  .observeOn(AndroidSchedulers.mainThread())
+                                  .subscribe({
 
 
-                                                                                    var selectedMarketOfferModel: MarketPlaceOffers? = null
-                                                                                    var item = it
+                                    var selectedMarketOfferModel: MarketPlaceOffers? =
+                                      null
+                                    var item = it
 
-                                                                                    selectedMarketOfferModel = MarketPlaceOffers( coupon_code = item.coupon_code,
-                                                                                            extra_information = item.extra_information!!,
-                                                                                            createdon = item.createdon!!,
-                                                                                            updatedon = item.updatedon!!,
-                                                                                            _kid = item._kid!!,
-                                                                                            websiteid = item.websiteid!!,
-                                                                                            isarchived = item.isarchived!!,
-                                                                                            expiry_date = item.expiry_date!!,
-                                                                                            title = item.title!!,
-                                                                                            exclusive_to_categories = Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                                                                            image = PrimaryImage(item.image),
-                                                                                    )
-                                                                                    val marketPlaceOfferFragment = MarketPlaceOfferFragment.newInstance()
-                                                                                    val args = Bundle()
-                                                                                    args.putString("marketOffersData", Gson().toJson(selectedMarketOfferModel))
-                                                                                    marketPlaceOfferFragment.arguments = args
-                                                                                    (activity as UpgradeActivity).addFragment(marketPlaceOfferFragment, MARKET_OFFER_FRAGMENT)
+                                    selectedMarketOfferModel =
+                                      MarketPlaceOffers(
+                                        coupon_code = item.coupon_code,
+                                        extra_information = item.extra_information!!,
+                                        createdon = item.createdon!!,
+                                        updatedon = item.updatedon!!,
+                                        _kid = item._kid!!,
+                                        websiteid = item.websiteid!!,
+                                        isarchived = item.isarchived!!,
+                                        expiry_date = item.expiry_date!!,
+                                        title = item.title!!,
+                                        exclusive_to_categories = Gson().fromJson<List<String>>(
+                                          item.exclusive_to_categories,
+                                          object :
+                                            TypeToken<List<String>>() {}.type
+                                        ),
+                                        image = PrimaryImage(
+                                          item.image
+                                        ),
+                                      )
+                                    val marketPlaceOfferFragment =
+                                      MarketPlaceOfferFragment.newInstance()
+                                    val args = Bundle()
+                                    args.putString(
+                                      "marketOffersData",
+                                      Gson().toJson(
+                                        selectedMarketOfferModel
+                                      )
+                                    )
+                                    marketPlaceOfferFragment.arguments =
+                                      args
+                                    (activity as UpgradeActivity).addFragment(
+                                      marketPlaceOfferFragment,
+                                      MARKET_OFFER_FRAGMENT
+                                    )
 
 
-                                                                                  }, {
-                                                                                    it.printStackTrace()
-                                                                                  })
-                                                                  )
-                                                                } else {
-                                                                  Log.v("getItemPromoBanner3", " "+ item)
-                                                                  if(item.contains("http")){
-                                                                    val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
-                                                                    val args = Bundle()
-                                                                    args.putString("title", "")
-                                                                    args.putString("link", item)
-                                                                    webViewFragment.arguments = args
-                                                                    (activity as UpgradeActivity).addFragment(
-                                                                            webViewFragment,
-                                                                            Constants.WEB_VIEW_FRAGMENT
-                                                                    )
-                                                                  }
+                                  }, {
+                                    it.printStackTrace()
+                                  })
+                              )
+                            } else {
+                              Log.v("getItemPromoBanner3", " " + item)
+                              if (item.contains("http")) {
+                                val webViewFragment: WebViewFragment =
+                                  WebViewFragment.newInstance()
+                                val args = Bundle()
+                                args.putString("title", "")
+                                args.putString("link", item)
+                                webViewFragment.arguments = args
+                                (activity as UpgradeActivity).addFragment(
+                                  webViewFragment,
+                                  Constants.WEB_VIEW_FRAGMENT
+                                )
+                              }
 
-                                                                }
-                                                              }, {
-                                                                it.printStackTrace()
-                                                              })
-                                              )
-                                            }
-                                          }, {
-                                            it.printStackTrace()
-                                          })
-                          )
-                        }
-                      }, {
-                        it.printStackTrace()
-                      })
+                            }
+                          }, {
+                            it.printStackTrace()
+                          })
+                      )
+                    }
+                  }, {
+                    it.printStackTrace()
+                  })
+              )
+            }
+          }, {
+            it.printStackTrace()
+          })
       )
     }
   }
+
+  fun callExpertContact(phone: String?) {
+    Log.d("callExpertContact", " " + phone)
+    if (phone != null) {
+      WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXPERT_SPEAK, CLICK, NO_EVENT_VALUE)
+      val callIntent = Intent(Intent.ACTION_DIAL)
+      callIntent.data = Uri.parse("tel:" + phone)
+      startActivity(Intent.createChooser(callIntent, "Call by:"))
+    } else {
+      Toasty.error(
+        requireContext(),
+        "Expert will be available tomorrow from 10AM",
+        Toast.LENGTH_LONG
+      ).show()
+    }
+  }
+
 }

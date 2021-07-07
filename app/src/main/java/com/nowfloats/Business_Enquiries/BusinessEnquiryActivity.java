@@ -1,9 +1,11 @@
 package com.nowfloats.Business_Enquiries;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 
 import com.thinksity.R;
@@ -19,14 +21,13 @@ public class BusinessEnquiryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_business_enquiry);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null)
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle(getString(R.string.business_enquiries_title));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_parent,new Business_Enquiries_Fragment())
+                .add(R.id.fragment_parent, new Business_Enquiries_Fragment())
                 .commit();
     }
 

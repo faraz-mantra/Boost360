@@ -9,7 +9,8 @@ import com.inventoryorder.model.timeSlot.TimeSlotData
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class TimeSlotViewHolder(binding: ItemBottomTimeSlotBinding) : AppBaseRecyclerViewHolder<ItemBottomTimeSlotBinding>(binding) {
+class TimeSlotViewHolder(binding: ItemBottomTimeSlotBinding) :
+  AppBaseRecyclerViewHolder<ItemBottomTimeSlotBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -22,7 +23,11 @@ class TimeSlotViewHolder(binding: ItemBottomTimeSlotBinding) : AppBaseRecyclerVi
     binding.tvOptionSelected.text = model.getTimeSlotText()
     binding.mainView.background = activity?.let { ContextCompat.getDrawable(it, model.getColor()) }
     binding.mainView.setOnClickListener {
-      listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.TIME_SLOT_ACTION_ITEM.ordinal)
+      listener?.onItemClick(
+        adapterPosition,
+        model,
+        RecyclerViewActionType.TIME_SLOT_ACTION_ITEM.ordinal
+      )
     }
   }
 

@@ -26,7 +26,8 @@ import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.BUSINESS_INFO
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
-open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment<binding, BusinessCreateViewModel>() {
+open class BaseRegistrationFragment<binding : ViewDataBinding> :
+  AppBaseFragment<binding, BusinessCreateViewModel>() {
 
   protected val channels: ArrayList<ChannelModel>
     get() {
@@ -40,12 +41,18 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
   protected val pref: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
+      return baseActivity.getSharedPreferences(
+        PreferenceConstant.NOW_FLOATS_PREFS,
+        Context.MODE_PRIVATE
+      )
     }
 
   protected val prefReferral: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.PREF_NAME_REFERRAL, Context.MODE_PRIVATE)
+      return baseActivity.getSharedPreferences(
+        PreferenceConstant.PREF_NAME_REFERRAL,
+        Context.MODE_PRIVATE
+      )
     }
 
   protected val userProfileId: String?
@@ -54,7 +61,10 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     }
   protected val clientId: String?
     get() {
-      return pref?.getString(PreferenceConstant.CLIENT_ID, "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5")
+      return pref?.getString(
+        PreferenceConstant.CLIENT_ID,
+        "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5"
+      )
     }
 
   protected var requestFloatsModel: RequestFloatsModel? = null
@@ -114,47 +124,73 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
   fun getDotProgress(): DotProgressBar? {
     return DotProgressBar.Builder().setMargin(0).setAnimationDuration(800)
-        .setDotBackground(R.drawable.ic_dot).setMaxScale(.7f).setMinScale(0.3f)
-        .setNumberOfDots(3).setdotRadius(8).build(baseActivity)
+      .setDotBackground(R.drawable.ic_dot).setMaxScale(.7f).setMinScale(0.3f)
+      .setNumberOfDots(3).setdotRadius(8).build(baseActivity)
   }
 
   protected fun gotoBusinessWebsite() {
-    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(getPreviousScreen(), getToolbarTitle()),
+      requestFloatsModel
+    )
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WEBSITE, getBundle())
   }
 
   protected fun gotoFacebookShop() {
-    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(getPreviousScreen(), getToolbarTitle()),
+      requestFloatsModel
+    )
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, getBundle())
   }
 
   protected fun gotoFacebookPage() {
-    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(getPreviousScreen(), getToolbarTitle()),
+      requestFloatsModel
+    )
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, getBundle())
   }
 
   protected fun gotoGoogleBusinessPage() {
-    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(getPreviousScreen(), getToolbarTitle()),
+      requestFloatsModel
+    )
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE, getBundle())
   }
 
   protected fun gotoTwitterDetails() {
-    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(getPreviousScreen(), getToolbarTitle()),
+      requestFloatsModel
+    )
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, getBundle())
   }
 
   protected fun gotoWhatsAppCallDetails() {
-    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(getPreviousScreen(), getToolbarTitle()),
+      requestFloatsModel
+    )
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, getBundle())
   }
 
   protected open fun gotoBusinessApiCallDetails() {
-    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(Screen.REGISTERING, getToolbarTitle()), requestFloatsModel)
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(Screen.REGISTERING, getToolbarTitle()),
+      requestFloatsModel
+    )
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_API_CALL, getBundle())
   }
 
   protected fun gotoRegistrationComplete() {
-    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(Screen.REGISTRATION_COMPLETE, getToolbarTitle()), requestFloatsModel)
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(
+        Screen.REGISTRATION_COMPLETE,
+        getToolbarTitle()
+      ), requestFloatsModel
+    )
     startFragmentActivity(FragmentType.REGISTRATION_COMPLETE, getBundle(), clearTop = true)
   }
 
@@ -169,8 +205,8 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
   private fun getBundle(): Bundle {
     val bundle = Bundle()
     bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages)
-        .addInt(IntentConstant.CURRENT_PAGES, currentPage + 1)
-        .addString(IntentConstant.PREVIOUS_SCREEN, getCurrentScreenType()?.name)
+      .addInt(IntentConstant.CURRENT_PAGES, currentPage + 1)
+      .addString(IntentConstant.PREVIOUS_SCREEN, getCurrentScreenType()?.name)
     return bundle
   }
 
@@ -206,7 +242,10 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     editor?.putString(PreferenceConstant.GET_FP_DETAILS_TAG, requestFloatsModel?.getWebSiteId())
     editor?.putString(PreferenceConstant.KEY_FP_ID, requestFloatsModel?.floatingPointId)
     editor?.putString(PreferenceConstant.KEY_sourceClientId, clientId)
-    editor?.putString(PreferenceConstant.GET_FP_EXPERIENCE_CODE, requestFloatsModel?.categoryDataModel?.experience_code)
+    editor?.putString(
+      PreferenceConstant.GET_FP_EXPERIENCE_CODE,
+      requestFloatsModel?.categoryDataModel?.experience_code
+    )
     editor?.putBoolean(PreferenceConstant.IS_USER_LOGIN, true)
     editor?.putBoolean(PreferenceConstant.IS_USER_SIGN_UP, false)
     editor?.apply()

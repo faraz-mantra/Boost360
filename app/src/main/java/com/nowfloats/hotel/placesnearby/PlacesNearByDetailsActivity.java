@@ -1,25 +1,14 @@
 package com.nowfloats.hotel.placesnearby;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -33,11 +22,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.UploadPlaceNearByImage;
@@ -51,24 +46,13 @@ import com.nowfloats.hotel.Interfaces.PlaceNearByDetailsListener;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
-import org.json.JSONObject;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -78,16 +62,16 @@ import retrofit.converter.GsonConverter;
 
 public class PlacesNearByDetailsActivity extends AppCompatActivity implements PlaceNearByDetailsListener {
 
+    private static final int GALLERY_PHOTO = 2;
+    private static final int CAMERA_PHOTO = 1;
+    private static final int ACTION_REQUEST_IMAGE_EDIT = 3;
+    private final int gallery_req_id = 0;
+    private final int media_req_id = 1;
     TextView saveReview;
     EditText placeName, placeAddress, placeDescription, placeDistance;
     CardView placeImageLayout;
     ImageView placeImage;
     ImageButton removePlaceImage;
-    private final int gallery_req_id = 0;
-    private final int media_req_id = 1;
-    private static final int GALLERY_PHOTO = 2;
-    private static final int CAMERA_PHOTO = 1;
-    private static final int ACTION_REQUEST_IMAGE_EDIT = 3;
     Uri imageUri;
     String path = null;
     String uploadedImageURL = "";
@@ -361,7 +345,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
     private boolean validateInput() {
         if (placeName.getText().toString().isEmpty() || placeDescription.getText().toString().isEmpty()
                 || placeDistance.getText().toString().isEmpty() || placeAddress.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(),getString( R.string.fields_are_empty), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_SHORT).show();
             hideLoader();
             return false;
         }
@@ -526,7 +510,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getString(R.string.something_went_wrong));

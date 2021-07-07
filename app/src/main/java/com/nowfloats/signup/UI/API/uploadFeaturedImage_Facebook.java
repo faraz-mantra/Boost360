@@ -23,22 +23,21 @@ import java.util.UUID;
 /**
  * Created by NowFloatsDev on 29/05/2015.
  */
-public class uploadFeaturedImage_Facebook extends AsyncTask<Void,String, String> {
+public class uploadFeaturedImage_Facebook extends AsyncTask<Void, String, String> {
 
-   // Activity appContext;
+    // Activity appContext;
     Bitmap path;
-    String fpID ;
+    String fpID;
     ProgressDialog pd = null;
 
-    boolean isUploadingSuccess = false ;
+    boolean isUploadingSuccess = false;
 
-    public uploadFeaturedImage_Facebook(Bitmap path,String fpID) {
+    public uploadFeaturedImage_Facebook(Bitmap path, String fpID) {
         //this.appContext	=  	context;
-        this.path	= 	path;
+        this.path = path;
         this.fpID = fpID;
-        Constants.IMAGEURIUPLOADED = false ;
+        Constants.IMAGEURIUPLOADED = false;
     }
-
 
 
     @Override
@@ -52,9 +51,9 @@ public class uploadFeaturedImage_Facebook extends AsyncTask<Void,String, String>
     @Override
     protected void onPostExecute(String result) {
 
-       // pd.dismiss();
+        // pd.dismiss();
         if (isUploadingSuccess) {
-        //    Methods.showSnackBarPositive(appContext, "Image updated successfully");
+            //    Methods.showSnackBarPositive(appContext, "Image updated successfully");
 //            Constants.IMAGEURIUPLOADED = true ;
 //            try {
 //                Bitmap bmp = Util.getBitmap(path, appContext);
@@ -71,27 +70,23 @@ public class uploadFeaturedImage_Facebook extends AsyncTask<Void,String, String>
     }
 
 
-
-
-
     @Override
-    protected String doInBackground(Void... params)
-    {
+    protected String doInBackground(Void... params) {
         String response = "";
 
-            uploadImage(path);
+        uploadImage(path);
 
-        return response ;
+        return response;
     }
 
 
-    public void uploadImage(Bitmap imagePath){
+    public void uploadImage(Bitmap imagePath) {
 //        FileInputStream fileInputStream = null;
 //        File img = new File(imagePath);
-        if(imagePath==null){
+        if (imagePath == null) {
             return;
         }
-      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 //        byte[] buf = new byte[1024];
 //        File f = new File(img.getAbsolutePath() + File.separator );
 //        try {
@@ -102,12 +97,12 @@ public class uploadFeaturedImage_Facebook extends AsyncTask<Void,String, String>
 //        }
 
         BitmapFactory.Options options = new BitmapFactory.Options();
-        Bitmap bmp =  imagePath;//BitmapFactory.decodeFile(imagePath,options);
+        Bitmap bmp = imagePath;//BitmapFactory.decodeFile(imagePath,options);
 //        if((f.length()/1024)>100){
 //            bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);
 //        }else{
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-       // }
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        // }
 //
         byte[] bitmapdata = bos.toByteArray();
 //
@@ -135,24 +130,21 @@ public class uploadFeaturedImage_Facebook extends AsyncTask<Void,String, String>
         s_uuid = s_uuid.replace("-", "");
         String uri;
         String param = "createImage";
-        uri = Constants.LoadStoreURI+
-                param+"?clientId="+
-                Constants.clientId+
-                "&fpId="+fpID+
+        uri = Constants.LoadStoreURI +
+                param + "?clientId=" +
+                Constants.clientId +
+                "&fpId=" + fpID +
                 "&reqType=sequential&reqtId=" +
                 s_uuid + "&";
 
-        String temp = uri + "totalChunks=1&currentChunkNumber=1" ;
-        sendDataToServer(temp,bitmapdata);
-
-
-
+        String temp = uri + "totalChunks=1&currentChunkNumber=1";
+        sendDataToServer(temp, bitmapdata);
 
 
     }
 
 
-    public void sendDataToServer(String url, byte[] BytesToBeSent){
+    public void sendDataToServer(String url, byte[] BytesToBeSent) {
         DataOutputStream outputStream = null;
 
         try {
@@ -184,15 +176,13 @@ public class uploadFeaturedImage_Facebook extends AsyncTask<Void,String, String>
 
             String responseMessage = connection.getResponseMessage();
 
-            if (responseCode	== 200  || responseCode	== 202)
-            {
+            if (responseCode == 200 || responseCode == 202) {
                 isUploadingSuccess = true;
             }
 
             InputStreamReader inputStreamReader = null;
-            BufferedReader bufferedReader =  null;
-            try
-            {
+            BufferedReader bufferedReader = null;
+            try {
                 inputStreamReader = new InputStreamReader(connection.getInputStream());
                 bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -202,32 +192,30 @@ public class uploadFeaturedImage_Facebook extends AsyncTask<Void,String, String>
 
                 boolean isFirst = true;
 
-                while((temp = bufferedReader.readLine())!=null)
-                {
-                    if(!isFirst)
+                while ((temp = bufferedReader.readLine()) != null) {
+                    if (!isFirst)
                         responseContent.append(Constants.NEW_LINE);
                     responseContent.append(temp);
                     isFirst = false;
                 }
 
                 String response = responseContent.toString();
-                if(!Util.isNullOrEmpty(response))
+                if (!Util.isNullOrEmpty(response))
                     Constants.serviceResponse = response;
                 else
                     Constants.serviceResponse = "";
-            }
-            catch(Exception e){}
-            finally
-            {
-                try{
+            } catch (Exception e) {
+            } finally {
+                try {
                     inputStreamReader.close();
-                }catch (Exception e) {}
-                try{
+                } catch (Exception e) {
+                }
+                try {
                     bufferedReader.close();
-                }catch (Exception e) {}
+                } catch (Exception e) {
+                }
 
             }
-
 
 
         } catch (Exception ex) {
