@@ -19,7 +19,8 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.getDrawable
 import com.onboarding.nowfloats.model.channel.getName
 
-class DigitalChannelWhyDialog : BaseDialogFragment<DialogDigitalChannelWhyBinding, BaseViewModel>() {
+class DigitalChannelWhyDialog :
+  BaseDialogFragment<DialogDigitalChannelWhyBinding, BaseViewModel>() {
 
   private var channelModel: ChannelModel? = null
 
@@ -30,8 +31,8 @@ class DigitalChannelWhyDialog : BaseDialogFragment<DialogDigitalChannelWhyBindin
   override fun onCreateView() {
     binding?.container?.post {
       (binding?.container?.fadeIn(300L)?.mergeWith(binding?.imageCard?.fadeIn(300L)))
-          ?.andThen(binding?.title?.fadeIn(100L)?.mergeWith(binding?.desc?.fadeIn(100L)))
-          ?.andThen(binding?.confirm?.fadeIn(50L))?.subscribe()
+        ?.andThen(binding?.title?.fadeIn(100L)?.mergeWith(binding?.desc?.fadeIn(100L)))
+        ?.andThen(binding?.confirm?.fadeIn(50L))?.subscribe()
       binding?.title?.text = channelModel?.getName()
       binding?.desc?.text = channelModel?.moreDesc
       binding?.image?.setImageDrawable(channelModel?.getDrawable(activity))

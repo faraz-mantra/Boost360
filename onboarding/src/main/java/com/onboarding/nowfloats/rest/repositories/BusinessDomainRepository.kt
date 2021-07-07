@@ -11,25 +11,32 @@ import com.onboarding.nowfloats.rest.services.remote.domain.BusinessDomainRemote
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object BusinessDomainRepository : AppBaseRepository<BusinessDomainRemoteDataSource, AppBaseLocalService>() {
+object BusinessDomainRepository :
+  AppBaseRepository<BusinessDomainRemoteDataSource, AppBaseLocalService>() {
 
-    override fun getRemoteDataSourceClass(): Class<BusinessDomainRemoteDataSource> {
-        return BusinessDomainRemoteDataSource::class.java
-    }
+  override fun getRemoteDataSourceClass(): Class<BusinessDomainRemoteDataSource> {
+    return BusinessDomainRemoteDataSource::class.java
+  }
 
-    override fun getLocalDataSourceInstance(): AppBaseLocalService {
-        return AppBaseLocalService()
-    }
+  override fun getLocalDataSourceInstance(): AppBaseLocalService {
+    return AppBaseLocalService()
+  }
 
-    fun postCheckBusinessDomain(request: BusinessDomainRequest): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.checkBusinessDomain(request), Taskcode.POST_CHECK_BUSINESS_DOMAIN)
-    }
+  fun postCheckBusinessDomain(request: BusinessDomainRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.checkBusinessDomain(request),
+      Taskcode.POST_CHECK_BUSINESS_DOMAIN
+    )
+  }
 
-    fun postCheckBusinessDomainSuggest(request: BusinessDomainSuggestRequest): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.checkBusinessDomainSuggest(request), Taskcode.POST_CHECK_BUSINESS_DOMAIN_SUGGEST)
-    }
+  fun postCheckBusinessDomainSuggest(request: BusinessDomainSuggestRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.checkBusinessDomainSuggest(request),
+      Taskcode.POST_CHECK_BUSINESS_DOMAIN_SUGGEST
+    )
+  }
 
-    override fun getApiClient(): Retrofit {
-        return WithFloatsApiClient.shared.retrofit
-    }
+  override fun getApiClient(): Retrofit {
+    return WithFloatsApiClient.shared.retrofit
+  }
 }

@@ -376,6 +376,7 @@
               android:src="@drawable/ic_arrow_right_grey_staff" />
 
           </RelativeLayout>
+
           <RelativeLayout
             android:id="@+id/rl_scheduled_breaks"
             android:layout_width="match_parent"

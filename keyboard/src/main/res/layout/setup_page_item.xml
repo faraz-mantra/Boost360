@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout fresco:orientation="vertical"
-    fresco:background="#ffffffff"
+<LinearLayout xmlns:fresco="http://schemas.android.com/apk/res/android"
+  xmlns:fresco2="http://schemas.android.com/apk/res-auto"
+  fresco:layout_width="match_parent"
+  fresco:layout_height="match_parent"
+  fresco:background="#ffffffff"
+  fresco:orientation="vertical">
+
+  <com.facebook.drawee.view.SimpleDraweeView
+    fresco:id="@+id/page_image"
     fresco:layout_width="match_parent"
-    fresco:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res/android"
-    xmlns:fresco2="http://schemas.android.com/apk/res-auto">
-    <com.facebook.drawee.view.SimpleDraweeView fresco:id="@+id/page_image" fresco:layout_width="match_parent" fresco:layout_height="0dp" fresco:layout_weight="1.0" fresco2:actualImageScaleType="focusCrop" />
-    <FrameLayout fresco:layout_gravity="center_horizontal" fresco:layout_width="wrap_content" fresco:layout_height="wrap_content" fresco:layout_marginTop="-30dp">
-        <TextView fresco:textSize="19sp" fresco:textStyle="bold" fresco:textColor="#ff000000" fresco:layout_gravity="center" fresco:id="@+id/page_number" fresco:layout_width="wrap_content" fresco:layout_height="wrap_content" fresco:text="@string/_1" />
-    </FrameLayout>
-    <Button fresco:textSize="14sp" fresco:textColor="#ffffffff" fresco:layout_gravity="center_horizontal" fresco:id="@+id/page_button" fresco:background="@drawable/slash_button" fresco:paddingLeft="20dp" fresco:paddingRight="20dp" fresco:layout_width="wrap_content" fresco:layout_height="40dp" fresco:layout_marginTop="30dp" fresco:text="@string/enable_slash" />
-    <TextView fresco:textSize="14sp" fresco:textColor="#ffa7a7a7" fresco:gravity="center" fresco:layout_gravity="center" fresco:id="@+id/step_info" fresco:paddingLeft="30dp" fresco:paddingRight="30dp" fresco:layout_width="wrap_content" fresco:layout_height="wrap_content" fresco:layout_marginTop="30dp" fresco:layout_marginBottom="30dp" fresco:text="@string/in_the_language_and_input_settings_tap_the_toggle_next_to_agah_keyboard_this_will_authorize_the_keyboard_to_run_on_your_device" fresco:lineSpacingExtra="6dp" />
+    fresco:layout_height="0dp"
+    fresco:layout_weight="1.0"
+    fresco2:actualImageScaleType="focusCrop" />
+
+  <FrameLayout
+    fresco:layout_width="wrap_content"
+    fresco:layout_height="wrap_content"
+    fresco:layout_gravity="center_horizontal"
+    fresco:layout_marginTop="-30dp">
+
+    <TextView
+      fresco:id="@+id/page_number"
+      fresco:layout_width="wrap_content"
+      fresco:layout_height="wrap_content"
+      fresco:layout_gravity="center"
+      fresco:text="@string/_1"
+      fresco:textColor="#ff000000"
+      fresco:textSize="19sp"
+      fresco:textStyle="bold" />
+  </FrameLayout>
+
+  <Button
+    fresco:id="@+id/page_button"
+    fresco:layout_width="wrap_content"
+    fresco:layout_height="40dp"
+    fresco:layout_gravity="center_horizontal"
+    fresco:layout_marginTop="30dp"
+    fresco:background="@drawable/slash_button"
+    fresco:paddingLeft="20dp"
+    fresco:paddingRight="20dp"
+    fresco:text="@string/enable_slash"
+    fresco:textColor="#ffffffff"
+    fresco:textSize="14sp" />
+
+  <TextView
+    fresco:id="@+id/step_info"
+    fresco:layout_width="wrap_content"
+    fresco:layout_height="wrap_content"
+    fresco:layout_gravity="center"
+    fresco:layout_marginTop="30dp"
+    fresco:layout_marginBottom="30dp"
+    fresco:gravity="center"
+    fresco:lineSpacingExtra="6dp"
+    fresco:paddingLeft="30dp"
+    fresco:paddingRight="30dp"
+    fresco:text="@string/in_the_language_and_input_settings_tap_the_toggle_next_to_agah_keyboard_this_will_authorize_the_keyboard_to_run_on_your_device"
+    fresco:textColor="#ffa7a7a7"
+    fresco:textSize="14sp" />
 </LinearLayout>

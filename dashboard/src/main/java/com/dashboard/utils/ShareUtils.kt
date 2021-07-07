@@ -22,9 +22,25 @@ fun AppCompatActivity.shareViaAnyApp(shareType: ShareType?, message: String) {
   intent.putExtra(Intent.EXTRA_TEXT, message)
   try {
     if (shareType != null) this.startActivity(intent)
-    else this.startActivity(Intent.createChooser(intent, resources.getString(R.string.share_your_business)))
+    else this.startActivity(
+      Intent.createChooser(
+        intent,
+        resources.getString(R.string.share_your_business)
+      )
+    )
   } catch (ex: ActivityNotFoundException) {
-    Toast.makeText(this, shareType?.message ?: "Sharing error, please try again!", Toast.LENGTH_SHORT).show()
-    shareType?.id?.let { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=$it"))) }
+    Toast.makeText(
+      this,
+      shareType?.message ?: "Sharing error, please try again!",
+      Toast.LENGTH_SHORT
+    ).show()
+    shareType?.id?.let {
+      startActivity(
+        Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse("http://play.google.com/store/apps/details?id=$it")
+        )
+      )
+    }
   }
 }

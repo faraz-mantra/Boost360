@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-    </data>
+  </data>
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/size_16">
+  <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/size_16">
 
-        <com.framework.views.customViews.CustomCheckBox
-            android:id="@+id/ccb_services"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:textFontWeight="600"
-            android:textSize="16sp"
-            app:buttonTint="@color/colorAccent"
-            app:useMaterialThemeColors="true"
-            tools:text="Hair Removal and Waxing" />
-    </LinearLayout>
+    <com.framework.views.customViews.CustomCheckBox
+      android:id="@+id/ccb_services"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/open_sans"
+      android:textFontWeight="600"
+      android:textSize="16sp"
+      app:buttonTint="@color/colorAccent"
+      app:useMaterialThemeColors="true"
+      tools:text="Hair Removal and Waxing" />
+  </LinearLayout>
 </layout>

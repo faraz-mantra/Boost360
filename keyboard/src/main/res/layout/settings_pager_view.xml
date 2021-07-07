@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:layout_gravity="bottom" android:orientation="vertical">
-    <Button
-        android:id="@+id/backFromSettingsKey"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/config_suggestions_strip_height"
-        android:text="back"
-        android:background="#FF04FF00" />
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_gravity="bottom"
+  android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/settings_pager_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/config_default_keyboard_height"
-        android:layout_gravity="bottom">
-    </androidx.viewpager.widget.ViewPager>
+  <Button
+    android:id="@+id/backFromSettingsKey"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/config_suggestions_strip_height"
+    android:background="#FF04FF00"
+    android:text="back" />
+
+  <androidx.viewpager.widget.ViewPager
+    android:id="@+id/settings_pager_tabs"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/config_default_keyboard_height"
+    android:layout_gravity="bottom"></androidx.viewpager.widget.ViewPager>
 </LinearLayout>

@@ -1,1 +1,18 @@
-[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":2018060013},"path":"app-partone-release.apk","properties":{"packageId":"com.biz2.nowfloats","split":"","minSdkVersion":"15"}}]
+[
+  {
+    "outputType": {
+      "type": "APK"
+    },
+    "apkInfo": {
+      "type": "MAIN",
+      "splits": [],
+      "versionCode": 2018060013
+    },
+    "path": "app-partone-release.apk",
+    "properties": {
+      "packageId": "com.biz2.nowfloats",
+      "split": "",
+      "minSdkVersion": "15"
+    }
+  }
+]

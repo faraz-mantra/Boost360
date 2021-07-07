@@ -1,82 +1,82 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+  <RelativeLayout
+    android:id="@+id/layout_address"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/white_rectangle_background"
+    android:orientation="vertical">
+
     <RelativeLayout
-        android:id="@+id/layout_address"
+      android:id="@+id/layout_address_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/grey_rectangle_background"
+      android:paddingStart="10dp"
+      android:paddingTop="5dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="5dp">
+
+      <RadioButton
+        android:id="@+id/radio_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:button="@drawable/custom_radio_button" />
+
+      <TextView
+        android:id="@+id/tv_address_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/white_rectangle_background">
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/btn_change"
+        android:layout_toRightOf="@+id/radio_choose"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="14sp" />
 
-        <RelativeLayout
-            android:id="@+id/layout_address_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/grey_rectangle_background"
-            android:paddingStart="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-
-            <RadioButton
-                android:id="@+id/radio_choose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:button="@drawable/custom_radio_button" />
-
-            <TextView
-                android:id="@+id/tv_address_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="12dp"
-                android:gravity="center_vertical"
-                android:layout_centerVertical="true"
-                android:textSize="14sp"
-                android:textColor="@color/primaryTextColor"
-                android:layout_toRightOf="@+id/radio_choose"
-                android:layout_toLeftOf="@+id/btn_change" />
-
-            <Button
-                android:id="@+id/btn_edit"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:textColor="@color/secondaryTextColor"
-                android:layout_alignParentEnd="true"
-                android:textSize="14sp"
-                android:text="@string/button_edit" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_pick_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingRight="20dp"
-            android:paddingStart="22dp"
-            android:layout_below="@+id/layout_address_title"
-            android:layout_marginTop="@dimen/margin_5"
-            android:textColor="@color/secondaryTextColor" />
-
-        <TextView
-            android:id="@+id/tv_mobile_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:paddingBottom="10dp"
-            android:paddingRight="20dp"
-            android:paddingStart="22dp"
-            android:layout_below="@+id/tv_pick_address"
-            android:layout_marginBottom="@dimen/margin_5"
-            android:textColor="@color/secondaryLightTextColor" />
+      <Button
+        android:id="@+id/btn_edit"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/transparent"
+        android:text="@string/button_edit"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="14sp" />
 
     </RelativeLayout>
+
+    <TextView
+      android:id="@+id/tv_pick_address"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/layout_address_title"
+      android:layout_marginTop="@dimen/margin_5"
+      android:paddingStart="22dp"
+      android:paddingTop="10dp"
+      android:paddingRight="20dp"
+      android:paddingBottom="10dp"
+      android:textColor="@color/secondaryTextColor"
+      android:textSize="14sp" />
+
+    <TextView
+      android:id="@+id/tv_mobile_number"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_pick_address"
+      android:layout_marginBottom="@dimen/margin_5"
+      android:paddingStart="22dp"
+      android:paddingRight="20dp"
+      android:paddingBottom="10dp"
+      android:textColor="@color/secondaryLightTextColor"
+      android:textSize="14sp" />
+
+  </RelativeLayout>
 
 </layout>

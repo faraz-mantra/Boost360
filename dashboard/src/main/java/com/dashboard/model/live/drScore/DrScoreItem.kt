@@ -6,10 +6,10 @@ import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 class DrScoreItem(
-    var drScoreUiData: DrScoreUiData? = null,
-    var isUpdate: Boolean = false,
-    var sortChar: Int = 0,
-) : AppBaseRecyclerViewItem, Serializable ,Comparable<Any?>{
+  var drScoreUiData: DrScoreUiData? = null,
+  var isUpdate: Boolean = false,
+  var sortChar: Int = 0,
+) : AppBaseRecyclerViewItem, Serializable, Comparable<Any?> {
 
 
   override fun getViewType(): Int {
@@ -50,7 +50,8 @@ class DrScoreItem(
     boolean_respond_to_customer_enquiries(10);
 
     companion object {
-      fun fromName(name: String?): DrScoreItemType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
+      fun fromName(name: String?): DrScoreItemType? =
+        values().firstOrNull { it.name.equals(name, ignoreCase = true) }
     }
   }
 }

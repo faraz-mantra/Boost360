@@ -1,90 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/screen_bg"
-    android:orientation="vertical">
-    <!--  <test.com.vinay.NavigationDrawer.SlidingTabLayout
-           android:id="@+id/sliding_tabs"
-           android:background="#FFFFFF"
-           android:layout_width="match_parent"
-           android:layout_height="42dp"
-           android:layout_gravity="top"/>  <!-->
-
-
-    <!-- <com.nowfloats.com.thinksity.PagerSlidingTabStrip
-         android:id="@+id/tabs"
-         app:pstsShouldExpand="true"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/screen_bg"
+  android:orientation="vertical">
+  <!--  <test.com.vinay.NavigationDrawer.SlidingTabLayout
+         android:id="@+id/sliding_tabs"
+         android:background="#FFFFFF"
          android:layout_width="match_parent"
-         android:layout_height="48dp"
-         app:pstsDividerColor="#e9e9e9"
-         app:pstsTabPaddingLeftRight="14dp"
-         app:pstsUnderlineColor="@android:color/white"
-         app:pstsIndicatorColor="#F79421">
-     </com.nowfloats.com.thinksity.PagerSlidingTabStrip>  <! -->
+         android:layout_height="42dp"
+         android:layout_gravity="top"/>  <!-->
 
-    <LinearLayout
+
+  <!-- <com.nowfloats.com.thinksity.PagerSlidingTabStrip
+       android:id="@+id/tabs"
+       app:pstsShouldExpand="true"
+       android:layout_width="match_parent"
+       android:layout_height="48dp"
+       app:pstsDividerColor="#e9e9e9"
+       app:pstsTabPaddingLeftRight="14dp"
+       app:pstsUnderlineColor="@android:color/white"
+       app:pstsIndicatorColor="#F79421">
+   </com.nowfloats.com.thinksity.PagerSlidingTabStrip>  <! -->
+
+  <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
     <com.nowfloats.NavigationDrawer.SlidingTabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primaryColor"/>
+      android:id="@+id/tabs"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/primaryColor" />
+
     <android.support.v4.view.ViewPager
-        android:id="@+id/homeTabViewpager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="1dp"
-        android:layout_weight="1"
-        android:layout_gravity="top"
-        android:background="@android:color/transparent" />
+      android:id="@+id/homeTabViewpager"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_gravity="top"
+      android:layout_marginTop="1dp"
+      android:layout_weight="1"
+      android:background="@android:color/transparent" />
 
-    </LinearLayout>
+  </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="right|top">
-        <TextView
-            android:id="@+id/alert_count_textview"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:background="@drawable/alert_count_bg"
-            android:padding="2dp"
-            android:text=""
-            android:gravity="center"
-            android:textSize="10sp"
-            android:visibility="gone"
-            android:textColor="@color/white"
-            fontPath="Roboto-Bold.ttf"
-            tools:ignore="MissingPrefix" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/progress_layout"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone"
-        android:gravity="center">
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/visits_progressBar" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/floating_bubble_overlay"
-        android:visibility="gone"
-        android:background="@android:color/transparent"
-        android:orientation="vertical">
+  <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:gravity="right|top"
+    android:padding="6dp">
 
-    </LinearLayout>
+    <TextView
+      android:id="@+id/alert_count_textview"
+      fontPath="Roboto-Bold.ttf"
+      android:layout_width="18dp"
+      android:layout_height="18dp"
+      android:background="@drawable/alert_count_bg"
+      android:gravity="center"
+      android:padding="2dp"
+      android:text=""
+      android:textColor="@color/white"
+      android:textSize="10sp"
+      android:visibility="gone"
+      tools:ignore="MissingPrefix" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/progress_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <ProgressBar
+      android:id="@+id/visits_progressBar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/floating_bubble_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+  </LinearLayout>
 </FrameLayout>

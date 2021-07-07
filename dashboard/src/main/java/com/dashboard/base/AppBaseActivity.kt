@@ -15,7 +15,8 @@ import com.dashboard.R
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 
-abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
+abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
+  BaseActivity<Binding, ViewModel>() {
 
   private var progressView: ProgressDialog? = null
 

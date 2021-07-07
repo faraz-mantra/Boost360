@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by NowFloats on 17-04-2018.
  */
 
-public class ProductImageResponseModel implements Serializable{
+public class ProductImageResponseModel implements Serializable {
     @SerializedName("_id")
     @Expose
     private String id;

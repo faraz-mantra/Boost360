@@ -1,88 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  app:cardBackgroundColor="@color/white"
+  app:cardElevation="2dp"
+  app:contentPadding="5dp">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardElevation="2dp"
-    app:contentPadding="5dp"
-    app:cardBackgroundColor="@color/white">
+    android:layout_gravity="center">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+    <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="120dp"
+      android:layout_height="match_parent"
+      android:src="@drawable/ic_nowfloats_circle"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/tv_name"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintHorizontal_chainStyle="spread"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_nowfloats_circle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_name"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+      android:id="@+id/tv_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="5dp"
+      android:ellipsize="end"
+      android:maxLines="2"
+      android:text="@string/tv_name"
+      app:layout_constraintBottom_toTopOf="@+id/tv_price"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toEndOf="@+id/imageView"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_name"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:layout_marginStart="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_price"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+    <TextView
+      android:id="@+id/tv_price"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:text="@string/tv_price"
+      app:layout_constraintBottom_toTopOf="@+id/tv_discount"
+      app:layout_constraintEnd_toEndOf="@+id/tv_name"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="@+id/tv_name"
+      app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_price"
-            app:layout_constraintBottom_toTopOf="@+id/tv_discount"
-            app:layout_constraintEnd_toEndOf="@+id/tv_name"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/tv_name"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+    <TextView
+      android:id="@+id/tv_discount"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:text="@string/tv_discount"
+      app:layout_constraintBottom_toTopOf="@+id/tv_description"
+      app:layout_constraintEnd_toEndOf="@+id/tv_name"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="@+id/tv_name"
+      app:layout_constraintTop_toBottomOf="@+id/tv_price" />
 
-        <TextView
-            android:id="@+id/tv_discount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_discount"
-            app:layout_constraintBottom_toTopOf="@+id/tv_description"
-            app:layout_constraintEnd_toEndOf="@+id/tv_name"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/tv_name"
-            app:layout_constraintTop_toBottomOf="@+id/tv_price" />
+    <TextView
+      android:id="@+id/tv_description"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:ellipsize="end"
+      android:maxLines="2"
+      android:text="@string/tv_description"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="@+id/tv_name"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="@+id/tv_name"
+      app:layout_constraintTop_toBottomOf="@+id/tv_discount" />
 
-        <TextView
-            android:id="@+id/tv_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@string/tv_description"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tv_name"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/tv_name"
-            app:layout_constraintTop_toBottomOf="@+id/tv_discount" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+  <include
+    layout="@layout/adapter_item_product_flipped"
+    android:visibility="gone" />
 
-    <include layout="@layout/adapter_item_product_flipped" android:visibility="gone" />
+  <include
+    layout="@layout/adapter_item_product_offer"
+    android:visibility="gone" />
 
-    <include layout="@layout/adapter_item_product_offer" android:visibility="gone" />
-
-    <include layout="@layout/adapter_item_product_keyboard" android:visibility="gone" />
+  <include
+    layout="@layout/adapter_item_product_keyboard"
+    android:visibility="gone" />
 
 </androidx.cardview.widget.CardView>

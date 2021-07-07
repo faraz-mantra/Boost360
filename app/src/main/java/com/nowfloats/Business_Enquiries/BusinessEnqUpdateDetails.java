@@ -2,8 +2,10 @@ package com.nowfloats.Business_Enquiries;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -40,7 +42,7 @@ public class BusinessEnqUpdateDetails extends AppCompatActivity {
         //Title
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.store_title);
         titleTextView.setText(getResources().getString(R.string.business_enquiries_title));
-        TextView bzText = (TextView)findViewById(R.id.bz_text);
+        TextView bzText = (TextView) findViewById(R.id.bz_text);
         bzText.setText(text);
 
     }
@@ -48,7 +50,7 @@ public class BusinessEnqUpdateDetails extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id==android.R.id.home){
+        if (id == android.R.id.home) {
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }

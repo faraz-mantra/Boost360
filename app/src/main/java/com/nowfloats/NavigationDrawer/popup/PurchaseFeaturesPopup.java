@@ -40,7 +40,7 @@ public class PurchaseFeaturesPopup extends DialogFragment {
         super.onStart();
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setLayout(width,height);
+        getDialog().getWindow().setLayout(width, height);
         getDialog().getWindow().setBackgroundDrawableResource(R.color.fullscreen_color);
 
     }

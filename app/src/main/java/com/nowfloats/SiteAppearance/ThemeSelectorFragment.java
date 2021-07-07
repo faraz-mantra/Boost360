@@ -3,9 +3,11 @@ package com.nowfloats.SiteAppearance;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,14 +41,14 @@ public class ThemeSelectorFragment extends Fragment {
     String[] themeNames, themeMessages;
     String[] themeIds;
     int pos;
-    private Context mContext;
     String currentThemeId = "";
     UserSessionManager manager;
     ProgressDialog dialog;
     TextView setLook;
+    private Context mContext;
 
     public static Fragment getInstance(int pos) {
-        BoostLog.e("","d");
+        BoostLog.e("", "d");
         Fragment frag = new ThemeSelectorFragment();
         Bundle b = new Bundle();
         b.putInt("pos", pos);

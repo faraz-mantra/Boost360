@@ -6,15 +6,19 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
 import androidx.databinding.DataBindingUtil;
+
 import android.graphics.Bitmap;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,42 +53,33 @@ import static com.framework.webengageconstant.EventNameKt.FAVICON_IMAGE_ADDED;
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_FAVICON_IMAGE;
 import static com.framework.webengageconstant.EventValueKt.NULL;
 
-public class FaviconImageActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload
-{
-    Button uploadButton ;
-
+public class FaviconImageActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload {
     private static final int ACTION_REQUEST_IMAGE_EDIT = 3;
-
-    ContentValues values;
-    Uri imageUri ;
-
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
-
-    Bitmap CameraBitmap;
-    String path = null;
-    String imageUrl ="";
-    private ImageView logoimageView;
-    PorterDuffColorFilter whiteLabelFilter;
-    UserSessionManager session;
-
     private final int gallery_req_id = 0;
     private final int media_req_id = 1;
+    Button uploadButton;
+    ContentValues values;
+    Uri imageUri;
+    Bitmap CameraBitmap;
+    String path = null;
+    String imageUrl = "";
+    PorterDuffColorFilter whiteLabelFilter;
+    UserSessionManager session;
+    ActivityFaviconImageBinding binding;
+    private ImageView logoimageView;
     private ProgressDialog dialog;
 
-    ActivityFaviconImageBinding binding;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_favicon_image);
 
         setSupportActionBar(binding.appBar.toolbar);
         Methods.isOnline(FaviconImageActivity.this);
 
-        if (getSupportActionBar() != null)
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -98,23 +93,15 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
         logoimageView = findViewById(R.id.logoimageView);
         uploadButton = findViewById(R.id.addLogoButton);
 
-        try
-        {
+        try {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FAVICON_IMAGE_URI);
 
-            if (!TextUtils.isEmpty(iconUrl))
-            {
+            if (!TextUtils.isEmpty(iconUrl)) {
                 Picasso.get().load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
-            }
-
-            else
-            {
+            } else {
                 Picasso.get().load(R.drawable.logo_default_image).into(logoimageView);
             }
-        }
-
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             System.gc();
         }
@@ -123,7 +110,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
             @Override
             public void onClick(View v) {
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     Methods.showFeatureNotAvailDialog(FaviconImageActivity.this);
                     return;
                 }
@@ -170,13 +157,13 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
             }
 
             private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
-                if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
-                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
-                    WebEngageController.trackEvent(UPLOAD_FAVICON_IMAGE,EVENT_LABEL_UPLOAD_FAVICON_IMAGE,NULL);
+                if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA, null);
+                    WebEngageController.trackEvent(UPLOAD_FAVICON_IMAGE, EVENT_LABEL_UPLOAD_FAVICON_IMAGE, NULL);
                     cameraIntent();
-                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
-                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
-                    WebEngageController.trackEvent(UPLOAD_FAVICON_IMAGE,EVENT_LABEL_UPLOAD_FAVICON_IMAGE,NULL);
+                } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY, null);
+                    WebEngageController.trackEvent(UPLOAD_FAVICON_IMAGE, EVENT_LABEL_UPLOAD_FAVICON_IMAGE, NULL);
                     galleryIntent();
                 }
             }
@@ -189,48 +176,37 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
-        if(requestCode == media_req_id)
-        {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)
-            {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == media_req_id) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
             }
 
-        }
-
-        else if(requestCode == gallery_req_id)
-        {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        } else if (requestCode == gallery_req_id) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
             }
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_business__logo, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         return super.onOptionsItemSelected(item);
     }
 
-    public void cameraIntent()
-    {
-        try
-        {
+    public void cameraIntent() {
+        try {
             // use standard intent to capture an image
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
 
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, media_req_id);
@@ -240,30 +216,22 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
             values = new ContentValues();
             values.put(MediaStore.Images.Media.TITLE, "New Picture");
             values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUri =getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             // we will handle the returned data in onActivityResult
             startActivityForResult(captureIntent, CAMERA_PHOTO);
-        }
-
-        catch (ActivityNotFoundException anfe)
-        {
+        } catch (ActivityNotFoundException anfe) {
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(FaviconImageActivity.this,errorMessage);
-        }
-
-        catch(Exception e)
-        {
+            Methods.showSnackBarNegative(FaviconImageActivity.this, errorMessage);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void galleryIntent()
-    {
-        try
-        {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED ) {
+    public void galleryIntent() {
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
                 return;
@@ -272,12 +240,9 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
             Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
             startActivityForResult(i, GALLERY_PHOTO);
-        }
-
-        catch (ActivityNotFoundException anfe)
-        {
+        } catch (ActivityNotFoundException anfe) {
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(FaviconImageActivity.this,errorMessage);
+            Methods.showSnackBarNegative(FaviconImageActivity.this, errorMessage);
         }
     }
 
@@ -325,10 +290,9 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
         }
     }
 
-    public void uploadPrimaryPicture(String path)
-    {
+    public void uploadPrimaryPicture(String path) {
         WebEngageController.trackEvent(FAVICON_IMAGE_ADDED, MANAGE_CONTENT, session.getFpTag());
-        new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
+        new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
 
         String s_uuid = UUID.randomUUID().toString();
         s_uuid = s_uuid.replace("-", "");
@@ -341,7 +305,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
                 "&reqType=sequential&reqtId=" +
                 s_uuid + "&";
 
-        String url = uri + "totalChunks=1&currentChunkNumber=1" ;
+        String url = uri + "totalChunks=1&currentChunkNumber=1";
 
         UploadFaviconImage upload = new UploadFaviconImage(path, url);
         upload.setUploadListener(this);
@@ -349,48 +313,35 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
     }
 
     @Override
-    public void onPreUpload()
-    {
+    public void onPreUpload() {
         dialog = ProgressDialog.show(this, "", getString(R.string.uploading_image));
         dialog.setCancelable(false);
     }
 
     @Override
-    public void onPostUpload(boolean isSuccess, String response)
-    {
-        if(isSuccess)
-        {
+    public void onPostUpload(boolean isSuccess, String response) {
+        if (isSuccess) {
             Methods.showSnackBarPositive(this, getString(R.string.image_updated_successfully));
 
-            if(!TextUtils.isEmpty(response))
-            {
+            if (!TextUtils.isEmpty(response)) {
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FAVICON_IMAGE_URI, response.replace("\\", "").replace("\"", ""));
             }
 
-            try
-            {
+            try {
                 Bitmap bmp = Util.getBitmap(path, this);
                 bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
 
-                if(logoimageView != null)
-                {
+                if (logoimageView != null) {
                     logoimageView.setImageBitmap(bmp);
                 }
-            }
-
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-
-        else
-        {
+        } else {
             Methods.showSnackBarNegative(this, getString(R.string.failed_to_upload));
         }
 
-        if(dialog != null && dialog.isShowing())
-        {
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
     }

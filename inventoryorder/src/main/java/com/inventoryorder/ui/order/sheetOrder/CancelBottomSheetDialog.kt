@@ -7,11 +7,13 @@ import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetCancelOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class CancelBottomSheetDialog : BaseBottomSheetDialog<BottomSheetCancelOrderBinding, BaseViewModel>() {
+class CancelBottomSheetDialog :
+  BaseBottomSheetDialog<BottomSheetCancelOrderBinding, BaseViewModel>() {
 
   private var cancellingEntity: String? = OrderItem.CancellingEntity.BUYER.name
   private var orderItem: OrderItem? = null
-  var onClicked: (cancellingEntity: String,reasonText:String) -> Unit = { _: String, _: String -> }
+  var onClicked: (cancellingEntity: String, reasonText: String) -> Unit =
+    { _: String, _: String -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_cancel_order
@@ -31,7 +33,7 @@ class CancelBottomSheetDialog : BaseBottomSheetDialog<BottomSheetCancelOrderBind
     cancellingEntity = OrderItem.CancellingEntity.SELLER.name
     binding?.radioGroup?.setOnCheckedChangeListener { group, checkedId ->
       val radioButton: View = group.findViewById(checkedId)
-      cancellingEntity= when (radioButton){
+      cancellingEntity = when (radioButton) {
         binding?.radioCustomer -> OrderItem.CancellingEntity.BUYER.name
         else -> OrderItem.CancellingEntity.SELLER.name
       }
@@ -42,7 +44,10 @@ class CancelBottomSheetDialog : BaseBottomSheetDialog<BottomSheetCancelOrderBind
     super.onClick(v)
     dismiss()
     when (v) {
-      binding?.buttonDone -> onClicked(cancellingEntity?:"", (binding?.txtReason?.text?.toString()?:""))
+      binding?.buttonDone -> onClicked(
+        cancellingEntity ?: "",
+        (binding?.txtReason?.text?.toString() ?: "")
+      )
     }
   }
 

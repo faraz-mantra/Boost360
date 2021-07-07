@@ -13,13 +13,14 @@ object EndPoints {
   const val CREATE_STAFF_PROFILE = "Staff/v1/Create"
   const val FETCH_STAFF_SERVICES = "product/v13/GetServiceListings"
   const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
-  const val STAFF_PROFILE_UPDATE ="staff/v1/Update"
-  const val STAFF_PROFILE_DELETE ="staff/v1/Delete"
-  const val STAFF_ADD_TIMING ="staff/v1/AddStaffTiming"
-  const val STAFF_UPDATE_TIMING ="staff/v1/UpdateStaffTiming"
-  const val STAFF_UPDATE_IMAGE ="staff/v1/UpdateStaffImage"
-  const val STAFF_DELETE_IMAGE ="staff/v1/DeleteStaffImage"
-  const val GET_STAFF_DETAILS ="Staff/v1/GetStaffDetails"
+  const val STAFF_PROFILE_UPDATE = "staff/v1/Update"
+  const val STAFF_PROFILE_DELETE = "staff/v1/Delete"
+  const val STAFF_ADD_TIMING = "staff/v1/AddStaffTiming"
+  const val STAFF_UPDATE_TIMING = "staff/v1/UpdateStaffTiming"
+  const val STAFF_UPDATE_IMAGE = "staff/v1/UpdateStaffImage"
+  const val STAFF_DELETE_IMAGE = "staff/v1/DeleteStaffImage"
+  const val GET_STAFF_DETAILS = "Staff/v1/GetStaffDetails"
+
   //TODO WEEKLY APPOINTMENT APIS
   const val POST_UPDATE_SERVICE_TIMING = "service/v1/UpdateServiceTiming"
   const val POST_ADD_SERVICE_TIMING = "service/v1/AddServiceTiming"
@@ -33,7 +34,7 @@ object EndPoints {
   const val ADD_IMAGE_V1 = "service/v1/AddImage"
   const val GET_TAGS_V1 = "service/v1/tags"
   const val GET_SERVICE_DETAILS = "Service/v1/GetServiceDetails"
-  const val  DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
+  const val DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
 
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
@@ -46,6 +47,8 @@ object EndPoints {
   const val GET_LATEST_UPDATES = "Discover/v1/floatingPoint/bizFloats"
   const val PUT_BIZ_MESSAGE = "discover/v1/FloatingPoint/createBizMessage"
   const val PUT_BIZ_IMAGE = "discover/v1/FloatingPoint/createBizImage"
+  const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
+  const val DELETE_BIZ_MESSAGE_UPDATE = "discover/v1/floatingpoint/archiveMessage"
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"

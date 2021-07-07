@@ -25,13 +25,27 @@ import java.util.Arrays;
  * Represents a range of text, relative to the current cursor position.
  */
 public final class TextRange {
+    public final CharSequence mWord;
+    public final boolean mHasUrlSpans;
     private final CharSequence mTextAtCursor;
     private final int mWordAtCursorStartIndex;
     private final int mWordAtCursorEndIndex;
     private final int mCursorIndex;
 
-    public final CharSequence mWord;
-    public final boolean mHasUrlSpans;
+    public TextRange(final CharSequence textAtCursor, final int wordAtCursorStartIndex,
+                     final int wordAtCursorEndIndex, final int cursorIndex, final boolean hasUrlSpans) {
+        if (wordAtCursorStartIndex < 0 || cursorIndex < wordAtCursorStartIndex
+                || cursorIndex > wordAtCursorEndIndex
+                || wordAtCursorEndIndex > textAtCursor.length()) {
+            throw new IndexOutOfBoundsException();
+        }
+        mTextAtCursor = textAtCursor;
+        mWordAtCursorStartIndex = wordAtCursorStartIndex;
+        mWordAtCursorEndIndex = wordAtCursorEndIndex;
+        mCursorIndex = cursorIndex;
+        mHasUrlSpans = hasUrlSpans;
+        mWord = mTextAtCursor.subSequence(mWordAtCursorStartIndex, mWordAtCursorEndIndex);
+    }
 
     public int getNumberOfCharsInWordBeforeCursor() {
         return mCursorIndex - mWordAtCursorStartIndex;
@@ -48,13 +62,14 @@ public final class TextRange {
     /**
      * Gets the suggestion spans that are put squarely on the word, with the exact start
      * and end of the span matching the boundaries of the word.
+     *
      * @return the list of spans.
      */
     public SuggestionSpan[] getSuggestionSpansAtWord() {
         if (!(mTextAtCursor instanceof Spanned && mWord instanceof Spanned)) {
             return new SuggestionSpan[0];
         }
-        final Spanned text = (Spanned)mTextAtCursor;
+        final Spanned text = (Spanned) mTextAtCursor;
         // Note: it's fine to pass indices negative or greater than the length of the string
         // to the #getSpans() method. The reason we need to get from -1 to +1 is that, the
         // spans were cut at the cursor position, and #getSpans(start, end) does not return
@@ -103,20 +118,5 @@ public final class TextRange {
             }
         }
         return writeIndex == readIndex ? spans : Arrays.copyOfRange(spans, 0, writeIndex);
-    }
-
-    public TextRange(final CharSequence textAtCursor, final int wordAtCursorStartIndex,
-            final int wordAtCursorEndIndex, final int cursorIndex, final boolean hasUrlSpans) {
-        if (wordAtCursorStartIndex < 0 || cursorIndex < wordAtCursorStartIndex
-                || cursorIndex > wordAtCursorEndIndex
-                || wordAtCursorEndIndex > textAtCursor.length()) {
-            throw new IndexOutOfBoundsException();
-        }
-        mTextAtCursor = textAtCursor;
-        mWordAtCursorStartIndex = wordAtCursorStartIndex;
-        mWordAtCursorEndIndex = wordAtCursorEndIndex;
-        mCursorIndex = cursorIndex;
-        mHasUrlSpans = hasUrlSpans;
-        mWord = mTextAtCursor.subSequence(mWordAtCursorStartIndex, mWordAtCursorEndIndex);
     }
 }

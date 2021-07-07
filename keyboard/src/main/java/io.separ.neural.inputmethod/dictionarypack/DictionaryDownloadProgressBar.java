@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2013 The Android Open Source Project
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
  * of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -45,13 +45,8 @@ public class DictionaryDownloadProgressBar extends ProgressBar {
         super(context, attrs);
     }
 
-    public void setIds(final String clientId, final String wordlistId) {
-        mClientId = clientId;
-        mWordlistId = wordlistId;
-    }
-
     static private int getDownloadManagerPendingIdFromWordlistId(final Context context,
-            final String clientId, final String wordlistId) {
+                                                                 final String clientId, final String wordlistId) {
         final SQLiteDatabase db = MetadataDbHelper.getDb(context, clientId);
         final ContentValues wordlistValues =
                 MetadataDbHelper.getContentValuesOfLatestAvailableWordlistById(db, wordlistId);
@@ -62,6 +57,11 @@ public class DictionaryDownloadProgressBar extends ProgressBar {
             return NOT_A_DOWNLOADMANAGER_PENDING_ID;
         }
         return wordlistValues.getAsInteger(MetadataDbHelper.PENDINGID_COLUMN);
+    }
+
+    public void setIds(final String clientId, final String wordlistId) {
+        mClientId = clientId;
+        mWordlistId = wordlistId;
     }
 
     /*
@@ -108,11 +108,13 @@ public class DictionaryDownloadProgressBar extends ProgressBar {
         private final static int REPORT_PERIOD = 150; // how often to report progress, in ms
         final DownloadManagerWrapper mDownloadManagerWrapper;
         final int mId;
+
         public UpdaterThread(final Context context, final int id) {
             super();
             mDownloadManagerWrapper = new DownloadManagerWrapper(context);
             mId = id;
         }
+
         @Override
         public void run() {
             try {
@@ -150,11 +152,13 @@ public class DictionaryDownloadProgressBar extends ProgressBar {
 
         private class UpdateHelper implements Runnable {
             private int mProgress;
+
             @Override
             public void run() {
                 setIndeterminate(false);
                 setProgress(mProgress);
             }
+
             public void setProgressFromAnotherThread(final int progress) {
                 if (mProgress != progress) {
                     mProgress = progress;

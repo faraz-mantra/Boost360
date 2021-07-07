@@ -30,7 +30,11 @@ class ChannelBottomSheetView : ConstraintLayout, View.OnClickListener {
     setup(context, attrs)
   }
 
-  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+    context,
+    attrs,
+    defStyleAttr
+  ) {
     setup(context, attrs)
   }
 
@@ -38,7 +42,12 @@ class ChannelBottomSheetView : ConstraintLayout, View.OnClickListener {
     if (isInEditMode) {
       View.inflate(context, R.layout.compound_view_channel_bottom_sheet, this)
     } else {
-      binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.compound_view_channel_bottom_sheet, this, true)
+      binding = DataBindingUtil.inflate(
+        LayoutInflater.from(context),
+        R.layout.compound_view_channel_bottom_sheet,
+        this,
+        true
+      )
       setCustomAttrs(context, attrs)
       binding?.done?.setOnClickListener(this)
     }

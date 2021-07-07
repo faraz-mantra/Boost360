@@ -18,7 +18,7 @@ public class AccountDetailModel {
     public String ToBeActivatedOn;
     public PurchasedPackageDetails purchasedPackageDetails;
 
-    public class PurchasedPackageDetails{
+    public class PurchasedPackageDetails {
         public Integer packType;
     }
 }

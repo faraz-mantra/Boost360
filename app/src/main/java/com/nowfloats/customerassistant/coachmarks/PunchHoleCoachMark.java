@@ -7,8 +7,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.LayoutRes;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -29,10 +31,6 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  */
 public class PunchHoleCoachMark extends InternallyAnchoredCoachMark {
 
-    @IntDef({POSITION_CONTENT_AUTOMATICALLY, POSITION_CONTENT_ABOVE, POSITION_CONTENT_BELOW})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface PunchMarkContentPosition {}
-
     /**
      * Decide whether to place the content above or below the punch hole at runtime depending on
      * which side has the most space available
@@ -46,21 +44,17 @@ public class PunchHoleCoachMark extends InternallyAnchoredCoachMark {
      * Position the coach mark content below the punch hole
      */
     public static final int POSITION_CONTENT_BELOW = 2;
-
     private final float mGap;
     private final long mHorizontalTranslationDuration;
     private final int mContentPosition;
-
     private final View mTargetView;
     private final int[] mTargetViewLoc = new int[2];
     private final int[] mAnchorViewLoc = new int[2];
     private float mRelCircleRadius;
-
     private PunchHoleView mPunchHoleView;
     private View mPunchHoleContent;
     private Interpolator INTERPOLATOR = new AccelerateDecelerateInterpolator();
     private AnimatorSet mHorizontalAnimators;
-
     protected PunchHoleCoachMark(PunchHoleCoachMarkBuilder builder) {
         super(builder);
 
@@ -118,9 +112,9 @@ public class PunchHoleCoachMark extends InternallyAnchoredCoachMark {
         // However, if the width of the target view is smaller than the diameter
         // of the punch hole, just center the circle (no point in animating).
         final int startOffsetX = hasHorizontalTranslation()
-                ?  isRtlConfig()
-                        ? mTargetViewLoc[0] + mTargetView.getWidth() - (int) mRelCircleRadius
-                        : mTargetViewLoc[0] + (int) mRelCircleRadius
+                ? isRtlConfig()
+                ? mTargetViewLoc[0] + mTargetView.getWidth() - (int) mRelCircleRadius
+                : mTargetViewLoc[0] + (int) mRelCircleRadius
                 : (mTargetView.getWidth() / 2);
         final int relCircleX = mTargetViewLoc[0] - mAnchorViewLoc[0] + startOffsetX;
         final int relCircleY = mTargetViewLoc[1] - mAnchorViewLoc[1] + (mTargetView.getHeight() / 2);
@@ -191,11 +185,11 @@ public class PunchHoleCoachMark extends InternallyAnchoredCoachMark {
 
     /**
      * CHECK if the punch hole should have a horizontal animation. Checks:
-     *  - the width of the target view is bigger than the diameter of the circle
-     *      (otherwise there's no space to perform the animation).
-     *  - the duration is greater than 0
+     * - the width of the target view is bigger than the diameter of the circle
+     * (otherwise there's no space to perform the animation).
+     * - the duration is greater than 0
      *
-     * @return  whether to display the animation
+     * @return whether to display the animation
      */
     private boolean hasHorizontalTranslation() {
         return mHorizontalTranslationDuration > 0 && mTargetView.getWidth() > 2 * mRelCircleRadius;
@@ -206,12 +200,18 @@ public class PunchHoleCoachMark extends InternallyAnchoredCoachMark {
      * LTR or RTL. Below that API, we assume it's LTR.
      * We need this to show the horizontal translation from start to end
      * (from left to right in LTR and from right to left in LTR), if possible.
-     * @return  whether the device has a RTL locale
+     *
+     * @return whether the device has a RTL locale
      */
     private boolean isRtlConfig() {
         final Configuration config = mAnchor.getResources().getConfiguration();
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
                 && config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+    }
+
+    @IntDef({POSITION_CONTENT_AUTOMATICALLY, POSITION_CONTENT_ABOVE, POSITION_CONTENT_BELOW})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PunchMarkContentPosition {
     }
 
     public static class PunchHoleCoachMarkBuilder extends InternallyAnchoredCoachMarkBuilder {
@@ -289,10 +289,10 @@ public class PunchHoleCoachMark extends InternallyAnchoredCoachMark {
          * Set the layout information for the content inside the coach mark, allowing explicit
          * placement and sizing of the content with respect to the punch hole
          *
-         * @param contentWidth the width of the content - defaults to {@link MATCH_PARENT}
-         * @param contentHeight the height of the content - defaults to {@link WRAP_CONTENT}
+         * @param contentWidth       the width of the content - defaults to {@link MATCH_PARENT}
+         * @param contentHeight      the height of the content - defaults to {@link WRAP_CONTENT}
          * @param contentPositioning where to place the content - defaults to
-         *  {@link POSITION_CONTENT_AUTOMATICALLY}
+         *                           {@link POSITION_CONTENT_AUTOMATICALLY}
          */
         public PunchHoleCoachMarkBuilder setContentLayoutParams(
                 final int contentWidth,

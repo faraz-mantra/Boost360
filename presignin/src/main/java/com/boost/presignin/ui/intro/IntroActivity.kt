@@ -19,6 +19,7 @@ import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.smsVerification.AppSignatureHashHelper
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
@@ -42,7 +43,10 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         val lastPosition: Int? = binding?.introViewpager?.adapter?.itemCount?.minus(1)
         val mCurrentPosition = binding?.introViewpager?.currentItem ?: 0
         val isLast = (mCurrentPosition == lastPosition)
-        binding?.introViewpager?.setCurrentItem(if (isLast) 0 else mCurrentPosition + 1, isLast.not())
+        binding?.introViewpager?.setCurrentItem(
+          if (isLast) 0 else mCurrentPosition + 1,
+          isLast.not()
+        )
         nextPageTimer()
       }
     }
@@ -61,6 +65,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     )
   }
 
+
   private fun openTNCDialog(url: String, title: String) {
     WebViewDialog().apply {
       setData(false, url, title)
@@ -74,7 +79,12 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     initTncString()
     nextPageTimer()
     binding?.introViewpager?.apply {
-      adapter = IntroAdapter(supportFragmentManager, lifecycle, items, { setNextPage() }, { isVideoPlaying = it; })
+      adapter = IntroAdapter(
+        supportFragmentManager,
+        lifecycle,
+        items,
+        { setNextPage() },
+        { isVideoPlaying = it; })
       orientation = ViewPager2.ORIENTATION_HORIZONTAL
       binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
       binding?.introViewpager?.registerOnPageChangeCallback(CircularViewPagerHandler(this))
@@ -89,17 +99,9 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
       }
     }
-//    binding?.introViewpager?.registerOnPageChangeCallback(object :
-//      ViewPager2.OnPageChangeCallback() {
-//      override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-//        super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-//        if (position>=items.size-2){
-//          binding?.btnCreate?.setText(R.string.psn_login_now)
-//        }else{
-//          binding?.btnCreate?.setText(R.string.psn_get_started)
-//        }
-//      }
-//    })
+
+    val hashes = AppSignatureHashHelper(this).appSignatures
+
   }
 
   private fun setNextPage() {

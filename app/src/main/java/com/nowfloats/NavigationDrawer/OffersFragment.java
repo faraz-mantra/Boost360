@@ -6,11 +6,13 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,22 +44,20 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class OffersFragment extends Fragment implements View.OnClickListener{
-    LinearLayout retryLayout,emptyMsgLayout;
+public class OffersFragment extends Fragment implements View.OnClickListener {
+    LinearLayout retryLayout, emptyMsgLayout;
     ButteryProgressBar progressBar;
     CardView progressCrd;
     RecyclerView recyclerView;
-    FloatingActionMenu fabButton ;
-
-
-    private UserSessionManager session;
+    FloatingActionMenu fabButton;
     OnRenewPlanClickListener mCallback = null;
+    Bus mBus;
+    private UserSessionManager session;
     private OffersApiService apiService;
     private List<OfferFloatsModel> offersModelList = new ArrayList<>();
     private OffersAdapter adapter;
     private boolean moreFloatsAvailable = false;
     private int visibilityFlag = 1;
-    Bus mBus;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,32 +84,32 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        session = new UserSessionManager(getActivity().getApplicationContext(),getActivity());
+        session = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
 
         apiService = new OffersApiService(mBus);
         apiService.getAllOffers(getOffersParam(0));
         return inflater.inflate(R.layout.fragment_offers, container, false);
     }
 
-    private HashMap<String,String> getOffersParam(int i) {
+    private HashMap<String, String> getOffersParam(int i) {
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("clientId", Constants.clientId);
         offersParam.put("fpId", session.getFPID());
-        offersParam.put("skipBy", i+"");
+        offersParam.put("skipBy", i + "");
         return offersParam;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        progressCrd = (CardView)view.findViewById(R.id.progressCard);
-        progressBar = (ButteryProgressBar)view.findViewById(R.id.progressbar);
-        retryLayout = (LinearLayout)view.findViewById(R.id.postRetryLayout);
+        progressCrd = (CardView) view.findViewById(R.id.progressCard);
+        progressBar = (ButteryProgressBar) view.findViewById(R.id.progressbar);
+        retryLayout = (LinearLayout) view.findViewById(R.id.postRetryLayout);
         fabButton = (FloatingActionMenu) view.findViewById(R.id.fab);
-        emptyMsgLayout = (LinearLayout)view.findViewById(R.id.emptymsglayout);
+        emptyMsgLayout = (LinearLayout) view.findViewById(R.id.emptymsglayout);
         view.findViewById(R.id.fab_offer).setOnClickListener(this);
         view.findViewById(R.id.fab_update).setOnClickListener(this);
-        ImageView retryPost = (ImageView)view.findViewById(R.id.retryPost);
-        ImageView cancelPost = (ImageView)view.findViewById(R.id.cancelPost);
+        ImageView retryPost = (ImageView) view.findViewById(R.id.retryPost);
+        ImageView cancelPost = (ImageView) view.findViewById(R.id.cancelPost);
         PorterDuffColorFilter whiteLabelFilter =
                 new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor),
                         PorterDuff.Mode.SRC_IN);
@@ -119,7 +119,7 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter  = new OffersAdapter(offersModelList, getActivity());
+        adapter = new OffersAdapter(offersModelList, getActivity());
         adapter.setOnItemClickListener(new OffersAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -131,13 +131,13 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
                 if (scrollState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (visibilityFlag == 0){
+                    if (visibilityFlag == 0) {
                         visibilityFlag = 1;
                         YoYo.with(Techniques.SlideInUp).interpolate(new DecelerateInterpolator()).duration(200)
                                 .playOn(fabButton);
                     }
-                } else if (scrollState == RecyclerView.SCROLL_STATE_DRAGGING){
-                    if (visibilityFlag == 1){
+                } else if (scrollState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    if (visibilityFlag == 1) {
                         YoYo.with(Techniques.SlideOutDown).interpolate(new AccelerateInterpolator()).duration(200).playOn(fabButton);
                         visibilityFlag = 0;
                     }
@@ -146,7 +146,7 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                if(moreFloatsAvailable){
+                if (moreFloatsAvailable) {
                     apiService.getAllOffers(getOffersParam(offersModelList.size()));
                 }
             }
@@ -154,11 +154,11 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
         fabButton.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
             public void onMenuToggle(boolean opened) {
-                if(opened){
+                if (opened) {
                     fabButton.setMenuButtonColorNormal(Color.parseColor("#545454"));
                     fabButton.setMenuButtonColorRipple(Color.parseColor("#fddc80"));
                     fabButton.setMenuButtonColorPressed(Color.parseColor("#545454"));
-                }else {
+                } else {
                     fabButton.setMenuButtonColorNormal(getResources().getColor(R.color.primaryColor));
                     fabButton.setMenuButtonColorRipple(Color.parseColor("#fddc80"));
                     fabButton.setMenuButtonColorPressed(getResources().getColor(R.color.primaryColor));
@@ -168,7 +168,7 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
         fabButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(fabButton.isOpened()){
+                if (fabButton.isOpened()) {
                     fabButton.close(true);
                     return true;
                 }
@@ -190,13 +190,12 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.fab_update:
                 fabButton.close(true);
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     mCallback.onRenewPlanSelected();
-                }
-                else {
+                } else {
                     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
                     startActivity(webIntent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right,
@@ -205,10 +204,9 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.fab_offer:
                 fabButton.close(true);
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     mCallback.onRenewPlanSelected();
-                }
-                else {
+                } else {
                     Intent webIntent = new Intent(getActivity(), CreateOffersActivity.class);
                     startActivity(webIntent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right,
@@ -219,21 +217,21 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
     }
 
     @Subscribe
-    public void getAllOffers(OfferModel result){
+    public void getAllOffers(OfferModel result) {
         progressBar.setVisibility(View.GONE);
-        if(result.response){
+        if (result.response) {
             int offerSize = result.floats.size();
-            if(offerSize>0){
-                for(int i=0; i<offerSize; i++){
+            if (offerSize > 0) {
+                for (int i = 0; i < offerSize; i++) {
                     offersModelList.add(result.floats.get(i));
                 }
-                if(offersModelList.size()>0 && emptyMsgLayout.getVisibility()==View.VISIBLE){
+                if (offersModelList.size() > 0 && emptyMsgLayout.getVisibility() == View.VISIBLE) {
                     emptyMsgLayout.setVisibility(View.GONE);
                 }
                 adapter.notifyDataSetChanged();
             }
             moreFloatsAvailable = result.moreFloatsAvailable;
-        }else {
+        } else {
             Methods.showSnackBarNegative(getActivity(), getString(R.string.offer_getting_error));
         }
 
@@ -243,7 +241,8 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
     interface OnRenewPlanClickListener {
         void onRenewPlanSelected();
     }
-    interface OnFragmentInteractionListener{
+
+    interface OnFragmentInteractionListener {
 
     }
 

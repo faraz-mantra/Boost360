@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Button implements Serializable{
+public class Button implements Serializable {
 
     @SerializedName("_id")
     @Expose
@@ -100,8 +100,16 @@ public class Button implements Serializable{
         return defaultButton;
     }
 
+    public void setDefaultButton(Boolean defaultButton) {
+        this.defaultButton = defaultButton;
+    }
+
     public Boolean getHidden() {
         return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
     }
 
     public boolean isConfirmInput() {
@@ -188,16 +196,8 @@ public class Button implements Serializable{
         return defaultButton;
     }
 
-    public void setDefaultButton(Boolean defaultButton) {
-        this.defaultButton = defaultButton;
-    }
-
     public Boolean isHidden() {
         return hidden;
-    }
-
-    public void setHidden(Boolean hidden) {
-        this.hidden = hidden;
     }
 
     public String getUrl() {

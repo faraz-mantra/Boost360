@@ -25,7 +25,8 @@ import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : Fragment(), View.OnClickListener {
+abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : Fragment(),
+  View.OnClickListener {
 
   protected lateinit var baseActivity: BaseActivity<*, *>
   protected lateinit var root: View
@@ -73,16 +74,28 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   fun showSnackBarNegative(context: Activity, msg: String?) {
-    val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg!!, Snackbar.LENGTH_INDEFINITE)
-    snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
+    val snackBar =
+      Snackbar.make(context.findViewById(android.R.id.content), msg!!, Snackbar.LENGTH_INDEFINITE)
+    snackBar.view.setBackgroundColor(
+      ContextCompat.getColor(
+        context,
+        R.color.snackbar_negative_color
+      )
+    )
     snackBar.duration = 4000
     snackBar.show()
   }
 
 
   fun showSnackBarPositive(context: Activity, msg: String?) {
-    val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg!!, Snackbar.LENGTH_INDEFINITE)
-    snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_positive_color))
+    val snackBar =
+      Snackbar.make(context.findViewById(android.R.id.content), msg!!, Snackbar.LENGTH_INDEFINITE)
+    snackBar.view.setBackgroundColor(
+      ContextCompat.getColor(
+        context,
+        R.color.snackbar_positive_color
+      )
+    )
     snackBar.duration = 4000
     snackBar.show()
   }

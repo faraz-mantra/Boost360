@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="50dp"
-    android:gravity="center"
-    android:background="@color/gray"
-    android:layout_width="40dp">
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:background="@drawable/ripple_spinner"
-        android:src="@drawable/quikr"
-        android:id="@+id/image_parent"/>
+  android:layout_width="40dp"
+  android:layout_height="50dp"
+  android:background="@color/gray"
+  android:gravity="center">
+
+  <ImageView
+    android:id="@+id/image_parent"
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:background="@drawable/ripple_spinner"
+    android:src="@drawable/quikr" />
 
 </LinearLayout>

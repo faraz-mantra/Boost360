@@ -1,106 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/ParentLayoutStyle"
-        android:background="#efefef"
-        tools:context="com.nowfloats.ProductGallery.ManageProductActivity">
+  <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ParentLayoutStyle"
+    android:background="#efefef"
+    tools:context="com.nowfloats.ProductGallery.ManageProductActivity">
 
-        <include
-            android:id="@+id/layout_toolbar"
-            layout="@layout/appbar_layout" />
+    <include
+      android:id="@+id/layout_toolbar"
+      layout="@layout/appbar_layout" />
 
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
+
+      <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/margin_50"
+        android:visibility="gone">
+
+        <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true">
+
+          <ImageView
+            android:id="@+id/iv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/no_product" />
+
+          <TextView
+            android:id="@+id/tv_message"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_empty"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="@string/you_have_no_products_listed_on_your_site_as_of_yet"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="14sp" />
 
-            <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/layout_empty_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:padding="@dimen/margin_50"
-                android:visibility="gone">
+          <Button
+            android:id="@+id/btn_add_catalogue"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_message"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginTop="@dimen/margin_30"
+            android:layout_marginEnd="@dimen/margin_30"
+            android:background="@drawable/rounded_button_enabled"
+            android:onClick="onAddNewProduct"
+            android:text="@string/add_to_catalogue"
+            android:textColor="@android:color/white" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
+        </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/iv_empty"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        app:srcCompat="@drawable/no_product" />
+      </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/tv_message"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/iv_empty"
-                        android:layout_marginTop="30dp"
-                        android:gravity="center"
-                        android:text="@string/you_have_no_products_listed_on_your_site_as_of_yet"
-                        android:textColor="@color/secondaryTextColor"
-                        android:textSize="14sp" />
+      <!--
+      <include
+          android:id="@+id/layout_empty"
+          layout="@layout/product_catalog_empty_view" />
+      -->
 
-                    <Button
-                        android:id="@+id/btn_add_catalogue"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_message"
-                        android:layout_marginStart="@dimen/margin_30"
-                        android:layout_marginTop="@dimen/margin_30"
-                        android:layout_marginEnd="@dimen/margin_30"
-                        android:background="@drawable/rounded_button_enabled"
-                        android:onClick="onAddNewProduct"
-                        android:text="@string/add_to_catalogue"
-                        android:textColor="@android:color/white" />
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
 
-                </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/product_list"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:clipToPadding="false"
+          android:scrollbars="none"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            </RelativeLayout>
+      </LinearLayout>
 
-            <!--
-            <include
-                android:id="@+id/layout_empty"
-                layout="@layout/product_catalog_empty_view" />
-            -->
+      <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
+    </FrameLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/product_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:scrollbars="none"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-            </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/pb_loading"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:visibility="gone" />
-
-        </FrameLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

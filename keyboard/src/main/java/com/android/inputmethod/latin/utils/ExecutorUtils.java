@@ -32,26 +32,13 @@ public class ExecutorUtils {
     private static final ConcurrentHashMap<String, ExecutorService> sExecutorMap =
             new ConcurrentHashMap<>();
 
-    private static class ThreadFactoryWithId implements ThreadFactory {
-        private final String mId;
-
-        public ThreadFactoryWithId(final String id) {
-            mId = id;
-        }
-
-        @Override
-        public Thread newThread(@NonNull final Runnable r) {
-            return new Thread(r, "Executor - " + mId);
-        }
-    }
-
     /**
      * Gets the executor for the given id.
      */
     public static ExecutorService getExecutor(final String id) {
         ExecutorService executor = sExecutorMap.get(id);
         if (executor == null) {
-            synchronized(sExecutorMap) {
+            synchronized (sExecutorMap) {
                 executor = sExecutorMap.get(id);
                 if (executor == null) {
                     executor = Executors.newSingleThreadExecutor(new ThreadFactoryWithId(id));
@@ -67,7 +54,7 @@ public class ExecutorUtils {
      */
     @UsedForTesting
     public static void shutdownAllExecutors() {
-        synchronized(sExecutorMap) {
+        synchronized (sExecutorMap) {
             for (final ExecutorService executor : sExecutorMap.values()) {
                 executor.execute(new Runnable() {
                     @Override
@@ -77,6 +64,19 @@ public class ExecutorUtils {
                     }
                 });
             }
+        }
+    }
+
+    private static class ThreadFactoryWithId implements ThreadFactory {
+        private final String mId;
+
+        public ThreadFactoryWithId(final String id) {
+            mId = id;
+        }
+
+        @Override
+        public Thread newThread(@NonNull final Runnable r) {
+            return new Thread(r, "Executor - " + mId);
         }
     }
 }

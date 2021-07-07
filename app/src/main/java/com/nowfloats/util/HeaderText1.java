@@ -9,12 +9,13 @@ import android.widget.TextView;
 
 import com.thinksity.R;
 
-public class HeaderText1 extends TextView{
+public class HeaderText1 extends TextView {
 
     public HeaderText1(Context context) {
         super(context);
         init(context);
     }
+
     public HeaderText1(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -24,9 +25,9 @@ public class HeaderText1 extends TextView{
         super(context, attrs, defStyle);
         init(context);
     }
-    public void init(Context context)
-    {
-        setCustomFont(context,"Roboto-Medium.ttf");
+
+    public void init(Context context) {
+        setCustomFont(context, "Roboto-Medium.ttf");
         setTextColor(getResources().getColor(R.color.white));
         setTextSize(19);
     }

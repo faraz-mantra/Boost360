@@ -40,7 +40,9 @@ import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 
-class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessScoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
+class DigitalReadinessScoreFragment :
+  AppBaseFragment<FragmentDigitalReadinessScoreBinding, DashboardViewModel>(),
+  RecyclerItemClickListener {
 
   private var adapterPager: AppBaseRecyclerViewAdapter<DrScoreSetupData>? = null
   private var session: UserSessionManager? = null
@@ -86,27 +88,50 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 85)
         val drScoreSetupList = drScoreData?.getDrScoreData(response.data)
         if (drScoreSetupList.isNullOrEmpty().not()) {
-          drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
+          drScoreSetupList?.map { it1 ->
+            it1.recyclerViewItemType =
+              RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout()
+          }
           if (adapterPager == null) {
             binding?.pagerBusinessContentSetup?.apply {
-              adapterPager = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DigitalReadinessScoreFragment)
+              adapterPager = AppBaseRecyclerViewAdapter(
+                baseActivity,
+                drScoreSetupList!!,
+                this@DigitalReadinessScoreFragment
+              )
               offscreenPageLimit = 3
               clipToPadding = false
               setPadding(34, 0, 34, 0)
               adapter = adapterPager
               currentItem = position
               binding?.dotBusinessContentSetup?.setViewPager2(this)
-              setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+              setPageTransformer { page, position ->
+                OffsetPageTransformer().transformPage(
+                  page,
+                  position
+                )
+              }
             }
           } else adapterPager?.notify(drScoreSetupList)
-        } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
-        binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "85%")
+        } else Snackbar.make(
+          binding?.root!!,
+          getString(R.string.digital_readiness_score_failed_to_load),
+          Snackbar.LENGTH_INDEFINITE
+        ).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
+        binding?.txtDes?.text = resources.getString(
+          R.string.add_missing_info_better_online_traction,
+          if (isHigh) "100%" else "85%"
+        )
 //        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
         binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal()}"
         binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
 //        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
 
-      } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
+      } else Snackbar.make(
+        binding?.root!!,
+        getString(R.string.digital_readiness_score_failed_to_load),
+        Snackbar.LENGTH_INDEFINITE
+      ).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
 
     })
 
@@ -119,7 +144,8 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         val data = item as? DrScoreItem ?: return
         val type = DrScoreItem.DrScoreItemType.fromName(data.drScoreUiData?.id)
         if (type == DrScoreItem.DrScoreItemType.boolean_share_business_card) {
-          val messageChannelUrl = PreferencesUtils.instance.getData(PreferenceConstant.CHANNEL_SHARE_URL, "")
+          val messageChannelUrl =
+            PreferencesUtils.instance.getData(PreferenceConstant.CHANNEL_SHARE_URL, "")
           if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
           else getChannelAccessToken(true)
         } else clickEventUpdateScoreN(type, baseActivity, session)
@@ -132,13 +158,26 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? ShareUserDetailResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
+        val messageDetail = response.data?.firstOrNull { it1 ->
+          it1.type.equals(
+            session?.fP_AppExperienceCode,
+            ignoreCase = true
+          )
+        }?.message
         if (messageDetail.isNullOrEmpty().not()) {
           val lat = session?.getFPDetails(Key_Preferences.LATITUDE)
           val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
           var location = ""
-          if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
-          val txt = String.format(messageDetail!!, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
+          if (lat != null && long != null) location = "${
+            if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""
+          }\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          val txt = String.format(
+            messageDetail!!,
+            session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "",
+            session!!.getDomainName(false),
+            shareChannelText,
+            location
+          )
           visitingCard(txt)
         }
       } else visitingCard(getString(R.string.business_card))
@@ -150,7 +189,10 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     session?.let {
       val dialogCard = VisitingCardSheet()
       dialogCard.setData(getLocalSession(it), shareChannelText)
-      dialogCard.show(this@DigitalReadinessScoreFragment.parentFragmentManager, VisitingCardSheet::class.java.name)
+      dialogCard.show(
+        this@DigitalReadinessScoreFragment.parentFragmentManager,
+        VisitingCardSheet::class.java.name
+      )
     }
   }
 
@@ -161,7 +203,8 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       if (it.isSuccess()) {
         val response = it as? ChannelAccessStatusResponse
         if (response?.channels?.facebookpage?.account?.accountId.isNullOrEmpty().not()) {
-          urlString = "\n⚡ *Facebook: https://www.facebook.com/${response?.channels?.facebookpage?.account?.accountId}*"
+          urlString =
+            "\n⚡ *Facebook: https://www.facebook.com/${response?.channels?.facebookpage?.account?.accountId}*"
         }
         if (response?.channels?.twitter?.account?.accountName.isNullOrEmpty().not()) {
           urlString += "\n⚡ *Twitter: https://twitter.com/${response?.channels?.twitter?.account?.accountName?.trim()}*"
@@ -181,7 +224,9 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
           urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.active_whatsapp_number}*"
         }
       }
-      if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDECall: ${session?.userPrimaryMobile}*"
+      if (session?.userPrimaryMobile.isNullOrEmpty()
+          .not()
+      ) urlStringN += "\n\uD83D\uDCDECall: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(PreferenceConstant.CHANNEL_SHARE_URL, urlStringN)
       if (isShowLoader) visitingCardDetailText(urlStringN)
     })
@@ -206,7 +251,11 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
   }
 }
 
-fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: AppCompatActivity, session: UserSessionManager?) {
+fun clickEventUpdateScoreN(
+  type: DrScoreItem.DrScoreItemType?,
+  baseActivity: AppCompatActivity,
+  session: UserSessionManager?
+) {
   WebEngageController.trackEvent(DIGITAL_READINESS_PAGE, PAGE_VIEW, session?.fpTag)
   when (type) {
     DrScoreItem.DrScoreItemType.boolean_add_business_name -> {
@@ -222,7 +271,9 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
       baseActivity.startBusinessLogo(session)
     }
     DrScoreItem.DrScoreItemType.boolean_add_business_hours -> {
-      if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(session)
+      if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(
+        session
+      )
       else alertDialogBusinessHours(baseActivity, session)
     }
     DrScoreItem.DrScoreItemType.boolean_add_contact_details -> {
@@ -273,10 +324,12 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
 
 fun alertDialogBusinessHours(baseActivity: AppCompatActivity, session: UserSessionManager?) {
   AlertDialog.Builder(baseActivity)
-      .setTitle(baseActivity.getString(R.string.features_not_available))
-      .setMessage(baseActivity.getString(R.string.check_store_for_upgrade_info))
-      .setPositiveButton(baseActivity.getString(R.string.goto_store)) { dialogInterface, i ->
-        baseActivity.startPricingPlan(session)
-        dialogInterface.dismiss()
-      }.setNegativeButton(baseActivity.getString(R.string.cancel)) { dialogInterface, _ -> dialogInterface.dismiss() }.show()
+    .setTitle(baseActivity.getString(R.string.features_not_available))
+    .setMessage(baseActivity.getString(R.string.check_store_for_upgrade_info))
+    .setPositiveButton(baseActivity.getString(R.string.goto_store)) { dialogInterface, i ->
+      baseActivity.startPricingPlan(session)
+      dialogInterface.dismiss()
+    }
+    .setNegativeButton(baseActivity.getString(R.string.cancel)) { dialogInterface, _ -> dialogInterface.dismiss() }
+    .show()
 }

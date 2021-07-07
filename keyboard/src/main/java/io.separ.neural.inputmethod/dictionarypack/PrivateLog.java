@@ -54,7 +54,7 @@ public class PrivateLog {
 
     public static synchronized PrivateLog getInstance(final Context context) {
         if (!DEBUG) return sInstance;
-        synchronized(PrivateLog.class) {
+        synchronized (PrivateLog.class) {
             if (sDebugHelper == null) {
                 sDebugHelper = new DebugHelper(context);
             }
@@ -62,10 +62,24 @@ public class PrivateLog {
         }
     }
 
+    public static void log(String event) {
+        if (!DEBUG) return;
+        final SQLiteDatabase l = sDebugHelper.getWritableDatabase();
+        DebugHelper.insert(l, event);
+    }
+
     private static class DebugHelper extends SQLiteOpenHelper {
 
         private DebugHelper(final Context context) {
             super(context, LOG_DATABASE_NAME, null, LOG_DATABASE_VERSION);
+        }
+
+        private static void insert(SQLiteDatabase db, String event) {
+            if (!DEBUG) return;
+            final ContentValues c = new ContentValues(2);
+            c.put(COLUMN_DATE, sDateFormat.format(new Date(System.currentTimeMillis())));
+            c.put(COLUMN_EVENT, event);
+            db.insert(LOG_TABLE_NAME, null, c);
         }
 
         @Override
@@ -84,19 +98,5 @@ public class PrivateLog {
             insert(db, "Upgrade finished");
         }
 
-        private static void insert(SQLiteDatabase db, String event) {
-            if (!DEBUG) return;
-            final ContentValues c = new ContentValues(2);
-            c.put(COLUMN_DATE, sDateFormat.format(new Date(System.currentTimeMillis())));
-            c.put(COLUMN_EVENT, event);
-            db.insert(LOG_TABLE_NAME, null, c);
-        }
-
-    }
-
-    public static void log(String event) {
-        if (!DEBUG) return;
-        final SQLiteDatabase l = sDebugHelper.getWritableDatabase();
-        DebugHelper.insert(l, event);
     }
 }

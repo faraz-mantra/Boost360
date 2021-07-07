@@ -1,125 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#EFEFEF"
+  android:clickable="true"
+  android:focusable="true"
+  android:orientation="vertical">
+
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/new_custome_app_bar" />
+
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#EFEFEF"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:orientation="vertical"
+    android:padding="@dimen/_20sdp">
 
-
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_custome_app_bar" />
-
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:text="@string/enter_the_domain_you_want_to_be_booked_amp_mapped_to_your_boost_business_website"
+      android:textColor="@color/white"
+      android:textSize="@dimen/_12sdp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/_20sdp"
+      android:background="@drawable/edittext_bg_elevated"
+      android:gravity="center_vertical">
+
+      <EditText
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:orientation="vertical"
-        android:padding="@dimen/_20sdp">
+        android:layout_weight="1"
+        android:background="@null"
+        android:hint="@string/write_a_domain_name"
+        android:padding="@dimen/_5sdp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/enter_the_domain_you_want_to_be_booked_amp_mapped_to_your_boost_business_website"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp" />
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#7EADFD">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/edittext_bg_elevated"
-            android:gravity="center_vertical">
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/write_a_domain_name"
-                android:padding="@dimen/_5sdp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#7EADFD">
-
-                <Spinner
-                    android:id="@+id/domain_support_type"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:background="@drawable/domain_spinner_bg"
-                    android:inputType="text"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:spinnerMode="dropdown"
-                    android:textColor="@color/white"
-                    app:layout_constraintStart_toStartOf="parent" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:text="@string/you_re_getting_this_domain_worth_600_for_first_year"
-            android:textColor="@color/white" />
+        <Spinner
+          android:id="@+id/domain_support_type"
+          android:layout_width="@dimen/_80sdp"
+          android:layout_height="@dimen/_30sdp"
+          android:background="@drawable/domain_spinner_bg"
+          android:inputType="text"
+          android:paddingStart="@dimen/_10sdp"
+          android:paddingEnd="@dimen/_10sdp"
+          android:spinnerMode="dropdown"
+          android:textColor="@color/white"
+          app:layout_constraintStart_toStartOf="parent" />
+      </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/_20sdp"
+      android:text="@string/you_re_getting_this_domain_worth_600_for_first_year"
+      android:textColor="@color/white" />
+  </LinearLayout>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="@dimen/_50sdp"
+      android:gravity="center_horizontal"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/boost_doesn_t_buy_any_premium_domain" />
+
+      <TextView
+        android:id="@+id/confirm_btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_50sdp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/boost_doesn_t_buy_any_premium_domain" />
-
-            <TextView
-                android:id="@+id/confirm_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@drawable/orange_button_click_effect"
-                android:elevation="@dimen/_2sdp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:gravity="center"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                android:text="@string/confirm_"
-                android:textAllCaps="true"
-                android:textColor="@color/white" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/orange_button_click_effect"
+        android:elevation="@dimen/_2sdp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:text="@string/confirm_"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
 
 
-            <TextView
-                android:id="@+id/order_needs_help"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
-                android:background="@drawable/order_grey_button_click_effect"
-                android:elevation="@dimen/_2sdp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:gravity="center"
-                android:padding="@dimen/_10sdp"
-                android:text="@string/back"
-                android:textAllCaps="true"
-                android:textColor="@color/common_text_color" />
-        </LinearLayout>
+      <TextView
+        android:id="@+id/order_needs_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/order_grey_button_click_effect"
+        android:elevation="@dimen/_2sdp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/back"
+        android:textAllCaps="true"
+        android:textColor="@color/common_text_color" />
+    </LinearLayout>
 
-    </RelativeLayout>
+  </RelativeLayout>
 
 </LinearLayout>

@@ -212,15 +212,13 @@
               android:id="@+id/service_location"
               style="@style/wrap_wrap"
               layout="@layout/icon_text_item"
-              android:layout_marginTop="@dimen/size_2"
-              tools:ignore="IncludeLayoutParam" />
+              android:layout_marginTop="@dimen/size_2" />
 
             <include
               android:id="@+id/customer"
               style="@style/wrap_wrap"
               layout="@layout/icon_text_item"
-              android:layout_marginTop="@dimen/size_2"
-              tools:ignore="IncludeLayoutParam" />
+              android:layout_marginTop="@dimen/size_2" />
 
             <RelativeLayout
               style="@style/match_wrap"

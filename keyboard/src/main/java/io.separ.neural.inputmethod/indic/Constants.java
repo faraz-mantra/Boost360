@@ -17,6 +17,180 @@
 package io.separ.neural.inputmethod.indic;
 
 public final class Constants {
+    public static final int NOT_A_CODE = -1;
+    public static final int NOT_A_CURSOR_POSITION = -1;
+    // TODO: replace the following constants with state in InputTransaction?
+    public static final int NOT_A_COORDINATE = -1;
+    public static final int SUGGESTION_STRIP_COORDINATE = -2;
+    public static final int SPELL_CHECKER_COORDINATE = -3;
+    public static final int EXTERNAL_KEYBOARD_COORDINATE = -4;
+    // A hint on how many characters to cache from the TextView. A good value of this is given by
+    // how many characters we need to be able to almost always find the caps mode.
+    public static final int EDITOR_CONTENTS_CACHE_SIZE = 512;
+    // How many characters we accept for the recapitalization functionality. This needs to be
+    // large enough for all reasonable purposes, but avoid purposeful attacks. 100k sounds about
+    // right for this.
+    public static final int MAX_CHARACTERS_FOR_RECAPITALIZATION = 512 * 100;
+    // Must be equal to MAX_WORD_LENGTH in native/jni/src/defines.h
+    public static final int DICTIONARY_MAX_WORD_LENGTH = 48;
+    // (MAX_PREV_WORD_COUNT_FOR_N_GRAM + 1)-gram is supported in Java side. Needs to modify
+    // MAX_PREV_WORD_COUNT_FOR_N_GRAM in native/jni/src/defines.h for suggestions.
+    public static final int MAX_PREV_WORD_COUNT_FOR_N_GRAM = 2;
+    // Key events coming any faster than this are long-presses.
+    public static final int LONG_PRESS_MILLISECONDS = 200;
+    // TODO: Set this value appropriately.
+    public static final int GET_SUGGESTED_WORDS_TIMEOUT = 200;
+    // How many continuous deletes at which to start deleting at a higher speed.
+    public static final int DELETE_ACCELERATE_AT = 20; //TODO delete behavior is here?
+    public static final String WORD_SEPARATOR = " ";
+    /**
+     * Custom request code used in
+     * {@link com.android.inputmethod.keyboard.KeyboardActionListener#onCustomRequest(int)}.
+     */
+    // The code to show input method picker.
+    public static final int CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER = 1;
+    /**
+     * Some common keys code. Must be positive.
+     */
+    public static final int CODE_ENTER = '\n';
+    public static final int CODE_TAB = '\t';
+    public static final int CODE_SPACE = ' ';
+    public static final int CODE_PERIOD = '.';
+    public static final int CODE_COMMA = ',';
+    public static final int CODE_DASH = '-';
+    public static final int CODE_SINGLE_QUOTE = '\'';
+    public static final int CODE_DOUBLE_QUOTE = '"';
+    public static final int CODE_QUESTION_MARK = '?';
+    public static final int CODE_EXCLAMATION_MARK = '!';
+    public static final int CODE_SLASH = '/';
+    public static final int CODE_BACKSLASH = '\\';
+    public static final int CODE_VERTICAL_BAR = '|';
+    public static final int CODE_COMMERCIAL_AT = '@';
+    public static final int CODE_PLUS = '+';
+    public static final int CODE_PERCENT = '%';
+    public static final int CODE_CLOSING_PARENTHESIS = ')';
+    public static final int CODE_CLOSING_SQUARE_BRACKET = ']';
+    public static final int CODE_CLOSING_CURLY_BRACKET = '}';
+    public static final int CODE_CLOSING_ANGLE_BRACKET = '>';
+    public static final int CODE_INVERTED_QUESTION_MARK = 0xBF; // ¿
+    public static final int CODE_INVERTED_EXCLAMATION_MARK = 0xA1; // ¡
+    public static final String REGEXP_PERIOD = "\\.";
+    public static final String STRING_SPACE = " ";
+    public static final String STRING_PERIOD_AND_SPACE = ". ";
+    /**
+     * Special keys code. Must be negative.
+     * These should be aligned with {@link KeyboardCodesSet#ID_TO_NAME},
+     * {@link KeyboardCodesSet#DEFAULT}, and {@link KeyboardCodesSet#RTL}.
+     */
+    public static final int CODE_SHIFT = -1;
+    public static final int CODE_CAPSLOCK = -2;
+    public static final int CODE_SWITCH_ALPHA_SYMBOL = -3;
+    public static final int CODE_OUTPUT_TEXT = -4;
+    public static final int CODE_DELETE = -5;
+    public static final int CODE_SETTINGS = -6;
+    public static final int CODE_SHORTCUT = -7;
+    public static final int CODE_ACTION_NEXT = -8;
+    public static final int CODE_ACTION_PREVIOUS = -9;
+    public static final int CODE_LANGUAGE_SWITCH = -10;
+    public static final int CODE_EMOJI = -11;
+    public static final int CODE_SHIFT_ENTER = -12;
+    public static final int CODE_SYMBOL_SHIFT = -13;
+    public static final int CODE_ALPHA_FROM_EMOJI = -14;
+    // Code value representing the code is not specified.
+    public static final int CODE_UNSPECIFIED = -15;
+    public static final int CODE_INLINESETTINGS = -16;
+    public static final int CODE_SWITCH_SCREEN_MAIN = -17;
+    public static final int MAX_INT_BIT_COUNT = 32;
+    /**
+     * Screen metrics (a.k.a. Device form factor) constants of
+     * {@link R.integer#config_screen_metrics}.
+     */
+    public static final int SCREEN_METRICS_SMALL_PHONE = 0;
+    public static final int SCREEN_METRICS_LARGE_PHONE = 1;
+    public static final int SCREEN_METRICS_LARGE_TABLET = 2;
+    public static final int SCREEN_METRICS_SMALL_TABLET = 3;
+    /**
+     * Default capacity of gesture points container.
+     * This constant is used by {@link BatchInputArbiter} and etc. to preallocate regions that
+     * contain gesture event points.
+     */
+    public static final int DEFAULT_GESTURE_POINTS_CAPACITY = 128;
+    public static final int EVENT_BACKSPACE = 1;
+    public static final int EVENT_REJECTION = 2;
+    public static final int EVENT_REVERT = 3;
+
+    private Constants() {
+        // This utility class is not publicly instantiable.
+    }
+
+    public static boolean isValidCoordinate(final int coordinate) {
+        // Detect {@link NOT_A_COORDINATE}, {@link SUGGESTION_STRIP_COORDINATE},
+        // and {@link SPELL_CHECKER_COORDINATE}.
+        return coordinate >= 0;
+    }
+
+    public static boolean isLetterCode(final int code) {
+        return code >= CODE_SPACE;
+    }
+
+    public static String printableCode(final int code) {
+        switch (code) {
+            case CODE_SHIFT:
+                return "shift";
+            case CODE_CAPSLOCK:
+                return "capslock";
+            case CODE_SWITCH_ALPHA_SYMBOL:
+                return "symbol";
+            case CODE_OUTPUT_TEXT:
+                return "text";
+            case CODE_DELETE:
+                return "delete";
+            case CODE_SETTINGS:
+                return "settings";
+            case CODE_SHORTCUT:
+                return "shortcut";
+            case CODE_ACTION_NEXT:
+                return "actionNext";
+            case CODE_ACTION_PREVIOUS:
+                return "actionPrevious";
+            case CODE_LANGUAGE_SWITCH:
+                return "languageSwitch";
+            case CODE_EMOJI:
+                return "emoji";
+            case CODE_SHIFT_ENTER:
+                return "shiftEnter";
+            case CODE_ALPHA_FROM_EMOJI:
+                return "alpha";
+            case CODE_UNSPECIFIED:
+                return "unspec";
+            case CODE_TAB:
+                return "tab";
+            case CODE_ENTER:
+                return "enter";
+            case CODE_SPACE:
+                return "space";
+            case CODE_SWITCH_SCREEN_MAIN:
+                return "switch";
+            default:
+                if (code < CODE_SPACE) return String.format("\\u%02X", code);
+                if (code < 0x100) return String.format("%c", code);
+                if (code < 0x10000) return String.format("\\u%04X", code);
+                return String.format("\\U%05X", code);
+        }
+    }
+
+    public static String printableCodes(final int[] codes) {
+        final StringBuilder sb = new StringBuilder();
+        boolean addDelimiter = false;
+        for (final int code : codes) {
+            if (code == NOT_A_CODE) break;
+            if (addDelimiter) sb.append(", ");
+            sb.append(printableCode(code));
+            addDelimiter = true;
+        }
+        return "[" + sb + ']';
+    }
+
     public static final class Color {
         /**
          * The alpha value for fully opaque.
@@ -67,6 +241,10 @@ public final class Constants {
          * The subtype mode used to indicate that the subtype is a keyboard.
          */
         public static final String KEYBOARD_MODE = "keyboard";
+
+        private Subtype() {
+            // This utility class is not publicly instantiable.
+        }
 
         public static final class ExtraValue {
             /**
@@ -130,10 +308,6 @@ public final class Constants {
                 // This utility class is not publicly instantiable.
             }
         }
-
-        private Subtype() {
-            // This utility class is not publicly instantiable.
-        }
     }
 
     public static final class TextUtils {
@@ -152,173 +326,4 @@ public final class Constants {
             // This utility class is not publicly instantiable.
         }
     }
-
-    public static final int NOT_A_CODE = -1;
-    public static final int NOT_A_CURSOR_POSITION = -1;
-    // TODO: replace the following constants with state in InputTransaction?
-    public static final int NOT_A_COORDINATE = -1;
-    public static final int SUGGESTION_STRIP_COORDINATE = -2;
-    public static final int SPELL_CHECKER_COORDINATE = -3;
-    public static final int EXTERNAL_KEYBOARD_COORDINATE = -4;
-
-    // A hint on how many characters to cache from the TextView. A good value of this is given by
-    // how many characters we need to be able to almost always find the caps mode.
-    public static final int EDITOR_CONTENTS_CACHE_SIZE = 512;
-    // How many characters we accept for the recapitalization functionality. This needs to be
-    // large enough for all reasonable purposes, but avoid purposeful attacks. 100k sounds about
-    // right for this.
-    public static final int MAX_CHARACTERS_FOR_RECAPITALIZATION = 512 * 100;
-
-    // Must be equal to MAX_WORD_LENGTH in native/jni/src/defines.h
-    public static final int DICTIONARY_MAX_WORD_LENGTH = 48;
-
-    // (MAX_PREV_WORD_COUNT_FOR_N_GRAM + 1)-gram is supported in Java side. Needs to modify
-    // MAX_PREV_WORD_COUNT_FOR_N_GRAM in native/jni/src/defines.h for suggestions.
-    public static final int MAX_PREV_WORD_COUNT_FOR_N_GRAM = 2;
-
-    // Key events coming any faster than this are long-presses.
-    public static final int LONG_PRESS_MILLISECONDS = 200;
-    // TODO: Set this value appropriately.
-    public static final int GET_SUGGESTED_WORDS_TIMEOUT = 200;
-    // How many continuous deletes at which to start deleting at a higher speed.
-    public static final int DELETE_ACCELERATE_AT = 20; //TODO delete behavior is here?
-
-    public static final String WORD_SEPARATOR = " ";
-
-    public static boolean isValidCoordinate(final int coordinate) {
-        // Detect {@link NOT_A_COORDINATE}, {@link SUGGESTION_STRIP_COORDINATE},
-        // and {@link SPELL_CHECKER_COORDINATE}.
-        return coordinate >= 0;
-    }
-
-    /**
-     * Custom request code used in
-     * {@link com.android.inputmethod.keyboard.KeyboardActionListener#onCustomRequest(int)}.
-     */
-    // The code to show input method picker.
-    public static final int CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER = 1;
-
-    /**
-     * Some common keys code. Must be positive.
-     */
-    public static final int CODE_ENTER = '\n';
-    public static final int CODE_TAB = '\t';
-    public static final int CODE_SPACE = ' ';
-    public static final int CODE_PERIOD = '.';
-    public static final int CODE_COMMA = ',';
-    public static final int CODE_DASH = '-';
-    public static final int CODE_SINGLE_QUOTE = '\'';
-    public static final int CODE_DOUBLE_QUOTE = '"';
-    public static final int CODE_QUESTION_MARK = '?';
-    public static final int CODE_EXCLAMATION_MARK = '!';
-    public static final int CODE_SLASH = '/';
-    public static final int CODE_BACKSLASH = '\\';
-    public static final int CODE_VERTICAL_BAR = '|';
-    public static final int CODE_COMMERCIAL_AT = '@';
-    public static final int CODE_PLUS = '+';
-    public static final int CODE_PERCENT = '%';
-    public static final int CODE_CLOSING_PARENTHESIS = ')';
-    public static final int CODE_CLOSING_SQUARE_BRACKET = ']';
-    public static final int CODE_CLOSING_CURLY_BRACKET = '}';
-    public static final int CODE_CLOSING_ANGLE_BRACKET = '>';
-    public static final int CODE_INVERTED_QUESTION_MARK = 0xBF; // ¿
-    public static final int CODE_INVERTED_EXCLAMATION_MARK = 0xA1; // ¡
-
-    public static final String REGEXP_PERIOD = "\\.";
-    public static final String STRING_SPACE = " ";
-    public static final String STRING_PERIOD_AND_SPACE = ". ";
-
-    /**
-     * Special keys code. Must be negative.
-     * These should be aligned with {@link KeyboardCodesSet#ID_TO_NAME},
-     * {@link KeyboardCodesSet#DEFAULT}, and {@link KeyboardCodesSet#RTL}.
-     */
-    public static final int CODE_SHIFT = -1;
-    public static final int CODE_CAPSLOCK = -2;
-    public static final int CODE_SWITCH_ALPHA_SYMBOL = -3;
-    public static final int CODE_OUTPUT_TEXT = -4;
-    public static final int CODE_DELETE = -5;
-    public static final int CODE_SETTINGS = -6;
-    public static final int CODE_SHORTCUT = -7;
-    public static final int CODE_ACTION_NEXT = -8;
-    public static final int CODE_ACTION_PREVIOUS = -9;
-    public static final int CODE_LANGUAGE_SWITCH = -10;
-    public static final int CODE_EMOJI = -11;
-    public static final int CODE_SHIFT_ENTER = -12;
-    public static final int CODE_SYMBOL_SHIFT = -13;
-    public static final int CODE_ALPHA_FROM_EMOJI = -14;
-    // Code value representing the code is not specified.
-    public static final int CODE_UNSPECIFIED = -15;
-    public static final int CODE_INLINESETTINGS = -16;
-    public static final int CODE_SWITCH_SCREEN_MAIN = -17;
-
-    public static boolean isLetterCode(final int code) {
-        return code >= CODE_SPACE;
-    }
-
-    public static String printableCode(final int code) {
-        switch (code) {
-        case CODE_SHIFT: return "shift";
-        case CODE_CAPSLOCK: return "capslock";
-        case CODE_SWITCH_ALPHA_SYMBOL: return "symbol";
-        case CODE_OUTPUT_TEXT: return "text";
-        case CODE_DELETE: return "delete";
-        case CODE_SETTINGS: return "settings";
-        case CODE_SHORTCUT: return "shortcut";
-        case CODE_ACTION_NEXT: return "actionNext";
-        case CODE_ACTION_PREVIOUS: return "actionPrevious";
-        case CODE_LANGUAGE_SWITCH: return "languageSwitch";
-        case CODE_EMOJI: return "emoji";
-        case CODE_SHIFT_ENTER: return "shiftEnter";
-        case CODE_ALPHA_FROM_EMOJI: return "alpha";
-        case CODE_UNSPECIFIED: return "unspec";
-        case CODE_TAB: return "tab";
-        case CODE_ENTER: return "enter";
-        case CODE_SPACE: return "space";
-            case CODE_SWITCH_SCREEN_MAIN: return "switch";
-        default:
-            if (code < CODE_SPACE) return String.format("\\u%02X", code);
-            if (code < 0x100) return String.format("%c", code);
-            if (code < 0x10000) return String.format("\\u%04X", code);
-            return String.format("\\U%05X", code);
-        }
-    }
-
-    public static String printableCodes(final int[] codes) {
-        final StringBuilder sb = new StringBuilder();
-        boolean addDelimiter = false;
-        for (final int code : codes) {
-            if (code == NOT_A_CODE) break;
-            if (addDelimiter) sb.append(", ");
-            sb.append(printableCode(code));
-            addDelimiter = true;
-        }
-        return "[" + sb + ']';
-    }
-
-    public static final int MAX_INT_BIT_COUNT = 32;
-
-    /**
-     * Screen metrics (a.k.a. Device form factor) constants of
-     * {@link R.integer#config_screen_metrics}.
-     */
-    public static final int SCREEN_METRICS_SMALL_PHONE = 0;
-    public static final int SCREEN_METRICS_LARGE_PHONE = 1;
-    public static final int SCREEN_METRICS_LARGE_TABLET = 2;
-    public static final int SCREEN_METRICS_SMALL_TABLET = 3;
-
-    /**
-     * Default capacity of gesture points container.
-     * This constant is used by {@link BatchInputArbiter} and etc. to preallocate regions that
-     * contain gesture event points.
-     */
-    public static final int DEFAULT_GESTURE_POINTS_CAPACITY = 128;
-
-    private Constants() {
-        // This utility class is not publicly instantiable.
-    }
-
-    public static final int EVENT_BACKSPACE = 1;
-    public static final int EVENT_REJECTION = 2;
-    public static final int EVENT_REVERT = 3;
 }

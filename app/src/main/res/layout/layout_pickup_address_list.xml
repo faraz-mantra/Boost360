@@ -1,70 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
     <LinearLayout
-        android:id="@+id/root"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:background="#efefef">
+
+      <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        android:orientation="vertical"
-        android:background="@color/white"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:background="#efefef"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/margin_15"
+        android:paddingTop="10dp"
+        android:paddingEnd="@dimen/margin_15"
+        android:paddingBottom="10dp"
+        android:text="@string/pickup_address"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="#efefef">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:text="@string/pickup_address"
-                android:paddingStart="@dimen/margin_15"
-                android:paddingEnd="@dimen/margin_15"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:background="#efefef"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:textColor="@color/primaryTextColor"
-                android:gravity="center_vertical" />
-
-            <ImageButton
-                android:id="@+id/ib_close"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@android:color/transparent"
-                android:layout_gravity="end|center"
-                android:visibility="visible"
-                android:layout_marginEnd="@dimen/margin_10"
-                app:srcCompat="@drawable/ic_cancel" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pickup_address_list"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-        <Button
-            android:id="@+id/button_add_new"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primaryColor"
-            style="?android:attr/borderlessButtonStyle"
-            android:textSize="12sp"
-            android:layout_margin="@dimen/margin_15"
-            android:gravity="center"
-            android:background="@drawable/yellow_rectangle_background"
-            android:text="@string/add_new_pickup_address"/>
+      <ImageButton
+        android:id="@+id/ib_close"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="end|center"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:background="@android:color/transparent"
+        android:visibility="visible"
+        app:srcCompat="@drawable/ic_cancel" />
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/pickup_address_list"
+      android:layout_width="match_parent"
+      android:layout_height="130dp"
+      android:clipToPadding="false"
+      android:scrollbars="vertical"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <Button
+      android:id="@+id/button_add_new"
+      style="?android:attr/borderlessButtonStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/margin_15"
+      android:background="@drawable/yellow_rectangle_background"
+      android:gravity="center"
+      android:text="@string/add_new_pickup_address"
+      android:textColor="@color/primaryColor"
+      android:textSize="12sp" />
+
+  </LinearLayout>
 
 </layout>

@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/package_details_layout"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/package_details_layout"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:focusable="true">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true">
+    android:layout_marginTop="@dimen/_8sdp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_layout"
+    <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guidelineOne"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent="0.92" />
+
+    <RelativeLayout
+      android:id="@+id/imageLayout"
+      android:layout_width="@dimen/pad_36dp"
+      android:layout_height="@dimen/pad_36dp"
+      android:layout_marginStart="13dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/backgroundwhite"
+        android:scaleType="fitCenter"
+        tools:src="@drawable/rectangle_copy_18" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+      android:id="@+id/mainLayoutText"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="13dp"
+      android:gravity="center_vertical"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/imageLayout"
+      app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+          android:id="@+id/title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          tools:text="Marketing"
+          android:textStyle="bold"
+          android:textAllCaps="true"
+          android:textFontWeight="600"
+          android:fontFamily="@font/open_sans"
+          android:textColor="@color/addons_text_color"
+          android:textSize="@dimen/txt_9sp" />
+
+      <TextView
+        android:id="@+id/details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineOne"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.92"/>
-
-        <RelativeLayout
-            android:id="@+id/imageLayout"
-            android:layout_width="@dimen/pad_36dp"
-            android:layout_height="@dimen/pad_36dp"
-            android:layout_marginStart="13dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/backgroundwhite"
-                android:scaleType="fitCenter"
-                tools:src="@drawable/rectangle_copy_18" />
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/mainLayoutText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageLayout"
-            app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginEnd="@dimen/_25sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/open_sans"
+        android:lineSpacingExtra="1.3sp"
+        android:maxLines="3"
+        android:textColor="#4A4A4A"
+        android:textFontWeight="600"
+        android:textSize="@dimen/txt_12sp"
+        android:textStyle="bold"
+        tools:text="Facebook Ads (upto 75 leads)" />
 
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Marketing"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:textFontWeight="600"
-                android:fontFamily="@font/open_sans"
-                android:textColor="@color/addons_text_color"
-                android:textSize="@dimen/txt_9sp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lineSpacingExtra="1.3sp"
-                android:layout_marginEnd="@dimen/_25sdp"
-                android:maxLines="3"
-                android:ellipsize="end"
-                android:textStyle="bold"
-                android:textFontWeight="600"
-                android:fontFamily="@font/open_sans"
-                android:textColor="#4A4A4A"
-                tools:text="Facebook Ads (upto 75 leads)"
-                android:textSize="@dimen/txt_12sp" />
+    <ImageView
+      android:id="@+id/arrow_icon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@drawable/ic_back_screen"
+      android:scaleType="fitCenter"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/guidelineOne"
+      app:layout_constraintTop_toTopOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        </LinearLayout>
-        <ImageView
-            android:id="@+id/arrow_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_back_screen"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/guidelineOne"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginStart="13dp"
-        android:layout_marginEnd="13dp"
-        android:background="@drawable/view_lines_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_layout"/>-->
-    <TextView
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="1dp"
-        android:background="#E6E6E6"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginStart="13dp"
-        android:layout_marginEnd="13dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_layout"/>
+  <!--    <View
+          android:id="@+id/view"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="@dimen/_8sdp"
+          android:layout_marginStart="13dp"
+          android:layout_marginEnd="13dp"
+          android:background="@drawable/view_lines_bg"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/main_layout"/>-->
+  <TextView
+    android:id="@+id/view"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginStart="13dp"
+    android:layout_marginTop="@dimen/_8sdp"
+    android:layout_marginEnd="13dp"
+    android:layout_marginBottom="1dp"
+    android:background="#E6E6E6"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/main_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

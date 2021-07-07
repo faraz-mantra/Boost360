@@ -42,7 +42,12 @@ class StaffHomeFragment : AppBaseFragment<FragmentStaffHomeBinding, BaseViewMode
     // Handle item selection
     return when (item.itemId) {
       R.id.menu_add -> {
-        startStaffFragmentActivity(baseActivity, FragmentType.STAFF_ADD_FRAGMENT, clearTop = false, isResult = false)
+        startStaffFragmentActivity(
+          baseActivity,
+          FragmentType.STAFF_ADD_FRAGMENT,
+          clearTop = false,
+          isResult = false
+        )
         true
       }
       else -> super.onOptionsItemSelected(item)
@@ -52,7 +57,13 @@ class StaffHomeFragment : AppBaseFragment<FragmentStaffHomeBinding, BaseViewMode
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnTakeToListing -> startStaffFragmentActivity(baseActivity, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, Bundle(), false, isResult = false)
+      binding?.btnTakeToListing -> startStaffFragmentActivity(
+        baseActivity,
+        FragmentType.STAFF_PROFILE_LISTING_FRAGMENT,
+        Bundle(),
+        false,
+        isResult = false
+      )
     }
   }
 }

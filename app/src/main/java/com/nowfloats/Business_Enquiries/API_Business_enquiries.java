@@ -58,35 +58,6 @@ public class API_Business_enquiries {
         this.bus = bus;
     }
 
-    public interface Business_enquiries_interface {
-        //GET ENTERPRIse
-        //baseURL = Constants.NOW_FLOATS_API_URL+ "/Dashboard/v1/"+Constants.parentID+"/topmessagedetails?clientId="+
-        //Constants.clientId+"&startDate="+startDate+"&endDate="+endDate+"&scope="+scope;
-//        @GET("/Dashboard/v1/{ParentId}/topmessagedetails")
-//        public void getMessagesMethod(@Path("ParentId") String ParentId,
-//                                      @Field("clientId") String clientId,
-//                                      @Field("startDate") String startDate,
-//                                      @Field("endDate") String endDate,
-//                                      @Field("scope") int scope,
-//                                      Callback<Business_Enquiry_Enterprise_Model> callback);
-
-        @GET("/Dashboard/v1/{ParentId}/topmessagedetails")
-        public void getMessagesMethod(@Path("ParentId") String ParentId, @QueryMap Map<String, String> map,
-                                      Callback<Business_Enquiry_Enterprise_Model> callback);
-
-        //https://api.withfloats.com/Discover/v1/floatingPoint/usermessages/5406bd254ec0a40d409f2b2b?
-        // clientId=2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5
-
-
-        //        @FormUrlEncoded
-        @Headers({"Content-Type: application/json"})
-        @POST("/Discover/v1/floatingPoint/usermessages/{fpId}")
-        public void postMessagesMethod(@Body JSONObject empty, @QueryMap HashMap<String, String> map, @Path("fpId") String fpId, Callback<ArrayList<Business_Enquiry_Model>> callback);
-
-        @GET("/dashboard/v1/floatingPoint/usermessageswithoffset/{ParentId}")
-        public void getMessagesEnterPriseMethod(@Path("ParentId") String ParentId, @QueryMap Map<String, String> map, Callback<ArrayList<Business_Enquiry_Model>> callback);
-    }
-
     public void getMessages() {
         try {
             if (session.getISEnterprise().equals("true")) {
@@ -201,6 +172,35 @@ public class API_Business_enquiries {
             }
         }
         if (bus != null) bus.post(new BzQueryEvent(Constants.StorebizQueries, null));
+    }
+
+    public interface Business_enquiries_interface {
+        //GET ENTERPRIse
+        //baseURL = Constants.NOW_FLOATS_API_URL+ "/Dashboard/v1/"+Constants.parentID+"/topmessagedetails?clientId="+
+        //Constants.clientId+"&startDate="+startDate+"&endDate="+endDate+"&scope="+scope;
+//        @GET("/Dashboard/v1/{ParentId}/topmessagedetails")
+//        public void getMessagesMethod(@Path("ParentId") String ParentId,
+//                                      @Field("clientId") String clientId,
+//                                      @Field("startDate") String startDate,
+//                                      @Field("endDate") String endDate,
+//                                      @Field("scope") int scope,
+//                                      Callback<Business_Enquiry_Enterprise_Model> callback);
+
+        @GET("/Dashboard/v1/{ParentId}/topmessagedetails")
+        public void getMessagesMethod(@Path("ParentId") String ParentId, @QueryMap Map<String, String> map,
+                                      Callback<Business_Enquiry_Enterprise_Model> callback);
+
+        //https://api.withfloats.com/Discover/v1/floatingPoint/usermessages/5406bd254ec0a40d409f2b2b?
+        // clientId=2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21
+
+
+        //        @FormUrlEncoded
+        @Headers({"Content-Type: application/json"})
+        @POST("/Discover/v1/floatingPoint/usermessages/{fpId}")
+        public void postMessagesMethod(@Body JSONObject empty, @QueryMap HashMap<String, String> map, @Path("fpId") String fpId, Callback<ArrayList<Business_Enquiry_Model>> callback);
+
+        @GET("/dashboard/v1/floatingPoint/usermessageswithoffset/{ParentId}")
+        public void getMessagesEnterPriseMethod(@Path("ParentId") String ParentId, @QueryMap Map<String, String> map, Callback<ArrayList<Business_Enquiry_Model>> callback);
     }
 
 }

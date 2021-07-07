@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class PaymentKycDataResponse(
-    @SerializedName("Data")
-    var `data`: List<DataKyc>? = null,
-    @SerializedName("Extra")
-    var extra: KycExtra? = null
-) : BaseResponse(),Serializable
+  @SerializedName("Data")
+  var `data`: List<DataKyc>? = null,
+  @SerializedName("Extra")
+  var extra: KycExtra? = null
+) : BaseResponse(), Serializable

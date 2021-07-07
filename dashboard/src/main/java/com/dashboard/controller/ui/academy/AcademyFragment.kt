@@ -6,7 +6,7 @@ import com.dashboard.databinding.FragmentAcademyBinding
 import com.framework.pref.UserSessionManager
 import com.dashboard.viewmodel.DashboardViewModel
 
-class AcademyFragment : AppBaseFragment<FragmentAcademyBinding, DashboardViewModel>(){
+class AcademyFragment : AppBaseFragment<FragmentAcademyBinding, DashboardViewModel>() {
 
   private var session: UserSessionManager? = null
 

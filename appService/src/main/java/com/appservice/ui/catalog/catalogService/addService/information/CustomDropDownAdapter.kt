@@ -9,9 +9,11 @@ import com.appservice.R
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.customViews.CustomTextView
 
-class CustomDropDownAdapter(val context: Context, var dataSource: List<SpinnerImageModel>) : BaseAdapter() {
+class CustomDropDownAdapter(val context: Context, var dataSource: List<SpinnerImageModel>) :
+  BaseAdapter() {
 
-  private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+  private val inflater: LayoutInflater =
+    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
   override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 

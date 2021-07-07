@@ -1,149 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/default_layout"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/default_layout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white">
+
+
+  <ExpandableListView
+    android:id="@+id/info_exlv"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="0dp"
+    android:layout_marginTop="10dp"
+    android:background="#eee"
+    android:divider="@color/white"
+    android:dividerHeight="5dp"
+    android:groupIndicator="@null"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/cv_wildfire_def" />
 
+  <androidx.cardview.widget.CardView
+    android:id="@+id/cv_wildfire_def"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="3dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <ExpandableListView
-        android:id="@+id/info_exlv"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:divider="@color/white"
-        android:dividerHeight="5dp"
-        android:background="#eee"
-        android:groupIndicator="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_wildfire_def" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="20dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_wildfire_def"
-        android:layout_width="match_parent"
+      <LinearLayout
+        android:id="@+id/llayout_know_more"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:cardElevation="3dp"
+        android:background="@drawable/rounded_corner_white"
+        android:gravity="center"
+        android:padding="9dp"
+        app:layout_constraintBottom_toBottomOf="@+id/llayout_wildfire"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/llayout_wildfire"
+        app:layout_constraintTop_toTopOf="@+id/llayout_wildfire">
+
+        <ImageView
+          android:id="@+id/tv_know_more"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_marginEnd="8dp"
+          android:src="@drawable/ic_info_outline_white_24dp"
+          android:tint="@color/primary_color" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/know_more_"
+          android:textColor="@drawable/yellow_btn_text_color"
+          app:layout_constraintEnd_toStartOf="@+id/llayout_know_more"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintHorizontal_chainStyle="spread_inside"
+          app:layout_constraintHorizontal_weight="1"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/wildfire_definition" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/llayout_wildfire"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ria_positive_btn"
+        android:gravity="center"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/llayout_know_more"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wildfire_definition">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="8dp"
+          app:srcCompat="@drawable/ic_plus_btn" />
+
+        <TextView
+          android:id="@+id/tv_wildfire"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/start_wildfire"
+          android:textColor="@drawable/yellow_btn_hover_text_color"
+          app:layout_constraintEnd_toStartOf="@+id/llayout_know_more"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintHorizontal_chainStyle="spread_inside"
+          app:layout_constraintHorizontal_weight="1"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/wildfire_definition" />
+      </LinearLayout>
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="5dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="3dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp">
+        <ImageView
+          android:id="@+id/image1"
+          android:layout_width="80dp"
+          android:layout_height="80dp"
+          app:srcCompat="@drawable/wild_fire_expire" />
+      </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:id="@+id/llayout_know_more"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_corner_white"
-                android:gravity="center"
-                android:padding="9dp"
-                app:layout_constraintBottom_toBottomOf="@+id/llayout_wildfire"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/llayout_wildfire"
-                app:layout_constraintTop_toTopOf="@+id/llayout_wildfire">
+      <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/why_upgrade_nto_wildfire_plan"
+        android:textColor="@color/primary_color"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2" />
 
-                <ImageView
-                    android:id="@+id/tv_know_more"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_info_outline_white_24dp"
-                    android:tint="@color/primary_color" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/know_more_"
-                    android:textColor="@drawable/yellow_btn_text_color"
-                    app:layout_constraintEnd_toStartOf="@+id/llayout_know_more"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/wildfire_definition" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llayout_wildfire"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ria_positive_btn"
-                android:gravity="center"
-                android:padding="10dp"
-                app:layout_constraintEnd_toStartOf="@+id/llayout_know_more"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/wildfire_definition">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    app:srcCompat="@drawable/ic_plus_btn" />
-
-                <TextView
-                    android:id="@+id/tv_wildfire"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/start_wildfire"
-                    android:textColor="@drawable/yellow_btn_hover_text_color"
-                    app:layout_constraintEnd_toStartOf="@+id/llayout_know_more"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/wildfire_definition" />
-            </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="5dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="3dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/image1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    app:srcCompat="@drawable/wild_fire_expire" />
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/title_tv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:gravity="center_vertical"
-                android:text="@string/why_upgrade_nto_wildfire_plan"
-                android:textColor="@color/primary_color"
-                android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView2" />
-
-            <TextView
-                android:id="@+id/wildfire_definition"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/wildfire_definition"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+      <TextView
+        android:id="@+id/wildfire_definition"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/wildfire_definition"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

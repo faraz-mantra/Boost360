@@ -5,7 +5,7 @@ import com.nowfloats.manufacturing.API.model.GetTeams.Data;
 
 public interface TeamsActivityListener {
 
-    void itemMenuOptionStatus(int pos,boolean status);
+    void itemMenuOptionStatus(int pos, boolean status);
 
     void editOptionClicked(Data data);
 

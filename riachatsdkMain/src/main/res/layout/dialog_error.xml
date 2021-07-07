@@ -1,170 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:paddingStart="@dimen/margin_10"
+  android:paddingRight="@dimen/margin_10">
+
+  <FrameLayout
+    android:id="@+id/ivRia"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true">
+
+    <ImageView
+      android:layout_width="80dp"
+      android:layout_height="80dp"
+      android:src="@drawable/ria_circle_image" />
+  </FrameLayout>
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/margin_10"
-    android:paddingRight="@dimen/margin_10">
+    android:layout_below="@+id/ivRia"
+    android:layout_marginTop="-40dip"
+    android:background="@drawable/popup_card_bg"
+    android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/ivRia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
+    <TextView
+      android:id="@+id/tvTitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/margin_20"
+      android:layout_marginTop="@dimen/margin_50"
+      android:layout_marginEnd="@dimen/margin_20"
+      android:fontFamily="sans-serif"
+      android:gravity="center"
+      android:text="@string/change_country_code"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/large_text_size" />
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ria_circle_image" />
-    </FrameLayout>
+    <TextView
+      android:id="@+id/tvContent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="sans-serif-light"
+      android:gravity="center"
+      android:lineSpacingExtra="2.5dp"
+      android:paddingStart="@dimen/margin_50"
+      android:paddingTop="@dimen/margin_15"
+      android:paddingRight="@dimen/margin_50"
+      android:paddingBottom="@dimen/margin_40"
+      android:text="@string/edit_content"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/medium_text_size" />
 
     <LinearLayout
+      android:id="@+id/llVertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:id="@+id/llPositive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivRia"
-        android:layout_marginTop="-40dip"
-        android:background="@drawable/popup_card_bg"
+        android:orientation="vertical">
+
+        <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="0.3dip"
+          android:src="@color/ria_popup_btn"></ImageView>
+
+        <TextView
+          android:id="@+id/tvPositive"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:padding="@dimen/margin_15"
+          android:text="@string/no_i_dont_want_to_change_details"
+          android:textColor="@android:color/black"
+          android:textSize="@dimen/medium_text_size" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/llNegative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="0.3dip"
+          android:src="@color/ria_popup_btn"></ImageView>
+
+
+        <TextView
+          android:id="@+id/tvNegative"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:padding="@dimen/margin_15"
+          android:text="@string/yes_i_want_to_make_changes"
+          android:textColor="@color/ria_popup_btn"
+          android:textSize="@dimen/medium_text_size" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+      android:id="@+id/ivHorizontalSep"
+      android:layout_width="match_parent"
+      android:layout_height="0.3dip"
+      android:src="@color/ria_popup_btn"
+      android:visibility="gone"></ImageView>
+
+    <LinearLayout
+      android:id="@+id/llHorizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:visibility="gone">
+
+      <LinearLayout
+        android:id="@+id/llNeg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_50"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:layout_marginStart="@dimen/margin_20"
-            android:layout_marginEnd="@dimen/margin_20"
-            android:text="@string/change_country_code"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/large_text_size" />
+          android:id="@+id/tvNeg"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:padding="@dimen/margin_15"
+          android:text="@string/yes_i_want_to_make_changes"
+          android:textColor="@color/ria_popup_btn"
+          android:textSize="@dimen/medium_text_size" />
+      </LinearLayout>
+
+
+      <ImageView
+        android:id="@+id/ivHorizontal"
+        android:layout_width="0.3dp"
+        android:layout_height="match_parent"
+        android:src="@color/ria_popup_btn"></ImageView>
+
+      <LinearLayout
+        android:id="@+id/llPos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:lineSpacingExtra="2.5dp"
-            android:paddingBottom="@dimen/margin_40"
-            android:paddingStart="@dimen/margin_50"
-            android:paddingRight="@dimen/margin_50"
-            android:paddingTop="@dimen/margin_15"
-            android:text="@string/edit_content"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/medium_text_size" />
+          android:id="@+id/tvPos"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:padding="@dimen/margin_15"
+          android:text="@string/no_i_dont_want_to_change_details"
+          android:textColor="@android:color/black"
+          android:textSize="@dimen/medium_text_size" />
+      </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llVertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/llPositive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.3dip"
-                    android:src="@color/ria_popup_btn"></ImageView>
-
-                <TextView
-                    android:id="@+id/tvPositive"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/margin_15"
-                    android:text="@string/no_i_dont_want_to_change_details"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/medium_text_size" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llNegative"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.3dip"
-                    android:src="@color/ria_popup_btn"></ImageView>
-
-
-                <TextView
-                    android:id="@+id/tvNegative"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/margin_15"
-                    android:text="@string/yes_i_want_to_make_changes"
-                    android:textColor="@color/ria_popup_btn"
-                    android:textSize="@dimen/medium_text_size" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/ivHorizontalSep"
-            android:layout_width="match_parent"
-            android:layout_height="0.3dip"
-            android:src="@color/ria_popup_btn"
-            android:visibility="gone"></ImageView>
-
-        <LinearLayout
-            android:id="@+id/llHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:id="@+id/llNeg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvNeg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/margin_15"
-                    android:text="@string/yes_i_want_to_make_changes"
-                    android:textColor="@color/ria_popup_btn"
-                    android:textSize="@dimen/medium_text_size" />
-            </LinearLayout>
-
-
-            <ImageView
-                android:id="@+id/ivHorizontal"
-                android:layout_width="0.3dp"
-                android:layout_height="match_parent"
-                android:src="@color/ria_popup_btn"></ImageView>
-
-            <LinearLayout
-                android:id="@+id/llPos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvPos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/margin_15"
-                    android:text="@string/no_i_dont_want_to_change_details"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/medium_text_size" />
-            </LinearLayout>
-
-        </LinearLayout>
     </LinearLayout>
+  </LinearLayout>
 </RelativeLayout>

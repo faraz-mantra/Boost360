@@ -86,13 +86,13 @@ public class PlayPauseView extends FrameLayout {
         }
     }
 
+    private int getColor() {
+        return mBackgroundColor;
+    }
+
     private void setColor(int color) {
         mBackgroundColor = color;
         invalidate();
-    }
-
-    private int getColor() {
-        return mBackgroundColor;
     }
 
     @Override

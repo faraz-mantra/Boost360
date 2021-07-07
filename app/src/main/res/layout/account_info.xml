@@ -1,125 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/screen_bg">
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/screen_bg"
+  android:orientation="vertical">
 
-    <include
-        android:id="@+id/accountinfo_action_bar"
-        layout="@layout/search_queries_action_bar" />
+  <include
+    android:id="@+id/accountinfo_action_bar"
+    layout="@layout/search_queries_action_bar" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="horizontal"
+      android:padding="8dp">
+
+      <TextView
+        fontPath="Roboto-Light.ttf"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:text="@string/username"
+        android:textColor="@color/text_color_brown"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="8dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="14sp"
-                fontPath="Roboto-Light.ttf"
-                android:text="@string/username"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/text_color_brown"
-                tools:ignore="MissingPrefix" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="14sp"
-                fontPath="Roboto-Bold.ttf"
-                android:textColor="@color/light_black"
-                android:id="@+id/tag_name"
-                tools:ignore="MissingPrefix" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_marginStart="10dp"
-            android:paddingRight="8dp"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            fontPath="Roboto-Light.ttf"
-            android:text="@string/plans_in_use"
-            android:textColor="@color/text_color_brown"
-            tools:ignore="MissingPrefix" />
+      <TextView
+        android:id="@+id/tag_name"
+        fontPath="Roboto-Bold.ttf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/light_black"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix" />
 
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+      fontPath="Roboto-Light.ttf"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:paddingStart="8dp"
+      android:paddingTop="8dp"
+      android:paddingRight="8dp"
+      android:text="@string/plans_in_use"
+      android:textColor="@color/text_color_brown"
+      android:textSize="14sp"
+      tools:ignore="MissingPrefix" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/account_info_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
+  </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/zeroth_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="12dp"
-            android:visibility="gone"
-            android:orientation="vertical">
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                fontPath="Roboto-Light.ttf"
-                android:padding="1dp"
-                android:layout_marginStart="6dp"
-                android:text="@string/buy"
-                android:textColor="@color/text_color_brown"
-                android:id="@+id/zeroth_txt"
-                tools:ignore="MissingPrefix"/>
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/account_info_recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:scrollbars="vertical" />
 
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginStart="6dp"
-                fontPath="Roboto-Regular.ttf"
-                android:singleLine="true"
-                android:gravity="center"
-                android:padding="1dp"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/selector"
-                android:text="@string/buy"
-                android:textColor="@color/white"
-                android:id="@+id/zeroth_storebtn"
-                tools:ignore="MissingPrefix" />
-        </LinearLayout>
+    <LinearLayout
+      android:id="@+id/zeroth_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      android:padding="12dp"
+      android:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/progress_accinfo_layout"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:visibility="gone"
-            android:gravity="center">
+      <TextView
+        android:id="@+id/zeroth_txt"
+        fontPath="Roboto-Light.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:padding="1dp"
+        android:text="@string/buy"
+        android:textColor="@color/text_color_brown"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix" />
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/visits_progressBar" />
-        </LinearLayout>
-    </FrameLayout>
+      <TextView
+        android:id="@+id/zeroth_storebtn"
+        fontPath="Roboto-Regular.ttf"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/selector"
+        android:gravity="center"
+        android:padding="1dp"
+        android:singleLine="true"
+        android:text="@string/buy"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:ignore="MissingPrefix" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/progress_accinfo_layout"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
+
+      <ProgressBar
+        android:id="@+id/visits_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+  </FrameLayout>
 </LinearLayout>

@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">InstaMojo Library</string>
-    <string name="payer_username">Username</string>
-    <string name="payer_business_name">Business Name</string>
-    <string name="payer_email">Email</string>
-    <string name="package_price">Price</string>
-    <string name="package_expire">Package Name</string>
-    <string name="payer_phone_no">Phone Number</string>
-    <string name="payment_page_title">Payment</string>
-    <string name="proceed">Proceed with Card</string>
+  <string name="app_name">InstaMojo Library</string>
+  <string name="payer_username">Username</string>
+  <string name="payer_business_name">Business Name</string>
+  <string name="payer_email">Email</string>
+  <string name="package_price">Price</string>
+  <string name="package_expire">Package Name</string>
+  <string name="payer_phone_no">Phone Number</string>
+  <string name="payment_page_title">Payment</string>
+  <string name="proceed">Proceed with Card</string>
 </resources>

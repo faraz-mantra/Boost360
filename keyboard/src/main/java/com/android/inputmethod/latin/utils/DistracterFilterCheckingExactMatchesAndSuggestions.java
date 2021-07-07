@@ -51,21 +51,19 @@ public class DistracterFilterCheckingExactMatchesAndSuggestions implements Distr
 
     private static final long TIMEOUT_TO_WAIT_LOADING_DICTIONARIES_IN_SECONDS = 120;
     private static final int MAX_DISTRACTERS_CACHE_SIZE = 512;
-
-    private final Context mContext;
-    private final Map<Locale, InputMethodSubtype> mLocaleToSubtypeMap;
-    private final Map<Locale, Keyboard> mLocaleToKeyboardMap;
-    private final DictionaryFacilitator mDictionaryFacilitator;
-    private final LruCache<String, Boolean> mDistractersCache;
-    private Keyboard mKeyboard;
-    private final Object mLock = new Object();
-
     // If the score of the top suggestion exceeds this value, the tested word (e.g.,
     // an OOV, a misspelling, or an in-vocabulary word) would be considered as a distractor to
     // words in dictionary. The greater the threshold is, the less likely the tested word would
     // become a distractor, which means the tested word will be more likely to be added to
     // the dictionary.
     private static final float DISTRACTER_WORD_SCORE_THRESHOLD = 0.4f;
+    private final Context mContext;
+    private final Map<Locale, InputMethodSubtype> mLocaleToSubtypeMap;
+    private final Map<Locale, Keyboard> mLocaleToKeyboardMap;
+    private final DictionaryFacilitator mDictionaryFacilitator;
+    private final LruCache<String, Boolean> mDistractersCache;
+    private final Object mLock = new Object();
+    private Keyboard mKeyboard;
 
     /**
      * Create a DistracterFilter instance.
@@ -79,6 +77,21 @@ public class DistracterFilterCheckingExactMatchesAndSuggestions implements Distr
         mDictionaryFacilitator = new DictionaryFacilitator();
         mDistractersCache = new LruCache<>(MAX_DISTRACTERS_CACHE_SIZE);
         mKeyboard = null;
+    }
+
+    private static boolean suggestionExceedsDistracterThreshold(final SuggestedWordInfo suggestion,
+                                                                final String consideredWord, final float distracterThreshold) {
+        if (suggestion == null) {
+            return false;
+        }
+        final int suggestionScore = suggestion.mScore;
+        final float normalizedScore = BinaryDictionaryUtils.calcNormalizedScore(
+                consideredWord, suggestion.mWord, suggestionScore);
+        if (DEBUG) {
+            Log.d(TAG, "normalizedScore: " + normalizedScore);
+            Log.d(TAG, "distracterThreshold: " + distracterThreshold);
+        }
+        return normalizedScore > distracterThreshold;
     }
 
     @Override
@@ -150,14 +163,14 @@ public class DistracterFilterCheckingExactMatchesAndSuggestions implements Distr
      * Determine whether a word is a distracter to words in dictionaries.
      *
      * @param prevWordsInfo the information of previous words. Not used for now.
-     * @param testedWord the word that will be tested to see whether it is a distracter to words
-     *                   in dictionaries.
-     * @param locale the locale of word.
+     * @param testedWord    the word that will be tested to see whether it is a distracter to words
+     *                      in dictionaries.
+     * @param locale        the locale of word.
      * @return true if testedWord is a distracter, otherwise false.
      */
     @Override
     public boolean isDistracterToWordsInDictionaries(final PrevWordsInfo prevWordsInfo,
-            final String testedWord, final Locale locale) {
+                                                     final String testedWord, final Locale locale) {
         if (locale == null) {
             return false;
         }
@@ -265,20 +278,5 @@ public class DistracterFilterCheckingExactMatchesAndSuggestions implements Distr
             }
             return isDistractor;
         }
-    }
-
-    private static boolean suggestionExceedsDistracterThreshold(final SuggestedWordInfo suggestion,
-            final String consideredWord, final float distracterThreshold) {
-        if (suggestion == null) {
-            return false;
-        }
-        final int suggestionScore = suggestion.mScore;
-        final float normalizedScore = BinaryDictionaryUtils.calcNormalizedScore(
-                consideredWord, suggestion.mWord, suggestionScore);
-        if (DEBUG) {
-            Log.d(TAG, "normalizedScore: " + normalizedScore);
-            Log.d(TAG, "distracterThreshold: " + distracterThreshold);
-        }
-        return normalizedScore > distracterThreshold;
     }
 }

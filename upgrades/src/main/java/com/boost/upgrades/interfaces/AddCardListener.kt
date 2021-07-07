@@ -5,5 +5,5 @@ import org.json.JSONObject
 
 interface AddCardListener {
 
-    fun cardSelected(data: JSONObject)
+  fun cardSelected(data: JSONObject)
 }

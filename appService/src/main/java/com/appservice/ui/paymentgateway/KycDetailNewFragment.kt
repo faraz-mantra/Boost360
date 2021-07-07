@@ -34,7 +34,11 @@ class KycDetailNewFragment : AppBaseFragment<FragmentKycDetailNewBinding, BaseVi
       try {
         val intent = Intent(Intent.ACTION_CALL)
         intent.data = Uri.parse("tel:${resources.getString(R.string.contact_us_number)}")
-        if (ContextCompat.checkSelfPermission(baseActivity, CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+            baseActivity,
+            CALL_PHONE
+          ) == PackageManager.PERMISSION_GRANTED
+        ) {
           baseActivity.startActivity(intent)
         } else requestPermissions(arrayOf(CALL_PHONE), 1)
       } catch (e: ActivityNotFoundException) {

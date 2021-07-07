@@ -31,14 +31,15 @@ class BottomBarParser(private val context: Context, res: Int) {
 
     for (i in 0 until attributeCount)
       when (parser.getAttributeName(i)) {
-          Constants.ICON_ATTRIBUTE -> itemDrawable = ContextCompat.getDrawable(context, parser.getAttributeResourceValue(i, 0))
-          Constants.TITLE_ATTRIBUTE -> {
-              itemText = try {
-                  context.getString(parser.getAttributeResourceValue(i, 0))
-              } catch (e: Exception) {
-                  parser.getAttributeValue(i)
-              }
+        Constants.ICON_ATTRIBUTE -> itemDrawable =
+          ContextCompat.getDrawable(context, parser.getAttributeResourceValue(i, 0))
+        Constants.TITLE_ATTRIBUTE -> {
+          itemText = try {
+            context.getString(parser.getAttributeResourceValue(i, 0))
+          } catch (e: Exception) {
+            parser.getAttributeValue(i)
           }
+        }
       }
 
     return BottomBarItem(itemText!!, itemDrawable!!)

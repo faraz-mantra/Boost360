@@ -9,17 +9,17 @@ import java.io.Serializable
 import java.util.*
 
 data class ItemN(
-    var ActualPrice: Double? = null,
-    var Product: ProductN? = null,
-    var product_detail: Product? = null,
-    val Quantity: Int? = null,
-    val SalePrice: Double? = null,
-    val ShippingCost: Double? = null,
-    val Type: String? = null,
-    val TaxDetails: Any? = null,
-    val TotalSalePrice: Double? = null,
-    val OffersApplied: Any? = null,
-    val FeedbackDetails: Any? = null,
+  var ActualPrice: Double? = null,
+  var Product: ProductN? = null,
+  var product_detail: Product? = null,
+  val Quantity: Int? = null,
+  val SalePrice: Double? = null,
+  val ShippingCost: Double? = null,
+  val Type: String? = null,
+  val TaxDetails: Any? = null,
+  val TotalSalePrice: Double? = null,
+  val OffersApplied: Any? = null,
+  val FeedbackDetails: Any? = null,
 ) : AppBaseRecyclerViewItem, Serializable {
 
   var recyclerViewType = RecyclerViewItemType.ITEM_ORDER_DETAILS.getLayout()
@@ -48,8 +48,16 @@ data class ItemN(
   fun getScheduledDate(): String? {
     val extraConsultation = Product?.extraItemProductConsultation()
     return if (extraConsultation != null) {
-      var dateString = parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_YYYY_MM_DD)
-      if (dateString.isNullOrEmpty()) dateString = parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_SERVER_1_DATE, DateUtils.FORMAT_YYYY_MM_DD)
+      var dateString = parseDate(
+        extraConsultation.scheduledDateTime,
+        DateUtils.FORMAT_SERVER_DATE,
+        DateUtils.FORMAT_YYYY_MM_DD
+      )
+      if (dateString.isNullOrEmpty()) dateString = parseDate(
+        extraConsultation.scheduledDateTime,
+        DateUtils.FORMAT_SERVER_1_DATE,
+        DateUtils.FORMAT_YYYY_MM_DD
+      )
       dateString ?: ""
     } else ""
   }
@@ -57,8 +65,16 @@ data class ItemN(
   private fun getFormattedScheduleDate(): String? {
     val extraConsultation = Product?.extraItemProductConsultation()
     return if (extraConsultation != null) {
-      var dateString = parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_DD_MM_YYYY_N)
-      if (dateString.isNullOrEmpty()) dateString = parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_SERVER_1_DATE, DateUtils.FORMAT_DD_MM_YYYY_N)
+      var dateString = parseDate(
+        extraConsultation.scheduledDateTime,
+        DateUtils.FORMAT_SERVER_DATE,
+        DateUtils.FORMAT_DD_MM_YYYY_N
+      )
+      if (dateString.isNullOrEmpty()) dateString = parseDate(
+        extraConsultation.scheduledDateTime,
+        DateUtils.FORMAT_SERVER_1_DATE,
+        DateUtils.FORMAT_DD_MM_YYYY_N
+      )
       dateString ?: ""
     } else ""
   }
@@ -69,7 +85,19 @@ data class ItemN(
       val date = scheduledDate?.parseDate(DateUtils.FORMAT_DD_MM_YYYY_N)
       var dateDiff = date?.getDateDifference()
       if (dateDiff.isNullOrEmpty()) dateDiff = scheduledDate ?: ""
-      "$dateDiff ${parseDate(Product?.extraItemProductConsultation()?.startTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A)}-${parseDate(Product?.extraItemProductConsultation()?.endTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A)}"
+      "$dateDiff ${
+        parseDate(
+          Product?.extraItemProductConsultation()?.startTime(),
+          DateUtils.FORMAT_HH_MM,
+          DateUtils.FORMAT_HH_MM_A
+        )
+      }-${
+        parseDate(
+          Product?.extraItemProductConsultation()?.endTime(),
+          DateUtils.FORMAT_HH_MM,
+          DateUtils.FORMAT_HH_MM_A
+        )
+      }"
     } catch (e: Exception) {
       ""
     }
@@ -82,7 +110,11 @@ data class ItemN(
   fun getScheduleDateAndTimeSpa(): String? {
     return try {
       val extraDataSpa = getAptSpaExtraDetail()
-      val scheduledDate = parseDate(extraDataSpa?.scheduledDateTime ?: "", DateUtils.FORMAT_YYYY_MM_DD, DateUtils.FORMAT_DD_MM_YYYY_N)
+      val scheduledDate = parseDate(
+        extraDataSpa?.scheduledDateTime ?: "",
+        DateUtils.FORMAT_YYYY_MM_DD,
+        DateUtils.FORMAT_DD_MM_YYYY_N
+      )
       val date = scheduledDate?.parseDate(DateUtils.FORMAT_DD_MM_YYYY_N)
       var dateDiff = date?.getDateDifference()
       if (dateDiff.isNullOrEmpty()) dateDiff = scheduledDate ?: ""
@@ -96,11 +128,20 @@ data class ItemN(
     val cal = Calendar.getInstance()
     cal.time = this
     val today = Calendar.getInstance()
-    return if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) && cal.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
+    return if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) && cal.get(Calendar.YEAR) == today.get(
+        Calendar.YEAR
+      )
+    ) {
       "Today"
-    } else if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) + 1 && cal.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
+    } else if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) + 1 && cal.get(
+        Calendar.YEAR
+      ) == today.get(Calendar.YEAR)
+    ) {
       "Tomorrow"
-    } else if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) - 1 && cal.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
+    } else if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) - 1 && cal.get(
+        Calendar.YEAR
+      ) == today.get(Calendar.YEAR)
+    ) {
       "Yesterday"
     } else {
       ""

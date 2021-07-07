@@ -71,24 +71,26 @@ public abstract class Dictionary {
     /**
      * Searches for suggestions for a given context. For the moment the context is only the
      * previous word.
-     * @param composer the key sequence to match with coordinate info, as a WordComposer
-     * @param prevWordsInfo the information of previous words.
-     * @param proximityInfo the object for key proximity. May be ignored by some implementations.
+     *
+     * @param composer                    the key sequence to match with coordinate info, as a WordComposer
+     * @param prevWordsInfo               the information of previous words.
+     * @param proximityInfo               the object for key proximity. May be ignored by some implementations.
      * @param settingsValuesForSuggestion the settings values used for the suggestion.
-     * @param sessionId the session id.
-     * @param inOutLanguageWeight the language weight used for generating suggestions.
-     * inOutLanguageWeight is a float array that has only one element. This can be updated when the
-     * different language weight is used.
+     * @param sessionId                   the session id.
+     * @param inOutLanguageWeight         the language weight used for generating suggestions.
+     *                                    inOutLanguageWeight is a float array that has only one element. This can be updated when the
+     *                                    different language weight is used.
      * @return the list of suggestions (possibly null if none)
      */
     abstract public ArrayList<SuggestedWordInfo> getSuggestions(final WordComposer composer,
-            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-            final SettingsValuesForSuggestion settingsValuesForSuggestion,
-            final int sessionId, final float[] inOutLanguageWeight);
+                                                                final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+                                                                final SettingsValuesForSuggestion settingsValuesForSuggestion,
+                                                                final int sessionId, final float[] inOutLanguageWeight);
 
     /**
      * Checks if the given word has to be treated as a valid word. Please note that some
      * dictionaries have entries that should be treated as invalid words.
+     *
      * @param word the word to search for. The search should be case-insensitive.
      * @return true if the word is valid, false otherwise
      */
@@ -112,8 +114,9 @@ public abstract class Dictionary {
     /**
      * Compares the contents of the character array with the typed word and returns true if they
      * are the same.
-     * @param word the array of characters that make up the word
-     * @param length the number of valid characters in the character array
+     *
+     * @param word      the array of characters that make up the word
+     * @param length    the number of valid characters in the character array
      * @param typedWord the word to compare with
      * @return true if they are the same, false otherwise.
      */
@@ -146,6 +149,7 @@ public abstract class Dictionary {
     /**
      * Whether we think this suggestion should trigger an auto-commit. prevWord is the word
      * before the suggestion, so that we can use n-gram frequencies.
+     *
      * @param candidate The candidate suggestion, in whole (not only the first part).
      * @return whether we should auto-commit or not.
      */
@@ -168,9 +172,9 @@ public abstract class Dictionary {
 
         @Override
         public ArrayList<SuggestedWordInfo> getSuggestions(final WordComposer composer,
-                final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-                final SettingsValuesForSuggestion settingsValuesForSuggestion,
-                final int sessionId, final float[] inOutLanguageWeight) {
+                                                           final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+                                                           final SettingsValuesForSuggestion settingsValuesForSuggestion,
+                                                           final int sessionId, final float[] inOutLanguageWeight) {
             return null;
         }
 

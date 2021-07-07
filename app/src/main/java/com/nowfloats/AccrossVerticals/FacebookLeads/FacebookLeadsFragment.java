@@ -110,6 +110,6 @@ public class FacebookLeadsFragment extends Fragment {
         startActivity(intent);
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
-        },1000);
+        }, 1000);
     }
 }

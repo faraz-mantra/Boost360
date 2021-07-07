@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#ffb900</color>
-    <color name="colorPrimary">#ffb900</color>
-    <color name="colorPrimaryDark">#d99d00</color>
+  <color name="colorAccent">#ffb900</color>
+  <color name="colorPrimary">#ffb900</color>
+  <color name="colorPrimaryDark">#d99d00</color>
 
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-    <color name="common_text_color">#4a4a4a</color>
+  <color name="white">#ffffff</color>
+  <color name="black">#000000</color>
+  <color name="common_text_color">#4a4a4a</color>
 
-    <color name="create_account_button_start_color">#ffb900</color>
-    <color name="create_account_button_end_color">#ffa500</color>
-    <color name="login_button_start_color">#f5c22a</color>
-    <color name="login_button_end_color">#f5a523</color>
-    <color name="login_button_color">#FDF2D4</color>
-    <color name="red_color">#EF6437</color>
-    <color name="login_text_color">#ee9400</color>
-    <color name="email_text_color">#747474</color>
-    <color name="transparent_black">#15000000</color>
+  <color name="create_account_button_start_color">#ffb900</color>
+  <color name="create_account_button_end_color">#ffa500</color>
+  <color name="login_button_start_color">#f5c22a</color>
+  <color name="login_button_end_color">#f5a523</color>
+  <color name="login_button_color">#FDF2D4</color>
+  <color name="red_color">#EF6437</color>
+  <color name="login_text_color">#ee9400</color>
+  <color name="email_text_color">#747474</color>
+  <color name="transparent_black">#15000000</color>
 
-    <color name="fullscreen_color">#a5000000</color>
-    <color name="com_facebook_button_background_color_focused_disabled">#3C5A99</color>
-    <color name="com_facebook_button_background_color_focused">#3C5A99</color>
-    <color name="com_facebook_button_border_color_focused">#3C5A99</color>
+  <color name="fullscreen_color">#a5000000</color>
+  <color name="com_facebook_button_background_color_focused_disabled">#3C5A99</color>
+  <color name="com_facebook_button_background_color_focused">#3C5A99</color>
+  <color name="com_facebook_button_border_color_focused">#3C5A99</color>
     <color name="pre_sign_up_title">#F5A640</color>
+
 
 </resources>

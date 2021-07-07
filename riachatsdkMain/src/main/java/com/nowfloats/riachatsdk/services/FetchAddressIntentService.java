@@ -123,7 +123,7 @@ public class FetchAddressIntentService extends IntentService {
     private void deliverResultToReceiver(int resultCode, String message, Address address) {
         Bundle bundle = null;
         try {
-            bundle  = new Bundle();
+            bundle = new Bundle();
             bundle.putString(Constants.LocationConstants.RESULT_DATA_KEY, message);
             bundle.putString(Constants.LocationConstants.LOCATION_DATA_AREA, address.getSubLocality());
             bundle.putString(Constants.LocationConstants.LOCATION_DATA_CITY, address.getLocality());

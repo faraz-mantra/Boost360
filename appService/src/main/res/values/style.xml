@@ -35,13 +35,14 @@
   </style>
 
 
-  <style name="ThemeOverlay.SearchView" parent="Widget.AppCompat.SearchView.ActionBar">
-    <item name="submitBackground">@android:color/transparent</item>
-    <item name="searchHintIcon">@null</item>
-    <item name="closeIconTint">@color/white</item>
-  </style>
+    <style name="ThemeOverlay.SearchView" parent="Widget.AppCompat.SearchView.ActionBar">
+        <item name="submitBackground">@android:color/transparent</item>
+        <item name="searchHintIcon">@null</item>
+        <item name="closeIconTint">@color/white</item>
+    </style>
 
-  <style name="RadioService" parent="Widget.AppCompat.CompoundButton.RadioButton">
+
+    <style name="RadioService" parent="Widget.AppCompat.CompoundButton.RadioButton">
     <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_width">match_parent</item>
@@ -98,12 +99,12 @@
     <item name="colorPrimaryDark">@color/orange</item>
   </style>
 
-  <style name="AppTheme_staff_home" parent="AppTheme.Base">
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
-    <item name="searchViewStyle">@style/SearchView</item>
-  </style>
+    <style name="AppTheme_staff_home" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
+        <item name="searchViewStyle">@style/SearchView</item>
+    </style>
 
   <style name="AppTheme_staff_details" parent="AppTheme.Base">
     <item name="colorPrimary">@color/color_primary</item>
@@ -124,23 +125,17 @@
     <item name="queryBackground">@android:color/transparent</item>
     <item name="searchHintIcon">@null</item>
   </style>
+    <style name="ActiveTheme" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/placeholder_bg</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
 
-  <style name="ActiveTheme" parent="Base.Theme.AppCompat">
-    <item name="colorAccent">@color/colorAccent</item>
-    <item name="colorControlNormal">@color/placeholder_bg</item>
-    <item name="colorControlActivated">@color/colorAccent</item>
-  </style>
-
-  <style name="ActiveThemeJio" parent="Base.Theme.AppCompat">
-    <item name="colorAccent">@color/colorAccentLight</item>
-    <item name="colorControlNormal">@color/placeholder_bg</item>
-    <item name="colorControlActivated">@color/colorAccentLight</item>
-  </style>
-
-  <style name="MyCheckBox" parent="Theme.AppCompat.Light">
-    <item name="colorControlNormal">@color/colorAccent</item>
-    <item name="colorControlActivated">@color/colorAccent</item>
-  </style>
+    <style name="ActiveThemeJio" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/colorAccentLight</item>
+        <item name="colorControlNormal">@color/placeholder_bg</item>
+        <item name="colorControlActivated">@color/colorAccentLight</item>
+    </style>
 
   <style name="TextFieldStyle">
     <item name="fontFamily">@font/regular</item>

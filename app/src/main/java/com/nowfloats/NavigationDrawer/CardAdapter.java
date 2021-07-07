@@ -1,6 +1,7 @@
 package com.nowfloats.NavigationDrawer;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +20,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
 
     private ArrayList<CardData> peopleDataSet;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-
-        TextView textViewName;
-        TextView textViewEmail;
-        ImageView imageViewIcon;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            this.textViewName = (TextView) itemView.findViewById(R.id.textViewName);
-            this.textViewEmail = (TextView) itemView.findViewById(R.id.textViewEmail);
-            this.imageViewIcon = (ImageView) itemView.findViewById(R.id.imageView);
-        }
-    }
-
     public CardAdapter(ArrayList<CardData> people) {
         this.peopleDataSet = people;
     }
@@ -43,7 +30,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cards_layout, parent, false);
 
-       // view.setOnClickListener(Home_Main_Fragment.myOnClickListener);
+        // view.setOnClickListener(Home_Main_Fragment.myOnClickListener);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
@@ -64,5 +51,19 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     @Override
     public int getItemCount() {
         return peopleDataSet.size();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView textViewName;
+        TextView textViewEmail;
+        ImageView imageViewIcon;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            this.textViewName = (TextView) itemView.findViewById(R.id.textViewName);
+            this.textViewEmail = (TextView) itemView.findViewById(R.id.textViewEmail);
+            this.imageViewIcon = (ImageView) itemView.findViewById(R.id.imageView);
+        }
     }
 }

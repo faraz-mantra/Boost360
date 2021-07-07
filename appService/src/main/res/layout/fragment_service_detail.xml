@@ -195,18 +195,18 @@
           app:textType="BODY_3" />
 
         <com.framework.views.customViews.CustomTextField
-            android:id="@+id/tv_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_5"
-            android:background="@drawable/bg_rect_edit_txt"
-            android:gravity="top|start"
-            android:hint="@string/describe_this_service_in_around_2000_characters_at_max"
-            android:inputType="textMultiLine"
-            android:padding="@dimen/size_12"
-            android:textColor="@color/warm_grey_10"
-            android:textColorHint="@color/primary_grey"
-            tools:ignore="UnusedAttribute" />
+          android:id="@+id/tv_desc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_5"
+          android:background="@drawable/bg_rect_edit_txt"
+          android:gravity="top|start"
+          android:hint="@string/describe_this_service_in_around_2000_characters_at_max"
+          android:inputType="textMultiLine"
+          android:padding="@dimen/size_12"
+          android:textColor="@color/warm_grey_10"
+          android:textColorHint="@color/primary_grey"
+          tools:ignore="UnusedAttribute" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"

@@ -31,7 +31,8 @@ import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
 
-class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding>() {
+class RegistrationBusinessContactInfoFragment :
+  BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding>() {
 
   private var businessInfoModel = BusinessInfoModel()
   private val PLACE_SEARCH_REQUEST = 1000
@@ -51,18 +52,21 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     personNumber = (pref?.getString(PreferenceConstant.PERSON_NUMBER, "") ?: "")
     binding?.viewImage?.post {
       (binding?.viewImage?.fadeIn(200L)?.mergeWith(binding?.viewBusiness?.fadeIn(100L))
-          ?.mergeWith(binding?.viewForm?.fadeIn(100L)))?.andThen(binding?.title?.fadeIn(100L)
-              ?.mergeWith(binding?.subTitle?.fadeIn(50L)))?.andThen(binding?.formMain?.fadeIn(50L))
-          ?.andThen(binding?.next?.fadeIn())?.doOnComplete {
-            baseActivity.showKeyBoard(binding?.storeName)
-          }?.subscribe()
+        ?.mergeWith(binding?.viewForm?.fadeIn(100L)))?.andThen(
+          binding?.title?.fadeIn(100L)
+            ?.mergeWith(binding?.subTitle?.fadeIn(50L))
+        )?.andThen(binding?.formMain?.fadeIn(50L))
+        ?.andThen(binding?.next?.fadeIn())?.doOnComplete {
+          baseActivity.showKeyBoard(binding?.storeName)
+        }?.subscribe()
     }
     setOnClickListener(binding?.next, binding?.textBtn, binding?.address)
     binding?.number?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
       if (hasFocus && binding?.countryCode?.visibility == GONE) {
         binding?.countryCode?.visible()
         binding?.number?.hint = ""
-        binding?.number?.compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.size_36)
+        binding?.number?.compoundDrawablePadding =
+          resources.getDimensionPixelOffset(R.dimen.size_36)
       } else if (binding?.number?.text.isNullOrEmpty()) {
         binding?.countryCode?.gone()
         binding?.number?.hint = resources.getString(R.string.business_contact_number)
@@ -112,13 +116,17 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
 
   private fun checkIsValidEmail(dotProgressBar: DotProgressBar) {
     if (businessInfoModel.email.isNullOrEmpty().not()) {
-      viewModel?.validateUsersEmail(RequestValidateEmail(clientId2, businessInfoModel.email))?.observeOnce(viewLifecycleOwner, { it1 ->
-        hideProgress()
-        if (it1.isSuccess()) {
-          if (parseResponse(it1)) errorMessageShow(dotProgressBar, getString(R.string.this_email_is_already_in_use))
-          else goNextPageDomain(dotProgressBar)
-        } else errorMessageShow(dotProgressBar, getString(R.string.validation_error_try_again))
-      })
+      viewModel?.validateUsersEmail(RequestValidateEmail(clientId2, businessInfoModel.email))
+        ?.observeOnce(viewLifecycleOwner, { it1 ->
+          hideProgress()
+          if (it1.isSuccess()) {
+            if (parseResponse(it1)) errorMessageShow(
+              dotProgressBar,
+              getString(R.string.this_email_is_already_in_use)
+            )
+            else goNextPageDomain(dotProgressBar)
+          } else errorMessageShow(dotProgressBar, getString(R.string.validation_error_try_again))
+        })
     } else goNextPageDomain(dotProgressBar)
   }
 

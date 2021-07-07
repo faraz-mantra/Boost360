@@ -8,10 +8,10 @@
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/size_10"
-    android:id="@+id/main_content"
     android:paddingEnd="@dimen/size_10">
 
     <View
@@ -47,9 +47,9 @@
       android:layout_marginStart="@dimen/size_8"
       android:layout_marginTop="@dimen/size_14"
       android:background="@color/light_grey_boost_jio"
-      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintBottom_toBottomOf="@+id/view_linear"
-      app:layout_constraintTop_toTopOf="@+id/view_frame"/>
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/view_frame" />
 
     <LinearLayout
       android:id="@+id/view_linear"
