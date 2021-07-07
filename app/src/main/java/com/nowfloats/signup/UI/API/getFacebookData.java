@@ -21,47 +21,45 @@ import java.io.InputStreamReader;
 /**
  * Created by NowFloatsDev on 08/06/2015.
  */
- public class getFacebookData extends AsyncTask<String, Void, String> {
+public class getFacebookData extends AsyncTask<String, Void, String> {
 
-        ProgressDialog pd = null;
-        Boolean Connectiontimeout = false;
-        Activity facebookActivity;
-        String accessToken;
+    ProgressDialog pd = null;
+    Boolean Connectiontimeout = false;
+    Activity facebookActivity;
+    String accessToken;
 
-        public getFacebookData(Activity appContext,String accessToken)
-        {
-            facebookActivity = appContext;
-            this.accessToken = accessToken;
-        }
+    public getFacebookData(Activity appContext, String accessToken) {
+        facebookActivity = appContext;
+        this.accessToken = accessToken;
+    }
 
-        @Override
-        protected void onPreExecute() {
+    @Override
+    protected void onPreExecute() {
 //            pd = ProgressDialog.show(facebookActivity, "Please wait",
 //                    "Loading please wait..", true);
 //            pd.setCancelable(true);
 
-        }
+    }
 
-        @Override
-        protected String doInBackground(String... params) {
-            fbUserProfile();
-            return null;
-        }
+    @Override
+    protected String doInBackground(String... params) {
+        fbUserProfile();
+        return null;
+    }
 
-        @Override
-        protected void onPostExecute(String result) {
-            pd.dismiss();
-            if (Connectiontimeout != true) {
+    @Override
+    protected void onPostExecute(String result) {
+        pd.dismiss();
+        if (Connectiontimeout != true) {
 //                textName.setText(name);
 //                textUserName.setText(userName);
 //                textGender.setText(gender);
 //                userImage.setImageBitmap(profilePic);
-            } else {
-                Toast.makeText(facebookActivity, "Connection Time out",
-                        Toast.LENGTH_SHORT).show();
-            }
+        } else {
+            Toast.makeText(facebookActivity, "Connection Time out",
+                    Toast.LENGTH_SHORT).show();
         }
-
+    }
 
 
     /**
@@ -104,7 +102,7 @@ import java.io.InputStreamReader;
             }
 
         } catch (Exception e) {
-            Log.d("E","E:"+e);
+            Log.d("E", "E:" + e);
             // Connectiontimeout = true;
         }
     }

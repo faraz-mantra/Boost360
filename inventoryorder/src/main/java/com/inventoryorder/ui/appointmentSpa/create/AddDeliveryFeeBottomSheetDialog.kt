@@ -7,9 +7,10 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.databinding.*
 
-class AddDeliveryFeeBottomSheetDialog(val deliveryFee : Double = 0.0, val type : String = "") : BaseBottomSheetDialog<BottomSheetAddDeliveryFeeBinding, BaseViewModel>() {
+class AddDeliveryFeeBottomSheetDialog(val deliveryFee: Double = 0.0, val type: String = "") :
+  BaseBottomSheetDialog<BottomSheetAddDeliveryFeeBinding, BaseViewModel>() {
 
-  var onClicked: (deliveryFeeValue: Double) -> Unit = { value : Double -> }
+  var onClicked: (deliveryFeeValue: Double) -> Unit = { value: Double -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_add_delivery_fee
@@ -23,7 +24,7 @@ class AddDeliveryFeeBottomSheetDialog(val deliveryFee : Double = 0.0, val type :
   override fun onCreateView() {
     if (deliveryFee > 0) binding?.editDeliveryFee?.setText(deliveryFee.toString())
 
-    if (type.isNotEmpty() && type.equals( AppConstant.TYPE_APPOINTMENT, true)) {
+    if (type.isNotEmpty() && type.equals(AppConstant.TYPE_APPOINTMENT, true)) {
       binding?.tvSubTitle?.text = getString(R.string.enter_service_charges_to_add_to_billing)
       binding?.tvTitle?.text = getString(R.string.str_service_charges)
       binding?.editDeliveryFee?.hint = getString(R.string.enter_service_charges)
@@ -36,7 +37,7 @@ class AddDeliveryFeeBottomSheetDialog(val deliveryFee : Double = 0.0, val type :
     dismiss()
     when (v) {
 
-      binding?.buttonDone ->  {
+      binding?.buttonDone -> {
 
         if (binding?.editDeliveryFee?.text?.isNullOrEmpty()?.not() == true) {
           onClicked(binding?.editDeliveryFee?.text?.toString()?.toDouble() ?: 0.0)

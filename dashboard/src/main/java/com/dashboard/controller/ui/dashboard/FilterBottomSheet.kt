@@ -23,7 +23,8 @@ const val BUSINESS_REPORT = "BUSINESS_REPORT"
 const val WEBSITE_REPORT = "WEBSITE_REPORT"
 const val MY_ENQUIRIES = "MY_ENQUIRIES"
 
-class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, BaseViewModel>(), RecyclerItemClickListener {
+class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, BaseViewModel>(),
+  RecyclerItemClickListener {
 
   var onClicked: (filterDateModel: FilterDateModel) -> Unit = { }
   var filterDateModel: FilterDateModel? = null
@@ -45,7 +46,9 @@ class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, Ba
   override fun onCreateView() {
     setOnClickListener(binding?.btnDone, binding?.btnReset)
     listFilter = FilterDateModel().getFilterDate()
-    if (filterDateModel != null) listFilter?.map { it.isSelect = it.title.equals(filterDateModel!!.title) }
+    if (filterDateModel != null) listFilter?.map {
+      it.isSelect = it.title.equals(filterDateModel!!.title)
+    }
     else listFilter?.last()?.isSelect = true
     binding?.recyclerView?.apply {
       adapterFilter = AppBaseRecyclerViewAdapter(baseActivity, listFilter!!, this@FilterBottomSheet)
@@ -85,10 +88,10 @@ const val FILTER_WEBSITE_REPORT = "FILTER_WEBSITE_REPORT"
 const val FILTER_MY_ENQUIRIES = "FILTER_MY_ENQUIRIES"
 
 data class FilterDateModel(
-    var title: String? = null,
-    var startDate: String? = null,
-    var endDate: String? = null,
-    var isSelect: Boolean = false,
+  var title: String? = null,
+  var startDate: String? = null,
+  var endDate: String? = null,
+  var isSelect: Boolean = false,
 ) : Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {

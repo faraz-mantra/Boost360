@@ -3462,13 +3462,13 @@
               "premiumCode": "",
               "title": "Appointment\nSettings"
             },
-//            {
-//              "businessType": "doctor_profile",
-//              "isLock": false,
-//              "isHide": false,
-//              "premiumCode": "",
-//              "title": "Staff\ne-Profiles"
-//            },
+            //            {
+            //              "businessType": "doctor_profile",
+            //              "isLock": false,
+            //              "isHide": false,
+            //              "premiumCode": "",
+            //              "title": "Staff\ne-Profiles"
+            //            },
             {
               "businessType": "membership_plans",
               "isLock": false,

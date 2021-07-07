@@ -29,7 +29,7 @@ import io.separ.neural.inputmethod.indic.Constants;
 
 /**
  * This class implements the logic chain between receiving events and generating code points.
- *
+ * <p>
  * Event sources are multiple. It may be a hardware keyboard, a D-PAD, a software keyboard,
  * or any exotic input source.
  * This class will orchestrate the composing chain that starts with an event as its input. Each
@@ -40,28 +40,29 @@ import io.separ.neural.inputmethod.indic.Constants;
  * a colored background.
  */
 public class CombinerChain {
+    private static final HashMap<String, Class<? extends Combiner>> IMPLEMENTED_COMBINERS =
+            new HashMap<>();
+    private static final String COMBINER_SPEC_SEPARATOR = ";";
+
+    static {
+        IMPLEMENTED_COMBINERS.put("MyanmarReordering", MyanmarReordering.class);
+    }
+
     // The already combined text, as described above
     private final StringBuilder mCombinedText;
     // The feedback on the composing state, as described above
     private final SpannableStringBuilder mStateFeedback;
     private final ArrayList<Combiner> mCombiners;
 
-    private static final HashMap<String, Class<? extends Combiner>> IMPLEMENTED_COMBINERS =
-            new HashMap<>();
-    static {
-        IMPLEMENTED_COMBINERS.put("MyanmarReordering", MyanmarReordering.class);
-    }
-    private static final String COMBINER_SPEC_SEPARATOR = ";";
-
     /**
      * Create an combiner chain.
-     *
+     * <p>
      * The combiner chain takes events as inputs and outputs code points and combining state.
      * For example, if the input language is Japanese, the combining chain will typically perform
      * kana conversion. This takes a string for initial text, taken to be present before the
      * cursor: we'll start after this.
      *
-     * @param initialText The text that has already been combined so far.
+     * @param initialText  The text that has already been combined so far.
      * @param combinerList A list of combiners to be applied in order.
      */
     public CombinerChain(final String initialText, final Combiner... combinerList) {
@@ -71,6 +72,32 @@ public class CombinerChain {
         Collections.addAll(mCombiners, combinerList);
         mCombinedText = new StringBuilder(initialText);
         mStateFeedback = new SpannableStringBuilder();
+    }
+
+    public static Combiner[] createCombiners(final String spec) {
+        if (TextUtils.isEmpty(spec)) {
+            return new Combiner[0];
+        }
+        final String[] combinerDescriptors = spec.split(COMBINER_SPEC_SEPARATOR);
+        final Combiner[] combiners = new Combiner[combinerDescriptors.length];
+        int i = 0;
+        for (final String combinerDescriptor : combinerDescriptors) {
+            final Class<? extends Combiner> combinerClass =
+                    IMPLEMENTED_COMBINERS.get(combinerDescriptor);
+            if (null == combinerClass) {
+                throw new RuntimeException("Unknown combiner descriptor: " + combinerDescriptor);
+            }
+            try {
+                combiners[i++] = combinerClass.newInstance();
+            } catch (InstantiationException e) {
+                throw new RuntimeException("Unable to instantiate combiner: " + combinerDescriptor,
+                        e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Unable to instantiate combiner: " + combinerDescriptor,
+                        e);
+            }
+        }
+        return combiners;
     }
 
     public void reset() {
@@ -90,10 +117,11 @@ public class CombinerChain {
 
     /**
      * Process an event through the combining chain, and return a processed event to apply.
+     *
      * @param previousEvents the list of previous events in this composition
-     * @param newEvent the new event to process
+     * @param newEvent       the new event to process
      * @return the processed event. It may be the same event, or a consumed event, or a completely
-     *   new event. However it may never be null.
+     * new event. However it may never be null.
      */
     @Nonnull
     public Event processEvent(final ArrayList<Event> previousEvents, final Event newEvent) {
@@ -115,6 +143,7 @@ public class CombinerChain {
 
     /**
      * Apply a processed event.
+     *
      * @param event the event to be applied
      */
     public void applyProcessedEvent(final Event event) {
@@ -147,31 +176,5 @@ public class CombinerChain {
     public CharSequence getComposingWordWithCombiningFeedback() {
         final SpannableStringBuilder s = new SpannableStringBuilder(mCombinedText);
         return s.append(mStateFeedback);
-    }
-
-    public static Combiner[] createCombiners(final String spec) {
-        if (TextUtils.isEmpty(spec)) {
-            return new Combiner[0];
-        }
-        final String[] combinerDescriptors = spec.split(COMBINER_SPEC_SEPARATOR);
-        final Combiner[] combiners = new Combiner[combinerDescriptors.length];
-        int i = 0;
-        for (final String combinerDescriptor : combinerDescriptors) {
-            final Class<? extends Combiner> combinerClass =
-                    IMPLEMENTED_COMBINERS.get(combinerDescriptor);
-            if (null == combinerClass) {
-                throw new RuntimeException("Unknown combiner descriptor: " + combinerDescriptor);
-            }
-            try {
-                combiners[i++] = combinerClass.newInstance();
-            } catch (InstantiationException e) {
-                throw new RuntimeException("Unable to instantiate combiner: " + combinerDescriptor,
-                        e);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException("Unable to instantiate combiner: " + combinerDescriptor,
-                        e);
-            }
-        }
-        return combiners;
     }
 }

@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+
 import androidx.annotation.NonNull;
 
 import io.separ.neural.inputmethod.colors.ColorDatabase;

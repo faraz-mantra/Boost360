@@ -141,9 +141,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         holder.projectResult.setText(itemList.get(position).getProjectResult());
         holder.ourApproach.setText(itemList.get(position).getProjectWhatWeDid());
 
-        if(itemList.get(position).getProjectResult().equals("COMPLETED")) {
+        if (itemList.get(position).getProjectResult().equals("COMPLETED")) {
             holder.projectResultLayout.setBackgroundColor(context.getResources().getColor(R.color.success_green));
-        }else {
+        } else {
             holder.projectResultLayout.setBackgroundColor(context.getResources().getColor(R.color.primary_color));
         }
 

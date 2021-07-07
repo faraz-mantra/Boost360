@@ -37,13 +37,21 @@ class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignU
     binding?.emailEt?.onTextChanged { binding?.getLinkBt?.isEnabled = it.isNotEmpty() }
     binding?.getLinkBt?.setOnClickListener {
       showProgress()
-      viewModel?.forgotPassword(ForgotPassRequest(clientId, binding?.emailEt?.text?.toString()?.trim()))?.observeOnce(viewLifecycleOwner, {
+      viewModel?.forgotPassword(
+        ForgotPassRequest(
+          clientId,
+          binding?.emailEt?.text?.toString()?.trim()
+        )
+      )?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
           WebEngageController.trackEvent(PS_FORGOT_PASSWORD_SEND, LINK_SEND, NO_EVENT_VALUE)
           val sheet = ResetLinkBottomSheet()
           sheet.onClick = { baseActivity.onNavPressed() }
-          sheet.show(this@ForgetPassFragment.parentFragmentManager, ForgetPassFragment::class.java.name)
+          sheet.show(
+            this@ForgetPassFragment.parentFragmentManager,
+            ForgetPassFragment::class.java.name
+          )
         } else showShortToast(getString(R.string.please_enter_correct_user))
       })
     }

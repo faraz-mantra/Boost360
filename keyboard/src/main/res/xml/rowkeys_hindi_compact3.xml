@@ -18,81 +18,81 @@
 -->
 
 <merge xmlns:latin="http://schemas.android.com/apk/res-auto">
-    <!-- Because the font rendering system prior to API version 16 can't automatically
-         render dotted circle for incomplete combining letter of some scripts, different
-         set of Key definitions are needed based on the API version. -->
-    <Key
-        latin:keySpec="&#x091F;"
-        latin:moreKeys="टं,ट्" />
-    <Key
-        latin:keySpec="&#x0920;"
-        latin:moreKeys="ठं,ठ्" />
-    <Key
-        latin:keySpec="&#x0921;"
-        latin:moreKeys="ङं,ड़्,ङ,ङ्,ड़,डं,ड्,ड़ं" />
-    <Key
-        latin:keySpec="&#x0922;"
-        latin:moreKeys="ढ़्,ढ़,ढं,ढ्,ढ़ं" />
-    <Key
-        latin:keySpec="&#x0923;"
-        latin:moreKeys="णं,ण्" />
-    <Key
-        latin:keySpec="&#x0924;"
-        latin:moreKeys="त्र,तं,त्" />
-    <Key
-        latin:keySpec="&#x0925;"
-        latin:moreKeys="थं,थ्" />
-    <Key
-        latin:keySpec="&#x0926;"
-        latin:moreKeys="दं,द्" />
-    <Key
-        latin:keySpec="&#x0927;"
-        latin:moreKeys="धं,ध्" />
-    <Key
-        latin:keySpec="&#x0928;"
-        latin:moreKeys="न्,नं" />
-    <!-- <include latin:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_candra_o" />
-     &lt;!&ndash; U+0911: "ऑ" DEVANAGARI LETTER CANDRA O &ndash;&gt;
-     <Key
-         latin:keySpec="&#x0911;"
-         latin:keyStyle="moreKeysDevanagariVowelSignCandraO" />
-     &lt;!&ndash; Because the font rendering system prior to API version 16 can't automatically
-          render dotted circle for incomplete combining letter of some scripts, different
-          set of Key definitions are needed based on the API version. &ndash;&gt;
-     <include latin:keyboardLayout="@xml/keystyle_devanagari_sign_virama" />
-     <Key latin:keyStyle="baseKeyDevanagariSignVirama" />
-     &lt;!&ndash; Because the font rendering system prior to API version 16 can't automatically
-          render dotted circle for incomplete combining letter of some scripts, different
-          set of Key definitions are needed based on the API version. &ndash;&gt;
-     <include latin:keyboardLayout="@xml/keystyle_devanagari_sign_anusvara" />
-     <Key latin:keyStyle="baseKeyDevanagariSignAnusvara" />
-     &lt;!&ndash; U+092E: "म" DEVANAGARI LETTER MA
-          U+0950: "ॐ" DEVANAGARI OM &ndash;&gt;
-     <Key
-         latin:keySpec="&#x092E;"
-         latin:moreKeys="&#x0950;" />
-     &lt;!&ndash; U+0928: "न" DEVANAGARI LETTER NA
-          U+0923: "ण" DEVANAGARI LETTER NNA
-          U+091E: "ञ" DEVANAGARI LETTER NYA
-          U+0919: "ङ" DEVANAGARI LETTER NGA &ndash;&gt;
-     <Key
-         latin:keySpec="&#x0928;"
-         latin:moreKeys="&#x0923;,&#x091E;,&#x0919;" />
-     &lt;!&ndash; U+0935: "व" DEVANAGARI LETTER VA &ndash;&gt;
-     <Key latin:keySpec="&#x0935;" />
-     &lt;!&ndash; U+0932: "ल" DEVANAGARI LETTER LA &ndash;&gt;
-     <Key latin:keySpec="&#x0932;" />
-     &lt;!&ndash; U+0938: "स" DEVANAGARI LETTER SA
-          U+0936: "श" DEVANAGARI LETTER SHA
-          U+0937: "ष" DEVANAGARI LETTER SSA
-          U+0936/U+094D/U+0930: "श्र" DEVANAGARI LETTER SHA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER RA &ndash;&gt;
-     <Key
-         latin:keySpec="&#x0938;"
-         latin:moreKeys="&#x0936;,&#x0937;,&#x0936;&#x094D;&#x0930;" />
-     &lt;!&ndash; U+092F: "य" DEVANAGARI LETTER YA &ndash;&gt;
-     <Key latin:keySpec="&#x092F;" />
-     &lt;!&ndash; U+0915/U+094D/U+0937: "क्ष" DEVANAGARI LETTER KA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER SSA &ndash;&gt;
-     <Key
-         latin:keySpec="&#x0915;&#x094D;&#x ;"
-         latin:keyLabelFlags="followKeyLetterRatio" />-->
+  <!-- Because the font rendering system prior to API version 16 can't automatically
+       render dotted circle for incomplete combining letter of some scripts, different
+       set of Key definitions are needed based on the API version. -->
+  <Key
+    latin:keySpec="&#x091F;"
+    latin:moreKeys="टं,ट्" />
+  <Key
+    latin:keySpec="&#x0920;"
+    latin:moreKeys="ठं,ठ्" />
+  <Key
+    latin:keySpec="&#x0921;"
+    latin:moreKeys="ङं,ड़्,ङ,ङ्,ड़,डं,ड्,ड़ं" />
+  <Key
+    latin:keySpec="&#x0922;"
+    latin:moreKeys="ढ़्,ढ़,ढं,ढ्,ढ़ं" />
+  <Key
+    latin:keySpec="&#x0923;"
+    latin:moreKeys="णं,ण्" />
+  <Key
+    latin:keySpec="&#x0924;"
+    latin:moreKeys="त्र,तं,त्" />
+  <Key
+    latin:keySpec="&#x0925;"
+    latin:moreKeys="थं,थ्" />
+  <Key
+    latin:keySpec="&#x0926;"
+    latin:moreKeys="दं,द्" />
+  <Key
+    latin:keySpec="&#x0927;"
+    latin:moreKeys="धं,ध्" />
+  <Key
+    latin:keySpec="&#x0928;"
+    latin:moreKeys="न्,नं" />
+  <!-- <include latin:keyboardLayout="@xml/keystyle_devanagari_vowel_sign_candra_o" />
+   &lt;!&ndash; U+0911: "ऑ" DEVANAGARI LETTER CANDRA O &ndash;&gt;
+   <Key
+       latin:keySpec="&#x0911;"
+       latin:keyStyle="moreKeysDevanagariVowelSignCandraO" />
+   &lt;!&ndash; Because the font rendering system prior to API version 16 can't automatically
+        render dotted circle for incomplete combining letter of some scripts, different
+        set of Key definitions are needed based on the API version. &ndash;&gt;
+   <include latin:keyboardLayout="@xml/keystyle_devanagari_sign_virama" />
+   <Key latin:keyStyle="baseKeyDevanagariSignVirama" />
+   &lt;!&ndash; Because the font rendering system prior to API version 16 can't automatically
+        render dotted circle for incomplete combining letter of some scripts, different
+        set of Key definitions are needed based on the API version. &ndash;&gt;
+   <include latin:keyboardLayout="@xml/keystyle_devanagari_sign_anusvara" />
+   <Key latin:keyStyle="baseKeyDevanagariSignAnusvara" />
+   &lt;!&ndash; U+092E: "म" DEVANAGARI LETTER MA
+        U+0950: "ॐ" DEVANAGARI OM &ndash;&gt;
+   <Key
+       latin:keySpec="&#x092E;"
+       latin:moreKeys="&#x0950;" />
+   &lt;!&ndash; U+0928: "न" DEVANAGARI LETTER NA
+        U+0923: "ण" DEVANAGARI LETTER NNA
+        U+091E: "ञ" DEVANAGARI LETTER NYA
+        U+0919: "ङ" DEVANAGARI LETTER NGA &ndash;&gt;
+   <Key
+       latin:keySpec="&#x0928;"
+       latin:moreKeys="&#x0923;,&#x091E;,&#x0919;" />
+   &lt;!&ndash; U+0935: "व" DEVANAGARI LETTER VA &ndash;&gt;
+   <Key latin:keySpec="&#x0935;" />
+   &lt;!&ndash; U+0932: "ल" DEVANAGARI LETTER LA &ndash;&gt;
+   <Key latin:keySpec="&#x0932;" />
+   &lt;!&ndash; U+0938: "स" DEVANAGARI LETTER SA
+        U+0936: "श" DEVANAGARI LETTER SHA
+        U+0937: "ष" DEVANAGARI LETTER SSA
+        U+0936/U+094D/U+0930: "श्र" DEVANAGARI LETTER SHA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER RA &ndash;&gt;
+   <Key
+       latin:keySpec="&#x0938;"
+       latin:moreKeys="&#x0936;,&#x0937;,&#x0936;&#x094D;&#x0930;" />
+   &lt;!&ndash; U+092F: "य" DEVANAGARI LETTER YA &ndash;&gt;
+   <Key latin:keySpec="&#x092F;" />
+   &lt;!&ndash; U+0915/U+094D/U+0937: "क्ष" DEVANAGARI LETTER KA/DEVANAGARI SIGN VIRAMA/DEVANAGARI LETTER SSA &ndash;&gt;
+   <Key
+       latin:keySpec="&#x0915;&#x094D;&#x ;"
+       latin:keyLabelFlags="followKeyLetterRatio" />-->
 </merge>

@@ -19,7 +19,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : BottomSheetDialogFragment(), View.OnClickListener {
+abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : BaseViewModel?> :
+  BottomSheetDialogFragment(), View.OnClickListener {
 
   companion object {
     val RESULT_OK = -1
@@ -45,7 +46,11 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
   private var resultCancelled = true
   protected lateinit var dialog: BottomSheetDialog
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     baseActivity = activity as BaseActivity<*, *>
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
@@ -59,7 +64,9 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     dialog.setOnShowListener {
       try {
         val dialog = it as? BottomSheetDialog ?: return@setOnShowListener
-        val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
+        val bottomSheet =
+          dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            ?: return@setOnShowListener
         BottomSheetBehavior.from(bottomSheet).apply {
           isPeekHeightSetMatch()?.let {
             isFitToContents = true

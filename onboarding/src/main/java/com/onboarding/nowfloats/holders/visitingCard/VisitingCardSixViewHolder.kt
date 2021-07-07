@@ -10,7 +10,8 @@ import com.onboarding.nowfloats.model.digitalCard.DigitalCardData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class VisitingCardSixViewHolder(binding: ItemVisitingCardSixBinding) : AppBaseRecyclerViewHolder<ItemVisitingCardSixBinding>(binding) {
+class VisitingCardSixViewHolder(binding: ItemVisitingCardSixBinding) :
+  AppBaseRecyclerViewHolder<ItemVisitingCardSixBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -18,7 +19,7 @@ class VisitingCardSixViewHolder(binding: ItemVisitingCardSixBinding) : AppBaseRe
     binding.businessName.text = data.businessName
     binding.number.text = data.number
     ChannelAccessStatusResponse.visibleChannels(binding.itemChannelsGroup.containerChannels)
-    data.cardIcon?.let { binding.imgLogo.setImageResource(it)}
+    data.cardIcon?.let { binding.imgLogo.setImageResource(it) }
     if (data.businessLogo.isNullOrEmpty().not()) {
       binding.profileView.visible()
       binding.channels.gone()

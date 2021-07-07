@@ -19,6 +19,10 @@ public class RImage {
         return url;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public int getResId() {
         return resId;
     }
@@ -29,9 +33,5 @@ public class RImage {
 
     public String getHeight() {
         return height;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

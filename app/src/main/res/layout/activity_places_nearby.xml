@@ -1,95 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context="com.nowfloats.hotel.placesnearby.PlacesNearByActivity">
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/new_custome_app_bar" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context="com.nowfloats.hotel.placesnearby.PlacesNearByActivity">
+    android:visibility="gone"
+    tools:listitem="@layout/item_place_nearby" />
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_custome_app_bar" />
+  <LinearLayout
+    android:id="@+id/secondary_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:visibility="visible">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/_20sdp">
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_feature_bg"
+        android:elevation="@dimen/_2sdp"
+        android:gravity="center">
+
+        <ImageView
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          app:srcCompat="@drawable/ic_expiry_lock" />
+      </LinearLayout>
+
+      <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_place_nearby"
-        android:visibility="gone"/>
-
-    <LinearLayout
-        android:id="@+id/secondary_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:visibility="visible">
+        android:orientation="vertical"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="70dp"
+        android:paddingRight="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_20sdp">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_20sdp">
+        <TextView
+          android:id="@+id/feature_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_semibold"
+          android:text="@string/places_to_look_around"
+          android:textColor="@color/common_text_color"
+          android:textSize="@dimen/_16sdp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
-                android:elevation="@dimen/_2sdp"
-                android:background="@drawable/circle_feature_bg"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:srcCompat="@drawable/ic_expiry_lock"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:gravity="center"
-                android:paddingTop="70dp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingRight="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_20sdp"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/feature_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/places_to_look_around"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:textColor="@color/common_text_color"
-                    android:textSize="@dimen/_16sdp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_with_this_feature_highlight_what_s_near_your_hotel"
-                    android:gravity="center"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:textSize="@dimen/_11sdp"
-                    android:layout_marginTop="@dimen/_20sdp"/>
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_20sdp"
+          android:fontFamily="@font/open_sans_semibold"
+          android:gravity="center"
+          android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_with_this_feature_highlight_what_s_near_your_hotel"
+          android:textSize="@dimen/_11sdp" />
 
-                <TextView
-                    android:id="@+id/buy_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/orange_button_click_effect"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:gravity="center"
-                    android:text="@string/view_in_add_on_store"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/_20sdp"/>
+        <TextView
+          android:id="@+id/buy_item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_10sdp"
+          android:layout_marginTop="@dimen/_20sdp"
+          android:layout_marginEnd="@dimen/_10sdp"
+          android:background="@drawable/orange_button_click_effect"
+          android:fontFamily="@font/open_sans_semibold"
+          android:gravity="center"
+          android:paddingTop="@dimen/_10sdp"
+          android:paddingBottom="@dimen/_10sdp"
+          android:text="@string/view_in_add_on_store"
+          android:textColor="@color/white" />
 
 
-            </LinearLayout>
+      </LinearLayout>
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-    </LinearLayout>
+  </LinearLayout>
 
 </LinearLayout>

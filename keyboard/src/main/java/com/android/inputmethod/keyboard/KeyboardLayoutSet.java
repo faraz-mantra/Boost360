@@ -73,10 +73,6 @@ public final class KeyboardLayoutSet {
     private static final String TAG_FEATURE = "Feature";
 
     private static final String KEYBOARD_LAYOUT_SET_RESOURCE_PREFIX = "keyboard_layout_set_";
-
-    private final Context mContext;
-    private final Params mParams;
-
     // How many layouts we forcibly keep in cache. This only includes ALPHABET (default) and
     // ALPHABET_AUTOMATIC_SHIFTED layouts - other layouts may stay in memory in the map of
     // soft-references, but we forcibly cache this many alphabetic/auto-shifted layouts.
@@ -88,43 +84,12 @@ public final class KeyboardLayoutSet {
     private static final HashMap<KeyboardId, SoftReference<Keyboard>> sKeyboardCache =
             new HashMap<>();
     private static final KeysCache sKeysCache = new KeysCache();
+    private final Context mContext;
+    private final Params mParams;
 
-    @SuppressWarnings("serial")
-    public static final class KeyboardLayoutSetException extends RuntimeException {
-        public final KeyboardId mKeyboardId;
-
-        public KeyboardLayoutSetException(final Throwable cause, final KeyboardId keyboardId) {
-            super(cause);
-            mKeyboardId = keyboardId;
-        }
-    }
-
-    private static final class ElementParams {
-        int mKeyboardXmlId;
-        boolean mProximityCharsCorrectionEnabled;
-
-        public ElementParams() {
-        }
-    }
-
-    public static final class Params {
-        String mKeyboardLayoutSetName;
-        int mMode;
-        boolean mDisableTouchPositionCorrectionDataForTest;
-        // TODO: Use {@link InputAttributes} instead of these variables.
-        EditorInfo mEditorInfo;
-        boolean mIsPasswordField;
-        boolean mVoiceInputKeyEnabled;
-        boolean mNoSettingsKey;
-        boolean mLanguageSwitchKeyEnabled;
-        InputMethodSubtype mSubtype;
-        boolean mIsSpellChecker;
-        int mKeyboardWidth;
-        int mKeyboardHeight;
-        int mScriptId = ScriptUtils.SCRIPT_LATIN;
-        // Sparse array of KeyboardLayoutSet element parameters indexed by element's id.
-        final SparseArray<ElementParams> mKeyboardLayoutSetElementIdToParamsMap =
-                new SparseArray<>();
+    KeyboardLayoutSet(final Context context, final Params params) {
+        mContext = context;
+        mParams = params;
     }
 
     public static void onSystemLocaleChanged() {
@@ -138,11 +103,6 @@ public final class KeyboardLayoutSet {
     private static void clearKeyboardCache() {
         sKeyboardCache.clear();
         sKeysCache.clear();
-    }
-
-    KeyboardLayoutSet(final Context context, final Params params) {
-        mContext = context;
-        mParams = params;
     }
 
     public Keyboard getKeyboard(final int baseKeyboardLayoutSetElementId) {
@@ -246,14 +206,50 @@ public final class KeyboardLayoutSet {
         return mParams.mScriptId;
     }
 
+    @SuppressWarnings("serial")
+    public static final class KeyboardLayoutSetException extends RuntimeException {
+        public final KeyboardId mKeyboardId;
+
+        public KeyboardLayoutSetException(final Throwable cause, final KeyboardId keyboardId) {
+            super(cause);
+            mKeyboardId = keyboardId;
+        }
+    }
+
+    private static final class ElementParams {
+        int mKeyboardXmlId;
+        boolean mProximityCharsCorrectionEnabled;
+
+        public ElementParams() {
+        }
+    }
+
+    public static final class Params {
+        // Sparse array of KeyboardLayoutSet element parameters indexed by element's id.
+        final SparseArray<ElementParams> mKeyboardLayoutSetElementIdToParamsMap =
+                new SparseArray<>();
+        String mKeyboardLayoutSetName;
+        int mMode;
+        boolean mDisableTouchPositionCorrectionDataForTest;
+        // TODO: Use {@link InputAttributes} instead of these variables.
+        EditorInfo mEditorInfo;
+        boolean mIsPasswordField;
+        boolean mVoiceInputKeyEnabled;
+        boolean mNoSettingsKey;
+        boolean mLanguageSwitchKeyEnabled;
+        InputMethodSubtype mSubtype;
+        boolean mIsSpellChecker;
+        int mKeyboardWidth;
+        int mKeyboardHeight;
+        int mScriptId = ScriptUtils.SCRIPT_LATIN;
+    }
+
     public static final class Builder {
+        private static final EditorInfo EMPTY_EDITOR_INFO = new EditorInfo();
         private final Context mContext;
         private final String mPackageName;
         private final Resources mResources;
-
         private final Params mParams = new Params();
-
-        private static final EditorInfo EMPTY_EDITOR_INFO = new EditorInfo();
 
         public Builder(final Context context, final EditorInfo ei) {
             mContext = context;
@@ -268,6 +264,41 @@ public final class KeyboardLayoutSet {
             params.mIsPasswordField = InputTypeUtils.isPasswordInputType(editorInfo.inputType);
             params.mNoSettingsKey = InputAttributes.inPrivateImeOptions(
                     mPackageName, NO_SETTINGS_KEY, editorInfo);
+        }
+
+        private static int getKeyboardMode(final EditorInfo editorInfo) {
+            final int inputType = editorInfo.inputType;
+            final int variation = inputType & InputType.TYPE_MASK_VARIATION;
+
+            switch (inputType & InputType.TYPE_MASK_CLASS) {
+                case InputType.TYPE_CLASS_NUMBER:
+                    return KeyboardId.MODE_NUMBER;
+                case InputType.TYPE_CLASS_DATETIME:
+                    switch (variation) {
+                        case InputType.TYPE_DATETIME_VARIATION_DATE:
+                            return KeyboardId.MODE_DATE;
+                        case InputType.TYPE_DATETIME_VARIATION_TIME:
+                            return KeyboardId.MODE_TIME;
+                        default: // InputType.TYPE_DATETIME_VARIATION_NORMAL
+                            return KeyboardId.MODE_DATETIME;
+                    }
+                case InputType.TYPE_CLASS_PHONE:
+                    return KeyboardId.MODE_PHONE;
+                case InputType.TYPE_CLASS_TEXT:
+                    if (InputTypeUtils.isEmailVariation(variation)) {
+                        return KeyboardId.MODE_EMAIL;
+                    } else if (variation == InputType.TYPE_TEXT_VARIATION_URI) {
+                        return KeyboardId.MODE_URL;
+                    } else if (variation == InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE) {
+                        return KeyboardId.MODE_IM;
+                    } else if (variation == InputType.TYPE_TEXT_VARIATION_FILTER) {
+                        return KeyboardId.MODE_TEXT;
+                    } else {
+                        return KeyboardId.MODE_TEXT;
+                    }
+                default:
+                    return KeyboardId.MODE_TEXT;
+            }
         }
 
         public Builder setKeyboardGeometry(final int keyboardWidth, final int keyboardHeight) {
@@ -416,41 +447,6 @@ public final class KeyboardLayoutSet {
                 setScriptId(scriptId);
             } finally {
                 a.recycle();
-            }
-        }
-
-        private static int getKeyboardMode(final EditorInfo editorInfo) {
-            final int inputType = editorInfo.inputType;
-            final int variation = inputType & InputType.TYPE_MASK_VARIATION;
-
-            switch (inputType & InputType.TYPE_MASK_CLASS) {
-                case InputType.TYPE_CLASS_NUMBER:
-                    return KeyboardId.MODE_NUMBER;
-                case InputType.TYPE_CLASS_DATETIME:
-                    switch (variation) {
-                        case InputType.TYPE_DATETIME_VARIATION_DATE:
-                            return KeyboardId.MODE_DATE;
-                        case InputType.TYPE_DATETIME_VARIATION_TIME:
-                            return KeyboardId.MODE_TIME;
-                        default: // InputType.TYPE_DATETIME_VARIATION_NORMAL
-                            return KeyboardId.MODE_DATETIME;
-                    }
-                case InputType.TYPE_CLASS_PHONE:
-                    return KeyboardId.MODE_PHONE;
-                case InputType.TYPE_CLASS_TEXT:
-                    if (InputTypeUtils.isEmailVariation(variation)) {
-                        return KeyboardId.MODE_EMAIL;
-                    } else if (variation == InputType.TYPE_TEXT_VARIATION_URI) {
-                        return KeyboardId.MODE_URL;
-                    } else if (variation == InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE) {
-                        return KeyboardId.MODE_IM;
-                    } else if (variation == InputType.TYPE_TEXT_VARIATION_FILTER) {
-                        return KeyboardId.MODE_TEXT;
-                    } else {
-                        return KeyboardId.MODE_TEXT;
-                    }
-                default:
-                    return KeyboardId.MODE_TEXT;
             }
         }
     }

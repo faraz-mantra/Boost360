@@ -44,7 +44,7 @@ class DetailKycFragment : AppBaseFragment<FragmentDetailsKycBinding, WebBoostKit
 
   private fun getKycDetails() {
     showProgress()
-    viewModel?.getKycData(session?.auth_1,getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getKycData(session?.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse
         if (it.status == 200 || it.status == 201 || it.status == 202) {

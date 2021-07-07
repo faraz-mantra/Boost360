@@ -23,5 +23,5 @@ public interface OffersInterface {
 
     @Headers({"Content-Type: application/json"})
     @PUT("/Discover/v1/float/createDeal")
-    public void postOffer(@Body HashMap<String,String> map, Callback<String> callback);
+    public void postOffer(@Body HashMap<String, String> map, Callback<String> callback);
 }

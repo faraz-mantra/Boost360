@@ -15,21 +15,22 @@ import java.util.TimeZone;
  */
 
 public class ChatLogger {
-    private static ChatLogger sRiaEventLogger;
-    private DatabaseReference mDatabase;
     private static final String DB_CHILD_NAME = "RiaChatSDK";
     //        private static final String DB_CHILD_NAME = "RiaChatTestSDK";
     private static final String DB_FEEDBACK_CHILD_NAME = "NpsSDK";
-
     private static final String EVENT_CATEGORY_ONBOARDING = "RIA_ONBOARDING_CHAT";
     private static final String EVENT_CATEGORY_NPS = "NF_FEEDBACK_CHAT";
-
     //    private static final String DB_CHILD_NAME = "RiaChatTestSDK";
     //    private static final String DB_CHILD_NAME = "ChatSDKTestAndroid";
     //private static Bus mBus;
     public static boolean lastEventStatus;
-
     public static ChatManager.ChatType chatType;
+    private static ChatLogger sRiaEventLogger;
+    private DatabaseReference mDatabase;
+
+    private ChatLogger() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+    }
 
     public static ChatLogger getInstance(ChatManager.ChatType chatOType) {
         if (sRiaEventLogger == null) {
@@ -37,24 +38,6 @@ public class ChatLogger {
         }
         chatType = chatOType;
         return sRiaEventLogger;
-    }
-
-
-    public enum EventStatus {
-        COMPLETED(0), DROPPED(1);
-        private final int value;
-
-        private EventStatus(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
-    private ChatLogger() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     public void logViewEvent(String deviceId, String NodeId, String appVersion, String flowId, String sessionId, String fpTag) {
@@ -196,5 +179,18 @@ public class ChatLogger {
                 break;
         }
 
+    }
+
+    public enum EventStatus {
+        COMPLETED(0), DROPPED(1);
+        private final int value;
+
+        private EventStatus(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 }

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
-      android:id="@+id/menu_item_search"
-      android:icon="@drawable/ic_search_inventory"
-      android:title="Search"
-      app:actionViewClass="androidx.appcompat.widget.SearchView"
-      app:showAsAction="always|collapseActionView" />
+    android:id="@+id/menu_item_search"
+    android:icon="@drawable/ic_search_inventory"
+    android:title="Search"
+    app:actionViewClass="androidx.appcompat.widget.SearchView"
+    app:showAsAction="always|collapseActionView" />
   <item
-      android:id="@+id/menu_filter"
-      android:icon="@drawable/ic_filter_n"
-      android:title="Filter"
-      app:showAsAction="ifRoom" />
+    android:id="@+id/menu_filter"
+    android:icon="@drawable/ic_filter_n"
+    android:title="Filter"
+    app:showAsAction="ifRoom" />
 </menu>

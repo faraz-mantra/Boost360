@@ -11,29 +11,49 @@ import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object BusinessCreateRepository : AppBaseRepository<BusinessCreateRemoteDataSource, AppBaseLocalService>() {
+object BusinessCreateRepository :
+  AppBaseRepository<BusinessCreateRemoteDataSource, AppBaseLocalService>() {
 
-    override fun getRemoteDataSourceClass(): Class<BusinessCreateRemoteDataSource> {
-        return BusinessCreateRemoteDataSource::class.java
-    }
+  override fun getRemoteDataSourceClass(): Class<BusinessCreateRemoteDataSource> {
+    return BusinessCreateRemoteDataSource::class.java
+  }
 
-    fun postActivatePurchasedOrder(clientId: String?, request: ActivatePurchasedOrderRequest): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.postActivatePurchasedOrder(clientId, request), TaskCode.POST_ACTIVATE_PURCHASED_ORDER)
-    }
-    override fun getLocalDataSourceInstance(): AppBaseLocalService {
-        return AppBaseLocalService()
-    }
+  fun postActivatePurchasedOrder(
+    clientId: String?,
+    request: ActivatePurchasedOrderRequest
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.postActivatePurchasedOrder(clientId, request),
+      TaskCode.POST_ACTIVATE_PURCHASED_ORDER
+    )
+  }
 
-    fun putCreateBusinessV5(profileId: String?, request: BusinessCreateRequest): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.putCreateBusinessV5(profileId, request), TaskCode.POST_CREATE_BUSINESS_V5)
-    }
+  override fun getLocalDataSourceInstance(): AppBaseLocalService {
+    return AppBaseLocalService()
+  }
 
-    fun putCreateBusinessV6(profileId: String?, request: BusinessCreateRequest): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.putCreateBusinessV6(profileId, request), TaskCode.POST_CREATE_BUSINESS_V6)
-    }
+  fun putCreateBusinessV5(
+    profileId: String?,
+    request: BusinessCreateRequest
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.putCreateBusinessV5(profileId, request),
+      TaskCode.POST_CREATE_BUSINESS_V5
+    )
+  }
+
+  fun putCreateBusinessV6(
+    profileId: String?,
+    request: BusinessCreateRequest
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.putCreateBusinessV6(profileId, request),
+      TaskCode.POST_CREATE_BUSINESS_V6
+    )
+  }
 
 
-    override fun getApiClient(): Retrofit {
-        return WithFloatsApiClient.shared.retrofit
-    }
+  override fun getApiClient(): Retrofit {
+    return WithFloatsApiClient.shared.retrofit
+  }
 }

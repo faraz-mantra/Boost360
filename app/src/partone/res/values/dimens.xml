@@ -1,76 +1,76 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">18dp</dimen>
+  <!-- Default screen margins, per the Android Design guidelines. -->
+  <dimen name="activity_horizontal_margin">16dp</dimen>
+  <dimen name="activity_vertical_margin">18dp</dimen>
 
-    <dimen name="actionBar_layout_height">55dp</dimen>
+  <dimen name="actionBar_layout_height">55dp</dimen>
 
-    <dimen name="actionBar_leftButtonDiv_layout_width">60dp</dimen>
-    <dimen name="actionBar_leftButtonDiv_layout_height">60dp</dimen>
-
-
-    <dimen name="content_creation_icon_sizes">40dp</dimen>
-    <dimen name="actionBar_leftButton_layout_width">30dp</dimen>
-    <dimen name="actionBar_leftButton_layout_height">30dp</dimen>
-
-    <dimen name="pis_primary_img_top_bar_store_back_button_marginLeft">10dp</dimen>
-
-    <dimen name="pre_screen_top_margin_text1">50dp</dimen>
-    <dimen name="pre_screen_top_margin_text2">170dp</dimen>
-    <dimen name="pre_screen_linear_layout_top_margin">20dp</dimen>
+  <dimen name="actionBar_leftButtonDiv_layout_width">60dp</dimen>
+  <dimen name="actionBar_leftButtonDiv_layout_height">60dp</dimen>
 
 
-    <dimen name="padding_medium">10dp</dimen>
-    <dimen name="icon_size">38dp</dimen>
-    <dimen name="nav_icon_size">24dp</dimen>
+  <dimen name="content_creation_icon_sizes">40dp</dimen>
+  <dimen name="actionBar_leftButton_layout_width">30dp</dimen>
+  <dimen name="actionBar_leftButton_layout_height">30dp</dimen>
 
-    <dimen name="icon_size_47">47dp</dimen>
-    <dimen name="icon_size_55">55dp</dimen>
+  <dimen name="pis_primary_img_top_bar_store_back_button_marginLeft">10dp</dimen>
 
-    <dimen name="ps_lbl1_size">22sp</dimen>
-    <dimen name="ps_lbl2_size">40sp</dimen>
-    <dimen name="ps_lbl3_size">12sp</dimen>
-    <dimen name="ps_lbl1_mb">20dp</dimen>
-
-    <!--    Pre SignUp slides screen  -->
-
-    <!--    End of Pre SignUp slides screen  -->
-
-    <!--    Pre SignUp slide2 screen  -->
-
-    <dimen name="pre_s2_linear1_paddingBottom">20dp</dimen>
-    <dimen name="pre_s2_mainImage_width">150dp</dimen>
-    <dimen name="pre_s2_description_marginTop">20dp</dimen>
-    <dimen name="pre_s2_description_paddingLeft">20dp</dimen>
-    <dimen name="pre_s2_description_paddingRight">20dp</dimen>
-
-    <!--    End of Pre SignUp slide2 screen  -->
-
-    <!--    Pre SignUp slide3 screen  -->
-
-    <dimen name="pre_s3_description_paddingLeft">20dp</dimen>
-    <dimen name="pre_s3_description_paddingRight">20dp</dimen>
-
-    <!--    End of Pre SignUp slide3 screen  -->
-
-    <!--    Pre SignUp slide7 screen  -->
-
-    <!--    End of Pre SignUp slide7 screen  -->
+  <dimen name="pre_screen_top_margin_text1">50dp</dimen>
+  <dimen name="pre_screen_top_margin_text2">170dp</dimen>
+  <dimen name="pre_screen_linear_layout_top_margin">20dp</dimen>
 
 
-    <!--    Side Panel Screen  -->
-    <dimen name="sidepanel_cell_height">50dp</dimen>
+  <dimen name="padding_medium">10dp</dimen>
+  <dimen name="icon_size">38dp</dimen>
+  <dimen name="nav_icon_size">24dp</dimen>
+
+  <dimen name="icon_size_47">47dp</dimen>
+  <dimen name="icon_size_55">55dp</dimen>
+
+  <dimen name="ps_lbl1_size">22sp</dimen>
+  <dimen name="ps_lbl2_size">40sp</dimen>
+  <dimen name="ps_lbl3_size">12sp</dimen>
+  <dimen name="ps_lbl1_mb">20dp</dimen>
+
+  <!--    Pre SignUp slides screen  -->
+
+  <!--    End of Pre SignUp slides screen  -->
+
+  <!--    Pre SignUp slide2 screen  -->
+
+  <dimen name="pre_s2_linear1_paddingBottom">20dp</dimen>
+  <dimen name="pre_s2_mainImage_width">150dp</dimen>
+  <dimen name="pre_s2_description_marginTop">20dp</dimen>
+  <dimen name="pre_s2_description_paddingLeft">20dp</dimen>
+  <dimen name="pre_s2_description_paddingRight">20dp</dimen>
+
+  <!--    End of Pre SignUp slide2 screen  -->
+
+  <!--    Pre SignUp slide3 screen  -->
+
+  <dimen name="pre_s3_description_paddingLeft">20dp</dimen>
+  <dimen name="pre_s3_description_paddingRight">20dp</dimen>
+
+  <!--    End of Pre SignUp slide3 screen  -->
+
+  <!--    Pre SignUp slide7 screen  -->
+
+  <!--    End of Pre SignUp slide7 screen  -->
 
 
-    <dimen name="icon_left_margin">13dp</dimen>
-    <dimen name="icon_right_margin">27dp</dimen>
-    <dimen name="cell_text_size">14sp</dimen>
+  <!--    Side Panel Screen  -->
+  <dimen name="sidepanel_cell_height">50dp</dimen>
 
-    <dimen name="textview_height_business_profile">47dp</dimen>
-    <dimen name="cell_height">55dp</dimen>
 
-    <dimen name="small_text_size">12sp</dimen>
-    <dimen name="medium_text_size">15sp</dimen>
-    <dimen name="large_text_size">18sp</dimen>
-    <dimen name="xxlarge_text_size">25sp</dimen>
+  <dimen name="icon_left_margin">13dp</dimen>
+  <dimen name="icon_right_margin">27dp</dimen>
+  <dimen name="cell_text_size">14sp</dimen>
+
+  <dimen name="textview_height_business_profile">47dp</dimen>
+  <dimen name="cell_height">55dp</dimen>
+
+  <dimen name="small_text_size">12sp</dimen>
+  <dimen name="medium_text_size">15sp</dimen>
+  <dimen name="large_text_size">18sp</dimen>
+  <dimen name="xxlarge_text_size">25sp</dimen>
 </resources>

@@ -1,64 +1,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/screen_bg"
+  android:orientation="vertical">
+
+  <include
+    android:id="@+id/search_queries_action_bar"
+    layout="@layout/search_queries_action_bar" />
+
+  <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/screen_bg"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/search_queries_action_bar"
-        layout="@layout/search_queries_action_bar" />
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/search_queries_recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scrollbars="vertical" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <LinearLayout
+      android:id="@+id/emptysearchlayout"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_queries_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+      <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_search_queries"
+        android:tint="@color/zeroth_grey_icon" />
 
-        <LinearLayout
-            android:id="@+id/emptysearchlayout"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:visibility="gone"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:tint="@color/zeroth_grey_icon"
-                android:src="@drawable/ic_search_queries" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="@dimen/dgts__padding_title"
-                android:textColor="@color/zeroth_grey_title"
-                android:text="@string/keep_move"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/zeroth_grey"
-                android:gravity="center"
-                android:text="@string/searchquery_empty"/>
-
-        </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:visibility="gone"
+      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="@dimen/dgts__padding_title"
+        android:text="@string/keep_move"
+        android:textColor="@color/zeroth_grey_title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-    </FrameLayout>
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/searchquery_empty"
+        android:textColor="@color/zeroth_grey"
+        android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <ProgressBar
+      android:id="@+id/progress_bar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:visibility="gone" />
+
+  </FrameLayout>
 
 </LinearLayout>

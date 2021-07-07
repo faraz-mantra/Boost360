@@ -33,7 +33,7 @@ import io.separ.neural.inputmethod.indic.define.ProductionFlags;
 
 /**
  * "Advanced" settings sub screen.
- *
+ * <p>
  * This settings sub screen handles the following advanced preferences.
  * - Key popup dismiss delay
  * - Keypress vibration duration
@@ -75,11 +75,11 @@ public final class AdvancedSettingsFragment extends SubScreenFragment {
                     (ListPreference) findPreference(Settings.PREF_KEY_PREVIEW_POPUP_DISMISS_DELAY);
             final String popupDismissDelayDefaultValue = Integer.toString(res.getInteger(
                     R.integer.config_key_preview_linger_timeout));
-            keyPreviewPopupDismissDelay.setEntries(new String[] {
+            keyPreviewPopupDismissDelay.setEntries(new String[]{
                     res.getString(R.string.key_preview_popup_dismiss_no_delay),
                     res.getString(R.string.key_preview_popup_dismiss_default_delay),
             });
-            keyPreviewPopupDismissDelay.setEntryValues(new String[] {
+            keyPreviewPopupDismissDelay.setEntryValues(new String[]{
                     "0",
                     popupDismissDelayDefaultValue
             });
@@ -123,7 +123,7 @@ public final class AdvancedSettingsFragment extends SubScreenFragment {
     }
 
     private void setupKeypressVibrationDurationSettings() {
-        final SeekBarDialogPreference pref = (SeekBarDialogPreference)findPreference(
+        final SeekBarDialogPreference pref = (SeekBarDialogPreference) findPreference(
                 Settings.PREF_VIBRATION_DURATION_SETTINGS);
         if (pref == null) {
             return;
@@ -134,14 +134,14 @@ public final class AdvancedSettingsFragment extends SubScreenFragment {
     }
 
     private void setupKeypressSoundVolumeSettings() {
-        final SeekBarDialogPreference pref = (SeekBarDialogPreference)findPreference(
+        final SeekBarDialogPreference pref = (SeekBarDialogPreference) findPreference(
                 Settings.PREF_KEYPRESS_SOUND_VOLUME);
         if (pref == null) {
             return;
         }
         final SharedPreferences prefs = getSharedPreferences();
         final Resources res = getResources();
-        final AudioManager am = (AudioManager)getActivity().getSystemService(Context.AUDIO_SERVICE);
+        final AudioManager am = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
         pref.setInterface(new MyValueProxy2(prefs, res, am));
     }
 
@@ -205,7 +205,7 @@ public final class AdvancedSettingsFragment extends SubScreenFragment {
         }
 
         private int getPercentageFromValue(final float floatValue) {
-            return (int)(floatValue * PERCENTAGE_FLOAT);
+            return (int) (floatValue * PERCENTAGE_FLOAT);
         }
 
         @Override

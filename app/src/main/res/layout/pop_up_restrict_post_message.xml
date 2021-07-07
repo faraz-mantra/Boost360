@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="#FFFFFF"
+  android:orientation="vertical"
+  android:padding="24dp">
+
+  <ImageView
+    android:id="@+id/img_warning"
+    android:layout_width="160dp"
+    android:layout_height="160dp"
+    android:layout_gravity="center" />
+
+  <com.nowfloats.CustomWidget.roboto_md_60_212121
+    android:id="@+id/textView1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:layout_marginTop="10dp"
+    android:gravity="center" />
 
-    <ImageView
-        android:id="@+id/img_warning"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_gravity="center" />
-
-    <com.nowfloats.CustomWidget.roboto_md_60_212121
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center" />
-
-    <com.nowfloats.CustomWidget.roboto_lt_24_212121
-        android:id="@+id/pop_up_create_message_body"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center" />
+  <com.nowfloats.CustomWidget.roboto_lt_24_212121
+    android:id="@+id/pop_up_create_message_body"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:gravity="center" />
 </LinearLayout>

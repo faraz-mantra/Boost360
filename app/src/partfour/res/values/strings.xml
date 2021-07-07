@@ -1,548 +1,547 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="twitter_consumer_key">VSfjudvcrSvfOesMgaHzlq8eG</string>
-    <string name="twitter_consumer_secret">jM656pIF5dSjyNI09I8OrAl1hdZ20oaPbAaYtMqHAarA025Xy9</string>
-    <string name="website_domain_name">.digitalseoz.com</string>
-    <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
-    <string name="app_name">Digitalseoz</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="next">Next</string>
-    <string name="allow_boost_to_read_your">Please allow Digitalseoz to read your Facebook Page insights.</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_web_site_address">Website Address</string>
-    <string name="title_activity_login">Welcome Back</string>
-    <string name="title_activity_business_profile">BusinessProfileActivity</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
-    <string name="title_activity_business_profile__home">Business Profile</string>
-    <string name="title_activity_business__address_">Business Address</string>
-    <string name="title_activity_contact__info_">Contact Information</string>
-    <string name="title_activity_business__hours_">Business Hours</string>
-    <string name="title_activity_business__logo_">Business Logo</string>
-    <string name="title_activity_social__sharing_">Social Sharing</string>
-    <string name="title_activity_login__main">Welcome Back</string>
-    <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
-    <string name="primary_number">Primary Number (To communicate with Digitalseoz)</string>
-    <string name="to_communicate_with_nowfloats">To communicate with Digitalseoz</string>
-    <string name="ps_create_lbl">CREATE</string>
-    <string name="ps_login_lbl">LOG IN</string>
-    <string name="ps_create_lbl_tag">a website with digitalseoz</string>
-    <string name="ps_login_lbl_tag">to manage digitalseoz website</string>
-    <string name="ps_sc2_lbl1">Instant Website</string>
-    <string name="ps_sc2_lbl2">Creation</string>
-    <string name="ps_sc2_lbl3">Get a business website \nthat is instantly created and \neasily managed using this app.</string>
-    <string name="ps_sc3_lbl1">Connect to</string>
-    <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#009EDF\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
-    <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#009EDF\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
-    <string name="ps_sc3_lbl2">Facebook</string>
-    <string name="ps_sc3_lbl3">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
-    <string name="ps_sc4_lbl1">Discoverable</string>
-    <string name="ps_sc4_lbl2">On Search</string>
-    <string name="ps_sc4_lbl3">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
-    <string name="ps_sc5_lbl1">Get your own</string>
-    <string name="ps_sc5_lbl2">Domain</string>
-    <string name="ps_sc5_lbl3">Take the next step in growing your business. Give it an identity of its own</string>
-    <string name="ps_sc6_lbl1">Generate Business</string>
-    <string name="ps_sc6_lbl2">Leads</string>
-    <string name="ps_sc6_lbl3">Let customers contact you directly \nand reply to them instantly!</string>
-    <string name="ps_sc8_lbl1">Premium features in</string>
-    <string name="ps_sc8_lbl2">Digitalseoz</string>
-    <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
-    <string name="ps_sc8_lbl4">Store</string>
-    <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
-    <string name="ps_sc1_lbl2_tf">HN53exd.ttf</string>
-    <string name="ps_create_lbl_tf">HN75Bold.ttf</string>
-    <string name="ps_create_tag_tf">HN56IT.ttf</string>
+  <string name="twitter_consumer_key">VSfjudvcrSvfOesMgaHzlq8eG</string>
+  <string name="twitter_consumer_secret">jM656pIF5dSjyNI09I8OrAl1hdZ20oaPbAaYtMqHAarA025Xy9</string>
+  <string name="website_domain_name">.digitalseoz.com</string>
+  <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
+  <string name="app_name">Digitalseoz</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="action_settings">Settings</string>
+  <string name="next">Next</string>
+  <string name="allow_boost_to_read_your">Please allow Digitalseoz to read your Facebook Page insights.</string>
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="title_activity_web_site_address">Website Address</string>
+  <string name="title_activity_login">Welcome Back</string>
+  <string name="title_activity_business_profile">BusinessProfileActivity</string>
+  <string name="title_activity_home">HomeActivity</string>
+  <string name="drawer_open">Open</string>
+  <string name="drawer_close">Close</string>
+  <string name="title_activity_business_profile__home">Business Profile</string>
+  <string name="title_activity_business__address_">Business Address</string>
+  <string name="title_activity_contact__info_">Contact Information</string>
+  <string name="title_activity_business__hours_">Business Hours</string>
+  <string name="title_activity_business__logo_">Business Logo</string>
+  <string name="title_activity_social__sharing_">Social Sharing</string>
+  <string name="title_activity_login__main">Welcome Back</string>
+  <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
+  <string name="primary_number">Primary Number (To communicate with Digitalseoz)</string>
+  <string name="to_communicate_with_nowfloats">To communicate with Digitalseoz</string>
+  <string name="ps_create_lbl">CREATE</string>
+  <string name="ps_login_lbl">LOG IN</string>
+  <string name="ps_create_lbl_tag">a website with digitalseoz</string>
+  <string name="ps_login_lbl_tag">to manage digitalseoz website</string>
+  <string name="ps_sc2_lbl1">Instant Website</string>
+  <string name="ps_sc2_lbl2">Creation</string>
+  <string name="ps_sc2_lbl3">Get a business website \nthat is instantly created and \neasily managed using this app.</string>
+  <string name="ps_sc3_lbl1">Connect to</string>
+  <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#009EDF\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
+  <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#009EDF\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
+  <string name="ps_sc3_lbl2">Facebook</string>
+  <string name="ps_sc3_lbl3">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
+  <string name="ps_sc4_lbl1">Discoverable</string>
+  <string name="ps_sc4_lbl2">On Search</string>
+  <string name="ps_sc4_lbl3">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
+  <string name="ps_sc5_lbl1">Get your own</string>
+  <string name="ps_sc5_lbl2">Domain</string>
+  <string name="ps_sc5_lbl3">Take the next step in growing your business. Give it an identity of its own</string>
+  <string name="ps_sc6_lbl1">Generate Business</string>
+  <string name="ps_sc6_lbl2">Leads</string>
+  <string name="ps_sc6_lbl3">Let customers contact you directly \nand reply to them instantly!</string>
+  <string name="ps_sc8_lbl1">Premium features in</string>
+  <string name="ps_sc8_lbl2">Digitalseoz</string>
+  <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
+  <string name="ps_sc8_lbl4">Store</string>
+  <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
+  <string name="ps_sc1_lbl2_tf">HN53exd.ttf</string>
+  <string name="ps_create_lbl_tf">HN75Bold.ttf</string>
+  <string name="ps_create_tag_tf">HN56IT.ttf</string>
 
-    <string-array name="time_arrays">
-        <item>01:00</item>
-        <item>02:00</item>
-        <item>03:00</item>
-        <item>04:00</item>
-        <item>05:00</item>
-        <item>06:00</item>
-        <item>07:00</item>
-        <item>08:00</item>
-        <item>09:00</item>
-        <item>10:00</item>
-        <item>11:00</item>
-    </string-array>
-    <string-array name="weeks">
-        <item>Week 1</item>
-        <item>Week 2</item>
-        <item>Week 3</item>
-        <item>Week 4</item>
-        <item>Week 5</item>
-        <item>Week 6</item>
-    </string-array>
+  <string-array name="time_arrays">
+    <item>01:00</item>
+    <item>02:00</item>
+    <item>03:00</item>
+    <item>04:00</item>
+    <item>05:00</item>
+    <item>06:00</item>
+    <item>07:00</item>
+    <item>08:00</item>
+    <item>09:00</item>
+    <item>10:00</item>
+    <item>11:00</item>
+  </string-array>
+  <string-array name="weeks">
+    <item>Week 1</item>
+    <item>Week 2</item>
+    <item>Week 3</item>
+    <item>Week 4</item>
+    <item>Week 5</item>
+    <item>Week 6</item>
+  </string-array>
 
-    <string name="facebook_app_id">298916947224187</string>
+  <string name="facebook_app_id">298916947224187</string>
 
-    <string name="title_activity_image__gallery__main">Image Gallery</string>
-    <string name="title_activity_home__main">Home_MainActivity</string>
-    <string name="title_activity_card__full__view__main">Home</string>
-    <string name="title_activity_create__message_">Post an Update</string>
-    <string name="side_panel_row_one">Dashboard</string>
-    <string name="side_panel_row_two">Manage Website</string>
-    <string name="side_panel_row_tenth">Manage Customers</string>
-    <string name="side_panel_site_appearance">Site Appearance</string>
-    <string name="side_panel_row_csp">Custom Pages</string>
-    <string name="side_panel_row_three">Business Enquiries</string>
-    <string name="side_panel_row_four">Photo Gallery</string>
-    <string name="side_panel_row_five">Settings</string>
-    <string name="setting_change_pwd">Change Password</string>
-    <string name="setting_feedback">Feedback</string>
-    <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
-    <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
-    <string name="setting_about_us">About us</string>
-    <string name="setting_logout">Logout</string>
-    <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
-
-
-    <!-- Deep Linking URLs  -->
-
-    <string name="deeplink_update">update</string>
-    <string name="deeplink_upgrade">upgrade</string>
-    <string name="deeplink_featuredimage">featuredimage</string>
-    <string name="deeplink_analytics">analytics</string>
-    <string name="deeplink_bizenquiry">ttb</string>
-    <string name="deeplink_store">nfstore</string>
-    <string name="deeplink_searchqueries">searchqueries</string>
-    <string name="deeplink_setings">settings</string>
-    <string name="deeplink_socailsharing">social</string>
-    <string name="deeplink_profile">profile</string>
-    <string name="deeplink_contact">contact</string>
-    <string name="deeplink_bizaddress">address</string>
-    <string name="deeplink_bizhours">hours</string>
-    <string name="deeplink_bizlogo">logo</string>
-    <string name="deeplink_nfstoreDomainTTBCombo">bookdomain</string>
-    <string name="deeplink_imageGallery">imagegallery</string>
-    <string name="deeplink_propack">proPack</string>
-    <string name="deeplink_nfstoreseo">nfstoreseo</string>
-    <string name="deeplink_nfstorettb">nfstorettb</string>
-    <string name="deeplink_nfstoreimage">nfstoreimage</string>
-    <string name="deeplink_gplaces">gplaces</string>
-    <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
-    <string name="deeplink_nfstorenoads">nfstorenoads</string>
-    <string name="deeplink_ProductGallery">productGallery</string>
-
-    <!-- Deep Linking URLs  -->
+  <string name="title_activity_image__gallery__main">Image Gallery</string>
+  <string name="title_activity_home__main">Home_MainActivity</string>
+  <string name="title_activity_card__full__view__main">Home</string>
+  <string name="title_activity_create__message_">Post an Update</string>
+  <string name="side_panel_row_one">Dashboard</string>
+  <string name="side_panel_row_two">Manage Website</string>
+  <string name="side_panel_row_tenth">Manage Customers</string>
+  <string name="side_panel_site_appearance">Site Appearance</string>
+  <string name="side_panel_row_csp">Custom Pages</string>
+  <string name="side_panel_row_three">Business Enquiries</string>
+  <string name="side_panel_row_four">Photo Gallery</string>
+  <string name="side_panel_row_five">Settings</string>
+  <string name="setting_change_pwd">Change Password</string>
+  <string name="setting_feedback">Feedback</string>
+  <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
+  <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
+  <string name="setting_about_us">About us</string>
+  <string name="setting_logout">Logout</string>
+  <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
 
 
+  <!-- Deep Linking URLs  -->
 
-    <!-- SITE-Meter Percentage  -->
+  <string name="deeplink_update">update</string>
+  <string name="deeplink_upgrade">upgrade</string>
+  <string name="deeplink_featuredimage">featuredimage</string>
+  <string name="deeplink_analytics">analytics</string>
+  <string name="deeplink_bizenquiry">ttb</string>
+  <string name="deeplink_store">nfstore</string>
+  <string name="deeplink_searchqueries">searchqueries</string>
+  <string name="deeplink_setings">settings</string>
+  <string name="deeplink_socailsharing">social</string>
+  <string name="deeplink_profile">profile</string>
+  <string name="deeplink_contact">contact</string>
+  <string name="deeplink_bizaddress">address</string>
+  <string name="deeplink_bizhours">hours</string>
+  <string name="deeplink_bizlogo">logo</string>
+  <string name="deeplink_nfstoreDomainTTBCombo">bookdomain</string>
+  <string name="deeplink_imageGallery">imagegallery</string>
+  <string name="deeplink_propack">proPack</string>
+  <string name="deeplink_nfstoreseo">nfstoreseo</string>
+  <string name="deeplink_nfstorettb">nfstorettb</string>
+  <string name="deeplink_nfstoreimage">nfstoreimage</string>
+  <string name="deeplink_gplaces">gplaces</string>
+  <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
+  <string name="deeplink_nfstorenoads">nfstorenoads</string>
+  <string name="deeplink_ProductGallery">productGallery</string>
 
-    <string name="buydomain_percentage">10</string>
-    <string name="phoneNumber_percentage">5</string>
-    <string name="businessCategory_percentage">5</string>
-    <string name="featuredImage_percentage">10</string>
-    <string name="businessName_percentage">5</string>
-    <string name="businessdescription_percentage">10</string>
-    <string name="social_percentage">10</string>
-    <string name="businessCategory">5</string>
-    <string name="address_percentage">10</string>
-    <string name="email_percentage">5</string>
-    <string name="postUpdate_percentage">20</string>
-    <string name="share_percentage">5</string>
-
-    <string name="facebook_url_message">If your Facebook page URL is facebook.com/digitalseoz; then your username is digitalseoz</string>
-    <string name="buydomain_text1">Get your own identity</string>
-    <string name="phoneNumber_text1">Phone number</string>
-    <string name="featuredImage_text1">Featured Image</string>
-    <string name="businessName_text1">Business Name</string>
-    <string name="businessdescription_text1">Business Description</string>
-    <string name="social_text1">Get Social</string>
-    <string name="businessCategory_text1">Business Category</string>
-    <string name="address_text1">Help your customers find you</string>
-    <string name="email_text1">Add Email</string>
-    <string name="postUpdate_text1">Post 5 Updates</string>
-    <string name="share_text1">Share</string>
-
-    <string name="buydomain_text2">Buy a.com</string>
-    <string name="phoneNumber_text2">Help customers reach you instantly</string>
-    <string name="featuredImage_text2">Add relevant image</string>
-    <string name="businessName_text2">Add Business name</string>
-    <string name="businessdescription_text2">Describe your business</string>
-    <string name="social_text2">Connect to Facebook/Twitter</string>
-    <string name="businessCategory_text2">Choose a Business category</string>
-    <string name="address_text2">Add address</string>
-    <string name="email_text2">Add email</string>
-    <string name="postUpdate_text2">Message regularly and relevantly</string>
-    <string name="share_text2">Promote your website</string>
-
-    <string-array name="CountryCodes">
-        <item>93,AF</item>
-        <item>355,AL</item>
-        <item>213,DZ</item>
-        <item>376,AD</item>
-        <item>244,AO</item>
-        <item>672,AQ</item>
-        <item>54,AR</item>
-        <item>374,AM</item>
-        <item>297,AW</item>
-        <item>61,AU</item>
-        <item>43,AT</item>
-        <item>994,AZ</item>
-        <item>973,BH</item>
-        <item>880,BD</item>
-        <item>375,BY</item>
-        <item>32,BE</item>
-        <item>501,BZ</item>
-        <item>229,BJ</item>
-        <item>975,BT</item>
-        <item>591,BO</item>
-        <item>387,BA</item>
-        <item>267,BW</item>
-        <item>55,BR</item>
-        <item>673,BN</item>
-        <item>359,BG</item>
-        <item>226,BF</item>
-        <item>95,MM</item>
-        <item>257,BI</item>
-        <item>855,KH</item>
-        <item>237,CM</item>
-        <item>1,CA</item>
-        <item>238,CV</item>
-        <item>236,CF</item>
-        <item>235,TD</item>
-        <item>56,CL</item>
-        <item>86,CN</item>
-        <item>61,CX</item>
-        <item>61,CC</item>
-        <item>57,CO</item>
-        <item>269,KM</item>
-        <item>242,CG</item>
-        <item>243,CD</item>
-        <item>682,CK</item>
-        <item>506,CR</item>
-        <item>385,HR</item>
-        <item>53,CU</item>
-        <item>357,CY</item>
-        <item>420,CZ</item>
-        <item>45,DK</item>
-        <item>253,DJ</item>
-        <item>670,TL</item>
-        <item>593,EC</item>
-        <item>20,EG</item>
-        <item>503,SV</item>
-        <item>240,GQ</item>
-        <item>291,ER</item>
-        <item>372,EE</item>
-        <item>251,ET</item>
-        <item>500,FK</item>
-        <item>298,FO</item>
-        <item>679,FJ</item>
-        <item>358,FI</item>
-        <item>33,FR</item>
-        <item>689,PF</item>
-        <item>241,GA</item>
-        <item>220,GM</item>
-        <item>995,GE</item>
-        <item>49,DE</item>
-        <item>233,GH</item>
-        <item>350,GI</item>
-        <item>30,GR</item>
-        <item>299,GL</item>
-        <item>502,GT</item>
-        <item>224,GN</item>
-        <item>245,GW</item>
-        <item>592,GY</item>
-        <item>509,HT</item>
-        <item>504,HN</item>
-        <item>852,HK</item>
-        <item>36,HU</item>
-        <item>91,IN</item>
-        <item>62,ID</item>
-        <item>98,IR</item>
-        <item>964,IQ</item>
-        <item>353,IE</item>
-        <item>44,IM</item>
-        <item>972,IL</item>
-        <item>39,IT</item>
-        <item>225,CI</item>
-        <item>81,JP</item>
-        <item>962,JO</item>
-        <item>7,KZ</item>
-        <item>254,KE</item>
-        <item>686,KI</item>
-        <item>965,KW</item>
-        <item>996,KG</item>
-        <item>856,LA</item>
-        <item>371,LV</item>
-        <item>961,LB</item>
-        <item>266,LS</item>
-        <item>231,LR</item>
-        <item>218,LY</item>
-        <item>423,LI</item>
-        <item>370,LT</item>
-        <item>352,LU</item>
-        <item>853,MO</item>
-        <item>389,MK</item>
-        <item>261,MG</item>
-        <item>265,MW</item>
-        <item>60,MY</item>
-        <item>960,MV</item>
-        <item>223,ML</item>
-        <item>356,MT</item>
-        <item>692,MH</item>
-        <item>222,MR</item>
-        <item>230,MU</item>
-        <item>262,YT</item>
-        <item>52,MX</item>
-        <item>691,FM</item>
-        <item>373,MD</item>
-        <item>377,MC</item>
-        <item>976,MN</item>
-        <item>382,ME</item>
-        <item>212,MA</item>
-        <item>258,MZ</item>
-        <item>264,NA</item>
-        <item>674,NR</item>
-        <item>977,NP</item>
-        <item>31,NL</item>
-        <item>599,AN</item>
-        <item>687,NC</item>
-        <item>64,NZ</item>
-        <item>505,NI</item>
-        <item>227,NE</item>
-        <item>234,NG</item>
-        <item>683,NU</item>
-        <item>850,KP</item>
-        <item>47,NO</item>
-        <item>968,OM</item>
-        <item>92,PK</item>
-        <item>680,PW</item>
-        <item>507,PA</item>
-        <item>675,PG</item>
-        <item>595,PY</item>
-        <item>51,PE</item>
-        <item>63,PH</item>
-        <item>870,PN</item>
-        <item>48,PL</item>
-        <item>351,PT</item>
-        <item>1,PR</item>
-        <item>974,QA</item>
-        <item>40,RO</item>
-        <item>7,RU</item>
-        <item>250,RW</item>
-        <item>590,BL</item>
-        <item>685,WS</item>
-        <item>378,SM</item>
-        <item>239,ST</item>
-        <item>966,SA</item>
-        <item>221,SN</item>
-        <item>381,RS</item>
-        <item>248,SC</item>
-        <item>232,SL</item>
-        <item>65,SG</item>
-        <item>421,SK</item>
-        <item>386,SI</item>
-        <item>677,SB</item>
-        <item>252,SO</item>
-        <item>27,ZA</item>
-        <item>82,KR</item>
-        <item>34,ES</item>
-        <item>94,LK</item>
-        <item>290,SH</item>
-        <item>508,PM</item>
-        <item>249,SD</item>
-        <item>597,SR</item>
-        <item>268,SZ</item>
-        <item>46,SE</item>
-        <item>41,CH</item>
-        <item>963,SY</item>
-        <item>886,TW</item>
-        <item>992,TJ</item>
-        <item>255,TZ</item>
-        <item>66,TH</item>
-        <item>228,TG</item>
-        <item>690,TK</item>
-        <item>676,TO</item>
-        <item>216,TN</item>
-        <item>90,TR</item>
-        <item>993,TM</item>
-        <item>688,TV</item>
-        <item>971,AE</item>
-        <item>256,UG</item>
-        <item>44,GB</item>
-        <item>380,UA</item>
-        <item>598,UY</item>
-        <item>1,US</item>
-        <item>998,UZ</item>
-        <item>678,VU</item>
-        <item>39,VA</item>
-        <item>58,VE</item>
-        <item>84,VN</item>
-        <item>681,WF</item>
-        <item>967,YE</item>
-        <item>260,ZM</item>
-        <item>263,ZW</item>
-    </string-array>
-    <string name="business_enquiries_title">Business Enquiries</string>
-    <string name="business_profile_title">Business Profile</string>
-    <string name="tag_for_partners">.digitalseoz.com</string>
-    <string name="title_activity_splash_screen_">Digitalseoz</string>
-    <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
-    <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
-    <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
-    <string name="pre_signup_screen_three_text">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
-    <string name="pre_signup_screen_four_text">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
-    <string name="pre_signup_screen_five_text">Take the next step in growing your \nbusiness. Give it an identity of its own</string>
-    <string name="pre_signup_screen_six_text">Let customers contact you directly \nand reply to them instantly!</string>
-    <string name="pre_signup_screen_seven_text">Get additional features \nfor your business website \nfrom the in-app Store..</string>
-    <string name="pre_signup_screen_eight_text">String belongs to Screen Eight</string>
-    <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
-    <string name="title_activity_site__meter__nf">Site_Meter_NF</string>
-    <string name="presignup_login_text">Already have a Digitalseoz account?</string>
-
-    <string name="onboarding_screen_1_title">Congratulations!</string>
-    <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
-    <string name="onboarding_screen_3_title">Discovery is Revenue</string>
-    <string name="onboarding_screen_3_desc">People around your business are searching for stuff you sell, so keep your updates relevant and fresh. This will you lead to attract more customers and generate more revenue.</string>
-    <string name="onboarding_screen_2_title">Content is King</string>
-    <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers.</string>
-    <string name="drop_us_on_email_or_call">Please drop us a line at support@digitalseoz.com or call us at 9320690003 if you\'d like to enable this feature.</string>
-    <string name="primary_contact_number_message">Please drop us a line at support@digitalseoz.com or call us at 9320690003 if you\'d like to change this number.</string>
-
-    <string name="your_site_health">Your site health</string>
-    <string name="contact_us_number">9320690003</string>
-    <string name="settings_feedback_link">support@digitalseoz.com</string>
-    <string name="settings_facebook_like_link">https://www.facebook.com/129528697583648/</string>
-    <string name="settings_about_us_link">http://digitalseoz.com/</string>
-    <string name="faqs_url"></string>
-    <string name="settings_tou_url">http://digitalseoz.com/Tnc.html</string>
-    <string name="settings_privacy_url">http://digitalseoz.com/Privacy.html</string>
-    <string name="settings_rate_us_link"></string>
-
-    <!--this part is for FAQ harcoded strings -->
-    <string-array name="faqmain">
-        <item>WELCOME TO THE ONLINE WORLD</item>
-        <item>WHAT\'S DIGITALSEOZ</item>
-        <item>UPDATING CONTENT</item>
-        <item>ENGAGING CUSTOMERS</item>
-        <item>DIGITALSEOZ APPS, WEB, SMS</item>
-        <item>DIGITALSEOZ DISCOVERY METHOD</item>
-        <item>GROWING YOUR BUSINESS WITH DIGITALSEOZ</item>
-        <item>NOT A FIRST TIME WEBSITE CREATOR?</item>
-    </string-array>
-    <string-array name="questions_0">
-        <item>Why does a small or medium sized business need to be online?</item>
-        <item>I keep hearing SEO all the time. What is SEO?</item>
-        <item>What does a \"location-based-platform\" mean?</item>
-        <item>Why do you need my business\' physical address to create the website?</item>
-        <item>Why is location so important for online?</item>
-    </string-array>
-    <string-array name="answer_0">
-        <item><![CDATA[You might have a small business that does well and have your steady customers, however you possibly couldn\'t have captured all the possible customers - around your business.<br/> And with the advent of mobile browsers, customers now look for businesses on the go. So it has becomes important to be (a) present and (b) relevant to them in order to attract them to your physical business.]]></item>
-        <item><![CDATA[SEO or Search Engine Optimization, is the technique of laying out data on a website in a manner that is ideal for a search engine to pick up. Every popular search engine has defined how it looks at, measures, stacks and stores information from millions of websites around the world. For it to perform its task in the best and most efficient manner, it measures websites on certain criteria. Meeting the criteria - by laying down your content accordingly, is search-engine-optimizing your website.<br/> Whereas this is a somewhat complex task that must be performed consistently, with digitalseoz, we reduce to it a bare minimum, if not zero.]]></item>
-        <item><![CDATA[For a business that has retail presence, it is pointless to be on the net and try to attract customers from another city or country. On the Digitalseoz platform, the physical location of your business is the crux of the solution. By pinning your business to the actual physical location of the business, we ensure that only customers who could drive across, take a bus or walk to your business would be exposed to your website in the search results. Of course, this will work well when consumers are searching for your services/products within a location too.<br/> So for example: people are looking for ice cream cafes in Seattle too. But it\'s pointless if you manage to attract someone from there when your business is actually in Sevilla, Spain.<br/> However if the person from Seattle is going to be in Sevilla and wants to taste the gelato there, he would search \'Ice cream café in Sevilla\' and your business result would show up.]]></item>
-        <item><![CDATA[Well, because we would like to pin your website to a physical location. Why? Because search engines now give more weight to local websites because consumers search like that. To take it a step further, it\'s also where customers can be guided to, when they are searching on the go on their mobile phones.]]></item>
-        <item><![CDATA[Well just think about it &#8230; consumers want convenience and they search for whatever they want to purchase - around them! Think about it a little harder: When consumers want to research, they search for products or services. But when consumers have intent to purchase, they search for the products or services in particular locations.]]></item>
-    </string-array>
-    <string-array name="questions_1">
-        <item>So what does Digitalseoz do?</item>
-        <item>What is Digitalseoz?</item>
-        <item>But the Digitalseoz website, doesn\'t look like a traditional website!</item>
-        <item>How does a \'website\' get more customers for Small and Medium Businesses?</item>
-        <item>So does Digitalseoz do search-engine optimization (SEO) for my business website?</item>
-    </string-array>
-    <string-array name="answer_1">
-        <item><![CDATA[Simplified, Digitalseoz works in two parts: (1) It makes the creation of business websites - very, very simple. These websites can be updated with equal amount of ease and speed. It can be done through an app, the web or SMS (only in India). And it is VERY simple.<br/> (2) After you start updating the website (also as easy) with business content, Digitalseoz\' technology kicks in, does the keyword extraction (automatically) and ensures that the search engine crawls your website and offers it up relevantly to potential customers searching for businesses like yours.<br/> Simply put, we ensure what you are saying on your website, is read by your potential customers. And as long as that is relevant information, we create opportunities for your customers to get in touch with you.]]></item>
-        <item><![CDATA[Digitalseoz is a location-based platform that helps smaller and medium-sized businesses grow bigger by getting them online and getting discovered by potential customers around them. <u>All without the need of any technical knowledge.</u>]]></item>
-        <item><![CDATA[Whereas that can be argued, we will go with, \"That might be true.\"<br/> We feel the important thing is that Digitalseoz tries to bring customers to your website and what you have to say (read: sell) and eventually, and more importantly, to your store\'s doorstep.<br/> The question that must be asked is, \"If it succeeds in getting your business more customers, which would you prefer - UI customization or functional success?\"<br/> Having said this, Digitalseoz is constantly working ahead and trying to create website templates that keep with the time and technology, if not ahead.]]></item>
-        <item><![CDATA[As mentioned earlier, the Digitalseoz website is not a regular \"static\" website that isn\'t updated after creation. No. When you start updating your website regularly and relevantly (to your business), the Digitalseoz technology ensures that when your potential customers do a web-search around your business, your website comes up ahead of others.<br/> When you get discovered first, you have a lead over others in getting this potential customer. Be it through a phone call, a message or simply the customer walking into your business premises.]]></item>
-        <item><![CDATA[Technically speaking, yes. Digitalseoz takes care of the SEO for the website and the content you create on it. Normally businesses have to fork out money to digital agencies to do the SEO for the website - to maintain it on a monthly or an annual basis.<br/> However with a Digitalseoz business website, you get the SEO built-in already. So all you need to worry about is what you want to tell the customers about your business.]]></item>
-    </string-array>
-    <string-array name="questions_2">
-        <item>Isn\'t updating a website technical? Do I need to interact with people to get it done?</item>
-        <item>Can Digitalseoz create the content for me?</item>
-        <item>Why is it so important to update the content on the business website?</item>
-        <item>Fine. But is there a simpler way of creating content for my website?</item>
-        <item>What about the other way around? Can my Digitalseoz page push content to my Twitter© and Facebook page?</item>
-        <item>What kind of content should I update for my business?</item>
-    </string-array>
-    <string-array name="answer_2">
-        <item><![CDATA[Mostly the answer would be yes. But with Digitalseoz it\'s a resounding NO! All you need to do is be able to type and press \"update\". We take care of the rest. That means design, SEO, etc.<br/> So say that you have a sale or have an offer or an announcement to make regarding your business, you don\'t need to find a developer or a designer. You simply have to update your website using the app or through the management portal or even a plain old SMS (in India).]]></item>
-        <item><![CDATA[You, as the owner or manager of the business, are the best judge of what your business does and what your customers look for. Digitalseoz could not possibly do justice to that.<br/> <u>Therefore Digitalseoz does not create any content for the business</u>. But it highly encourages business to do small updates twice or thrice a week to build the in-coming traffic.]]></item>
-        <item><![CDATA[Well for starters, a fresh website is one that customers trust. It shows the business is engaged online and that the information is fresh. For example a coffee shop that updates it\'s offers every day, a bit like a traditional chalkboard, is more likely to draw customers more regularly because they have interesting offers.<br/> And that\'s not all. Even search engines which crawl websites give sites which are updated regularly with relevant data more importance when it comes to search queries and results.]]></item>
-        <item><![CDATA[Sure! If you already have a Facebook© page, creating a \"full\" website is a cinch. We pull the last 10&#8211;15 feeds from your Facebook page and create entries on your Digitalseoz business website. You can also choose to keep pulling feed from the Facebook page. So that every time you update it, your Digitalseoz website gets updated too.<br/> The advantage? Your Facebook entries now become discoverable by location.]]></item>
-        <item><![CDATA[Absolutely. You can make one update on your Digitalseoz business website and ensure the word spreads on your other social media platforms. All automatically. All instantly.<br/> All you need to do is go to the \"Social Settings\" of the Digitalseoz app and activate the various social options available there.]]></item>
-        <item><![CDATA[What we advise our customers is that they should update what their business does - in long term, and in short term too. The most important thing is that you DO NOT worry about keywords, or anything technical. But rather update messages as if you were in a conversation with an actual customer. Our technology takes care of the rest.<br/> For instance if it is a interior decorator, the long term message - which can also be the \'business description\' too, could be what they specialize in. Eg.: We are specialist in art-deco style interior decoration based in the Bay area.<br/> A short term message/update could be a promotion or an announcement.Eg.: Get high discounts on art-deco wallpapers for the pre-holiday run-up. Eg.: We have now started specializing in Minimalist styled interiors too.]]></item>
-    </string-array>
-    <string-array name="questions_3">
-        <item>Can the potential customer contact the business?</item>
-        <item>How else can I engage the customers?</item>
-        <item>Can I sell through a Digitalseoz website? Do you provide for e-commerce?</item>
-    </string-array>
-    <string-array name="answer_3">
-        <item><![CDATA[Yes! There are widgets on the website that are meant to increase customer engagement. For instance the \"Make an Enquiry\" widget allows the customers on the website to send a direct business enquiry to you. The enquiry is delivered to your phone or email address, giving you the potential lead.]]></item>
-        <item><![CDATA[Digitalseoz has a subscription facility, which your customers can use. After subscription, every time the business updates the website, the update is delivered in an email to the customer. So that there is less chance of the customer missing an update.]]></item>
-        <item><![CDATA[At the moment Digitalseoz provides a product catalogue feature, which promotes your best selling items further by SEO\'ing them. The product catalogue allows for customers to show interest and contact the merchant in regards to a particular product - generating a hot lead.<br/> However the option of e-commerce doesn\'t exist as of now. Having said that, we are working on providing e-commerce on the Digitalseoz websites soon enough. Stay tuned.]]></item>
-    </string-array>
-    <string-array name="questions_4">
-        <item>So what is Digitalseoz?</item>
-        <item>How can we make an update through the web?</item>
-    </string-array>
-    <string-array name="answer_4">
-        <item><![CDATA[Digitalseoz is the website management app that makes creating, updating, analyzing the website a walk in the park. Highly intuitive, and built on common app logic, this will get you going and ensure your website is well maintained by you. You can also update the store information and check the analytics of your website. It is available for iPhone and Android smartphones currently (the Windows Phone version is coming soon).]]></item>
-        <item><![CDATA[Digitalseoz has a web management portal with which you can update your Digitalseoz business website. You can also manage the store information and check more in-depth analytics of your website. If you have multiple stores, you can manage them all from this one portal.]]></item>
-    </string-array>
-    <string-array name="questions_5">
-        <item>How does the search engine optimization work for my specific business?</item>
-        <item>How long does it take before my SEO improves and my website starts showing up in the results?</item>
-        <item>But what if the business is in a hurry? Does Digitalseoz also provide \'inorganic\' growth?</item>
-        <item>What is \'organic\' web traffic? How does Digitalseoz build that for me?</item>
-    </string-array>
-    <string-array name="answer_5">
-        <item><![CDATA[Well the trick is in the language of your business. You don\'t have to worry about anything technological. Just pitch it like you would to your customers. That\'s all. We will do the heavy lifting of finding the right keywords from your language and ensuring the search engines recognize it. This enables relevant and better rankings in search results.]]></item>
-        <item><![CDATA[We\'ll be honest with you: There is no exact answer to this. However we have seen that with 2&#8211;3 updates a week, which are relevant and consistent with your business, our customers\' websites start showing up in local searches on popular search engines like Google in 3&#8211;4 weeks. This of course is what is called organic web traffic.<br/> Of course this requires you to create content. Think of it like fuel that\'ll make the car run. If you don\'t fill\'er up, the car won\'t take you anywhere.]]></item>
-        <item><![CDATA[We have 2 plans, one that is entirely organic SEO, and the other which is a mix of organic and inorganic SEO. You can always opt for this plan which has an \'inorganic\' element to it. We match the keywords from your messages and push them out as advertising to popular advertising networks online and then \"push\" potential customers to your website.<br/> Remember that even this method is exact and not random. People searching for what your business is talking about are the ones brought to your website.]]></item>
-        <item><![CDATA[Organic traffic is people landing up on your site without you having to apply any external stimulus like online advertising or offline advertising for that matter. People land up on your site because of the content that you have written and the search engines pointing at you for a relevant search query.<br/> With your effort of updating your Digitalseoz website regularly and relevantly, we ensure that you start getting established as someone who is an expert in your business (within the location for maximum impact and thus start rising in the search results. Please note that this DOES NOT happen overnight. It takes time (but no more money : ) and effort to curate the website.]]></item>
-    </string-array>
-    <string-array name="questions_6">
-        <item>How do I know that Digitalseoz is working for me?</item>
-        <item>If there are two businesses of the same nature and category on your platform within the same area/location, who will you show up first on the search results?</item>
-        <item>How does it compare to let\'s say a business listing site?</item>
-    </string-array>
-    <string-array name="answer_6">
-        <item><![CDATA[The best measure will be more customers over time.<br/> But more instant than that will be the number of people visiting your website. That number upsurges when you are regular with your updates.]]></item>
-        <item><![CDATA[This is a very interesting question and the answer is fairly straightforward:<br/> Whichever business updates its website regularly and more relevantly will show up first.<br/> Digitalseoz doesn\'t play favourites. We are merely a platform. What the customer does on it, defines what they can make of it. Also, what you must understand is that search engines apply weights to websites by various actions - how often is it updated, how focused it is, what the location is, etc. If you talk relevantly about your business, its products or services, consistently - give advice around it, provide updates, etc., it\'s quite likely that your site will come up first.<br/> Imagine two salesmen trying to sell you an ironing board. One says to you, \"You can iron your clothes on this.\" Whereas the second salesman says, \"This is designed for your maximum comfort, as you stand and iron clothes daily. It also comes in various colours to match your house décor. And I have a great deal for you.\" Who would you go to/purchase from? Yeah, it\'s pretty much like that online too.<br/> So if you want to show up ahead of other similar businesses in the location (both based on Digitalseoz platform) the trick is to put in a little bit of effort and update your website regularly with messages, images, product/service news, etc. That\'s it.]]></item>
-        <item><![CDATA[Digitalseoz is not like a listing site in many ways. To begin, you own your website with Digitalseoz, whereas on a listing site, you are one of the many businesses listed there. Second, on a listing site, you\'re exactly that - a listing. There is little context to your business besides the category you are listed under. With Digitalseoz you can give your customers context of your business - with content in form of messages, pictures, deals, subscriptions, enquiry forms, point of contacts, etc. Last, the SEO of a listing site, goes to the listing site. With Digitalseoz, when you write your content, it\'s your website the SEO is going to. You benefit from it first and foremost.]]></item>
-    </string-array>
-    <string-array name="questions_7">
-        <item>I bought a domain name but did nothing with it. Can the Digitalseoz website be built with it?</item>
-        <item>What if I already have a website? Can Digitalseoz still help me get more customers?</item>
-    </string-array>
-    <string-array name="answer_7">
-        <item><![CDATA[Yes indeed. In fact, you can build the Digitalseoz website (almost instantly) and then contact our customer care at <a href="support@digitalseoz.com">support@digitalseoz.com</a> and they can ensure that your purchased domain name/URL begins to point to the website.<br/> If you\'ve been waiting for the right opportunity, this is the time to build it.]]></item>
-        <item><![CDATA[Absolutely! If you already have a website for your business, but it isn\'t updated often enough, chances are it won\'t be doing much for your business. The Digitalseoz website can plug-in to your existing website as a sub-domain page where you can update your deals, offers, launches or messages. With regular updates, your page rank begins to rise and the SEO gets added on to your main site too.]]></item>
-    </string-array>
+  <!-- Deep Linking URLs  -->
 
 
-    <string name="buy_in_capital">BUY</string>
-    <string name="later_in_capital">LATER</string>
-    <string name="renew_light_house_plan">Renew SeoMagnet plan to get all the features</string>
-    <string name="light_house_plan_expired_some_features_visible">Your SeoMagnet plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
-    <string name="renew_wildfire_plan">Renew Wildfire plan</string>
-    <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
-    <string name="renew_in_capital">RENEW</string>
-    <string name="ignore_in_capital">IGNORE</string>
-    <string name="buy_light_house_plan">Buy SeoMagnet plan to get all the features</string>
-    <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
-    <string name="light_house_pla_will_expire"><Data><![CDATA[Your SeoMagnet plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+  <!-- SITE-Meter Percentage  -->
+
+  <string name="buydomain_percentage">10</string>
+  <string name="phoneNumber_percentage">5</string>
+  <string name="businessCategory_percentage">5</string>
+  <string name="featuredImage_percentage">10</string>
+  <string name="businessName_percentage">5</string>
+  <string name="businessdescription_percentage">10</string>
+  <string name="social_percentage">10</string>
+  <string name="businessCategory">5</string>
+  <string name="address_percentage">10</string>
+  <string name="email_percentage">5</string>
+  <string name="postUpdate_percentage">20</string>
+  <string name="share_percentage">5</string>
+
+  <string name="facebook_url_message">If your Facebook page URL is facebook.com/digitalseoz; then your username is digitalseoz</string>
+  <string name="buydomain_text1">Get your own identity</string>
+  <string name="phoneNumber_text1">Phone number</string>
+  <string name="featuredImage_text1">Featured Image</string>
+  <string name="businessName_text1">Business Name</string>
+  <string name="businessdescription_text1">Business Description</string>
+  <string name="social_text1">Get Social</string>
+  <string name="businessCategory_text1">Business Category</string>
+  <string name="address_text1">Help your customers find you</string>
+  <string name="email_text1">Add Email</string>
+  <string name="postUpdate_text1">Post 5 Updates</string>
+  <string name="share_text1">Share</string>
+
+  <string name="buydomain_text2">Buy a.com</string>
+  <string name="phoneNumber_text2">Help customers reach you instantly</string>
+  <string name="featuredImage_text2">Add relevant image</string>
+  <string name="businessName_text2">Add Business name</string>
+  <string name="businessdescription_text2">Describe your business</string>
+  <string name="social_text2">Connect to Facebook/Twitter</string>
+  <string name="businessCategory_text2">Choose a Business category</string>
+  <string name="address_text2">Add address</string>
+  <string name="email_text2">Add email</string>
+  <string name="postUpdate_text2">Message regularly and relevantly</string>
+  <string name="share_text2">Promote your website</string>
+
+  <string-array name="CountryCodes">
+    <item>93,AF</item>
+    <item>355,AL</item>
+    <item>213,DZ</item>
+    <item>376,AD</item>
+    <item>244,AO</item>
+    <item>672,AQ</item>
+    <item>54,AR</item>
+    <item>374,AM</item>
+    <item>297,AW</item>
+    <item>61,AU</item>
+    <item>43,AT</item>
+    <item>994,AZ</item>
+    <item>973,BH</item>
+    <item>880,BD</item>
+    <item>375,BY</item>
+    <item>32,BE</item>
+    <item>501,BZ</item>
+    <item>229,BJ</item>
+    <item>975,BT</item>
+    <item>591,BO</item>
+    <item>387,BA</item>
+    <item>267,BW</item>
+    <item>55,BR</item>
+    <item>673,BN</item>
+    <item>359,BG</item>
+    <item>226,BF</item>
+    <item>95,MM</item>
+    <item>257,BI</item>
+    <item>855,KH</item>
+    <item>237,CM</item>
+    <item>1,CA</item>
+    <item>238,CV</item>
+    <item>236,CF</item>
+    <item>235,TD</item>
+    <item>56,CL</item>
+    <item>86,CN</item>
+    <item>61,CX</item>
+    <item>61,CC</item>
+    <item>57,CO</item>
+    <item>269,KM</item>
+    <item>242,CG</item>
+    <item>243,CD</item>
+    <item>682,CK</item>
+    <item>506,CR</item>
+    <item>385,HR</item>
+    <item>53,CU</item>
+    <item>357,CY</item>
+    <item>420,CZ</item>
+    <item>45,DK</item>
+    <item>253,DJ</item>
+    <item>670,TL</item>
+    <item>593,EC</item>
+    <item>20,EG</item>
+    <item>503,SV</item>
+    <item>240,GQ</item>
+    <item>291,ER</item>
+    <item>372,EE</item>
+    <item>251,ET</item>
+    <item>500,FK</item>
+    <item>298,FO</item>
+    <item>679,FJ</item>
+    <item>358,FI</item>
+    <item>33,FR</item>
+    <item>689,PF</item>
+    <item>241,GA</item>
+    <item>220,GM</item>
+    <item>995,GE</item>
+    <item>49,DE</item>
+    <item>233,GH</item>
+    <item>350,GI</item>
+    <item>30,GR</item>
+    <item>299,GL</item>
+    <item>502,GT</item>
+    <item>224,GN</item>
+    <item>245,GW</item>
+    <item>592,GY</item>
+    <item>509,HT</item>
+    <item>504,HN</item>
+    <item>852,HK</item>
+    <item>36,HU</item>
+    <item>91,IN</item>
+    <item>62,ID</item>
+    <item>98,IR</item>
+    <item>964,IQ</item>
+    <item>353,IE</item>
+    <item>44,IM</item>
+    <item>972,IL</item>
+    <item>39,IT</item>
+    <item>225,CI</item>
+    <item>81,JP</item>
+    <item>962,JO</item>
+    <item>7,KZ</item>
+    <item>254,KE</item>
+    <item>686,KI</item>
+    <item>965,KW</item>
+    <item>996,KG</item>
+    <item>856,LA</item>
+    <item>371,LV</item>
+    <item>961,LB</item>
+    <item>266,LS</item>
+    <item>231,LR</item>
+    <item>218,LY</item>
+    <item>423,LI</item>
+    <item>370,LT</item>
+    <item>352,LU</item>
+    <item>853,MO</item>
+    <item>389,MK</item>
+    <item>261,MG</item>
+    <item>265,MW</item>
+    <item>60,MY</item>
+    <item>960,MV</item>
+    <item>223,ML</item>
+    <item>356,MT</item>
+    <item>692,MH</item>
+    <item>222,MR</item>
+    <item>230,MU</item>
+    <item>262,YT</item>
+    <item>52,MX</item>
+    <item>691,FM</item>
+    <item>373,MD</item>
+    <item>377,MC</item>
+    <item>976,MN</item>
+    <item>382,ME</item>
+    <item>212,MA</item>
+    <item>258,MZ</item>
+    <item>264,NA</item>
+    <item>674,NR</item>
+    <item>977,NP</item>
+    <item>31,NL</item>
+    <item>599,AN</item>
+    <item>687,NC</item>
+    <item>64,NZ</item>
+    <item>505,NI</item>
+    <item>227,NE</item>
+    <item>234,NG</item>
+    <item>683,NU</item>
+    <item>850,KP</item>
+    <item>47,NO</item>
+    <item>968,OM</item>
+    <item>92,PK</item>
+    <item>680,PW</item>
+    <item>507,PA</item>
+    <item>675,PG</item>
+    <item>595,PY</item>
+    <item>51,PE</item>
+    <item>63,PH</item>
+    <item>870,PN</item>
+    <item>48,PL</item>
+    <item>351,PT</item>
+    <item>1,PR</item>
+    <item>974,QA</item>
+    <item>40,RO</item>
+    <item>7,RU</item>
+    <item>250,RW</item>
+    <item>590,BL</item>
+    <item>685,WS</item>
+    <item>378,SM</item>
+    <item>239,ST</item>
+    <item>966,SA</item>
+    <item>221,SN</item>
+    <item>381,RS</item>
+    <item>248,SC</item>
+    <item>232,SL</item>
+    <item>65,SG</item>
+    <item>421,SK</item>
+    <item>386,SI</item>
+    <item>677,SB</item>
+    <item>252,SO</item>
+    <item>27,ZA</item>
+    <item>82,KR</item>
+    <item>34,ES</item>
+    <item>94,LK</item>
+    <item>290,SH</item>
+    <item>508,PM</item>
+    <item>249,SD</item>
+    <item>597,SR</item>
+    <item>268,SZ</item>
+    <item>46,SE</item>
+    <item>41,CH</item>
+    <item>963,SY</item>
+    <item>886,TW</item>
+    <item>992,TJ</item>
+    <item>255,TZ</item>
+    <item>66,TH</item>
+    <item>228,TG</item>
+    <item>690,TK</item>
+    <item>676,TO</item>
+    <item>216,TN</item>
+    <item>90,TR</item>
+    <item>993,TM</item>
+    <item>688,TV</item>
+    <item>971,AE</item>
+    <item>256,UG</item>
+    <item>44,GB</item>
+    <item>380,UA</item>
+    <item>598,UY</item>
+    <item>1,US</item>
+    <item>998,UZ</item>
+    <item>678,VU</item>
+    <item>39,VA</item>
+    <item>58,VE</item>
+    <item>84,VN</item>
+    <item>681,WF</item>
+    <item>967,YE</item>
+    <item>260,ZM</item>
+    <item>263,ZW</item>
+  </string-array>
+  <string name="business_enquiries_title">Business Enquiries</string>
+  <string name="business_profile_title">Business Profile</string>
+  <string name="tag_for_partners">.digitalseoz.com</string>
+  <string name="title_activity_splash_screen_">Digitalseoz</string>
+  <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
+  <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
+  <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
+  <string name="pre_signup_screen_three_text">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
+  <string name="pre_signup_screen_four_text">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
+  <string name="pre_signup_screen_five_text">Take the next step in growing your \nbusiness. Give it an identity of its own</string>
+  <string name="pre_signup_screen_six_text">Let customers contact you directly \nand reply to them instantly!</string>
+  <string name="pre_signup_screen_seven_text">Get additional features \nfor your business website \nfrom the in-app Store..</string>
+  <string name="pre_signup_screen_eight_text">String belongs to Screen Eight</string>
+  <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
+  <string name="title_activity_site__meter__nf">Site_Meter_NF</string>
+  <string name="presignup_login_text">Already have a Digitalseoz account?</string>
+
+  <string name="onboarding_screen_1_title">Congratulations!</string>
+  <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
+  <string name="onboarding_screen_3_title">Discovery is Revenue</string>
+  <string name="onboarding_screen_3_desc">People around your business are searching for stuff you sell, so keep your updates relevant and fresh. This will you lead to attract more customers and generate more revenue.</string>
+  <string name="onboarding_screen_2_title">Content is King</string>
+  <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers.</string>
+  <string name="drop_us_on_email_or_call">Please drop us a line at support@digitalseoz.com or call us at 9320690003 if you\'d like to enable this feature.</string>
+  <string name="primary_contact_number_message">Please drop us a line at support@digitalseoz.com or call us at 9320690003 if you\'d like to change this number.</string>
+
+  <string name="your_site_health">Your site health</string>
+  <string name="contact_us_number">9320690003</string>
+  <string name="settings_feedback_link">support@digitalseoz.com</string>
+  <string name="settings_facebook_like_link">https://www.facebook.com/129528697583648/</string>
+  <string name="settings_about_us_link">http://digitalseoz.com/</string>
+  <string name="faqs_url"></string>
+  <string name="settings_tou_url">http://digitalseoz.com/Tnc.html</string>
+  <string name="settings_privacy_url">http://digitalseoz.com/Privacy.html</string>
+  <string name="settings_rate_us_link"></string>
+
+  <!--this part is for FAQ harcoded strings -->
+  <string-array name="faqmain">
+    <item>WELCOME TO THE ONLINE WORLD</item>
+    <item>WHAT\'S DIGITALSEOZ</item>
+    <item>UPDATING CONTENT</item>
+    <item>ENGAGING CUSTOMERS</item>
+    <item>DIGITALSEOZ APPS, WEB, SMS</item>
+    <item>DIGITALSEOZ DISCOVERY METHOD</item>
+    <item>GROWING YOUR BUSINESS WITH DIGITALSEOZ</item>
+    <item>NOT A FIRST TIME WEBSITE CREATOR?</item>
+  </string-array>
+  <string-array name="questions_0">
+    <item>Why does a small or medium sized business need to be online?</item>
+    <item>I keep hearing SEO all the time. What is SEO?</item>
+    <item>What does a \"location-based-platform\" mean?</item>
+    <item>Why do you need my business\' physical address to create the website?</item>
+    <item>Why is location so important for online?</item>
+  </string-array>
+  <string-array name="answer_0">
+    <item><![CDATA[You might have a small business that does well and have your steady customers, however you possibly couldn\'t have captured all the possible customers - around your business.<br/> And with the advent of mobile browsers, customers now look for businesses on the go. So it has becomes important to be (a) present and (b) relevant to them in order to attract them to your physical business.]]></item>
+    <item><![CDATA[SEO or Search Engine Optimization, is the technique of laying out data on a website in a manner that is ideal for a search engine to pick up. Every popular search engine has defined how it looks at, measures, stacks and stores information from millions of websites around the world. For it to perform its task in the best and most efficient manner, it measures websites on certain criteria. Meeting the criteria - by laying down your content accordingly, is search-engine-optimizing your website.<br/> Whereas this is a somewhat complex task that must be performed consistently, with digitalseoz, we reduce to it a bare minimum, if not zero.]]></item>
+    <item><![CDATA[For a business that has retail presence, it is pointless to be on the net and try to attract customers from another city or country. On the Digitalseoz platform, the physical location of your business is the crux of the solution. By pinning your business to the actual physical location of the business, we ensure that only customers who could drive across, take a bus or walk to your business would be exposed to your website in the search results. Of course, this will work well when consumers are searching for your services/products within a location too.<br/> So for example: people are looking for ice cream cafes in Seattle too. But it\'s pointless if you manage to attract someone from there when your business is actually in Sevilla, Spain.<br/> However if the person from Seattle is going to be in Sevilla and wants to taste the gelato there, he would search \'Ice cream café in Sevilla\' and your business result would show up.]]></item>
+    <item><![CDATA[Well, because we would like to pin your website to a physical location. Why? Because search engines now give more weight to local websites because consumers search like that. To take it a step further, it\'s also where customers can be guided to, when they are searching on the go on their mobile phones.]]></item>
+    <item><![CDATA[Well just think about it &#8230; consumers want convenience and they search for whatever they want to purchase - around them! Think about it a little harder: When consumers want to research, they search for products or services. But when consumers have intent to purchase, they search for the products or services in particular locations.]]></item>
+  </string-array>
+  <string-array name="questions_1">
+    <item>So what does Digitalseoz do?</item>
+    <item>What is Digitalseoz?</item>
+    <item>But the Digitalseoz website, doesn\'t look like a traditional website!</item>
+    <item>How does a \'website\' get more customers for Small and Medium Businesses?</item>
+    <item>So does Digitalseoz do search-engine optimization (SEO) for my business website?</item>
+  </string-array>
+  <string-array name="answer_1">
+    <item><![CDATA[Simplified, Digitalseoz works in two parts: (1) It makes the creation of business websites - very, very simple. These websites can be updated with equal amount of ease and speed. It can be done through an app, the web or SMS (only in India). And it is VERY simple.<br/> (2) After you start updating the website (also as easy) with business content, Digitalseoz\' technology kicks in, does the keyword extraction (automatically) and ensures that the search engine crawls your website and offers it up relevantly to potential customers searching for businesses like yours.<br/> Simply put, we ensure what you are saying on your website, is read by your potential customers. And as long as that is relevant information, we create opportunities for your customers to get in touch with you.]]></item>
+    <item><![CDATA[Digitalseoz is a location-based platform that helps smaller and medium-sized businesses grow bigger by getting them online and getting discovered by potential customers around them. <u>All without the need of any technical knowledge.</u>]]></item>
+    <item><![CDATA[Whereas that can be argued, we will go with, \"That might be true.\"<br/> We feel the important thing is that Digitalseoz tries to bring customers to your website and what you have to say (read: sell) and eventually, and more importantly, to your store\'s doorstep.<br/> The question that must be asked is, \"If it succeeds in getting your business more customers, which would you prefer - UI customization or functional success?\"<br/> Having said this, Digitalseoz is constantly working ahead and trying to create website templates that keep with the time and technology, if not ahead.]]></item>
+    <item><![CDATA[As mentioned earlier, the Digitalseoz website is not a regular \"static\" website that isn\'t updated after creation. No. When you start updating your website regularly and relevantly (to your business), the Digitalseoz technology ensures that when your potential customers do a web-search around your business, your website comes up ahead of others.<br/> When you get discovered first, you have a lead over others in getting this potential customer. Be it through a phone call, a message or simply the customer walking into your business premises.]]></item>
+    <item><![CDATA[Technically speaking, yes. Digitalseoz takes care of the SEO for the website and the content you create on it. Normally businesses have to fork out money to digital agencies to do the SEO for the website - to maintain it on a monthly or an annual basis.<br/> However with a Digitalseoz business website, you get the SEO built-in already. So all you need to worry about is what you want to tell the customers about your business.]]></item>
+  </string-array>
+  <string-array name="questions_2">
+    <item>Isn\'t updating a website technical? Do I need to interact with people to get it done?</item>
+    <item>Can Digitalseoz create the content for me?</item>
+    <item>Why is it so important to update the content on the business website?</item>
+    <item>Fine. But is there a simpler way of creating content for my website?</item>
+    <item>What about the other way around? Can my Digitalseoz page push content to my Twitter© and Facebook page?</item>
+    <item>What kind of content should I update for my business?</item>
+  </string-array>
+  <string-array name="answer_2">
+    <item><![CDATA[Mostly the answer would be yes. But with Digitalseoz it\'s a resounding NO! All you need to do is be able to type and press \"update\". We take care of the rest. That means design, SEO, etc.<br/> So say that you have a sale or have an offer or an announcement to make regarding your business, you don\'t need to find a developer or a designer. You simply have to update your website using the app or through the management portal or even a plain old SMS (in India).]]></item>
+    <item><![CDATA[You, as the owner or manager of the business, are the best judge of what your business does and what your customers look for. Digitalseoz could not possibly do justice to that.<br/> <u>Therefore Digitalseoz does not create any content for the business</u>. But it highly encourages business to do small updates twice or thrice a week to build the in-coming traffic.]]></item>
+    <item><![CDATA[Well for starters, a fresh website is one that customers trust. It shows the business is engaged online and that the information is fresh. For example a coffee shop that updates it\'s offers every day, a bit like a traditional chalkboard, is more likely to draw customers more regularly because they have interesting offers.<br/> And that\'s not all. Even search engines which crawl websites give sites which are updated regularly with relevant data more importance when it comes to search queries and results.]]></item>
+    <item><![CDATA[Sure! If you already have a Facebook© page, creating a \"full\" website is a cinch. We pull the last 10&#8211;15 feeds from your Facebook page and create entries on your Digitalseoz business website. You can also choose to keep pulling feed from the Facebook page. So that every time you update it, your Digitalseoz website gets updated too.<br/> The advantage? Your Facebook entries now become discoverable by location.]]></item>
+    <item><![CDATA[Absolutely. You can make one update on your Digitalseoz business website and ensure the word spreads on your other social media platforms. All automatically. All instantly.<br/> All you need to do is go to the \"Social Settings\" of the Digitalseoz app and activate the various social options available there.]]></item>
+    <item><![CDATA[What we advise our customers is that they should update what their business does - in long term, and in short term too. The most important thing is that you DO NOT worry about keywords, or anything technical. But rather update messages as if you were in a conversation with an actual customer. Our technology takes care of the rest.<br/> For instance if it is a interior decorator, the long term message - which can also be the \'business description\' too, could be what they specialize in. Eg.: We are specialist in art-deco style interior decoration based in the Bay area.<br/> A short term message/update could be a promotion or an announcement.Eg.: Get high discounts on art-deco wallpapers for the pre-holiday run-up. Eg.: We have now started specializing in Minimalist styled interiors too.]]></item>
+  </string-array>
+  <string-array name="questions_3">
+    <item>Can the potential customer contact the business?</item>
+    <item>How else can I engage the customers?</item>
+    <item>Can I sell through a Digitalseoz website? Do you provide for e-commerce?</item>
+  </string-array>
+  <string-array name="answer_3">
+    <item><![CDATA[Yes! There are widgets on the website that are meant to increase customer engagement. For instance the \"Make an Enquiry\" widget allows the customers on the website to send a direct business enquiry to you. The enquiry is delivered to your phone or email address, giving you the potential lead.]]></item>
+    <item><![CDATA[Digitalseoz has a subscription facility, which your customers can use. After subscription, every time the business updates the website, the update is delivered in an email to the customer. So that there is less chance of the customer missing an update.]]></item>
+    <item><![CDATA[At the moment Digitalseoz provides a product catalogue feature, which promotes your best selling items further by SEO\'ing them. The product catalogue allows for customers to show interest and contact the merchant in regards to a particular product - generating a hot lead.<br/> However the option of e-commerce doesn\'t exist as of now. Having said that, we are working on providing e-commerce on the Digitalseoz websites soon enough. Stay tuned.]]></item>
+  </string-array>
+  <string-array name="questions_4">
+    <item>So what is Digitalseoz?</item>
+    <item>How can we make an update through the web?</item>
+  </string-array>
+  <string-array name="answer_4">
+    <item><![CDATA[Digitalseoz is the website management app that makes creating, updating, analyzing the website a walk in the park. Highly intuitive, and built on common app logic, this will get you going and ensure your website is well maintained by you. You can also update the store information and check the analytics of your website. It is available for iPhone and Android smartphones currently (the Windows Phone version is coming soon).]]></item>
+    <item><![CDATA[Digitalseoz has a web management portal with which you can update your Digitalseoz business website. You can also manage the store information and check more in-depth analytics of your website. If you have multiple stores, you can manage them all from this one portal.]]></item>
+  </string-array>
+  <string-array name="questions_5">
+    <item>How does the search engine optimization work for my specific business?</item>
+    <item>How long does it take before my SEO improves and my website starts showing up in the results?</item>
+    <item>But what if the business is in a hurry? Does Digitalseoz also provide \'inorganic\' growth?</item>
+    <item>What is \'organic\' web traffic? How does Digitalseoz build that for me?</item>
+  </string-array>
+  <string-array name="answer_5">
+    <item><![CDATA[Well the trick is in the language of your business. You don\'t have to worry about anything technological. Just pitch it like you would to your customers. That\'s all. We will do the heavy lifting of finding the right keywords from your language and ensuring the search engines recognize it. This enables relevant and better rankings in search results.]]></item>
+    <item><![CDATA[We\'ll be honest with you: There is no exact answer to this. However we have seen that with 2&#8211;3 updates a week, which are relevant and consistent with your business, our customers\' websites start showing up in local searches on popular search engines like Google in 3&#8211;4 weeks. This of course is what is called organic web traffic.<br/> Of course this requires you to create content. Think of it like fuel that\'ll make the car run. If you don\'t fill\'er up, the car won\'t take you anywhere.]]></item>
+    <item><![CDATA[We have 2 plans, one that is entirely organic SEO, and the other which is a mix of organic and inorganic SEO. You can always opt for this plan which has an \'inorganic\' element to it. We match the keywords from your messages and push them out as advertising to popular advertising networks online and then \"push\" potential customers to your website.<br/> Remember that even this method is exact and not random. People searching for what your business is talking about are the ones brought to your website.]]></item>
+    <item><![CDATA[Organic traffic is people landing up on your site without you having to apply any external stimulus like online advertising or offline advertising for that matter. People land up on your site because of the content that you have written and the search engines pointing at you for a relevant search query.<br/> With your effort of updating your Digitalseoz website regularly and relevantly, we ensure that you start getting established as someone who is an expert in your business (within the location for maximum impact and thus start rising in the search results. Please note that this DOES NOT happen overnight. It takes time (but no more money : ) and effort to curate the website.]]></item>
+  </string-array>
+  <string-array name="questions_6">
+    <item>How do I know that Digitalseoz is working for me?</item>
+    <item>If there are two businesses of the same nature and category on your platform within the same area/location, who will you show up first on the search results?</item>
+    <item>How does it compare to let\'s say a business listing site?</item>
+  </string-array>
+  <string-array name="answer_6">
+    <item><![CDATA[The best measure will be more customers over time.<br/> But more instant than that will be the number of people visiting your website. That number upsurges when you are regular with your updates.]]></item>
+    <item><![CDATA[This is a very interesting question and the answer is fairly straightforward:<br/> Whichever business updates its website regularly and more relevantly will show up first.<br/> Digitalseoz doesn\'t play favourites. We are merely a platform. What the customer does on it, defines what they can make of it. Also, what you must understand is that search engines apply weights to websites by various actions - how often is it updated, how focused it is, what the location is, etc. If you talk relevantly about your business, its products or services, consistently - give advice around it, provide updates, etc., it\'s quite likely that your site will come up first.<br/> Imagine two salesmen trying to sell you an ironing board. One says to you, \"You can iron your clothes on this.\" Whereas the second salesman says, \"This is designed for your maximum comfort, as you stand and iron clothes daily. It also comes in various colours to match your house décor. And I have a great deal for you.\" Who would you go to/purchase from? Yeah, it\'s pretty much like that online too.<br/> So if you want to show up ahead of other similar businesses in the location (both based on Digitalseoz platform) the trick is to put in a little bit of effort and update your website regularly with messages, images, product/service news, etc. That\'s it.]]></item>
+    <item><![CDATA[Digitalseoz is not like a listing site in many ways. To begin, you own your website with Digitalseoz, whereas on a listing site, you are one of the many businesses listed there. Second, on a listing site, you\'re exactly that - a listing. There is little context to your business besides the category you are listed under. With Digitalseoz you can give your customers context of your business - with content in form of messages, pictures, deals, subscriptions, enquiry forms, point of contacts, etc. Last, the SEO of a listing site, goes to the listing site. With Digitalseoz, when you write your content, it\'s your website the SEO is going to. You benefit from it first and foremost.]]></item>
+  </string-array>
+  <string-array name="questions_7">
+    <item>I bought a domain name but did nothing with it. Can the Digitalseoz website be built with it?</item>
+    <item>What if I already have a website? Can Digitalseoz still help me get more customers?</item>
+  </string-array>
+  <string-array name="answer_7">
+    <item><![CDATA[Yes indeed. In fact, you can build the Digitalseoz website (almost instantly) and then contact our customer care at <a href="support@digitalseoz.com">support@digitalseoz.com</a> and they can ensure that your purchased domain name/URL begins to point to the website.<br/> If you\'ve been waiting for the right opportunity, this is the time to build it.]]></item>
+    <item><![CDATA[Absolutely! If you already have a website for your business, but it isn\'t updated often enough, chances are it won\'t be doing much for your business. The Digitalseoz website can plug-in to your existing website as a sub-domain page where you can update your deals, offers, launches or messages. With regular updates, your page rank begins to rise and the SEO gets added on to your main site too.]]></item>
+  </string-array>
 
 
-    <!--FAQ hardcoded string end-->
-    <string name="Logo_percentage">5</string>
-    <string name="business_hours">5</string>
+  <string name="buy_in_capital">BUY</string>
+  <string name="later_in_capital">LATER</string>
+  <string name="renew_light_house_plan">Renew SeoMagnet plan to get all the features</string>
+  <string name="light_house_plan_expired_some_features_visible">Your SeoMagnet plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
+  <string name="renew_wildfire_plan">Renew Wildfire plan</string>
+  <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
+  <string name="renew_in_capital">RENEW</string>
+  <string name="ignore_in_capital">IGNORE</string>
+  <string name="buy_light_house_plan">Buy SeoMagnet plan to get all the features</string>
+  <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+  <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+  <string name="light_house_pla_will_expire"><Data><![CDATA[Your SeoMagnet plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
 
 
-    <string name="fb_login_protocol_scheme">fb1641508162754092</string>
+  <!--FAQ hardcoded string end-->
+  <string name="Logo_percentage">5</string>
+  <string name="business_hours">5</string>
 
 
-    <string name="email_id_to_request_plans">support@digitalseoz.com</string>
+  <string name="fb_login_protocol_scheme">fb1641508162754092</string>
+
+
+  <string name="email_id_to_request_plans">support@digitalseoz.com</string>
 
 </resources>

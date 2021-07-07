@@ -22,11 +22,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Handler;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -92,11 +94,14 @@ import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
 
 public final class KeyboardSwitcher implements KeyboardState.SwitchActions, ItemClickListener, ApiCallToKeyboardViewInterface, GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
     private static final String TAG = KeyboardSwitcher.class.getSimpleName();
+    private static final KeyboardSwitcher sInstance = new KeyboardSwitcher();
+    public static int MAIN_KEYBOARD_HEIGHT;
+    // TODO: The following {@link KeyboardTextsSet} should be in {@link KeyboardLayoutSet}.
+    private final KeyboardTextsSet mKeyboardTextsSet = new KeyboardTextsSet();
+    boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
     private EventBusHandler mEventHandler;
-
     private SubtypeSwitcher mSubtypeSwitcher;
     private SharedPreferences mPrefs;
-
     private InputView mCurrentInputView;
     private View mMainKeyboardFrame;
     private MainKeyboardView mKeyboardView;
@@ -105,7 +110,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private LatinIME mLatinIME;
     private boolean mIsHardwareAcceleratedDrawingEnabled;
     private ActionRowView mActionRowView;
-
     private KeyboardState mState;
     private RecyclerView mRecyclerView;
     private MainAdapter shareAdapter;
@@ -122,20 +126,10 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
     private Button shareBtn, deselectBtn;
     private UrlToBitmapInterface urlToBitmapInterface;
     private GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface galleryImagesListener;
-    boolean isProductCompleted, isUpdatesCompleted, isPhotosCompleted, isDetailsCompleted;
     private ProgressBar pbOffers;
     private TextView tvImageNotSupported;
-    public static int MAIN_KEYBOARD_HEIGHT;
     private TextView tvPhotos;
-
-    public LatinIME getmLatinIME() {
-        return mLatinIME;
-    }
-
     private KeyboardLayoutSet mKeyboardLayoutSet;
-    // TODO: The following {@link KeyboardTextsSet} should be in {@link KeyboardLayoutSet}.
-    private final KeyboardTextsSet mKeyboardTextsSet = new KeyboardTextsSet();
-
     private KeyboardTheme mKeyboardTheme;
     private Context mThemeContext;
     private ArrayList<AllSuggestionModel> updatesList = new ArrayList<>(),
@@ -144,21 +138,23 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
             selectedImages = new ArrayList<>(),
             detailsList = new ArrayList<>();
 
-    private static final KeyboardSwitcher sInstance = new KeyboardSwitcher();
-
-    public static KeyboardSwitcher getInstance() {
-        return sInstance;
-    }
-
     private KeyboardSwitcher() {
         // Intentional empty constructor for singleton.
 
         mEventHandler = new EventBusHandler();
     }
 
+    public static KeyboardSwitcher getInstance() {
+        return sInstance;
+    }
+
     public static void init(final LatinIME latinIme) {
         final SharedPreferences prefs = latinIme.getApplicationContext().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
         sInstance.initInternal(latinIme, prefs);
+    }
+
+    public LatinIME getmLatinIME() {
+        return mLatinIME;
     }
 
     private void initInternal(final LatinIME latinIme, final SharedPreferences prefs) {
@@ -220,7 +216,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         productList.clear();
         imagesList.clear();
         detailsList.clear();
-        isDetailsCompleted =  isProductCompleted = isUpdatesCompleted = isPhotosCompleted = false;
+        isDetailsCompleted = isProductCompleted = isUpdatesCompleted = isPhotosCompleted = false;
         if (shareAdapter != null)
             shareAdapter.setSuggestionModels(null);
     }
@@ -236,6 +232,13 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
             mKeyboardView.onHideWindow();
         }
         // mEventHandler.unregister();
+    }
+
+    public Keyboard getKeyboard() {
+        if (mKeyboardView != null) {
+            return mKeyboardView.getKeyboard();
+        }
+        return null;
     }
 
     private void setKeyboard(final Keyboard keyboard) {
@@ -270,13 +273,6 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
         SharedPreferences.Editor editor = mPrefs.edit();
         editor.putInt("keyboard_height", getMainKeyboardView().getHeight());
         editor.commit();
-    }
-
-    public Keyboard getKeyboard() {
-        if (mKeyboardView != null) {
-            return mKeyboardView.getKeyboard();
-        }
-        return null;
     }
 
     // TODO: Remove this method. Come up with a more comprehensive way to reset the keyboard layout
@@ -1069,8 +1065,8 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     @Override
     public void onDetailsLoaded(ArrayList<AllSuggestionModel> details) {
-       isDetailsCompleted = true;
-        if (detailsList.size() > 0|| detailsList.get(detailsList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
+        isDetailsCompleted = true;
+        if (detailsList.size() > 0 || detailsList.get(detailsList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
             detailsList.remove(detailsList.size() - 1);
             //detailsList.clear();
         }

@@ -80,16 +80,6 @@ public class Product implements Serializable {
     public List<Specification> otherSpecification;
     public String pickupAddressReferenceId;
 
-    public static class BuyOnlineLink implements Serializable {
-        public String url;
-        public String description;
-    }
-
-    public static class Specification implements Serializable {
-        public String key;
-        public String value;
-    }
-
     public void setProductType(String productType) {
         this.productType = productType;
     }
@@ -114,7 +104,6 @@ public class Product implements Serializable {
         return images;
     }
 
-
     //for sharing data
     public String getFinalPriceWithCurrency() {
         return CurrencyCode + " " + Helper.getCurrencyFormatter().format(Price - DiscountAmount);
@@ -127,5 +116,15 @@ public class Product implements Serializable {
         } else {
             return "";
         }
+    }
+
+    public static class BuyOnlineLink implements Serializable {
+        public String url;
+        public String description;
+    }
+
+    public static class Specification implements Serializable {
+        public String key;
+        public String value;
     }
 }

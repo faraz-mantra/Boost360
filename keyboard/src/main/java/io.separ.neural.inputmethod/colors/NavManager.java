@@ -24,6 +24,20 @@ public class NavManager implements OnSharedPreferenceChangeListener, ServiceConn
     private boolean notHide;
     private boolean settingsEnabled;
 
+    public NavManager(Context context) {
+        this.notHide = false;
+        this.context = context.getApplicationContext();
+        this.settingsEnabled = true;
+        boolean hasNavBar = hasNavBar(context);
+        this.hasNavBar = hasNavBar;
+        if (hasNavBar) {
+            PreferenceManager.getDefaultSharedPreferences(this.context).registerOnSharedPreferenceChangeListener(this);
+            if (this.settingsEnabled) {
+                createService();
+            }
+        }
+    }
+
     public void onServiceConnected(ComponentName className, IBinder service) {
         this.navService = ((NavService.NavBinder) service).getService();
         this.isBind = true;
@@ -55,20 +69,6 @@ public class NavManager implements OnSharedPreferenceChangeListener, ServiceConn
             this.navService.show(true);
         }
         this.notHide = false;
-    }
-
-    public NavManager(Context context) {
-        this.notHide = false;
-        this.context = context.getApplicationContext();
-        this.settingsEnabled = true;
-        boolean hasNavBar = hasNavBar(context);
-        this.hasNavBar = hasNavBar;
-        if (hasNavBar) {
-            PreferenceManager.getDefaultSharedPreferences(this.context).registerOnSharedPreferenceChangeListener(this);
-            if (this.settingsEnabled) {
-                createService();
-            }
-        }
     }
 
     private void createService() {

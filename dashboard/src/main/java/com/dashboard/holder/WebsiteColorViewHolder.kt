@@ -9,7 +9,8 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class WebsiteColorViewHolder(binding: RecyclerItemColorsBinding) : AppBaseRecyclerViewHolder<RecyclerItemColorsBinding>(binding) {
+class WebsiteColorViewHolder(binding: RecyclerItemColorsBinding) :
+  AppBaseRecyclerViewHolder<RecyclerItemColorsBinding>(binding) {
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val colorsItem = item as? ColorsItem
@@ -19,17 +20,20 @@ class WebsiteColorViewHolder(binding: RecyclerItemColorsBinding) : AppBaseRecycl
         binding.civCheck.visible()
         binding.ccvColor.strokeWidth = 5
         binding.ccvColor.elevation = 2F
-        binding.ccvColor.strokeColor = Color.parseColor(colorsItem.secondary?.ifBlank { colorsItem.primary})
+        binding.ccvColor.strokeColor =
+          Color.parseColor(colorsItem.secondary?.ifBlank { colorsItem.primary })
       }
       else -> {
         binding.civCheck.gone()
         binding.ccvColor.strokeWidth = 0
         binding.ccvColor.elevation = 0F
-        binding.ccvColor.strokeColor = Color.parseColor(colorsItem?.primary?.ifBlank { colorsItem.secondary })
+        binding.ccvColor.strokeColor =
+          Color.parseColor(colorsItem?.primary?.ifBlank { colorsItem.secondary })
       }
     }
     binding.root.setOnClickListener {
       colorsItem?.isSelected = true
-      listener?.onItemClick(position,item,RecyclerViewActionType.ITEM_COLOR_CLICK.ordinal) }
+      listener?.onItemClick(position, item, RecyclerViewActionType.ITEM_COLOR_CLICK.ordinal)
+    }
   }
 }

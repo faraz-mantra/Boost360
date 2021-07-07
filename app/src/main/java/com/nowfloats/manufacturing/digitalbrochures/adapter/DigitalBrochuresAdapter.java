@@ -25,11 +25,11 @@ import java.util.List;
 
 public class DigitalBrochuresAdapter extends RecyclerView.Adapter<DigitalBrochuresAdapter.ViewHolder> {
 
+    Context context;
     private List<Data> itemList;
     private DigitalBrochuresListener listener;
     private int menuPosition = -1;
     private boolean menuStatus = false;
-    Context context;
 
     public DigitalBrochuresAdapter(List<Data> itemList, DigitalBrochuresListener listener) {
         this.itemList = itemList;
@@ -92,7 +92,7 @@ public class DigitalBrochuresAdapter extends RecyclerView.Adapter<DigitalBrochur
         holder.documentURL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!itemList.get(position).getUploadpdf().getUrl().isEmpty()) {
+                if (!itemList.get(position).getUploadpdf().getUrl().isEmpty()) {
 //                    String googleDocs = "https://docs.google.com/viewer?url="+itemList.get(position).getUploadpdf().getUrl();
 //                    Intent intent = new Intent(context, WebViewActivity.class);
 //                    intent.putExtra("url", googleDocs );
@@ -100,8 +100,8 @@ public class DigitalBrochuresAdapter extends RecyclerView.Adapter<DigitalBrochur
 
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(itemList.get(position).getUploadpdf().getUrl()));
                     context.startActivity(browserIntent);
-                }else{
-                    Toast.makeText(context,"Facebook URL is Empty!!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Facebook URL is Empty!!", Toast.LENGTH_LONG).show();
                 }
             }
         });

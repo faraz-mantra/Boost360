@@ -5,9 +5,11 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.StyleRes;
+
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,78 +28,34 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * A CoachMark is a temporary popup that can be positioned above a {@link View}
  * to notify the user about a new feature, proposition or other information.
- * 
- * CoachMarks are dismissed in two ways: 
- *  1) A pre-set timeout passed 
- *  2) The {@link CoachMark#dismiss()} method is called
- * 
+ * <p>
+ * CoachMarks are dismissed in two ways:
+ * 1) A pre-set timeout passed
+ * 2) The {@link CoachMark#dismiss()} method is called
+ * <p>
  * Coach marks can be very annoying to the user, SO PLEASE USE SPARINGLY!
- * 
+ *
  * @author lachie
- * 
  */
 public abstract class CoachMark {
-
-    @IntDef({COACHMARK_PUNCHHOLE, COACHMARK_LAYERED, COACHMARK_HIGHLIGHT, COACHMARK_BUBBLE})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface CoachmarkType {}
 
     public static final int COACHMARK_PUNCHHOLE = 0;
     public static final int COACHMARK_LAYERED = 1;
     public static final int COACHMARK_HIGHLIGHT = 2;
     public static final int COACHMARK_BUBBLE = 3;
-
     public static final int NO_ANIMATION = 0;
-
-    /**
-     * Interface used to allow the creator of a coach mark to run some code when the
-     * coach mark is dismissed.
-     */
-    public interface OnDismissListener {
-        /**
-         * This method will be invoked when the coach mark is dismissed.
-         */
-        void onDismiss();
-    }
-
-    /**
-     * Interface used to allow the creator of a coach mark to run some code when the
-     * coach mark is shown.
-     */
-    public interface OnShowListener {
-        /**
-         * This method will be invoked when the coach mark is shown.
-         */
-        void onShow();
-    }
-
-    /**
-     * Interface used to allow the creator of a coach mark to run some code when the
-     * coach mark's given timeout is expired.
-     */
-    public interface OnTimeoutListener {
-        /**
-         * This method will be invoked when the coach mark's given timeout is expired.
-         */
-        void onTimeout();
-    }
-    
     protected final PopupWindow mPopup;
     protected final Context mContext;
     protected final View mTokenView;
     protected final View mAnchor;
     protected final int mPadding;
-
     private final OnPreDrawListener mPreDrawListener;
     private final OnDismissListener mDismissListener;
     private final OnShowListener mShowListener;
     private final OnTimeoutListener mTimeoutListener;
     private final long mTimeoutInMs;
-
-    private Runnable mTimeoutDismissRunnable;
-
     protected Rect mDisplayFrame;
-    
+    private Runnable mTimeoutDismissRunnable;
     protected CoachMark(CoachMarkBuilder builder) {
         mAnchor = builder.anchor;
         mContext = builder.context;
@@ -112,42 +70,51 @@ public abstract class CoachMark {
 
         // Create the coach mark view
         View view = createContentView(builder.content);
-        
+
         // Create and initialise the PopupWindow
         mPopup = createNewPopupWindow(view);
-        
+
         mPopup.setAnimationStyle(builder.animationStyle);
         mPopup.setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
         mPopup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         mPreDrawListener = new CoachMarkPreDrawListener();
     }
-    
+
+    /**
+     * Get the visible display size of the window this view is attached to
+     */
+    private static Rect getDisplayFrame(View view) {
+        final Rect displayFrame = new Rect();
+        view.getWindowVisibleDisplayFrame(displayFrame);
+        return displayFrame;
+    }
+
     /**
      * Create the coach mark view
      */
     protected abstract View createContentView(View content);
-    
+
     /**
      * Create and initialise a new {@link PopupWindow}
      */
     protected abstract PopupWindow createNewPopupWindow(View contentView);
-    
+
     /**
      * Get the dimensions of the anchor view
      */
     protected abstract CoachMarkDimens<Integer> getAnchorDimens();
-    
+
     /**
      * Get the current dimensions of the popup window
      */
     protected abstract CoachMarkDimens<Integer> getPopupDimens(CoachMarkDimens<Integer> anchorDimens);
-    
+
     /**
      * Perform any necessary updates to the view when popupDimens or anchorDimens have changed
      */
     protected abstract void updateView(CoachMarkDimens<Integer> popupDimens, CoachMarkDimens<Integer> anchorDimens);
-    
+
     /**
      * Show the coach mark and start listening for changes to the anchor view
      */
@@ -164,7 +131,7 @@ public abstract class CoachMark {
             mTimeoutDismissRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    if(mPopup.isShowing()) {
+                    if (mPopup.isShowing()) {
                         if (mTimeoutListener != null) {
                             mTimeoutListener.onTimeout();
                         }
@@ -204,84 +171,50 @@ public abstract class CoachMark {
     public View getContentView() {
         return mPopup.getContentView();
     }
-    
+
     /**
      * Exposes the {@link PopupWindow#isShowing()} method of {@link CoachMark#mPopup}
      */
     public boolean isShowing() {
         return mPopup.isShowing();
     }
-    
-    /**
-     * Get the visible display size of the window this view is attached to
-     */
-    private static Rect getDisplayFrame(View view) {
-        final Rect displayFrame = new Rect();
-        view.getWindowVisibleDisplayFrame(displayFrame);
-        return displayFrame;
-    }
-    
-    /**
-     * Listener which is used to update the position of the coach mark when the
-     * position of the anchor view is about to change
-     */
-    private class CoachMarkPreDrawListener implements OnPreDrawListener {
-        
-        @Override
-        public boolean onPreDraw() {
-            if(mAnchor != null && mAnchor.isShown()) {
-                CoachMarkDimens<Integer> anchorDimens = getAnchorDimens();
-                CoachMarkDimens<Integer> popupDimens = getPopupDimens(anchorDimens);
-                updateView(popupDimens, anchorDimens);
-                mPopup.update(popupDimens.x, popupDimens.y, popupDimens.width , popupDimens.height);
-            } else {
-                dismiss();
-            }        
-            return true;
-        }
-    }
-    
-    /**
-     * Listener may be used to dismiss the coach mark when it is touched
-     */
-    protected class CoachMarkOnTouchListener implements OnTouchListener {
 
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-            case MotionEvent.ACTION_UP:
-                dismiss();
-            case MotionEvent.ACTION_DOWN:
-                return true;
-            default:
-                return false;
-            }
-        }
+    @IntDef({COACHMARK_PUNCHHOLE, COACHMARK_LAYERED, COACHMARK_HIGHLIGHT, COACHMARK_BUBBLE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface CoachmarkType {
     }
 
     /**
-     * An {@link android.view.View.OnClickListener} which wraps an
-     * existing listener with a call to {@link CoachMark#dismiss()}
-     *
-     * @author lachie
-     *
+     * Interface used to allow the creator of a coach mark to run some code when the
+     * coach mark is dismissed.
      */
-    protected class CoachMarkOnClickListener implements View.OnClickListener {
+    public interface OnDismissListener {
+        /**
+         * This method will be invoked when the coach mark is dismissed.
+         */
+        void onDismiss();
+    }
 
-        private final View.OnClickListener mListener;
+    /**
+     * Interface used to allow the creator of a coach mark to run some code when the
+     * coach mark is shown.
+     */
+    public interface OnShowListener {
+        /**
+         * This method will be invoked when the coach mark is shown.
+         */
+        void onShow();
+    }
 
-        public CoachMarkOnClickListener(View.OnClickListener listener) {
-            mListener = listener;
-        }
-
-        @Override
-        public void onClick(View v) {
-            dismiss();
-
-            if (mListener != null) {
-                mListener.onClick(v);
-            }
-        }
+    /**
+     * Interface used to allow the creator of a coach mark to run some code when the
+     * coach mark's given timeout is expired.
+     */
+    public interface OnTimeoutListener {
+        /**
+         * This method will be invoked when the coach mark's given timeout is expired.
+         */
+        void onTimeout();
     }
 
     public static class CoachMarkDimens<T extends Number> {
@@ -338,8 +271,7 @@ public abstract class CoachMark {
          * If the desired anchor view does not contain a valid window token then
          * the token of an alternative view may be used to display the coach mark
          *
-         * @param tokenView
-         *      the view who's window token should be used
+         * @param tokenView the view who's window token should be used
          */
         public CoachMarkBuilder setTokenView(View tokenView) {
             this.tokenView = tokenView;
@@ -350,9 +282,8 @@ public abstract class CoachMark {
          * Set the period of time after which the coach mark should be
          * automatically dismissed
          *
-         * @param timeoutInMs
-         *      the time in milliseconds after which to dismiss the coach
-         *      mark (defaults to 10 seconds)
+         * @param timeoutInMs the time in milliseconds after which to dismiss the coach
+         *                    mark (defaults to 10 seconds)
          */
         public CoachMarkBuilder setTimeout(long timeoutInMs) {
             this.timeout = timeoutInMs;
@@ -363,8 +294,7 @@ public abstract class CoachMark {
          * Set how much padding there should be between the left and right edges
          * of the coach mark and the screen
          *
-         * @param padding
-         *      the amount of left/right padding in px
+         * @param padding the amount of left/right padding in px
          */
         public CoachMarkBuilder setPadding(int padding) {
             this.padding = padding;
@@ -385,7 +315,7 @@ public abstract class CoachMark {
         /**
          * Set an {@link CoachMark.OnTimeoutListener} to be called when the
          * coach mark's display timeout has been expired
-         *
+         * <p>
          * This listener will be called before the coach mark dismissed
          *
          * @param listener the timeout listener
@@ -398,8 +328,7 @@ public abstract class CoachMark {
         /**
          * Set which animation will be used when displaying/hiding the coach mark
          *
-         * @param animationStyle
-         *      the resource ID of the Style to be used for showing and hiding the coach mark
+         * @param animationStyle the resource ID of the Style to be used for showing and hiding the coach mark
          */
         public CoachMarkBuilder setAnimation(@StyleRes int animationStyle) {
             this.animationStyle = animationStyle;
@@ -409,7 +338,7 @@ public abstract class CoachMark {
         /**
          * Set an {@link CoachMark.OnShowListener} to be called when the
          * coach mark is shown
-         * 
+         *
          * @param listener
          */
         public CoachMarkBuilder setOnShowListener(OnShowListener listener) {
@@ -418,5 +347,67 @@ public abstract class CoachMark {
         }
 
         public abstract CoachMark build();
+    }
+
+    /**
+     * Listener which is used to update the position of the coach mark when the
+     * position of the anchor view is about to change
+     */
+    private class CoachMarkPreDrawListener implements OnPreDrawListener {
+
+        @Override
+        public boolean onPreDraw() {
+            if (mAnchor != null && mAnchor.isShown()) {
+                CoachMarkDimens<Integer> anchorDimens = getAnchorDimens();
+                CoachMarkDimens<Integer> popupDimens = getPopupDimens(anchorDimens);
+                updateView(popupDimens, anchorDimens);
+                mPopup.update(popupDimens.x, popupDimens.y, popupDimens.width, popupDimens.height);
+            } else {
+                dismiss();
+            }
+            return true;
+        }
+    }
+
+    /**
+     * Listener may be used to dismiss the coach mark when it is touched
+     */
+    protected class CoachMarkOnTouchListener implements OnTouchListener {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_UP:
+                    dismiss();
+                case MotionEvent.ACTION_DOWN:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    }
+
+    /**
+     * An {@link android.view.View.OnClickListener} which wraps an
+     * existing listener with a call to {@link CoachMark#dismiss()}
+     *
+     * @author lachie
+     */
+    protected class CoachMarkOnClickListener implements View.OnClickListener {
+
+        private final View.OnClickListener mListener;
+
+        public CoachMarkOnClickListener(View.OnClickListener listener) {
+            mListener = listener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            dismiss();
+
+            if (mListener != null) {
+                mListener.onClick(v);
+            }
+        }
     }
 }

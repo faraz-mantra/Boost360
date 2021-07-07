@@ -58,13 +58,13 @@ public abstract class AbstractDrawingPreview {
      * The class that is overriding this method must call this super implementation.
      *
      * @param originCoords the top-left coordinates of the {@link MainKeyboardView} in
-     *        {@link SoftInputWindow} coordinate-system. This is unused but has a point in an
-     *        extended class, such as {@link GestureTrailsDrawingPreview}.
-     * @param width the width of {@link MainKeyboardView}.
-     * @param height the height of {@link MainKeyboardView}.
+     *                     {@link SoftInputWindow} coordinate-system. This is unused but has a point in an
+     *                     extended class, such as {@link GestureTrailsDrawingPreview}.
+     * @param width        the width of {@link MainKeyboardView}.
+     * @param height       the height of {@link MainKeyboardView}.
      */
     public void setKeyboardViewGeometry(@Nonnull final int[] originCoords, final int width,
-            final int height) {
+                                        final int height) {
         mHasValidGeometry = (width > 0 && height > 0);
     }
 
@@ -72,13 +72,15 @@ public abstract class AbstractDrawingPreview {
 
     /**
      * Draws the preview
+     *
      * @param context
-     * @param canvas The canvas where the preview is drawn.
+     * @param canvas  The canvas where the preview is drawn.
      */
     public abstract void drawPreview(Context context, @Nonnull final Canvas canvas);
 
     /**
      * Set the position of the preview.
+     *
      * @param tracker The new location of the preview is based on the points in PointerTracker.
      */
     public abstract void setPreviewPosition(@Nonnull final PointerTracker tracker);

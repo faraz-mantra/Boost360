@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/main_view"
-        style="@style/wrap_wrap"
-        android:background="@drawable/item_appointment_schedule_background_2"
-        android:orientation="horizontal">
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_view"
+    style="@style/wrap_wrap"
+    android:background="@drawable/item_appointment_schedule_background_2"
+    android:orientation="horizontal">
 
-        <View
-            android:id="@+id/firstView"
-            android:layout_width="1.5dp"
-            android:layout_height="match_parent"
-            android:background="#DCDDDE"
-            android:visibility="gone" />
+    <View
+      android:id="@+id/firstView"
+      android:layout_width="1.5dp"
+      android:layout_height="match_parent"
+      android:background="#DCDDDE"
+      android:visibility="gone" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tvAppointmentTime"
-            style="@style/wrap_wrap"
-            android:paddingStart="@dimen/size_22"
-            android:paddingTop="@dimen/size_10"
-            android:paddingEnd="@dimen/size_22"
-            android:paddingBottom="@dimen/size_10"
-            android:text="@string/today"
-            android:textAllCaps="true"
-            android:textColor="@color/primary_grey"
-            android:visibility="visible"
-            app:fontFamily="@font/semi_bold"
-            app:textType="BODY_1" />
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvAppointmentTime"
+      style="@style/wrap_wrap"
+      android:paddingStart="@dimen/size_22"
+      android:paddingTop="@dimen/size_10"
+      android:paddingEnd="@dimen/size_22"
+      android:paddingBottom="@dimen/size_10"
+      android:text="@string/today"
+      android:textAllCaps="true"
+      android:textColor="@color/primary_grey"
+      android:visibility="visible"
+      app:fontFamily="@font/semi_bold"
+      app:textType="BODY_1" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </layout>

@@ -3,8 +3,10 @@ package com.nowfloats.Analytics_Screen.Search_Query_Adapter;
 import android.app.Activity;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,42 +22,24 @@ import java.util.ArrayList;
 /**
  * Created by Kamal on 17-02-2015.
  */
-public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.MyViewHolder>{
+public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.MyViewHolder> {
 
     private ArrayList<SearchAnalytics> queryList;
     private Activity activity;
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        TextView search_query_header_text;
-        TextView search_query_date_text;
-        ImageView search_query_image_icon;
-
-        public MyViewHolder(View itemView)
-        {
-            super(itemView);
-
-            this.search_query_header_text = itemView.findViewById(R.id.search_query_header_text_1);
-            this.search_query_date_text = itemView.findViewById(R.id.search_query_header_text_2);
-            this.search_query_image_icon = itemView.findViewById(R.id.search_query_image);
-        }
-    }
-
-    public SearchQueryAdapter(Activity activity, ArrayList<SearchAnalytics> list)
-    {
+    public SearchQueryAdapter(Activity activity, ArrayList<SearchAnalytics> list) {
         this.activity = activity;
         queryList = list;
     }
 
     @Override
     @NonNull
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-       View view = LayoutInflater.from(parent.getContext())
-               .inflate(R.layout.search_query_adapter, parent, false);
-       return new MyViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.search_query_adapter, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -76,14 +60,10 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
             e.printStackTrace();
         }*/
 
-        try
-        {
+        try {
             String dateTime = Methods.getISO8601FormattedDate(response.getDate());
             holder.search_query_date_text.setText(dateTime);
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -93,8 +73,22 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return queryList.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView search_query_header_text;
+        TextView search_query_date_text;
+        ImageView search_query_image_icon;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+
+            this.search_query_header_text = itemView.findViewById(R.id.search_query_header_text_1);
+            this.search_query_date_text = itemView.findViewById(R.id.search_query_header_text_2);
+            this.search_query_image_icon = itemView.findViewById(R.id.search_query_image);
+        }
     }
 }

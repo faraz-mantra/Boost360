@@ -37,16 +37,12 @@ import io.separ.neural.inputmethod.indic.suggestions.MoreSuggestions.MoreSuggest
 public final class MoreSuggestionsView extends MoreKeysKeyboardView {
     private static final String TAG = MoreSuggestionsView.class.getSimpleName();
 
-    public static abstract class MoreSuggestionsListener extends KeyboardActionListener.Adapter {
-        public abstract void onSuggestionSelected(final SuggestedWordInfo info);
-    }
-
     public MoreSuggestionsView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.moreKeysKeyboardViewStyle);
     }
 
     public MoreSuggestionsView(final Context context, final AttributeSet attrs,
-            final int defStyle) {
+                               final int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -67,7 +63,7 @@ public final class MoreSuggestionsView extends MoreKeysKeyboardView {
 
     @Override
     protected int getDefaultCoordX() {
-        final MoreSuggestions pane = (MoreSuggestions)getKeyboard();
+        final MoreSuggestions pane = (MoreSuggestions) getKeyboard();
         return pane.mOccupiedWidth / 2;
     }
 
@@ -94,8 +90,8 @@ public final class MoreSuggestionsView extends MoreKeysKeyboardView {
                     + keyboard.getClass().getName());
             return;
         }
-        final SuggestedWords suggestedWords = ((MoreSuggestions)keyboard).mSuggestedWords;
-        final int index = ((MoreSuggestionKey)key).mSuggestedWordIndex;
+        final SuggestedWords suggestedWords = ((MoreSuggestions) keyboard).mSuggestedWords;
+        final int index = ((MoreSuggestionKey) key).mSuggestedWordIndex;
         if (index < 0 || index >= suggestedWords.size()) {
             Log.e(TAG, "Selected suggestion has an illegal index: " + index);
             return;
@@ -105,6 +101,10 @@ public final class MoreSuggestionsView extends MoreKeysKeyboardView {
                     + mListener.getClass().getName());
             return;
         }
-        ((MoreSuggestionsListener)mListener).onSuggestionSelected(suggestedWords.getInfo(index));
+        ((MoreSuggestionsListener) mListener).onSuggestionSelected(suggestedWords.getInfo(index));
+    }
+
+    public static abstract class MoreSuggestionsListener extends KeyboardActionListener.Adapter {
+        public abstract void onSuggestionSelected(final SuggestedWordInfo info);
     }
 }

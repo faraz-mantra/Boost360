@@ -2,10 +2,14 @@ package com.nowfloats.Store;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,16 +46,14 @@ import static android.app.Activity.RESULT_OK;
 
 public class AllPlansFragment extends Fragment {
 
+    private final int DIRECT_REQUEST_CODE = 2013;
     ViewPager vpPricingPlans;
     PricingPlansPagerAdapter pricingPagerAdapter;
-    private List<PackageDetails> mBasePlans;
-    private List<PackageDetails> mTopUps;
     TextView tvPrice, tvCurrency;
     LinearLayout llPurchasePlan;
-
     MaterialDialog materialProgress;
-
-    private final int DIRECT_REQUEST_CODE = 2013;
+    private List<PackageDetails> mBasePlans;
+    private List<PackageDetails> mTopUps;
     private View tvTaxes;
 
     @Override

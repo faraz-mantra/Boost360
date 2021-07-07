@@ -30,15 +30,14 @@ import junit.framework.TestCase;
 
 @MediumTest
 public class NetworkDispatcherTest extends TestCase {
+    private static final byte[] CANNED_DATA = "Ceci n'est pas une vraie reponse".getBytes();
+    private static final long TIMEOUT_MILLIS = 5000;
     private NetworkDispatcher mDispatcher;
     private MockResponseDelivery mDelivery;
     private WaitableQueue mNetworkQueue;
     private MockNetwork mNetwork;
     private MockCache mCache;
     private MockRequest mRequest;
-
-    private static final byte[] CANNED_DATA = "Ceci n'est pas une vraie reponse".getBytes();
-    private static final long TIMEOUT_MILLIS = 5000;
 
     @Override
     protected void setUp() throws Exception {
@@ -70,7 +69,7 @@ public class NetworkDispatcherTest extends TestCase {
         Response<?> response = mDelivery.responsePosted;
         assertNotNull(response);
         assertTrue(response.isSuccess());
-        assertTrue(Arrays.equals((byte[])response.result, CANNED_DATA));
+        assertTrue(Arrays.equals((byte[]) response.result, CANNED_DATA));
     }
 
     public void testExceptionPostsError() throws Exception {

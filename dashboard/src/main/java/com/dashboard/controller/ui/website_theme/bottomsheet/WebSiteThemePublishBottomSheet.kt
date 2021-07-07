@@ -10,7 +10,8 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
 
-class WebSiteThemePublishBottomSheet : BaseBottomSheetDialog<BottomSheetPublishChangesBinding, BaseViewModel>() {
+class WebSiteThemePublishBottomSheet :
+  BaseBottomSheetDialog<BottomSheetPublishChangesBinding, BaseViewModel>() {
 
   var onClicked: (value: String) -> Unit = { }
   override fun getLayout(): Int {
@@ -22,7 +23,7 @@ class WebSiteThemePublishBottomSheet : BaseBottomSheetDialog<BottomSheetPublishC
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnDiscard,binding?.btnPublish)
+    setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnDiscard, binding?.btnPublish)
     isCancelable = false
   }
 

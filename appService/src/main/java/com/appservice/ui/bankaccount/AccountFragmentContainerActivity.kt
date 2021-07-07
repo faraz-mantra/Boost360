@@ -19,7 +19,8 @@ import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
 
-open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerAccountBinding, BaseViewModel>() {
+open class AccountFragmentContainerActivity :
+  AppBaseActivity<ActivityFragmentContainerAccountBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
 
@@ -76,7 +77,10 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getDrawable(
+        this,
+        R.drawable.ic_back_arrow_new
+      )
       else -> super.getNavigationIcon()
     }
   }
@@ -142,8 +146,10 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   }
 }
 
-fun Fragment.startFragmentAccountActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false,
-                                          isResult: Boolean = false, requestCode: Int = 101) {
+fun Fragment.startFragmentAccountActivity(
+  type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false,
+  isResult: Boolean = false, requestCode: Int = 101
+) {
   val intent = Intent(activity, AccountFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -151,7 +157,12 @@ fun Fragment.startFragmentAccountActivity(type: FragmentType, bundle: Bundle = B
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, requestCode)
 }
 
-fun startFragmentAccountActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
+fun startFragmentAccountActivityNew(
+  activity: Activity,
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean
+) {
   val intent = Intent(activity, AccountFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -159,7 +170,11 @@ fun startFragmentAccountActivityNew(activity: Activity, type: FragmentType, bund
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentAccountActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun AppCompatActivity.startFragmentAccountActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false
+) {
   val intent = Intent(this, AccountFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

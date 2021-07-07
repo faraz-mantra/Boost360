@@ -17,12 +17,7 @@
 package io.separ.neural.inputmethod.indic.define;
 
 public final class ProductionFlags {
-    private ProductionFlags() {
-        // This class is not publicly instantiable.
-    }
-
     public static final boolean IS_HARDWARE_KEYBOARD_SUPPORTED = false;
-
     /**
      * When true, enable {@link InputMethodService#onUpdateCursorAnchorInfo} callback via
      * {@link InputConnection#requestUpdateCursorAnchorInfo}. This flag has no effect in API
@@ -30,14 +25,16 @@ public final class ProductionFlags {
      * even though an explicit support is required by the editor.
      */
     public static final boolean ENABLE_CURSOR_ANCHOR_INFO_CALLBACK = true;
-
     /**
      * Include all suggestions from all dictionaries in {@link SuggestedWords#mRawSuggestions}.
      */
     public static final boolean INCLUDE_RAW_SUGGESTIONS = false;
-
     /**
      * When false, the metrics logging is not yet ready to be enabled.
      */
     public static final boolean IS_METRICS_LOGGING_SUPPORTED = true;
+
+    private ProductionFlags() {
+        // This class is not publicly instantiable.
+    }
 }

@@ -11,7 +11,8 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBaseRecyclerViewHolder<ItemBusinessSetupHighBinding>(binding) {
+class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) :
+  AppBaseRecyclerViewHolder<ItemBusinessSetupHighBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -34,14 +35,31 @@ class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBa
 //        binding.txtPercentage.setTextColor(ContextCompat.getColor(activity!!, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
 //        binding.progressBar.progressDrawable = ContextCompat.getDrawable(activity!!, if (isHigh) R.drawable.ic_progress_bar_high_grey else R.drawable.progress_bar_horizontal)
         data.score?.let { binding.progressBar.progress = it }
-        binding.viewReadinessScore.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.READING_SCORE_CLICK.ordinal) }
+        binding.viewReadinessScore.setOnClickListener {
+          listener?.onItemClick(
+            position,
+            data,
+            RecyclerViewActionType.READING_SCORE_CLICK.ordinal
+          )
+        }
       }
     }
   }
 }
 
-private fun ItemDetailBusinessBinding.setData(listener: RecyclerItemClickListener?, position: Int, item: Specification?) {
+private fun ItemDetailBusinessBinding.setData(
+  listener: RecyclerItemClickListener?,
+  position: Int,
+  item: Specification?
+) {
   txtTitle.text = item?.title
-  txtValue.text = if (item?.value.isNullOrEmpty().not() && item?.value.equals("0").not()) item?.value else "_"
-  viewBusinessCount.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.BUSINESS_UPDATE_CLICK.ordinal) }
+  txtValue.text =
+    if (item?.value.isNullOrEmpty().not() && item?.value.equals("0").not()) item?.value else "_"
+  viewBusinessCount.setOnClickListener {
+    listener?.onItemClick(
+      position,
+      item,
+      RecyclerViewActionType.BUSINESS_UPDATE_CLICK.ordinal
+    )
+  }
 }

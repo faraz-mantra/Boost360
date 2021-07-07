@@ -43,7 +43,6 @@ public final class MoreKeysKeyboard extends Keyboard {
     @UsedForTesting
     static class MoreKeysKeyboardParams extends KeyboardParams {
         public boolean mIsMoreKeysFixedOrder;
-        /* package */ int mTopRowAdjustment;
         public int mNumRows;
         public int mNumColumns;
         public int mTopKeys;
@@ -51,9 +50,15 @@ public final class MoreKeysKeyboard extends Keyboard {
         public int mRightKeys; // includes default key.
         public int mDividerWidth;
         public int mColumnWidth;
+        /* package */ int mTopRowAdjustment;
 
         public MoreKeysKeyboardParams() {
             super();
+        }
+
+        private static int getTopRowEmptySlots(final int numKeys, final int numColumns) {
+            final int remainings = numKeys % numColumns;
+            return remainings == 0 ? 0 : numColumns - remainings;
         }
 
         /**
@@ -212,11 +217,6 @@ public final class MoreKeysKeyboard extends Keyboard {
             return pos;
         }
 
-        private static int getTopRowEmptySlots(final int numKeys, final int numColumns) {
-            final int remainings = numKeys % numColumns;
-            return remainings == 0 ? 0 : numColumns - remainings;
-        }
-
         private int getOptimizedColumns(final int numKeys, final int maxColumns) {
             int numColumns = Math.min(numKeys, maxColumns);
             while (getTopRowEmptySlots(numKeys, numColumns) >= mNumRows) {
@@ -254,10 +254,9 @@ public final class MoreKeysKeyboard extends Keyboard {
     }
 
     public static class Builder extends KeyboardBuilder<MoreKeysKeyboardParams> {
-        private final Key mParentKey;
-
         private static final float LABEL_PADDING_RATIO = 0.2f;
         private static final float DIVIDER_RATIO = 0.2f;
+        private final Key mParentKey;
 
         /**
          * The builder of MoreKeysKeyboard.

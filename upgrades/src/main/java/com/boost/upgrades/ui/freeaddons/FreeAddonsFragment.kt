@@ -28,63 +28,63 @@ import kotlinx.android.synthetic.main.free_addons_fragment.recycler_paidaddons
 
 class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
 
-    lateinit var root: View
-//    lateinit var freeAddonsAdapter: FreeAddonsAdapter
-    lateinit var freeAddonsAdapter: CompareFreeAddonsAdapter
-    lateinit var compareFreeAddonsAdapter: CompareFreeAddonsAdapter
-    //    lateinit var localStorage: LocalStorage
-    lateinit var myAddonsViewModelFactory: FreeAddonsViewModelFactory
+  lateinit var root: View
 
-    var freeaddonsSeeMoreStatus = false
-    var paidaddonsSeeMoreStatus = false
+  //    lateinit var freeAddonsAdapter: FreeAddonsAdapter
+  lateinit var freeAddonsAdapter: CompareFreeAddonsAdapter
+  lateinit var compareFreeAddonsAdapter: CompareFreeAddonsAdapter
 
-    var totalActiveWidgetCount = 0
-    var totalActiveFreeWidgetCount = 0
-    var totalActivePremiumWidgetCount = 0
+  //    lateinit var localStorage: LocalStorage
+  lateinit var myAddonsViewModelFactory: FreeAddonsViewModelFactory
 
-    var totalFreeItemList: List<FeaturesModel>? = null
+  var freeaddonsSeeMoreStatus = false
+  var paidaddonsSeeMoreStatus = false
 
-    lateinit var progressDialog: ProgressDialog
+  var totalActiveWidgetCount = 0
+  var totalActiveFreeWidgetCount = 0
+  var totalActivePremiumWidgetCount = 0
 
-    var purchasedPackages = ArrayList<String>()
+  var totalFreeItemList: List<FeaturesModel>? = null
 
-    companion object {
-        fun newInstance() = FreeAddonsFragment()
+  lateinit var progressDialog: ProgressDialog
+
+  var purchasedPackages = ArrayList<String>()
+
+  companion object {
+    fun newInstance() = FreeAddonsFragment()
+  }
+
+  private lateinit var viewModel: FreeAddonsViewModel
+
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    root = inflater.inflate(R.layout.free_addons_fragment, container, false)
+
+    myAddonsViewModelFactory =
+      FreeAddonsViewModelFactory(requireNotNull(requireActivity().application))
+
+    viewModel = ViewModelProviders.of(requireActivity(), myAddonsViewModelFactory)
+      .get(FreeAddonsViewModel::class.java)
+
+    progressDialog = ProgressDialog(requireContext())
+    var purchasedPack = arguments!!.getStringArrayList("userPurchsedWidgets")
+    if (purchasedPack != null) {
+      purchasedPackages = purchasedPack
     }
 
-    private lateinit var viewModel: FreeAddonsViewModel
-
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        root = inflater.inflate(R.layout.free_addons_fragment, container, false)
-
-        myAddonsViewModelFactory = FreeAddonsViewModelFactory(requireNotNull(requireActivity().application))
-
-        viewModel = ViewModelProviders.of(requireActivity(), myAddonsViewModelFactory).get(FreeAddonsViewModel::class.java)
-
-        progressDialog = ProgressDialog(requireContext())
-        var purchasedPack = arguments!!.getStringArrayList("userPurchsedWidgets")
-        if (purchasedPack != null) {
-            purchasedPackages = purchasedPack
-        }
-
-        freeAddonsAdapter = CompareFreeAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
+    freeAddonsAdapter = CompareFreeAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
 
 
-        return root
-    }
+    return root
+  }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+  override fun onActivityCreated(savedInstanceState: Bundle?) {
+    super.onActivityCreated(savedInstanceState)
 
-        loadData()
-        initMVVM()
-
-
-
-
+    loadData()
+    initMVVM()
 
 
 //        Glide.with(this).load(R.drawable.back_beau)
@@ -92,101 +92,100 @@ class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
 //                .into(back_image)
 
 
-
-
-        addons_back.setOnClickListener {
-            (activity as UpgradeActivity).popFragmentFromBackStack()
-        }
-
-
-
-
-
-
-
-        WebEngageController.trackEvent( ADDONS_MARKETPLACE_MY_ADDONS_LOADED , MY_ADDONS, NO_EVENT_VALUE)
+    addons_back.setOnClickListener {
+      (activity as UpgradeActivity).popFragmentFromBackStack()
     }
 
-    private fun loadData() {
-        viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
-    }
-
-    @SuppressLint("FragmentLiveDataObserve")
-    private fun initMVVM() {
-        viewModel.getActiveFreeWidgets().observe(this, Observer {
-            totalFreeItemList = it
-
-            totalActiveFreeWidgetCount = totalFreeItemList!!.size
-            totalActiveWidgetCount = totalActiveFreeWidgetCount + totalActivePremiumWidgetCount
 
 
 
-            initializeFreeAddonsRecyclerView()
 
 
-            if (totalFreeItemList != null) {
-                paid_title.setText(totalFreeItemList!!.size.toString() + " Free add-ons")
+
+    WebEngageController.trackEvent(ADDONS_MARKETPLACE_MY_ADDONS_LOADED, MY_ADDONS, NO_EVENT_VALUE)
+  }
+
+  private fun loadData() {
+    viewModel.loadUpdates(
+      (activity as UpgradeActivity).fpid!!,
+      (activity as UpgradeActivity).clientid
+    )
+  }
+
+  @SuppressLint("FragmentLiveDataObserve")
+  private fun initMVVM() {
+    viewModel.getActiveFreeWidgets().observe(this, Observer {
+      totalFreeItemList = it
+
+      totalActiveFreeWidgetCount = totalFreeItemList!!.size
+      totalActiveWidgetCount = totalActiveFreeWidgetCount + totalActivePremiumWidgetCount
+
+
+
+      initializeFreeAddonsRecyclerView()
+
+
+      if (totalFreeItemList != null) {
+        paid_title.setText(totalFreeItemList!!.size.toString() + " Free add-ons")
 //                if (totalFreeItemList!!.size > 6) {
-                    val lessList = totalFreeItemList
-                    updateFreeAddonsRecycler(lessList)
+        val lessList = totalFreeItemList
+        updateFreeAddonsRecycler(lessList)
 
 //                }
-                /*else {
-                    myaddons_view1.visibility = View.INVISIBLE
-                    read_more_less_free_addons.visibility = View.GONE
-                    updateFreeAddonsRecycler(totalFreeItemList!!)
-                }*/
-            }
-        })
-
-        viewModel.updatesLoader().observe(this, Observer {
-            if (it) {
-                val status = "Loading. Please wait..."
-                progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-                progressDialog.show()
-            } else {
-                progressDialog.dismiss()
-            }
-        })
-    }
-
-
-
-    private fun updateFreeAddonsRecycler(list: List<FeaturesModel>?) {
-        freeAddonsAdapter.addupdates(list)
-        recycler_paidaddons.adapter = freeAddonsAdapter
-        freeAddonsAdapter.notifyDataSetChanged()
-    }
-
-
-
-    fun initializeFreeAddonsRecyclerView() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        recycler_paidaddons.apply {
-            layoutManager = gridLayoutManager
-
-        }
-        recycler_paidaddons.adapter = freeAddonsAdapter
-    }
-
-
-    override fun onFreeAddonsClicked(v: View?) {
-       /* if (add_remove_layout.visibility == View.VISIBLE) {
-            add_remove_layout.visibility = View.GONE
-        } else {
-            val itemPosition = recycler_freeaddons.getChildAdapterPosition(v!!)
-
+        /*else {
+            myaddons_view1.visibility = View.INVISIBLE
+            read_more_less_free_addons.visibility = View.GONE
+            updateFreeAddonsRecycler(totalFreeItemList!!)
         }*/
-    }
+      }
+    })
 
-    override fun onPaidAddonsClicked(v: View?) {
-       /* if (add_remove_layout.visibility == View.VISIBLE) {
-            add_remove_layout.visibility = View.GONE
-        } else {
-            val itemPosition = recycler_paidaddons.getChildAdapterPosition(v!!)
+    viewModel.updatesLoader().observe(this, Observer {
+      if (it) {
+        val status = "Loading. Please wait..."
+        progressDialog.setMessage(status)
+        progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+        progressDialog.show()
+      } else {
+        progressDialog.dismiss()
+      }
+    })
+  }
 
-        }*/
+
+  private fun updateFreeAddonsRecycler(list: List<FeaturesModel>?) {
+    freeAddonsAdapter.addupdates(list)
+    recycler_paidaddons.adapter = freeAddonsAdapter
+    freeAddonsAdapter.notifyDataSetChanged()
+  }
+
+
+  fun initializeFreeAddonsRecyclerView() {
+    val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+    gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+    recycler_paidaddons.apply {
+      layoutManager = gridLayoutManager
+
     }
+    recycler_paidaddons.adapter = freeAddonsAdapter
+  }
+
+
+  override fun onFreeAddonsClicked(v: View?) {
+    /* if (add_remove_layout.visibility == View.VISIBLE) {
+         add_remove_layout.visibility = View.GONE
+     } else {
+         val itemPosition = recycler_freeaddons.getChildAdapterPosition(v!!)
+
+     }*/
+  }
+
+  override fun onPaidAddonsClicked(v: View?) {
+    /* if (add_remove_layout.visibility == View.VISIBLE) {
+         add_remove_layout.visibility = View.GONE
+     } else {
+         val itemPosition = recycler_paidaddons.getChildAdapterPosition(v!!)
+
+     }*/
+  }
 }

@@ -36,7 +36,7 @@ import io.separ.neural.inputmethod.indic.R;
 
 /**
  * Object representing an upgrade from one state to another.
- *
+ * <p>
  * This implementation basically encapsulates a list of Runnable objects. In the future
  * it may manage dependencies between them. Concretely, it does not use Runnable because the
  * actions need an argument.
@@ -75,14 +75,57 @@ InstallAfterDownloadAction   |               |
   is available and we should forget about the old one.
 */
 public final class ActionBatch {
+    // An action batch consists of an ordered queue of Actions that can execute.
+    private final Queue<Action> mActions;
+
+    public ActionBatch() {
+        mActions = new LinkedList<>();
+    }
+
+    public void add(final Action a) {
+        mActions.add(a);
+    }
+
+    /**
+     * Append all the actions of another action batch.
+     *
+     * @param that the upgrade to merge into this one.
+     */
+    public void append(final ActionBatch that) {
+        for (final Action a : that.mActions) {
+            add(a);
+        }
+    }
+
+    /**
+     * Execute this batch.
+     *
+     * @param context  the context for getting resources, databases, system services.
+     * @param reporter a Reporter to send errors to.
+     */
+    public void execute(final Context context, final ProblemReporter reporter) {
+        DebugLogUtils.l("Executing a batch of actions");
+        Queue<Action> remainingActions = mActions;
+        while (!remainingActions.isEmpty()) {
+            final Action a = remainingActions.poll();
+            try {
+                a.execute(context);
+            } catch (Exception e) {
+                if (null != reporter)
+                    reporter.report(e);
+            }
+        }
+    }
+
     /**
      * A piece of update.
-     *
+     * <p>
      * Action is basically like a Runnable that takes an argument.
      */
     public interface Action {
         /**
          * Execute this action NOW.
+         *
          * @param context the context to get system services, resources, databases
          */
         void execute(final Context context);
@@ -93,13 +136,13 @@ public final class ActionBatch {
      */
     public static final class StartDownloadAction implements Action {
         static final String TAG = "DictionaryProvider:" + StartDownloadAction.class.getSimpleName();
-
-        private final String mClientId;
         // The data to download. May not be null.
         final WordListMetadata mWordList;
         final boolean mForceStartNow;
+        private final String mClientId;
+
         public StartDownloadAction(final String clientId,
-                final WordListMetadata wordList, final boolean forceStartNow) {
+                                   final WordListMetadata wordList, final boolean forceStartNow) {
             DebugLogUtils.l("New download action for client ", clientId, " : ", wordList);
             mClientId = clientId;
             mWordList = wordList;
@@ -121,7 +164,7 @@ public final class ActionBatch {
             if (MetadataDbHelper.STATUS_DOWNLOADING == status) {
                 // The word list is still downloading. Cancel the download and revert the
                 // word list status to "available".
-                 manager.remove(values.getAsLong(MetadataDbHelper.PENDINGID_COLUMN));
+                manager.remove(values.getAsLong(MetadataDbHelper.PENDINGID_COLUMN));
                 MetadataDbHelper.markEntryAsAvailable(db, mWordList.mId, mWordList.mVersion);
             } else if (MetadataDbHelper.STATUS_AVAILABLE != status) {
                 // Should never happen
@@ -145,17 +188,17 @@ public final class ActionBatch {
                 if (DownloadManagerCompatUtils.hasSetAllowedOverMetered()) {
                     final boolean allowOverMetered;
                     switch (UpdateHandler.getDownloadOverMeteredSetting(context)) {
-                    case UpdateHandler.DOWNLOAD_OVER_METERED_DISALLOWED:
-                        // User said no: don't allow.
-                        allowOverMetered = false;
-                        break;
-                    case UpdateHandler.DOWNLOAD_OVER_METERED_ALLOWED:
-                        // User said yes: allow.
-                        allowOverMetered = true;
-                        break;
-                    default: // UpdateHandler.DOWNLOAD_OVER_METERED_SETTING_UNKNOWN
-                        // Don't know: use the default value from configuration.
-                        allowOverMetered = res.getBoolean(R.bool.allow_over_metered);
+                        case UpdateHandler.DOWNLOAD_OVER_METERED_DISALLOWED:
+                            // User said no: don't allow.
+                            allowOverMetered = false;
+                            break;
+                        case UpdateHandler.DOWNLOAD_OVER_METERED_ALLOWED:
+                            // User said yes: allow.
+                            allowOverMetered = true;
+                            break;
+                        default: // UpdateHandler.DOWNLOAD_OVER_METERED_SETTING_UNKNOWN
+                            // Don't know: use the default value from configuration.
+                            allowOverMetered = res.getBoolean(R.bool.allow_over_metered);
                     }
                     DownloadManagerCompatUtils.setAllowedOverMetered(request, allowOverMetered);
                 } else {
@@ -183,12 +226,12 @@ public final class ActionBatch {
     public static final class InstallAfterDownloadAction implements Action {
         static final String TAG = "DictionaryProvider:"
                 + InstallAfterDownloadAction.class.getSimpleName();
-        private final String mClientId;
         // The state to upgrade from. May not be null.
         final ContentValues mWordListValues;
+        private final String mClientId;
 
         public InstallAfterDownloadAction(final String clientId,
-                final ContentValues wordListValues) {
+                                          final ContentValues wordListValues) {
             DebugLogUtils.l("New InstallAfterDownloadAction for client ", clientId, " : ",
                     wordListValues);
             mClientId = clientId;
@@ -219,9 +262,9 @@ public final class ActionBatch {
      */
     public static final class EnableAction implements Action {
         static final String TAG = "DictionaryProvider:" + EnableAction.class.getSimpleName();
-        private final String mClientId;
         // The state to upgrade from. May not be null.
         final WordListMetadata mWordList;
+        private final String mClientId;
 
         public EnableAction(final String clientId, final WordListMetadata wordList) {
             DebugLogUtils.l("New EnableAction for client ", clientId, " : ", wordList);
@@ -243,7 +286,7 @@ public final class ActionBatch {
             if (MetadataDbHelper.STATUS_DISABLED != status
                     && MetadataDbHelper.STATUS_DELETING != status) {
                 Log.e(TAG, "Unexpected state of the word list '" + mWordList.mId + " : " + status
-                      + " for an enable action. Cancelling");
+                        + " for an enable action. Cancelling");
                 return;
             }
             MetadataDbHelper.markEntryAsEnabled(db, mWordList.mId, mWordList.mVersion);
@@ -255,9 +298,10 @@ public final class ActionBatch {
      */
     public static final class DisableAction implements Action {
         static final String TAG = "DictionaryProvider:" + DisableAction.class.getSimpleName();
-        private final String mClientId;
         // The word list to disable. May not be null.
         final WordListMetadata mWordList;
+        private final String mClientId;
+
         public DisableAction(final String clientId, final WordListMetadata wordlist) {
             DebugLogUtils.l("New Disable action for client ", clientId, " : ", wordlist);
             mClientId = clientId;
@@ -297,9 +341,10 @@ public final class ActionBatch {
      */
     public static final class MakeAvailableAction implements Action {
         static final String TAG = "DictionaryProvider:" + MakeAvailableAction.class.getSimpleName();
-        private final String mClientId;
         // The word list to make available. May not be null.
         final WordListMetadata mWordList;
+        private final String mClientId;
+
         public MakeAvailableAction(final String clientId, final WordListMetadata wordlist) {
             DebugLogUtils.l("New MakeAvailable action", clientId, " : ", wordlist);
             mClientId = clientId;
@@ -336,7 +381,7 @@ public final class ActionBatch {
 
     /**
      * An action that marks a word list as pre-installed.
-     *
+     * <p>
      * This is almost the same as MakeAvailableAction, as it only inserts a line with parameters
      * received from outside.
      * Unlike MakeAvailableAction, the parameters are not received from a downloaded metadata file
@@ -347,9 +392,10 @@ public final class ActionBatch {
     public static final class MarkPreInstalledAction implements Action {
         static final String TAG = "DictionaryProvider:"
                 + MarkPreInstalledAction.class.getSimpleName();
-        private final String mClientId;
         // The word list to mark pre-installed. May not be null.
         final WordListMetadata mWordList;
+        private final String mClientId;
+
         public MarkPreInstalledAction(final String clientId, final WordListMetadata wordlist) {
             DebugLogUtils.l("New MarkPreInstalled action", clientId, " : ", wordlist);
             mClientId = clientId;
@@ -389,8 +435,9 @@ public final class ActionBatch {
      */
     public static final class UpdateDataAction implements Action {
         static final String TAG = "DictionaryProvider:" + UpdateDataAction.class.getSimpleName();
-        private final String mClientId;
         final WordListMetadata mWordList;
+        private final String mClientId;
+
         public UpdateDataAction(final String clientId, final WordListMetadata wordlist) {
             DebugLogUtils.l("New UpdateData action for client ", clientId, " : ", wordlist);
             mClientId = clientId;
@@ -425,13 +472,13 @@ public final class ActionBatch {
             db.update(MetadataDbHelper.METADATA_TABLE_NAME, values,
                     MetadataDbHelper.WORDLISTID_COLUMN + " = ? AND "
                             + MetadataDbHelper.VERSION_COLUMN + " = ?",
-                    new String[] { mWordList.mId, Integer.toString(mWordList.mVersion) });
+                    new String[]{mWordList.mId, Integer.toString(mWordList.mVersion)});
         }
     }
 
     /**
      * An action that deletes the metadata about a word list if possible.
-     *
+     * <p>
      * This is triggered when a specific word list disappeared from the server, or when a fresher
      * word list is available and the old one was not installed.
      * If the word list has not been installed, it's possible to delete its associated metadata.
@@ -439,12 +486,13 @@ public final class ActionBatch {
      */
     public static final class ForgetAction implements Action {
         static final String TAG = "DictionaryProvider:" + ForgetAction.class.getSimpleName();
-        private final String mClientId;
         // The word list to remove. May not be null.
         final WordListMetadata mWordList;
         final boolean mHasNewerVersion;
+        private final String mClientId;
+
         public ForgetAction(final String clientId, final WordListMetadata wordlist,
-                final boolean hasNewerVersion) {
+                            final boolean hasNewerVersion) {
             DebugLogUtils.l("New TryRemove action for client ", clientId, " : ", wordlist);
             mClientId = clientId;
             mWordList = wordlist;
@@ -486,20 +534,20 @@ public final class ActionBatch {
                 db.update(MetadataDbHelper.METADATA_TABLE_NAME, values,
                         MetadataDbHelper.WORDLISTID_COLUMN + " = ? AND "
                                 + MetadataDbHelper.VERSION_COLUMN + " = ?",
-                        new String[] { mWordList.mId, Integer.toString(mWordList.mVersion) });
+                        new String[]{mWordList.mId, Integer.toString(mWordList.mVersion)});
             } else {
                 // If it's AVAILABLE or DOWNLOADING or even UNKNOWN, delete the entry.
                 db.delete(MetadataDbHelper.METADATA_TABLE_NAME,
                         MetadataDbHelper.WORDLISTID_COLUMN + " = ? AND "
                                 + MetadataDbHelper.VERSION_COLUMN + " = ?",
-                        new String[] { mWordList.mId, Integer.toString(mWordList.mVersion) });
+                        new String[]{mWordList.mId, Integer.toString(mWordList.mVersion)});
             }
         }
     }
 
     /**
      * An action that sets the word list for deletion as soon as possible.
-     *
+     * <p>
      * This is triggered when the user requests deletion of a word list. This will mark it as
      * deleted in the database, and fire an intent for Android Keyboard to take notice and
      * reload its dictionaries right away if it is up. If it is not up now, then it will
@@ -513,9 +561,10 @@ public final class ActionBatch {
      */
     public static final class StartDeleteAction implements Action {
         static final String TAG = "DictionaryProvider:" + StartDeleteAction.class.getSimpleName();
-        private final String mClientId;
         // The word list to delete. May not be null.
         final WordListMetadata mWordList;
+        private final String mClientId;
+
         public StartDeleteAction(final String clientId, final WordListMetadata wordlist) {
             DebugLogUtils.l("New StartDelete action for client ", clientId, " : ", wordlist);
             mClientId = clientId;
@@ -546,15 +595,16 @@ public final class ActionBatch {
 
     /**
      * An action that validates a word list as deleted.
-     *
+     * <p>
      * This will restore the word list as available if it still is, or remove the entry if
      * it is not any more.
      */
     public static final class FinishDeleteAction implements Action {
         static final String TAG = "DictionaryProvider:" + FinishDeleteAction.class.getSimpleName();
-        private final String mClientId;
         // The word list to delete. May not be null.
         final WordListMetadata mWordList;
+        private final String mClientId;
+
         public FinishDeleteAction(final String clientId, final WordListMetadata wordlist) {
             DebugLogUtils.l("New FinishDelete action for client", clientId, " : ", wordlist);
             mClientId = clientId;
@@ -589,50 +639,9 @@ public final class ActionBatch {
                 db.delete(MetadataDbHelper.METADATA_TABLE_NAME,
                         MetadataDbHelper.WORDLISTID_COLUMN + " = ? AND "
                                 + MetadataDbHelper.VERSION_COLUMN + " = ?",
-                        new String[] { mWordList.mId, Integer.toString(mWordList.mVersion) });
+                        new String[]{mWordList.mId, Integer.toString(mWordList.mVersion)});
             } else {
                 MetadataDbHelper.markEntryAsAvailable(db, mWordList.mId, mWordList.mVersion);
-            }
-        }
-    }
-
-    // An action batch consists of an ordered queue of Actions that can execute.
-    private final Queue<Action> mActions;
-
-    public ActionBatch() {
-        mActions = new LinkedList<>();
-    }
-
-    public void add(final Action a) {
-        mActions.add(a);
-    }
-
-    /**
-     * Append all the actions of another action batch.
-     * @param that the upgrade to merge into this one.
-     */
-    public void append(final ActionBatch that) {
-        for (final Action a : that.mActions) {
-            add(a);
-        }
-    }
-
-    /**
-     * Execute this batch.
-     *
-     * @param context the context for getting resources, databases, system services.
-     * @param reporter a Reporter to send errors to.
-     */
-    public void execute(final Context context, final ProblemReporter reporter) {
-        DebugLogUtils.l("Executing a batch of actions");
-        Queue<Action> remainingActions = mActions;
-        while (!remainingActions.isEmpty()) {
-            final Action a = remainingActions.poll();
-            try {
-                a.execute(context);
-            } catch (Exception e) {
-                if (null != reporter)
-                    reporter.report(e);
             }
         }
     }

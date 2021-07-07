@@ -72,7 +72,11 @@ class FloatingActionButton : AppCompatTextView {
 
   constructor(context: Context?) : this(context, null, 0)
   constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
-  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context!!, attrs, defStyleAttr) {
+  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+    context!!,
+    attrs,
+    defStyleAttr
+  ) {
     initTypedArray(attrs)
     createTextParams()
   }
@@ -82,16 +86,44 @@ class FloatingActionButton : AppCompatTextView {
 
     val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, 0, 0)
 
-    fabType = FabType.getByIndex(ta.getInt(R.styleable.FloatingActionButton_fabType, FabType.FAB_TYPE_CIRCLE.ordinal))
-    fabSize = FabSize.getByIndex(ta.getInt(R.styleable.FloatingActionButton_fabSizes, FabSize.FAB_SIZE_NORMAL.ordinal))
-    fabElevation = ta.getDimension(R.styleable.FloatingActionButton_fabElevation, resources.getDimension(R.dimen.fab_default_elevation))
-    fabBackground = ta.getResourceId(R.styleable.FloatingActionButton_fabBackground, R.drawable.fab_circle_bg)
-    fabColor = ta.getColor(R.styleable.FloatingActionButton_fabColor, ContextCompat.getColor(context, R.color.colorAccent))
+    fabType = FabType.getByIndex(
+      ta.getInt(
+        R.styleable.FloatingActionButton_fabType,
+        FabType.FAB_TYPE_CIRCLE.ordinal
+      )
+    )
+    fabSize = FabSize.getByIndex(
+      ta.getInt(
+        R.styleable.FloatingActionButton_fabSizes,
+        FabSize.FAB_SIZE_NORMAL.ordinal
+      )
+    )
+    fabElevation = ta.getDimension(
+      R.styleable.FloatingActionButton_fabElevation,
+      resources.getDimension(R.dimen.fab_default_elevation)
+    )
+    fabBackground =
+      ta.getResourceId(R.styleable.FloatingActionButton_fabBackground, R.drawable.fab_circle_bg)
+    fabColor = ta.getColor(
+      R.styleable.FloatingActionButton_fabColor,
+      ContextCompat.getColor(context, R.color.colorAccent)
+    )
     @DrawableRes val fabIconRes = ta.getResourceId(R.styleable.FloatingActionButton_fabIcon, -1)
     fabIcon = if (fabIconRes != -1) AppCompatResources.getDrawable(context, fabIconRes) else null
-    fabIconColor = ta.getColor(R.styleable.FloatingActionButton_fabIconColor, ContextCompat.getColor(context, R.color.colorFabIcon))
-    fabIconPosition = FabIconPosition.getByIndex(ta.getInt(R.styleable.FloatingActionButton_fabIconPosition, FabIconPosition.FAB_ICON_START.ordinal))
-    fabRippleColor = ta.getColor(R.styleable.FloatingActionButton_fabRippleColor, ContextCompat.getColor(context, R.color.colorPrimary))
+    fabIconColor = ta.getColor(
+      R.styleable.FloatingActionButton_fabIconColor,
+      ContextCompat.getColor(context, R.color.colorFabIcon)
+    )
+    fabIconPosition = FabIconPosition.getByIndex(
+      ta.getInt(
+        R.styleable.FloatingActionButton_fabIconPosition,
+        FabIconPosition.FAB_ICON_START.ordinal
+      )
+    )
+    fabRippleColor = ta.getColor(
+      R.styleable.FloatingActionButton_fabRippleColor,
+      ContextCompat.getColor(context, R.color.colorPrimary)
+    )
 
     ta.recycle()
   }
@@ -104,9 +136,13 @@ class FloatingActionButton : AppCompatTextView {
   }
 
   private fun createPaddings() {
-    val paddingSize = if (fabSize == FabSize.FAB_SIZE_MINI) resources.getDimensionPixelSize(R.dimen.fab_text_horizontal_margin_mini) else resources.getDimensionPixelSize(R.dimen.fab_text_horizontal_margin_normal)
+    val paddingSize =
+      if (fabSize == FabSize.FAB_SIZE_MINI) resources.getDimensionPixelSize(R.dimen.fab_text_horizontal_margin_mini) else resources.getDimensionPixelSize(
+        R.dimen.fab_text_horizontal_margin_normal
+      )
     setPadding(paddingSize, paddingSize, paddingSize, paddingSize)
-    compoundDrawablePadding = resources.getDimensionPixelSize(R.dimen.fab_text_horizontal_margin_mini)
+    compoundDrawablePadding =
+      resources.getDimensionPixelSize(R.dimen.fab_text_horizontal_margin_mini)
   }
 
   private fun createElevation() {
@@ -114,13 +150,18 @@ class FloatingActionButton : AppCompatTextView {
   }
 
   private fun createBackground() {
-    val background = AppCompatResources.getDrawable(context, when (fabType) {
-      FabType.FAB_TYPE_SQUARE -> R.drawable.fab_square_bg
-      FabType.FAB_TYPE_ROUNDED_SQUARE -> R.drawable.fab_rounded_square_bg
-      else -> fabBackground
-    })?.mutate()?.apply {
+    val background = AppCompatResources.getDrawable(
+      context, when (fabType) {
+        FabType.FAB_TYPE_SQUARE -> R.drawable.fab_square_bg
+        FabType.FAB_TYPE_ROUNDED_SQUARE -> R.drawable.fab_rounded_square_bg
+        else -> fabBackground
+      }
+    )?.mutate()?.apply {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        mutate().colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(fabColor, BlendModeCompat.SRC_IN)
+        mutate().colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+          fabColor,
+          BlendModeCompat.SRC_IN
+        )
       } else {
         mutate().setColorFilter(fabColor, PorterDuff.Mode.SRC_IN)
       }
@@ -141,17 +182,40 @@ class FloatingActionButton : AppCompatTextView {
     fabIcon!!.setBounds(0, 0, w, h)
     fabIcon?.apply {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        mutate().colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(fabIconColor, BlendModeCompat.SRC_IN)
+        mutate().colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+          fabIconColor,
+          BlendModeCompat.SRC_IN
+        )
       } else {
         mutate().setColorFilter(fabIconColor, PorterDuff.Mode.SRC_IN)
       }
     }
 
     when (fabIconPosition) {
-      FabIconPosition.FAB_ICON_START -> setCompoundDrawablesRelativeWithIntrinsicBounds(fabIcon, null, null, null)
-      FabIconPosition.FAB_ICON_TOP -> setCompoundDrawablesRelativeWithIntrinsicBounds(null, fabIcon, null, null)
-      FabIconPosition.FAB_ICON_END -> setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, fabIcon, null)
-      FabIconPosition.FAB_ICON_BOTTOM -> setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, fabIcon)
+      FabIconPosition.FAB_ICON_START -> setCompoundDrawablesRelativeWithIntrinsicBounds(
+        fabIcon,
+        null,
+        null,
+        null
+      )
+      FabIconPosition.FAB_ICON_TOP -> setCompoundDrawablesRelativeWithIntrinsicBounds(
+        null,
+        fabIcon,
+        null,
+        null
+      )
+      FabIconPosition.FAB_ICON_END -> setCompoundDrawablesRelativeWithIntrinsicBounds(
+        null,
+        null,
+        fabIcon,
+        null
+      )
+      FabIconPosition.FAB_ICON_BOTTOM -> setCompoundDrawablesRelativeWithIntrinsicBounds(
+        null,
+        null,
+        null,
+        fabIcon
+      )
     }
   }
 

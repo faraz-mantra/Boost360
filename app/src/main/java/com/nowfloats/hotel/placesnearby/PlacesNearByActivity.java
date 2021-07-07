@@ -1,16 +1,8 @@
 package com.nowfloats.hotel.placesnearby;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -19,11 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.boost.upgrades.UpgradeActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.model.DeletePlacesAround.DeletePlacesAroundRequest;
 import com.nowfloats.hotel.API.model.GetPlacesAround.Data;
@@ -78,18 +75,18 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
         //setheader
         setHeader();
 
-        if (Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")){
+        if (Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")) {
             recyclerView.setVisibility(View.VISIBLE);
             secondaryLayout.setVisibility(View.GONE);
             initialiseRecycler();
-        }else{
+        } else {
             recyclerView.setVisibility(View.GONE);
             secondaryLayout.setVisibility(View.VISIBLE);
             showSecondaryLayout();
         }
     }
 
-    void showSecondaryLayout(){
+    void showSecondaryLayout() {
         buyItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,9 +224,9 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(error.getResponse().getStatus() == 200){
+                    if (error.getResponse().getStatus() == 200) {
                         loadData();
-                    }else {
+                    } else {
                         Methods.showSnackBarNegative(PlacesNearByActivity.this, getString(R.string.something_went_wrong));
                     }
                 }
@@ -269,7 +266,7 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
             finish();
-        },1000);
+        }, 1000);
     }
 
 }

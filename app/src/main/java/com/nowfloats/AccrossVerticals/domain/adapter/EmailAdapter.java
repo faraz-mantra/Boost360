@@ -38,7 +38,7 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.MyViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onEmailItemClicked(String.valueOf(position)+" position Clicked");
+                listener.onEmailItemClicked(String.valueOf(position) + " position Clicked");
             }
         });
     }

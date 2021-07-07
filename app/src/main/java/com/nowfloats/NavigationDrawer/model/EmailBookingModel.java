@@ -1,5 +1,7 @@
 package com.nowfloats.NavigationDrawer.model;
+
 import androidx.annotation.NonNull;
+
 import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
@@ -7,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity;
 
 import java.util.List;
+
 /**
  * Created by Admin on 22-11-2017.
  */
@@ -35,6 +38,7 @@ public class EmailBookingModel {
     public void setEmailDomainNames(List<EmailDomainName> emailDomainNames) {
         this.emailDomainNames = emailDomainNames;
     }
+
     public static class EmailDomainName {
 
         @SerializedName("firstName")
@@ -84,14 +88,13 @@ public class EmailBookingModel {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof EmailDomainName)){
+            if (!(obj instanceof EmailDomainName)) {
                 return false;
             }
-            EmailDomainName emailDomainName = (EmailDomainName)obj;
-            if(TextUtils.isEmpty(emailDomainName.getUsername())){
+            EmailDomainName emailDomainName = (EmailDomainName) obj;
+            if (TextUtils.isEmpty(emailDomainName.getUsername())) {
                 return false;
-            }
-            else if (!TextUtils.isEmpty(username) && username.equalsIgnoreCase(emailDomainName.getUsername()) ){
+            } else if (!TextUtils.isEmpty(username) && username.equalsIgnoreCase(emailDomainName.getUsername())) {
                 return true;
             }
             return false;
@@ -159,13 +162,15 @@ public class EmailBookingModel {
 
     }
 
-    public static class AddEmailModel implements Comparable{
+    public static class AddEmailModel implements Comparable {
         private String emailId;
         private DomainDetailsActivity.EmailType type = DomainDetailsActivity.EmailType.ADDED;
-        public AddEmailModel(String emailId, DomainDetailsActivity.EmailType type){
+
+        public AddEmailModel(String emailId, DomainDetailsActivity.EmailType type) {
             this.emailId = emailId;
             this.type = type;
         }
+
         public DomainDetailsActivity.EmailType getType() {
             return type;
         }
@@ -184,14 +189,15 @@ public class EmailBookingModel {
 
         @Override
         public int compareTo(@NonNull Object o) {
-            if (!(o instanceof AddEmailModel)){
+            if (!(o instanceof AddEmailModel)) {
                 return -1;
-            }else{
+            } else {
                 return type.compareTo(((AddEmailModel) o).getType());
             }
         }
     }
-    public static class EmailBookingIds{
+
+    public static class EmailBookingIds {
         private List<String> emailIds;
 
         public List<String> getEmailIds() {

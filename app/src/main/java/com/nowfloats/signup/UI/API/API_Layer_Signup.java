@@ -22,19 +22,6 @@ public class API_Layer_Signup {
 
     static String tag = null;
 
-    public interface SignUp_Interface {
-
-        public void tagStatus(String status, String tag);
-
-        public void CheckUniqueNumber_preExecute(String value);
-
-        public void CheckUniqueNumber_postExecute(String value);
-
-        public void CheckUniqueNumber_postExecute(String value, String phoneNumber);
-
-    }
-
-
     public static String getTag(final Context context, String name, String country, String city, String category) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -95,8 +82,7 @@ public class API_Layer_Signup {
 
     }
 
-
-    public static void checkUniqueNumber(Context context, final String mobileNumber,final String countryCode) {
+    public static void checkUniqueNumber(Context context, final String mobileNumber, final String countryCode) {
 
         final SignUp_Interface checkUniqueNumberInterface = (SignUp_Interface) context;
 
@@ -154,6 +140,19 @@ public class API_Layer_Signup {
 
         }.execute((Void) null);
 
+
+    }
+
+
+    public interface SignUp_Interface {
+
+        public void tagStatus(String status, String tag);
+
+        public void CheckUniqueNumber_preExecute(String value);
+
+        public void CheckUniqueNumber_postExecute(String value);
+
+        public void CheckUniqueNumber_postExecute(String value, String phoneNumber);
 
     }
 

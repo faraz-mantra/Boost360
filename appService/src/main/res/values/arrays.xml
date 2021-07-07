@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="length_measure">
-        <item>"Inch"</item>
-        <item>"Meter"</item>
-    </string-array>
-    <string-array name="weight_measure">
-        <item>"Kgs"</item>
-        <item>"Meters"</item>
-    </string-array>
-    <string-array name="timing">
-        <item >7:30</item>
-        <item >8:30</item>
-        <item >9:30</item>
-        <item >10:30</item>
-        <item >11:30</item>
-    </string-array>
+  <string-array name="length_measure">
+    <item>"Inch"</item>
+    <item>"Meter"</item>
+  </string-array>
+  <string-array name="weight_measure">
+    <item>"Kgs"</item>
+    <item>"Meters"</item>
+  </string-array>
+  <string-array name="timing">
+    <item>7:30</item>
+    <item>8:30</item>
+    <item>9:30</item>
+    <item>10:30</item>
+    <item>11:30</item>
+  </string-array>
 </resources>

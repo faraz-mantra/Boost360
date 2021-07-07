@@ -42,7 +42,7 @@ public final class ReadOnlyBinaryDictionary extends Dictionary {
     private final BinaryDictionary mBinaryDictionary;
 
     public ReadOnlyBinaryDictionary(final String filename, final long offset, final long length,
-            final boolean useFullEditDistance, final Locale locale, final String dictType) {
+                                    final boolean useFullEditDistance, final Locale locale, final String dictType) {
         super(dictType);
         mBinaryDictionary = new BinaryDictionary(filename, offset, length, useFullEditDistance,
                 locale, dictType, false /* isUpdatable */);
@@ -54,9 +54,9 @@ public final class ReadOnlyBinaryDictionary extends Dictionary {
 
     @Override
     public ArrayList<SuggestedWordInfo> getSuggestions(final WordComposer composer,
-            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-            final SettingsValuesForSuggestion settingsValuesForSuggestion,
-            final int sessionId, final float[] inOutLanguageWeight) {
+                                                       final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+                                                       final SettingsValuesForSuggestion settingsValuesForSuggestion,
+                                                       final int sessionId, final float[] inOutLanguageWeight) {
         if (mLock.readLock().tryLock()) {
             try {
                 return mBinaryDictionary.getSuggestions(composer, prevWordsInfo, proximityInfo,

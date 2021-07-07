@@ -30,8 +30,10 @@ import android.preference.DialogPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
+
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -61,19 +63,272 @@ import io.separ.neural.inputmethod.indic.R;
 import io.separ.neural.inputmethod.indic.RichInputMethodManager;
 
 public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
-    private RichInputMethodManager mRichImm;
-    private SharedPreferences mPrefs;
-    private SubtypeLocaleAdapter mSubtypeLocaleAdapter;
-    private KeyboardLayoutSetAdapter mKeyboardLayoutSetAdapter;
-
-    private boolean mIsAddingNewSubtype;
-    private AlertDialog mSubtypeEnablerNotificationDialog;
-    private String mSubtypePreferenceKeyForSubtypeEnabler;
-
     private static final String KEY_IS_ADDING_NEW_SUBTYPE = "is_adding_new_subtype";
     private static final String KEY_IS_SUBTYPE_ENABLER_NOTIFICATION_DIALOG_OPEN =
             "is_subtype_enabler_notification_dialog_open";
     private static final String KEY_SUBTYPE_FOR_SUBTYPE_ENABLER = "subtype_for_subtype_enabler";
+    private RichInputMethodManager mRichImm;
+    private SharedPreferences mPrefs;
+    private SubtypeLocaleAdapter mSubtypeLocaleAdapter;
+    private KeyboardLayoutSetAdapter mKeyboardLayoutSetAdapter;
+    private boolean mIsAddingNewSubtype;
+    private AlertDialog mSubtypeEnablerNotificationDialog;
+    private String mSubtypePreferenceKeyForSubtypeEnabler;
+    private final SubtypeDialogProxy mSubtypeProxy = new SubtypeDialogProxy() {
+        @Override
+        public void onRemovePressed(final SubtypePreference subtypePref) {
+            mIsAddingNewSubtype = false;
+            final PreferenceGroup group = getPreferenceScreen();
+            group.removePreference(subtypePref);
+            mRichImm.setAdditionalInputMethodSubtypes(getSubtypes());
+        }
+
+        @Override
+        public void onSavePressed(final SubtypePreference subtypePref) {
+            final InputMethodSubtype subtype = subtypePref.getSubtype();
+            if (!subtypePref.hasBeenModified()) {
+                return;
+            }
+            if (findDuplicatedSubtype(subtype) == null) {
+                mRichImm.setAdditionalInputMethodSubtypes(getSubtypes());
+                return;
+            }
+
+            // Saved subtype is duplicated.
+            final PreferenceGroup group = getPreferenceScreen();
+            group.removePreference(subtypePref);
+            subtypePref.revert();
+            group.addPreference(subtypePref);
+            showSubtypeAlreadyExistsToast(subtype);
+        }
+
+        @Override
+        public void onAddPressed(final SubtypePreference subtypePref) {
+            mIsAddingNewSubtype = false;
+            final InputMethodSubtype subtype = subtypePref.getSubtype();
+            if (findDuplicatedSubtype(subtype) == null) {
+                mRichImm.setAdditionalInputMethodSubtypes(getSubtypes());
+                mSubtypePreferenceKeyForSubtypeEnabler = subtypePref.getKey();
+                mSubtypeEnablerNotificationDialog = createDialog();
+                mSubtypeEnablerNotificationDialog.show();
+                return;
+            }
+
+            // Newly added subtype is duplicated.
+            final PreferenceGroup group = getPreferenceScreen();
+            group.removePreference(subtypePref);
+            showSubtypeAlreadyExistsToast(subtype);
+        }
+
+        @Override
+        public SubtypeLocaleAdapter getSubtypeLocaleAdapter() {
+            return mSubtypeLocaleAdapter;
+        }
+
+        @Override
+        public KeyboardLayoutSetAdapter getKeyboardLayoutSetAdapter() {
+            return mKeyboardLayoutSetAdapter;
+        }
+    };
+
+    public CustomInputStyleSettingsFragment() {
+        // Empty constructor for fragment generation.
+    }
+
+    static void updateCustomInputStylesSummary(final Preference pref) {
+        // When we are called from the Settings application but we are not already running, some
+        // singleton and utility classes may not have been initialized.  We have to call
+        // initialization method of these classes here. See {@link LatinIME#onCreate()}.
+        SubtypeLocaleUtils.init(pref.getContext());
+
+        final Resources res = pref.getContext().getResources();
+        final SharedPreferences prefs = pref.getSharedPreferences();
+        final String prefSubtype = Settings.readPrefAdditionalSubtypes(prefs, res);
+        final InputMethodSubtype[] subtypes =
+                AdditionalSubtypeUtils.createAdditionalSubtypesArray(prefSubtype);
+        final ArrayList<String> subtypeNames = new ArrayList<>();
+        for (final InputMethodSubtype subtype : subtypes) {
+            subtypeNames.add(SubtypeLocaleUtils.getSubtypeDisplayNameInSystemLocale(subtype));
+        }
+        // TODO: A delimiter of custom input styles should be localized.
+        pref.setSummary(TextUtils.join(", ", subtypeNames));
+    }
+
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mPrefs = getPreferenceManager().getSharedPreferences();
+        RichInputMethodManager.init(getActivity());
+        mRichImm = RichInputMethodManager.getInstance();
+        addPreferencesFromResource(R.xml.additional_subtype_settings);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
+        // For correct display in RTL locales, we need to set the layout direction of the
+        // fragment's top view.
+        ViewCompat.setLayoutDirection(view, ViewCompat.LAYOUT_DIRECTION_LOCALE);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(final Bundle savedInstanceState) {
+        final Context context = getActivity();
+        mSubtypeLocaleAdapter = new SubtypeLocaleAdapter(context);
+        mKeyboardLayoutSetAdapter = new KeyboardLayoutSetAdapter(context);
+
+        final String prefSubtypes =
+                Settings.readPrefAdditionalSubtypes(mPrefs, getResources());
+        setPrefSubtypes(prefSubtypes, context);
+
+        mIsAddingNewSubtype = (savedInstanceState != null)
+                && savedInstanceState.containsKey(KEY_IS_ADDING_NEW_SUBTYPE);
+        if (mIsAddingNewSubtype) {
+            getPreferenceScreen().addPreference(
+                    SubtypePreference.newIncompleteSubtypePreference(context, mSubtypeProxy));
+        }
+
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(
+                KEY_IS_SUBTYPE_ENABLER_NOTIFICATION_DIALOG_OPEN)) {
+            mSubtypePreferenceKeyForSubtypeEnabler = savedInstanceState.getString(
+                    KEY_SUBTYPE_FOR_SUBTYPE_ENABLER);
+            final SubtypePreference subtypePref = (SubtypePreference) findPreference(
+                    mSubtypePreferenceKeyForSubtypeEnabler);
+            mSubtypeEnablerNotificationDialog = createDialog();
+            mSubtypeEnablerNotificationDialog.show();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mIsAddingNewSubtype) {
+            outState.putBoolean(KEY_IS_ADDING_NEW_SUBTYPE, true);
+        }
+        if (mSubtypeEnablerNotificationDialog != null
+                && mSubtypeEnablerNotificationDialog.isShowing()) {
+            outState.putBoolean(KEY_IS_SUBTYPE_ENABLER_NOTIFICATION_DIALOG_OPEN, true);
+            outState.putString(
+                    KEY_SUBTYPE_FOR_SUBTYPE_ENABLER, mSubtypePreferenceKeyForSubtypeEnabler);
+        }
+    }
+
+    private void showSubtypeAlreadyExistsToast(final InputMethodSubtype subtype) {
+        final Context context = getActivity();
+        final Resources res = context.getResources();
+        final String message = res.getString(R.string.custom_input_style_already_exists,
+                SubtypeLocaleUtils.getSubtypeDisplayNameInSystemLocale(subtype));
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private InputMethodSubtype findDuplicatedSubtype(final InputMethodSubtype subtype) {
+        final String localeString = subtype.getLocale();
+        final String keyboardLayoutSetName = SubtypeLocaleUtils.getKeyboardLayoutSetName(subtype);
+        return mRichImm.findSubtypeByLocaleAndKeyboardLayoutSet(
+                localeString, keyboardLayoutSetName);
+    }
+
+    private AlertDialog createDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(
+                DialogUtils.getPlatformDialogThemeContext(getActivity()));
+        builder.setTitle(R.string.custom_input_styles_title)
+                .setMessage(R.string.custom_input_style_note_message)
+                .setNegativeButton(R.string.not_now, null)
+                .setPositiveButton(R.string.enable, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final Intent intent = IntentUtils.getInputLanguageSelectionIntent(
+                                mRichImm.getInputMethodIdOfThisIme(),
+                                Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+                                        | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        // TODO: Add newly adding subtype to extra value of the intent as a hint
+                        // for the input language selection activity.
+                        // intent.putExtra("newlyAddedSubtype", subtypePref.getSubtype());
+                        startActivity(intent);
+                    }
+                });
+
+        return builder.create();
+    }
+
+    private void setPrefSubtypes(final String prefSubtypes, final Context context) {
+        final PreferenceGroup group = getPreferenceScreen();
+        group.removeAll();
+        final InputMethodSubtype[] subtypesArray =
+                AdditionalSubtypeUtils.createAdditionalSubtypesArray(prefSubtypes);
+        for (final InputMethodSubtype subtype : subtypesArray) {
+            final SubtypePreference pref = new SubtypePreference(
+                    context, subtype, mSubtypeProxy);
+            group.addPreference(pref);
+        }
+    }
+
+    private InputMethodSubtype[] getSubtypes() {
+        final PreferenceGroup group = getPreferenceScreen();
+        final ArrayList<InputMethodSubtype> subtypes = new ArrayList<>();
+        final int count = group.getPreferenceCount();
+        for (int i = 0; i < count; i++) {
+            final Preference pref = group.getPreference(i);
+            if (pref instanceof SubtypePreference) {
+                final SubtypePreference subtypePref = (SubtypePreference) pref;
+                // We should not save newly adding subtype to preference because it is incomplete.
+                if (subtypePref.isIncomplete()) continue;
+                subtypes.add(subtypePref.getSubtype());
+            }
+        }
+        return subtypes.toArray(new InputMethodSubtype[subtypes.size()]);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        final String oldSubtypes = Settings.readPrefAdditionalSubtypes(mPrefs, getResources());
+        final InputMethodSubtype[] subtypes = getSubtypes();
+        final String prefSubtypes = AdditionalSubtypeUtils.createPrefSubtypes(subtypes);
+        if (prefSubtypes.equals(oldSubtypes)) {
+            return;
+        }
+        Settings.writePrefAdditionalSubtypes(mPrefs, prefSubtypes);
+        mRichImm.setAdditionalInputMethodSubtypes(subtypes);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+        inflater.inflate(R.menu.add_style, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        final int itemId = item.getItemId();
+        if (itemId == R.id.action_add_style) {
+            final SubtypePreference newSubtype =
+                    SubtypePreference.newIncompleteSubtypePreference(getActivity(), mSubtypeProxy);
+            getPreferenceScreen().addPreference(newSubtype);
+            newSubtype.show();
+            mIsAddingNewSubtype = true;
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private interface SubtypeDialogProxy {
+        void onRemovePressed(SubtypePreference subtypePref);
+
+        void onSavePressed(SubtypePreference subtypePref);
+
+        void onAddPressed(SubtypePreference subtypePref);
+
+        SubtypeLocaleAdapter getSubtypeLocaleAdapter();
+
+        KeyboardLayoutSetAdapter getKeyboardLayoutSetAdapter();
+    }
 
     static final class SubtypeLocaleItem extends Pair<String, String>
             implements Comparable<SubtypeLocaleItem> {
@@ -125,7 +380,7 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
         }
 
         public static SubtypeLocaleItem createItem(final Context context,
-                final String localeString) {
+                                                   final String localeString) {
             if (localeString.equals(SubtypeLocaleUtils.NO_LANGUAGE)) {
                 final String displayName = context.getString(R.string.subtype_no_language);
                 return new SubtypeLocaleItem(localeString, displayName);
@@ -162,38 +417,50 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
         }
     }
 
-    private interface SubtypeDialogProxy {
-        void onRemovePressed(SubtypePreference subtypePref);
-        void onSavePressed(SubtypePreference subtypePref);
-        void onAddPressed(SubtypePreference subtypePref);
-        SubtypeLocaleAdapter getSubtypeLocaleAdapter();
-        KeyboardLayoutSetAdapter getKeyboardLayoutSetAdapter();
-    }
-
     static final class SubtypePreference extends DialogPreference
             implements DialogInterface.OnCancelListener {
         private static final String KEY_PREFIX = "subtype_pref_";
         private static final String KEY_NEW_SUBTYPE = KEY_PREFIX + "new";
-
+        private final SubtypeDialogProxy mProxy;
         private InputMethodSubtype mSubtype;
         private InputMethodSubtype mPreviousSubtype;
-
-        private final SubtypeDialogProxy mProxy;
         private Spinner mSubtypeLocaleSpinner;
         private Spinner mKeyboardLayoutSetSpinner;
 
-        public static SubtypePreference newIncompleteSubtypePreference(final Context context,
-                final SubtypeDialogProxy proxy) {
-            return new SubtypePreference(context, null, proxy);
-        }
-
         public SubtypePreference(final Context context, final InputMethodSubtype subtype,
-                final SubtypeDialogProxy proxy) {
+                                 final SubtypeDialogProxy proxy) {
             super(context, null);
             setDialogLayoutResource(R.layout.additional_subtype_dialog);
             setPersistent(false);
             mProxy = proxy;
             setSubtype(subtype);
+        }
+
+        public static SubtypePreference newIncompleteSubtypePreference(final Context context,
+                                                                       final SubtypeDialogProxy proxy) {
+            return new SubtypePreference(context, null, proxy);
+        }
+
+        private static void setSpinnerPosition(final Spinner spinner, final Object itemToSelect) {
+            final SpinnerAdapter adapter = spinner.getAdapter();
+            final int count = adapter.getCount();
+            for (int i = 0; i < count; i++) {
+                final Object item = spinner.getItemAtPosition(i);
+                if (item.equals(itemToSelect)) {
+                    spinner.setSelection(i);
+                    return;
+                }
+            }
+        }
+
+        private static int getSpinnerPosition(final Spinner spinner) {
+            if (spinner == null) return -1;
+            return spinner.getSelectedItemPosition();
+        }
+
+        private static void setSpinnerPosition(final Spinner spinner, final int position) {
+            if (spinner == null || position < 0) return;
+            spinner.setSelection(position);
         }
 
         public void show() {
@@ -268,18 +535,6 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
             }
         }
 
-        private static void setSpinnerPosition(final Spinner spinner, final Object itemToSelect) {
-            final SpinnerAdapter adapter = spinner.getAdapter();
-            final int count = adapter.getCount();
-            for (int i = 0; i < count; i++) {
-                final Object item = spinner.getItemAtPosition(i);
-                if (item.equals(itemToSelect)) {
-                    spinner.setSelection(i);
-                    return;
-                }
-            }
-        }
-
         @Override
         public void onCancel(final DialogInterface dialog) {
             if (isIncomplete()) {
@@ -291,40 +546,30 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
         public void onClick(final DialogInterface dialog, final int which) {
             super.onClick(dialog, which);
             switch (which) {
-            case DialogInterface.BUTTON_POSITIVE:
-                final boolean isEditing = !isIncomplete();
-                final SubtypeLocaleItem locale =
-                        (SubtypeLocaleItem) mSubtypeLocaleSpinner.getSelectedItem();
-                final KeyboardLayoutSetItem layout =
-                        (KeyboardLayoutSetItem) mKeyboardLayoutSetSpinner.getSelectedItem();
-                final InputMethodSubtype subtype =
-                        AdditionalSubtypeUtils.createAsciiEmojiCapableAdditionalSubtype(
-                                locale.first, layout.first);
-                setSubtype(subtype);
-                notifyChanged();
-                if (isEditing) {
-                    mProxy.onSavePressed(this);
-                } else {
-                    mProxy.onAddPressed(this);
-                }
-                break;
-            case DialogInterface.BUTTON_NEUTRAL:
-                // Nothing to do
-                break;
-            case DialogInterface.BUTTON_NEGATIVE:
-                mProxy.onRemovePressed(this);
-                break;
+                case DialogInterface.BUTTON_POSITIVE:
+                    final boolean isEditing = !isIncomplete();
+                    final SubtypeLocaleItem locale =
+                            (SubtypeLocaleItem) mSubtypeLocaleSpinner.getSelectedItem();
+                    final KeyboardLayoutSetItem layout =
+                            (KeyboardLayoutSetItem) mKeyboardLayoutSetSpinner.getSelectedItem();
+                    final InputMethodSubtype subtype =
+                            AdditionalSubtypeUtils.createAsciiEmojiCapableAdditionalSubtype(
+                                    locale.first, layout.first);
+                    setSubtype(subtype);
+                    notifyChanged();
+                    if (isEditing) {
+                        mProxy.onSavePressed(this);
+                    } else {
+                        mProxy.onAddPressed(this);
+                    }
+                    break;
+                case DialogInterface.BUTTON_NEUTRAL:
+                    // Nothing to do
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    mProxy.onRemovePressed(this);
+                    break;
             }
-        }
-
-        private static int getSpinnerPosition(final Spinner spinner) {
-            if (spinner == null) return -1;
-            return spinner.getSelectedItemPosition();
-        }
-
-        private static void setSpinnerPosition(final Spinner spinner, final int position) {
-            if (spinner == null || position < 0) return;
-            spinner.setSelection(position);
         }
 
         @Override
@@ -357,29 +602,6 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
         }
 
         static final class SavedState extends Preference.BaseSavedState {
-            InputMethodSubtype mSubtype;
-            int mSubtypeLocaleSelectedPos;
-            int mKeyboardLayoutSetSelectedPos;
-
-            public SavedState(final Parcelable superState) {
-                super(superState);
-            }
-
-            @Override
-            public void writeToParcel(final Parcel dest, final int flags) {
-                super.writeToParcel(dest, flags);
-                dest.writeInt(mSubtypeLocaleSelectedPos);
-                dest.writeInt(mKeyboardLayoutSetSelectedPos);
-                dest.writeParcelable(mSubtype, 0);
-            }
-
-            public SavedState(final Parcel source) {
-                super(source);
-                mSubtypeLocaleSelectedPos = source.readInt();
-                mKeyboardLayoutSetSelectedPos = source.readInt();
-                mSubtype = source.readParcelable(null);
-            }
-
             public static final Parcelable.Creator<SavedState> CREATOR =
                     new Parcelable.Creator<SavedState>() {
                         @Override
@@ -392,250 +614,28 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
                             return new SavedState[size];
                         }
                     };
-        }
-    }
+            InputMethodSubtype mSubtype;
+            int mSubtypeLocaleSelectedPos;
+            int mKeyboardLayoutSetSelectedPos;
 
-    public CustomInputStyleSettingsFragment() {
-        // Empty constructor for fragment generation.
-    }
-
-    static void updateCustomInputStylesSummary(final Preference pref) {
-        // When we are called from the Settings application but we are not already running, some
-        // singleton and utility classes may not have been initialized.  We have to call
-        // initialization method of these classes here. See {@link LatinIME#onCreate()}.
-        SubtypeLocaleUtils.init(pref.getContext());
-
-        final Resources res = pref.getContext().getResources();
-        final SharedPreferences prefs = pref.getSharedPreferences();
-        final String prefSubtype = Settings.readPrefAdditionalSubtypes(prefs, res);
-        final InputMethodSubtype[] subtypes =
-                AdditionalSubtypeUtils.createAdditionalSubtypesArray(prefSubtype);
-        final ArrayList<String> subtypeNames = new ArrayList<>();
-        for (final InputMethodSubtype subtype : subtypes) {
-            subtypeNames.add(SubtypeLocaleUtils.getSubtypeDisplayNameInSystemLocale(subtype));
-        }
-        // TODO: A delimiter of custom input styles should be localized.
-        pref.setSummary(TextUtils.join(", ", subtypeNames));
-    }
-
-    @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mPrefs = getPreferenceManager().getSharedPreferences();
-        RichInputMethodManager.init(getActivity());
-        mRichImm = RichInputMethodManager.getInstance();
-        addPreferencesFromResource(R.xml.additional_subtype_settings);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        final View view = super.onCreateView(inflater, container, savedInstanceState);
-        // For correct display in RTL locales, we need to set the layout direction of the
-        // fragment's top view.
-        ViewCompat.setLayoutDirection(view, ViewCompat.LAYOUT_DIRECTION_LOCALE);
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(final Bundle savedInstanceState) {
-        final Context context = getActivity();
-        mSubtypeLocaleAdapter = new SubtypeLocaleAdapter(context);
-        mKeyboardLayoutSetAdapter = new KeyboardLayoutSetAdapter(context);
-
-        final String prefSubtypes =
-                Settings.readPrefAdditionalSubtypes(mPrefs, getResources());
-        setPrefSubtypes(prefSubtypes, context);
-
-        mIsAddingNewSubtype = (savedInstanceState != null)
-                && savedInstanceState.containsKey(KEY_IS_ADDING_NEW_SUBTYPE);
-        if (mIsAddingNewSubtype) {
-            getPreferenceScreen().addPreference(
-                    SubtypePreference.newIncompleteSubtypePreference(context, mSubtypeProxy));
-        }
-
-        super.onActivityCreated(savedInstanceState);
-
-        if (savedInstanceState != null && savedInstanceState.containsKey(
-                KEY_IS_SUBTYPE_ENABLER_NOTIFICATION_DIALOG_OPEN)) {
-            mSubtypePreferenceKeyForSubtypeEnabler = savedInstanceState.getString(
-                    KEY_SUBTYPE_FOR_SUBTYPE_ENABLER);
-            final SubtypePreference subtypePref = (SubtypePreference)findPreference(
-                    mSubtypePreferenceKeyForSubtypeEnabler);
-            mSubtypeEnablerNotificationDialog = createDialog();
-            mSubtypeEnablerNotificationDialog.show();
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mIsAddingNewSubtype) {
-            outState.putBoolean(KEY_IS_ADDING_NEW_SUBTYPE, true);
-        }
-        if (mSubtypeEnablerNotificationDialog != null
-                && mSubtypeEnablerNotificationDialog.isShowing()) {
-            outState.putBoolean(KEY_IS_SUBTYPE_ENABLER_NOTIFICATION_DIALOG_OPEN, true);
-            outState.putString(
-                    KEY_SUBTYPE_FOR_SUBTYPE_ENABLER, mSubtypePreferenceKeyForSubtypeEnabler);
-        }
-    }
-
-    private final SubtypeDialogProxy mSubtypeProxy = new SubtypeDialogProxy() {
-        @Override
-        public void onRemovePressed(final SubtypePreference subtypePref) {
-            mIsAddingNewSubtype = false;
-            final PreferenceGroup group = getPreferenceScreen();
-            group.removePreference(subtypePref);
-            mRichImm.setAdditionalInputMethodSubtypes(getSubtypes());
-        }
-
-        @Override
-        public void onSavePressed(final SubtypePreference subtypePref) {
-            final InputMethodSubtype subtype = subtypePref.getSubtype();
-            if (!subtypePref.hasBeenModified()) {
-                return;
-            }
-            if (findDuplicatedSubtype(subtype) == null) {
-                mRichImm.setAdditionalInputMethodSubtypes(getSubtypes());
-                return;
+            public SavedState(final Parcelable superState) {
+                super(superState);
             }
 
-            // Saved subtype is duplicated.
-            final PreferenceGroup group = getPreferenceScreen();
-            group.removePreference(subtypePref);
-            subtypePref.revert();
-            group.addPreference(subtypePref);
-            showSubtypeAlreadyExistsToast(subtype);
-        }
-
-        @Override
-        public void onAddPressed(final SubtypePreference subtypePref) {
-            mIsAddingNewSubtype = false;
-            final InputMethodSubtype subtype = subtypePref.getSubtype();
-            if (findDuplicatedSubtype(subtype) == null) {
-                mRichImm.setAdditionalInputMethodSubtypes(getSubtypes());
-                mSubtypePreferenceKeyForSubtypeEnabler = subtypePref.getKey();
-                mSubtypeEnablerNotificationDialog = createDialog();
-                mSubtypeEnablerNotificationDialog.show();
-                return;
+            public SavedState(final Parcel source) {
+                super(source);
+                mSubtypeLocaleSelectedPos = source.readInt();
+                mKeyboardLayoutSetSelectedPos = source.readInt();
+                mSubtype = source.readParcelable(null);
             }
 
-            // Newly added subtype is duplicated.
-            final PreferenceGroup group = getPreferenceScreen();
-            group.removePreference(subtypePref);
-            showSubtypeAlreadyExistsToast(subtype);
-        }
-
-        @Override
-        public SubtypeLocaleAdapter getSubtypeLocaleAdapter() {
-            return mSubtypeLocaleAdapter;
-        }
-
-        @Override
-        public KeyboardLayoutSetAdapter getKeyboardLayoutSetAdapter() {
-            return mKeyboardLayoutSetAdapter;
-        }
-    };
-
-    private void showSubtypeAlreadyExistsToast(final InputMethodSubtype subtype) {
-        final Context context = getActivity();
-        final Resources res = context.getResources();
-        final String message = res.getString(R.string.custom_input_style_already_exists,
-                SubtypeLocaleUtils.getSubtypeDisplayNameInSystemLocale(subtype));
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-    }
-
-    private InputMethodSubtype findDuplicatedSubtype(final InputMethodSubtype subtype) {
-        final String localeString = subtype.getLocale();
-        final String keyboardLayoutSetName = SubtypeLocaleUtils.getKeyboardLayoutSetName(subtype);
-        return mRichImm.findSubtypeByLocaleAndKeyboardLayoutSet(
-                localeString, keyboardLayoutSetName);
-    }
-
-    private AlertDialog createDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(
-                DialogUtils.getPlatformDialogThemeContext(getActivity()));
-        builder.setTitle(R.string.custom_input_styles_title)
-                .setMessage(R.string.custom_input_style_note_message)
-                .setNegativeButton(R.string.not_now, null)
-                .setPositiveButton(R.string.enable, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        final Intent intent = IntentUtils.getInputLanguageSelectionIntent(
-                                mRichImm.getInputMethodIdOfThisIme(),
-                                Intent.FLAG_ACTIVITY_NEW_TASK
-                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-                                | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        // TODO: Add newly adding subtype to extra value of the intent as a hint
-                        // for the input language selection activity.
-                        // intent.putExtra("newlyAddedSubtype", subtypePref.getSubtype());
-                        startActivity(intent);
-                    }
-                });
-
-        return builder.create();
-    }
-
-    private void setPrefSubtypes(final String prefSubtypes, final Context context) {
-        final PreferenceGroup group = getPreferenceScreen();
-        group.removeAll();
-        final InputMethodSubtype[] subtypesArray =
-                AdditionalSubtypeUtils.createAdditionalSubtypesArray(prefSubtypes);
-        for (final InputMethodSubtype subtype : subtypesArray) {
-            final SubtypePreference pref = new SubtypePreference(
-                    context, subtype, mSubtypeProxy);
-            group.addPreference(pref);
-        }
-    }
-
-    private InputMethodSubtype[] getSubtypes() {
-        final PreferenceGroup group = getPreferenceScreen();
-        final ArrayList<InputMethodSubtype> subtypes = new ArrayList<>();
-        final int count = group.getPreferenceCount();
-        for (int i = 0; i < count; i++) {
-            final Preference pref = group.getPreference(i);
-            if (pref instanceof SubtypePreference) {
-                final SubtypePreference subtypePref = (SubtypePreference)pref;
-                // We should not save newly adding subtype to preference because it is incomplete.
-                if (subtypePref.isIncomplete()) continue;
-                subtypes.add(subtypePref.getSubtype());
+            @Override
+            public void writeToParcel(final Parcel dest, final int flags) {
+                super.writeToParcel(dest, flags);
+                dest.writeInt(mSubtypeLocaleSelectedPos);
+                dest.writeInt(mKeyboardLayoutSetSelectedPos);
+                dest.writeParcelable(mSubtype, 0);
             }
         }
-        return subtypes.toArray(new InputMethodSubtype[subtypes.size()]);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        final String oldSubtypes = Settings.readPrefAdditionalSubtypes(mPrefs, getResources());
-        final InputMethodSubtype[] subtypes = getSubtypes();
-        final String prefSubtypes = AdditionalSubtypeUtils.createPrefSubtypes(subtypes);
-        if (prefSubtypes.equals(oldSubtypes)) {
-            return;
-        }
-        Settings.writePrefAdditionalSubtypes(mPrefs, prefSubtypes);
-        mRichImm.setAdditionalInputMethodSubtypes(subtypes);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        inflater.inflate(R.menu.add_style, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        final int itemId = item.getItemId();
-        if (itemId == R.id.action_add_style) {
-            final SubtypePreference newSubtype =
-                    SubtypePreference.newIncompleteSubtypePreference(getActivity(), mSubtypeProxy);
-            getPreferenceScreen().addPreference(newSubtype);
-            newSubtype.show();
-            mIsAddingNewSubtype = true;
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

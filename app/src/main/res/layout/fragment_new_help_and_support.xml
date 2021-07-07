@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:attrs="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:clipToPadding="false"
-    android:layout_height="match_parent">
+  xmlns:attrs="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clipToPadding="false">
 
-    <com.rd.PageIndicatorView
-        android:id="@+id/ps_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:padding="5dp"
-        attrs:layout_constraintBottom_toTopOf="@+id/textView9"
-        attrs:layout_constraintEnd_toEndOf="parent"
-        attrs:layout_constraintHorizontal_bias="0.498"
-        attrs:layout_constraintLeft_toLeftOf="parent"
-        attrs:layout_constraintRight_toRightOf="parent"
-        attrs:layout_constraintStart_toStartOf="parent"
-        attrs:piv_animationType="slide"
-        attrs:piv_count="0"
-        attrs:piv_radius="3dp"
-        attrs:piv_selectedColor="@color/primary_color"
-        attrs:piv_unselectedColor="@color/business_button_gray"
-        attrs:piv_viewPager="@id/viewPager" />
+  <com.rd.PageIndicatorView
+    android:id="@+id/ps_indicator"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="10dp"
+    android:padding="5dp"
+    attrs:layout_constraintBottom_toTopOf="@+id/textView9"
+    attrs:layout_constraintEnd_toEndOf="parent"
+    attrs:layout_constraintHorizontal_bias="0.498"
+    attrs:layout_constraintLeft_toLeftOf="parent"
+    attrs:layout_constraintRight_toRightOf="parent"
+    attrs:layout_constraintStart_toStartOf="parent"
+    attrs:piv_animationType="slide"
+    attrs:piv_count="0"
+    attrs:piv_radius="3dp"
+    attrs:piv_selectedColor="@color/primary_color"
+    attrs:piv_unselectedColor="@color/business_button_gray"
+    attrs:piv_viewPager="@id/viewPager" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/ps_pager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
-        attrs:layout_constraintBottom_toTopOf="@+id/ps_indicator"
-        attrs:layout_constraintHorizontal_bias="0.0"
-        attrs:layout_constraintLeft_toLeftOf="parent"
-        attrs:layout_constraintRight_toRightOf="parent"
-        attrs:layout_constraintTop_toTopOf="parent" />
+  <androidx.viewpager.widget.ViewPager
+    android:id="@+id/ps_pager"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginBottom="10dp"
+    attrs:layout_constraintBottom_toTopOf="@+id/ps_indicator"
+    attrs:layout_constraintHorizontal_bias="0.0"
+    attrs:layout_constraintLeft_toLeftOf="parent"
+    attrs:layout_constraintRight_toRightOf="parent"
+    attrs:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="32dp"
-        android:textSize="12sp"
-        android:layout_marginStart="32dp"
-        android:text="@string/contact_us_message"
-        android:textAlignment="center"
-        android:textColorLink="@color/gray"
-        android:lineSpacingExtra="4dp"
-        attrs:layout_constraintBottom_toBottomOf="parent"
-        attrs:layout_constraintEnd_toEndOf="parent"
-        attrs:layout_constraintStart_toStartOf="parent" />
+  <TextView
+    android:id="@+id/textView9"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="32dp"
+    android:layout_marginEnd="32dp"
+    android:layout_marginBottom="15dp"
+    android:lineSpacingExtra="4dp"
+    android:text="@string/contact_us_message"
+    android:textAlignment="center"
+    android:textColorLink="@color/gray"
+    android:textSize="12sp"
+    attrs:layout_constraintBottom_toBottomOf="parent"
+    attrs:layout_constraintEnd_toEndOf="parent"
+    attrs:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

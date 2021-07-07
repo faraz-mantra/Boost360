@@ -18,6 +18,7 @@ package com.android.inputmethod.keyboard;
 
 import android.content.SharedPreferences;
 import android.os.Build.VERSION_CODES;
+
 import androidx.annotation.NonNull;
 
 import java.util.Arrays;
@@ -27,11 +28,6 @@ import io.separ.neural.inputmethod.compat.BuildCompatUtils;
 import io.separ.neural.inputmethod.indic.R;
 
 public final class KeyboardTheme implements Comparable<KeyboardTheme> {
-    private static final String TAG = KeyboardTheme.class.getSimpleName();
-
-    static final String KLP_KEYBOARD_THEME_KEY = "pref_keyboard_layout_20110916";
-    static final String LXX_KEYBOARD_THEME_KEY = "pref_keyboard_theme_20140509";
-
     // These should be aligned with Keyboard.themeId and Keyboard.Case.keyboardTheme
     // attributes' values in attrs.xml.
     public static final int THEME_ID_KLP = 1;
@@ -39,18 +35,20 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
     public static final int THEME_ID_LXX_DARK = 3;
     public static final int THEME_ID_LXX_DARK_UNBORDERED = 4;
     public static final int DEFAULT_THEME_ID = THEME_ID_LXX_DARK;
-
+    static final String KLP_KEYBOARD_THEME_KEY = "pref_keyboard_layout_20110916";
+    static final String LXX_KEYBOARD_THEME_KEY = "pref_keyboard_theme_20140509";
+    private static final String TAG = KeyboardTheme.class.getSimpleName();
     private static final KeyboardTheme[] KEYBOARD_THEMES = {
-        new KeyboardTheme(THEME_ID_KLP, "KLP", R.style.KeyboardTheme_KLP,
-                // Default theme for ICS, JB, and KLP.
-                VERSION_CODES.ICE_CREAM_SANDWICH),
-        new KeyboardTheme(THEME_ID_LXX_LIGHT, "LXXLight", R.style.KeyboardTheme_LXX_Dark,
-                // Default theme for LXX.
-                BuildCompatUtils.VERSION_CODES_LXX),
-        new KeyboardTheme(THEME_ID_LXX_DARK, "LXX_DARK", R.style.KeyboardTheme_LXX_Dark,
-                VERSION_CODES.BASE),
-        new KeyboardTheme(THEME_ID_LXX_DARK_UNBORDERED, "LXX_DARK_UNBORDERED", R.style.KeyboardTheme_LXX_Dark_Unbordered,
-                VERSION_CODES.BASE),
+            new KeyboardTheme(THEME_ID_KLP, "KLP", R.style.KeyboardTheme_KLP,
+                    // Default theme for ICS, JB, and KLP.
+                    VERSION_CODES.ICE_CREAM_SANDWICH),
+            new KeyboardTheme(THEME_ID_LXX_LIGHT, "LXXLight", R.style.KeyboardTheme_LXX_Dark,
+                    // Default theme for LXX.
+                    BuildCompatUtils.VERSION_CODES_LXX),
+            new KeyboardTheme(THEME_ID_LXX_DARK, "LXX_DARK", R.style.KeyboardTheme_LXX_Dark,
+                    VERSION_CODES.BASE),
+            new KeyboardTheme(THEME_ID_LXX_DARK_UNBORDERED, "LXX_DARK_UNBORDERED", R.style.KeyboardTheme_LXX_Dark_Unbordered,
+                    VERSION_CODES.BASE),
     };
 
     static {
@@ -66,28 +64,11 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
     // Note: The themeId should be aligned with "themeId" attribute of Keyboard style
     // in values/themes-<style>.xml.
     private KeyboardTheme(final int themeId, final String themeName, final int styleId,
-            final int minApiVersion) {
+                          final int minApiVersion) {
         mThemeId = themeId;
         mThemeName = themeName;
         mStyleId = styleId;
         mMinApiVersion = minApiVersion;
-    }
-
-    @Override
-    public int compareTo(@NonNull final KeyboardTheme rhs) {
-        if (mMinApiVersion > rhs.mMinApiVersion) return -1;
-        if (mMinApiVersion < rhs.mMinApiVersion) return 1;
-        return 0;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        return o == this || (o instanceof KeyboardTheme) && ((KeyboardTheme) o).mThemeId == mThemeId;
-    }
-
-    @Override
-    public int hashCode() {
-        return mThemeId;
     }
 
     @UsedForTesting
@@ -103,7 +84,7 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
 
     @UsedForTesting
     static KeyboardTheme getDefaultKeyboardTheme(final SharedPreferences prefs,
-            final int sdkVersion) {
+                                                 final int sdkVersion) {
         return searchKeyboardThemeById(DEFAULT_THEME_ID);
     }
 
@@ -113,7 +94,7 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
     }
 
     public static void saveKeyboardThemeId(final String themeIdString,
-            final SharedPreferences prefs) {
+                                           final SharedPreferences prefs) {
         saveKeyboardThemeId(themeIdString, prefs, BuildCompatUtils.EFFECTIVE_SDK_INT);
     }
 
@@ -127,7 +108,7 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
 
     @UsedForTesting
     static void saveKeyboardThemeId(final String themeIdString,
-            final SharedPreferences prefs, final int sdkVersion) {
+                                    final SharedPreferences prefs, final int sdkVersion) {
         final String prefKey = getPreferenceKey(sdkVersion);
         prefs.edit().putString(prefKey, themeIdString).apply();
     }
@@ -166,5 +147,22 @@ public final class KeyboardTheme implements Comparable<KeyboardTheme> {
                 return getDefaultKeyboardTheme(prefs, sdkVersion);
             }
         }
+    }
+
+    @Override
+    public int compareTo(@NonNull final KeyboardTheme rhs) {
+        if (mMinApiVersion > rhs.mMinApiVersion) return -1;
+        if (mMinApiVersion < rhs.mMinApiVersion) return 1;
+        return 0;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        return o == this || (o instanceof KeyboardTheme) && ((KeyboardTheme) o).mThemeId == mThemeId;
+    }
+
+    @Override
+    public int hashCode() {
+        return mThemeId;
     }
 }

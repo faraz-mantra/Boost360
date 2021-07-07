@@ -48,6 +48,7 @@ public class RequestQueueTest extends InstrumentationTestCase {
 
     /**
      * Make a list of requests with random priorities.
+     *
      * @param count Number of requests to make
      */
     private List<MockRequest> makeRequests(int count) {

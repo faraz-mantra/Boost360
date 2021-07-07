@@ -1,41 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@android:id/background">
-        <shape>
-            <corners android:radius="5dip" />
-            <gradient
-                android:startColor="@color/light_gray"
-                android:centerColor="@color/light_gray"
-                android:endColor="#ff747674"
-                />
-        </shape>
-    </item>
+  <item android:id="@android:id/background">
+    <shape>
+      <corners android:radius="5dip" />
+      <gradient
+        android:centerColor="@color/light_gray"
+        android:endColor="#ff747674"
+        android:startColor="@color/light_gray" />
+    </shape>
+  </item>
 
-    <item android:id="@android:id/secondaryProgress">
-        <clip>
-            <shape>
-                <corners android:radius="5dip" />
-                <gradient
-                    android:startColor="#80ffd300"
-                    android:centerColor="#80ffb600"
-                    android:endColor="#a0ffcb00"
-                    />
-            </shape>
-        </clip>
-    </item>
-    <item
-        android:id="@android:id/progress"
-        >
-        <clip>
-            <shape>
-                <corners
-                    android:radius="5dip" />
-                <gradient
-                    android:startColor="#41abef"
-                    android:endColor="#41abef"
-                    android:angle="270" />
-            </shape>
-        </clip>
-    </item>
+  <item android:id="@android:id/secondaryProgress">
+    <clip>
+      <shape>
+        <corners android:radius="5dip" />
+        <gradient
+          android:centerColor="#80ffb600"
+          android:endColor="#a0ffcb00"
+          android:startColor="#80ffd300" />
+      </shape>
+    </clip>
+  </item>
+  <item android:id="@android:id/progress">
+    <clip>
+      <shape>
+        <corners android:radius="5dip" />
+        <gradient
+          android:angle="270"
+          android:endColor="#41abef"
+          android:startColor="#41abef" />
+      </shape>
+    </clip>
+  </item>
 
 </layer-list><!-- From: file:/C:/Vinay/prashant772-boostcode-d282cb67240e/app/src/main/res/drawable/greenprogress.xml -->

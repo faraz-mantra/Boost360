@@ -9,6 +9,8 @@ import android.os.Bundle;
 public interface SpeechRecognitionResultInterface {
 
     void onResult(Bundle b);
+
     void onReadyToSpeech(Bundle b);
+
     void onError(int i);
 }

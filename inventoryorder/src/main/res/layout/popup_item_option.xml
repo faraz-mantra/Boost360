@@ -6,8 +6,7 @@
 
   </data>
 
-  <LinearLayout
-    style="@style/wrap_wrap">
+  <LinearLayout style="@style/wrap_wrap">
 
     <androidx.cardview.widget.CardView
       style="@style/wrap_wrap"

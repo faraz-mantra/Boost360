@@ -36,12 +36,16 @@ class CategoryViewModel : BaseViewModel() {
     return ChannelRepository.updateChannelAccessTokens(request).toLiveData()
   }
 
-  fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): LiveData<BaseResponse> {
+  fun postUpdateWhatsappRequest(
+    request: UpdateChannelActionDataRequest,
+    auth: String
+  ): LiveData<BaseResponse> {
     return WhatsAppRepository.postUpdateWhatsappRequest(auth = auth, request = request).toLiveData()
   }
 
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(auth = auth, request = getJsonRequest(request)).toLiveData()
+    return WhatsAppRepository.getWhatsappBusiness(auth = auth, request = getJsonRequest(request))
+      .toLiveData()
   }
 
   fun nfxProcess(request: NFXProcessRequest?): LiveData<BaseResponse> {

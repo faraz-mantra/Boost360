@@ -28,8 +28,15 @@ class UpdatesViewModel : BaseViewModel() {
   }
 
   fun putBizImageUpdate(
-    clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-    socialParmeters: String?, bizMessageId: String?, sendToSubscribers: Boolean?, requestBody: RequestBody?,
+    clientId: String?,
+    requestType: String?,
+    requestId: String?,
+    totalChunks: Int?,
+    currentChunkNumber: Int?,
+    socialParmeters: String?,
+    bizMessageId: String?,
+    sendToSubscribers: Boolean?,
+    requestBody: RequestBody?,
   ): LiveData<BaseResponse> {
     return WithFloatTwoRepository.putBizImageUpdate(
       clientId, requestType, requestId, totalChunks,

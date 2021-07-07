@@ -11,10 +11,10 @@ import android.view.ViewGroup;
  */
 
 public class CustomTagLayout extends ViewGroup {
-    private float verticalSpacing,horizontalSpacing;
+    private float verticalSpacing, horizontalSpacing;
 
     public CustomTagLayout(Context context) {
-        this(context,null);
+        this(context, null);
 
     }
 
@@ -35,7 +35,7 @@ public class CustomTagLayout extends ViewGroup {
      */
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
-        return new MarginLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+        return new MarginLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     }
 
     /**
@@ -56,10 +56,12 @@ public class CustomTagLayout extends ViewGroup {
     protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
         return generateDefaultLayoutParams();
     }
+
     public float dp2px(float dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getResources().getDisplayMetrics());
     }
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final int parentLeft = getPaddingLeft();

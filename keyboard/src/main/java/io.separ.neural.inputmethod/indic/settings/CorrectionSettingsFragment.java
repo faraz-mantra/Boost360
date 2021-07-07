@@ -35,7 +35,7 @@ import io.separ.neural.inputmethod.indic.userdictionary.UserDictionarySettings;
 
 /**
  * "Text correction" settings sub screen.
- *
+ * <p>
  * This settings sub screen handles the following text correction preferences.
  * - Personal dictionary
  * - Add-on dictionaries
@@ -50,7 +50,7 @@ public final class CorrectionSettingsFragment extends SubScreenFragment {
     private static final boolean DBG_USE_INTERNAL_PERSONAL_DICTIONARY_SETTINGS = false;
     private static final boolean USE_INTERNAL_PERSONAL_DICTIONARY_SETTIGS =
             DBG_USE_INTERNAL_PERSONAL_DICTIONARY_SETTINGS
-            || Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2;
+                    || Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2;
 
     @Override
     public void onCreate(final Bundle icicle) {
@@ -77,7 +77,7 @@ public final class CorrectionSettingsFragment extends SubScreenFragment {
         final Intent editPersonalDictionaryIntent = editPersonalDictionary.getIntent();
         final ResolveInfo ri = USE_INTERNAL_PERSONAL_DICTIONARY_SETTIGS ? null
                 : pm.resolveActivity(
-                        editPersonalDictionaryIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                editPersonalDictionaryIntent, PackageManager.MATCH_DEFAULT_ONLY);
         if (ri == null) {
             overwriteUserDictionaryPreference(editPersonalDictionary);
         }
@@ -91,7 +91,7 @@ public final class CorrectionSettingsFragment extends SubScreenFragment {
     private void ensureConsistencyOfAutoCorrectionSettings() {
         final String autoCorrectionOff = getString(
                 R.string.auto_correction_threshold_mode_index_off);
-        final ListPreference autoCorrectionThresholdPref = (ListPreference)findPreference(
+        final ListPreference autoCorrectionThresholdPref = (ListPreference) findPreference(
                 Settings.PREF_AUTO_CORRECTION_THRESHOLD);
         final String currentSetting = autoCorrectionThresholdPref.getValue();
         setPreferenceEnabled(
@@ -114,7 +114,7 @@ public final class CorrectionSettingsFragment extends SubScreenFragment {
             // the locale list always has at least one element, since it always includes the current
             // locale explicitly. @see UserDictionaryList.getUserDictionaryLocalesSet().
             if (localeList.size() == 1) {
-                final String locale = (String)localeList.toArray()[0];
+                final String locale = (String) localeList.toArray()[0];
                 userDictionaryPreference.getExtras().putString("locale", locale);
             }
         } else {

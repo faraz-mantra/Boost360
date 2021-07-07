@@ -19,36 +19,31 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.provider.Settings;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 
 
 public class LocationProvider extends Service implements LocationListener {
 
+    // The minimum distance to change Updates in meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
     private final Context mContext;
-
+    // Declaring a Location Manager
+    protected LocationManager locationManager;
     // flag for GPS status
     boolean isGPSEnabled = false;
-
     // flag for network status
     boolean isNetworkEnabled = false;
-
     // flag for GPS status
     boolean canGetLocation = false;
-
     Location location; // location
     double latitude; // latitude
     double longitude; // longitude
-
-    // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
-
-    // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
-
-    // Declaring a Location Manager
-    protected LocationManager locationManager;
 
     public LocationProvider(Context context) {
         this.mContext = context;
@@ -121,23 +116,23 @@ public class LocationProvider extends Service implements LocationListener {
     /**
      * Stop using GPS listener
      * Calling this function will stop using GPS in your app
-     * */
-    public void stopUsingGPS(){
-            if (locationManager != null) {
-                if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+     */
+    public void stopUsingGPS() {
+        if (locationManager != null) {
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                }
-                    locationManager.removeUpdates(LocationProvider.this);
+            }
+            locationManager.removeUpdates(LocationProvider.this);
 
-                }
+        }
 
     }
 
     /**
      * Function to get latitude
-     * */
-    public double getLatitude(){
-        if(location != null){
+     */
+    public double getLatitude() {
+        if (location != null) {
             latitude = location.getLatitude();
         }
 
@@ -147,9 +142,9 @@ public class LocationProvider extends Service implements LocationListener {
 
     /**
      * Function to get longitude
-     * */
-    public double getLongitude(){
-        if(location != null){
+     */
+    public double getLongitude() {
+        if (location != null) {
             longitude = location.getLongitude();
         }
 
@@ -159,8 +154,9 @@ public class LocationProvider extends Service implements LocationListener {
 
     /**
      * Function to check GPS/wifi enabled
+     *
      * @return boolean
-     * */
+     */
     public boolean canGetLocation() {
         return this.canGetLocation;
     }
@@ -168,8 +164,8 @@ public class LocationProvider extends Service implements LocationListener {
     /**
      * Function to show settings alert dialog
      * On pressing ic_settings button will lauch ic_settings Options
-     * */
-    public void showSettingsAlert(){
+     */
+    public void showSettingsAlert() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
         // Setting Dialog Title
@@ -180,7 +176,7 @@ public class LocationProvider extends Service implements LocationListener {
 
         // On pressing ic_settings button
         alertDialog.setPositiveButton("settings", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which) {
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 dialog.dismiss();
                 mContext.startActivity(intent);
