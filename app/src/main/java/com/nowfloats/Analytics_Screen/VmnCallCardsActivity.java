@@ -34,6 +34,7 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -216,7 +217,8 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
         buyItemButton = (TextView) findViewById(R.id.buy_item);
-        if (session.getStoreWidgets().contains("CALLTRACKER")) {
+        List<String> keys=session.getStoreWidgets();
+        if (keys!=null && keys.contains("CALLTRACKER")) {
             //oldCode
 //            setVmnTotalCallCount();
             //newCode

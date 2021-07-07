@@ -27,4 +27,7 @@ interface MarketOfferDao {
     @Query("SELECT EXISTS(SELECT * FROM MarketOffers WHERE coupon_code=:couponCode )")
     fun checkOffersTableKeyExist(couponCode: String): Single<Int>
 
+    @Query("DELETE FROM MarketOffers")
+    fun emptyMarketOffers()
+
 }

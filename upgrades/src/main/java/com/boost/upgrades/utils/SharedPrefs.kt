@@ -34,6 +34,7 @@ class SharedPrefs(activity: Activity) {
     private val temp_monthsValidity = "Months_validity"
     private val compareStatus = "compareStatus"
     private val gstRegistered = "gstRegistered"
+    private val expertContact = "expertContact"
 
     private var editor: SharedPreferences.Editor? = null
 
@@ -196,6 +197,14 @@ class SharedPrefs(activity: Activity) {
 
     fun getGstRegistered(): Boolean{
         return pref!!.getBoolean(gstRegistered, true)
+    }
+
+    fun storeExpertContact(value: String){
+        editor!!.putString(expertContact, value).apply()
+    }
+
+    fun getExpertContact(): String? {
+        return pref!!.getString(expertContact, null)
     }
 
 }

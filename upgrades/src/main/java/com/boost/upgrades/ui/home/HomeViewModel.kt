@@ -419,6 +419,23 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                             if (item.cta_offer_identifier != null) item.cta_offer_identifier else null,
                                                     ))
                                                 }
+                                                if(marketOfferData.size == 0){
+                                                    Completable.fromAction {
+                                                        AppDatabase.getInstance(getApplication())!!
+                                                            .marketOffersDao()
+                                                            .emptyMarketOffers()
+                                                    }
+                                                        .subscribeOn(Schedulers.io())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .doOnComplete {
+                                                            Log.i("deleteMarketOffers", "Successfully")
+
+                                                        }
+                                                        .doOnError {
+
+                                                        }
+                                                        .subscribe()
+                                                }
                                                 Completable.fromAction {
                                                     AppDatabase.getInstance(getApplication())!!
                                                             .marketOffersDao()

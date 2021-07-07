@@ -73,7 +73,7 @@ class MarketPlaceOfferFragment : BaseFragment(), HistoryFragmentListener {
     ): View? {
         root = inflater.inflate(R.layout.marketplaceoffer_fragment, container, false)
 
-        val jsonString = arguments!!.getString("marketOffersData")
+        val jsonString = requireArguments().getString("marketOffersData")
         marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
         marketOfferDetailAdapter = MarketOfferDetailAdapter(ArrayList(), this)
         marketOfferTermsAdapter = MarketOfferTermsAdapter(ArrayList(), this)
@@ -161,7 +161,7 @@ class MarketPlaceOfferFragment : BaseFragment(), HistoryFragmentListener {
 
 
 
-        if (arguments!!.containsKey("showCartIcon")) {
+        if (requireArguments().containsKey("showCartIcon")) {
             offer_info_icon.visibility = View.INVISIBLE
             avail_coupon_submit.visibility = View.GONE
         }

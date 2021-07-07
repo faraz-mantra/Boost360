@@ -94,6 +94,7 @@ const val deeplink_REFER_EARN = "refer_and_earn"
 const val deeplink_compare_package = "compare_package_selection"
 const val deeplink_package_bundle = "package_bundle"
 const val deeplink_promo_banner = "promo_banner"
+const val deeplink_expert_contact = "expert_connect"
 const val deeplink_create_order = "create_order"
 const val deeplink_create_appointment = "create_appointment"
 const val deeplink_create_consultation = "create_consultation"
@@ -271,6 +272,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startReferralView(session)
         }else if (url.contains(deeplink_website_theme)) {
           baseActivity.startWebsiteTheme(session)
+        }
+        else if (url.contains(deeplink_expert_contact)) {
+          Log.v("deeplink_expert_contact", " "+ url + " "+ buyItemKey)
+          baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
         }
       }
     } catch (e: Exception) {
