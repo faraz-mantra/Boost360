@@ -1,104 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/screen_bg">
-    <LinearLayout
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/screen_bg">
+
+  <LinearLayout
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-        android:id="@+id/parent_layout"
     android:orientation="vertical">
+
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
+      android:layout_width="match_parent"
+      android:layout_height="86dp"
+      android:layout_marginTop="2dp"
+      android:background="@color/white"
+      android:gravity="center"
+      android:orientation="horizontal">
 
-        <ProgressBar
-            android:id="@+id/ProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="42dp"
-            android:layout_gravity="center"
-            android:layout_margin="11dp"
-            android:indeterminate="false"
-            android:maxHeight="10dip"
-            android:minHeight="10dip"
-            android:progress="0"
-            android:progressDrawable="@drawable/greenprogress" />
+      <ProgressBar
+        android:id="@+id/ProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
+        android:layout_margin="11dp"
+        android:indeterminate="false"
+        android:maxHeight="10dip"
+        android:minHeight="10dip"
+        android:progress="0"
+        android:progressDrawable="@drawable/greenprogress" />
 
-        <com.nowfloats.CustomWidget.roboto_lt_38_white
-            android:id="@+id/site_meter_reading"
-            android:layout_width="fill_parent"
-            android:layout_height="27dp"
-            android:layout_alignBottom="@id/ProgressBar"
-            android:layout_alignLeft="@id/ProgressBar"
-            android:layout_alignRight="@id/ProgressBar"
-            android:layout_alignTop="@id/ProgressBar"
-            android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="7dp"
-            android:text=""
+      <com.nowfloats.CustomWidget.roboto_lt_38_white
+        android:id="@+id/site_meter_reading"
+        android:layout_width="fill_parent"
+        android:layout_height="27dp"
+        android:layout_alignLeft="@id/ProgressBar"
+        android:layout_alignTop="@id/ProgressBar"
+        android:layout_alignRight="@id/ProgressBar"
+        android:layout_alignBottom="@id/ProgressBar"
+        android:layout_gravity="center"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="5dp"
+        android:text=""
 
-            />
+        />
 
 
     </RelativeLayout>
+
     <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="#e0e0e0"
+      android:gravity="center"
+      android:orientation="vertical">
+
+
+      <com.nowfloats.CustomWidget.roboto_lt_28_565656
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#e0e0e0"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="start"
+        android:text="@string/site_meter_body_text"
 
+        />
 
-        <com.nowfloats.CustomWidget.roboto_lt_28_565656
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="11dp"
-            android:gravity="start"
-            android:text="@string/site_meter_body_text"
+      <com.nowfloats.CustomWidget.roboto_lt_28_565656
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
 
-            />
-
-        <com.nowfloats.CustomWidget.roboto_lt_28_565656
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-
-            android:layout_marginStart="11dp"
-            android:layout_marginEnd="11dp"
-            android:gravity="start"
-            android:visibility="gone"
-            android:text="@string/site_meter_more_traffic_text"
-            />
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="11dp"
+        android:gravity="start"
+        android:text="@string/site_meter_more_traffic_text"
+        android:visibility="gone" />
     </LinearLayout>
+
     <LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="#e0e0e0">
-    <androidx.recyclerview.widget.RecyclerView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="#e0e0e0">
+
+      <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sitemeter_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#e0e0e0" />
     </LinearLayout>
-</LinearLayout>
-    <LinearLayout
-        android:id="@+id/progress_layout"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone"
-        android:gravity="center">
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/visits_progressBar" />
-    </LinearLayout>
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/progress_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <ProgressBar
+      android:id="@+id/visits_progressBar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  </LinearLayout>
 </FrameLayout>

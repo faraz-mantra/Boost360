@@ -35,12 +35,11 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class ProjectAndTermsActivity extends AppCompatActivity {
 
-    private ProgressDialog progressDialog;
     public UserSessionManager session;
     LinearLayout projectLayout, teamLayout;
     TextView projectTitle, teamTitle, buyItemButton;
-
     LinearLayout primaryLayout, secoundaryLayout;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +117,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         }
     }
 
-    public void setHeader(){
+    public void setHeader() {
         LinearLayout backButton;
         TextView title;
 
@@ -231,7 +230,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
             finish();
-        },1000);
+        }, 1000);
     }
 
 

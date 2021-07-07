@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
-        <layer-list>
-            <item>
-                <shape android:shape="rectangle">
-                    <solid android:color="#7EADFD"/>
-                </shape>
-            </item>
+  <item>
+    <layer-list>
+      <item>
+        <shape android:shape="rectangle">
+          <solid android:color="#7EADFD" />
+        </shape>
+      </item>
 
-            <item android:gravity="center|right" android:drawable="@drawable/ic_white_arrow_down">
+      <item android:drawable="@drawable/ic_white_arrow_down" android:gravity="center|right">
 
-            </item>
+      </item>
 
-        </layer-list>
-    </item>
+    </layer-list>
+  </item>
 </selector>

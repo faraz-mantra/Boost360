@@ -1,273 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+  <data>
 
-    </data>
+  </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/linearLayoutCompat"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingHorizontal="27dp"
+      android:paddingVertical="@dimen/size_16"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_info" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/size_8"
+        android:text="@string/read_how_breaks_work"
+        android:textColor="@color/blue_4889f8" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/customCardView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_8"
+      app:cardCornerRadius="@dimen/size_8"
+      app:cardElevation="1dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+      app:layout_constraintVertical_bias=".04">
+
+      <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayoutCompat"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="27dp"
-            android:paddingVertical="@dimen/size_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+          android:id="@+id/rl_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:paddingHorizontal="@dimen/size_16">
 
-            <com.framework.views.customViews.CustomImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_info" />
-
-            <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/size_8"
-                android:text="@string/read_how_breaks_work"
-                android:textColor="@color/blue_4889f8" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <com.framework.views.customViews.CustomCardView
-            android:id="@+id/customCardView"
-            android:layout_width="match_parent"
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/size_8"
-            app:cardCornerRadius="@dimen/size_8"
-            app:cardElevation="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
-            app:layout_constraintVertical_bias=".04">
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="@string/break_111"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/size_18"
+            tools:ignore="RelativeOverlap" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/civ_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_edit" />
 
-                <RelativeLayout
-                    android:id="@+id/rl_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:paddingHorizontal="@dimen/size_16">
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/civ_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/size_32"
+            android:layout_toStartOf="@id/civ_edit"
+            android:src="@drawable/ic_delete" />
+        </RelativeLayout>
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="@string/break_111"
-                        android:textColor="@color/black_4a4a4a"
-                        android:textSize="@dimen/size_18"
-                        tools:ignore="RelativeOverlap" />
+        <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:paddingVertical="@dimen/size_8">
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/civ_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_edit" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/ctv_from_date"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/size_4"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="@string/from"
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/civ_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/size_32"
-                        android:layout_toStartOf="@id/civ_edit"
-                        android:src="@drawable/ic_delete" />
-                </RelativeLayout>
+            android:textColor="@color/gray_979797" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingVertical="@dimen/size_8">
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_from_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ctv_from"
+            android:layout_marginStart="@dimen/size_16"
+            android:layout_toEndOf="@id/civ_calendar"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/size_16"
+            tools:text="22 Jul 2020 . 10:00 AM" />
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/ctv_from"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@id/ctv_from_date"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginBottom="@dimen/size_4"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="@string/from"
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/civ_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ctv_from_date"
+            android:layout_alignBottom="@id/ctv_from_date"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_calender_background" />
 
-                        android:textColor="@color/gray_979797" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_till"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ctv_from_date"
+            android:layout_alignStart="@id/ctv_from_date"
+            android:layout_marginTop="@dimen/size_8"
+            android:layout_marginBottom="@dimen/size_4"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="@string/till"
+            android:textColor="@color/gray_979797" />
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/ctv_from_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ctv_from"
-                        android:layout_marginStart="@dimen/size_16"
-                        android:layout_toEndOf="@id/civ_calendar"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:textColor="@color/black_4a4a4a"
-                        android:textSize="@dimen/size_16"
-                        tools:text="22 Jul 2020 . 10:00 AM" />
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ctv_till_date"
+            android:layout_alignBottom="@id/ctv_till_date"
+            android:src="@drawable/ic_calender_background" />
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/civ_calendar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/ctv_from_date"
-                        android:layout_alignBottom="@id/ctv_from_date"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_calender_background" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_till_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ctv_till"
+            android:layout_marginStart="@dimen/size_16"
+            android:layout_toEndOf="@id/civ_calendar"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/size_16"
+            tools:text="22 Jul 2020 . 10:00 AM" />
+          <!---->
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ctv_till_date"
+            android:layout_alignStart="@id/ctv_till_date"
+            android:layout_marginTop="@dimen/size_8"
+            android:layout_marginBottom="@dimen/size_4"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="@string/duration"
+            android:textColor="@color/gray_979797" />
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/ctv_till"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ctv_from_date"
-                        android:layout_alignStart="@id/ctv_from_date"
-                        android:layout_marginTop="@dimen/size_8"
-                        android:layout_marginBottom="@dimen/size_4"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="@string/till"
-                        android:textColor="@color/gray_979797" />
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ctv_total_duration"
+            android:layout_alignBottom="@id/ctv_total_duration"
+            android:layout_toStartOf="@id/ctv_total_duration"
+            android:src="@drawable/ic_duration_background" />
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/ctv_till_date"
-                        android:layout_alignBottom="@id/ctv_till_date"
-                        android:src="@drawable/ic_calender_background" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_total_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ctv_duration"
+            android:layout_marginStart="@dimen/size_16"
+            android:layout_toEndOf="@id/civ_calendar"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/gray_66666"
+            android:textSize="@dimen/size_16"
+            tools:text="6 Days 8 hrs" />
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/ctv_till_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ctv_till"
-                        android:layout_marginStart="@dimen/size_16"
-                        android:layout_toEndOf="@id/civ_calendar"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:textColor="@color/black_4a4a4a"
-                        android:textSize="@dimen/size_16"
-                        tools:text="22 Jul 2020 . 10:00 AM" />
-                    <!---->
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/ctv_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ctv_till_date"
-                        android:layout_alignStart="@id/ctv_till_date"
-                        android:layout_marginTop="@dimen/size_8"
-                        android:layout_marginBottom="@dimen/size_4"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="@string/duration"
-                        android:textColor="@color/gray_979797" />
+        </RelativeLayout>
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/ctv_total_duration"
-                        android:layout_alignBottom="@id/ctv_total_duration"
-                        android:layout_toStartOf="@id/ctv_total_duration"
-                        android:src="@drawable/ic_duration_background" />
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/ctv_total_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ctv_duration"
-                        android:layout_marginStart="@dimen/size_16"
-                        android:layout_toEndOf="@id/civ_calendar"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:textColor="@color/gray_66666"
-                        android:textSize="@dimen/size_16"
-                        tools:text="6 Days 8 hrs" />
-
-                </RelativeLayout>
-
-                <com.framework.views.customViews.CustomImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/size_8"
-                    android:background="@color/gray_979797" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_16"
-                    android:layout_marginTop="@dimen/size_16"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:text="@string/additional_break_info"
-                    android:textColor="@color/gray_979797"
-                    android:textSize="@dimen/size_12" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_16"
-                    android:layout_marginBottom="@dimen/size_16"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:text="@string/friend_s_wedding"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="@dimen/size_16" />
-            </LinearLayout>
-
-        </com.framework.views.customViews.CustomCardView>
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="@dimen/size_8"
+          android:background="@color/gray_979797" />
 
         <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/size_16"
-            android:gravity="center_horizontal"
-            android:background="@drawable/button_rounded_corner_blue"
-            android:fontFamily="@font/open_sans"
-            android:paddingVertical="@dimen/size_12"
-            android:text="@string/add_another_break"
-            android:textColor="@color/blue_4889f8"
-            app:layout_constraintBottom_toTopOf="@+id/frameLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customCardView"
-            app:layout_constraintVertical_bias="0.206"
-            app:textAllCaps="true" />
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
+          android:layout_marginTop="@dimen/size_16"
+          android:fontFamily="@font/open_sans_semibold"
+          android:text="@string/additional_break_info"
+          android:textColor="@color/gray_979797"
+          android:textSize="@dimen/size_12" />
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            style="@style/ButtonStyle.Rounded.Solid"
-            android:layout_width="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginHorizontal="@dimen/size_16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customCardView"
-            app:layout_constraintVertical_bias="0.899">
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
+          android:layout_marginBottom="@dimen/size_16"
+          android:fontFamily="@font/open_sans_semibold"
+          android:text="@string/friend_s_wedding"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="@dimen/size_16" />
+      </LinearLayout>
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableEnd="@drawable/ic_arrow_right_white"
-                android:drawablePadding="@dimen/size_16"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="@string/save"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textFontWeight="600"
-                app:textType="BODY_1" />
-        </FrameLayout>
+    </com.framework.views.customViews.CustomCardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_16"
+      android:background="@drawable/button_rounded_corner_blue"
+      android:fontFamily="@font/open_sans"
+      android:gravity="center_horizontal"
+      android:paddingVertical="@dimen/size_12"
+      android:text="@string/add_another_break"
+      android:textColor="@color/blue_4889f8"
+      app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/customCardView"
+      app:layout_constraintVertical_bias="0.206"
+      app:textAllCaps="true" />
+
+    <FrameLayout
+      android:id="@+id/frameLayout"
+      style="@style/ButtonStyle.Rounded.Solid"
+      android:layout_width="match_parent"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginHorizontal="@dimen/size_16"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/customCardView"
+      app:layout_constraintVertical_bias="0.899">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableEnd="@drawable/ic_arrow_right_white"
+        android:drawablePadding="@dimen/size_16"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:text="@string/save"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        app:textType="BODY_1" />
+    </FrameLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

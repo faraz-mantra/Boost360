@@ -1,64 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_display_image"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/layout_display_image"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginTop="@dimen/margin_5"
+  android:layout_marginBottom="@dimen/margin_5"
+  android:background="@drawable/white_rectangle_background"
+  android:orientation="horizontal"
+  android:paddingStart="8dp"
+  android:paddingTop="5dp"
+  android:paddingEnd="8dp"
+  android:paddingBottom="5dp">
+
+  <ImageView
+    android:id="@+id/iv_image"
+    android:layout_width="35dp"
+    android:layout_height="35dp" />
+
+  <LinearLayout
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/white_rectangle_background"
-    android:layout_marginTop="@dimen/margin_5"
-    android:layout_marginBottom="@dimen/margin_5"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp"
-    android:orientation="horizontal" >
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/margin_10"
+    android:layout_marginEnd="@dimen/margin_5"
+    android:layout_weight="1"
+    android:background="@drawable/image_upload_title_background"
+    android:padding="5dp">
 
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="35dp"
-        android:layout_height="35dp" />
+    <TextView
+      android:id="@+id/label_image_name"
+      style="@style/ProductLabelTextStyle"
+      android:layout_weight="1"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:paddingStart="5dp"
+      android:paddingRight="5dp"
+      android:text="" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="5dp"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_5"
-        android:background="@drawable/image_upload_title_background"
-        android:layout_weight="1">
+    <ImageButton
+      android:id="@+id/ib_remove"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:layout_gravity="end"
+      app:srcCompat="@drawable/ic_remove" />
 
-        <TextView
-            android:id="@+id/label_image_name"
-            style="@style/ProductLabelTextStyle"
-            android:layout_weight="1"
-            android:paddingRight="5dp"
-            android:paddingStart="5dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text=""/>
+  </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/ib_remove"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="end"
-            app:srcCompat="@drawable/ic_remove"/>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_change"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:text="@string/change_"
-        android:textSize="12sp"
-        android:textAllCaps="false"
-        android:padding="5dp"
-        android:visibility="gone"
-        android:layout_gravity="end"
-        android:textColor="@color/secondaryTextColor"
-        android:background="@drawable/button_pick_image"/>
+  <Button
+    android:id="@+id/btn_change"
+    android:layout_width="wrap_content"
+    android:layout_height="35dp"
+    android:layout_gravity="end"
+    android:background="@drawable/button_pick_image"
+    android:padding="5dp"
+    android:text="@string/change_"
+    android:textAllCaps="false"
+    android:textColor="@color/secondaryTextColor"
+    android:textSize="12sp"
+    android:visibility="gone" />
 
 </LinearLayout>

@@ -3,17 +3,19 @@ package com.inventoryorder.model.ordersdetails
 import java.io.Serializable
 
 data class BuyerDetailsN(
-    val Address: AddressN? = null,
-    val ContactDetails: ContactDetailsN? = null,
-    val ExtraProperties: Any? = null,
-    val GSTIN: Any? = null,
+  val Address: AddressN? = null,
+  val ContactDetails: ContactDetailsN? = null,
+  val ExtraProperties: Any? = null,
+  val GSTIN: Any? = null,
 ) : Serializable {
 
   fun getAddressFull(): String? {
     if (ContactDetails?.EmailId.isNullOrEmpty()) {
       return "${ContactDetails?.PrimaryContactNumber?.trim()}\n${address().addressLine1().trim()}"
     }
-    return "${ContactDetails?.PrimaryContactNumber?.trim()}, ${ContactDetails?.EmailId?.trim()}\n${address().addressLine1().trim()}"
+    return "${ContactDetails?.PrimaryContactNumber?.trim()}, ${ContactDetails?.EmailId?.trim()}\n${
+      address().addressLine1().trim()
+    }"
   }
 
   fun getPhoneEmailFull(): String? {
@@ -25,7 +27,7 @@ data class BuyerDetailsN(
     return Address ?: AddressN()
   }
 
-  fun getFullAddressDetail():String{
+  fun getFullAddressDetail(): String {
     val address = StringBuilder()
     Address?.let {
       if (it.AddressLine1.isNullOrBlank().not()) address.append(it.AddressLine1 ?: "")

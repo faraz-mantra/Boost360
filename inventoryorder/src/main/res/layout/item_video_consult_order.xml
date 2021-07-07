@@ -118,8 +118,7 @@
         android:layout_marginStart="@dimen/size_2"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-          style="@style/match_wrap">
+        <androidx.appcompat.widget.LinearLayoutCompat style="@style/match_wrap">
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="0dp"
@@ -134,14 +133,14 @@
 
             <include
               android:id="@+id/create_date"
-              layout="@layout/text_item"
               style="@style/wrap_wrap"
+              layout="@layout/text_item"
               android:layout_marginTop="@dimen/size_8" />
 
             <include
               android:id="@+id/payment"
-              layout="@layout/text_item"
               style="@style/wrap_wrap"
+              layout="@layout/text_item"
               android:layout_marginTop="@dimen/size_8" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -166,8 +165,8 @@
 
         <include
           android:id="@+id/duration"
-          layout="@layout/text_item"
           style="@style/wrap_wrap"
+          layout="@layout/text_item"
           android:layout_marginTop="@dimen/size_8" />
 
         <com.framework.views.customViews.CustomTextView

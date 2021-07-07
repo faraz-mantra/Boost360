@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -42,32 +44,19 @@ import java.util.HashMap;
 public class CustomerAssistantActivity extends Activity {
 
 
-    public ProgressBar pbView;
-
-    private CustomerAssistantApi suggestionsApi;
-
-    private Bus mBus;
-
-    private DbController mDbController;
-
-    private UserSessionManager session;
-
-    public SMSSuggestions smsSuggestions;
-
-    public SharedPreferences pref;
-
-    private OnBoardingFragment onBoardingFragment;
-
-    private CustomerAssistantListFragment mCustomerAssitantListFragment;
-
-    private CustomerAssistantDetailFragment mCustomerAssistantDetailFragment;
-
     public static final String KEY_DATA = "mData";
-
     public static final String TAG_FRAGMENT = "customer_assistant";
-
+    public ProgressBar pbView;
+    public SMSSuggestions smsSuggestions;
+    public SharedPreferences pref;
+    private CustomerAssistantApi suggestionsApi;
+    private Bus mBus;
+    private DbController mDbController;
+    private UserSessionManager session;
+    private OnBoardingFragment onBoardingFragment;
+    private CustomerAssistantListFragment mCustomerAssitantListFragment;
+    private CustomerAssistantDetailFragment mCustomerAssistantDetailFragment;
     private String appVersion = "";
-
 
 
     @Override

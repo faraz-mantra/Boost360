@@ -5,7 +5,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.framework.base.BaseActivity
 
-abstract class BaseRecyclerViewHolder<Binding : ViewDataBinding> constructor(var binding: Binding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+abstract class BaseRecyclerViewHolder<Binding : ViewDataBinding> constructor(var binding: Binding) :
+  RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
   var listener: RecyclerItemClickListener? = null
   var activity: BaseActivity<*, *>? = null

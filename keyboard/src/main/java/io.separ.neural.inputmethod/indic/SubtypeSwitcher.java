@@ -51,26 +51,14 @@ public final class SubtypeSwitcher {
     private static final String TAG = SubtypeSwitcher.class.getSimpleName();
 
     private static final SubtypeSwitcher sInstance = new SubtypeSwitcher();
-
-    private /* final */ RichInputMethodManager mRichImm;
-    private /* final */ Resources mResources;
-
-    private final LanguageOnSpacebarHelper mLanguageOnSpacebarHelper =
-            new LanguageOnSpacebarHelper();
-    private InputMethodInfo mShortcutInputMethodInfo;
-    private InputMethodSubtype mShortcutSubtype;
-    private InputMethodSubtype mNoLanguageSubtype;
-    private InputMethodSubtype mEmojiSubtype;
-    private boolean mIsNetworkConnected;
-
     private static final String KEYBOARD_MODE = "keyboard";
     // Dummy no language QWERTY subtype. See {@link R.xml.method}.
     private static final int SUBTYPE_ID_OF_DUMMY_NO_LANGUAGE_SUBTYPE = 0xdde0bfd3;
     private static final String EXTRA_VALUE_OF_DUMMY_NO_LANGUAGE_SUBTYPE =
             "KeyboardLayoutSet=" + SubtypeLocaleUtils.QWERTY
-            + ',' + Constants.Subtype.ExtraValue.ASCII_CAPABLE
-            + ',' + Constants.Subtype.ExtraValue.ENABLED_WHEN_DEFAULT_IS_NOT_ASCII_CAPABLE
-            + ',' + Constants.Subtype.ExtraValue.EMOJI_CAPABLE;
+                    + ',' + Constants.Subtype.ExtraValue.ASCII_CAPABLE
+                    + ',' + Constants.Subtype.ExtraValue.ENABLED_WHEN_DEFAULT_IS_NOT_ASCII_CAPABLE
+                    + ',' + Constants.Subtype.ExtraValue.EMOJI_CAPABLE;
     private static final InputMethodSubtype DUMMY_NO_LANGUAGE_SUBTYPE =
             InputMethodSubtypeCompatUtils.newInputMethodSubtype(
                     R.string.subtype_no_language_qwerty, R.drawable.ic_ime_switcher_dark,
@@ -83,7 +71,7 @@ public final class SubtypeSwitcher {
     private static final int SUBTYPE_ID_OF_DUMMY_EMOJI_SUBTYPE = 0xd78b2ed0;
     private static final String EXTRA_VALUE_OF_DUMMY_EMOJI_SUBTYPE =
             "KeyboardLayoutSet=" + SubtypeLocaleUtils.EMOJI
-            + ',' + Constants.Subtype.ExtraValue.EMOJI_CAPABLE;
+                    + ',' + Constants.Subtype.ExtraValue.EMOJI_CAPABLE;
     private static final InputMethodSubtype DUMMY_EMOJI_SUBTYPE =
             InputMethodSubtypeCompatUtils.newInputMethodSubtype(
                     R.string.subtype_emoji, R.drawable.ic_ime_switcher_dark,
@@ -91,6 +79,20 @@ public final class SubtypeSwitcher {
                     EXTRA_VALUE_OF_DUMMY_EMOJI_SUBTYPE,
                     false /* isAuxiliary */, false /* overridesImplicitlyEnabledSubtype */,
                     SUBTYPE_ID_OF_DUMMY_EMOJI_SUBTYPE);
+    private static InputMethodSubtype sForcedSubtypeForTesting = null;
+    private final LanguageOnSpacebarHelper mLanguageOnSpacebarHelper =
+            new LanguageOnSpacebarHelper();
+    private /* final */ RichInputMethodManager mRichImm;
+    private /* final */ Resources mResources;
+    private InputMethodInfo mShortcutInputMethodInfo;
+    private InputMethodSubtype mShortcutSubtype;
+    private InputMethodSubtype mNoLanguageSubtype;
+    private InputMethodSubtype mEmojiSubtype;
+    private boolean mIsNetworkConnected;
+
+    private SubtypeSwitcher() {
+        // Intentional empty constructor for singleton.
+    }
 
     public static SubtypeSwitcher getInstance() {
         return sInstance;
@@ -102,8 +104,9 @@ public final class SubtypeSwitcher {
         sInstance.initialize(context);
     }
 
-    private SubtypeSwitcher() {
-        // Intentional empty constructor for singleton.
+    @UsedForTesting
+    static void forceSubtype(final InputMethodSubtype subtype) {
+        sForcedSubtypeForTesting = subtype;
     }
 
     private void initialize(final Context context) {
@@ -113,7 +116,7 @@ public final class SubtypeSwitcher {
         mResources = context.getResources();
         mRichImm = RichInputMethodManager.getInstance();
         //ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(
-                //Context.CONNECTIVITY_SERVICE);
+        //Context.CONNECTIVITY_SERVICE);
 
         //final NetworkInfo info = connectivityManager.getActiveNetworkInfo();
         //mIsNetworkConnected = (info != null && info.isConnected());
@@ -133,13 +136,17 @@ public final class SubtypeSwitcher {
         updateShortcutIME();
     }
 
+    ////////////////////////////
+    // Shortcut IME functions //
+    ////////////////////////////
+
     private void updateShortcutIME() {
         if (DBG) {
             Log.d(TAG, "Update shortcut IME from : "
                     + (mShortcutInputMethodInfo == null
-                            ? "<null>" : mShortcutInputMethodInfo.getId()) + ", "
+                    ? "<null>" : mShortcutInputMethodInfo.getId()) + ", "
                     + (mShortcutSubtype == null ? "<null>" : (
-                            mShortcutSubtype.getLocale() + ", " + mShortcutSubtype.getMode())));
+                    mShortcutSubtype.getLocale() + ", " + mShortcutSubtype.getMode())));
         }
         // TODO: Update an icon for shortcut IME
         final Map<InputMethodInfo, List<InputMethodSubtype>> shortcuts =
@@ -159,9 +166,9 @@ public final class SubtypeSwitcher {
         if (DBG) {
             Log.d(TAG, "Update shortcut IME to : "
                     + (mShortcutInputMethodInfo == null
-                            ? "<null>" : mShortcutInputMethodInfo.getId()) + ", "
+                    ? "<null>" : mShortcutInputMethodInfo.getId()) + ", "
                     + (mShortcutSubtype == null ? "<null>" : (
-                            mShortcutSubtype.getLocale() + ", " + mShortcutSubtype.getMode())));
+                    mShortcutSubtype.getLocale() + ", " + mShortcutSubtype.getMode())));
         }
     }
 
@@ -184,10 +191,6 @@ public final class SubtypeSwitcher {
         updateShortcutIME();
     }
 
-    ////////////////////////////
-    // Shortcut IME functions //
-    ////////////////////////////
-
     public void switchToShortcutIME(final InputMethodService context) {
         if (mShortcutInputMethodInfo == null) {
             return;
@@ -198,7 +201,7 @@ public final class SubtypeSwitcher {
     }
 
     private void switchToTargetIME(final String imiId, final InputMethodSubtype subtype,
-            final InputMethodService context) {
+                                   final InputMethodService context) {
         final IBinder token = context.getWindow().getWindow().getAttributes().token;
         if (token == null) {
             return;
@@ -212,6 +215,10 @@ public final class SubtypeSwitcher {
         return mShortcutInputMethodInfo != null && (mShortcutSubtype == null || mRichImm.checkIfSubtypeBelongsToImeAndEnabled(mShortcutInputMethodInfo, mShortcutSubtype));
     }
 
+    //////////////////////////////////
+    // Subtype Switching functions //
+    //////////////////////////////////
+
     public boolean isShortcutImeReady() {
         updateShortcutIME();
         if (mShortcutInputMethodInfo == null) {
@@ -221,22 +228,18 @@ public final class SubtypeSwitcher {
             return true;
         }
         //if (mShortcutSubtype.containsExtraValueKey(REQ_NETWORK_CONNECTIVITY)) {
-            //return mIsNetworkConnected;
+        //return mIsNetworkConnected;
         //}
         return true;
     }
 
     public void onNetworkStateChanged(final Intent intent) {
         //final boolean noConnection = intent.getBooleanExtra(
-                //ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+        //ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
         //mIsNetworkConnected = !noConnection;
 
         //KeyboardSwitcher.getInstance().onNetworkStateChanged();
     }
-
-    //////////////////////////////////
-    // Subtype Switching functions //
-    //////////////////////////////////
 
     public int getLanguageOnSpacebarFormatType(final InputMethodSubtype subtype) {
         return mLanguageOnSpacebarHelper.getLanguageOnSpacebarFormatType(subtype);
@@ -265,12 +268,6 @@ public final class SubtypeSwitcher {
             }
         }
         return true;
-    }
-
-    private static InputMethodSubtype sForcedSubtypeForTesting = null;
-    @UsedForTesting
-    static void forceSubtype(final InputMethodSubtype subtype) {
-        sForcedSubtypeForTesting = subtype;
     }
 
     public Locale getCurrentSubtypeLocale() {

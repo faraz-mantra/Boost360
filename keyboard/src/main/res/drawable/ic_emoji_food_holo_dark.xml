@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2015, The Android Open Source Project
@@ -19,15 +18,8 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:state_focused="true"
-        android:drawable="@drawable/ic_emoji_food_activated_holo_dark" />
-    <item
-        android:state_pressed="true"
-        android:drawable="@drawable/ic_emoji_food_activated_holo_dark" />
-    <item
-        android:state_selected="true"
-        android:drawable="@drawable/ic_emoji_food_activated_holo_dark" />
-    <item
-        android:drawable="@drawable/ic_emoji_food_normal_holo_dark" />
+  <item android:drawable="@drawable/ic_emoji_food_activated_holo_dark" android:state_focused="true" />
+  <item android:drawable="@drawable/ic_emoji_food_activated_holo_dark" android:state_pressed="true" />
+  <item android:drawable="@drawable/ic_emoji_food_activated_holo_dark" android:state_selected="true" />
+  <item android:drawable="@drawable/ic_emoji_food_normal_holo_dark" />
 </selector>

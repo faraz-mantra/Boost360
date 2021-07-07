@@ -7,4 +7,4 @@ import java.io.Serializable
 data class DrScoreUiDataResponse(
   @SerializedName("data")
   var `data`: ArrayList<DrScoreUiData> = ArrayList()
-):BaseResponse(),Serializable
+) : BaseResponse(), Serializable

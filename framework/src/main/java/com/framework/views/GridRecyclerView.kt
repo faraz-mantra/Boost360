@@ -12,15 +12,24 @@ class GridRecyclerView : RecyclerView {
 
   constructor(context: Context) : super(context)
   constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-  constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
+  constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(
+    context,
+    attrs,
+    defStyle
+  )
 
-  override fun attachLayoutAnimationParameters(child: View, params: ViewGroup.LayoutParams, index: Int, count: Int) {
+  override fun attachLayoutAnimationParameters(
+    child: View,
+    params: ViewGroup.LayoutParams,
+    index: Int,
+    count: Int
+  ) {
     val adapter = adapter
     val layoutManager = layoutManager
     if (adapter != null && layoutManager is GridLayoutManager) {
       val animationParams = params.layoutAnimationParameters
-              as? GridLayoutAnimationController.AnimationParameters
-              ?: GridLayoutAnimationController.AnimationParameters()
+          as? GridLayoutAnimationController.AnimationParameters
+        ?: GridLayoutAnimationController.AnimationParameters()
       params.layoutAnimationParameters = animationParams
       val columns = layoutManager.spanCount
       animationParams.count = count

@@ -26,7 +26,7 @@ public class RiaEventModel {
         this.EventData = EventData;
     }
 
-    public RiaEventModel(){
+    public RiaEventModel() {
 
     }
 

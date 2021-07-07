@@ -1,10 +1,5 @@
 package com.nowfloats.hotel.seasonalOffers;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,17 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.boost.upgrades.UpgradeActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.model.DeleteOffer.DeleteOfferRequest;
-import com.nowfloats.hotel.API.model.DeletePlacesAround.DeletePlacesAroundRequest;
 import com.nowfloats.hotel.API.model.GetOffers.Data;
 import com.nowfloats.hotel.API.model.GetOffers.GetOffersResponse;
 import com.nowfloats.hotel.Interfaces.SeasonalOffersListener;
-import com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity;
 import com.nowfloats.hotel.seasonalOffers.adapter.SeasonalOffersAdapter;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
@@ -228,7 +226,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                 public void success(String s, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(SeasonalOffersActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(SeasonalOffersActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(SeasonalOffersActivity.this, getString(R.string.something_went_wrong));
@@ -238,7 +236,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                 @Override
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(SeasonalOffersActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(SeasonalOffersActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(SeasonalOffersActivity.this, getString(R.string.something_went_wrong));

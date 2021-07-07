@@ -15,14 +15,15 @@
  */
 
 
-
 package hani.momanii.supernova_emoji_library.Helper;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
 import java.util.List;
+
 import hani.momanii.supernova_emoji_library.R;
 import hani.momanii.supernova_emoji_library.emoji.Emojicon;
 
@@ -32,8 +33,8 @@ import hani.momanii.supernova_emoji_library.emoji.Emojicon;
  */
 
 class EmojiAdapter extends ArrayAdapter<Emojicon> {
-    private boolean mUseSystemDefault = false;
     EmojiconGridView.OnEmojiconClickedListener emojiClickListener;
+    private boolean mUseSystemDefault = false;
 
 
     public EmojiAdapter(Context context, List<Emojicon> data, boolean useSystemDefault) {
@@ -47,7 +48,7 @@ class EmojiAdapter extends ArrayAdapter<Emojicon> {
     }
 
 
-    public void setEmojiClickListener(EmojiconGridView.OnEmojiconClickedListener listener){
+    public void setEmojiClickListener(EmojiconGridView.OnEmojiconClickedListener listener) {
         this.emojiClickListener = listener;
     }
 
@@ -63,15 +64,15 @@ class EmojiAdapter extends ArrayAdapter<Emojicon> {
             v.setTag(holder);
         }
 
-         Emojicon emoji = getItem(position);
-         ViewHolder holder = (ViewHolder) v.getTag();
-             holder.icon.setText(emoji.getEmoji());
-                holder.icon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        emojiClickListener.onEmojiconClicked(getItem(position));
-                    }
-                });
+        Emojicon emoji = getItem(position);
+        ViewHolder holder = (ViewHolder) v.getTag();
+        holder.icon.setText(emoji.getEmoji());
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emojiClickListener.onEmojiconClicked(getItem(position));
+            }
+        });
 
         return v;
     }

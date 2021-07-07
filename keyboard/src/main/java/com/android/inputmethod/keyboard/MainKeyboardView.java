@@ -111,70 +111,59 @@ import io.separ.neural.inputmethod.indic.settings.DebugSettings;
 public final class MainKeyboardView extends KeyboardView implements PointerTracker.DrawingProxy,
         MoreKeysPanel.Controller, DrawingHandler.Callbacks, TimerHandler.Callbacks {
     private static final String TAG = MainKeyboardView.class.getSimpleName();
-
-    /**
-     * Listener for {@link KeyboardActionListener}.
-     */
-    private KeyboardActionListener mKeyboardActionListener;
-
-    /* Space key and its icon and background. */
-    private Key mSpaceKey;
-    // Stuff to draw language name on spacebar.
-    private final int mLanguageOnSpacebarFinalAlpha;
-    private final ObjectAnimator mLanguageOnSpacebarFadeoutAnimator;
-    private int mLanguageOnSpacebarFormatType;
-    private boolean mHasMultipleEnabledIMEsOrSubtypes;
-    private int mLanguageOnSpacebarAnimAlpha = Constants.Color.ALPHA_OPAQUE;
-    private final float mLanguageOnSpacebarTextRatio;
-    private float mLanguageOnSpacebarTextSize;
-    private final int mLanguageOnSpacebarTextColor;
-    private final float mLanguageOnSpacebarTextShadowRadius;
-    private final int mLanguageOnSpacebarTextShadowColor;
     private static final float LANGUAGE_ON_SPACEBAR_TEXT_SHADOW_RADIUS_DISABLED = -1.0f;
     // The minimum x-scale to fit the language name on spacebar.
     private static final float MINIMUM_XSCALE_OF_LANGUAGE_NAME = 0.8f;
-
+    public static int MAIN_KEYBOARD_HEIGHT;
+    // Stuff to draw language name on spacebar.
+    private final int mLanguageOnSpacebarFinalAlpha;
+    private final ObjectAnimator mLanguageOnSpacebarFadeoutAnimator;
+    private final float mLanguageOnSpacebarTextRatio;
+    private final int mLanguageOnSpacebarTextColor;
+    private final float mLanguageOnSpacebarTextShadowRadius;
+    private final int mLanguageOnSpacebarTextShadowColor;
     // Stuff to draw altCodeWhileTyping keys.
     private final ObjectAnimator mAltCodeKeyWhileTypingFadeoutAnimator;
     private final ObjectAnimator mAltCodeKeyWhileTypingFadeinAnimator;
-    private int mAltCodeKeyWhileTypingAnimAlpha = Constants.Color.ALPHA_OPAQUE;
-
     // Drawing preview placer view
     private final DrawingPreviewPlacerView mDrawingPreviewPlacerView;
     private final int[] mOriginCoords = CoordinateUtils.newInstance();
     private final GestureFloatingTextDrawingPreview mGestureFloatingTextDrawingPreview;
     private final GestureTrailsDrawingPreview mGestureTrailsDrawingPreview;
     private final SlidingKeyInputDrawingPreview mSlidingKeyInputDrawingPreview;
-
     // Key preview
     private final KeyPreviewDrawParams mKeyPreviewDrawParams;
     private final KeyPreviewChoreographer mKeyPreviewChoreographer;
-
     // More keys keyboard
     private final Paint mBackgroundDimAlphaPaint = new Paint();
-    private boolean mNeedsToDimEntireKeyboard;
     private final View mMoreKeysKeyboardContainer;
     private final View mMoreKeysKeyboardForActionContainer;
     private final WeakHashMap<Key, Keyboard> mMoreKeysKeyboardCache = new WeakHashMap<>();
     private final boolean mConfigShowMoreKeysKeyboardAtTouchedPoint;
-    // More keys panel (used by both more keys keyboard and more suggestions view)
-    // TODO: Consider extending to support multiple more keys panels
-    private MoreKeysPanel mMoreKeysPanel;
-
     // Gesture floating preview text
     // TODO: Make this parameter customizable by user via settings.
     private final int mGestureFloatingPreviewTextLingerTimeout;
-
     private final KeyDetector mKeyDetector;
     private final NonDistinctMultitouchHelper mNonDistinctMultitouchHelper;
-
     private final TimerHandler mKeyTimerHandler;
     private final int mLanguageOnSpacebarHorizontalMargin;
-
     private final DrawingHandler mDrawingHandler = new DrawingHandler(this);
-
+    /**
+     * Listener for {@link KeyboardActionListener}.
+     */
+    private KeyboardActionListener mKeyboardActionListener;
+    /* Space key and its icon and background. */
+    private Key mSpaceKey;
+    private int mLanguageOnSpacebarFormatType;
+    private boolean mHasMultipleEnabledIMEsOrSubtypes;
+    private int mLanguageOnSpacebarAnimAlpha = Constants.Color.ALPHA_OPAQUE;
+    private float mLanguageOnSpacebarTextSize;
+    private int mAltCodeKeyWhileTypingAnimAlpha = Constants.Color.ALPHA_OPAQUE;
+    private boolean mNeedsToDimEntireKeyboard;
+    // More keys panel (used by both more keys keyboard and more suggestions view)
+    // TODO: Consider extending to support multiple more keys panels
+    private MoreKeysPanel mMoreKeysPanel;
     private MainKeyboardAccessibilityDelegate mAccessibilityDelegate;
-    public static int MAIN_KEYBOARD_HEIGHT;
 
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.mainKeyboardViewStyle);
@@ -277,6 +266,28 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
                 R.dimen.config_language_on_spacebar_horizontal_margin);
     }
 
+    private static void cancelAndStartAnimators(final ObjectAnimator animatorToCancel,
+                                                final ObjectAnimator animatorToStart) {
+        if (animatorToCancel == null || animatorToStart == null) {
+            // TODO: Stop using null as a no-operation animator.
+            return;
+        }
+        float startFraction = 0.0f;
+        if (animatorToCancel.isStarted()) {
+            animatorToCancel.cancel();
+            startFraction = 1.0f - animatorToCancel.getAnimatedFraction();
+        }
+        final long startTime = (long) (animatorToStart.getDuration() * startFraction);
+        animatorToStart.start();
+        animatorToStart.setCurrentPlayTime(startTime);
+    }
+
+    // Note that this method is called from a non-UI thread.
+    @SuppressWarnings("static-method")
+    public static void setMainDictionaryAvailability(final boolean mainDictionaryAvailable) {
+        PointerTracker.setMainDictionaryAvailability(mainDictionaryAvailable);
+    }
+
     @Override
     public void setHardwareAcceleratedDrawingEnabled(final boolean enabled) {
         super.setHardwareAcceleratedDrawingEnabled(enabled);
@@ -294,22 +305,6 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
             animator.setTarget(target);
         }
         return animator;
-    }
-
-    private static void cancelAndStartAnimators(final ObjectAnimator animatorToCancel,
-                                                final ObjectAnimator animatorToStart) {
-        if (animatorToCancel == null || animatorToStart == null) {
-            // TODO: Stop using null as a no-operation animator.
-            return;
-        }
-        float startFraction = 0.0f;
-        if (animatorToCancel.isStarted()) {
-            animatorToCancel.cancel();
-            startFraction = 1.0f - animatorToCancel.getAnimatedFraction();
-        }
-        final long startTime = (long) (animatorToStart.getDuration() * startFraction);
-        animatorToStart.start();
-        animatorToStart.setCurrentPlayTime(startTime);
     }
 
     // Implements {@link TimerHander.Callbacks} method.
@@ -547,12 +542,6 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
             mGestureFloatingTextDrawingPreview.setPreviewPosition(tracker);
         }
         mGestureTrailsDrawingPreview.setPreviewPosition(tracker);
-    }
-
-    // Note that this method is called from a non-UI thread.
-    @SuppressWarnings("static-method")
-    public static void setMainDictionaryAvailability(final boolean mainDictionaryAvailable) {
-        PointerTracker.setMainDictionaryAvailability(mainDictionaryAvailable);
     }
 
     public void setGestureHandlingEnabledByUser(final boolean isGestureHandlingEnabledByUser,

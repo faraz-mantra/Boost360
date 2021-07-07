@@ -52,7 +52,7 @@ public final class DrawingPreviewPlacerView extends RelativeLayout {
     }
 
     public void setKeyboardViewGeometry(final int[] originCoords, final int width,
-            final int height) {
+                                        final int height) {
         CoordinateUtils.copy(mKeyboardViewOrigin, originCoords);
         final int count = mPreviews.size();
         for (int i = 0; i < count; i++) {
@@ -81,7 +81,7 @@ public final class DrawingPreviewPlacerView extends RelativeLayout {
         canvas.translate(originX, originY);
         final int count = mPreviews.size();
         for (int i = 0; i < count; i++) {
-            mPreviews.get(i).drawPreview(getContext(),canvas);
+            mPreviews.get(i).drawPreview(getContext(), canvas);
         }
         canvas.translate(-originX, -originY);
     }

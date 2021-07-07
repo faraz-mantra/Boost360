@@ -5,19 +5,19 @@
 
   <item
     android:id="@+id/app_bar_search"
-      android:icon="@drawable/ic_search_staff"
-      android:title="Search"
-      android:visible="false"
-      app:actionViewClass="androidx.appcompat.widget.SearchView"
-      app:showAsAction="always|collapseActionView" />
-    <item
-        android:id="@+id/menu_add_staff"
-        android:icon="@drawable/ic_add_white"
-        android:title="Add Staff"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/menu_help"
-        android:icon="@drawable/ic_help_white"
-        android:title="Help"
-        app:showAsAction="always" />
+    android:icon="@drawable/ic_search_staff"
+    android:title="Search"
+    android:visible="false"
+    app:actionViewClass="androidx.appcompat.widget.SearchView"
+    app:showAsAction="always|collapseActionView" />
+  <item
+    android:id="@+id/menu_add_staff"
+    android:icon="@drawable/ic_add_white"
+    android:title="Add Staff"
+    app:showAsAction="always" />
+  <item
+    android:id="@+id/menu_help"
+    android:icon="@drawable/ic_help_white"
+    android:title="Help"
+    app:showAsAction="always" />
 </menu>

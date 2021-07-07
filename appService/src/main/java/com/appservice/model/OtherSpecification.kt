@@ -9,4 +9,4 @@ data class OtherSpecification(
   var key: String? = null,
   @SerializedName("value")
   var value: String? = null
-): Serializable
+) : Serializable

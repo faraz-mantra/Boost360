@@ -2,14 +2,18 @@ package com.nowfloats.Store;
 
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.annotation.Nullable;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -47,14 +51,16 @@ import retrofit.client.Response;
 
 public class YourPurchasedPlansActivity extends AppCompatActivity implements PurchasePlanFragment.AdapterCallback {
 
+    private static final int NUM_OF_FEATURES = 5;
     UserSessionManager mSession;
     Toolbar toolbar;
     List<PackageDetails> mTopUps = Collections.emptyList();
-
-    private static final int NUM_OF_FEATURES = 5;
     MaterialDialog materialProgress;
 
     ViewPager mViewPager;
+    ArrayList<ActivePackage> activePlans = new ArrayList<>(), toBeActivatedPlans = new ArrayList<>(),
+            expiredPlans = new ArrayList<>();
+    ArrayList<ActivePackage> yourOrdersItems = new ArrayList<>();
 
     @Override
     public PurchasedPlanAdapter getAdapter(PlansType planType) {
@@ -77,47 +83,6 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
         }
         return adapter;
     }
-
-    public enum PlansType {
-        ACTIVE_PLANS,
-        TO_BE_ACTIVATED_PLANS,
-        EXPIRED_PLANS,
-        YOUR_ORDERS;
-
-        public static String getName(int pos) {
-            switch (pos) {
-                case 0:
-                    return "ACTIVE";
-                case 3:
-                    return "YOUR INVOICES";
-                case 1:
-                    return "TO BE ACTIVATED";
-                case 2:
-                    return "EXPIRED";
-                default:
-                    return getName(0);
-            }
-        }
-
-        public static PlansType getPlanType(int pos) {
-            switch (pos) {
-                case 0:
-                    return ACTIVE_PLANS;
-                case 3:
-                    return YOUR_ORDERS;
-                case 1:
-                    return TO_BE_ACTIVATED_PLANS;
-                case 2:
-                    return EXPIRED_PLANS;
-                default:
-                    return ACTIVE_PLANS;
-            }
-        }
-    }
-
-    ArrayList<ActivePackage> activePlans = new ArrayList<>(), toBeActivatedPlans = new ArrayList<>(),
-            expiredPlans = new ArrayList<>();
-    ArrayList<ActivePackage> yourOrdersItems = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -225,30 +190,6 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
             }
         });
 
-    }
-
-    class PagerAdapter extends FragmentStatePagerAdapter {
-
-        public PagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("pos", position);
-            return PurchasePlanFragment.getInstance(bundle);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return PlansType.getName(position);
-        }
-
-        @Override
-        public int getCount() {
-            return PlansType.values().length;
-        }
     }
 
     private void preProcessAndDispatchPlans(final PricingPlansModel storeMainModel) {
@@ -366,5 +307,66 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    public enum PlansType {
+        ACTIVE_PLANS,
+        TO_BE_ACTIVATED_PLANS,
+        EXPIRED_PLANS,
+        YOUR_ORDERS;
+
+        public static String getName(int pos) {
+            switch (pos) {
+                case 0:
+                    return "ACTIVE";
+                case 3:
+                    return "YOUR INVOICES";
+                case 1:
+                    return "TO BE ACTIVATED";
+                case 2:
+                    return "EXPIRED";
+                default:
+                    return getName(0);
+            }
+        }
+
+        public static PlansType getPlanType(int pos) {
+            switch (pos) {
+                case 0:
+                    return ACTIVE_PLANS;
+                case 3:
+                    return YOUR_ORDERS;
+                case 1:
+                    return TO_BE_ACTIVATED_PLANS;
+                case 2:
+                    return EXPIRED_PLANS;
+                default:
+                    return ACTIVE_PLANS;
+            }
+        }
+    }
+
+    class PagerAdapter extends FragmentStatePagerAdapter {
+
+        public PagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("pos", position);
+            return PurchasePlanFragment.getInstance(bundle);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return PlansType.getName(position);
+        }
+
+        @Override
+        public int getCount() {
+            return PlansType.values().length;
+        }
     }
 }

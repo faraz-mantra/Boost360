@@ -52,6 +52,7 @@ public final class ResizableIntArray {
 
     /**
      * Calculate the new capacity of {@code mArray}.
+     *
      * @param minimumCapacity the minimum capacity that the {@code mArray} should have.
      * @return the new capacity that the {@code mArray} should have. Returns zero when there is no
      * need to expand {@code mArray}.
@@ -134,6 +135,7 @@ public final class ResizableIntArray {
 
     /**
      * Shift to the left by elementCount, discarding elementCount pointers at the start.
+     *
      * @param elementCount how many elements to shift.
      */
     public void shift(final int elementCount) {

@@ -1,142 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@color/white"
+  android:clickable="true"
+  android:focusable="true"
+  android:padding="15dp">
+
+  <TextView
+    android:id="@+id/textView7"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/filter_by_"
+    android:textColor="@color/gray_light"
+    android:textSize="18sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <RadioGroup
+    android:id="@+id/radioGroup"
     android:layout_width="match_parent"
-    android:padding="15dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="@color/white"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:divider="@color/light_gray"
+    android:showDividers="middle"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+    <RadioButton
+      android:id="@+id/rb_select_all"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="15dp"
+      android:paddingBottom="15dp"
+      android:text="@string/all" />
+
+    <RadioButton
+      android:id="@+id/rb_seven_days"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="15dp"
+      android:paddingBottom="15dp"
+      android:text="@string/last_7_days" />
+
+    <RadioButton
+      android:id="@+id/rb_ten_days"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="15dp"
+      android:paddingBottom="15dp"
+      android:text="@string/last_10_days" />
+
+    <RadioButton
+      android:id="@+id/rb_fifteen_days"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="15dp"
+      android:paddingBottom="15dp"
+      android:text="@string/last_15_days" />
+
+    <RadioButton
+      android:id="@+id/rb_thirty_days"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="15dp"
+      android:paddingBottom="15dp"
+      android:text="@string/last_30_days" />
+
+    <RadioButton
+      android:id="@+id/rb_select_time"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="15dp"
+      android:paddingBottom="15dp"
+      android:text="@string/select_time_span" />
+
+  </RadioGroup>
+
+  <LinearLayout
+    android:id="@+id/llayout_date_period"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintStart_toStartOf="@+id/textView7"
+    app:layout_constraintTop_toBottomOf="@+id/radioGroup">
 
     <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/filter_by_"
-        android:textColor="@color/gray_light"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:divider="@color/light_gray"
-        android:showDividers="middle"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7">
-        <RadioButton
-            android:id="@+id/rb_select_all"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="@string/all" />
-            <RadioButton
-                android:id="@+id/rb_seven_days"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/last_7_days"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp" />
-
-            <RadioButton
-                android:id="@+id/rb_ten_days"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/last_10_days"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp" />
-
-            <RadioButton
-                android:id="@+id/rb_fifteen_days"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:text="@string/last_15_days" />
-            <RadioButton
-                android:id="@+id/rb_thirty_days"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:text="@string/last_30_days" />
-
-            <RadioButton
-                android:id="@+id/rb_select_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:text="@string/select_time_span" />
-
-    </RadioGroup>
-
-    <LinearLayout
-        android:id="@+id/llayout_date_period"
-        android:layout_width="0dp"
-        android:visibility="gone"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
-
-        <TextView
-            android:id="@+id/tv_start_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/focused_edittext_bg"
-            android:focusable="false"
-            android:gravity="center"
-            android:textSize="13sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:textSize="14sp"
-            android:textAllCaps="true"
-            android:text="@string/to"
-            />
-        <TextView
-            android:id="@+id/tv_end_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/focused_edittext_bg"
-            android:focusable="false"
-            android:gravity="center"
-            android:textSize="13sp"/>
-    </LinearLayout>
-
+      android:id="@+id/tv_start_date"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_weight="1"
+      android:background="@drawable/focused_edittext_bg"
+      android:focusable="false"
+      android:gravity="center"
+      android:textSize="13sp" />
 
     <TextView
-        android:id="@+id/btn_apply"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/ria_positive_btn"
-        android:padding="10dp"
-        android:text="@string/apply_"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llayout_date_period" />
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginStart="8dp"
+      android:text="@string/to"
+      android:textAllCaps="true"
+      android:textSize="14sp" />
+
+    <TextView
+      android:id="@+id/tv_end_date"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_weight="1"
+      android:background="@drawable/focused_edittext_bg"
+      android:focusable="false"
+      android:gravity="center"
+      android:textSize="13sp" />
+  </LinearLayout>
+
+
+  <TextView
+    android:id="@+id/btn_apply"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="15dp"
+    android:background="@drawable/ria_positive_btn"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="@string/apply_"
+    android:textColor="@color/white"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.95"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/llayout_date_period" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class AccountError(
-    @SerializedName("ErrorCode")
-    var errorCode: Any? = null,
-    @SerializedName("ErrorList")
-    var errorList: AccountErrorList? = null
+  @SerializedName("ErrorCode")
+  var errorCode: Any? = null,
+  @SerializedName("ErrorList")
+  var errorList: AccountErrorList? = null
 ) : Serializable {
 
   fun getMessage(): String {

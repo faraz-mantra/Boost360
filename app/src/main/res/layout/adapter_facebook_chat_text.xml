@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginStart="5dp"
+  android:layout_marginTop="4dp"
+  android:layout_marginEnd="5dp"
+  android:gravity="start"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:id="@+id/ll_bubble_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.nowfloats.riachatsdk.CustomWidget.WrappedTextView
+      android:id="@+id/tv_message"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:autoLink="all"
+      android:fontFamily="sans-serif-light"
+      android:lineSpacingExtra="2.5dp"
+      android:paddingStart="8dp"
+      android:paddingTop="3dp"
+      android:paddingRight="8dp"
+      android:paddingBottom="3dp"
+      android:textColor="@android:color/black"
+      android:textColorLink="@color/primary"
+      android:textSize="15sp" />
+  </LinearLayout>
+
+  <TextView
+    android:id="@+id/tv_date"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
-    android:layout_marginTop="4dp"
-    android:gravity="start">
-    <LinearLayout
-        android:id="@+id/ll_bubble_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <com.nowfloats.riachatsdk.CustomWidget.WrappedTextView
-            android:id="@+id/tv_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoLink="all"
-            android:fontFamily="sans-serif-light"
-            android:lineSpacingExtra="2.5dp"
-            android:paddingBottom="3dp"
-            android:paddingStart="8dp"
-            android:paddingRight="8dp"
-            android:textColor="@android:color/black"
-            android:paddingTop="3dp"
-            android:textColorLink="@color/primary"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:text=""
-        android:textColor="#afafaf"
-        android:textSize="10sp" />
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:text=""
+    android:textColor="#afafaf"
+    android:textSize="10sp" />
 
 </LinearLayout>

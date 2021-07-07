@@ -42,7 +42,7 @@ import io.separ.neural.inputmethod.indic.userdictionary.UserDictionaryLocalePick
 
 /**
  * Fragment to add a word/shortcut to the user dictionary.
- *
+ * <p>
  * As opposed to the UserDictionaryActivity, this is only invoked within Settings
  * from the UserDictionarySettings.
  */
@@ -67,7 +67,7 @@ public class UserDictionaryAddWordFragment extends Fragment
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedState) {
+                             final Bundle savedState) {
         mRootView = inflater.inflate(R.layout.user_dictionary_add_word_fullscreen, null);
         mIsDeleting = false;
         // If we have a non-null mContents object, it's the old value before a configuration
@@ -133,7 +133,7 @@ public class UserDictionaryAddWordFragment extends Fragment
         final ArrayList<LocaleRenderer> localesList = mContents.getLocalesList(getActivity());
 
         final Spinner localeSpinner =
-                (Spinner)mRootView.findViewById(R.id.user_dictionary_add_locale);
+                (Spinner) mRootView.findViewById(R.id.user_dictionary_add_locale);
         final ArrayAdapter<LocaleRenderer> adapter = new ArrayAdapter<>(
                 getActivity(), android.R.layout.simple_spinner_item, localesList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -152,10 +152,10 @@ public class UserDictionaryAddWordFragment extends Fragment
 
     @Override
     public void onItemSelected(final AdapterView<?> parent, final View view, final int pos,
-            final long id) {
-        final LocaleRenderer locale = (LocaleRenderer)parent.getItemAtPosition(pos);
+                               final long id) {
+        final LocaleRenderer locale = (LocaleRenderer) parent.getItemAtPosition(pos);
         if (locale.isMoreLanguages()) {
-            PreferenceActivity preferenceActivity = (PreferenceActivity)getActivity();
+            PreferenceActivity preferenceActivity = (PreferenceActivity) getActivity();
             preferenceActivity.startPreferenceFragment(new UserDictionaryLocalePicker(), true);
         } else {
             mContents.updateLocale(locale.getLocaleString());

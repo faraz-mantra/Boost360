@@ -1,84 +1,85 @@
 package com.nowfloats.CustomPage.Model;
 
 import java.util.List;
- import com.google.gson.annotations.SerializedName;
 
- public class ItemsItem{
+import com.google.gson.annotations.SerializedName;
 
-	@SerializedName("keywords")
-	private List<Object> keywords;
+public class ItemsItem {
 
-	@SerializedName("name")
-	private String name;
+    @SerializedName("keywords")
+    private List<Object> keywords;
 
-	@SerializedName("html")
-	private String html;
+    @SerializedName("name")
+    private String name;
 
-	@SerializedName("id")
-	private String id;
+    @SerializedName("html")
+    private String html;
 
-	@SerializedName("updatedon")
-	private String updatedon;
+    @SerializedName("id")
+    private String id;
 
-	@SerializedName("createdon")
-	private String createdon;
+    @SerializedName("updatedon")
+    private String updatedon;
 
-	@SerializedName("url")
-	private Url url;
+    @SerializedName("createdon")
+    private String createdon;
 
-	public void setKeywords(List<Object> keywords){
-		this.keywords = keywords;
-	}
+    @SerializedName("url")
+    private Url url;
 
-	public List<Object> getKeywords(){
-		return keywords;
-	}
+    public List<Object> getKeywords() {
+        return keywords;
+    }
 
-	public void setName(String name){
-		this.name = name;
-	}
+    public void setKeywords(List<Object> keywords) {
+        this.keywords = keywords;
+    }
 
-	public String getName(){
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setHtml(String html){
-		this.html = html;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getHtml(){
-		return html;
-	}
+    public String getHtml() {
+        return html;
+    }
 
-	public void setId(String id){
-		this.id = id;
-	}
+    public void setHtml(String html) {
+        this.html = html;
+    }
 
-	public String getId(){
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setUpdatedon(String updatedon){
-		this.updatedon = updatedon;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getUpdatedon(){
-		return updatedon;
-	}
+    public String getUpdatedon() {
+        return updatedon;
+    }
 
-	public void setCreatedon(String createdon){
-		this.createdon = createdon;
-	}
+    public void setUpdatedon(String updatedon) {
+        this.updatedon = updatedon;
+    }
 
-	public String getCreatedon(){
-		return createdon;
-	}
+    public String getCreatedon() {
+        return createdon;
+    }
 
-	public void setUrl(Url url){
-		this.url = url;
-	}
+    public void setCreatedon(String createdon) {
+        this.createdon = createdon;
+    }
 
-	public Url getUrl(){
-		return url;
-	}
+    public Url getUrl() {
+        return url;
+    }
+
+    public void setUrl(Url url) {
+        this.url = url;
+    }
 }

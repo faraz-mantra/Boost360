@@ -44,168 +44,134 @@ public class PurchaseDetail {
     private List<TaxDetail> taxDetails = null;
 
     /**
-     *
-     * @return
-     * The basePrice
+     * @return The basePrice
      */
     public Double getBasePrice() {
         return basePrice;
     }
 
     /**
-     *
-     * @param basePrice
-     * The BasePrice
+     * @param basePrice The BasePrice
      */
     public void setBasePrice(Double basePrice) {
         this.basePrice = basePrice;
     }
 
     /**
-     *
-     * @return
-     * The clientId
+     * @return The clientId
      */
     public String getClientId() {
         return clientId;
     }
 
     /**
-     *
-     * @param clientId
-     * The ClientId
+     * @param clientId The ClientId
      */
     public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
-    public Discount getDiscount(){ return discount; }
+    public Discount getDiscount() {
+        return discount;
+    }
 
-    public void setDiscount(Discount discount){
+    public void setDiscount(Discount discount) {
         this.discount = discount;
     }
 
     /**
-     *
-     * @return
-     * The durationInMnths
+     * @return The durationInMnths
      */
     public Double getDurationInMnths() {
         return durationInMnths;
     }
 
     /**
-     *
-     * @param durationInMnths
-     * The DurationInMnths
+     * @param durationInMnths The DurationInMnths
      */
     public void setDurationInMnths(Double durationInMnths) {
         this.durationInMnths = durationInMnths;
     }
 
     /**
-     *
-     * @return
-     * The fPId
+     * @return The fPId
      */
     public String getFPId() {
         return fPId;
     }
 
     /**
-     *
-     * @param fPId
-     * The FPId
+     * @param fPId The FPId
      */
     public void setFPId(String fPId) {
         this.fPId = fPId;
     }
 
     /**
-     *
-     * @return
-     * The mRP
+     * @return The mRP
      */
     public Double getMRP() {
         return mRP;
     }
 
     /**
-     *
-     * @param mRP
-     * The MRP
+     * @param mRP The MRP
      */
     public void setMRP(Double mRP) {
         this.mRP = mRP;
     }
 
     /**
-     *
-     * @return
-     * The mRPCurrencyCode
+     * @return The mRPCurrencyCode
      */
     public String getMRPCurrencyCode() {
         return mRPCurrencyCode;
     }
 
     /**
-     *
-     * @param mRPCurrencyCode
-     * The MRPCurrencyCode
+     * @param mRPCurrencyCode The MRPCurrencyCode
      */
     public void setMRPCurrencyCode(String mRPCurrencyCode) {
         this.mRPCurrencyCode = mRPCurrencyCode;
     }
 
     /**
-     *
-     * @return
-     * The packageId
+     * @return The packageId
      */
     public String getPackageId() {
         return packageId;
     }
 
     /**
-     *
-     * @param packageId
-     * The PackageId
+     * @param packageId The PackageId
      */
     public void setPackageId(String packageId) {
         this.packageId = packageId;
     }
 
     /**
-     *
-     * @return
-     * The packageName
+     * @return The packageName
      */
     public String getPackageName() {
         return packageName;
     }
 
     /**
-     *
-     * @param packageName
-     * The PackageName
+     * @param packageName The PackageName
      */
     public void setPackageName(String packageName) {
         this.packageName = packageName;
     }
 
     /**
-     *
-     * @return
-     * The taxDetails
+     * @return The taxDetails
      */
     public List<TaxDetail> getTaxDetails() {
         return taxDetails;
     }
 
     /**
-     *
-     * @param taxDetails
-     * The TaxDetails
+     * @param taxDetails The TaxDetails
      */
     public void setTaxDetails(List<TaxDetail> taxDetails) {
         this.taxDetails = taxDetails;

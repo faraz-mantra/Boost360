@@ -5,5 +5,5 @@ import org.json.JSONObject
 
 interface MoreBanksListener {
 
-    fun moreBankSelected(data: JSONObject)
+  fun moreBankSelected(data: JSONObject)
 }

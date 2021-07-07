@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="20dp"
-    android:paddingEnd="20dp"
-    android:paddingStart="20dp"
-    android:paddingTop="20dp">
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:paddingStart="20dp"
+  android:paddingTop="20dp"
+  android:paddingEnd="20dp"
+  android:paddingBottom="20dp">
 
-    <TextView
-        android:id="@+id/toast_message_to_contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoLink="all"
-        android:text="@string/drop_us_on_email_or_call"
-        android:textSize="15sp" />
+  <TextView
+    android:id="@+id/toast_message_to_contact"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:autoLink="all"
+    android:text="@string/drop_us_on_email_or_call"
+    android:textSize="15sp" />
 </LinearLayout>

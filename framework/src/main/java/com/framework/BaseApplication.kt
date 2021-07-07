@@ -21,7 +21,7 @@ open class BaseApplication : MultiDexApplication() {
 
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
-      this.instance=application
+      this.instance = application
       DrScoreApiClient.shared.init(DR_SCORE_BASE)
     }
   }

@@ -28,6 +28,23 @@ public final class XmlParseUtils {
         // This utility class is not publicly instantiable.
     }
 
+    public static void checkEndTag(final String tag, final XmlPullParser parser)
+            throws XmlPullParserException, IOException {
+        if (parser.next() == XmlPullParser.END_TAG && tag.equals(parser.getName()))
+            return;
+        throw new NonEmptyTag(parser, tag);
+    }
+
+    public static void checkAttributeExists(final TypedArray attr, final int attrId,
+                                            final String attrName, final String tag, final XmlPullParser parser)
+            throws XmlPullParserException {
+        if (attr.hasValue(attrId)) {
+            return;
+        }
+        throw new ParseException(
+                "No " + attrName + " attribute found in <" + tag + "/>", parser);
+    }
+
     @SuppressWarnings("serial")
     public static class ParseException extends XmlPullParserException {
         public ParseException(final String msg, final XmlPullParser parser) {
@@ -52,32 +69,15 @@ public final class XmlParseUtils {
     @SuppressWarnings("serial")
     public static final class IllegalAttribute extends ParseException {
         public IllegalAttribute(final XmlPullParser parser, final String tag,
-                final String attribute) {
+                                final String attribute) {
             super("Tag " + tag + " has illegal attribute " + attribute, parser);
         }
     }
 
     @SuppressWarnings("serial")
-    public static final class NonEmptyTag extends ParseException{
+    public static final class NonEmptyTag extends ParseException {
         public NonEmptyTag(final XmlPullParser parser, final String tag) {
             super(tag + " must be empty tag", parser);
         }
-    }
-
-    public static void checkEndTag(final String tag, final XmlPullParser parser)
-            throws XmlPullParserException, IOException {
-        if (parser.next() == XmlPullParser.END_TAG && tag.equals(parser.getName()))
-            return;
-        throw new NonEmptyTag(parser, tag);
-    }
-
-    public static void checkAttributeExists(final TypedArray attr, final int attrId,
-            final String attrName, final String tag, final XmlPullParser parser)
-                    throws XmlPullParserException {
-        if (attr.hasValue(attrId)) {
-            return;
-        }
-        throw new ParseException(
-                "No " + attrName + " attribute found in <" + tag + "/>", parser);
     }
 }

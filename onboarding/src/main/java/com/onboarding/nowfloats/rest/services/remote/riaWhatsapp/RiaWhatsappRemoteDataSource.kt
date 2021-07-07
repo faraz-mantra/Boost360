@@ -11,6 +11,9 @@ import retrofit2.http.Query
 interface RiaWhatsappRemoteDataSource {
 
   @POST(EndPoints.RIA_WHATSAPP)
-  fun updateRiaWhatsapp(@Query("authClientId") authClientId: String?, @Body request: RiaWhatsappRequest?): Observable<Response<Any>>
+  fun updateRiaWhatsapp(
+    @Query("authClientId") authClientId: String?,
+    @Body request: RiaWhatsappRequest?
+  ): Observable<Response<Any>>
 
 }

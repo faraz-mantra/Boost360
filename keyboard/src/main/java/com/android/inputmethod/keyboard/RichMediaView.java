@@ -26,6 +26,10 @@ public class RichMediaView extends LinearLayout implements ChangeRichModeListene
     private StickerView mStickerView;
     private boolean emojiIsActive;
 
+    public RichMediaView(final Context context, final AttributeSet attrs) {
+        super(context, attrs);
+    }
+
     public void setGone() {
         mEmojiPalettesView.setVisibility(View.GONE);
         mMediaBottomBar.setVisibility(View.GONE);
@@ -63,10 +67,6 @@ public class RichMediaView extends LinearLayout implements ChangeRichModeListene
     public void deallocateMemory() {
         if (mEmojiPalettesView != null)
             mEmojiPalettesView.stopEmojiPalettes();
-    }
-
-    public RichMediaView(final Context context, final AttributeSet attrs) {
-        super(context, attrs);
     }
 
     public void setUp(View view, boolean hardwareAccelerated, KeyboardActionListener actionListener) {

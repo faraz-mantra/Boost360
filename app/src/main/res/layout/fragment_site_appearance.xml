@@ -1,115 +1,126 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/parent_layout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/screen_bg"
+  tools:context="com.nowfloats.SiteAppearance.SiteAppearanceFragment">
+
+  <LinearLayout
+    android:id="@+id/child_layout"
     android:layout_width="match_parent"
-    android:id="@+id/parent_layout"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.nowfloats.SiteAppearance.SiteAppearanceFragment">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView xmlns:card="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="15dp"
+      card:cardBackgroundColor="@color/white"
+      card:cardElevation="3dp"
+      card:contentPaddingBottom="0dp"
+      card:contentPaddingLeft="10dp"
+      card:contentPaddingTop="15dp">
+
+      <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/child_layout"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <androidx.cardview.widget.CardView
-            xmlns:card="http://schemas.android.com/apk/res-auto"
-            card:cardBackgroundColor="@color/white"
-            card:cardElevation="3dp"
-            card:contentPaddingTop="15dp"
-            card:contentPaddingLeft="10dp"
-            card:contentPaddingBottom="0dp"
-            android:layout_marginBottom="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
-                    android:id="@+id/tv_help_header"
-                    android:text="@string/site_appearance_title"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:id="@+id/tv_help_body"
-                    android:text="@string/site_appearance_text"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="#808080"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/tv_help_footer"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/site_appearance_warn"
-                    android:textColor="#808080"
-                    android:textSize="14sp"
-                    android:visibility="gone"
-                    android:textStyle="italic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
 
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+          android:id="@+id/tv_help_header"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:text="@string/site_appearance_title" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentPadding="10dp"
-            app:cardElevation="3dp"
-            android:layout_marginBottom="1dp"
-            android:id="@+id/cv_kitsune_switch">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="10dp"
-                    android:background="@color/primaryColor"
-                    android:id="@+id/iv_kitsune_switch"
-                    android:src="@drawable/ic_enable_kitsune"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:id="@+id/tv_kitsune_switch"
-                    android:textSize="18sp"
-                    android:textColor="@color/primaryColor"
-                    android:text="@string/site_appearance_upgrade_text"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentPadding="10dp"
-            app:cardElevation="3dp"
-            android:id="@+id/cv_revert_back"
-            android:visibility="gone">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:tint="#808080"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_revert_back"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:textSize="18sp"
-                    android:text="@string/site_appearance_revert_to_old"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        <me.biubiubiu.justifytext.library.JustifyTextView
+          android:id="@+id/tv_help_body"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:gravity="center"
+          android:text="@string/site_appearance_text"
+          android:textColor="#808080"
+          android:textSize="14sp" />
 
-    </LinearLayout>
+        <TextView
+          android:id="@+id/tv_help_footer"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:text="@string/site_appearance_warn"
+          android:textColor="#808080"
+          android:textSize="14sp"
+          android:textStyle="italic"
+          android:visibility="gone" />
+
+      </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/cv_kitsune_switch"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="1dp"
+      app:cardElevation="3dp"
+      app:contentPadding="10dp">
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+          android:id="@+id/iv_kitsune_switch"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_marginStart="10dp"
+          android:background="@color/primaryColor"
+          android:src="@drawable/ic_enable_kitsune" />
+
+        <TextView
+          android:id="@+id/tv_kitsune_switch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="10dp"
+          android:text="@string/site_appearance_upgrade_text"
+          android:textColor="@color/primaryColor"
+          android:textSize="18sp" />
+      </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/cv_revert_back"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      app:cardElevation="3dp"
+      app:contentPadding="10dp">
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_marginStart="10dp"
+          android:src="@drawable/ic_revert_back"
+          android:tint="#808080" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="10dp"
+          android:text="@string/site_appearance_revert_to_old"
+          android:textSize="18sp" />
+      </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+  </LinearLayout>
 
 </FrameLayout>

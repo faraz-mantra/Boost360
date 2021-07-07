@@ -9,9 +9,9 @@ import com.dashboard.constant.RecyclerViewItemType
 import com.framework.base.BaseActivity
 
 abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
-    var activity: BaseActivity<*, *>,
-    var list: ArrayList<T>,
-    private var itemClickListener: RecyclerItemClickListener?,
+  var activity: BaseActivity<*, *>,
+  var list: ArrayList<T>,
+  private var itemClickListener: RecyclerItemClickListener?,
 ) : RecyclerView.Adapter<BaseRecyclerViewHolder<*>>() {
 
   protected var isLoaderVisible = false
@@ -50,7 +50,11 @@ abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
   }
 
 
-  protected fun getViewDataBinding(inflater: LayoutInflater, recyclerViewItemType: RecyclerViewItemType, parent: ViewGroup): ViewDataBinding {
+  protected fun getViewDataBinding(
+    inflater: LayoutInflater,
+    recyclerViewItemType: RecyclerViewItemType,
+    parent: ViewGroup
+  ): ViewDataBinding {
     return DataBindingUtil.inflate(inflater, recyclerViewItemType.getLayout(), parent, false)
   }
 }

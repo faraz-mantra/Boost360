@@ -6,28 +6,23 @@ package io.separ.neural.inputmethod.colors;
 
 import android.content.Context;
 import android.graphics.Color;
+
 import androidx.core.view.ViewCompat;
 
 public class ColorUtils {
-    private static final int[] DEFAULT_COLORS;
     public static final String MATERIAL_LIGHT = "#eceff1";
     public static final int NO_COLOR = 1000;
     static final int NUM_COLORS = 1;
+    private static final int[] DEFAULT_COLORS;
+
+    static {
+        DEFAULT_COLORS = new int[]{NO_COLOR, -1644826, -4342339, -657931};
+    }
 
     public static String convertColor(int color) {
         Object[] objArr = new Object[NUM_COLORS];
         objArr[0] = Integer.valueOf(ViewCompat.MEASURED_SIZE_MASK & color);
         return String.format("#%06X", objArr);
-    }
-
-    public enum ButtonType {
-        NONE,
-        FLAT,
-        BIG
-    }
-
-    static {
-        DEFAULT_COLORS = new int[]{NO_COLOR, -1644826, -4342339, -657931};
     }
 
     public static ButtonType getButtonType() {
@@ -137,7 +132,7 @@ public class ColorUtils {
     public static int flipBrightness(int color) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
-        if(hsv[2] < 0.5)
+        if (hsv[2] < 0.5)
             hsv[2] = hsv[2] + 0.4f;
         else
             hsv[2] = hsv[2] - 0.4f;
@@ -178,6 +173,12 @@ public class ColorUtils {
 
     static int getAccent(int color) {
         return isColorDark(color) ? lightColor(color, 0.4f) : darkerColor(color, 0.4f);
+    }
+
+    public enum ButtonType {
+        NONE,
+        FLAT,
+        BIG
     }
 
 

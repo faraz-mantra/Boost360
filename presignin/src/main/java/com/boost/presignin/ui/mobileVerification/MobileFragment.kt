@@ -84,9 +84,9 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     val constraint = binding?.root as? ConstraintLayout
     binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
       if (hasFocus) {
-        binding?.divider?.setBackgroundColor(getColor(R.color.colorAccent))
+        binding?.divider?.setBackgroundColor(getColor(R.color.black_4a4a4a))
       } else {
-        binding?.divider?.setBackgroundColor(getColor(R.color.graycacaca))
+        binding?.divider?.setBackgroundColor(getColor(R.color.pinkish_grey))
       }
 
     }

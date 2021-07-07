@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -18,47 +17,38 @@
 */
 -->
 
-<merge
-    xmlns:latin="http://schemas.android.com/apk/res-auto"
->
-    <switch>
-        <case
-            latin:languageCode="fa"
-        >
-            <!-- U+066C: "٬" ARABIC THOUSANDS SEPARATOR
-                 U+066B: "٫" ARABIC DECIMAL SEPARATOR -->
-            <Key
-                latin:keySpec="\@"
-                latin:keyHintLabel="&#x066C;"
-                latin:moreKeys="&#x066C;" />
-            <Key
-                latin:keySpec="\#"
-                latin:keyHintLabel="&#x066B;"
-                latin:moreKeys="&#x066B;" />
-        </case>
-        <default>
-            <Key
-                latin:keySpec="\@" />
-            <Key
-                latin:keySpec="\#" />
-        </default>
-    </switch>
-    <Key
-        latin:keyStyle="currencyKeyStyle" />
-    <Key
-        latin:keySpec="!text/keyspec_symbols_percent"
-        latin:moreKeys="!text/morekeys_symbols_percent" />
-    <Key
-        latin:keySpec="&amp;" />
-    <!-- U+2013: "–" EN DASH
-         U+2014: "—" EM DASH
-         U+00B7: "·" MIDDLE DOT -->
-    <Key
-        latin:keySpec="-"
-        latin:moreKeys="_,&#x2013;,&#x2014;,&#x00B7;" />
-    <Key
-        latin:keySpec="+"
-        latin:moreKeys="!text/morekeys_plus" />
-    <include
-        latin:keyboardLayout="@xml/keys_parentheses" />
+<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
+  <switch>
+    <case latin:languageCode="fa">
+      <!-- U+066C: "٬" ARABIC THOUSANDS SEPARATOR
+           U+066B: "٫" ARABIC DECIMAL SEPARATOR -->
+      <Key
+        latin:keyHintLabel="&#x066C;"
+        latin:keySpec="\@"
+        latin:moreKeys="&#x066C;" />
+      <Key
+        latin:keyHintLabel="&#x066B;"
+        latin:keySpec="\#"
+        latin:moreKeys="&#x066B;" />
+    </case>
+    <default>
+      <Key latin:keySpec="\@" />
+      <Key latin:keySpec="\#" />
+    </default>
+  </switch>
+  <Key latin:keyStyle="currencyKeyStyle" />
+  <Key
+    latin:keySpec="!text/keyspec_symbols_percent"
+    latin:moreKeys="!text/morekeys_symbols_percent" />
+  <Key latin:keySpec="&amp;" />
+  <!-- U+2013: "–" EN DASH
+       U+2014: "—" EM DASH
+       U+00B7: "·" MIDDLE DOT -->
+  <Key
+    latin:keySpec="-"
+    latin:moreKeys="_,&#x2013;,&#x2014;,&#x00B7;" />
+  <Key
+    latin:keySpec="+"
+    latin:moreKeys="!text/morekeys_plus" />
+  <include latin:keyboardLayout="@xml/keys_parentheses" />
 </merge>

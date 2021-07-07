@@ -22,7 +22,7 @@ public final class InlineSettingsAdaptor extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(customPagerEnum.getLayoutResId(), collection, false);
         Button mButton = new Button(mContext);
-        mButton.setText("Insert "+customPagerEnum.getTitleResId());
+        mButton.setText("Insert " + customPagerEnum.getTitleResId());
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

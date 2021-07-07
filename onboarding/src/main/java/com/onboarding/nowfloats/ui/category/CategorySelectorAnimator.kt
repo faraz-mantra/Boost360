@@ -50,9 +50,11 @@ class CategorySelectorAnimator {
 
   var listener: OnAnimationCompleteListener? = null
 
-  fun setViews(imageRiyaLarge: LinearLayout?, imageRiyaCard: ShadowLayout?,
-               motionLayout: MotionLayout?, toolbarTitle: CustomTextView?,
-               subTitleForeground: View?) {
+  fun setViews(
+    imageRiyaLarge: LinearLayout?, imageRiyaCard: ShadowLayout?,
+    motionLayout: MotionLayout?, toolbarTitle: CustomTextView?,
+    subTitleForeground: View?
+  ) {
     this.imageRiyaLarge = WeakReference(imageRiyaLarge)
     this.imageRiyaCard = WeakReference(imageRiyaCard)
     this.motionLayout = WeakReference(motionLayout)
@@ -80,14 +82,18 @@ class CategorySelectorAnimator {
         as? ConstraintLayout.LayoutParams) ?: return false
 
     val (heightAnimator, widthAnimator) =
-        largeLogoSizeAnimators(imageRiyaParams, imageRiyaLargeParams)
+      largeLogoSizeAnimators(imageRiyaParams, imageRiyaLargeParams)
 
     val (marginTopAnimator, marginStartAnimator) =
-        largeLogoPositionAnimators(imageRiyaLargeParams)
+      largeLogoPositionAnimators(imageRiyaLargeParams)
 
     val animatorSet = AnimatorSet()
-    animatorSet.playTogether(listOf(heightAnimator, widthAnimator,
-        marginTopAnimator, marginStartAnimator))
+    animatorSet.playTogether(
+      listOf(
+        heightAnimator, widthAnimator,
+        marginTopAnimator, marginStartAnimator
+      )
+    )
     animatorSet.interpolator = accelerateInterpolator
     animatorSet.duration = largeLogoAnimationDuration
     animatorSet.startDelay = animationDelay
@@ -114,16 +120,20 @@ class CategorySelectorAnimator {
   }
 
   private fun largeLogoPositionAnimators(imageRiyaLargeParams: FrameLayout.LayoutParams): Pair<ValueAnimator, ValueAnimator> {
-    val marginTopAnimator = ValueAnimator.ofInt(imageRiyaLargeParams.topMargin,
-        ConversionUtils.dp2px(58f))
+    val marginTopAnimator = ValueAnimator.ofInt(
+      imageRiyaLargeParams.topMargin,
+      ConversionUtils.dp2px(58f)
+    )
     marginTopAnimator.addUpdateListener {
       imageRiyaLargeParams.topMargin = it.animatedValue as Int
       imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams
       imageRiyaLarge?.get()?.refreshLayout()
     }
 
-    val marginStartAnimator = ValueAnimator.ofInt(imageRiyaLargeParams.marginStart,
-        ConversionUtils.dp2px(24f))
+    val marginStartAnimator = ValueAnimator.ofInt(
+      imageRiyaLargeParams.marginStart,
+      ConversionUtils.dp2px(24f)
+    )
     marginStartAnimator.addUpdateListener {
       imageRiyaLargeParams.marginStart = it.animatedValue as Int
       imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams
@@ -132,9 +142,14 @@ class CategorySelectorAnimator {
     return Pair(marginTopAnimator, marginStartAnimator)
   }
 
-  private fun largeLogoSizeAnimators(imageRiyaParams: ConstraintLayout.LayoutParams, imageRiyaLargeParams: FrameLayout.LayoutParams): Pair<ValueAnimator, ValueAnimator> {
-    val heightAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredHeight?.minus(0))
-        ?: 0, (imageRiyaParams.height - 0))
+  private fun largeLogoSizeAnimators(
+    imageRiyaParams: ConstraintLayout.LayoutParams,
+    imageRiyaLargeParams: FrameLayout.LayoutParams
+  ): Pair<ValueAnimator, ValueAnimator> {
+    val heightAnimator = ValueAnimator.ofInt(
+      (imageRiyaLarge?.get()?.measuredHeight?.minus(0))
+        ?: 0, (imageRiyaParams.height - 0)
+    )
 
     heightAnimator.addUpdateListener {
       imageRiyaLargeParams.height = it.animatedValue as Int
@@ -142,8 +157,10 @@ class CategorySelectorAnimator {
       imageRiyaLarge?.get()?.refreshLayout()
     }
 
-    val widthAnimator = ValueAnimator.ofInt((imageRiyaLarge?.get()?.measuredWidth?.minus(0))
-        ?: 0, (imageRiyaParams.width - 0))
+    val widthAnimator = ValueAnimator.ofInt(
+      (imageRiyaLarge?.get()?.measuredWidth?.minus(0))
+        ?: 0, (imageRiyaParams.width - 0)
+    )
     widthAnimator.addUpdateListener {
       imageRiyaLargeParams.width = it.animatedValue as Int
       imageRiyaLarge?.get()?.layoutParams = imageRiyaLargeParams
@@ -154,15 +171,16 @@ class CategorySelectorAnimator {
 
   private fun startTitleTypeWriter() {
     titleTypeWriter = Observable.range(0, title.length)
-        .concatMap { Observable.just(it).delay(typingSpeed, TimeUnit.MILLISECONDS) }
-        .map { title[it].toString() }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
-        .doOnComplete {
-          listener?.onTitleAnimationComplete()
-          onTitleTypingAnimationCompleted()
-        }
-        .subscribe { char ->
-          toolbarTitle?.get()?.text = toolbarTitle?.get()?.text?.toString()?.plus(char)
-        }
+      .concatMap { Observable.just(it).delay(typingSpeed, TimeUnit.MILLISECONDS) }
+      .map { title[it].toString() }.subscribeOn(Schedulers.computation())
+      .observeOn(AndroidSchedulers.mainThread())
+      .doOnComplete {
+        listener?.onTitleAnimationComplete()
+        onTitleTypingAnimationCompleted()
+      }
+      .subscribe { char ->
+        toolbarTitle?.get()?.text = toolbarTitle?.get()?.text?.toString()?.plus(char)
+      }
   }
 
   private fun onTitleTypingAnimationCompleted() {

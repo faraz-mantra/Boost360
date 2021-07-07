@@ -10,7 +10,8 @@ enum class TypeSuccess {
   CLOSE, VISIT_WEBSITE
 }
 
-class CreateServiceSuccessBottomSheet : BaseBottomSheetDialog<BottomSheetServiceCreatedSuccessfullyBinding, BaseViewModel>() {
+class CreateServiceSuccessBottomSheet :
+  BaseBottomSheetDialog<BottomSheetServiceCreatedSuccessfullyBinding, BaseViewModel>() {
 
   var onClicked: (value: String) -> Unit = { }
   var isEdit: Boolean = false
@@ -29,8 +30,10 @@ class CreateServiceSuccessBottomSheet : BaseBottomSheetDialog<BottomSheetService
   override fun onCreateView() {
     setOnClickListener(binding?.civCancel, binding?.visitWebsite)
     isCancelable = false
-    binding?.txtMessage?.text = getString(if (isEdit) R.string.successfully_update else R.string.successfully_saved)
-    binding?.txtDesc?.text = getString(if (isEdit) R.string.product_update_and_published_live_on_your_website_or_share else R.string.product_saved_and_published_live_on_your_website_or_share)
+    binding?.txtMessage?.text =
+      getString(if (isEdit) R.string.successfully_update else R.string.successfully_saved)
+    binding?.txtDesc?.text =
+      getString(if (isEdit) R.string.product_update_and_published_live_on_your_website_or_share else R.string.product_saved_and_published_live_on_your_website_or_share)
   }
 
   override fun onClick(v: View) {

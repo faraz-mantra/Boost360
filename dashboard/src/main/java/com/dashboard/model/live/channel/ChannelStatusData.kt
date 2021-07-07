@@ -14,13 +14,13 @@ import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
 const val CHANNEL_STATUS_DATA = "CHANNEL_STATUS_DATA"
 
 class ChannelStatusData(
-    @SerializedName("account_type")
-    var accountType: String? = null,
-    @SerializedName("total_count")
-    var totalCount: Int? = null,
-    @SerializedName("is_connected")
-    var isConnected: Boolean = false,
-    var insightsData: InsightsData? = null,
+  @SerializedName("account_type")
+  var accountType: String? = null,
+  @SerializedName("total_count")
+  var totalCount: Int? = null,
+  @SerializedName("is_connected")
+  var isConnected: Boolean = false,
+  var insightsData: InsightsData? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -81,7 +81,10 @@ fun getChannelStatus(): ArrayList<ChannelStatusData> {
 }
 
 fun saveDataChannelStatus(channelStatus: ArrayList<ChannelStatusData>?) {
-  PreferencesUtils.instance.saveData(CHANNEL_STATUS_DATA, convertListObjToString(channelStatus ?: ArrayList()) ?: "")
+  PreferencesUtils.instance.saveData(
+    CHANNEL_STATUS_DATA,
+    convertListObjToString(channelStatus ?: ArrayList()) ?: ""
+  )
 }
 
 
@@ -89,20 +92,56 @@ fun ChannelsType?.getChannelStatusList(): ArrayList<ChannelStatusData> {
   val list = ArrayList<ChannelStatusData>()
   if (this != null) {
     val isConnectedFpPage = this.facebookpage?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
-    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.facebookpage.name, isConnected = isConnectedFpPage))
+    list.add(
+      ChannelStatusData(
+        accountType = ChannelsType.AccountType.facebookpage.name,
+        isConnected = isConnectedFpPage
+      )
+    )
 
     val isConnectedFpShop = this.facebookshop?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
-    if (isConnectedFpShop) list.add(ChannelStatusData(accountType = ChannelsType.AccountType.facebookshop.name, isConnected = isConnectedFpShop))
+    if (isConnectedFpShop) list.add(
+      ChannelStatusData(
+        accountType = ChannelsType.AccountType.facebookshop.name,
+        isConnected = isConnectedFpShop
+      )
+    )
 
     val isConnectedTwitter = this.twitter?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
-    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.twitter.name, isConnected = isConnectedTwitter))
+    list.add(
+      ChannelStatusData(
+        accountType = ChannelsType.AccountType.twitter.name,
+        isConnected = isConnectedTwitter
+      )
+    )
 
-    val isConnectedGmb = this.googlemybusiness?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
-    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.googlemybusiness.name, isConnected = isConnectedGmb))
+    val isConnectedGmb =
+      this.googlemybusiness?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
+    list.add(
+      ChannelStatusData(
+        accountType = ChannelsType.AccountType.googlemybusiness.name,
+        isConnected = isConnectedGmb
+      )
+    )
   } else {
-    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.facebookpage.name, isConnected = false))
-    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.twitter.name, isConnected = false))
-    list.add(ChannelStatusData(accountType = ChannelsType.AccountType.googlemybusiness.name, isConnected = false))
+    list.add(
+      ChannelStatusData(
+        accountType = ChannelsType.AccountType.facebookpage.name,
+        isConnected = false
+      )
+    )
+    list.add(
+      ChannelStatusData(
+        accountType = ChannelsType.AccountType.twitter.name,
+        isConnected = false
+      )
+    )
+    list.add(
+      ChannelStatusData(
+        accountType = ChannelsType.AccountType.googlemybusiness.name,
+        isConnected = false
+      )
+    )
   }
   return list
 }

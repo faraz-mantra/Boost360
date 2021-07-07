@@ -16,6 +16,7 @@ enum class FragmentType {
   MY_DIGITAL_CHANNEL;
 
   companion object {
-    fun fromName(name: String?): FragmentType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
+    fun fromName(name: String?): FragmentType? =
+      values().firstOrNull { it.name.equals(name, ignoreCase = true) }
   }
 }

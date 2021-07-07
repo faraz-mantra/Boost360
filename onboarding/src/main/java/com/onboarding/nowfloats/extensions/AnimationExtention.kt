@@ -14,14 +14,20 @@ fun View.fadeIn(duration: Long = 500L, alpha: Float = 1F, color: Int? = null): C
   val animationSubject = CompletableSubject.create()
   return animationSubject.doOnSubscribe {
     ViewCompat.animate(this)
-        .setDuration(duration)
-        .alpha(alpha)
-        .withEndAction {
-          color?.let {
-            this.setBackgroundColor(ResourcesCompat.getColor(instance.resources, color, instance.theme))
-          }
-          animationSubject.onComplete()
+      .setDuration(duration)
+      .alpha(alpha)
+      .withEndAction {
+        color?.let {
+          this.setBackgroundColor(
+            ResourcesCompat.getColor(
+              instance.resources,
+              color,
+              instance.theme
+            )
+          )
         }
+        animationSubject.onComplete()
+      }
   }
 }
 

@@ -74,14 +74,15 @@ import static com.framework.webengageconstant.EventValueKt.NULL;
 
 public class AccountSettingsFragment extends Fragment implements DomainApiService.DomainCallback {
 
+    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
+    Boolean confirmCheckerActive = false;
+    UserSessionManager sessionManager;
     private Context mContext;
     private EditText old_pwd, new_pwd, confirm_pwd;
-    Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
-    UserSessionManager sessionManager;
     private ProgressDialog progressDialog;
     private DomainApiService domainApiService;
-    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
+    private boolean isAlreadyCalled = false;
 
     @Nullable
     @Override
@@ -124,7 +125,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 //                        intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
 //                        startActivity(intent);
                         DashboardFragmentContainerActivityKt.startFragmentDashboardActivity(((AppCompatActivity) requireActivity())
-                                ,com.dashboard.constant.FragmentType.FRAGMENT_BUSINESS_PROFILE,new Bundle(),false);
+                                , com.dashboard.constant.FragmentType.FRAGMENT_BUSINESS_PROFILE, new Bundle(), false);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                     case "My Bank Account":
@@ -147,7 +148,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         Bundle b1 = getBundleDataKyc();
                         if (sessionManager.isSelfBrandedKycAdd()) {
                             startFragmentPaymentActivityNew(getActivity(), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
-                        } else startFragmentPaymentActivityNew(getActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
+                        } else
+                            startFragmentPaymentActivityNew(getActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
                     case "Boost Extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
@@ -209,8 +211,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name(), session);
         return bundle;
     }
-
-
 
     public void logoutAlertDialog_Material() {
 
@@ -509,7 +509,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         message.setText(Methods.fromHtml(dialogMessage));
     }
 
-
     @Override
     public void getDomainDetails(DomainDetails domainDetails) {
         hideLoader();
@@ -539,14 +538,10 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
     }
 
-
     @Override
     public void domainBookStatus(String response) {
 
     }
-
-    private boolean isAlreadyCalled = false;
-
 
     private void showDomainDetails() {
         isAlreadyCalled = true;
@@ -558,19 +553,19 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private enum DialogFrom {
-        DOMAIN_AVAILABLE,
-        CONTACTS_AND_EMAIL_REQUIRED,
-        CATEGORY_REQUIRED,
-        ADDRESS_REQUIRED,
-        DEFAULT
-    }
-
     @Override
     public void onResume() {
         super.onResume();
         if (mContext instanceof HomeActivity && HomeActivity.headerText != null) {
             HomeActivity.headerText.setText(getString(R.string.account_settings));
         }
+    }
+
+    private enum DialogFrom {
+        DOMAIN_AVAILABLE,
+        CONTACTS_AND_EMAIL_REQUIRED,
+        CATEGORY_REQUIRED,
+        ADDRESS_REQUIRED,
+        DEFAULT
     }
 }

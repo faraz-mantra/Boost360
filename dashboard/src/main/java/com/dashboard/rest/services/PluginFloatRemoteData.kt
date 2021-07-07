@@ -12,7 +12,7 @@ interface PluginFloatRemoteData {
 
   @GET(EndPoints.DOMAIN_DETAIL)
   fun getDomainDetailsForFloatingPoint(
-      @Path("fpTag") fpTag: String?,
-      @QueryMap map: Map<String, String>?
+    @Path("fpTag") fpTag: String?,
+    @QueryMap map: Map<String, String>?
   ): Observable<Response<DomainDetailResponse>>
 }

@@ -11,12 +11,17 @@ class CustomMaterialButton : MaterialButton {
     init(context, attrs, 0)
   }
 
-  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+    context,
+    attrs,
+    defStyleAttr
+  ) {
     init(context, attrs, defStyleAttr)
   }
 
   private fun init(context: Context, attrs: AttributeSet, defStyleAttr: Int) {
-    val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.CustomMaterialButton, defStyleAttr, 0)
+    val typedArray =
+      context.theme.obtainStyledAttributes(attrs, R.styleable.CustomMaterialButton, defStyleAttr, 0)
     isEnabled = isEnabled
     requestLayout()
     invalidate()

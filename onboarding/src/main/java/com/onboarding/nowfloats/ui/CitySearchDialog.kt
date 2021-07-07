@@ -20,7 +20,8 @@ import com.onboarding.nowfloats.viewmodel.CityViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewModel>(), RecyclerItemClickListener {
+class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewModel>(),
+  RecyclerItemClickListener {
 
   private var cityList = ArrayList<CityDataModel>()
   private var cityListFilter = ArrayList<CityDataModel>()
@@ -40,7 +41,8 @@ class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewMod
   }
 
   override fun onCreateView() {
-    viewModel?.getCities(baseActivity)?.observeOnce(viewLifecycleOwner, Observer { onGetCities(it) })
+    viewModel?.getCities(baseActivity)
+      ?.observeOnce(viewLifecycleOwner, Observer { onGetCities(it) })
     binding?.edtSearchText?.afterTextChanged { filterCity(it) }
     binding?.ivClearText?.setOnClickListener { binding?.edtSearchText?.setText("") }
     binding?.close?.setOnClickListener { dismiss() }
@@ -56,7 +58,8 @@ class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewMod
       cityListFilter.clear()
       cityListFilter.addAll(cityList)
       val list = cityListFilter.filter {
-        it.getCityName().startsWith(query) || it.getCityName().contains(query) || it.getStateName().startsWith(query) || it.getStateName().contains(query)
+        it.getCityName().startsWith(query) || it.getCityName().contains(query) || it.getStateName()
+          .startsWith(query) || it.getStateName().contains(query)
       } as ArrayList<CityDataModel>
       baseAdapter?.notify(list)
     }

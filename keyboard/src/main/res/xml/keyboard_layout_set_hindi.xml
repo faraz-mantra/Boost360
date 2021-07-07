@@ -18,33 +18,33 @@
 -->
 
 <KeyboardLayoutSet xmlns:latin="http://schemas.android.com/apk/res-auto">
-    <Feature latin:supportedScript="devanagari" />
-    <Element
-        latin:elementKeyboard="@xml/kbd_hindi_compact"
-        latin:elementName="alphabet"
-        latin:enableProximityCharsCorrection="true" />
-    <Element
-        latin:elementKeyboard="@xml/kbd_hindi_compact_two_by_four"
-        latin:elementName="mainLayoutTwo" />
-    <Element
-        latin:elementKeyboard="@xml/kbd_hindi_compact_three_by_three"
-        latin:elementName="mainLayoutThree" />
-    <Element
-        latin:elementKeyboard="@xml/kbd_hindi_compact4"
-        latin:elementName="mainLayoutFour" />
-    <Element
-        latin:elementKeyboard="@xml/kbd_symbols_hindi"
-        latin:elementName="symbols" />
-    <Element
-        latin:elementKeyboard="@xml/kbd_symbols_shift_hindi"
-        latin:elementName="symbolsShifted" />
-    <Element
-        latin:elementKeyboard="@xml/kbd_phone"
-        latin:elementName="phone" />
-    <Element
-        latin:elementKeyboard="@xml/kbd_phone_symbols"
-        latin:elementName="phoneSymbols" />
-    <Element
-        latin:elementKeyboard="@xml/kbd_number"
-        latin:elementName="number" />
+  <Feature latin:supportedScript="devanagari" />
+  <Element
+    latin:elementKeyboard="@xml/kbd_hindi_compact"
+    latin:elementName="alphabet"
+    latin:enableProximityCharsCorrection="true" />
+  <Element
+    latin:elementKeyboard="@xml/kbd_hindi_compact_two_by_four"
+    latin:elementName="mainLayoutTwo" />
+  <Element
+    latin:elementKeyboard="@xml/kbd_hindi_compact_three_by_three"
+    latin:elementName="mainLayoutThree" />
+  <Element
+    latin:elementKeyboard="@xml/kbd_hindi_compact4"
+    latin:elementName="mainLayoutFour" />
+  <Element
+    latin:elementKeyboard="@xml/kbd_symbols_hindi"
+    latin:elementName="symbols" />
+  <Element
+    latin:elementKeyboard="@xml/kbd_symbols_shift_hindi"
+    latin:elementName="symbolsShifted" />
+  <Element
+    latin:elementKeyboard="@xml/kbd_phone"
+    latin:elementName="phone" />
+  <Element
+    latin:elementKeyboard="@xml/kbd_phone_symbols"
+    latin:elementName="phoneSymbols" />
+  <Element
+    latin:elementKeyboard="@xml/kbd_number"
+    latin:elementName="number" />
 </KeyboardLayoutSet>

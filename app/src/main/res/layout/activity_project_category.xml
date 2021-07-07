@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#FBFBFB"
+  android:clickable="true"
+  android:focusable="true"
+  android:orientation="vertical">
+
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/new_custome_app_bar" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycler"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FBFBFB"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical">
-
-
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_custome_app_bar"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_single_project"/>
+    tools:listitem="@layout/item_single_project" />
 
 </LinearLayout>

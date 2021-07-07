@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_focused="false" android:state_pressed="true" android:drawable="@drawable/click_effect_button_spherical_yellow_rect" />
-    <item android:drawable="@drawable/button_spherical_yellow_rect" />
+  <item android:drawable="@drawable/click_effect_button_spherical_yellow_rect" android:state_focused="false" android:state_pressed="true" />
+  <item android:drawable="@drawable/button_spherical_yellow_rect" />
 </selector>

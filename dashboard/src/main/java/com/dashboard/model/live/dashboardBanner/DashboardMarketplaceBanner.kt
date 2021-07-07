@@ -8,20 +8,20 @@ import java.io.Serializable
 data class DashboardMarketplaceBanner(
 //    @SerializedName("createdon")
 //    var createdon: String? = null,
-    @SerializedName("cta_feature_key")
-    var ctaFeatureKey: String? = null,
-    @SerializedName("importance")
-    var importance: String? = null,
-    @SerializedName("cta_web_link")
-    var ctaWebLink: String? = null,
-    @SerializedName("exclusive_to_categories")
-    var exclusiveToCategories: ArrayList<String>? = null,
-    @SerializedName("image")
-    var bannerImage: BannerImage? = null,
-    @SerializedName("isarchived")
-    var isarchived: Boolean? = null,
-    @SerializedName("_kid")
-    var kid: String? = null,
+  @SerializedName("cta_feature_key")
+  var ctaFeatureKey: String? = null,
+  @SerializedName("importance")
+  var importance: String? = null,
+  @SerializedName("cta_web_link")
+  var ctaWebLink: String? = null,
+  @SerializedName("exclusive_to_categories")
+  var exclusiveToCategories: ArrayList<String>? = null,
+  @SerializedName("image")
+  var bannerImage: BannerImage? = null,
+  @SerializedName("isarchived")
+  var isarchived: Boolean? = null,
+  @SerializedName("_kid")
+  var kid: String? = null,
 //    @SerializedName("_parentClassId")
 //    var parentClassId: String? = null,
 //    @SerializedName("_parentClassName")

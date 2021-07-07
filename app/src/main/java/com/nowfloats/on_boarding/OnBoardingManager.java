@@ -53,7 +53,7 @@ public class OnBoardingManager implements OnBoardingCallback {
 
     public void getMerchantProfileCOnnection(final String fptag, final View mLockLayout) {
 
-        UserSessionManager session =new UserSessionManager(mContext, (Activity)mContext);
+        UserSessionManager session = new UserSessionManager(mContext, (Activity) mContext);
 
         OnBoardingWebActionApis apis = Constants.restAdapterDev.create(OnBoardingWebActionApis.class);
         String[] arr = new String[]{session.getFPID()};
@@ -142,7 +142,7 @@ public class OnBoardingManager implements OnBoardingCallback {
                     }
 
                     Integer index = onBoardingModel.getToBeCompletePos();
-                    if(index >= 0) {
+                    if (index >= 0) {
                         onBoardingModel.setScreenDataArrayList(screenDataArrayList);
                         startOnBoarding(onBoardingModel);
                     }

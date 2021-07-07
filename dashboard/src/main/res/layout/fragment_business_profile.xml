@@ -147,12 +147,12 @@
           android:id="@+id/ctv_business_name"
           style="@style/BusinessProfileTextField"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
-          android:singleLine="true"
-          tools:ignore="UnusedAttribute"
-          app:textType="BODY_2"
           android:includeFontPadding="false"
+          android:singleLine="true"
           android:textColor="@color/black_2A2A2A"
           android:textFontWeight="500"
+          app:textType="BODY_2"
+          tools:ignore="UnusedAttribute"
           tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -171,9 +171,9 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_business_category"
           style="@style/BusinessProfileTextField"
-          android:textColor="@color/primary_grey_light"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
           android:drawableEnd="@drawable/ic_lock_business"
+          android:textColor="@color/primary_grey_light"
           tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat

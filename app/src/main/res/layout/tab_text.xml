@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="50dp"
+  android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
+  <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
 
-        <TextView
-            android:id="@+id/tab_textview"
-            fontPath="Roboto-Bold.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/alerts_text"
-            android:textColor="@color/text_color_brown"
-            android:textSize="20sp"
-            tools:ignore="MissingPrefix" />
-    </LinearLayout>
+    <TextView
+      android:id="@+id/tab_textview"
+      fontPath="Roboto-Bold.ttf"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/alerts_text"
+      android:textColor="@color/text_color_brown"
+      android:textSize="20sp"
+      tools:ignore="MissingPrefix" />
+  </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/ll_ria_alert"
-        android:layout_width="17dp"
-        android:layout_height="17dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/alert_count_bg"
-        android:visibility="gone">
+  <RelativeLayout
+    android:id="@+id/ll_ria_alert"
+    android:layout_width="17dp"
+    android:layout_height="17dp"
+    android:layout_gravity="end"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/alert_count_bg"
+    android:visibility="gone">
 
-        <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="3dp"
-            app:srcCompat="@drawable/ic_star_black_24dp"
-            android:tint="@color/white" />
-    </RelativeLayout>
-    <!-- <LinearLayout
-         android:layout_width="fill_parent"
-         android:layout_height="match_parent"
-         android:padding="10dp"
-         android:gravity="right|top">
-         <TextView
-             android:id="@+id/alert_count_textview"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:padding="2dp"
-             android:background="@drawable/alert_count_bg"
-             android:text="12"
-             android:textSize="12sp"
-             android:textColor="@color/white"
-             fontPath="Roboto-Bold.ttf"
-             tools:ignore="MissingPrefix" />
-         </LinearLayout>-->
+    <ImageView
+      android:layout_width="10dp"
+      android:layout_height="10dp"
+      android:layout_centerInParent="true"
+      android:layout_marginTop="3dp"
+      android:tint="@color/white"
+      app:srcCompat="@drawable/ic_star_black_24dp" />
+  </RelativeLayout>
+  <!-- <LinearLayout
+       android:layout_width="fill_parent"
+       android:layout_height="match_parent"
+       android:padding="10dp"
+       android:gravity="right|top">
+       <TextView
+           android:id="@+id/alert_count_textview"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:padding="2dp"
+           android:background="@drawable/alert_count_bg"
+           android:text="12"
+           android:textSize="12sp"
+           android:textColor="@color/white"
+           fontPath="Roboto-Bold.ttf"
+           tools:ignore="MissingPrefix" />
+       </LinearLayout>-->
 </FrameLayout>

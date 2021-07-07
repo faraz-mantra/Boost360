@@ -39,7 +39,7 @@ import io.separ.neural.inputmethod.indic.debug.ExternalDictionaryGetterForDebug;
 
 /**
  * "Debug mode" settings sub screen.
- *
+ * <p>
  * This settings sub screen handles a several preference options for debugging.
  */
 public final class DebugSettingsFragment extends SubScreenFragment
@@ -67,7 +67,7 @@ public final class DebugSettingsFragment extends SubScreenFragment
         }
 
         final PreferenceGroup dictDumpPreferenceGroup =
-                (PreferenceGroup)findPreference(PREF_KEY_DUMP_DICTS);
+                (PreferenceGroup) findPreference(PREF_KEY_DUMP_DICTS);
         for (final String dictName : DictionaryFacilitator.DICT_TYPE_TO_CLASS.keySet()) {
             final Preference pref = new DictDumpPreference(getActivity(), dictName);
             pref.setOnPreferenceClickListener(this);
@@ -97,17 +97,6 @@ public final class DebugSettingsFragment extends SubScreenFragment
         updateDebugMode();
     }
 
-    private static class DictDumpPreference extends Preference {
-        public final String mDictName;
-
-        public DictDumpPreference(final Context context, final String dictName) {
-            super(context);
-            setKey(PREF_KEY_DUMP_DICT_PREFIX + dictName);
-            setTitle("Dump " + dictName + " dictionary");
-            mDictName = dictName;
-        }
-    }
-
     @Override
     public boolean onPreferenceClick(final Preference pref) {
         final Context context = getActivity();
@@ -117,7 +106,7 @@ public final class DebugSettingsFragment extends SubScreenFragment
             return true;
         }
         if (pref instanceof DictDumpPreference) {
-            final DictDumpPreference dictDumpPref = (DictDumpPreference)pref;
+            final DictDumpPreference dictDumpPref = (DictDumpPreference) pref;
             final String dictName = dictDumpPref.mDictName;
             final Intent intent = new Intent(
                     DictionaryDumpBroadcastReceiver.DICTIONARY_DUMP_INTENT_ACTION);
@@ -166,7 +155,7 @@ public final class DebugSettingsFragment extends SubScreenFragment
     private void setupKeyLongpressTimeoutSettings() {
         final SharedPreferences prefs = getSharedPreferences();
         final Resources res = getResources();
-        final SeekBarDialogPreference pref = (SeekBarDialogPreference)findPreference(
+        final SeekBarDialogPreference pref = (SeekBarDialogPreference) findPreference(
                 DebugSettings.PREF_KEY_LONGPRESS_TIMEOUT);
         if (pref == null) {
             return;
@@ -198,14 +187,15 @@ public final class DebugSettingsFragment extends SubScreenFragment
             }
 
             @Override
-            public void feedbackValue(final int value) {}
+            public void feedbackValue(final int value) {
+            }
         });
     }
 
     private void setupKeyPreviewAnimationScale(final String prefKey, final float defaultValue) {
         final SharedPreferences prefs = getSharedPreferences();
         final Resources res = getResources();
-        final SeekBarDialogPreference pref = (SeekBarDialogPreference)findPreference(prefKey);
+        final SeekBarDialogPreference pref = (SeekBarDialogPreference) findPreference(prefKey);
         if (pref == null) {
             return;
         }
@@ -217,7 +207,7 @@ public final class DebugSettingsFragment extends SubScreenFragment
             }
 
             private int getPercentageFromValue(final float floatValue) {
-                return (int)(floatValue * PERCENTAGE_FLOAT);
+                return (int) (floatValue * PERCENTAGE_FLOAT);
             }
 
             @Override
@@ -250,14 +240,15 @@ public final class DebugSettingsFragment extends SubScreenFragment
             }
 
             @Override
-            public void feedbackValue(final int value) {}
+            public void feedbackValue(final int value) {
+            }
         });
     }
 
     private void setupKeyPreviewAnimationDuration(final String prefKey, final int defaultValue) {
         final SharedPreferences prefs = getSharedPreferences();
         final Resources res = getResources();
-        final SeekBarDialogPreference pref = (SeekBarDialogPreference)findPreference(prefKey);
+        final SeekBarDialogPreference pref = (SeekBarDialogPreference) findPreference(prefKey);
         if (pref == null) {
             return;
         }
@@ -288,7 +279,19 @@ public final class DebugSettingsFragment extends SubScreenFragment
             }
 
             @Override
-            public void feedbackValue(final int value) {}
+            public void feedbackValue(final int value) {
+            }
         });
+    }
+
+    private static class DictDumpPreference extends Preference {
+        public final String mDictName;
+
+        public DictDumpPreference(final Context context, final String dictName) {
+            super(context);
+            setKey(PREF_KEY_DUMP_DICT_PREFIX + dictName);
+            setTitle("Dump " + dictName + " dictionary");
+            mDictName = dictName;
+        }
     }
 }

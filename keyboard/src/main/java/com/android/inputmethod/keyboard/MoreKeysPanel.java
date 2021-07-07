@@ -20,31 +20,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public interface MoreKeysPanel {
-    interface Controller {
-        /**
-         * Add the {@link MoreKeysPanel} to the target view.
-         * @param panel the panel to be shown.
-         */
-        void onShowMoreKeysPanel(final MoreKeysPanel panel);
-
-        /**
-         * Remove the current {@link MoreKeysPanel} from the target view.
-         */
-        void onDismissMoreKeysPanel();
-
-        /**
-         * Instructs the parent to cancel the panel (e.g., when entering a different input mode).
-         */
-        void onCancelMoreKeysPanel();
-    }
-
     Controller EMPTY_CONTROLLER = new Controller() {
         @Override
-        public void onShowMoreKeysPanel(final MoreKeysPanel panel) {}
+        public void onShowMoreKeysPanel(final MoreKeysPanel panel) {
+        }
+
         @Override
-        public void onDismissMoreKeysPanel() {}
+        public void onDismissMoreKeysPanel() {
+        }
+
         @Override
-        public void onCancelMoreKeysPanel() {}
+        public void onCancelMoreKeysPanel() {
+        }
     };
 
     /**
@@ -53,10 +40,10 @@ public interface MoreKeysPanel {
      *
      * @param parentView the parent view of this {@link MoreKeysPanel}
      * @param controller the controller that can dismiss this {@link MoreKeysPanel}
-     * @param pointX x coordinate of this {@link MoreKeysPanel}
-     * @param pointY y coordinate of this {@link MoreKeysPanel}
-     * @param listener the listener that will receive keyboard action from this
-     * {@link MoreKeysPanel}.
+     * @param pointX     x coordinate of this {@link MoreKeysPanel}
+     * @param pointY     y coordinate of this {@link MoreKeysPanel}
+     * @param listener   the listener that will receive keyboard action from this
+     *                   {@link MoreKeysPanel}.
      */
     // TODO: Currently the MoreKeysPanel is inside a container view that is added to the parent.
     // Consider the simpler approach of placing the MoreKeysPanel itself into the parent view.
@@ -72,8 +59,8 @@ public interface MoreKeysPanel {
     /**
      * Process a move event on the more keys panel.
      *
-     * @param x translated x coordinate of the touch point
-     * @param y translated y coordinate of the touch point
+     * @param x         translated x coordinate of the touch point
+     * @param y         translated y coordinate of the touch point
      * @param pointerId pointer id touch point
      * @param eventTime timestamp of touch point
      */
@@ -82,8 +69,8 @@ public interface MoreKeysPanel {
     /**
      * Process a down event on the more keys panel.
      *
-     * @param x translated x coordinate of the touch point
-     * @param y translated y coordinate of the touch point
+     * @param x         translated x coordinate of the touch point
+     * @param y         translated y coordinate of the touch point
      * @param pointerId pointer id touch point
      * @param eventTime timestamp of touch point
      */
@@ -92,8 +79,8 @@ public interface MoreKeysPanel {
     /**
      * Process an up event on the more keys panel.
      *
-     * @param x translated x coordinate of the touch point
-     * @param y translated y coordinate of the touch point
+     * @param x         translated x coordinate of the touch point
+     * @param y         translated y coordinate of the touch point
      * @param pointerId pointer id touch point
      * @param eventTime timestamp of touch point
      */
@@ -133,4 +120,23 @@ public interface MoreKeysPanel {
      * Return whether the panel is currently being shown.
      */
     boolean isShowingInParent();
+
+    interface Controller {
+        /**
+         * Add the {@link MoreKeysPanel} to the target view.
+         *
+         * @param panel the panel to be shown.
+         */
+        void onShowMoreKeysPanel(final MoreKeysPanel panel);
+
+        /**
+         * Remove the current {@link MoreKeysPanel} from the target view.
+         */
+        void onDismissMoreKeysPanel();
+
+        /**
+         * Instructs the parent to cancel the panel (e.g., when entering a different input mode).
+         */
+        void onCancelMoreKeysPanel();
+    }
 }

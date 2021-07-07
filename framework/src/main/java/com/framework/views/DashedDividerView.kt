@@ -22,13 +22,23 @@ class DashedDividerView : View {
   private val paint = Paint()
   private val path = Path()
 
-  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-    val typedArray = context.obtainStyledAttributes(attrs, R.styleable.DashedDividerView, defStyleAttr, R.style.DashedDividerDefault)
+  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+    context,
+    attrs,
+    defStyleAttr
+  ) {
+    val typedArray = context.obtainStyledAttributes(
+      attrs,
+      R.styleable.DashedDividerView,
+      defStyleAttr,
+      R.style.DashedDividerDefault
+    )
 
     dGap = typedArray.getDimension(R.styleable.DashedDividerView_dividerDashGap, dGap)
     dWidth = typedArray.getDimension(R.styleable.DashedDividerView_dividerDashWidth, dWidth)
     dColor = typedArray.getColor(R.styleable.DashedDividerView_dividerDashColor, dColor)
-    direction = typedArray.getInt(R.styleable.DashedDividerView_dividerDirection, DIRECTION_HORIZONTAL)
+    direction =
+      typedArray.getInt(R.styleable.DashedDividerView_dividerDirection, DIRECTION_HORIZONTAL)
 
     paint.color = dColor
     paint.style = Paint.Style.STROKE

@@ -15,50 +15,50 @@ import kotlinx.android.synthetic.main.fragment_splash.view.*
 class SplashFragment : Fragment() {
 
 
-    lateinit var root: View
-    private lateinit var viewModel: SharedViewModel
+  lateinit var root: View
+  private lateinit var viewModel: SharedViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        root =  inflater.inflate(R.layout.fragment_splash, container, false)
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    // Inflate the layout for this fragment
+    root = inflater.inflate(R.layout.fragment_splash, container, false)
 
 //        root.animation_view.setAnimation(R.raw.splash_globe)
-        root.animation_view.addAnimatorListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) {
-                Log.d("onAnimationRepeat", "")
-            }
+    root.animation_view.addAnimatorListener(object : Animator.AnimatorListener {
+      override fun onAnimationRepeat(animation: Animator?) {
+        Log.d("onAnimationRepeat", "")
+      }
 
-            override fun onAnimationEnd(animation: Animator?) {
-                Log.d("onAnimationEnd", "")
+      override fun onAnimationEnd(animation: Animator?) {
+        Log.d("onAnimationEnd", "")
 //                findNavController().navigate(R.id.action_splashFragment_to_videoPlayerFragment)
-            }
+      }
 
-            override fun onAnimationCancel(animation: Animator?) {
-                Log.d("onAnimationCancel", "")
-            }
+      override fun onAnimationCancel(animation: Animator?) {
+        Log.d("onAnimationCancel", "")
+      }
 
-            override fun onAnimationStart(animation: Animator?) {
-                Log.d("onAnimationStart", "")
-            }
+      override fun onAnimationStart(animation: Animator?) {
+        Log.d("onAnimationStart", "")
+      }
 
-        })
+    })
 
-        setUpMvvm()
+    setUpMvvm()
 
-        return root
-    }
+    return root
+  }
 
-    private fun setUpMvvm() {
+  private fun setUpMvvm() {
 
-    }
+  }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
-        root.animation_view.playAnimation()
-    }
+  override fun onActivityCreated(savedInstanceState: Bundle?) {
+    super.onActivityCreated(savedInstanceState)
+    viewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
+    root.animation_view.playAnimation()
+  }
 
 }

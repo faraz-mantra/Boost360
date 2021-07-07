@@ -13,5 +13,5 @@ import retrofit.http.QueryMap;
 public interface VisitorsApiInterface {
 
     @POST("/dashboard/v2/visitsAnalytics")
-    void getVisitors(@Body List<String> websiteIds, @QueryMap Map<String,String> map, Callback<List<VisitAnalytics>> callback);
+    void getVisitors(@Body List<String> websiteIds, @QueryMap Map<String, String> map, Callback<List<VisitAnalytics>> callback);
 }

@@ -21,47 +21,47 @@ import kotlin.collections.ArrayList
 
 
 class MarketOfferTermsAdapter(itemList: ArrayList<String>?, val listener: HistoryFragmentListener) :
-        RecyclerView.Adapter<MarketOfferTermsAdapter.upgradeViewHolder>() {
+  RecyclerView.Adapter<MarketOfferTermsAdapter.upgradeViewHolder>() {
 
-    private var list = ArrayList<String>()
-    private lateinit var context: Context
+  private var list = ArrayList<String>()
+  private lateinit var context: Context
 
-    init {
-        this.list = itemList as ArrayList<String>
-    }
+  init {
+    this.list = itemList as ArrayList<String>
+  }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
-        val itemView = LayoutInflater.from(parent?.context).inflate(
-                R.layout.marketoffers_info_item, parent, false
-        )
-        context = itemView.context
-        return upgradeViewHolder(itemView)
-    }
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
+    val itemView = LayoutInflater.from(parent?.context).inflate(
+      R.layout.marketoffers_info_item, parent, false
+    )
+    context = itemView.context
+    return upgradeViewHolder(itemView)
+  }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+  override fun getItemCount(): Int {
+    return list.size
+  }
 
-    override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+  override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-        Log.v("onBindViewHolder", " "+ list.get(position))
-        if (list.get(position) != null) {
-            holder.offer_details.setText(Html.fromHtml(list.get(position)))
+    Log.v("onBindViewHolder", " " + list.get(position))
+    if (list.get(position) != null) {
+      holder.offer_details.setText(Html.fromHtml(list.get(position)))
 //            holder.offer_details.setText(list.get(position))
-        }
-
-
     }
 
 
-    fun addupdates(purchaseResult: List<String>) {
-        val initPosition = list.size
-        list.clear()
-        list.addAll(purchaseResult)
-        notifyItemRangeInserted(initPosition, list.size)
-    }
+  }
 
-    class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var offer_details = itemView.findViewById<TextView>(R.id.offer_details)!!
-    }
+
+  fun addupdates(purchaseResult: List<String>) {
+    val initPosition = list.size
+    list.clear()
+    list.addAll(purchaseResult)
+    notifyItemRangeInserted(initPosition, list.size)
+  }
+
+  class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    var offer_details = itemView.findViewById<TextView>(R.id.offer_details)!!
+  }
 }

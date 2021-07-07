@@ -2,8 +2,6 @@ package com.nowfloats.Store.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Store.Model.ActivePackage;
 import com.squareup.picasso.Picasso;
@@ -55,12 +56,12 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
         holder.tvActivationDate.setText(parseDate(activePackage.getToBeActivatedOn()));
         holder.tvExpiryDate.setText(format.format(getExpiryDate(activePackage.getToBeActivatedOn(),
                 activePackage.getTotalMonthsValidity())));
-        if(isExpired){
+        if (isExpired) {
             holder.tvExpiresIn.setTextColor(ContextCompat.getColor(mContext, R.color.red));
             holder.tvExpiryDate.setTextColor(ContextCompat.getColor(mContext, R.color.red));
             holder.tvExpiresIn.setText("(expired)");
             holder.tvAddFeatures.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.tvExpiresIn.setTextColor(ContextCompat.getColor(mContext, R.color.green));
             holder.tvExpiryDate.setTextColor(Color.parseColor("#808080"));
             holder.tvExpiresIn.setText("(expires in "
@@ -69,12 +70,12 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
                     + " days)");
             holder.tvAddFeatures.setVisibility(View.VISIBLE);
         }
-        String variable = activePackage.getTotalMonthsValidity() < 2 ? " month":" months";
+        String variable = activePackage.getTotalMonthsValidity() < 2 ? " month" : " months";
         holder.tvValidity.setText("(Validity: " + activePackage.getTotalMonthsValidity() + variable + ")");
-        if(activePackage.isExpanded()){
+        if (activePackage.isExpanded()) {
             holder.llPlanDetails.setVisibility(View.VISIBLE);
             holder.tvSeePlanDetails.setText(Html.fromHtml("<u>Hide Plan Details</u>"));
-        }else {
+        } else {
             holder.llPlanDetails.setVisibility(View.GONE);
             holder.tvSeePlanDetails.setText(Html.fromHtml("<u>See Plan Details</u>"));
         }
@@ -82,11 +83,11 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
         holder.tvSeePlanDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(activePackage.isExpanded()){
+                if (activePackage.isExpanded()) {
                     holder.llPlanDetails.setVisibility(View.GONE);
                     activePackage.setExpanded(false);
                     holder.tvSeePlanDetails.setText(Html.fromHtml("<u>See Plan Details</u>"));
-                }else {
+                } else {
                     holder.llPlanDetails.setVisibility(View.VISIBLE);
                     activePackage.setExpanded(true);
                     holder.tvSeePlanDetails.setText(Html.fromHtml("<u>Hide Plan Details</u>"));
@@ -99,8 +100,8 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
         long time = Long.parseLong(toBeActivatedOn.replaceAll("[^\\d]", ""));
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time);
-        calendar.add(Calendar.MONTH, (int)Math.floor(totalMonthsValidity));
-        calendar.add(Calendar.DATE, (int) ((totalMonthsValidity-Math.floor(totalMonthsValidity))*30));
+        calendar.add(Calendar.MONTH, (int) Math.floor(totalMonthsValidity));
+        calendar.add(Calendar.DATE, (int) ((totalMonthsValidity - Math.floor(totalMonthsValidity)) * 30));
         return calendar.getTime();
     }
 
@@ -118,13 +119,12 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
     }
 
 
-
     @Override
     public int getItemCount() {
         return mPackages.size();
     }
 
-    public void setActivePackages(List<ActivePackage> activePackages){
+    public void setActivePackages(List<ActivePackage> activePackages) {
         mPackages.clear();
         isExpired = false;
         mPackages.addAll(activePackages);
@@ -136,6 +136,22 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
         isExpired = true;
         mPackages.addAll(expiredPackages);
         this.notifyDataSetChanged();
+    }
+
+    public void setOnItemClickInterface(OnItemClickInterface onItemClickInterface) {
+        this.mOnitemClickInterface = onItemClickInterface;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        this.mOnitemClickInterface = null;
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
+
+    public interface OnItemClickInterface {
+        public void onRenewOrUpdate();
+
+        public void onAddFeatures();
     }
 
     class PlanDetailsViewHolder extends RecyclerView.ViewHolder {
@@ -156,13 +172,13 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
             tvSeePlanDetails = (TextView) itemView.findViewById(R.id.tv_see_plan_details);
             tvRenewUpgrade = (TextView) itemView.findViewById(R.id.tv_renew_upgrade);
             tvAddFeatures = (TextView) itemView.findViewById(R.id.tv_add_features);
-            tvPlanDetails = (TextView ) itemView.findViewById(R.id.tv_package_details);
+            tvPlanDetails = (TextView) itemView.findViewById(R.id.tv_package_details);
             llPlanDetails = (LinearLayout) itemView.findViewById(R.id.ll_plan_details);
 
             tvRenewUpgrade.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mOnitemClickInterface!=null){
+                    if (mOnitemClickInterface != null) {
                         mOnitemClickInterface.onRenewOrUpdate();
                     }
                 }
@@ -176,20 +192,5 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
             });
 
         }
-    }
-
-    public void setOnItemClickInterface(OnItemClickInterface onItemClickInterface){
-        this.mOnitemClickInterface = onItemClickInterface;
-    }
-
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        this.mOnitemClickInterface =  null;
-        super.onDetachedFromRecyclerView(recyclerView);
-    }
-
-    public interface OnItemClickInterface {
-        public void onRenewOrUpdate();
-        public void onAddFeatures();
     }
 }

@@ -14,20 +14,20 @@ import com.onboarding.nowfloats.BaseBoardingApplication;
 
 public class ApiReLoadActivity extends AppCompatActivity {
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    BaseOrderApplication.apiInitialize();
-    BaseBoardingApplication.apiInitialize();
-    AppServiceApplication.apiInitialize();
-    AppDashboardApplication.apiInitialize();
-    AppPreSignInApplication.apiInitialize();
-    onBackPressed();
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        BaseOrderApplication.apiInitialize();
+        BaseBoardingApplication.apiInitialize();
+        AppServiceApplication.apiInitialize();
+        AppDashboardApplication.apiInitialize();
+        AppPreSignInApplication.apiInitialize();
+        onBackPressed();
+    }
 
-  @Override
-  public void onBackPressed() {
-    setResult(Activity.RESULT_OK, new Intent());
-    finish();
-  }
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_OK, new Intent());
+        finish();
+    }
 }

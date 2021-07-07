@@ -20,10 +20,10 @@ import java.util.List;
 
 public class ProjectDetailsImageAdapter extends RecyclerView.Adapter<ProjectDetailsImageAdapter.ViewHolder> {
 
+    ProjectDetailsListener listener;
     private List<String> itemList;
     private boolean menuStatus = false;
     private Context context;
-    ProjectDetailsListener listener;
 
     public ProjectDetailsImageAdapter(List<String> itemList, ProjectDetailsListener listener) {
         this.itemList = itemList;

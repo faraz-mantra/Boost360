@@ -12,7 +12,8 @@ import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.utils.getWebViewUrl
 
-class WebPreSignInBottomDialog : BaseBottomSheetDialog<WebPresignInBottomsheetBinding, BaseViewModel>() {
+class WebPreSignInBottomDialog :
+  BaseBottomSheetDialog<WebPresignInBottomsheetBinding, BaseViewModel>() {
 
   var onClicked: () -> Unit = { }
 
@@ -67,7 +68,11 @@ class WebPreSignInBottomDialog : BaseBottomSheetDialog<WebPresignInBottomsheetBi
         binding?.progressBar?.gone()
       }
 
-      override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+      override fun onReceivedError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        error: WebResourceError?
+      ) {
         super.onReceivedError(view, request, error)
         binding?.agreeBtn?.setOnClickListener { onClicked() }
         binding?.progressBar?.gone()

@@ -9,7 +9,8 @@ import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class ChannelsConnectViewHolder constructor(binding: ItemChannelsConnectedBinding) : AppBaseRecyclerViewHolder<ItemChannelsConnectedBinding>(binding) {
+class ChannelsConnectViewHolder constructor(binding: ItemChannelsConnectedBinding) :
+  AppBaseRecyclerViewHolder<ItemChannelsConnectedBinding>(binding) {
 
   private var model: ChannelModel? = null
 
@@ -22,7 +23,11 @@ class ChannelsConnectViewHolder constructor(binding: ItemChannelsConnectedBindin
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding.infoBtn -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_CONNECT_INFO_CLICKED.ordinal)
+      binding.infoBtn -> listener?.onItemClick(
+        adapterPosition,
+        model,
+        RecyclerViewActionType.CHANNEL_CONNECT_INFO_CLICKED.ordinal
+      )
     }
   }
 
@@ -34,16 +39,23 @@ class ChannelsConnectViewHolder constructor(binding: ItemChannelsConnectedBindin
     when {
       model.isWhatsAppChannel() -> {
         binding.optInOut.visible()
-        binding.nameLink.text = model.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
+        binding.nameLink.text =
+          model.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it }
+            ?: model.getName()
       }
       model.isGoogleBusinessChannel() -> {
-        binding.nameLink.text = model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
+        binding.nameLink.text =
+          model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it }
+            ?: model.getName()
 //        binding.nameLink.text = model.channelAccessToken?.LocationName?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
       }
       model.isGoogleSearch() -> {
-        binding.nameLink.text = model.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
+        binding.nameLink.text =
+          model.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
       }
-      else -> binding.nameLink.text = model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
+      else -> binding.nameLink.text =
+        model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it }
+          ?: model.getName()
     }
   }
 }

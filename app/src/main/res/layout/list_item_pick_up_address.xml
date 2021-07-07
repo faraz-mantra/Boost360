@@ -1,135 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_layout"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/item_layout"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@color/white"
+  android:orientation="vertical"
+  android:padding="@dimen/margin_10"
+  tools:ignore="MissingPrefix">
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="@dimen/margin_10"
-    tools:ignore="MissingPrefix">
+    android:layout_marginTop="@dimen/margin_5"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:orientation="vertical">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:text="Address Line 1"
+      android:textColor="#383838"
+      android:textSize="14sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Address Line 1"
-            android:textColor="#383838"
-            android:textSize="14sp" />
+    <EditText
+      android:id="@+id/edtAccountNumber"
+      style="@style/SignUp_EditText_Style_Ria"
+      fontPath="Roboto-Regular.ttf"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:backgroundTint="#383838"
+      android:ellipsize="end"
+      android:hint="Address Line 1"
+      android:inputType="textNoSuggestions"
+      android:scrollHorizontally="true"
+      android:singleLine="true"
+      android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-        <EditText
-            android:id="@+id/edtAccountNumber"
-            style="@style/SignUp_EditText_Style_Ria"
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#383838"
-            android:ellipsize="end"
-            android:hint="Address Line 1"
-            android:inputType="textNoSuggestions"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+  </LinearLayout>
 
-    </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_5"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:orientation="vertical">
+    <TextView
+      fontPath="Roboto-Regular.ttf"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:text="@string/address_line_2"
+      android:textColor="#383838"
+      android:textSize="14sp" />
 
-        <TextView
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@string/address_line_2"
-            android:textColor="#383838"
-            android:textSize="14sp" />
+    <EditText
+      android:id="@+id/edtAddressLine2"
+      style="@style/SignUp_EditText_Style_Ria"
+      fontPath="Roboto-Regular.ttf"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:backgroundTint="#383838"
+      android:ellipsize="end"
+      android:hint="@string/address_line_2"
+      android:inputType="textNoSuggestions"
+      android:scrollHorizontally="true"
+      android:singleLine="true"
+      android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-        <EditText
-            android:id="@+id/edtAddressLine2"
-            style="@style/SignUp_EditText_Style_Ria"
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#383838"
-            android:ellipsize="end"
-            android:hint="@string/address_line_2"
-            android:inputType="textNoSuggestions"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+  </LinearLayout>
 
-    </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_5"
+    android:hint="@string/ifsc_code"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:hint="@string/ifsc_code"
-        android:orientation="vertical">
+    <TextView
+      fontPath="Roboto-Regular.ttf"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:text="@string/city_"
+      android:textColor="#383838"
+      android:textSize="14sp" />
 
-        <TextView
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@string/city_"
-            android:textColor="#383838"
-            android:textSize="14sp" />
+    <EditText
+      android:id="@+id/edtCity"
+      style="@style/SignUp_EditText_Style_Ria"
+      fontPath="Roboto-Regular.ttf"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:backgroundTint="#383838"
+      android:ellipsize="end"
+      android:hint="@string/city_"
+      android:inputType="textNoSuggestions"
+      android:scrollHorizontally="true"
+      android:singleLine="true"
+      android:textAllCaps="true"
+      android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-        <EditText
-            android:id="@+id/edtCity"
-            style="@style/SignUp_EditText_Style_Ria"
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#383838"
-            android:ellipsize="end"
-            android:hint="@string/city_"
-            android:inputType="textNoSuggestions"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textAllCaps="true"
-            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+  </LinearLayout>
 
-    </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_5"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:orientation="vertical">
+    <TextView
+      fontPath="Roboto-Regular.ttf"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:text="@string/country"
+      android:textColor="#383838"
+      android:textSize="14sp" />
 
-        <TextView
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@string/country"
-            android:textColor="#383838"
-            android:textSize="14sp" />
+    <EditText
+      android:id="@+id/edtCountry"
+      style="@style/SignUp_EditText_Style_Ria"
+      fontPath="Roboto-Regular.ttf"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:backgroundTint="#383838"
+      android:drawableRight="@drawable/dropselect"
+      android:hint="@string/country"
+      android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
-        <EditText
-            android:id="@+id/edtCountry"
-            style="@style/SignUp_EditText_Style_Ria"
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#383838"
-            android:drawableRight="@drawable/dropselect"
-            android:hint="@string/country"
-            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-    </LinearLayout>
+  </LinearLayout>
 
 </LinearLayout>

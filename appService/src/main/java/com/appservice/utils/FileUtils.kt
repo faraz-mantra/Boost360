@@ -49,10 +49,17 @@ class FileUtils(var context: Activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           var cursor: Cursor? = null
           try {
-            cursor = context.contentResolver.query(uri, arrayOf(MediaStore.MediaColumns.DISPLAY_NAME), null, null, null)
+            cursor = context.contentResolver.query(
+              uri,
+              arrayOf(MediaStore.MediaColumns.DISPLAY_NAME),
+              null,
+              null,
+              null
+            )
             if (!(cursor == null || !cursor.moveToFirst())) {
               val fileName: String = cursor.getString(0)
-              val path: String = Environment.getExternalStorageDirectory().toString().toString() + "/Download/" + fileName
+              val path: String = Environment.getExternalStorageDirectory().toString()
+                .toString() + "/Download/" + fileName
               if (!TextUtils.isEmpty(path)) {
                 return path
               }
@@ -65,10 +72,14 @@ class FileUtils(var context: Activity) {
             if (id.startsWith("raw:")) {
               return id.replaceFirst("raw:".toRegex(), "")
             }
-            val contentUriPrefixesToTry = arrayOf("content://downloads/public_downloads", "content://downloads/my_downloads")
+            val contentUriPrefixesToTry =
+              arrayOf("content://downloads/public_downloads", "content://downloads/my_downloads")
             for (contentUriPrefix in contentUriPrefixesToTry) {
               return try {
-                val contentUri: Uri = ContentUris.withAppendedId(Uri.parse(contentUriPrefix), java.lang.Long.valueOf(id))
+                val contentUri: Uri = ContentUris.withAppendedId(
+                  Uri.parse(contentUriPrefix),
+                  java.lang.Long.valueOf(id)
+                )
                 getDataColumn(context, contentUri, null, null)
               } catch (e: NumberFormatException) {
                 //In Android 8 and Android P the id is not a number
@@ -124,7 +135,10 @@ class FileUtils(var context: Activity) {
         if (isGoogleDriveUri(uri)) {
           return getDriveFilePath(uri)
         }
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) copyFileToInternalStorage(uri, "userfiles")
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) copyFileToInternalStorage(
+          uri,
+          "userfiles"
+        )
         else getDataColumn(context, uri, null, null)
 
       }
@@ -233,7 +247,13 @@ class FileUtils(var context: Activity) {
    */
   private fun copyFileToInternalStorage(uri: Uri, newDirName: String): String {
     val returnUri: Uri = uri
-    val returnCursor: Cursor? = context.contentResolver.query(returnUri, arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE), null, null, null)
+    val returnCursor: Cursor? = context.contentResolver.query(
+      returnUri,
+      arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
+      null,
+      null,
+      null
+    )
 
     /*
          * Get the column indexes of the data in the Cursor,
@@ -276,7 +296,12 @@ class FileUtils(var context: Activity) {
     return copyFileToInternalStorage(uri, "whatsapp")
   }
 
-  private fun getDataColumn(context: Activity, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
+  private fun getDataColumn(
+    context: Activity,
+    uri: Uri?,
+    selection: String?,
+    selectionArgs: Array<String>?
+  ): String? {
     var cursor: Cursor? = null
     val column = "_data"
     val projection = arrayOf(column)
@@ -371,7 +396,12 @@ class FileUtils(var context: Activity) {
     } else if (uri.scheme == "file") {
       try {
         val exif = ExifInterface(uri.path!!)
-        val rotation = exifOrientationToDegrees(exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) as? Int
+        val rotation = exifOrientationToDegrees(
+          exif.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_NORMAL
+          )
+        ) as? Int
         return rotation?.toFloat() ?: 0F
       } catch (e: IOException) {
         e.printStackTrace()

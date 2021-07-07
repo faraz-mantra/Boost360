@@ -18,14 +18,13 @@ import com.thinksity.R;
  */
 
 
-
-
 public class roboto_md_italic_16_primary_color extends TextView {
 
     public roboto_md_italic_16_primary_color(Context context) {
         super(context);
         init(context);
     }
+
     public roboto_md_italic_16_primary_color(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -35,9 +34,9 @@ public class roboto_md_italic_16_primary_color extends TextView {
         super(context, attrs, defStyle);
         init(context);
     }
-    public void init(Context context)
-    {
-        setCustomFont(context,"Roboto-Light.ttf");
+
+    public void init(Context context) {
+        setCustomFont(context, "Roboto-Light.ttf");
         setTextColor(getResources().getColor(R.color.primaryColor));
         setTextSize(16);
     }

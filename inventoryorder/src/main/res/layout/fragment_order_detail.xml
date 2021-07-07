@@ -18,8 +18,7 @@
       android:visibility="gone"
       tools:visibility="visible">
 
-      <androidx.core.widget.NestedScrollView
-        style="@style/match_match">
+      <androidx.core.widget.NestedScrollView style="@style/match_match">
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/content"
@@ -388,8 +387,8 @@
 
             <include
               android:id="@+id/user_address"
-              layout="@layout/layout_shipping_billing_address"
               style="@style/match_wrap"
+              layout="@layout/layout_shipping_billing_address"
               android:layout_marginTop="@dimen/size_20" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -511,10 +510,10 @@
       android:gravity="center"
       android:textColor="@color/scarlet_40"
       android:visibility="visible"
-      tools:visibility="gone"
       app:fontFamily="@font/bold"
       app:textType="BODY_1"
-      tools:text="Error" />
+      tools:text="Error"
+      tools:visibility="gone" />
 
   </androidx.appcompat.widget.LinearLayoutCompat>
 

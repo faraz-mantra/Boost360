@@ -6,8 +6,8 @@ import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 data class PaymentKycListResponse(
-    @SerializedName("Extra")
-    var extra: KycExtra? = null,
-    @SerializedName("WebActions")
-    var webActions: List<WebActionKyc>? = null
+  @SerializedName("Extra")
+  var extra: KycExtra? = null,
+  @SerializedName("WebActions")
+  var webActions: List<WebActionKyc>? = null
 ) : BaseResponse()

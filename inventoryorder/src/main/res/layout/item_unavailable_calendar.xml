@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-    </data>
+  </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/cl_calendar_item"
-        style="@style/wrap_wrap"
-        android:layout_marginEnd="@dimen/size_8"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/size_8">
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/cl_calendar_item"
+    style="@style/wrap_wrap"
+    android:layout_marginEnd="@dimen/size_8"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/size_8">
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_date_calendar_item"
-            style="@style/wrap_wrap"
-            android:text="@string/_12"
-            android:textColor="@color/gray_light_1"
-            android:textSize="16sp"
-            app:fontFamily="@font/semi_bold" />
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tv_date_calendar_item"
+      style="@style/wrap_wrap"
+      android:text="@string/_12"
+      android:textColor="@color/gray_light_1"
+      android:textSize="16sp"
+      app:fontFamily="@font/semi_bold" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_day_calendar_item"
-            style="@style/wrap_wrap"
-            android:layout_marginTop="@dimen/size_2"
-            android:text="@string/sun"
-            android:textColor="@color/gray_light_1"
-            android:textSize="14sp"
-            app:fontFamily="@font/regular" />
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tv_day_calendar_item"
+      style="@style/wrap_wrap"
+      android:layout_marginTop="@dimen/size_2"
+      android:text="@string/sun"
+      android:textColor="@color/gray_light_1"
+      android:textSize="14sp"
+      app:fontFamily="@font/regular" />
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

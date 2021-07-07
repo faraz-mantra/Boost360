@@ -31,11 +31,18 @@ class ServiceViewModel : BaseViewModel() {
   }
 
   fun addUpdateImageProductService(
-      clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-      productId: String?, requestBody: RequestBody?,
+    clientId: String?,
+    requestType: String?,
+    requestId: String?,
+    totalChunks: Int?,
+    currentChunkNumber: Int?,
+    productId: String?,
+    requestBody: RequestBody?,
   ): LiveData<BaseResponse> {
-    return WithFloatTwoRepository.addUpdateImageProductService(clientId, requestType, requestId, totalChunks,
-        currentChunkNumber, productId, requestBody).toLiveData()
+    return WithFloatTwoRepository.addUpdateImageProductService(
+      clientId, requestType, requestId, totalChunks,
+      currentChunkNumber, productId, requestBody
+    ).toLiveData()
   }
 
   fun addProductGstDetail(request: ProductGstDetailRequest?): LiveData<BaseResponse> {
@@ -50,7 +57,10 @@ class ServiceViewModel : BaseViewModel() {
     return KitWebActionRepository.getProductGstDetail(query).toLiveData()
   }
 
-  fun uploadImageProfile(assetFileName: String?, file: MultipartBody.Part?): LiveData<BaseResponse> {
+  fun uploadImageProfile(
+    assetFileName: String?,
+    file: MultipartBody.Part?
+  ): LiveData<BaseResponse> {
     return KitWebActionRepository.uploadImageProfile(assetFileName, file).toLiveData()
   }
 
@@ -78,7 +88,14 @@ class ServiceViewModel : BaseViewModel() {
     return NowfloatsApiRepository.getServiceListing(request).toLiveData()
   }
 
-  fun getSearchListings(fpTag: String?, fpId: String?, searchString: String? = "", offset: Int? = 0, limit: Int? = 0): LiveData<BaseResponse> {
-    return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
+  fun getSearchListings(
+    fpTag: String?,
+    fpId: String?,
+    searchString: String? = "",
+    offset: Int? = 0,
+    limit: Int? = 0
+  ): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit)
+      .toLiveData()
   }
 }

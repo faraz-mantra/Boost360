@@ -58,7 +58,7 @@ public final class SuggestionSpanUtils {
         }
         final Spannable spannable = new SpannableString(text);
         final SuggestionSpan suggestionSpan = new SuggestionSpan(context, null /* locale */,
-                new String[] {} /* suggestions */, OBJ_FLAG_AUTO_CORRECTION,
+                new String[]{} /* suggestions */, OBJ_FLAG_AUTO_CORRECTION,
                 SuggestionSpanPickedNotificationReceiver.class);
         spannable.setSpan(suggestionSpan, 0, text.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE | Spanned.SPAN_COMPOSING);
@@ -66,7 +66,7 @@ public final class SuggestionSpanUtils {
     }
 
     public static CharSequence getTextWithSuggestionSpan(final Context context,
-            final String pickedWord, final SuggestedWords suggestedWords) {
+                                                         final String pickedWord, final SuggestedWords suggestedWords) {
         if (TextUtils.isEmpty(pickedWord) || suggestedWords.isEmpty()
                 || suggestedWords.isPrediction() || suggestedWords.isPunctuationSuggestions()) {
             return pickedWord;

@@ -5,7 +5,9 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+
 import androidx.core.app.NotificationCompat;
+
 import android.util.Log;
 
 import com.nowfloats.ProductGallery.Product_Detail_Activity;
@@ -21,18 +23,18 @@ import java.net.URL;
 /**
  * Created by NowFloats on 06-09-2016.
  */
-public class MultipleImageUploadService extends IntentService{
+public class MultipleImageUploadService extends IntentService {
 
     public static final String REQUEST_PI = "productId";
     public static final String REQUEST_FILE_NAME = "fileName";
-    private String productId;
-    private String fileName;
-    private NotificationManager mNotificationManager;
-    private boolean flag =false;
-    private int a = 0;
     NotificationCompat.Builder mBuilder;
     int mTotalCount = 0;
     int mSuccessCount = 0;
+    private String productId;
+    private String fileName;
+    private NotificationManager mNotificationManager;
+    private boolean flag = false;
+    private int a = 0;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -43,7 +45,7 @@ public class MultipleImageUploadService extends IntentService{
         super(name);
     }
 
-    public MultipleImageUploadService(){
+    public MultipleImageUploadService() {
         super("MultipleImageUploadService");
     }
 
@@ -59,45 +61,45 @@ public class MultipleImageUploadService extends IntentService{
         mTotalCount++;
         productId = intent.getExtras().getString(REQUEST_PI, null);
         fileName = intent.getExtras().getString(REQUEST_FILE_NAME, null);
-        if(productId!=null && fileName!=null){
-            String valuesStr = "clientId="+Constants.clientId
-                    +"&requestType=sequential&requestId="+Constants.deviceId
-                    +"&totalChunks=1&currentChunkNumber=1&productId="+productId;
-            String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" +valuesStr;
+        if (productId != null && fileName != null) {
+            String valuesStr = "clientId=" + Constants.clientId
+                    + "&requestType=sequential&requestId=" + Constants.deviceId
+                    + "&totalChunks=1&currentChunkNumber=1&productId=" + productId;
+            String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" + valuesStr;
             String response = startUpload(fileName, url);
-            if(response.equals("true")){
+            if (response.equals("true")) {
                 mBuilder =
                         new NotificationCompat.Builder(this)
                                 .setContentTitle(getString(R.string.uploading))
                                 .setStyle(new NotificationCompat.BigTextStyle()
                                         .bigText(getString(R.string.upload_successful)))
-                                .setContentText(getString(R.string.upload_successful)+": " + fileName)
-                                .setLargeIcon(((BitmapDrawable)getResources().getDrawable(R.drawable.app_launcher)).getBitmap())
+                                .setContentText(getString(R.string.upload_successful) + ": " + fileName)
+                                .setLargeIcon(((BitmapDrawable) getResources().getDrawable(R.drawable.app_launcher)).getBitmap())
                                 .setSmallIcon(R.drawable.app_launcher2);
 
                 mNotificationManager.notify(16, mBuilder.build());
                 mSuccessCount++;
-            }else {
+            } else {
                 mBuilder =
                         new NotificationCompat.Builder(this)
                                 .setContentTitle(getString(R.string.uploading))
                                 .setStyle(new NotificationCompat.BigTextStyle()
                                         .bigText(getString(R.string.upload_failed)))
-                                .setContentText(getString(R.string.error_in_uploading)+": " + fileName)
-                                .setLargeIcon(((BitmapDrawable)getResources().getDrawable(R.drawable.app_launcher)).getBitmap())
+                                .setContentText(getString(R.string.error_in_uploading) + ": " + fileName)
+                                .setLargeIcon(((BitmapDrawable) getResources().getDrawable(R.drawable.app_launcher)).getBitmap())
                                 .setSmallIcon(R.drawable.app_launcher2);
 
                 mNotificationManager.notify(16, mBuilder.build());
             }
         }
-        if(a==0){
+        if (a == 0) {
             mBuilder =
                     new NotificationCompat.Builder(this)
                             .setContentTitle(getString(R.string.uploading))
                             .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText(mSuccessCount + getString(R.string.uploaded_and) + (mTotalCount-mSuccessCount) +getString(R.string.failed)))
-                            .setContentText(mSuccessCount + getString(R.string.uploaded_and) + (mTotalCount-mSuccessCount) + getString(R.string.failed))
-                            .setLargeIcon(((BitmapDrawable)getResources().getDrawable(R.drawable.app_launcher)).getBitmap())
+                                    .bigText(mSuccessCount + getString(R.string.uploaded_and) + (mTotalCount - mSuccessCount) + getString(R.string.failed)))
+                            .setContentText(mSuccessCount + getString(R.string.uploaded_and) + (mTotalCount - mSuccessCount) + getString(R.string.failed))
+                            .setLargeIcon(((BitmapDrawable) getResources().getDrawable(R.drawable.app_launcher)).getBitmap())
                             .setSmallIcon(R.drawable.app_launcher2);
 
             mNotificationManager.notify(16, mBuilder.build());
@@ -107,13 +109,13 @@ public class MultipleImageUploadService extends IntentService{
         }
     }
 
-    private String startUpload(String filename, String targetUrl){
-        mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+    private String startUpload(String filename, String targetUrl) {
+        mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         mBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.uploading))
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(getString(R.string.uploading)))
-                .setContentText(getString(R.string.uploading_image)+": " + filename)
+                .setContentText(getString(R.string.uploading_image) + ": " + filename)
                 .setSmallIcon(R.drawable.app_launcher2);
 
         mNotificationManager.notify(16, mBuilder.build());

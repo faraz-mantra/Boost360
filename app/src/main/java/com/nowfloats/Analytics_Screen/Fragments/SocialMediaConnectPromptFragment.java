@@ -53,7 +53,7 @@ public class SocialMediaConnectPromptFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startDigitalChannel(getActivity(),session);
+                startDigitalChannel(getActivity(), session);
             }
         });
     }
