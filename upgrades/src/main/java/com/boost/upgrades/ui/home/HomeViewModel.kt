@@ -746,7 +746,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun addItemToCartPackage1(cartItem: CartModel) {
-        updatesLoader.postValue(true)
+        updatesLoader.postValue(false)
         Completable.fromAction {
             AppDatabase.getInstance(getApplication())!!.cartDao()
                     .insertToCart(cartItem)
@@ -765,7 +765,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun addItemToCartPackage(cartItem: CartModel) {
         Log.v("addItemToCartPackage", " " + cartItem.boost_widget_key + " " + cartItem.boost_widget_key)
-        updatesLoader.postValue(true)
+        updatesLoader.postValue(false)
 
 
         Completable.fromAction {
