@@ -29,6 +29,7 @@ import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.hasHTMLTags
+import com.framework.utils.showKeyBoard
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -83,6 +84,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
 
   override fun onCreateView() {
     super.onCreateView()
+    baseActivity.showKeyBoard(binding?.edtDesc)
     updateFloat = arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as? UpdateFloat
     isUpdate = updateFloat != null && updateFloat!!.id.isNullOrEmpty().not()
     WebEngageController.trackEvent(EVENT_NAME_UPDATE_CREATE, PAGE_VIEW, sessionLocal.fpTag)

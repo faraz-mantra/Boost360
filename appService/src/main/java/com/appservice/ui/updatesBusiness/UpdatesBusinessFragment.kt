@@ -31,6 +31,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
+import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_color_gray"
+    android:background="@color/margin_grey"
     android:clickable="true"
     android:focusable="true">
 
@@ -139,7 +139,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/all_side_curve_bg">
-
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/all_side_curve_bg"
+                app:cardCornerRadius="10dp"
+                android:clipToPadding="true"
+                android:clipChildren="true"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardElevation="1dp"
+                android:divider="@android:color/darker_gray"
+                app:cardUseCompatPadding="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/package_main_layout"
                 android:layout_width="match_parent"
@@ -239,7 +256,7 @@
                         android:textSize="@dimen/txt_10sp"/>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
+            </androidx.cardview.widget.CardView>
             <View
                 android:id="@+id/package_main_layout_view"
                 android:layout_width="match_parent"
@@ -247,7 +264,8 @@
                 android:background="@color/material_grey_400"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/package_main_layout"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/cardView"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"/>
 

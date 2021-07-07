@@ -80,12 +80,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="Offers Info"
+                android:text="About The Offer"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/package_cart_icon"
                 app:layout_constraintStart_toEndOf="@+id/package_back"
                 app:layout_constraintTop_toTopOf="parent" />
 

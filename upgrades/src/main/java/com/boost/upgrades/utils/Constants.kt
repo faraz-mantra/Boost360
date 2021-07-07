@@ -16,6 +16,7 @@ import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.marketplace_offers.MarketPlaceOfferFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
+import com.boost.upgrades.ui.packages.PackageFragmentNew
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.*
 import com.boost.upgrades.ui.razorpay.RazorPayWebView
@@ -78,6 +79,7 @@ class Constants {
         var MARKET_OFFER_FRAGMENT: String = MarketPlaceOfferFragment::class.java.getName()
         var BUSINESS_DETAILS_FRAGMENT: String = BusinessDetailsFragment::class.java.getName()
         var STATE_LIST_FRAGMENT: String = StateListPopFragment::class.java.getName()
+        var NEW_PACKAGE_FRAGMENT: String = PackageFragmentNew::class.java.getName()
 
     }
 }
