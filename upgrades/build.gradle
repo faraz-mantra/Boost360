@@ -123,4 +123,6 @@ dependencies {
 //    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:2.1.0'
 
     implementation 'com.appsflyer:af-android-sdk:6.0.0'
+
+    api project(path: ':dashboard')
 }

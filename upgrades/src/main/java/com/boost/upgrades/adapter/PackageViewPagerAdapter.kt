@@ -49,9 +49,13 @@ class PackageViewPagerAdapter(
                     activity.application,
                     R.drawable.added_to_cart_grey
             )
+
             holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
             holder.getNowButton.setText("Added To Cart")
-            homeListener.onPackageAddToCart(list.get(position))
+
+            homeListener.onPackageAddToCart(list.get(position),holder.primaryImageCopy)
+
+
         }
 
         holder.details_button.setOnClickListener {
@@ -62,6 +66,7 @@ class PackageViewPagerAdapter(
             homeListener.onPackageClicked(list.get(position))
         }
         holder.name.setText(list.get(position).name)
+
         getPackageInfoFromDB(holder, list.get(position))
         isItemAddedInCart(holder, list.get(position))
 //        image_title.setText(list.get(position).title)
@@ -84,6 +89,7 @@ class PackageViewPagerAdapter(
         val getNowButton = itemView.findViewById<TextView>(R.id.getnow_button)
         val details_button = itemView.findViewById<TextView>(R.id.details_button)
         val primaryImage = itemView.findViewById<ImageView>(R.id.package_primary_image)
+        val primaryImageCopy = itemView.findViewById<ImageView>(R.id.package_primary_image_copy)
         val bundleDiscount = itemView.findViewById<TextView>(R.id.bundle_level_discount)
         val bundlePriceLabel = itemView.findViewById<TextView>(R.id.bundle_price_label)
     }
@@ -147,8 +153,10 @@ class PackageViewPagerAdapter(
 
                                     if(bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()){
                                         Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.primaryImage)
+                                        Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.primaryImageCopy)
                                     } else {
                                         holder.primaryImage.setImageResource(R.drawable.rectangle_copy_18)
+                                        holder.primaryImageCopy.setImageResource(R.drawable.rectangle_copy_18)
                                     }
                                 },
                                 {
@@ -182,6 +190,7 @@ class PackageViewPagerAdapter(
                                         )
                                         holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
                                         holder.getNowButton.setText("Added To Cart")
+                                        holder.getNowButton.setEnabled(false)
                                     }
 //                                }
                             }
