@@ -29,7 +29,8 @@ import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.activity_dashboard.view.*
 
-class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, WebsiteThemeViewModel>(), RecyclerItemClickListener {
+class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, WebsiteThemeViewModel>(),
+  RecyclerItemClickListener {
 
   private var popupWindow: PopupWindow? = null
   private var sessionData: SessionData? = null
@@ -62,8 +63,16 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(WEBSITE_STYLE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.ctfPrimaryFont, binding?.ctfSecondaryFont, binding?.btnDone, binding?.openWebsite, binding?.more, binding?.back)
-    this.sessionData = arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
+    setOnClickListener(
+      binding?.ctfPrimaryFont,
+      binding?.ctfSecondaryFont,
+      binding?.btnDone,
+      binding?.openWebsite,
+      binding?.more,
+      binding?.back
+    )
+    this.sessionData =
+      arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
     getWebsiteTheme(sessionData)
     setWebsiteData()
     hideActionButtons()
@@ -131,12 +140,12 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
     if (this.primaryItem != null) {
       binding?.ctfPrimaryFont?.setText("${this.primaryItem?.description} ${if (this.primaryItem?.defaultFont == true) "(default)" else ""}")
-    }else{
+    } else {
       binding?.ctfPrimaryFont?.setText(getString(R.string.choose_primary_font))
     }
     if (this.secondaryItem != null) {
       binding?.ctfSecondaryFont?.setText("${this.secondaryItem?.description} ${if (this.secondaryItem?.defaultFont == true) "(default)" else ""}")
-    }else{
+    } else {
       binding?.ctfSecondaryFont?.setText(getString(R.string.choose_secondary_font))
     }
   }
@@ -160,7 +169,8 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
   private fun showPrimaryFontsBottomSheet(fontsList: ArrayList<PrimaryItem?>?) {
     val bottomSheetSelectFont = BottomSheetSelectFont()
-    bottomSheetSelectFont.arguments = Bundle().apply { putSerializable(IntentConstant.FONT_LIST_PRIMARY.name, fontsList) }
+    bottomSheetSelectFont.arguments =
+      Bundle().apply { putSerializable(IntentConstant.FONT_LIST_PRIMARY.name, fontsList) }
     bottomSheetSelectFont.onPrimaryClicked = {
       this.primaryItem = it
       binding?.ctfPrimaryFont?.setText(it.description)
@@ -179,7 +189,8 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
   private fun showSecondaryFontsBottomSheet(fontsList: ArrayList<SecondaryItem?>?) {
     val bottomSheetSelectFont = BottomSheetSelectFont()
-    bottomSheetSelectFont.arguments = Bundle().apply { putSerializable(IntentConstant.FONT_LIST_SECONDARY.name, fontsList) }
+    bottomSheetSelectFont.arguments =
+      Bundle().apply { putSerializable(IntentConstant.FONT_LIST_SECONDARY.name, fontsList) }
     bottomSheetSelectFont.onSecondaryClicked = {
       this.secondaryItem = it
       binding?.ctfSecondaryFont?.setText(it.description)
@@ -348,13 +359,16 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
           websiteThemePublishBottomSheet.dismiss()
           WebEngageController.trackEvent(WEBSITE_STYLE_CANCEL, CLICK, NO_EVENT_VALUE)
 
-          }
-          TypeSuccess.PUBLISH_CHANGES.name -> {
-            websiteThemePublishBottomSheet.dismiss()
-            updateAPI(false)
-          }
+        }
+        TypeSuccess.PUBLISH_CHANGES.name -> {
+          websiteThemePublishBottomSheet.dismiss()
+          updateAPI(false)
         }
       }
-      websiteThemePublishBottomSheet.show(parentFragmentManager,WebSiteThemePublishBottomSheet::javaClass.name)
     }
+    websiteThemePublishBottomSheet.show(
+      parentFragmentManager,
+      WebSiteThemePublishBottomSheet::javaClass.name
+    )
+  }
 }

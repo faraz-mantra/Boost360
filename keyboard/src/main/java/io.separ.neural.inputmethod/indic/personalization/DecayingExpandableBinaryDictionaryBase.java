@@ -32,20 +32,21 @@ import io.separ.neural.inputmethod.indic.ExpandableBinaryDictionary;
  * model.
  */
 public abstract class DecayingExpandableBinaryDictionaryBase extends ExpandableBinaryDictionary {
-    private static final boolean DBG_DUMP_ON_CLOSE = false;
-
-    /** Any pair being typed or picked */
+    /**
+     * Any pair being typed or picked
+     */
     public static final int FREQUENCY_FOR_TYPED = 2;
-
     public static final int FREQUENCY_FOR_WORDS_IN_DICTS = FREQUENCY_FOR_TYPED;
     public static final int FREQUENCY_FOR_WORDS_NOT_IN_DICTS = Dictionary.NOT_A_PROBABILITY;
-
-    /** The locale for this dictionary. */
+    private static final boolean DBG_DUMP_ON_CLOSE = false;
+    /**
+     * The locale for this dictionary.
+     */
     public final Locale mLocale;
 
     protected DecayingExpandableBinaryDictionaryBase(final Context context,
-            final String dictName, final Locale locale, final String dictionaryType,
-            final File dictFile) {
+                                                     final String dictName, final Locale locale, final String dictionaryType,
+                                                     final File dictFile) {
         super(context, dictName, locale, dictionaryType, dictFile);
         mLocale = locale;
         if (mLocale != null && mLocale.toString().length() > 1) {

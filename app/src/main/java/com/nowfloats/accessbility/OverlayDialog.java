@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,28 +22,29 @@ import com.thinksity.R;
  */
 
 public class OverlayDialog extends AppCompatActivity {
+    private MaterialDialog overLayDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dialogForOverlayPath();
     }
 
-    private MaterialDialog overLayDialog;
-    private void dialogForOverlayPath(){
+    private void dialogForOverlayPath() {
 
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_bubble_overlay_permission,null);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_bubble_overlay_permission, null);
         ImageView image = (ImageView) view.findViewById(R.id.gif_image);
         TextView screenOverlay = (TextView) view.findViewById(R.id.overlay_title);
         screenOverlay.setVisibility(View.GONE);
         try {
             Glide.with(this).asGif().load(R.drawable.overlay_gif).into(image);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(overLayDialog == null){
+        if (overLayDialog == null) {
             overLayDialog = new MaterialDialog.Builder(this)
                     .title(getString(R.string.boost_bubble))
-                    .customView(view,false)
+                    .customView(view, false)
                     .positiveColorRes(R.color.primary)
                     .positiveText(getString(R.string.open_setting))
                     .callback(new MaterialDialog.ButtonCallback() {
@@ -53,9 +56,9 @@ public class OverlayDialog extends AppCompatActivity {
                                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
-                            }finally {
+                            } finally {
                                 dialog.dismiss();
                                 finish();
                             }

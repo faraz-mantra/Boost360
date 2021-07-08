@@ -30,16 +30,16 @@ import java.util.ArrayList;
  * Created by guru on 26-08-2015.
  */
 
-public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
-    String url="",tag = "";
+public class PageDeleteAsyncTaask extends AsyncTask<String, String, String> {
+    String url = "", tag = "";
     Activity activity;
     private boolean flag = false;
     private MaterialDialog materialProgress;
     private CustomPageInterface pageInterface;
     private Bus bus;
 
-    public PageDeleteAsyncTaask(String url, Activity activity, String tag, CustomPageInterface pageInterface, Bus bus){
-        this.url=url;
+    public PageDeleteAsyncTaask(String url, Activity activity, String tag, CustomPageInterface pageInterface, Bus bus) {
+        this.url = url;
         this.activity = activity;
         this.tag = tag;
         this.bus = bus;
@@ -58,7 +58,8 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
     }
 
     @Override
-    protected void onPostExecute(final String result){}
+    protected void onPostExecute(final String result) {
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -69,14 +70,14 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
                 map.put("PageId", CustomPageFragment.dataModel.get(n).PageId);
                 map.put("Tag", "" + tag);
                 map.put("clientId", "" + Constants.clientId);
-                if (CustomPageFragment.posList.size()-1 == i){
+                if (CustomPageFragment.posList.size() - 1 == i) {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             deleteMethod(map.toString(), true);
                         }
                     }).start();
-                }else{
+                } else {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -87,8 +88,10 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (Exception e) {e.printStackTrace();}
-        return  null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void deleteMethod(String values, final boolean lastChk) {
@@ -106,30 +109,30 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
             Log.i("Delete Page---", "status----" + status);
             if (status.getStatusCode() == 200) {
                 MixPanelController.track("DeleteCustomPages", null);
-                Log.i("Delete page...","Success");
+                Log.i("Delete page...", "Success");
                 flag = true;
-            }else{
+            } else {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
+                        Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
                     }
                 });
             }
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (lastChk){
-                        if (materialProgress!=null)
+                    if (lastChk) {
+                        if (materialProgress != null)
                             materialProgress.dismiss();
-                        if (flag){
+                        if (flag) {
 //                            if (CustomPageFragment.dataModel!=null && CustomPageFragment.dataModel.size()>0){
 //                        for (int i = 0; i < CustomPageFragment.posList.size(); i++) {
 //                            int n = Integer.parseInt(CustomPageFragment.posList.get(i).toString());
 //                            CustomPageFragment.dataModel.remove(n);
 //                        }
 
-                            new CustomPageService().GetPages(tag,Constants.clientId,pageInterface,bus);
+                            new CustomPageService().GetPages(tag, Constants.clientId, pageInterface, bus);
                             CustomPageFragment.posList = new ArrayList<>();
 
 //                        CustomPageFragment.custompageAdapter.notifyDataSetChanged();
@@ -138,11 +141,11 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
 //                        CustomPageFragment.recyclerView.invalidate();
 //                    }
                             Methods.showSnackBarPositive(activity, activity.getString(R.string.page_removed));
-                        }else{
-                            Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
-                            if (CustomPageFragment.custompageAdapter!=null)
+                        } else {
+                            Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
+                            if (CustomPageFragment.custompageAdapter != null)
                                 CustomPageFragment.custompageAdapter.notifyDataSetChanged();
-                            if (CustomPageFragment.recyclerView!=null)
+                            if (CustomPageFragment.recyclerView != null)
                                 CustomPageFragment.recyclerView.invalidate();
                             CustomPageFragment.posList = new ArrayList<>();
                         }

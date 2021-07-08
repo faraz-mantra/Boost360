@@ -12,16 +12,16 @@ import java.io.Serializable
 
 
 data class ChannelAccessStatusResponse(
-    @SerializedName("channels")
-    var channels: ChannelsType? = null,
-    @SerializedName("connected_at")
-    var connectedAt: String? = null,
-    @SerializedName("last_activity_at")
-    var lastActivityAt: String? = null,
-    @SerializedName("nowfloats_id")
-    var nowfloatsId: String? = null,
-    @SerializedName("success")
-    var success: Boolean? = null,
+  @SerializedName("channels")
+  var channels: ChannelsType? = null,
+  @SerializedName("connected_at")
+  var connectedAt: String? = null,
+  @SerializedName("last_activity_at")
+  var lastActivityAt: String? = null,
+  @SerializedName("nowfloats_id")
+  var nowfloatsId: String? = null,
+  @SerializedName("success")
+  var success: Boolean? = null,
 ) : BaseResponse(), Serializable {
 
   companion object {
@@ -47,7 +47,10 @@ data class ChannelAccessStatusResponse(
     }
 
     fun saveDataConnectedChannel(connectedChannels: ArrayList<String>?) {
-      PreferencesUtils.instance.saveData(key = CONNECTED_CHANNELS, convertListObjToString(connectedChannels ?: ArrayList()) ?: "")
+      PreferencesUtils.instance.saveData(
+        key = CONNECTED_CHANNELS,
+        convertListObjToString(connectedChannels ?: ArrayList()) ?: ""
+      )
     }
   }
 }

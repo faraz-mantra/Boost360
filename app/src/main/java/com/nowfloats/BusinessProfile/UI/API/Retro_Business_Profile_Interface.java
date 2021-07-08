@@ -19,12 +19,12 @@ public interface Retro_Business_Profile_Interface {
 
     //https://api.withfloats.com/Discover/v1/floatingpoint/update/
 
-    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
     @POST("/Discover/v1/floatingpoint/update/")
-    void post_updateBusinessDetails(@Body JSONObject jsonObject,Callback<ArrayList<String>> callback);
+    void post_updateBusinessDetails(@Body JSONObject jsonObject, Callback<ArrayList<String>> callback);
 
 
-    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
     @POST("/Discover/v1/floatingpoint/update/")
     void updateContactInformation(@Body ContactInformationUpdateModel body, Callback<ArrayList<String>> callback);
 

@@ -110,8 +110,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public void onCreate() {
         super.onCreate();
 //        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
-        SharedPreferences pref =  this.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
         BaseOrderApplication.instance = this;
         BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
@@ -122,12 +120,14 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppDashboardApplication.initModule(this);
         AppPreSignInApplication.instance = this;
         AppPreSignInApplication.initModule(this);
+        SharedPreferences pref = BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
         FlorisApplication.instance = this;
         FlorisApplication.initModule(this);
         initWebEngage();
         //Invite Referral
         InviteReferralsApplication.register(this);
-        if (!pref.getBoolean(Constants.IS_INSTALL_APP,false)) {
+        if (!pref.getBoolean(Constants.IS_INSTALL_APP, false)) {
             InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
             InviteReferralsApi.getInstance(this).getReferrerCode(code -> {
                 editor.putBoolean(Constants.IS_INSTALL_APP, true);

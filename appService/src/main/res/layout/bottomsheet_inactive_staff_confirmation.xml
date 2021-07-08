@@ -1,110 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_10">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_10"
+        android:layout_marginBottom="@dimen/size_6"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/size_10">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_10"
-                android:layout_marginBottom="@dimen/size_6"
-                android:orientation="vertical">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="@string/do_you_want_to_temporarily_mark_this_st"
-                    android:textColor="@color/white"
-                    app:fontFamily="@font/semi_bold"
-                    android:textSize="24sp"
-                    tools:textColor="@color/black_4a4a4a" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_rounded_top_white_2"
-            android:orientation="vertical">
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_about_staff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ctv_about_heading"
-                android:layout_marginHorizontal="@dimen/size_20"
-                android:layout_marginTop="@dimen/size_20"
-                android:fontFamily="@font/open_sans"
-                android:textStyle="normal"
-                android:textFontWeight="400"
-                android:text="@string/marking_as_inactive_will_hide"
-                android:textColor="@color/black_4a4a4a"
-                android:textSize="12sp" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_20"
-                android:layout_marginBottom="@dimen/size_20"
-                android:paddingEnd="@dimen/size_10">
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/btn_done"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/size_36"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/bg_button_proceed_radius_4dp"
-                    android:fontFamily="@font/semi_bold"
-                    android:gravity="center"
-                    android:padding="12dp"
-                    android:text="@string/mark_as_inactive"
-                    android:stateListAnimator="@null"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.50"
-                    android:textSize="11sp" />
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/btn_cancel"
-                    android:layout_width="@dimen/size_110"
-                    android:layout_height="@dimen/size_36"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginEnd="@dimen/size_20"
-                    android:background="@null"
-                    android:fontFamily="@font/semi_bold"
-                    android:gravity="center"
-                    android:padding="@dimen/size_12"
-                    android:text="@string/cancel"
-                    android:textSize="11sp"
-                    android:textAllCaps="true"
-                    android:textColor="@color/grey_787878"
-                    app:layout_constraintRight_toLeftOf="@id/btn_done"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:includeFontPadding="false"
+          android:text="@string/do_you_want_to_temporarily_mark_this_st"
+          android:textColor="@color/white"
+          android:textSize="24sp"
+          app:fontFamily="@font/semi_bold"
+          tools:textColor="@color/black_4a4a4a" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bg_rounded_top_white_2"
+      android:orientation="vertical">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_about_staff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ctv_about_heading"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_20"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/marking_as_inactive_will_hide"
+        android:textColor="@color/black_4a4a4a"
+        android:textFontWeight="400"
+        android:textSize="12sp"
+        android:textStyle="normal" />
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_20"
+        android:paddingEnd="@dimen/size_10">
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_done"
+          android:layout_width="0dp"
+          android:layout_height="@dimen/size_36"
+          android:layout_gravity="center_horizontal"
+          android:background="@drawable/bg_button_proceed_radius_4dp"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:padding="12dp"
+          android:stateListAnimator="@null"
+          android:text="@string/mark_as_inactive"
+          android:textAllCaps="true"
+          android:textColor="@color/white"
+          android:textSize="11sp"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintWidth_percent="0.50" />
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_cancel"
+          android:layout_width="@dimen/size_110"
+          android:layout_height="@dimen/size_36"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginEnd="@dimen/size_20"
+          android:background="@null"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:padding="@dimen/size_12"
+          android:text="@string/cancel"
+          android:textAllCaps="true"
+          android:textColor="@color/grey_787878"
+          android:textSize="11sp"
+          app:layout_constraintRight_toLeftOf="@id/btn_done"
+          app:layout_constraintTop_toTopOf="parent" />
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>
 

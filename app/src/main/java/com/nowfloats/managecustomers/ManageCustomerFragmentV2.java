@@ -9,11 +9,13 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,23 +48,19 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * A simple {@link Fragment} subclass.
  */
 public class ManageCustomerFragmentV2 extends Fragment {
+    private static final int CI_WEBSITE = 0, FB_CHATS = 1,
+            MULTI_CHANNEL_CUSTOMERS = 2, CAROUSEL = 3;
     TextView tvBusinessEnquires, tvSubscribers, tvFacebookChat, tvBubbleInfo;
     Typeface robotoLight;
-    private SharedPreferences pref = null;
     UserSessionManager session;
     SharedPreferences.Editor prefsEditor;
+    private SharedPreferences pref = null;
     private Activity activity;
     private Switch bubbleSwitch, customerAssistantSwitch;
     private TextView tvLearnMore;
     private LinearLayout llManageCustomers;
-
     private RecyclerView rvManageCustomers;
-
     private ManageCustomerAdapter manageCustomerAdapter;
-
-    private static final int CI_WEBSITE = 0, FB_CHATS = 1,
-            MULTI_CHANNEL_CUSTOMERS = 2, CAROUSEL = 3;
-
     private int customerList[] = {CI_WEBSITE, FB_CHATS, MULTI_CHANNEL_CUSTOMERS};
 
     private Bus bus;
@@ -123,7 +121,7 @@ public class ManageCustomerFragmentV2 extends Fragment {
     public void onDetach() {
         super.onDetach();
         if (headerText != null)
-        headerText.setText(Constants.StoreName);
+            headerText.setText(Constants.StoreName);
     }
 
     private void showGif() {
@@ -135,6 +133,66 @@ public class ManageCustomerFragmentV2 extends Fragment {
 
     }
 
+    private void showOverlay(ManageCustomerAdapter.ManageCustomerHolder manageCustomerHolder) {
+
+        int cx = (manageCustomerHolder.rlRevealLayout.getLeft() + manageCustomerHolder.rlRevealLayout.getRight());
+        int cy = manageCustomerHolder.rlRevealLayout.getTop();
+        int radius = Math.max(manageCustomerHolder.rlRevealLayout.getWidth(), manageCustomerHolder.rlRevealLayout.getHeight());
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Animator animator =
+                    ViewAnimationUtils.createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, 0, radius);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setDuration(700);
+
+            manageCustomerHolder.rlRevealLayout.setVisibility(View.VISIBLE);
+            manageCustomerHolder.rflOverLay.setBackgroundColor(Color.parseColor("#66000000"));
+            animator.start();
+        } else {
+            Animator anim = android.view.ViewAnimationUtils.
+                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, 0, radius);
+            manageCustomerHolder.rlRevealLayout.setVisibility(View.VISIBLE);
+            manageCustomerHolder.rflOverLay.setBackgroundColor(Color.parseColor("#66000000"));
+            anim.start();
+        }
+    }
+
+    private void closeOverlay(final ManageCustomerAdapter.ManageCustomerHolder manageCustomerHolder) {
+
+        int cx = (manageCustomerHolder.rlRevealLayout.getLeft() + manageCustomerHolder.rlRevealLayout.getRight());
+        int cy = manageCustomerHolder.rlRevealLayout.getTop();
+        int radius = Math.max(manageCustomerHolder.rlRevealLayout.getWidth(), manageCustomerHolder.rlRevealLayout.getHeight());
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+
+            Animator anim = ViewAnimationUtils.
+                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, radius, 0);
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
+                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
+                }
+            });
+            anim.start();
+
+        } else {
+            Animator anim = android.view.ViewAnimationUtils.
+                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, radius, 0);
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
+                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
+                }
+            });
+            anim.start();
+
+        }
+
+    }
 
     private class ManageCustomerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -346,67 +404,6 @@ public class ManageCustomerFragmentV2 extends Fragment {
 
 
         }
-    }
-
-    private void showOverlay(ManageCustomerAdapter.ManageCustomerHolder manageCustomerHolder) {
-
-        int cx = (manageCustomerHolder.rlRevealLayout.getLeft() + manageCustomerHolder.rlRevealLayout.getRight());
-        int cy = manageCustomerHolder.rlRevealLayout.getTop();
-        int radius = Math.max(manageCustomerHolder.rlRevealLayout.getWidth(), manageCustomerHolder.rlRevealLayout.getHeight());
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Animator animator =
-                    ViewAnimationUtils.createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, 0, radius);
-            animator.setInterpolator(new AccelerateDecelerateInterpolator());
-            animator.setDuration(700);
-
-            manageCustomerHolder.rlRevealLayout.setVisibility(View.VISIBLE);
-            manageCustomerHolder.rflOverLay.setBackgroundColor(Color.parseColor("#66000000"));
-            animator.start();
-        } else {
-            Animator anim = android.view.ViewAnimationUtils.
-                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, 0, radius);
-            manageCustomerHolder.rlRevealLayout.setVisibility(View.VISIBLE);
-            manageCustomerHolder.rflOverLay.setBackgroundColor(Color.parseColor("#66000000"));
-            anim.start();
-        }
-    }
-
-    private void closeOverlay(final ManageCustomerAdapter.ManageCustomerHolder manageCustomerHolder) {
-
-        int cx = (manageCustomerHolder.rlRevealLayout.getLeft() + manageCustomerHolder.rlRevealLayout.getRight());
-        int cy = manageCustomerHolder.rlRevealLayout.getTop();
-        int radius = Math.max(manageCustomerHolder.rlRevealLayout.getWidth(), manageCustomerHolder.rlRevealLayout.getHeight());
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-
-            Animator anim = ViewAnimationUtils.
-                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, radius, 0);
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
-                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
-                }
-            });
-            anim.start();
-
-        } else {
-            Animator anim = android.view.ViewAnimationUtils.
-                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, radius, 0);
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
-                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
-                }
-            });
-            anim.start();
-
-        }
-
     }
 
 

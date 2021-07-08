@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/main_view"
-        style="@style/match_wrap"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/size_16">
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_view"
+    style="@style/match_wrap"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/size_16">
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/ivGenderSelected"
-            style="@style/wrap_wrap"
-            android:layout_marginStart="@dimen/size_2"
-            app:srcCompat="@drawable/ic_option_unselected" />
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/ivGenderSelected"
+      style="@style/wrap_wrap"
+      android:layout_marginStart="@dimen/size_2"
+      app:srcCompat="@drawable/ic_option_unselected" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tvSelectGender"
-            style="@style/wrap_wrap"
-            android:paddingStart="@dimen/size_30"
-            android:text="@string/male"
-            android:textColor="@color/grey_text_color"
-            app:fontFamily="@font/semi_bold"
-            app:textType="BODY_3" />
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvSelectGender"
+      style="@style/wrap_wrap"
+      android:paddingStart="@dimen/size_30"
+      android:text="@string/male"
+      android:textColor="@color/grey_text_color"
+      app:fontFamily="@font/semi_bold"
+      app:textType="BODY_3" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>

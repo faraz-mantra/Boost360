@@ -25,7 +25,10 @@ interface WithFloatTwoRemoteData {
   fun deleteService(@Body request: DeleteProductRequest?): Observable<Response<String>>
 
   @GET(EndPoints.GET_TAGS)
-  fun getTags(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?): Observable<Response<List<String>>>
+  fun getTags(
+    @Query("clientId") clientId: String?,
+    @Query("fpId") fpId: String?
+  ): Observable<Response<List<String>>>
 
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.ADD_IMAGE)
@@ -40,7 +43,11 @@ interface WithFloatTwoRemoteData {
   ): Observable<Response<String>>
 
   @GET(EndPoints.GET_NOTIFICATION)
-  fun getNotificationCount(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?, @Query("isRead") isRead: Boolean = false): Observable<Response<Any>>
+  fun getNotificationCount(
+    @Query("clientId") clientId: String?,
+    @Query("fpId") fpId: String?,
+    @Query("isRead") isRead: Boolean = false
+  ): Observable<Response<Any>>
 
   @GET(EndPoints.GET_LATEST_UPDATES)
   fun getMessageUpdates(@QueryMap map: Map<String?, String?>?): Observable<Response<BusinessUpdateResponse>>
@@ -70,7 +77,10 @@ interface WithFloatTwoRemoteData {
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
 
   @GET(EndPoints.GET_BIZ_WEB_UPDATE_BY_ID)
-  fun getBizWebMessage(@Path("id") id: String?, @Query("clientId") clientId: String?): Observable<Response<ResponseBody>>
+  fun getBizWebMessage(
+    @Path("id") id: String?,
+    @Query("clientId") clientId: String?
+  ): Observable<Response<ResponseBody>>
 
   @HTTP(method = "DELETE", path = EndPoints.DELETE_BIZ_MESSAGE_UPDATE, hasBody = true)
   fun deleteBizMessageUpdate(@Body request: DeleteBizMessageRequest?): Observable<Response<ResponseBody>>

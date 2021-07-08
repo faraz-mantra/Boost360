@@ -4,7 +4,7 @@ import com.framework.rest.BaseApiClient
 
 class WithFloatsApiTwoClient : BaseApiClient() {
 
-    companion object {
-        val shared = WithFloatsApiTwoClient()
-    }
+  companion object {
+    val shared = WithFloatsApiTwoClient()
+  }
 }

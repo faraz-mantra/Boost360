@@ -1,285 +1,312 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/screen_bg">
+
+  <LinearLayout
+    android:id="@+id/updatesLayout"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg">
+    android:background="@color/screen_bg"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/updatesLayout"
-        android:layout_width="fill_parent"
+    <com.nowfloats.util.ButteryProgressBar
+      android:id="@+id/progressbar"
+      android:layout_width="match_parent"
+      android:layout_height="7dp"
+      android:visibility="visible"></com.nowfloats.util.ButteryProgressBar>
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/progressCard"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:visibility="gone">
+
+      <LinearLayout
+        android:id="@+id/postRetryLayout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/screen_bg"
-        android:orientation="vertical">
-        <com.nowfloats.util.ButteryProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="match_parent"
-            android:layout_height="7dp"
-            android:visibility="visible">
-        </com.nowfloats.util.ButteryProgressBar>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/progressCard"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="60dp">
-
-            <LinearLayout
-                android:id="@+id/postRetryLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:id="@+id/retryPost"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:tint="@color/primary"
-                        android:src="@drawable/retry_post"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        fontPath="Roboto-Medium.ttf"
-                        android:gravity="center"
-                        android:textSize="18sp"
-                        android:text="@string/retry"
-                        android:textColor="@color/retry_txt"
-                        tools:ignore="MissingPrefix" />
-                </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/cancelPost"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp"
-                    app:tint="@color/primary"
-                    android:src="@drawable/cancel_post" />
-                <TextView
-                    fontPath="Roboto-Medium.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="18sp"
-                    android:text="@string/cancel"
-                    android:textColor="@color/retry_txt"
-                    tools:ignore="MissingPrefix" />
-            </LinearLayout>
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/screen_bg"
-            android:scrollbars="vertical" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/emptymsglayout"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="visible"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:src="@drawable/home_zerothicon" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/dgts__title_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/zeroth_grey_title"
-            android:layout_marginTop="@dimen/dgts__padding_title"
-            android:layout_marginBottom="@dimen/dgts__padding_title"
-            android:text="@string/message_soon"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/zeroth_grey"
-            android:gravity="center"
-            android:text="@string/Message_empty"/>
-    </LinearLayout>
-
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        android:layout_gravity="bottom|end|right">-->
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/addOptions"
-            android:layout_width="wrap_content"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+          <ImageView
+            android:id="@+id/retryPost"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/retry_post"
+            app:tint="@color/primary" />
+
+          <TextView
+            fontPath="Roboto-Medium.ttf"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/_65sdp"
-            android:orientation="vertical">
-            <LinearLayout
-                android:id="@+id/addProduct"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/rounded_white_selector_bg"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_gravity="center_vertical"
-                        app:srcCompat="@drawable/product_verb"/>
-                    <TextView
-                        android:id="@+id/addProductText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Add a product"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="@dimen/_11sdp"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/addImage"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/rounded_white_selector_bg"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_gravity="center_vertical"
-                        app:srcCompat="@drawable/gallery_image"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Add an image"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="@dimen/_11sdp"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/addCustomPage"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/rounded_white_selector_bg"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_gravity="center_vertical"
-                        app:srcCompat="@drawable/custom_page"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Create a custom page"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="@dimen/_11sdp"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/addTestimonial"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/rounded_white_selector_bg"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_gravity="center_vertical"
-                        app:srcCompat="@drawable/testimonial"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Add a testimonial"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="@dimen/_11sdp"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/addUpdate"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/rounded_corner_pre_signup"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_gravity="center_vertical"
-                        app:srcCompat="@drawable/create_update"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Write an update"
-                        android:textColor="#fff"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="@dimen/_11sdp"/>
-                </LinearLayout>
-            </LinearLayout>
+            android:gravity="center"
+            android:text="@string/retry"
+            android:textColor="@color/retry_txt"
+            android:textSize="18sp"
+            tools:ignore="MissingPrefix" />
         </LinearLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:elevation="@dimen/_25sdp"
-            app:backgroundTint="@color/primaryColor"
-            android:layout_gravity="bottom|right"
-            app:fabSize="normal"
-            app:rippleColor="@color/white"
-            app:srcCompat="@drawable/ic_add_white" />
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:orientation="vertical">
 
-<!--    </LinearLayout>-->
+          <ImageView
+            android:id="@+id/cancelPost"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/cancel_post"
+            app:tint="@color/primary" />
+
+          <TextView
+            fontPath="Roboto-Medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/retry_txt"
+            android:textSize="18sp"
+            tools:ignore="MissingPrefix" />
+        </LinearLayout>
+      </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/my_recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/screen_bg"
+      android:scrollbars="vertical" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/emptymsglayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/home_zerothicon"
+      android:visibility="gone" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dgts__padding_title"
+      android:layout_marginBottom="@dimen/dgts__padding_title"
+      android:text="@string/message_soon"
+      android:textColor="@color/zeroth_grey_title"
+      android:textSize="@dimen/dgts__title_text_size"
+      android:textStyle="bold" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="@string/Message_empty"
+      android:textColor="@color/zeroth_grey"
+      android:textSize="15sp" />
+  </LinearLayout>
+
+
+  <!--    <LinearLayout-->
+  <!--        android:layout_width="wrap_content"-->
+  <!--        android:layout_height="wrap_content"-->
+  <!--        android:orientation="vertical"-->
+  <!--        android:layout_gravity="bottom|end|right">-->
+
+  <LinearLayout
+    android:id="@+id/addOptions"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|right"
+    android:layout_marginBottom="@dimen/_65sdp"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:id="@+id/addProduct"
+      android:layout_width="@dimen/_150sdp"
+      android:layout_height="@dimen/_35sdp"
+      android:layout_marginEnd="@dimen/_6sdp"
+      android:background="@drawable/rounded_white_selector_bg"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:layout_width="@dimen/_15sdp"
+          android:layout_height="@dimen/_15sdp"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="@dimen/_8sdp"
+          android:layout_marginEnd="@dimen/_8sdp"
+          app:srcCompat="@drawable/product_verb" />
+
+        <TextView
+          android:id="@+id/addProductText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:text="Add a product"
+          android:textSize="@dimen/_11sdp" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/addImage"
+      android:layout_width="@dimen/_150sdp"
+      android:layout_height="@dimen/_35sdp"
+      android:layout_marginEnd="@dimen/_6sdp"
+      android:background="@drawable/rounded_white_selector_bg"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:layout_width="@dimen/_15sdp"
+          android:layout_height="@dimen/_15sdp"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="@dimen/_8sdp"
+          android:layout_marginEnd="@dimen/_8sdp"
+          app:srcCompat="@drawable/gallery_image" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:text="Add an image"
+          android:textSize="@dimen/_11sdp" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/addCustomPage"
+      android:layout_width="@dimen/_150sdp"
+      android:layout_height="@dimen/_35sdp"
+      android:layout_marginEnd="@dimen/_6sdp"
+      android:background="@drawable/rounded_white_selector_bg"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:layout_width="@dimen/_15sdp"
+          android:layout_height="@dimen/_15sdp"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="@dimen/_8sdp"
+          android:layout_marginEnd="@dimen/_8sdp"
+          app:srcCompat="@drawable/custom_page" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:text="Create a custom page"
+          android:textSize="@dimen/_11sdp" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/addTestimonial"
+      android:layout_width="@dimen/_150sdp"
+      android:layout_height="@dimen/_35sdp"
+      android:layout_marginEnd="@dimen/_6sdp"
+      android:background="@drawable/rounded_white_selector_bg"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:layout_width="@dimen/_15sdp"
+          android:layout_height="@dimen/_15sdp"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="@dimen/_8sdp"
+          android:layout_marginEnd="@dimen/_8sdp"
+          app:srcCompat="@drawable/testimonial" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:text="Add a testimonial"
+          android:textSize="@dimen/_11sdp" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/addUpdate"
+      android:layout_width="@dimen/_150sdp"
+      android:layout_height="@dimen/_35sdp"
+      android:layout_marginEnd="@dimen/_6sdp"
+      android:layout_marginBottom="@dimen/_6sdp"
+      android:background="@drawable/rounded_corner_pre_signup"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:layout_width="@dimen/_15sdp"
+          android:layout_height="@dimen/_15sdp"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="@dimen/_8sdp"
+          android:layout_marginEnd="@dimen/_8sdp"
+          app:srcCompat="@drawable/create_update" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:text="Write an update"
+          android:textColor="#fff"
+          android:textSize="@dimen/_11sdp" />
+      </LinearLayout>
+    </LinearLayout>
+  </LinearLayout>
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|right"
+    android:layout_marginEnd="@dimen/_20sdp"
+    android:layout_marginBottom="@dimen/_20sdp"
+    android:elevation="@dimen/_25sdp"
+    app:backgroundTint="@color/primaryColor"
+    app:fabSize="normal"
+    app:rippleColor="@color/white"
+    app:srcCompat="@drawable/ic_add_white" />
+
+  <!--    </LinearLayout>-->
 
 </FrameLayout>

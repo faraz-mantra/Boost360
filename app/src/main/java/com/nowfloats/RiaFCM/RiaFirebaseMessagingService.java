@@ -66,6 +66,8 @@ import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = RiaFirebaseMessagingService.class.getSimpleName();
+    private static final String SAM_BUBBLE_MSG = "I have Got some data";
+    private static final String SAM_BUBBLE_MSG_KEY = "100";
     public static String deepLinkUrl;
     private SharedPreferences pref;
 
@@ -110,9 +112,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             Crashlytics.log("Failed to process onMessageReceived in RiaFirebaseMessagingService" + e.getMessage());
         }
     }
-
-    private static final String SAM_BUBBLE_MSG = "I have Got some data";
-    private static final String SAM_BUBBLE_MSG_KEY = "100";
 
     private void sendNotification(Map<String, String> message) {
 

@@ -58,14 +58,14 @@ public class DemoActivity extends Activity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_demo, container, false);
 
-            String[] items = { "Menu with FloatingActionButton",
-                               "Menu attached to custom button",
-                               "Menu with custom animation",
-                               "Menu in ScrollView"
-                            };
+            String[] items = {"Menu with FloatingActionButton",
+                    "Menu attached to custom button",
+                    "Menu with custom animation",
+                    "Menu in ScrollView"
+            };
             ArrayAdapter<String> simpleAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
             demosListView = (ListView) rootView.findViewById(R.id.demosListView);
             demosListView.setAdapter(simpleAdapter);

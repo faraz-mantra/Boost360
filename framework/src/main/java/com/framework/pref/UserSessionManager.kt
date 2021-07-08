@@ -243,7 +243,7 @@ class UserSessionManager(var activity: Context) {
 
   fun getStoreWidgets(): List<String>? {
     val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
-    return (if (str.isNullOrEmpty()) ArrayList() else convertStringToList(str))
+    return if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)
   }
 
   val sourceClientId: String?
@@ -687,7 +687,8 @@ class UserSessionManager(var activity: Context) {
             storeFacebookName(facebookName)
             //                        Constants.FACEBOOK_USER_NAME = facebookName;
           }
-          if (facebookPage != null && facebookPage.trim { it <= ' ' }.isNotEmpty()) storeFacebookPage(facebookPage)
+          if (facebookPage != null && facebookPage.trim { it <= ' ' }
+              .isNotEmpty()) storeFacebookPage(facebookPage)
           if (facebookAccessToken != null && facebookAccessToken.trim { it <= ' ' }.isNotEmpty()) {
             storeFacebookAccessToken(facebookAccessToken)
           }
@@ -794,11 +795,20 @@ class UserSessionManager(var activity: Context) {
     private const val KEY_GALLLERY_IMAGES = "gallery"
   }
 }
+
 fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
-  val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-  val normalUri = "https://${getFPDetails(GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+  val rootAliasUri =
+    getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
+  val normalUri =
+    "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
   return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
-    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
-    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
+    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace(
+      "http://",
+      ""
+    )
+    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace(
+      "https://",
+      ""
+    ) else rootAliasUri
   } else normalUri
 }

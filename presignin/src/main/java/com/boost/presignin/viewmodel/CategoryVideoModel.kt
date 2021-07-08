@@ -8,7 +8,7 @@ import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 
 class CategoryVideoModel : BaseViewModel() {
-    fun getCategories(context: Context): LiveData<BaseResponse> {
-        return CategoryRepository.getCategories(context).toLiveData()
-    }
+  fun getCategories(context: Context): LiveData<BaseResponse> {
+    return CategoryRepository.getCategories(context).toLiveData()
+  }
 }

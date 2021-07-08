@@ -14,7 +14,7 @@ public class DeleteProductImage extends AsyncTask<String, Void, Void> {
     private Product_Detail_Activity mProductDtailsActivity;
     private MaterialDialog materialProgress;
 
-    public DeleteProductImage(Product_Detail_Activity activity){
+    public DeleteProductImage(Product_Detail_Activity activity) {
         this.mProductDtailsActivity = activity;
     }
 

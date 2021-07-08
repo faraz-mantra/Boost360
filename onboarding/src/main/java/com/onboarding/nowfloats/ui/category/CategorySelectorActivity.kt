@@ -13,7 +13,9 @@ import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.disposables.Disposable
 
-class CategorySelectorActivity : AppBaseActivity<ActivityCategorySelectorBinding, CategoryViewModel>(), CategorySelectorAnimator.OnAnimationCompleteListener {
+class CategorySelectorActivity :
+  AppBaseActivity<ActivityCategorySelectorBinding, CategoryViewModel>(),
+  CategorySelectorAnimator.OnAnimationCompleteListener {
 
   private val animations = CategorySelectorAnimator()
   private val categorySelectorFragment = CategorySelectorFragment.newInstance()
@@ -47,11 +49,11 @@ class CategorySelectorActivity : AppBaseActivity<ActivityCategorySelectorBinding
       binding?.imageRiyaLarge?.post {
         binding?.imageRiyaLarge?.alpha = 1f
         animations.setViews(
-            imageRiyaLarge = binding?.imageRiyaLarge,
-            imageRiyaCard = binding?.imageRiya,
-            motionLayout = binding?.motionLayout,
-            toolbarTitle = binding?.title,
-            subTitleForeground = binding?.subTitleForeground
+          imageRiyaLarge = binding?.imageRiyaLarge,
+          imageRiyaCard = binding?.imageRiya,
+          motionLayout = binding?.motionLayout,
+          toolbarTitle = binding?.title,
+          subTitleForeground = binding?.subTitleForeground
         )
         animations.listener = this
         animations.startAnimation()

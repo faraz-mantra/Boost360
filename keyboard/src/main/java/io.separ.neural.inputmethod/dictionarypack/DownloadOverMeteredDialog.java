@@ -57,10 +57,10 @@ public final class DownloadOverMeteredDialog extends Activity {
         final String allowButtonFormat = getString(R.string.download_over_metered);
         final Locale locale = LocaleUtils.constructLocaleFromString(localeString);
         final String language = (null == locale ? "" : locale.getDisplayLanguage());
-        final TextView prompt = (TextView)findViewById(R.id.download_over_metered_prompt);
+        final TextView prompt = (TextView) findViewById(R.id.download_over_metered_prompt);
         prompt.setText(Html.fromHtml(String.format(promptFormat, language)));
-        final Button allowButton = (Button)findViewById(R.id.allow_button);
-        allowButton.setText(String.format(allowButtonFormat, ((float)size)/(1024*1024)));
+        final Button allowButton = (Button) findViewById(R.id.allow_button);
+        allowButton.setText(String.format(allowButtonFormat, ((float) size) / (1024 * 1024)));
     }
 
     public void onClickDeny(final View v) {

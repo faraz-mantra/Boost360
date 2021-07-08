@@ -179,10 +179,6 @@ public final class FormatSpec {
      */
 
     public static final int MAGIC_NUMBER = 0x9BC13AFE;
-    static final int NOT_A_VERSION_NUMBER = -1;
-    static final int FIRST_VERSION_WITH_DYNAMIC_UPDATE = 3;
-    static final int FIRST_VERSION_WITH_TERMINAL_ID = 4;
-
     // These MUST have the same values as the relevant constants in format_utils.h.
     // From version 4 on, we use version * 100 + revision as a version number. That allows
     // us to change the format during development while having testing devices remove
@@ -196,38 +192,36 @@ public final class FormatSpec {
     public static final int VERSION401 = 401;
     public static final int VERSION4 = 402;
     public static final int VERSION4_DEV = 403;
+    public static final String HEADER_FILE_EXTENSION = ".header";
+    public static final int SHORTCUT_WHITELIST_FREQUENCY = 15;
+    static final int NOT_A_VERSION_NUMBER = -1;
+    static final int FIRST_VERSION_WITH_DYNAMIC_UPDATE = 3;
+    static final int FIRST_VERSION_WITH_TERMINAL_ID = 4;
     static final int MINIMUM_SUPPORTED_VERSION = VERSION2;
     static final int MAXIMUM_SUPPORTED_VERSION = VERSION4_DEV;
-
     // TODO: Make this value adaptative to content data, store it in the header, and
     // use it in the reading code.
     static final int MAX_WORD_LENGTH = Constants.DICTIONARY_MAX_WORD_LENGTH;
-
     static final int PARENT_ADDRESS_SIZE = 3;
     static final int FORWARD_LINK_ADDRESS_SIZE = 3;
-
     // These flags are used only in the static dictionary.
     static final int MASK_CHILDREN_ADDRESS_TYPE = 0xC0;
     static final int FLAG_CHILDREN_ADDRESS_TYPE_NOADDRESS = 0x00;
     static final int FLAG_CHILDREN_ADDRESS_TYPE_ONEBYTE = 0x40;
     static final int FLAG_CHILDREN_ADDRESS_TYPE_TWOBYTES = 0x80;
     static final int FLAG_CHILDREN_ADDRESS_TYPE_THREEBYTES = 0xC0;
-
     static final int FLAG_HAS_MULTIPLE_CHARS = 0x20;
-
     static final int FLAG_IS_TERMINAL = 0x10;
     static final int FLAG_HAS_SHORTCUT_TARGETS = 0x08;
     static final int FLAG_HAS_BIGRAMS = 0x04;
     static final int FLAG_IS_NOT_A_WORD = 0x02;
     static final int FLAG_IS_BLACKLISTED = 0x01;
-
     // These flags are used only in the dynamic dictionary.
     static final int MASK_MOVE_AND_DELETE_FLAG = 0xC0;
     static final int FIXED_BIT_OF_DYNAMIC_UPDATE_MOVE = 0x40;
     static final int FLAG_IS_MOVED = FIXED_BIT_OF_DYNAMIC_UPDATE_MOVE;
     static final int FLAG_IS_NOT_MOVED = 0x80 | FIXED_BIT_OF_DYNAMIC_UPDATE_MOVE;
     static final int FLAG_IS_DELETED = 0x80;
-
     static final int FLAG_BIGRAM_SHORTCUT_ATTR_HAS_NEXT = 0x80;
     static final int FLAG_BIGRAM_ATTR_OFFSET_NEGATIVE = 0x40;
     static final int MASK_BIGRAM_ATTR_ADDRESS_TYPE = 0x30;
@@ -235,9 +229,7 @@ public final class FormatSpec {
     static final int FLAG_BIGRAM_ATTR_ADDRESS_TYPE_TWOBYTES = 0x20;
     static final int FLAG_BIGRAM_ATTR_ADDRESS_TYPE_THREEBYTES = 0x30;
     static final int FLAG_BIGRAM_SHORTCUT_ATTR_FREQUENCY = 0x0F;
-
     static final int PTNODE_CHARACTERS_TERMINATOR = 0x1F;
-
     static final int PTNODE_TERMINATOR_SIZE = 1;
     static final int PTNODE_FLAGS_SIZE = 1;
     static final int PTNODE_FREQUENCY_SIZE = 1;
@@ -246,11 +238,9 @@ public final class FormatSpec {
     static final int PTNODE_ATTRIBUTE_FLAGS_SIZE = 1;
     static final int PTNODE_ATTRIBUTE_MAX_ADDRESS_SIZE = 3;
     static final int PTNODE_SHORTCUT_LIST_SIZE_SIZE = 2;
-
     // These values are used only by version 4 or later. They MUST match the definitions in
     // ver4_dict_constants.cpp.
     static final String TRIE_FILE_EXTENSION = ".trie";
-    public static final String HEADER_FILE_EXTENSION = ".header";
     static final String FREQ_FILE_EXTENSION = ".freq";
     // tat = Terminal Address Table
     static final String TERMINAL_ADDRESS_TABLE_FILE_EXTENSION = ".tat";
@@ -264,7 +254,6 @@ public final class FormatSpec {
     static final int UNIGRAM_TIMESTAMP_SIZE = 4;
     static final int UNIGRAM_COUNTER_SIZE = 1;
     static final int UNIGRAM_LEVEL_SIZE = 1;
-
     // With the English main dictionary as of October 2013, the size of bigram address table is
     // is 345KB with the block size being 16.
     // This is 54% of that of full address table.
@@ -275,7 +264,6 @@ public final class FormatSpec {
     static final int BIGRAM_TIMESTAMP_SIZE = 4;
     static final int BIGRAM_COUNTER_SIZE = 1;
     static final int BIGRAM_LEVEL_SIZE = 1;
-
     static final int SHORTCUT_CONTENT_COUNT = 1;
     static final int SHORTCUT_CONTENT_INDEX = 0;
     // With the English main dictionary as of October 2013, the size of shortcut address table is
@@ -283,24 +271,18 @@ public final class FormatSpec {
     // This is only 4.4% of that of full address table.
     static final int SHORTCUT_ADDRESS_TABLE_BLOCK_SIZE = 64;
     static final String SHORTCUT_CONTENT_ID = "_shortcut";
-
     static final int NO_CHILDREN_ADDRESS = Integer.MIN_VALUE;
     static final int NO_PARENT_ADDRESS = 0;
     static final int NO_FORWARD_LINK_ADDRESS = 0;
     static final int INVALID_CHARACTER = -1;
-
     static final int MAX_PTNODES_FOR_ONE_BYTE_PTNODE_COUNT = 0x7F; // 127
     // Large PtNode array size field size is 2 bytes.
     static final int LARGE_PTNODE_ARRAY_SIZE_FIELD_SIZE_FLAG = 0x8000;
     static final int MAX_PTNODES_IN_A_PT_NODE_ARRAY = 0x7FFF; // 32767
     static final int MAX_BIGRAMS_IN_A_PTNODE = 10000;
     static final int MAX_SHORTCUT_LIST_SIZE_IN_A_PTNODE = 0xFFFF;
-
     static final int MAX_TERMINAL_FREQUENCY = 255;
     static final int MAX_BIGRAM_FREQUENCY = 15;
-
-    public static final int SHORTCUT_WHITELIST_FREQUENCY = 15;
-
     // This option needs to be the same numeric value as the one in binary_format.h.
     static final int NOT_VALID_WORD = -99;
     static final int SIGNED_CHILDREN_ADDRESS_SIZE = 3;
@@ -311,6 +293,10 @@ public final class FormatSpec {
     static final int SINT24_MAX = 0x7FFFFF;
     static final int MSB8 = 0x80;
     static final int MSB24 = 0x800000;
+
+    private FormatSpec() {
+        // This utility class is not publicly instantiable.
+    }
 
     /**
      * Options about file format.
@@ -335,13 +321,16 @@ public final class FormatSpec {
      */
     public static final class DictionaryOptions {
         public final HashMap<String, String> mAttributes;
+
         public DictionaryOptions(final HashMap<String, String> attributes) {
             mAttributes = attributes;
         }
+
         @Override
         public String toString() { // Convenience method
             return toString(0, false);
         }
+
         public String toString(final int indentCount, final boolean plumbing) {
             final StringBuilder indent = new StringBuilder();
             if (plumbing) {
@@ -367,9 +356,5 @@ public final class FormatSpec {
             }
             return s.toString();
         }
-    }
-
-    private FormatSpec() {
-        // This utility class is not publicly instantiable.
     }
 }

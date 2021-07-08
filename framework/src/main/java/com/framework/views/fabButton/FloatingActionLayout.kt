@@ -42,7 +42,11 @@ class FloatingActionLayout : FrameLayout {
 
   constructor(context: Context) : this(context, null, 0)
   constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+    context,
+    attrs,
+    defStyleAttr
+  ) {
     initTypedArray(attrs)
   }
 
@@ -51,10 +55,24 @@ class FloatingActionLayout : FrameLayout {
 
     val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, 0, 0)
 
-    fabType = FabType.getByIndex(ta.getInt(R.styleable.FloatingActionButton_fabType, FabType.FAB_TYPE_CIRCLE.ordinal))
-    fabElevation = ta.getDimension(R.styleable.FloatingActionButton_fabElevation, resources.getDimension(R.dimen.fab_default_elevation))
-    fabColor = ta.getColor(R.styleable.FloatingActionButton_fabColor, ContextCompat.getColor(context, R.color.colorAccent))
-    fabRippleColor = ta.getColor(R.styleable.FloatingActionButton_fabRippleColor, ContextCompat.getColor(context, R.color.colorPrimary))
+    fabType = FabType.getByIndex(
+      ta.getInt(
+        R.styleable.FloatingActionButton_fabType,
+        FabType.FAB_TYPE_CIRCLE.ordinal
+      )
+    )
+    fabElevation = ta.getDimension(
+      R.styleable.FloatingActionButton_fabElevation,
+      resources.getDimension(R.dimen.fab_default_elevation)
+    )
+    fabColor = ta.getColor(
+      R.styleable.FloatingActionButton_fabColor,
+      ContextCompat.getColor(context, R.color.colorAccent)
+    )
+    fabRippleColor = ta.getColor(
+      R.styleable.FloatingActionButton_fabRippleColor,
+      ContextCompat.getColor(context, R.color.colorPrimary)
+    )
 
     ta.recycle()
   }
@@ -71,13 +89,18 @@ class FloatingActionLayout : FrameLayout {
   }
 
   private fun createBackground() {
-    val background = ContextCompat.getDrawable(context, when (fabType) {
-      FabType.FAB_TYPE_SQUARE -> R.drawable.fab_square_bg
-      FabType.FAB_TYPE_ROUNDED_SQUARE -> R.drawable.fab_rounded_square_bg
-      else -> R.drawable.fab_circle_bg
-    })?.mutate()?.apply {
+    val background = ContextCompat.getDrawable(
+      context, when (fabType) {
+        FabType.FAB_TYPE_SQUARE -> R.drawable.fab_square_bg
+        FabType.FAB_TYPE_ROUNDED_SQUARE -> R.drawable.fab_rounded_square_bg
+        else -> R.drawable.fab_circle_bg
+      }
+    )?.mutate()?.apply {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        mutate().colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(fabColor, BlendModeCompat.SRC_IN)
+        mutate().colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+          fabColor,
+          BlendModeCompat.SRC_IN
+        )
       } else {
         mutate().setColorFilter(fabColor, PorterDuff.Mode.SRC_IN)
       }
@@ -108,17 +131,26 @@ class FloatingActionLayout : FrameLayout {
     canvas?.let { cnv ->
       when (fabType) {
         FabType.FAB_TYPE_CIRCLE -> {
-          clipPath.addCircle(measuredWidth / 2f, measuredHeight / 2f, measuredWidth / 2f, Path.Direction.CW)
+          clipPath.addCircle(
+            measuredWidth / 2f,
+            measuredHeight / 2f,
+            measuredWidth / 2f,
+            Path.Direction.CW
+          )
           cnv.clipPath(clipPath)
         }
         FabType.FAB_TYPE_ROUNDED_SQUARE -> {
           val radius = resources.getDimension(R.dimen.fab_rounded_radius)
-          roundedSquareRect.apply { left = 0f; top = 0f; right = measuredWidth.toFloat(); bottom = measuredHeight.toFloat() }
+          roundedSquareRect.apply {
+            left = 0f; top = 0f; right = measuredWidth.toFloat(); bottom = measuredHeight.toFloat()
+          }
           clipPath.addRoundRect(roundedSquareRect, radius, radius, Path.Direction.CW)
           cnv.clipPath(clipPath)
         }
         else -> {
-          roundedSquareRect.apply { left = 0f; top = 0f; right = measuredWidth.toFloat(); bottom = measuredHeight.toFloat() }
+          roundedSquareRect.apply {
+            left = 0f; top = 0f; right = measuredWidth.toFloat(); bottom = measuredHeight.toFloat()
+          }
           clipPath.addRect(roundedSquareRect, Path.Direction.CW)
           cnv.clipPath(clipPath)
         }

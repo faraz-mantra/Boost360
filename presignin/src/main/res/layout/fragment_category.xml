@@ -67,11 +67,11 @@
     <com.framework.views.customViews.CustomButton
       android:id="@+id/confirm_button"
       style="@style/psn_button_style"
-      android:enabled="true"
       android:layout_width="match_parent"
-      android:text="@string/confirm_business_category"
       android:layout_marginHorizontal="@dimen/_20sdp"
       android:layout_marginBottom="@dimen/_14sdp"
+      android:enabled="true"
+      android:text="@string/confirm_business_category"
       android:visibility="invisible"
       app:layout_constraintBottom_toBottomOf="parent"
       tools:ignore="MissingConstraints,UnknownId" />

@@ -35,7 +35,8 @@ class SplashActivity : AppCompatActivity() {
       if (uri == null) {
         if (uri.toString().contains("onelink", true)) {
           if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-            deepLinkViewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+            deepLinkViewType =
+              AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
             deepLinkFpId = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpId.name] ?: ""
             deepLinkFpTag = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpTag.name] ?: ""
             deepLinkDay = AppsFlyerUtils.sAttributionData[DynamicLinkParams.day.name] ?: ""
@@ -64,7 +65,8 @@ class SplashActivity : AppCompatActivity() {
 
   private fun onCreateView() {
     if (isUserLoggedIn && deepLinkViewType.isNotEmpty()) {
-      val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+      val intent =
+        Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
       intent.putExtra("deepLinkViewType", deepLinkViewType)
       intent.putExtra("deepLinkFpId", deepLinkFpId)
       intent.putExtra("deepLinkFpTag", deepLinkFpTag)
@@ -86,7 +88,10 @@ class SplashActivity : AppCompatActivity() {
         animation_view?.cancelAnimation()
         when {
           isUserLoggedIn -> {
-            val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+            val intent = Intent(
+              applicationContext,
+              Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity")
+            )
             startActivity(intent)
             finish()
           }
@@ -116,7 +121,10 @@ class SplashActivity : AppCompatActivity() {
 
   private fun startNewSignUpSuccess() {
     try {
-      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.registration.RegistrationActivity"))
+      val intent = Intent(
+        applicationContext,
+        Class.forName("com.boost.presignin.ui.registration.RegistrationActivity")
+      )
       intent.putExtra("FRAGMENT_TYPE", 101)
       startActivity(intent)
       finish()
@@ -128,7 +136,8 @@ class SplashActivity : AppCompatActivity() {
 
   private fun startNewSignIn() {
     try {
-      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+      val intent =
+        Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
       startActivity(intent)
       finish()
     } catch (e: Exception) {
@@ -140,8 +149,9 @@ class SplashActivity : AppCompatActivity() {
   private fun hashGeneration() { // Add code to print out the key hash
     try {
       val info: PackageInfo = packageManager.getPackageInfo(
-          packageName,
-          PackageManager.GET_SIGNATURES)
+        packageName,
+        PackageManager.GET_SIGNATURES
+      )
       for (signature in info.signatures) {
         val md: MessageDigest = MessageDigest.getInstance("SHA")
         md.update(signature.toByteArray())

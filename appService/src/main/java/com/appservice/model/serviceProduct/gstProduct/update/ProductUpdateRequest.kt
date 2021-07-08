@@ -6,12 +6,12 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ProductUpdateRequest(
-    @SerializedName("Multi")
-    var multi: Boolean? = null,
-    @SerializedName("Query")
-    var query: String? = null,
-    @SerializedName("UpdateValue")
-    var updateValue: String? = null
+  @SerializedName("Multi")
+  var multi: Boolean? = null,
+  @SerializedName("Query")
+  var query: String? = null,
+  @SerializedName("UpdateValue")
+  var updateValue: String? = null
 ) : BaseRequest(), Serializable {
 
   fun updateValueSet(updateValue: UpdateValueU) {

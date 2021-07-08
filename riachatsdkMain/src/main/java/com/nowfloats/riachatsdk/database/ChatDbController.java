@@ -17,8 +17,8 @@ import java.util.Map;
  */
 public class ChatDbController implements ChatIdbController {
 
-    private Context mContext;
     private static ChatDbController sDbController = null;
+    private Context mContext;
 
     private ChatDbController(Context context) {
         this.mContext = context;

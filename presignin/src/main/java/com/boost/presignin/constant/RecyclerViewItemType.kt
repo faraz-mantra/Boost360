@@ -5,7 +5,7 @@ import com.boost.presignin.R
 
 enum class RecyclerViewItemType {
   PAGINATION_LOADER,
-  CATEGORY_ITEM,BUSINESS_LIST_ITEM,
+  CATEGORY_ITEM, BUSINESS_LIST_ITEM,
   SECTION_HEADER_ITEM;
 
 

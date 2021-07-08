@@ -19,10 +19,10 @@ import retrofit.http.QueryMap;
 
 public interface IOPCValidation {
     @GET("/Internal/v1/VerifyPaymentToken")
-    public void verifyPaymentToken(@QueryMap Map<String,String> map, Callback<OPCDataMain> callback);
+    public void verifyPaymentToken(@QueryMap Map<String, String> map, Callback<OPCDataMain> callback);
 
     @GET("/Internal/v1/RedeemPaymentToken")
-    public void redeemToken(@QueryMap Map<String,String> map, Callback<String> callback);
+    public void redeemToken(@QueryMap Map<String, String> map, Callback<String> callback);
 
     @POST("/support/v1/MarkFloatingPointAsPaid")
     public void markAsPaid(@Body MarkAsPaidModel model, Callback<String> callback);

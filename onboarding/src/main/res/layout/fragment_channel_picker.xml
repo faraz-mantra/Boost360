@@ -118,9 +118,9 @@
             android:id="@+id/featureList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/size_18"
             android:orientation="vertical"
             android:overScrollMode="never"
-            android:layout_marginTop="@dimen/size_18"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="3"
             tools:listitem="@layout/item_channel_feature" />

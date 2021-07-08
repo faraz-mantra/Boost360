@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class DoctorAppointmentResponse(
-    @SerializedName("Data")
+  @SerializedName("Data")
   var `data`: ArrayList<AptData>? = null,
-    @SerializedName("Extra")
+  @SerializedName("Extra")
   var extra: Extra? = null
-):BaseResponse(),Serializable
+) : BaseResponse(), Serializable

@@ -7,18 +7,16 @@ import java.util.List;
 
 public class Widget {
 
-    private static Widget singleton = new Widget( );
+    private static Widget singleton = new Widget();
 
     public List<ActivePackage> activePackages;
     private ActivePackage activePackage;
 
-    private Widget()
-    {
+    private Widget() {
 
     }
 
-    public static Widget getInstance( )
-    {
+    public static Widget getInstance() {
         return singleton;
     }
 
@@ -32,13 +30,11 @@ public class Widget {
         this.activePackages = activePackages;
     }*/
 
-    public ActivePackage getActivePackage()
-    {
+    public ActivePackage getActivePackage() {
         return activePackage;
     }
 
-    public void setActivePackage(ActivePackage activePackage)
-    {
+    public void setActivePackage(ActivePackage activePackage) {
         this.activePackage = activePackage;
     }
 

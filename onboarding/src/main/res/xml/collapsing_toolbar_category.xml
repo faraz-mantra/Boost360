@@ -1,115 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <ConstraintSet android:id="@+id/expanded">
     <Constraint
-        android:id="@id/toolbar_image"
-        android:layout_height="@dimen/size_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+      android:id="@id/toolbar_image"
+      android:layout_height="@dimen/size_200"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
     <Constraint
-        android:id="@id/image_riya"
-        android:layout_width="@dimen/size_70"
-        android:layout_height="@dimen/size_70"
-        android:layout_marginStart="@dimen/size_18"
-        android:layout_marginTop="@dimen/size_26"
-        android:layout_marginBottom="@dimen/size_6"
-        app:layout_constraintBottom_toTopOf="@id/title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:shadowColor="@color/shadow"
-        app:shadowDx=".5dp"
-        app:shadowDy=".5dp"
-        app:shadowRadius="2dp"
-        app:shadowShape="oval"
-        app:shadowSide="all"
-        app:srcCompat="@drawable/ic_ria_circle" />
+      android:id="@id/image_riya"
+      android:layout_width="@dimen/size_70"
+      android:layout_height="@dimen/size_70"
+      android:layout_marginStart="@dimen/size_18"
+      android:layout_marginTop="@dimen/size_26"
+      android:layout_marginBottom="@dimen/size_6"
+      app:layout_constraintBottom_toTopOf="@id/title"
+      app:layout_constraintStart_toStartOf="parent"
+      app:shadowColor="@color/shadow"
+      app:shadowDx=".5dp"
+      app:shadowDy=".5dp"
+      app:shadowRadius="2dp"
+      app:shadowShape="oval"
+      app:shadowSide="all"
+      app:srcCompat="@drawable/ic_ria_circle" />
     <Constraint
-        android:id="@+id/title"
-        style="@style/Onboarding.HeaderTitleStyle"
-        app:layout_constraintBottom_toTopOf="@id/sub_title"
-        app:layout_constraintEnd_toEndOf="@id/toolbar_image"
-        app:layout_constraintStart_toStartOf="parent" />
+      android:id="@+id/title"
+      style="@style/Onboarding.HeaderTitleStyle"
+      app:layout_constraintBottom_toTopOf="@id/sub_title"
+      app:layout_constraintEnd_toEndOf="@id/toolbar_image"
+      app:layout_constraintStart_toStartOf="parent" />
     <Constraint
-        android:id="@+id/sub_title"
-        style="@style/Onboarding.HeaderDescriptionStyle"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-        app:layout_constraintStart_toStartOf="parent" />
+      android:id="@+id/sub_title"
+      style="@style/Onboarding.HeaderDescriptionStyle"
+      app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+      app:layout_constraintStart_toStartOf="parent" />
     <Constraint
-        android:id="@+id/view_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/down_shadow"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
+      android:id="@+id/view_shadow"
+      android:layout_width="match_parent"
+      android:layout_height="3dp"
+      android:background="@drawable/down_shadow"
+      android:visibility="gone"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
   </ConstraintSet>
 
   <ConstraintSet android:id="@+id/collapsed">
     <Constraint
-        android:id="@id/toolbar_image"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+      android:id="@id/toolbar_image"
+      android:layout_height="?attr/actionBarSize"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
     <Constraint
-        android:id="@+id/image_riya"
-        android:layout_width="@dimen/size_45"
-        android:layout_height="@dimen/size_45"
-        android:layout_marginStart="@dimen/size_34"
-        android:layout_marginTop="@dimen/size_22"
-        android:layout_marginBottom="@dimen/size_24"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/toolbar_image"
-        app:shadowColor="@color/shadow"
-        app:shadowDx=".2dp"
-        app:shadowDy=".2dp"
-        app:shadowRadius="2dp"
-        app:shadowShape="oval"
-        app:shadowSide="all" />
+      android:id="@+id/image_riya"
+      android:layout_width="@dimen/size_45"
+      android:layout_height="@dimen/size_45"
+      android:layout_marginStart="@dimen/size_34"
+      android:layout_marginTop="@dimen/size_22"
+      android:layout_marginBottom="@dimen/size_24"
+      app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@id/toolbar_image"
+      app:shadowColor="@color/shadow"
+      app:shadowDx=".2dp"
+      app:shadowDy=".2dp"
+      app:shadowRadius="2dp"
+      app:shadowShape="oval"
+      app:shadowSide="all" />
     <Constraint
-        android:id="@+id/title"
-        style="@style/Onboarding.HeaderTitleStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_10"
-        android:layout_marginTop="@dimen/size_4"
-        android:scaleX="0.725"
-        android:scaleY="0.725"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-        app:layout_constraintEnd_toEndOf="@id/toolbar_image"
-        app:layout_constraintStart_toStartOf="@id/image_riya"
-        app:layout_constraintTop_toTopOf="@id/toolbar_image" />
+      android:id="@+id/title"
+      style="@style/Onboarding.HeaderTitleStyle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_10"
+      android:layout_marginTop="@dimen/size_4"
+      android:scaleX="0.725"
+      android:scaleY="0.725"
+      app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+      app:layout_constraintEnd_toEndOf="@id/toolbar_image"
+      app:layout_constraintStart_toStartOf="@id/image_riya"
+      app:layout_constraintTop_toTopOf="@id/toolbar_image" />
     <Constraint
-        android:id="@+id/sub_title"
-        android:scaleX="0.50"
-        android:scaleY="0.50"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
-        app:layout_constraintLeft_toLeftOf="@+id/image_riya"
-        app:layout_constraintTop_toTopOf="@id/toolbar_image" />
+      android:id="@+id/sub_title"
+      android:scaleX="0.50"
+      android:scaleY="0.50"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+      app:layout_constraintLeft_toLeftOf="@+id/image_riya"
+      app:layout_constraintTop_toTopOf="@id/toolbar_image" />
     <Constraint
-        android:id="@+id/view_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/down_shadow"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
+      android:id="@+id/view_shadow"
+      android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:background="@drawable/down_shadow"
+      android:visibility="visible"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar_image" />
 
   </ConstraintSet>
 
   <Transition
-      app:constraintSetEnd="@id/collapsed"
-      app:constraintSetStart="@id/expanded">
+    app:constraintSetEnd="@id/collapsed"
+    app:constraintSetStart="@id/expanded">
     <OnSwipe
-        app:dragDirection="dragUp"
-        app:touchAnchorId="@id/fragmentContainer"
-        app:touchAnchorSide="top" />
+      app:dragDirection="dragUp"
+      app:touchAnchorId="@id/fragmentContainer"
+      app:touchAnchorSide="top" />
   </Transition>
 
 </MotionScene>

@@ -30,16 +30,22 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
+interface AllowAudioPlay {
+    boolean allowAudioPlay();
+
+    void toggleAllowAudioPlayFlag(boolean setValue);
+}
+
 /**
  * Created by Admin on 23-06-2017.
  */
 
 public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHolder> {
 
+    NotificationManagerCompat notificationManager;
     private ArrayList<VmnCallModel> mList;
     private int currentPlay = -1;
     private Context mContext;
-    NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder mBuilder;
     private AllowAudioPlay mAllowAudioPlay;
 
@@ -72,8 +78,8 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
             holder.audioStartTime.setText("0:00");
             holder.audioEndTime.setText(" / 0:00");
 
-/*            if(mList.get(position).getCallRecordingUri() != null && !mList.get(position).getCallRecordingUri().equals("None")){
-               *//* Uri uri = Uri.parse(mList.get(position).getCallRecordingUri());
+            /*            if(mList.get(position).getCallRecordingUri() != null && !mList.get(position).getCallRecordingUri().equals("None")){
+             *//* Uri uri = Uri.parse(mList.get(position).getCallRecordingUri());
                 MediaMetadataRetriever mmr = new MediaMetadataRetriever();
                 String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
                 int millSecond = Integer.parseInt(durationStr);*//*
@@ -145,8 +151,10 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
                                         }
                                     }
                                 } catch (Exception e) {
-                                    if (e.getLocalizedMessage() != null) Log.v("AUDIO_EXCEPTION", e.getLocalizedMessage());
-                                    else if (e.getMessage() != null) Log.v("AUDIO_EXCEPTION", e.getMessage());
+                                    if (e.getLocalizedMessage() != null)
+                                        Log.v("AUDIO_EXCEPTION", e.getLocalizedMessage());
+                                    else if (e.getMessage() != null)
+                                        Log.v("AUDIO_EXCEPTION", e.getMessage());
                                 }
                             }
                         } else {
@@ -249,12 +257,12 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
         View divider;
         LinearLayout playerLayout, mainLayout;
         SeekBar seekBar;
-        private MediaPlayer mediaPlayer;
-        private VmnCallModel mediaData;
         boolean audioPlayState = false;
         String totaltime;
         int currentDuration = 0;
         Runnable updateSeekBar;
+        private MediaPlayer mediaPlayer;
+        private VmnCallModel mediaData;
         private Handler handler;
 
         public MyHolder(View itemView) {
@@ -318,10 +326,4 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
         }
     }
 
-}
-
-interface AllowAudioPlay {
-    boolean allowAudioPlay();
-
-    void toggleAllowAudioPlayFlag(boolean setValue);
 }

@@ -29,8 +29,7 @@ public class AddressInformation implements Serializable {
 
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return new StringBuilder().append(streetAddress).append(", ").append(city).append(", ").append(state).append(", ").append(country).toString();
     }
 }

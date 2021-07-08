@@ -1,8 +1,10 @@
 package com.nowfloats.sellerprofile;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -27,7 +29,7 @@ public class SellerProfileActivity extends AppCompatActivity implements Expandab
 
     }
 
-    private void initViews(){
+    private void initViews() {
         llSignature = findViewById(R.id.llSignature);
     }
 
@@ -36,7 +38,7 @@ public class SellerProfileActivity extends AppCompatActivity implements Expandab
 
     }
 
-    private void bindSignature(){
+    private void bindSignature() {
 
 //        mSignatureView = new SignatureView(SellerProfileActivity.this);
 //        mSignatureView.setDrawingCacheEnabled(true);

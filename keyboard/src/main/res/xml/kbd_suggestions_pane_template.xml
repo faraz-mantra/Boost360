@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2011, The Android Open Source Project
@@ -19,7 +18,5 @@
 -->
 
 <Keyboard xmlns:latin="http://schemas.android.com/apk/res-auto"
-    latin:keyWidth="10%p"
-    latin:rowHeight="@dimen/config_more_suggestions_row_height"
-    >
-</Keyboard>
+  latin:keyWidth="10%p"
+  latin:rowHeight="@dimen/config_more_suggestions_row_height"></Keyboard>

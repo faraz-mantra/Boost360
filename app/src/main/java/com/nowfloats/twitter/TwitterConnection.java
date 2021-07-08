@@ -32,7 +32,7 @@ public class TwitterConnection {
 
     private TwitterAuthClient client;
 
-    public TwitterConnection(Context context, TwitterResult twitterResult){
+    public TwitterConnection(Context context, TwitterResult twitterResult) {
         TwitterConfig config;
         config = new TwitterConfig.Builder(context)
                 .twitterAuthConfig(new TwitterAuthConfig(Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET))
@@ -43,10 +43,10 @@ public class TwitterConnection {
         mTwitterResult = twitterResult;
 
     }
-    
-    public void authorize(){
+
+    public void authorize() {
         client = new TwitterAuthClient();
-        client.authorize((Activity)mContext, new Callback<TwitterSession>() {
+        client.authorize((Activity) mContext, new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
                 mTwitterResult.onTwitterConnected(result);
@@ -61,11 +61,11 @@ public class TwitterConnection {
 
     }
 
-    public interface TwitterResult{
-        void onTwitterConnected(Result<TwitterSession> result);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        client.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        client.onActivityResult(requestCode,resultCode,data);
+    public interface TwitterResult {
+        void onTwitterConnected(Result<TwitterSession> result);
     }
 }

@@ -50,6 +50,10 @@ public class EmojiPageView extends FrameLayout {
         ((EmojiGridAdapter) grid.getAdapter()).setListener(listener);
     }
 
+    public interface EmojiSelectionListener {
+        void onEmojiSelected(String emoji);
+    }
+
     private static class EmojiGridAdapter extends BaseAdapter {
 
         protected final Context context;
@@ -100,9 +104,5 @@ public class EmojiPageView extends FrameLayout {
             view.setEmoji(modelEmojis[position]);
             return view;
         }
-    }
-
-    public interface EmojiSelectionListener {
-        void onEmojiSelected(String emoji);
     }
 }

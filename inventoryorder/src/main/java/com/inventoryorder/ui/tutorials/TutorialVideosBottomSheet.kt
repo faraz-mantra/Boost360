@@ -28,7 +28,8 @@ import com.inventoryorder.ui.tutorials.model.AllTutorialsItem
 import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 
-class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnStaffProfileBinding, TutorialViewModel>() {
+class TutorialVideosBottomSheet :
+  BaseBottomSheetDialog<BottomSheetTutorialsOnStaffProfileBinding, TutorialViewModel>() {
 
   private var playbackPosition: Long = 0
   private var videosItem: VIDEOSItem? = null
@@ -47,7 +48,11 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnSt
     setupBackPressListener()
     setOnClickListener(binding?.civBack, binding?.civClose)
     viewModel?.getTutorialsStaffList()?.observeOnce(viewLifecycleOwner, {
-      val tutorialPagerAdapter = TutorialPagerAdapter(childFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, it.contents?.allTutorials)
+      val tutorialPagerAdapter = TutorialPagerAdapter(
+        childFragmentManager,
+        FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
+        it.contents?.allTutorials
+      )
       binding?.viewPagerTutorials?.adapter = tutorialPagerAdapter
       if (it.contents?.allTutorials?.size ?: 0 > 1) binding?.tabLayout?.setupWithViewPager(binding?.viewPagerTutorials)
       else binding?.tabLayout?.gone()
@@ -58,7 +63,7 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnSt
     this.videosItem = arguments?.getSerializable(IntentConstant.VIDEO_ITEM.name) as? VIDEOSItem
     binding?.ctvVideoTitle?.text = videosItem?.videoTitle
   }
-  
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
@@ -114,12 +119,20 @@ class TutorialVideosBottomSheet : BaseBottomSheetDialog<BottomSheetTutorialsOnSt
   private fun initializePlayer() {
     MediaPlayer.initialize(baseActivity)
     viewClose = MediaPlayer.exoPlayer?.preparePlayer(binding?.playerView!!, baseActivity)
-    MediaPlayer.exoPlayer?.setSource(playbackPosition, baseActivity, videosItem?.videoUrl.toString())
+    MediaPlayer.exoPlayer?.setSource(
+      playbackPosition,
+      baseActivity,
+      videosItem?.videoUrl.toString()
+    )
     MediaPlayer.startPlayer()
   }
 }
 
-class TutorialPagerAdapter(fm: FragmentManager, behavior: Int, private var allTutorials: ArrayList<AllTutorialsItem>?) : FragmentStatePagerAdapter(fm, behavior) {
+class TutorialPagerAdapter(
+  fm: FragmentManager,
+  behavior: Int,
+  private var allTutorials: ArrayList<AllTutorialsItem>?
+) : FragmentStatePagerAdapter(fm, behavior) {
   override fun getCount(): Int {
     return if (allTutorials?.size ?: 0 <= 1) 1
     else 2
@@ -144,7 +157,8 @@ class TutorialPagerAdapter(fm: FragmentManager, behavior: Int, private var allTu
 
 }
 
-class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, TutorialViewModel>(), RecyclerItemClickListener {
+class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, TutorialViewModel>(),
+  RecyclerItemClickListener {
   companion object {
     fun newInstance(): FragmentAllTutorials {
       return FragmentAllTutorials()
@@ -162,7 +176,8 @@ class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, Tutori
   override fun onCreateView() {
     super.onCreateView()
     viewModel?.getTutorialsStaffList()?.observeOnce(viewLifecycleOwner, {
-      binding?.rvVideos?.adapter = AppBaseRecyclerViewAdapter(baseActivity, it.contents?.allTutorials!!, this)
+      binding?.rvVideos?.adapter =
+        AppBaseRecyclerViewAdapter(baseActivity, it.contents?.allTutorials!!, this)
     })
   }
 
@@ -174,7 +189,10 @@ class FragmentAllTutorials : AppBaseFragment<FragmentAllTutorialsBinding, Tutori
         bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, item as? AllTutorialsItem)
         bottomSheetTutorialVideos.arguments = bundle
         bottomSheetTutorialVideos.isCancelable = false
-        bottomSheetTutorialVideos.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
+        bottomSheetTutorialVideos.show(
+          parentFragmentManager,
+          TutorialVideosBottomSheet::class.java.name
+        )
       }
     }
   }

@@ -38,17 +38,17 @@ public class NotificationCompatUtils {
             CompatUtils.getField(Notification.class, "VISIBILITY_SECRET");
     private static final int VISIBILITY_SECRET = null == FIELD_VISIBILITY_SECRET ? 0
             : (Integer) CompatUtils.getFieldValue(null /* receiver */, null /* defaultValue */,
-                    FIELD_VISIBILITY_SECRET);
+            FIELD_VISIBILITY_SECRET);
     private static final Field FIELD_CATEGORY_RECOMMENDATION =
             CompatUtils.getField(Notification.class, "CATEGORY_RECOMMENDATION");
     private static final String CATEGORY_RECOMMENDATION = null == FIELD_CATEGORY_RECOMMENDATION ? ""
             : (String) CompatUtils.getFieldValue(null /* receiver */, null /* defaultValue */,
-                    FIELD_CATEGORY_RECOMMENDATION);
+            FIELD_CATEGORY_RECOMMENDATION);
     private static final Field FIELD_PRIORITY_LOW =
             CompatUtils.getField(Notification.class, "PRIORITY_LOW");
     private static final int PRIORITY_LOW = null == FIELD_PRIORITY_LOW ? 0
             : (Integer) CompatUtils.getFieldValue(null /* receiver */, null /* defaultValue */,
-                    FIELD_PRIORITY_LOW);
+            FIELD_PRIORITY_LOW);
 
     private NotificationCompatUtils() {
         // This class is non-instantiable.

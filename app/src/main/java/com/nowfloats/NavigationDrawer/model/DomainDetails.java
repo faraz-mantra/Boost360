@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class DomainDetails {
 
+    public String fpTag;
     private String domainName;
     private String domainType;
     private String ActivatedOn;
@@ -16,7 +17,6 @@ public class DomainDetails {
     private boolean isActive;
     private boolean isExpired;
     private String ErrorMessage;
-    public String fpTag;
     private boolean isPending;
     private boolean isFailed;
     private boolean isLinked;

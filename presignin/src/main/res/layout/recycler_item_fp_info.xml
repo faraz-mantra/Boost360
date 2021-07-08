@@ -59,13 +59,13 @@
         android:drawablePadding="@dimen/_4sdp"
         android:gravity="center_vertical"
         android:includeFontPadding="false"
-        tools:text="www.google.com"
         android:textColor="@color/blue_4A90E2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_icon"
         app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
         app:layout_constraintVertical_bias="0.1"
-        app:textType="BODY_1" />
+        app:textType="BODY_1"
+        tools:text="www.google.com" />
 
 
       <com.framework.views.customViews.CustomRadioButton

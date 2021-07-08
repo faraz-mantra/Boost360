@@ -7,5 +7,5 @@ import java.util.ArrayList;
  */
 public class PlacesMainModel {
     public String description;
-    public ArrayList<PlacesModel>  terms;
+    public ArrayList<PlacesModel> terms;
 }

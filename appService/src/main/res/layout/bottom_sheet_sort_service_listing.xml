@@ -1,186 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-<data></data>
-    <androidx.appcompat.widget.LinearLayoutCompat
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data></data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottoms_sheet_top20dp_white"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:gravity="center_vertical"
+      android:orientation="horizontal">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottoms_sheet_top20dp_white"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_20"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/customTextView2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:includeFontPadding="false"
+          android:text="@string/sort_the_service_list"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="20sp"
+          app:fontFamily="@font/semi_bold"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:textColor="@color/black_4a4a4a" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_marginTop="8dp"
+          android:includeFontPadding="false"
+          android:text="@string/reset"
+          android:textColor="@color/yellow_ffb900"
+          android:textSize="14sp"
+          app:fontFamily="@font/semi_bold"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tvCustomerAddress"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans"
+          android:includeFontPadding="false"
+          android:text="@string/select_how_you_would_want_to_list_the_services"
+          android:textColor="@color/gray_828282"
+          android:textFontWeight="400"
+          android:textSize="12sp"
+          app:layout_constraintTop_toBottomOf="@+id/customTextView2" />
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-           >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ll_header"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/size_20"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/size_20"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <com.framework.views.customViews.CustomRadioButton
+          style="@style/RadioService"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:paddingHorizontal="@dimen/size_10"
+          android:text="@string/most_popular_on_top" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="@string/sort_the_service_list"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="20sp"
-                    app:fontFamily="@font/semi_bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:textColor="@color/black_4a4a4a" />
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_5"
+          android:background="@drawable/shape_grey_dotted_line" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="8dp"
-                    android:includeFontPadding="false"
-                    android:text="@string/reset"
-                    android:textColor="@color/yellow_ffb900"
-                    android:textSize="14sp"
-                    app:fontFamily="@font/semi_bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <com.framework.views.customViews.CustomRadioButton
+          style="@style/RadioService"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:paddingHorizontal="@dimen/size_10"
+          android:text="@string/latest_on_top" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tvCustomerAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:includeFontPadding="false"
-                    android:text="@string/select_how_you_would_want_to_list_the_services"
-                    android:textColor="@color/gray_828282"
-                    android:textFontWeight="400"
-                    android:textSize="12sp"
-                    app:layout_constraintTop_toBottomOf="@+id/customTextView2" />
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_5"
+          android:background="@drawable/shape_grey_dotted_line" />
 
+        <com.framework.views.customViews.CustomRadioButton
+          style="@style/RadioService"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:paddingHorizontal="@dimen/size_10"
+          android:text="@string/oldest_on_top" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_5"
+          android:background="@drawable/shape_grey_dotted_line" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.framework.views.customViews.CustomRadioButton
+          style="@style/RadioService"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:paddingHorizontal="@dimen/size_10"
+          android:text="@string/biggest_value_service_on_top" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_5"
+          android:background="@drawable/shape_grey_dotted_line" />
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_10"
-                android:orientation="vertical">
+        <com.framework.views.customViews.CustomRadioButton
+          style="@style/RadioService"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:paddingHorizontal="@dimen/size_10"
+          android:text="@string/lowest_value_service_on_top" />
 
+      </RadioGroup>
 
-                <com.framework.views.customViews.CustomRadioButton
-                    style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/most_popular_on_top" />
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_20"
+        android:padding="@dimen/size_10">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_done"
+          android:layout_width="@dimen/size_110"
+          android:layout_height="@dimen/size_36"
+          android:layout_gravity="center_horizontal"
+          android:background="@drawable/bg_button_proceed_4"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:stateListAnimator="@null"
+          android:text="@string/apply"
+          android:textAllCaps="true"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-                <com.framework.views.customViews.CustomRadioButton
-                    style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/latest_on_top" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-                <com.framework.views.customViews.CustomRadioButton
-                   style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/oldest_on_top" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-                <com.framework.views.customViews.CustomRadioButton
-                   style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/biggest_value_service_on_top" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-                <com.framework.views.customViews.CustomRadioButton
-                  style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/lowest_value_service_on_top" />
-
-            </RadioGroup>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_20"
-                android:layout_marginBottom="@dimen/size_20"
-                android:padding="@dimen/size_10">
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/btn_done"
-                    android:layout_width="@dimen/size_110"
-                    android:layout_height="@dimen/size_36"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/bg_button_proceed_4"
-                    android:fontFamily="@font/semi_bold"
-                    android:gravity="center"
-                    android:stateListAnimator="@null"
-                    android:text="@string/apply"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@id/btn_cancel"
-                    android:layout_width="@dimen/size_110"
-                    android:layout_height="@dimen/size_36"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginEnd="@dimen/size_20"
-                    android:background="@null"
-                    android:fontFamily="@font/semi_bold"
-                    android:gravity="center"
-                    android:stateListAnimator="@null"
-                    android:text="@string/cancel"
-                    android:textAllCaps="true"
-                    android:textColor="@color/yellow_ffb900"
-                    android:textSize="12sp"
-                    app:layout_constraintRight_toLeftOf="@id/btn_done"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <com.framework.views.customViews.CustomButton
+          android:id="@id/btn_cancel"
+          android:layout_width="@dimen/size_110"
+          android:layout_height="@dimen/size_36"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginEnd="@dimen/size_20"
+          android:background="@null"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:stateListAnimator="@null"
+          android:text="@string/cancel"
+          android:textAllCaps="true"
+          android:textColor="@color/yellow_ffb900"
+          android:textSize="12sp"
+          app:layout_constraintRight_toLeftOf="@id/btn_done"
+          app:layout_constraintTop_toTopOf="parent" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>

@@ -1,63 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  app:cardBackgroundColor="@color/c_a3a3a3">
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/c_a3a3a3">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:paddingStart="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:text="Business Address"/>
-            <TextView
-                android:id="@+id/tv_address_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/black_round_corner"
-                android:text="Edit"
-                android:textSize="12sp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textColor="@color/white"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/ic_map_marker"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:id="@+id/img_address"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_product_image"/>
-        </LinearLayout>
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingStart="10dp"
+      android:paddingTop="5dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="5dp">
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Business Address"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
+
+      <TextView
+        android:id="@+id/tv_address_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/black_round_corner"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:text="Edit"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
     </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white">
+
+      <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_map_marker"
+        android:drawablePadding="5dp"
+        android:padding="10dp" />
+
+      <ImageView
+        android:id="@+id/img_address"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_product_image" />
+    </LinearLayout>
+  </LinearLayout>
 
 </androidx.cardview.widget.CardView>

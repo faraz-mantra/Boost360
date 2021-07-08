@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2013 The Android Open Source Project
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
  * of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -36,14 +36,12 @@ public class ButtonSwitcher extends FrameLayout {
     public static final int STATUS_INSTALL = 1;
     public static final int STATUS_CANCEL = 2;
     public static final int STATUS_DELETE = 3;
-    // One of the above
-    private int mStatus = NOT_INITIALIZED;
-    private int mAnimateToStatus = NOT_INITIALIZED;
-
     // Animation directions
     public static final int ANIMATION_IN = 1;
     public static final int ANIMATION_OUT = 2;
-
+    // One of the above
+    private int mStatus = NOT_INITIALIZED;
+    private int mAnimateToStatus = NOT_INITIALIZED;
     private Button mInstallButton;
     private Button mCancelButton;
     private Button mDeleteButton;
@@ -66,11 +64,11 @@ public class ButtonSwitcher extends FrameLayout {
 
     @Override
     protected void onLayout(final boolean changed, final int left, final int top, final int right,
-            final int bottom) {
+                            final int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        mInstallButton = (Button)findViewById(R.id.dict_install_button);
-        mCancelButton = (Button)findViewById(R.id.dict_cancel_button);
-        mDeleteButton = (Button)findViewById(R.id.dict_delete_button);
+        mInstallButton = (Button) findViewById(R.id.dict_install_button);
+        mCancelButton = (Button) findViewById(R.id.dict_cancel_button);
+        mDeleteButton = (Button) findViewById(R.id.dict_delete_button);
         setInternalOnClickListener(mOnClickListener);
         setButtonPositionWithoutAnimation(mStatus);
         if (mAnimateToStatus != NOT_INITIALIZED) {
@@ -83,15 +81,15 @@ public class ButtonSwitcher extends FrameLayout {
     }
 
     private Button getButton(final int status) {
-        switch(status) {
-        case STATUS_INSTALL:
-            return mInstallButton;
-        case STATUS_CANCEL:
-            return mCancelButton;
-        case STATUS_DELETE:
-            return mDeleteButton;
-        default:
-            return null;
+        switch (status) {
+            case STATUS_INSTALL:
+                return mInstallButton;
+            case STATUS_CANCEL:
+                return mCancelButton;
+            case STATUS_DELETE:
+                return mDeleteButton;
+            default:
+                return null;
         }
     }
 
@@ -155,7 +153,7 @@ public class ButtonSwitcher extends FrameLayout {
     private ViewPropertyAnimator animateButton(final View button, final int direction) {
         final float outerX = getWidth();
         final float innerX = button.getX() - button.getTranslationX();
-        mInterfaceState.removeFromCache((View)getParent());
+        mInterfaceState.removeFromCache((View) getParent());
         if (ANIMATION_IN == direction) {
             button.setClickable(true);
             return button.animate().translationX(0);

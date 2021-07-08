@@ -29,8 +29,7 @@ data class CardData(
   var businessType: String? = null,
   var website: String? = null,
   var cardIcon: Int? = null,
-) : Serializable
-
+)
 
 fun savePositionCard(posCard: Int) {
   PreferencesUtils.instance.saveData(LAST_SHARE_CARD, posCard)

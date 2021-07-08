@@ -10,7 +10,8 @@ import com.onboarding.nowfloats.rest.services.remote.riaWhatsapp.RiaWhatsappRemo
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object RiaFloatWhatsappRepository : AppBaseRepository<RiaWhatsappRemoteDataSource, AppBaseLocalService>() {
+object RiaFloatWhatsappRepository :
+  AppBaseRepository<RiaWhatsappRemoteDataSource, AppBaseLocalService>() {
 
   override fun getRemoteDataSourceClass(): Class<RiaWhatsappRemoteDataSource> {
     return RiaWhatsappRemoteDataSource::class.java
@@ -21,7 +22,10 @@ object RiaFloatWhatsappRepository : AppBaseRepository<RiaWhatsappRemoteDataSourc
   }
 
   fun updateRiaWhatsapp(req: RiaWhatsappRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.updateRiaWhatsapp(req?.client_id, req), Taskcode.POST_GOOGLE_AUTH_TOKEN)
+    return makeRemoteRequest(
+      remoteDataSource.updateRiaWhatsapp(req?.client_id, req),
+      Taskcode.POST_GOOGLE_AUTH_TOKEN
+    )
   }
 
   override fun getApiClient(): Retrofit {

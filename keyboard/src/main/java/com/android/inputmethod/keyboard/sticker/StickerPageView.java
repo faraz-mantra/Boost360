@@ -36,7 +36,7 @@ public class StickerPageView extends FrameLayout {
         final View view = LayoutInflater.from(getContext()).inflate(R.layout.sticker_grid_layout, this, true);
         grid = (GridView) view.findViewById(R.id.sticker_grid);
         //TODO change these numbers and also in grid_layout
-        grid.setColumnWidth(getResources().getDimensionPixelSize(R.dimen.emoji_drawer_size)*2 + 2 * getResources().getDimensionPixelSize(R.dimen.emoji_drawer_item_padding));
+        grid.setColumnWidth(getResources().getDimensionPixelSize(R.dimen.emoji_drawer_size) * 2 + 2 * getResources().getDimensionPixelSize(R.dimen.emoji_drawer_item_padding));
         //grid.setBackgroundColor(colorProfile.getPrimary());
     }
 
@@ -46,15 +46,15 @@ public class StickerPageView extends FrameLayout {
 
     private static class StickerGridAdapter extends BaseAdapter {
 
-        protected final Context                context;
-        private   final int                    emojiSize;
+        protected final Context context;
+        private final int emojiSize;
         private final String[] modelStickers;
         private final String baseAddress;
         //private EmojiPageView.EmojiSelectionListener listener;
 
         public StickerGridAdapter(Context context, StickerPageModel model) {
-            this.context   = context;
-            this.emojiSize = (int) context.getResources().getDimension(R.dimen.emoji_drawer_size)*2;
+            this.context = context;
+            this.emojiSize = (int) context.getResources().getDimension(R.dimen.emoji_drawer_size) * 2;
             modelStickers = model.getPack();
             baseAddress = model.getName();
         }
@@ -63,7 +63,8 @@ public class StickerPageView extends FrameLayout {
             this.listener = listener;
         }*/
 
-        @Override public int getCount() {
+        @Override
+        public int getCount() {
             return modelStickers.length;
         }
 
@@ -83,13 +84,13 @@ public class StickerPageView extends FrameLayout {
             ImageView imageView;
             if (convertView == null) {
                 imageView = new ImageView(context);
-                imageView.setLayoutParams(new GridView.LayoutParams(emojiSize+2*5, emojiSize+2*5));
+                imageView.setLayoutParams(new GridView.LayoutParams(emojiSize + 2 * 5, emojiSize + 2 * 5));
                 imageView.setPadding(5, 5, 5, 5);
             } else {
                 imageView = (ImageView) convertView;
             }
             Glide.with(context)
-                    .load(Uri.parse("file:///android_asset/stickers/"+baseAddress+"/"+modelStickers[position]))
+                    .load(Uri.parse("file:///android_asset/stickers/" + baseAddress + "/" + modelStickers[position]))
                     .into(imageView);
             return imageView;
         }

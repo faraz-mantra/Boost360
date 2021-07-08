@@ -2,10 +2,14 @@ package com.nowfloats.enablekeyboard;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.google.android.material.snackbar.Snackbar;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,20 +36,6 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
     private ArrayList<Integer> keyboardDrawables;
     private int selected;
 
-    public enum Themes {
-        LXX_DARK {
-            public String toString() {
-                return "LXX_DARK";
-            }
-        },
-
-        LXX_DARK_UNBORDERED {
-            public String toString() {
-                return "LXX_DARK_UNBORDERED";
-            }
-        }
-    };
-
     public KeyboardThemesAdapter(Context context, ArrayList<Integer> keyboardDrawables, int selected, SharedPreferences sharedPreferences) {
         this.context = context;
         this.keyboardDrawables = keyboardDrawables;
@@ -53,6 +43,8 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
         this.sharedPreferences = sharedPreferences;
         this.editor = sharedPreferences.edit();
     }
+
+    ;
 
     @NonNull
     @Override
@@ -113,6 +105,20 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
     @Override
     public int getItemCount() {
         return keyboardDrawables.size();
+    }
+
+    public enum Themes {
+        LXX_DARK {
+            public String toString() {
+                return "LXX_DARK";
+            }
+        },
+
+        LXX_DARK_UNBORDERED {
+            public String toString() {
+                return "LXX_DARK_UNBORDERED";
+            }
+        }
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

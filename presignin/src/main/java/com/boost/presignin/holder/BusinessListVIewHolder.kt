@@ -12,7 +12,8 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 
-class BusinessListViewHolder(binding: RecyclerItemFpInfoBinding) : AppBaseRecyclerViewHolder<RecyclerItemFpInfoBinding>(binding) {
+class BusinessListViewHolder(binding: RecyclerItemFpInfoBinding) :
+  AppBaseRecyclerViewHolder<RecyclerItemFpInfoBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -25,11 +26,13 @@ class BusinessListViewHolder(binding: RecyclerItemFpInfoBinding) : AppBaseRecycl
     binding.customRadioButton.setOnCheckedChangeListener(null)
     if (data.isItemSelected == true) {
       binding.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_selected)
-      binding.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.orange)!!)
+      binding.customRadioButton.buttonTintList =
+        ColorStateList.valueOf(getResources()?.getColor(R.color.orange)!!)
       binding.customRadioButton.isChecked = true
     } else {
       binding.llRootBusinessItem.setBackgroundResource(R.drawable.bg_business_item_unselected)
-      binding.customRadioButton.buttonTintList = ColorStateList.valueOf(getResources()?.getColor(R.color.greyish_brown)!!)
+      binding.customRadioButton.buttonTintList =
+        ColorStateList.valueOf(getResources()?.getColor(R.color.greyish_brown)!!)
       binding.customRadioButton.isChecked = false
     }
     binding.root.setOnClickListener { onItemClick(position, item) }

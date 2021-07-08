@@ -76,8 +76,8 @@
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
             android:fontFamily="@font/open_sans"
             android:inputType="textFilter"
-            android:textAllCaps="false"
             android:maxLength="50"
+            android:textAllCaps="false"
             android:textColor="@color/et_color"
             android:textSize="@dimen/heading_4" />
 

@@ -40,7 +40,7 @@ public final class TextInfoCompatUtils {
 
     @UsedForTesting
     public static TextInfo newInstance(CharSequence charSequence, int start, int end, int cookie,
-            int sequenceNumber) {
+                                       int sequenceNumber) {
         if (TEXT_INFO_CONSTRUCTOR_FOR_CHAR_SEQUENCE != null) {
             return (TextInfo) CompatUtils.newInstance(TEXT_INFO_CONSTRUCTOR_FOR_CHAR_SEQUENCE,
                     charSequence, start, end, cookie, sequenceNumber);
@@ -52,8 +52,9 @@ public final class TextInfoCompatUtils {
     /**
      * Returns the result of {@link TextInfo#getCharSequence()} when available. Otherwise returns
      * the result of {@link TextInfo#getText()} as fall back.
+     *
      * @param textInfo the instance for which {@link TextInfo#getCharSequence()} or
-     * {@link TextInfo#getText()} is called.
+     *                 {@link TextInfo#getText()} is called.
      * @return the result of {@link TextInfo#getCharSequence()} when available. Otherwise returns
      * the result of {@link TextInfo#getText()} as fall back. If {@code textInfo} is {@code null},
      * returns {@code null}.

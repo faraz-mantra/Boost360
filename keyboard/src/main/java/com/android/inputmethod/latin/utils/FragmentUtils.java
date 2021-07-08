@@ -35,6 +35,7 @@ import io.separ.neural.inputmethod.indic.userdictionary.UserDictionarySettings;
 
 public class FragmentUtils {
     private static final HashSet<String> sLatinImeFragments = new HashSet<>();
+
     static {
         sLatinImeFragments.add(DictionarySettingsFragment.class.getName());
         sLatinImeFragments.add(AboutPreferences.class.getName());

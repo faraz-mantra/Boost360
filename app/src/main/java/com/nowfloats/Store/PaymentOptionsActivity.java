@@ -11,6 +11,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,11 +78,6 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
         setResult(RESULT_OK, intent);
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-    }
-
-
-    public enum PaymentType {
-        PAYMENT_OPTIONS, CHEQUE, OPC, BANK_TRANSFER;
     }
 
     @Override
@@ -148,7 +145,7 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
                 galleryIntent();
 
             } else {
-                Toast.makeText(this,getString( R.string.please_give_read_storage_permission), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.please_give_read_storage_permission), Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -346,5 +343,9 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    public enum PaymentType {
+        PAYMENT_OPTIONS, CHEQUE, OPC, BANK_TRANSFER;
     }
 }

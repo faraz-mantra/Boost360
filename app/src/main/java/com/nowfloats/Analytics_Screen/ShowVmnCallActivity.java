@@ -6,11 +6,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -41,18 +43,17 @@ import retrofit.client.Response;
 
 public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2Adapter.RequestPermission, View.OnClickListener {
 
-    Toolbar toolbar;
     final static int REQUEST_PERMISSION = 202;
-
+    Toolbar toolbar;
     RecyclerView mRecyclerView;
     UserSessionManager sessionManager;
     LinearLayoutManager linearLayoutManager;
-    private int offset = 0;
     VmnCall_v2Adapter vmnCallAdapter;
     ArrayList<VmnCallModel> headerList = new ArrayList<>();
     boolean stopApiCall;
     ProgressBar progressBar;
     Button loadButton;
+    private int offset = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

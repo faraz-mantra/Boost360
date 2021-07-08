@@ -1,58 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="@style/white_label_style"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:ignore="MissingPrefix"
+
+  >
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="@style/white_label_style"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingPrefix"
-
-    >
-<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerInParent="true"
-        android:background="@drawable/screen7"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="@dimen/pre_screen_linear_layout_top_margin"
-        android:layout_marginBottom="20dp"
-         >
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_marginStart="20dp"
+    android:layout_marginTop="@dimen/pre_screen_linear_layout_top_margin"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/screen7"
+    android:orientation="vertical">
 
     <com.nowfloats.CustomWidget.GothamTextView
-				android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/ps_sc8_lbl1"
-		        android:textColor="@color/primaryColor"
-		        android:textSize="@dimen/ps_lbl1_size"
-		        android:layout_marginTop="@dimen/pre_screen_top_margin_text1"
-		        android:layout_gravity="center_horizontal"
-                         />
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="@dimen/pre_screen_top_margin_text1"
+      android:text="@string/ps_sc8_lbl1"
+      android:textColor="@color/primaryColor"
+      android:textSize="@dimen/ps_lbl1_size" />
 
     <com.nowfloats.CustomWidget.GothamTextView
-				android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/ps_sc8_lbl4"
-		        android:textColor="@color/primaryColor"
-		        android:textSize="40sp"
-		        android:layout_gravity="center_horizontal"
-		        android:layout_marginBottom="27dp"
-                         />
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="27dp"
+      android:text="@string/ps_sc8_lbl4"
+      android:textColor="@color/primaryColor"
+      android:textSize="40sp" />
+
     <com.nowfloats.CustomWidget.GothamTextView
-				android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/pre_signup_screen_seven_text"
-		        android:textColor="@color/black"
-		        android:lineSpacingExtra="2dp"
-		        android:textSize="@dimen/ps_lbl3_size"
-		        android:layout_gravity="center_horizontal"
-		        android:gravity="center_horizontal"
-		        android:layout_marginTop="@dimen/pre_screen_top_margin_text2"
-		        android:paddingStart="@dimen/pre_s2_description_paddingLeft"
-		        android:paddingRight="@dimen/pre_s2_description_paddingRight"
-                         />
-    
-    </LinearLayout>
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="@dimen/pre_screen_top_margin_text2"
+      android:gravity="center_horizontal"
+      android:lineSpacingExtra="2dp"
+      android:paddingStart="@dimen/pre_s2_description_paddingLeft"
+      android:paddingRight="@dimen/pre_s2_description_paddingRight"
+      android:text="@string/pre_signup_screen_seven_text"
+      android:textColor="@color/black"
+      android:textSize="@dimen/ps_lbl3_size" />
+
+  </LinearLayout>
 
 </RelativeLayout>

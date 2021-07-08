@@ -15,5 +15,6 @@ class ObservableFactory {
 fun ObservableFactory.Companion.afterTextChangeEvents(textView: TextView?): Observable<TextViewAfterTextChangeEvent>? {
   if (textView == null) return null
 
-  return RxTextView.afterTextChangeEvents(textView).subscribeOn(Schedulers.computation()).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+  return RxTextView.afterTextChangeEvents(textView).subscribeOn(Schedulers.computation())
+    .debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
 }

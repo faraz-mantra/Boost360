@@ -13,7 +13,8 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding, BaseViewModel>(), RecyclerItemClickListener {
+class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding, BaseViewModel>(),
+  RecyclerItemClickListener {
 
   private var secondaryItem: SecondaryItem? = null
   private var primaryItem: PrimaryItem? = null
@@ -36,21 +37,28 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
   override fun onCreateView() {
     setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnDone)
     binding?.btnDone?.isEnabled = false
-    this.primaryFontList = arguments?.get(IntentConstant.FONT_LIST_PRIMARY.name) as? ArrayList<PrimaryItem>
-    this.secondaryFontList = arguments?.get(IntentConstant.FONT_LIST_SECONDARY.name) as? ArrayList<SecondaryItem>
+    this.primaryFontList =
+      arguments?.get(IntentConstant.FONT_LIST_PRIMARY.name) as? ArrayList<PrimaryItem>
+    this.secondaryFontList =
+      arguments?.get(IntentConstant.FONT_LIST_SECONDARY.name) as? ArrayList<SecondaryItem>
     when {
       primaryFontList != null -> {
         isPrimaryFontSelection = true
-        val list = ArrayList(primaryFontList?.map { it.isNewSelected = (it.isSelected == true);it } ?: arrayListOf())
-        this.primaryFontsAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this@BottomSheetSelectFont)
+        val list = ArrayList(primaryFontList?.map { it.isNewSelected = (it.isSelected == true);it }
+          ?: arrayListOf())
+        this.primaryFontsAdapter =
+          AppBaseRecyclerViewAdapter(baseActivity, list, this@BottomSheetSelectFont)
         binding?.rvFont?.adapter = primaryFontsAdapter
         binding?.ctvSubheading?.text = getString(R.string.default_theme_font)
         binding?.ctvHeading?.text = getString(R.string.select_primary_font)
       }
       else -> {
         isPrimaryFontSelection = false
-        val list = ArrayList(secondaryFontList?.map { it.isNewSelected = (it.isSelected == true);it } ?: arrayListOf())
-        this.secondaryFontAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this@BottomSheetSelectFont)
+        val list =
+          ArrayList(secondaryFontList?.map { it.isNewSelected = (it.isSelected == true);it }
+            ?: arrayListOf())
+        this.secondaryFontAdapter =
+          AppBaseRecyclerViewAdapter(baseActivity, list, this@BottomSheetSelectFont)
         binding?.rvFont?.adapter = secondaryFontAdapter
         binding?.ctvSubheading?.text = getString(R.string.default_theme_font)
         binding?.ctvHeading?.text = getString(R.string.select_secondary_font)
@@ -63,7 +71,8 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
     when (actionType) {
       RecyclerViewActionType.PRIMARY_FONT_SELECTED.ordinal -> {
         this.primaryItem = item as? PrimaryItem
-        binding?.btnDone?.isEnabled = !(primaryItem?.isSelected == true && primaryItem?.isNewSelected == true)
+        binding?.btnDone?.isEnabled =
+          !(primaryItem?.isSelected == true && primaryItem?.isNewSelected == true)
         primaryFontList?.forEach {
           if (item != it) it.isNewSelected = false
         }
@@ -71,7 +80,8 @@ class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding
       }
       RecyclerViewActionType.SECONDARY_FONT_SELECTED.ordinal -> {
         this.secondaryItem = item as? SecondaryItem
-        binding?.btnDone?.isEnabled = !(secondaryItem?.isSelected == true && secondaryItem?.isNewSelected == true)
+        binding?.btnDone?.isEnabled =
+          !(secondaryItem?.isSelected == true && secondaryItem?.isNewSelected == true)
         secondaryFontList?.forEach {
           if (item != it) it.isNewSelected = false
         }

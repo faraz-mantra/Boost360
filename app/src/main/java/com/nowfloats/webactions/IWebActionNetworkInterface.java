@@ -51,6 +51,6 @@ public interface IWebActionNetworkInterface {
 
     @Multipart
     @POST("/{webactionnname}/upload-file")
-    public void uploadFile(@Header("Authorization") String authHeader, @Query("assetFileName") String assetFileName,  @Path("webactionnname") String webActionName, @Part("file")TypedFile file, Callback<String> callback);
+    public void uploadFile(@Header("Authorization") String authHeader, @Query("assetFileName") String assetFileName, @Path("webactionnname") String webActionName, @Part("file") TypedFile file, Callback<String> callback);
 
 }

@@ -5,7 +5,8 @@ import com.appservice.model.FileModel
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
 
-class AdditionalFileViewHolder(binding: ItemPdfFileBinding) : AppBaseRecyclerViewHolder<ItemPdfFileBinding>(binding) {
+class AdditionalFileViewHolder(binding: ItemPdfFileBinding) :
+  AppBaseRecyclerViewHolder<ItemPdfFileBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ErrorDeatil(
-    @SerializedName("ErrorCode")
-    var errorCode: Any? = null,
-    @SerializedName("ErrorList")
-    var errorList: ErrorDetailList? = null
-): Serializable
+  @SerializedName("ErrorCode")
+  var errorCode: Any? = null,
+  @SerializedName("ErrorList")
+  var errorList: ErrorDetailList? = null
+) : Serializable
