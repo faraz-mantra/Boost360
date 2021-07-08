@@ -218,8 +218,9 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS_CLICK)
     ManageBusinessData.BusinessType.business_name_d,
     ManageBusinessData.BusinessType.clinic_basic_info,
+    ManageBusinessData.BusinessType.business_description_d,
     -> baseActivity.startBusinessProfileDetailEdit(session)
-    ManageBusinessData.BusinessType.ic_my_business_faqs -> baseActivity.startMobileSite(session, baseActivity.resources.getString(R.string.boost_360_faqs))
+    ManageBusinessData.BusinessType.ic_my_business_faqs -> baseActivity.startMobileSite(session, "https://www.getboost360.com/faqs/")
     ManageBusinessData.BusinessType.website_social_share_plugin -> baseActivity.startBoostExtension(session)
     ManageBusinessData.BusinessType.project_portfolio_d -> baseActivity.startListProjectAndTeams(session)
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)

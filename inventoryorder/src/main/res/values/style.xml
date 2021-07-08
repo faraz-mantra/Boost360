@@ -162,7 +162,7 @@
     <item name="android:clickable">false</item>
     <item name="android:focusable">false</item>
     <item name="android:textColor">@color/black_4a4a4a</item>
-    <item name="android:buttonTint">@color/ButtoncolorAccent</item>
+    <item name="android:buttonTint">@color/colorAccent</item>
   </style>
 
   <style name="RadioButtonStyle">
@@ -180,7 +180,7 @@
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="textType">HEADING_6</item>
-    <item name="android:buttonTint">@color/ButtoncolorAccent</item>
+    <item name="android:buttonTint">@color/colorAccent</item>
     <item name="android:textColor">@color/black_2A2A2A</item>
     <item name="android:layout_weight">1</item>
   </style>

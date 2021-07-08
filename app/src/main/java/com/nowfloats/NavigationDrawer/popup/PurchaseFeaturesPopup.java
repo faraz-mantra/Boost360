@@ -20,8 +20,6 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.thinksity.R;
 
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
-import static com.thinksity.Specific.CONTACT_EMAIL_ID;
-import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 public class PurchaseFeaturesPopup extends DialogFragment {
 
@@ -97,12 +95,12 @@ public class PurchaseFeaturesPopup extends DialogFragment {
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {
-            intent.putExtra("email", CONTACT_EMAIL_ID);
+            intent.putExtra("email", "ria@nowfloats.com");
         }
         if (session.getFPPrimaryContactNumber() != null) {
             intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
         } else {
-            intent.putExtra("mobileNo", CONTACT_PHONE_ID);
+            intent.putExtra("mobileNo", "9160004303");
         }
         intent.putExtra("profileUrl", session.getFPLogo());
         intent.putExtra("buyItemKey", buyItemKey);

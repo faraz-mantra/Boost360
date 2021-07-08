@@ -13,15 +13,17 @@
         app:cardUseCompatPadding="true">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="@dimen/size_150"
+            android:layout_width="@dimen/size_120"
             android:layout_height="wrap_content"
             android:id="@+id/ll_share"
             android:paddingVertical="@dimen/size_6"
             android:paddingHorizontal="@dimen/size_4"
             android:orientation="horizontal">
+
             <com.framework.views.customViews.CustomImageView
                 android:layout_width="@dimen/size_24"
                 android:padding="1dp"
+                android:layout_marginTop="@dimen/size_4"
                 android:layout_height="@dimen/size_24"
                 android:src="@drawable/ic_share_gray" />
 
@@ -35,7 +37,7 @@
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
-                android:text="@string/share_on_more_website"
+                android:text="@string/share"
                 android:textColor="@color/gray_4e4e4e"
                 android:textSize="14sp" />
 

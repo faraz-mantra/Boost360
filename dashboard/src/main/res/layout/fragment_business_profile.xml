@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_20"
                 android:text="@string/add_business_image"
-                android:textColor="@color/ButtoncolorAccent"
+                android:textColor="@color/yellow_ffb900"
                 app:fontFamily="@font/semi_bold"
                 app:textAllCaps="true"
                 app:textType="BODY_1" />
@@ -101,7 +101,7 @@
           android:enabled="true"
           android:gravity="center"
           android:text="@string/update_business_image"
-          android:textColor="@color/ButtoncolorAccent"
+          android:textColor="@color/colorAccent"
           android:visibility="gone" />
 
         <View
@@ -173,7 +173,7 @@
           style="@style/BusinessProfileTextField"
           android:textColor="@color/primary_grey_light"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
-          android:drawableEnd="@drawable/ic_lock_business_n"
+          android:drawableEnd="@drawable/ic_lock_business"
           tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat

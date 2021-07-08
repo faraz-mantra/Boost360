@@ -147,7 +147,7 @@
           android:focusable="true"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
-          android:backgroundTint="@color/colorAccentLight"
+          android:textColor="@color/white"
           app:fabIcon="@drawable/ic_add_white"
           app:fabIconPosition="start"
           app:fabSize="normal"

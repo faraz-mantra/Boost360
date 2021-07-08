@@ -58,12 +58,12 @@ class UnlockFeatureFragment(private val session: UserSessionManager?, private va
             if (it.fpEmail != null) {
                 intent.putExtra("email", it.fpEmail)
             } else {
-                intent.putExtra("email", getString(R.string.ria_customer_mail))
+                intent.putExtra("email", "ria@nowfloats.com")
             }
             if (it.fpPrimaryContactNumber != null) {
                 intent.putExtra("mobileNo", it.fpPrimaryContactNumber)
             } else {
-                intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
+                intent.putExtra("mobileNo", "9160004303")
             }
             intent.putExtra("profileUrl", it.fpLogo)
             intent.putExtra("buyItemKey", unlockFeatureModel.buyItemKey)

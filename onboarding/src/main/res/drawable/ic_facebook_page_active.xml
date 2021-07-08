@@ -8,16 +8,16 @@
     android:fillType="evenOdd"
     android:pathData="M30,60C46.5685,60 60,46.5685 60,30C60,13.4315 46.5685,0 30,0C13.4315,0 0,13.4315 0,30C0,46.5685 13.4315,60 30,60Z" />
   <path
-    android:fillColor="@color/colorPrimary"
+    android:fillColor="#FFB900"
     android:pathData="M20.3711,15.3788V13.3832C20.3712,12.7113 19.8386,12.1634 19.1741,12.1519H18.5021C17.8377,12.1634 17.3051,12.7113 17.3052,13.3832V15.3788H20.3711Z" />
   <path
-    android:fillColor="@color/colorPrimary"
+    android:fillColor="#FFB900"
     android:pathData="M17.3052,16.504h3.087v16.0497h-3.087z" />
   <path
-    android:fillColor="@color/colorPrimary"
+    android:fillColor="#FFB900"
     android:pathData="M17.3052,33.7h3.087v16.4318h-3.087z" />
   <path
-    android:fillColor="@color/colorPrimary"
+    android:fillColor="#FFB900"
     android:pathData="M16.1712,16.504H47.5867L44.0798,26.1422L47.5867,36.3325H16.1712V33.7H21.6311V19.3912H16.1712V16.504Z" />
 <!--  <path-->
 <!--    android:fillColor="#ffffff"-->

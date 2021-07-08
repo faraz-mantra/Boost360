@@ -282,7 +282,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
@@ -658,7 +658,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
@@ -864,7 +864,14 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Business\nName"
+            },
+            {
+              "businessType": "business_description_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
@@ -1013,7 +1020,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
@@ -1240,7 +1247,14 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Business\nName"
+            },
+            {
+              "businessType": "business_description_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
@@ -1389,7 +1403,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
@@ -1616,7 +1630,14 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Business\nName"
+            },
+            {
+              "businessType": "business_description_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
@@ -1772,7 +1793,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
@@ -2013,7 +2034,14 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Business\nName"
+            },
+            {
+              "businessType": "business_description_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
@@ -2162,7 +2190,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
@@ -2382,7 +2410,14 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Business\nName"
+            },
+            {
+              "businessType": "business_description_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
@@ -2531,7 +2566,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
@@ -2751,7 +2786,14 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Business\nName"
+            },
+            {
+              "businessType": "business_description_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
@@ -2900,7 +2942,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
@@ -3120,7 +3162,14 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Business\nName"
+            },
+            {
+              "businessType": "business_description_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
@@ -3269,7 +3318,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
@@ -3503,7 +3552,14 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Business\nName"
+            },
+            {
+              "businessType": "business_description_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
@@ -3652,7 +3708,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nChatbot"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",

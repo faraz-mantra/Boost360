@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -72,19 +71,12 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     progressView?.showProgress(supportFragmentManager)
   }
 
-  fun changeTheme(color: Int, taskBarColor: Int, isLight: Boolean = false) {
+  fun changeTheme(color: Int, taskBarColor: Int) {
     getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      if (isLight) {
-        var flags: Int = window.decorView.systemUiVisibility
-        flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        window.decorView.systemUiVisibility = flags
-      } else {
-        var flags: Int = window.decorView.systemUiVisibility
-        flags = flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-        window.decorView.systemUiVisibility = flags
-      }
+    window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+      window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
     }
-    window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
   }
 }

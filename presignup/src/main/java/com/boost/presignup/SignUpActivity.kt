@@ -191,7 +191,7 @@ class SignUpActivity : AppCompatActivity() {
 
     val userInfo = UserProfileRequest(
         personIdToken,
-        "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5",
+        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
         email,
         userPassword,
         ProfileProperties(email, userMobile, personName, userPassword),
@@ -303,7 +303,7 @@ class SignUpActivity : AppCompatActivity() {
   fun registerUserProfileAPI() {
     val userInfo = UserProfileRequest(
         personIdToken,
-        "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5",
+        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
         email,
         userPassword,
         ProfileProperties(email, userMobile, personName, userPassword), provider, null)

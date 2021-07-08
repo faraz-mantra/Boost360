@@ -61,7 +61,6 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
   override fun onCreateView() {
     super.onCreateView()
-
     WebEngageController.trackEvent(WEBSITE_STYLE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.ctfPrimaryFont, binding?.ctfSecondaryFont, binding?.btnDone, binding?.openWebsite, binding?.more, binding?.back)
     this.sessionData = arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
@@ -348,6 +347,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
         TypeSuccess.DISCARD.name -> {
           websiteThemePublishBottomSheet.dismiss()
           WebEngageController.trackEvent(WEBSITE_STYLE_CANCEL, CLICK, NO_EVENT_VALUE)
+
           }
           TypeSuccess.PUBLISH_CHANGES.name -> {
             websiteThemePublishBottomSheet.dismiss()

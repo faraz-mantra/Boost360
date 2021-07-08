@@ -240,7 +240,7 @@
         style="@style/wrap_wrap"
         android:layout_marginEnd="@dimen/size_14"
         android:text="@string/go_back"
-        android:textColor="@color/colorAccentLight"
+        android:textColor="@color/orange"
         android:textSize="14sp"
         app:fontFamily="@font/bold" />
 

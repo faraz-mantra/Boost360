@@ -35,7 +35,7 @@ public class DomainEmailActivity extends AppCompatActivity {
     private Fragment currentFragment = null;
     private FragmentManager fragmentManager = null;
     private FragmentTransaction fragmentTransaction = null;
-    public String clientid = "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5";
+    public String clientid = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

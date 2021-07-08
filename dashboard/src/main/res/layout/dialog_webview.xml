@@ -1,104 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <data>
+    <data>
 
-  </data>
-
-  <androidx.constraintlayout.widget.ConstraintLayout
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/transparent">
+    android:background="@color/transparent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:background="@drawable/bg_rounded_top_grey"
-      android:orientation="vertical"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHeight_percent="0.95"
-      app:layout_constraintStart_toStartOf="parent">
-
-      <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/app_bar_layout"
-        android:layout_width="0dp"
-        android:layout_height="?android:attr/actionBarSize"
-        android:layout_marginVertical="@dimen/size_8"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/back_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_business_name"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_16"
-          android:text="@string/boost360_terms_conditions"
-          android:textColor="@color/white"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_2" />
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_website_url"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_16"
-          android:text="@string/boost360_terms_conditions"
-          android:textColor="@color/white"
-          app:fontFamily="@font/regular"
-          app:textType="BODY_3" />
-
-
-      </androidx.appcompat.widget.LinearLayoutCompat>
-
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/back_btn"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
-        android:layout_marginEnd="@dimen/size_16"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="@dimen/size_12"
-        app:layout_constraintBottom_toBottomOf="@+id/app_bar_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_cross_grey" />
-
-      <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_3"
-        android:indeterminate="true"
-        android:scaleY="4"
-        android:theme="@style/ActiveThemeJio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_layout" />
-
-      <View
-        android:id="@+id/view_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_3"
-        android:background="@drawable/down_shadow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
-
-      <WebView
-        android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/bg_rounded_top_grey"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_shadow" />
+        app:layout_constraintHeight_percent="0.95"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/app_bar_layout"
+            android:layout_width="0dp"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginVertical="@dimen/size_8"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/back_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_business_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_16"
+                android:text="@string/boost360_terms_conditions"
+                android:textColor="@color/white"
+                app:fontFamily="@font/semi_bold"
+                app:textType="BODY_2" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_website_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_16"
+                android:text="@string/boost360_terms_conditions"
+                android:textColor="@color/white"
+                app:fontFamily="@font/regular"
+                app:textType="BODY_3" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/back_btn"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginEnd="@dimen/size_16"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/size_12"
+            app:layout_constraintBottom_toBottomOf="@+id/app_bar_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cross_grey" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_3"
+            android:indeterminate="true"
+            android:scaleY="4"
+            android:theme="@style/ActiveTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_layout" />
+
+        <View
+            android:id="@+id/view_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_3"
+            android:background="@drawable/down_shadow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_shadow" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-  </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

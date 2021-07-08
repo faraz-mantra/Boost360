@@ -46,11 +46,10 @@
         style="@style/BusinessProfileTextField"
         android:drawableEnd="@null"
         android:gravity="top|left"
-        android:inputType="textMultiLine|textCapWords"
+        android:inputType="textMultiLine"
         android:lines="10"
         android:minLines="6"
         android:scrollbars="vertical"
-        android:textColor="@color/black_4a4a4a"
         android:textCursorDrawable="@drawable/color_cursor"
         android:textSize="14sp" />
 

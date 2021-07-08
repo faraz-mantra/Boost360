@@ -95,7 +95,7 @@
       android:layout_width="@dimen/size_20"
       android:layout_height="@dimen/size_20"
       android:padding="@dimen/size_4"
-      android:tint="@color/colorAccent_jio"
+      android:tint="@color/colorAccent"
       app:srcCompat="@drawable/ic_arrow_right_d" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

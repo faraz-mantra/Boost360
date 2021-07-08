@@ -168,9 +168,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
                 .setFontAttrId(R.attr.fontPath)
                 .build());*/
         FacebookSdk.sdkInitialize(getApplicationContext());
-        if (!BaseOrderApplication.instance.getPackageName().equals("com.jio.online")) {
-            registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
-        }
+        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
         //WebEngage.registerPushNotificationCallback(new PushNotificationCallbacksImpl());
         AppEventsLogger.activateApp(this);
 
@@ -194,13 +192,13 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     }
 
     void initWebEngage() {
-        if (!BaseOrderApplication.instance.getPackageName().equals("com.jio.online")) {
-            WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
+        WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
                 .setWebEngageKey(webEngageKey)
                 .setDebugMode(true)
                 .build();
-            registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
-        }
+        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
+
+
     }
 
     public RequestQueue getRequestQueue() {

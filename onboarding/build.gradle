@@ -43,10 +43,4 @@ dependencies {
     api project(path: ':facebook')
     api project(path: ':twitter')
     api project(path: ':google')
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-repositories {
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-    mavenCentral()
 }

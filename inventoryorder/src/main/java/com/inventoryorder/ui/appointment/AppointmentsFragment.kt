@@ -150,7 +150,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
           onInClinicAptAddedOrUpdated(isDataNotEmpty)//Dr score
           if (isDataNotEmpty) {
-            binding?.btnAdd?.visible()
             orderList.clear()
             removeLoader()
             val list = response!!.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
@@ -168,7 +167,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             orderList.addAll(list)
             setAdapterNotify(orderList)
           } else if (orderList.isNullOrEmpty().not()) {
-            binding?.btnAdd?.visible()
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
@@ -212,7 +210,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private fun emptyView() {
     binding?.bookingRecycler?.gone()
     binding?.errorView?.visible()
-    binding?.btnAdd?.gone()
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {

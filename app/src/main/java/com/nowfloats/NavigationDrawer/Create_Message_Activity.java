@@ -624,7 +624,6 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
           getMessages(session.getFPID(), "0");
         }
         hideLoader();
-        if (isSuccess) this.finish();
       });
     }).UploadPostService();
   }

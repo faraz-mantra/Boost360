@@ -3,7 +3,6 @@
   <color name="accent_dark">#F2994A</color>
   <color name="accent_30">#4DFFB900</color>
   <color name="greyish_brown">#4A4A4A</color>
-  <color name="dashboard_business_url">#4A4A4A</color>
   <color name="greyish_brown_1">#25252F</color>
   <color name="greyish_brown_light">#898A8D</color>
   <color name="greyish_brown_40">#664A4A4A</color>
@@ -33,7 +32,6 @@
   <color name="grey_dark_2">#828282</color>
   <color name="grey_dark_3">#BDBDBD</color>
   <color name="light_grey_1">#DFDFDF</color>
-  <color name="light_grey_boost_jio">#DFDFDF</color>
   <color name="light_grey_2">#E0E0E0</color>
   <color name="light_grey_4">#FAFAFA</color>
   <color name="light_grey_5">#F5F5F5</color>
@@ -56,7 +54,6 @@
   <color name="pinkish_grey_ten_alpha">#BBBBBB</color>
   <color name="marigold">#ffc800</color>
   <color name="orange">#ffb900</color>
-  <color name="orange_light">#FFF8E5</color>
   <color name="squash">#f7981c</color>
   <color name="carmine">#9f041b</color>
   <color name="watermelon">#f5515f</color>
@@ -86,7 +83,7 @@
   <color name="light_green_2">#00D34F</color>
   <color name="light_green_3">#99DC45</color>
   <color name="light_lemon">#EC9A81</color>
-  <color name="accent_lemon">#1AFFB900</color>
+  <color name="accent_lemon">#fef3ce</color>
   <color name="pinkish_grey_two">#bababa</color>
   <color name="scarlet_40">#66D0021B</color>
   <color name="scarlet">#D0021B</color>
@@ -116,8 +113,6 @@
   <color name="grey_A1A1A1">#A1A1A1</color>
   <color name="black_2A2A2A">#2A2A2A</color>
   <color name="black_4a4a4a">#4A4A4A</color>
-  <color name="black_4a4a4a_jio">@color/black_4a4a4a</color>
-  <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="black_4a4a4a_50">#804A4A4A</color>
   <color name="black_4a4a4a_30">#4D4A4A4A</color>
   <color name="black_4f4f4f">#4f4f4f</color>
@@ -136,7 +131,6 @@
   <color name="white_4">#fbfbfb</color>
   <color name="grey_f9f9f9">#f9f9f9</color>
   <color name="colorLightGrey">#E4E4E4</color>
-  <color name="colorLightGrey_jio">#E4E4E4</color>
   <color name="light_blue_grey">#54617A</color>
 
   <color name="green_27AE60">#27AE60</color>

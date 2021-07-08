@@ -82,7 +82,7 @@
                         android:layout_below="@+id/card_view"
                         android:background="@drawable/round_border_button"
                         style="?android:attr/borderlessButtonStyle"
-                        android:textColor="@color/back_button_color"
+                        android:textColor="@color/primaryColor"
                         card_view:ignore="MissingPrefix" />
 
                 </RelativeLayout>

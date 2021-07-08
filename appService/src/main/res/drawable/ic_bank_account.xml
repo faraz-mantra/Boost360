@@ -6,10 +6,10 @@
   <group>
     <clip-path android:pathData="M0,0h197v197h-197z" />
     <path
-      android:fillColor="@color/colorPrimary"
+      android:fillColor="#FFB900"
       android:pathData="M98.5,197C152.9,197 197,152.9 197,98.5C197,44.1 152.9,0 98.5,0C44.1,0 0,44.1 0,98.5C0,152.9 44.1,197 98.5,197Z" />
     <path
-      android:fillColor="@color/colorPrimaryDark"
+      android:fillColor="#CE9600"
       android:pathData="M152.537,62.432H44.594V168.146H152.537V62.432Z" />
     <path
       android:fillColor="#F1F3F7"

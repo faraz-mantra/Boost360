@@ -5,11 +5,6 @@
     <color name="colorPrimary">#ffb900</color>
     <color name="colorPrimaryDark">#d99d00</color>
 
-<!--new colors added -->
-    <color name="ButtoncolorAccent">#ffb900</color>
-    <color name="ButtonTextcolorAccent">#ffb900</color>
-    <color name="buttonUnselected">#E2E2E2</color>
-    <color name="IntroIndicatorAccent">#ffb900</color>
 
     <color name="intro_indi_inactive">#D7D7D7</color>
     <color name="intro_indi_active">#000</color>

@@ -296,7 +296,7 @@
         android:id="@+id/self_branded_kyc_add_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingHorizontal="@dimen/size_20"
+        android:paddingHorizontal="@dimen/size_22"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -307,7 +307,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_alignParentBottom="true"
-          android:layout_marginBottom="@dimen/size_10"
+          android:layout_marginBottom="@dimen/size_12"
           android:gravity="center"
           android:orientation="vertical">
 
@@ -336,7 +336,7 @@
             android:id="@+id/verify_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_16"
             android:layout_marginBottom="@dimen/size_16"
             android:fontFamily="@font/regular"
             android:gravity="center"
@@ -348,12 +348,13 @@
             android:id="@+id/btn_view_details"
             style="@style/ButtonStyle.Rounded"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_42"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_refresh_btn"
             android:gravity="center"
+            android:paddingVertical="@dimen/size_12"
             android:text="@string/view_details"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccentLight"
+            android:textColor="@color/colorAccent"
             android:textStyle="bold" />
         </LinearLayout>
       </RelativeLayout>

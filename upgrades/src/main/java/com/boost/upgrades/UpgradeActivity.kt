@@ -76,7 +76,7 @@ class UpgradeActivity : AppCompatActivity() {
   var deepLinkDay: Int = 7
   var compareBackListener: CompareBackListener? = null
 
-  var clientid: String = "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5"
+  var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
   private var widgetFeatureCode: String? = null
 
   private var initialLoadUpgradeActivity: Int = 0
@@ -89,34 +89,30 @@ class UpgradeActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
-    if (packageName.equals("com.jio.online", ignoreCase = true)) {
-      Toast.makeText(this, "Coming soon...", Toast.LENGTH_LONG).show()
-      this.finish()
-    } else {
-      isDeepLink = intent.getBooleanExtra("isDeepLink", false)
-      deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
-      deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
 
-      experienceCode = intent.getStringExtra("expCode")
-      fpName = intent.getStringExtra("fpName")
-      fpid = intent.getStringExtra("fpid")
-      fpTag = intent.getStringExtra("fpTag")
-      email = intent.getStringExtra("email")
-      mobileNo = intent.getStringExtra("mobileNo")
-      profileUrl = intent.getStringExtra("profileUrl")
-      accountType = intent.getStringExtra("accountType")
-      isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
-      //user buying item directly
-      widgetFeatureCode = intent.getStringExtra("buyItemKey")
-      userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+    isDeepLink = intent.getBooleanExtra("isDeepLink", false)
+    deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
+    deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
 
-      progressDialog = ProgressDialog(this)
+    experienceCode = intent.getStringExtra("expCode")
+    fpName = intent.getStringExtra("fpName")
+    fpid = intent.getStringExtra("fpid")
+    fpTag = intent.getStringExtra("fpTag")
+    email = intent.getStringExtra("email")
+    mobileNo = intent.getStringExtra("mobileNo")
+    profileUrl = intent.getStringExtra("profileUrl")
+    accountType = intent.getStringExtra("accountType")
+    isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+    //user buying item directly
+    widgetFeatureCode = intent.getStringExtra("buyItemKey")
+    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")?:ArrayList()
 
-      prefs = SharedPrefs(this)
+    progressDialog = ProgressDialog(this)
+
+    prefs = SharedPrefs(this)
 //    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
-      initView()
-      initRazorPay()
-    }
+    initView()
+    initRazorPay()
   }
 
   infix fun setBackListener(compareBackListener: CompareBackListener?) {

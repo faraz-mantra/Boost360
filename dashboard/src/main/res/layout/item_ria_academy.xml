@@ -18,7 +18,7 @@
     app:cardCornerRadius="@dimen/size_10"
     app:cardElevation="0dp"
     app:cardUseCompatPadding="true"
-    tools:layout_height="@dimen/size_academy_banners">
+    tools:layout_height="140dp">
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/image"

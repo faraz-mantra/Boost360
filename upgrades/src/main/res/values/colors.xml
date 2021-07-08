@@ -347,7 +347,5 @@
 
     <color name="fullscreen_color">#a5000000</color>
     <color name="light_blue">#0068e0</color>
-    <color name="addons_toolbar">#FF9F00</color>
-    <color name="addons_text_color">#ffb900</color>
 
 </resources>

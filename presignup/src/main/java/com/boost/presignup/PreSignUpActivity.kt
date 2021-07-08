@@ -51,9 +51,6 @@ class PreSignUpActivity : AppCompatActivity() {
     binding.viewModel = viewModel
     navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
-    if(!packageName.equals(getString(R.string.package_name_sign_up_visibility))){
-      binding.createAccountButton.visibility = View.VISIBLE
-    }
     //custome navigation controller after language selection
     if (intent.hasExtra("fragmentState")) {
       val fragmetState = intent.getStringExtra("fragmentState")
@@ -477,14 +474,16 @@ class PreSignUpActivity : AppCompatActivity() {
       it?.let {
         Log.e(it, ">>>>@@@@@@@@@@@@@@@@@@@")
         if (it.equals(ENABLE_BOTTOM_VIEW)) {
+          binding.createAccountButton.visibility = View.VISIBLE
           binding.loginButton.visibility = View.VISIBLE
           binding.languageView.visibility = View.VISIBLE
           binding.languageDropdown.visibility = View.GONE
           binding.languageLayout.visibility = View.VISIBLE
         } else if (it.equals(SINGLE_LANGUAGE_BUTTON_VIEW)) {
-          binding.languageDropdown.visibility = View.GONE
+          binding.languageDropdown.visibility = View.VISIBLE
           binding.languageLayout.visibility = View.GONE
           binding.languageView.visibility = View.VISIBLE
+          binding.createAccountButton.visibility = View.VISIBLE
           binding.loginButton.visibility = View.VISIBLE
         }
       }

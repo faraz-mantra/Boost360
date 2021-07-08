@@ -33,12 +33,12 @@
         android:drawablePadding="@dimen/size_6"
         android:layout_weight="1"
         tools:text="Till date"
-        android:textColor="@color/black_4a4a4a_jio"
+        android:textColor="@color/black_4a4a4a"
         app:textType="BODY_1" />
       <com.framework.views.customViews.CustomImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@color/black_4a4a4a_jio"
+        android:tint="@color/black_4a4a4a"
         app:srcCompat="@drawable/ic_arrow_down_d"/>
     </LinearLayout>
 

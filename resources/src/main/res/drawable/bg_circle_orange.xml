@@ -6,7 +6,7 @@
         android:shape="ring"
         android:thicknessRatio="2"
         android:useLevel="false">
-      <solid android:color="@color/colorPrimary" />
+      <solid android:color="#F9BD16" />
       <padding
           android:bottom="@dimen/size_5"
           android:left="@dimen/size_4"

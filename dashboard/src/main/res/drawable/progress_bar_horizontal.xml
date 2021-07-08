@@ -22,9 +22,9 @@
         <corners android:radius="5dip" />
         <gradient
           android:angle="0"
-          android:centerColor="@color/colorPrimary"
-          android:endColor="@color/colorPrimaryDark"
-          android:startColor="@color/colorAccent"
+          android:centerColor="#F49E51"
+          android:endColor="#EF9240"
+          android:startColor="#EAA466"
           android:type="linear" />
       </shape>
     </clip>

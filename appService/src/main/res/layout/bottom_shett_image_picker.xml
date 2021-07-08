@@ -47,7 +47,6 @@
           android:id="@+id/pop_up_camera_imag"
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:tint="@color/colorPrimary"
           app:srcCompat="@drawable/circle_bakground" />
 
         <com.framework.views.customViews.CustomImageView
@@ -92,7 +91,6 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:tint="@color/colorPrimary"
           app:srcCompat="@drawable/circle_bakground" />
 
         <com.framework.views.customViews.CustomImageView
@@ -137,7 +135,6 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:tint="@color/colorPrimary"
           app:srcCompat="@drawable/circle_bakground" />
 
         <com.framework.views.customViews.CustomImageView
@@ -183,7 +180,6 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:tint="@color/colorPrimary"
           app:srcCompat="@drawable/circle_bakground" />
 
         <com.framework.views.customViews.CustomImageView

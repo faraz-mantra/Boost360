@@ -74,7 +74,7 @@ class OrderConfirmationFragment : BaseFragment() {
         }
 
         order_needs_help.setOnClickListener {
-            Toasty.info(requireContext(),getString(R.string.in_case_of_any_concerns)).show()
+            Toasty.info(requireContext(),"In case of any concerns, you can write to ria@nowfloats.com. Boost Care Team is available during business hours.").show()
         }
 
         WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM, PAGE_VIEW, ADDONS_MARKETPLACE_ORDER_CONFIRMATION)

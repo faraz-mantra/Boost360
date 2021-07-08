@@ -102,7 +102,6 @@
           </LinearLayout>
 
           <LinearLayout
-            android:id="@+id/linearLayout4"
             style="@style/match_wrap"
             android:gravity="center"
             android:orientation="vertical"
@@ -150,7 +149,7 @@
           android:focusable="true"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
-          android:backgroundTint="@color/colorAccentLight"
+          android:textColor="@color/white"
           app:fabIcon="@drawable/ic_add_white"
           app:fabIconPosition="start"
           app:fabSize="normal"

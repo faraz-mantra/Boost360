@@ -23,7 +23,7 @@
                 android:id="@+id/ctv_font_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/colorAccentLight"
+                android:buttonTint="@color/colorAccent"
                 android:layout_weight="1"
                 android:text="@string/open_sans"
                 android:textColor="@color/black_4a4a4a"

@@ -15,7 +15,7 @@
         app:contentInsetEnd="0dp"
         android:elevation="@dimen/cardview_default_elevation"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/addons_toolbar"
+        android:background="#FFB900"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

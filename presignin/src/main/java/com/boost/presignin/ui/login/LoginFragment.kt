@@ -110,18 +110,13 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 //        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
 //      })
 //    } else {
-    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+    if (response.authTokens!!.size == 1) {
       this.resultLogin = response
       authTokenData()?.createAccessTokenAuth()
     } else {
-      if (response.authTokens!!.size == 1) {
-        this.resultLogin = response
-        authTokenData()?.createAccessTokenAuth()
-      } else {
-        navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
-        })
-      }
+      navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+        putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+      })
     }
 //    }
   }

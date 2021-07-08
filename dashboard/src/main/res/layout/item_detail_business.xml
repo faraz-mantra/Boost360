@@ -35,7 +35,7 @@
         app:fontFamily="@font/barlow_medium"
         android:id="@+id/txt_value"
         app:textType="HEADING_7"
-        android:textColor="@color/colorAccentLight"
+        android:textColor="@color/colorAccent"
         tools:text="3,45,890" />
     </LinearLayout>
 
