@@ -31,16 +31,16 @@
           android:id="@+id/txt_title1"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/business_nsummary"
-          android:textColor="@color/black_4f4f4f"
-          app:fontFamily="@font/semi_bold"
           android:ellipsize="end"
           android:includeFontPadding="false"
           android:maxLines="2"
+          android:text="@string/business_nsummary"
+          android:textColor="@color/black_4f4f4f"
           app:autoSizeMaxTextSize="14sp"
           app:autoSizeMinTextSize="12sp"
           app:autoSizeStepGranularity="1sp"
-          app:autoSizeTextType="uniform" />
+          app:autoSizeTextType="uniform"
+          app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomImageView
           android:layout_width="wrap_content"
@@ -108,6 +108,7 @@
           android:text="@string/your_site_health_heading"
           android:textColor="@color/black_4f4f4f"
           app:textType="BODY_1" />
+
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/txt_percentage"
           android:layout_width="0dp"
@@ -134,16 +135,64 @@
           app:textType="CAPTION" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
-      <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/CustomProgressBar"
+      <!--      <ProgressBar-->
+      <!--        android:id="@+id/progressBar"-->
+      <!--        style="@style/CustomProgressBar"-->
+      <!--        android:layout_width="match_parent"-->
+      <!--        android:layout_height="@dimen/size_6"-->
+      <!--        android:layout_marginTop="@dimen/size_8"-->
+      <!--        android:layout_marginBottom="@dimen/size_2"-->
+      <!--        android:max="100"-->
+      <!--        android:progress="50"-->
+      <!--        android:progressDrawable="@drawable/ic_progress_bar_high_grey" />-->
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progress_parent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_6"
+        android:layout_height="@dimen/size_8"
         android:layout_marginTop="@dimen/size_8"
-        android:layout_marginBottom="@dimen/size_2"
-        android:max="100"
-        android:progress="50"
-        android:progressDrawable="@drawable/ic_progress_bar_high_grey" />
+        android:layout_marginBottom="@dimen/size_2">
+
+        <androidx.cardview.widget.CardView
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginEnd="0.8dp"
+          android:repeatCount="infinite"
+          android:repeatMode="restart"
+          app:cardBackgroundColor="@android:color/transparent"
+          app:cardCornerRadius="@dimen/size_4"
+          app:cardElevation="0dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintWidth_default="percent"
+          tools:cardBackgroundColor="@color/colorAccent">
+
+          <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:repeatCount="infinite"
+            android:repeatMode="restart"
+            android:rotation="-180"
+            android:scaleX="-1.5"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/progress_green" />
+        </androidx.cardview.widget.CardView>
+
+        <View
+          android:id="@+id/progressBar"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:background="@drawable/ic_dr_progress_bg"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintWidth_default="percent"
+          tools:layout_constraintWidth_percent=".5" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
   </FrameLayout>
 </layout>
