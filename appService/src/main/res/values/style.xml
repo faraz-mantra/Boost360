@@ -358,7 +358,15 @@
     <item name="android:textColor">@color/green_6bc95c</item>
     <item name="android:background">@drawable/rounded_stroke_grey_4_solid_green</item>
   </style>
-
+  <style name="MenuButtonsStyle">
+    <item name="fab_size">mini</item>
+    <item name="fab_showAnimation">@anim/jump_from_down</item>
+    <item name="fab_hideAnimation">@anim/jump_to_down</item>
+    <item name="fab_shadowColor">#444</item>
+    <item name="fab_colorNormal">@color/ButtoncolorAccent</item>
+    <item name="fab_colorPressed">@color/ButtoncolorAccent</item>
+    <item name="fab_colorRipple">@color/ButtoncolorAccent</item>
+  </style>
   <style name="ButtonStyle.Red">
     <item name="android:textSize">14sp</item>
     <item name="android:stateListAnimator">@null</item>

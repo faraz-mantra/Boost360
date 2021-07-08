@@ -29,6 +29,7 @@
       android:layout_margin="16dp"
       android:clickable="true"
       android:focusable="true"
+      app:fabColor="@color/ButtoncolorAccent"
       app:fabIcon="@drawable/ic_add_white"
       app:fabSize="normal" />
 

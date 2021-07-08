@@ -148,7 +148,7 @@ class AddUpdateBusinessFragment :
       binding?.btnFpStatus?.setTintColor(
         ContextCompat.getColor(
           baseActivity,
-          if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1
+          if (fbStatusEnabled) R.color.ButtoncolorAccent else R.color.grey_A1A1A1
         )
       )
     }
@@ -159,7 +159,7 @@ class AddUpdateBusinessFragment :
       binding?.btnFpPageStatus?.setTintColor(
         ContextCompat.getColor(
           baseActivity,
-          if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1
+          if (fbPageStatusEnable) R.color.ButtoncolorAccent else R.color.grey_A1A1A1
         )
       )
     }
@@ -168,7 +168,7 @@ class AddUpdateBusinessFragment :
       binding?.btnTwitter?.setTintColor(
         ContextCompat.getColor(
           baseActivity,
-          if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1
+          if (twitterSharingEnabled) R.color.ButtoncolorAccent else R.color.grey_A1A1A1
         )
       )
     }
@@ -204,7 +204,7 @@ class AddUpdateBusinessFragment :
               binding?.btnSubscription?.setTintColor(
                 ContextCompat.getColor(
                   baseActivity,
-                  if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1
+                  if (toSubscribers) R.color.ButtoncolorAccent else R.color.grey_A1A1A1
                 )
               )
             }
@@ -215,7 +215,7 @@ class AddUpdateBusinessFragment :
           binding?.btnSubscription?.setTintColor(
             ContextCompat.getColor(
               baseActivity,
-              if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1
+              if (toSubscribers) R.color.ButtoncolorAccent else R.color.grey_A1A1A1
             )
           )
         }
@@ -230,7 +230,7 @@ class AddUpdateBusinessFragment :
           binding?.btnFpStatus?.setTintColor(
             ContextCompat.getColor(
               baseActivity,
-              if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1
+              if (fbStatusEnabled) R.color.ButtoncolorAccent else R.color.grey_A1A1A1
             )
           )
           showShortToast(getString(if (fbStatusEnabled) R.string.fb_enabled else R.string.fb_disabled))
@@ -244,7 +244,7 @@ class AddUpdateBusinessFragment :
           binding?.btnFpPageStatus?.setTintColor(
             ContextCompat.getColor(
               baseActivity,
-              if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1
+              if (fbPageStatusEnable) R.color.ButtoncolorAccent else R.color.grey_A1A1A1
             )
           )
           if (fbPageStatusEnable) WebEngageController.trackEvent(
@@ -261,7 +261,7 @@ class AddUpdateBusinessFragment :
           binding?.btnTwitter?.setTintColor(
             ContextCompat.getColor(
               baseActivity,
-              if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1
+              if (twitterSharingEnabled) R.color.ButtoncolorAccent else R.color.grey_A1A1A1
             )
           )
           if (twitterSharingEnabled) WebEngageController.trackEvent(

@@ -43,6 +43,7 @@
             android:lines="10"
             android:maxLines="10"
             android:minLines="6"
+            android:textCursorDrawable="@color/ButtoncolorAccent"
             android:padding="@dimen/size_10"
             android:scrollbars="vertical"
             app:textType="HEADING_6" />
