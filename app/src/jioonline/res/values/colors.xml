@@ -6,9 +6,9 @@
     <color name="product_delete_btn">#ff3f3f</color>
 
     <color name="orange">@color/colorPrimary</color>
-    <color name="colorAccentLight">#0E0AC3</color>
-    <color name="squash">#0E0AC3</color>
-    <color name="marigold">#0E0AC3</color>
+    <color name="colorAccentLight">@color/colorPrimaryDarkBlue</color>
+    <color name="squash">@color/colorPrimaryDarkBlue</color>
+    <color name="marigold">@color/colorPrimaryDarkBlue</color>
     <color name="colorPrimary_10">#1A0400A6</color>
     <color name="accentLight_1">#2522D3</color>
 
@@ -37,7 +37,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="green">#23cf34</color>
-    <color name="blue">#0000FF</color>
+    <color name="blue">@color/ButtoncolorAccent</color>
     <color name="grey">#a4a4a4</color>
     <color name="transparent">#00ffffff</color>
     <color name="light_black">#505050</color>
