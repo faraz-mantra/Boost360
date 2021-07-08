@@ -36,6 +36,8 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
   }
 }
 
+fun Double.roundToFloat(numFractionDigits: Int):Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
+
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
   if (view != null) {
