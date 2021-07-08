@@ -25,6 +25,23 @@
   <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
     <item name="android:background">@android:color/transparent</item>
   </style>
+  <style name="ButtonStyle.Red">
+    <item name="android:textSize">14sp</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="paddingStart">@dimen/size_28</item>
+    <item name="paddingEnd">@dimen/size_28</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">@dimen/size_38</item>
+    <item name="height">@dimen/size_36</item>
+    <item name="textSize">14sp</item>
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:textColor">@color/ButtoncolorAccent</item>
+    <item name="android:background">@drawable/rounded_stroke_grey_4_solid_error</item>
+  </style>
 
   <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
     <!-- customize the color palette -->
@@ -54,7 +71,6 @@
     </style>
 
     <style name="SignUp_EditText_Style_Ria" parent="Theme.AppCompat.Light.NoActionBar">
-
         <item name="android:gravity">bottom</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -93,10 +109,9 @@
         <item name="android:inputType">textCapWords</item>
         <item name="android:padding">@dimen/size_12</item>
         <item name="android:drawableEnd">@drawable/ic_edit_business</item>
-        <item name="drawableTint">@color/ButtoncolorAccent</item>
         <item name="android:textColor">@color/ButtoncolorAccent</item>
         <item name="android:textColorHint">@color/primary_grey</item>
-        <item name="android:textCursorDrawable">@drawable/color_cursor_orange</item>
+        <item name="android:textCursorDrawable">@color/primary_grey</item>
 
     </style>
     <style name="EditTextCustomeStyle" parent="Widget.AppCompat.EditText">
