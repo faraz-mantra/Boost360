@@ -92,7 +92,7 @@
   <string name="digital_readiness_score_failed_to_load">Failed to load your Digital Readiness Score.</string>
   <string name="please_wait">Please wait...</string>
   <string name="business_nsummary">Business\nSummary</string>
-  <string name="your_site_health_heading">Your site health:</string>
+  <string name="your_site_health_heading">Your site health: </string>
   <string name="_82">82%</string>
   <string name="new_content" translatable="false">NEW</string>
   <string name="inr">INR</string>

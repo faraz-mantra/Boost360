@@ -158,16 +158,64 @@
                     tools:ignore="RtlSymmetry" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <ProgressBar
-                  android:id="@+id/progress_score"
-                  style="@style/CustomProgressBar"
+                <!--                <ProgressBar-->
+                <!--                  android:id="@+id/progress_score"-->
+                <!--                  style="@style/CustomProgressBar"-->
+                <!--                  android:layout_width="match_parent"-->
+                <!--                  android:layout_height="@dimen/size_6"-->
+                <!--                  android:layout_marginStart="@dimen/size_18"-->
+                <!--                  android:layout_marginTop="@dimen/size_12"-->
+                <!--                  android:layout_marginEnd="@dimen/size_14"-->
+                <!--                  android:max="100"-->
+                <!--                  android:progress="50" />-->
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                  android:id="@+id/progress_parent"
                   android:layout_width="match_parent"
-                  android:layout_height="@dimen/size_6"
+                  android:layout_height="@dimen/size_8"
                   android:layout_marginStart="@dimen/size_18"
                   android:layout_marginTop="@dimen/size_12"
-                  android:layout_marginEnd="@dimen/size_14"
-                  android:max="100"
-                  android:progress="50" />
+                  android:layout_marginEnd="@dimen/size_14">
+                  <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="0.8dp"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    tools:cardBackgroundColor="@color/colorAccent"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="@dimen/size_4"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_default="percent">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_gravity="center_horizontal"
+                      android:repeatCount="infinite"
+                      android:repeatMode="restart"
+                      android:scaleX="-1.5"
+                      android:rotation="-180"
+                      app:lottie_autoPlay="true"
+                      app:lottie_loop="true"
+                      app:lottie_rawRes="@raw/progress_green" />
+                  </androidx.cardview.widget.CardView>
+
+                  <View
+                    android:id="@+id/progressBar"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/ic_dr_progress_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_default="percent"
+                    tools:layout_constraintWidth_percent=".5" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                   android:layout_width="match_parent"
@@ -567,6 +615,7 @@
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_arrow_down_white_12_d" />
             </LinearLayout>
+
           </LinearLayout>
 
         </FrameLayout>
