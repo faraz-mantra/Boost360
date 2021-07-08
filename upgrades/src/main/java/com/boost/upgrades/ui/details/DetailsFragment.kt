@@ -1,6 +1,7 @@
 package com.boost.upgrades.ui.details
 
 //import com.devs.readmoreoption.ReadMoreOption
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.graphics.Color
@@ -12,6 +13,7 @@ import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -34,14 +36,11 @@ import com.boost.upgrades.interfaces.DetailsFragmentListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.popup.ImagePreviewPopUpFragement
 import com.boost.upgrades.ui.webview.WebViewFragment
-import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.WEB_VIEW_FRAGMENT
-import com.boost.upgrades.utils.HorizontalMarginItemDecoration
-import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.longToast
-import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.framework.webengageconstant.*
@@ -50,6 +49,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.details_fragment.*
+import kotlinx.android.synthetic.main.details_fragment.app_bar_layout
+import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.util.*
@@ -101,8 +102,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         progressDialog = ProgressDialog(requireContext())
         secondaryImagesAdapter = SecondaryImagesAdapter(ArrayList(), this)
         reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
-        localStorage = LocalStorage.getInstance(context!!)!!
-        singleWidgetKey = arguments!!.getString("itemId")
+        localStorage = LocalStorage.getInstance(requireContext())!!
+        singleWidgetKey = requireArguments().getString("itemId")
         prefs = SharedPrefs(activity as UpgradeActivity)
 
 //        addons_list = localStorage.getInitialLoad()
@@ -163,7 +164,9 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                     //clear cartOrderInfo from SharedPref to requestAPI again
                     prefs.storeCartOrderInfo(null)
 
-                    viewModel.addItemToCart(addonDetails!!)
+                    makeFlyAnimation(image1222Copy)
+
+//                    viewModel.addItemToCart(addonDetails!!)
                     val event_attributes: HashMap<String, Any> = HashMap()
                     addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
                     event_attributes.put("Addon Price", addonDetails!!.price)
@@ -247,7 +250,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         try {
 
             //if the View is opened from package then hide button, price, discount and Cart icon
-            if (arguments!!.containsKey("packageView")) {
+            if (requireArguments().containsKey("packageView")) {
                 imageViewCart121.visibility = View.INVISIBLE
                 money.visibility = View.GONE
                 orig_cost.visibility = View.GONE
@@ -315,7 +318,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         viewModel.addonsResult().observe(this, Observer {
 
             //if the View is from PackageView then No need to call getCartItems method
-            if(!arguments!!.containsKey("packageView")) {
+            if(!requireArguments().containsKey("packageView")) {
                 viewModel.getCartItems()
             }
             addonDetails = it
@@ -324,6 +327,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 val learnMoreLink: LearnMoreLink? = if (addonDetails!!.learn_more_link == null) null else Gson().fromJson(addonDetails!!.learn_more_link, learnMoreLinkType)
                 Glide.with(this).load(addonDetails!!.primary_image)
                         .into(image1222)
+                Glide.with(this).load(addonDetails!!.primary_image)
+                    .into(image1222Copy)
 
                 Glide.with(this).load(addonDetails!!.primary_image)
                         .fitCenter()
@@ -383,7 +388,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                     val totalInstall = addonDetails!!.total_installs + " businesses have added this"
                     val businessUses = SpannableString(totalInstall)
                     businessUses.setSpan(
-                            ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.light_blue)),
+                            ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.light_blue)),
                             0,
                             addonDetails!!.total_installs!!.length,
                             0
@@ -503,7 +508,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     override fun onBackPressed() {
         if (::viewModel.isInitialized) {
             //if the View is from PackageView then No need to call getCartItems method
-            if(!arguments!!.containsKey("packageView")) {
+            if(!requireArguments().containsKey("packageView")) {
                 viewModel.getCartItems()
             }
         }
@@ -524,6 +529,22 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().viewModelStore.clear()
+    }
+
+    private fun makeFlyAnimation(targetView: ImageView) {
+
+        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView).setMoveDuration(600)
+            .setDestView(featureDetailsCartIcon).setAnimationListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    viewModel.addItemToCart(addonDetails!!)
+                }
+
+
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            }).startAnimation()
+
     }
 
 }

@@ -98,7 +98,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun addItemToCart(updatesModel: FeaturesModel) {
-        updatesLoader.postValue(true)
+        updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
         val cartItem = CartModel(
