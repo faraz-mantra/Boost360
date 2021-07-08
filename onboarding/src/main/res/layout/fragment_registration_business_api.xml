@@ -61,8 +61,7 @@
         app:shadowDy=".5dp"
         app:shadowRadius="2dp"
         app:shadowShape="oval"
-        app:shadowSide="all"
-        app:srcCompat="@drawable/ic_ria_circle">
+        app:shadowSide="all">
 
       <com.framework.views.customViews.CustomImageView
           android:id="@+id/riya_image"

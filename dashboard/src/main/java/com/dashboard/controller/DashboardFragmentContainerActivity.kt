@@ -81,8 +81,8 @@ open class DashboardFragmentContainerActivity :
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
-      FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
-      FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
+      FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
   }

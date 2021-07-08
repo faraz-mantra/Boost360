@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="₹400/month"
-                    android:textColor="#FFB900"
+                    android:textColor="@color/addons_text_color"
                     android:textFontWeight="400"
                     android:fontFamily="@font/open_sans"
                     android:textSize="@dimen/txt_11sp"

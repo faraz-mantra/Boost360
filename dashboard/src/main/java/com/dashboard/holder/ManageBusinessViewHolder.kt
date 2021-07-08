@@ -6,6 +6,7 @@ import com.dashboard.databinding.ItemManageBusinessDBinding
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
+import com.framework.glide.util.glideLoad
 
 class ManageBusinessViewHolder(binding: ItemManageBusinessDBinding) : AppBaseRecyclerViewHolder<ItemManageBusinessDBinding>(binding) {
 

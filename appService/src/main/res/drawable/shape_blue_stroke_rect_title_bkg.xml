@@ -7,7 +7,7 @@
         android:width="1dp"
         android:color="@color/orange" />
 
-    <solid android:color="#1AFFB900" />
+    <solid android:color="@color/accent_lemon" />
 
 
     <corners android:radius="@dimen/size_10" />

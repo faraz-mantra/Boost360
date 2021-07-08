@@ -2,6 +2,7 @@
 
 
 buildscript {
+    ext.kotlin_version = '1.5.0-M1'
     ext {
         kotlin_version = '1.4.10'
     }
@@ -9,6 +10,7 @@ buildscript {
         jcenter()
         google()
         mavenCentral()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.1'

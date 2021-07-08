@@ -188,7 +188,7 @@
       android:paddingVertical="@dimen/size_14"
       android:text="@string/contact_support"
       android:textAllCaps="false"
-      android:textColor="@color/colorAccent"
+      android:textColor="@color/colorAccentLight"
       android:textStyle="bold"
       app:layout_constraintBottom_toBottomOf="parent" />
   </androidx.constraintlayout.widget.ConstraintLayout>

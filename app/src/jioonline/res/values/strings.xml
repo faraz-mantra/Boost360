@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">JioOnline</string>
+  <string name="action_settings">Settings</string>
+  <string name="allow_boost_to_read_your">Please allow JioOnline to read your Facebook Page insights.</string>
+  <string name="title_activity_web_site_address">Website Address</string>
+  <string name="title_activity_business_profile">BusinessProfileActivity</string>
+  <string name="title_activity_home">HomeActivity</string>
+  <string name="title_activity_business__address_">Business Address</string>
+  <string name="title_activity_contact__info_">Contact Information</string>
+  <string name="title_activity_business__hours_">Business Hours</string>
+  <string name="title_activity_business__logo_">Business Logo</string>
+  <string name="title_activity_social__sharing_">Social Sharing</string>
+  <string name="title_activity_login__main">Welcome Back</string>
+  <string name="primary_number">Primary Number (To communicate with JioOnline)</string>
+  <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
+  <string name="ps_sc2_lbl1">Instant Website</string>
+  <string name="ps_sc2_lbl2">Creation</string>
+  <string name="ps_sc3_lbl1">Connect to</string>
+  <string name="ps_sc3_lbl2">Facebook</string>
+  <string name="ps_sc3_lbl3">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
+  <string name="ps_sc4_lbl1">Discoverable</string>
+  <string name="ps_sc4_lbl2">On Search</string>
+  <string name="ps_sc4_lbl3">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
+  <string name="ps_sc5_lbl1">Get your own</string>
+  <string name="ps_sc5_lbl2">Domain</string>
+  <string name="ps_sc5_lbl3">Take the next step in growing your business. Give it an identity of its own</string>
+  <string name="ps_sc6_lbl1">Generate Business</string>
+  <string name="ps_sc6_lbl2">Leads</string>
+  <string name="ps_sc8_lbl1">Premium features in</string>
+  <string name="ps_sc8_lbl2">JioOnline</string>
+  <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
+  <string name="ps_sc8_lbl4">Store</string>
+  <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at businesscare@jio.com or call us at 1860&#8211;123&#8211;1233.</string>
+
+  <string name="website_report_description">Learn how to make JioOnline work for you.</string>
+  <string name="learn_how_boost_360_work">Learn how to make JioOnline work for you.</string>
+  <string-array name="weeks">
+    <item>Week 1</item>
+    <item>Week 2</item>
+    <item>Week 3</item>
+    <item>Week 4</item>
+    <item>Week 5</item>
+    <item>Week 6</item>
+  </string-array>
+
+  <string name="facebook_app_id">539836972828386</string>
+  <string name="title_activity_card__full__view__main">Home</string>
+  <string name="title_activity_create__message_">Post an update</string>
+  <string name="side_panel_row_one">Home</string>
+  <string name="side_panel_row_two">Manage Website</string>
+  <string name="side_panel_row_tenth">Manage Customers</string>
+  <!--    <string name="manage_inventory">E-Commerce</string>-->
+  <!--    <string name="manage_inbox">Inbox</string>-->
+  <string name="side_panel_site_appearance">Site Appearance</string>
+  <string name="side_panel_row_csp">Custom Pages</string>
+  <string name="side_panel_row_four">Photo Gallery</string>
+  <string name="side_panel_row_five">Settings</string>
+  <string name="setting_logout">Logout</string>
+  <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
+  <string name="currency_text">INR</string>
+  <string name="email_change_level">If you wish to change email address, please contact businesscare@jio.com</string>
+  <string name="business_category_change_level">If you wish to change business category, please contact businesscare@jio.com</string>
+  <!-- Deep Linking URLs  -->
+
+  <string name="deeplink_update">update</string>
+  <string name="deeplink_upgrade">upgrade</string>
+  <string name="deeplink_featuredimage">featuredimage</string>
+  <string name="deeplink_analytics">analytics</string>
+  <string name="deeplink_bizenquiry">ttb</string>
+  <string name="deeplink_store">nfstore</string>
+  <string name="deeplink_searchqueries">searchqueries</string>
+  <string name="deeplink_socailsharing">social</string>
+  <string name="deeplink_profile">profile</string>
+  <string name="deeplink_contact">contact</string>
+  <string name="deeplink_bizaddress">address</string>
+  <string name="deeplink_bizhours">hours</string>
+  <string name="deeplink_bizlogo">logo</string>
+  <string name="deeplink_nfstoreDomainTTBCombo">bookdomain</string>
+  <string name="deeplink_imageGallery">imagegallery</string>
+  <string name="deeplink_propack">proPack</string>
+  <string name="deeplink_nfstoreseo">nfstoreseo</string>
+  <string name="deeplink_nfstorettb">nfstorettb</string>
+  <string name="deeplink_nfstoreimage">nfstoreimage</string>
+  <string name="deeplink_gplaces">gplaces</string>
+  <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
+  <string name="deeplink_ProductGallery">productGallery</string>
+
+  <!-- Deep Linking URLs  -->
+
+
+  <!-- SITE-Meter Percentage  -->
+
+  <string name="buydomain_percentage">10</string>
+  <string name="phoneNumber_percentage">5</string>
+  <string name="businessCategory_percentage">5</string>
+  <string name="featuredImage_percentage">10</string>
+  <string name="businessName_percentage">5</string>
+  <string name="businessdescription_percentage">10</string>
+  <string name="social_percentage">10</string>
+  <string name="address_percentage">10</string>
+  <string name="email_percentage">5</string>
+  <string name="postUpdate_percentage">20</string>
+  <string name="share_percentage">5</string>
+
+  <string name="buydomain_text2">Buy a.com</string>
+
+  <string-array name="CountryCodes">
+    <item>93,AF</item>
+    <item>355,AL</item>
+    <item>213,DZ</item>
+    <item>376,AD</item>
+    <item>244,AO</item>
+    <item>672,AQ</item>
+    <item>54,AR</item>
+    <item>374,AM</item>
+    <item>297,AW</item>
+    <item>61,AU</item>
+    <item>43,AT</item>
+    <item>994,AZ</item>
+    <item>973,BH</item>
+    <item>880,BD</item>
+    <item>375,BY</item>
+    <item>32,BE</item>
+    <item>501,BZ</item>
+    <item>229,BJ</item>
+    <item>975,BT</item>
+    <item>591,BO</item>
+    <item>387,BA</item>
+    <item>267,BW</item>
+    <item>55,BR</item>
+    <item>673,BN</item>
+    <item>359,BG</item>
+    <item>226,BF</item>
+    <item>95,MM</item>
+    <item>257,BI</item>
+    <item>855,KH</item>
+    <item>237,CM</item>
+    <item>1,CA</item>
+    <item>238,CV</item>
+    <item>236,CF</item>
+    <item>235,TD</item>
+    <item>56,CL</item>
+    <item>86,CN</item>
+    <item>61,CX</item>
+    <item>61,CC</item>
+    <item>57,CO</item>
+    <item>269,KM</item>
+    <item>242,CG</item>
+    <item>243,CD</item>
+    <item>682,CK</item>
+    <item>506,CR</item>
+    <item>385,HR</item>
+    <item>53,CU</item>
+    <item>357,CY</item>
+    <item>420,CZ</item>
+    <item>45,DK</item>
+    <item>253,DJ</item>
+    <item>670,TL</item>
+    <item>593,EC</item>
+    <item>20,EG</item>
+    <item>503,SV</item>
+    <item>240,GQ</item>
+    <item>291,ER</item>
+    <item>372,EE</item>
+    <item>251,ET</item>
+    <item>500,FK</item>
+    <item>298,FO</item>
+    <item>679,FJ</item>
+    <item>358,FI</item>
+    <item>33,FR</item>
+    <item>689,PF</item>
+    <item>241,GA</item>
+    <item>220,GM</item>
+    <item>995,GE</item>
+    <item>49,DE</item>
+    <item>233,GH</item>
+    <item>350,GI</item>
+    <item>30,GR</item>
+    <item>299,GL</item>
+    <item>502,GT</item>
+    <item>224,GN</item>
+    <item>245,GW</item>
+    <item>592,GY</item>
+    <item>509,HT</item>
+    <item>504,HN</item>
+    <item>852,HK</item>
+    <item>36,HU</item>
+    <item>91,IN</item>
+    <item>62,ID</item>
+    <item>98,IR</item>
+    <item>964,IQ</item>
+    <item>353,IE</item>
+    <item>44,IM</item>
+    <item>972,IL</item>
+    <item>39,IT</item>
+    <item>225,CI</item>
+    <item>81,JP</item>
+    <item>962,JO</item>
+    <item>7,KZ</item>
+    <item>254,KE</item>
+    <item>686,KI</item>
+    <item>965,KW</item>
+    <item>996,KG</item>
+    <item>856,LA</item>
+    <item>371,LV</item>
+    <item>961,LB</item>
+    <item>266,LS</item>
+    <item>231,LR</item>
+    <item>218,LY</item>
+    <item>423,LI</item>
+    <item>370,LT</item>
+    <item>352,LU</item>
+    <item>853,MO</item>
+    <item>389,MK</item>
+    <item>261,MG</item>
+    <item>265,MW</item>
+    <item>60,MY</item>
+    <item>960,MV</item>
+    <item>223,ML</item>
+    <item>356,MT</item>
+    <item>692,MH</item>
+    <item>222,MR</item>
+    <item>230,MU</item>
+    <item>262,YT</item>
+    <item>52,MX</item>
+    <item>691,FM</item>
+    <item>373,MD</item>
+    <item>377,MC</item>
+    <item>976,MN</item>
+    <item>382,ME</item>
+    <item>212,MA</item>
+    <item>258,MZ</item>
+    <item>264,NA</item>
+    <item>674,NR</item>
+    <item>977,NP</item>
+    <item>31,NL</item>
+    <item>599,AN</item>
+    <item>687,NC</item>
+    <item>64,NZ</item>
+    <item>505,NI</item>
+    <item>227,NE</item>
+    <item>234,NG</item>
+    <item>683,NU</item>
+    <item>850,KP</item>
+    <item>47,NO</item>
+    <item>968,OM</item>
+    <item>92,PK</item>
+    <item>680,PW</item>
+    <item>507,PA</item>
+    <item>675,PG</item>
+    <item>595,PY</item>
+    <item>51,PE</item>
+    <item>63,PH</item>
+    <item>870,PN</item>
+    <item>48,PL</item>
+    <item>351,PT</item>
+    <item>1,PR</item>
+    <item>974,QA</item>
+    <item>40,RO</item>
+    <item>7,RU</item>
+    <item>250,RW</item>
+    <item>590,BL</item>
+    <item>685,WS</item>
+    <item>378,SM</item>
+    <item>239,ST</item>
+    <item>966,SA</item>
+    <item>221,SN</item>
+    <item>381,RS</item>
+    <item>248,SC</item>
+    <item>232,SL</item>
+    <item>65,SG</item>
+    <item>421,SK</item>
+    <item>386,SI</item>
+    <item>677,SB</item>
+    <item>252,SO</item>
+    <item>27,ZA</item>
+    <item>82,KR</item>
+    <item>34,ES</item>
+    <item>94,LK</item>
+    <item>290,SH</item>
+    <item>508,PM</item>
+    <item>249,SD</item>
+    <item>597,SR</item>
+    <item>268,SZ</item>
+    <item>46,SE</item>
+    <item>41,CH</item>
+    <item>963,SY</item>
+    <item>886,TW</item>
+    <item>992,TJ</item>
+    <item>255,TZ</item>
+    <item>66,TH</item>
+    <item>228,TG</item>
+    <item>690,TK</item>
+    <item>676,TO</item>
+    <item>216,TN</item>
+    <item>90,TR</item>
+    <item>993,TM</item>
+    <item>688,TV</item>
+    <item>971,AE</item>
+    <item>256,UG</item>
+    <item>44,GB</item>
+    <item>380,UA</item>
+    <item>598,UY</item>
+    <item>1,US</item>
+    <item>998,UZ</item>
+    <item>678,VU</item>
+    <item>39,VA</item>
+    <item>58,VE</item>
+    <item>84,VN</item>
+    <item>681,WF</item>
+    <item>967,YE</item>
+    <item>260,ZM</item>
+    <item>263,ZW</item>
+  </string-array>
+  <string name="title_activity_splash_screen_">JioOnline</string>
+  <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
+  <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
+  <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
+  <string name="pre_signup_screen_six_text">Let customers contact you directly \nand reply to them instantly!</string>
+  <string name="pre_signup_screen_seven_text">Get additional features \nfor your business website \nfrom the in-app Store..</string>
+  <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
+  <string name="presignup_login_text">Already have a JioOnline site?</string>
+
+  <string name="onboarding_screen_1_title">Congratulations!</string>
+  <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
+  <string name="onboarding_screen_3_title">Discovery is Revenue</string>
+  <string name="onboarding_screen_2_title">Content is King</string>
+  <string name="primary_contact_number_message">Please drop us a line at businesscare@jio.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
+
+  <string name="your_site_health">Your Site Health</string>
+
+  <!--this part is for FAQ harcoded strings -->
+  <string-array name="faqmain">
+    <item>WELCOME TO THE ONLINE WORLD</item>
+    <item>WHAT\'S JioOnline</item>
+    <item>UPDATING CONTENT</item>
+    <item>ENGAGING CUSTOMERS</item>
+    <item>JioOnline APPS, WEB, SMS</item>
+    <item>JioOnline DISCOVERY METHOD</item>
+    <item>GROWING YOUR BUSINESS WITH JioOnline</item>
+    <item>NOT A FIRST TIME WEBSITE CREATOR?</item>
+    <item>PLANS</item>
+    <item>OTHER INFO</item>
+  </string-array>
+
+  <string name="buy_in_capital">BUY</string>
+  <string name="later_in_capital">LATER</string>
+  <string name="renew_light_house_plan">Renew JioOnline plan to get all the features</string>
+  <string name="light_house_plan_expired_some_features_visible">Your JioOnline plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
+  <string name="renew_wildfire_plan">Renew Wildfire plan</string>
+  <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
+  <string name="renew_in_capital">RENEW</string>
+  <string name="ignore_in_capital">IGNORE</string>
+  <string name="buy_light_house_plan">Buy JioOnline plan to get all the features</string>
+  <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+  <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy JioOnline plan.</string>
+  <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+  <string name="light_house_pla_will_expire"><Data><![CDATA[Your JioOnline plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+
+
+  <!--FAQ hardcoded string end-->
+  <string name="Logo_percentage">5</string>
+  <string name="business_hours">5</string>
+  <string name="package_name">com.jio.online</string>
+  <string name="fb_login_protocol_scheme">fb1641508162754092</string>
+
+  <string name="payment_config_acceptance_message">I agree that JioOnline will charge %s of the total cart value as convenience fee(as part of your current JioOnline plan)</string>
+
+  <string name="link_marketplace">boost.nowfloats.com/home/marketplace</string>
+  <string name="wordpress_plugin_script">wordpress-plugin script</string>
+  <string name="shared_user_key">com.jioonline.kb.boostapp.sharedkey</string>
+  <string name="ria_academy">JioOnline Academy</string>
+  <string name="boost_keyboard">Business Keyboard</string>
+
+  <string-array name="account_setting_tab_items">
+    <!--<item>Seller Profile</item>-->
+    <item>My Business Profile</item>
+    <item>My Bank Account</item>
+    <item>My Business KYC</item>
+    <item>Self Branded Payment Gateway</item>
+    <item>JioOnline Extensions</item>
+    <!--        <item>Subscription History</item>-->
+    <item>Domain and Email</item>
+    <item>Change Password</item>
+    <item>Log out</item>
+  </string-array>
+  <string name="boost_extension">JioOnline Extensions</string>
+  <string name="enable_boost_keyboard">Enable Business Keyboard</string>
+  <string name="about">About JioOnline</string>
+  <string name="boost_payment_gateway">JioOnline payment gateway</string>
+  <string name="payment_gateway_not_added_please_add_first">JioOnline Payment gateway not added, please add first.</string>
+  <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your JioOnline website are processed through this payment gateway instead of default JioOnline Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
+  <string name="in_case_of_any_concerns">In case of any concerns, you can write to businesscare@jio.com. JioOnline Care Team is available during business hours.</string>
+  <string name="open_boost">Open JioOnline</string>
+  <string name="boost_lite_boost_pro_boost_custom">jioOnline Lite, jioOnline Pro, jioOnline Custom</string>
+  <string name="your_nowfloats_website_runs_on_your_base_pack_once_your_base_pack_expires_all_your_features_and_functions_will_be_disabled_and_you_won_t_be_able_to_update_any_content">Your jioOnline website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.</string>
+  <string name="boost_plans">jioOnline Plans</string>
+  <string name="month_boost_demo_package_will_expire_on">\" month JioOnline demo package will expire on \"</string>
+  <string name="tags_help_site_visitors_to_find_a_desire_item">Tags help site visitors find a desired item on your JioOnline website. You can add related tags here and reuse them across other related products. Selecting a tag filters all relevant inventory in your product catalog.</string>
+  <string name="the_total_number_of_units">The total number of units you are willing to sell through your JioOnline website. Quantity decreases with orders that include this product.</string>
+  <string name="need_help_with_boost">Need help with JioOnline [</string>
+  <string name="you_need_to_buy_one_time_pack_for_boost_training">You need to buy the one-time pack for JioOnline Training and Certification.</string>
+  <string name="shared_from_boost">Shared from JioOnline</string>
+  <string name="sorry_no_boost_account_was_found_for_the_given">Sorry, no JioOnline account was found for the given login details. Please try again.</string>
+  <string name="error_occured_while_processing_your_mobile">Error occurred processing your mobile number. Please get in touch with JioOnline support to resolve your login issue.</string>
+  <string name="unable_to_validate_your_phone">Unable to validate your phone number with JioOnline.</string>
+  <string name="make_my_domain_as_my_boost">Make given domain as my JioOnline website’s web address/URL.[</string>
+  <string name="your_plan_does_not_include_domain_purchase">Your plan does not include domain purchase. To get domain, please buy JioOnline plan</string>
+  <string name="your_plan_does_not_included_domain_purchase">Your plan does not include domain purchase. To get domain, please buy JioOnline plan</string>
+  <string name="problem_to_open_boost">Problem to open JioOnline</string>
+  <string name="a_boost_service_which_ensures_a_secure_payment_and_safe_delivery_of_this_product">A JioOnline service which ensures a secure payment and safe delivery of this product</string>
+  <string name="boost_doesn_t_buy_any_premium_domain">*JioOnline doesn’t buy any premium domain.</string>
+  <string name="enter_the_domain_you_want_to_be_booked_amp_mapped_to_your_boost_business_website"><![CDATA[Enter the domain you want to be booked & mapped to your JioOnline business website.]]></string>
+  <string name="awesome_nyou_are_using_nowfloats_boost">Awesome,\nyou are using JioOnline!</string>
+  <string name="showcase_tripadvisor_ratings_on_your_boost_business_website">Showcase Tripadvisor Ratings on your JioOnline business website.</string>
+  <string name="note_boost_will_automatically_create_a_commerce_enabled_website_e_g_cairo_nowfloats_com_for_your_business_as_you_start_adding_content_on_boost_the_website_gets_updated_instantly_helping_your_business_get_visibility_across_all_search_engines">NOTE: JioOnline will automatically create a commerce-enabled website (e.g. cairo.nowfloats.com) for your business. As you start adding content on JioOnline, the website gets updated instantly helping your business get visibility across all search engines.</string>
+  <string name="your_domain_will_be_automatically_renewed_based_on_your_active_boost_package" translatable="false">Your domain will be automatically renewed based on your active JioOnline package</string>
+  <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right JioOnline account.</string>
+  <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your JioOnline website. Online discovery will be better as search engines already recognize your domain.</string>
+  <string name="how_to_use_boost">Learn How-To-Use JioOnline</string>
+  <string name="message_2">is not authorized to support faster login to your JioOnline account.</string>
+  <string name="keyboard_message">The JioOnline Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
+        (We do not store or share any data that you type on the JioOnline Keyboard.)</string>
+  <string name="upgrade_base_plan_description"><Data><![CDATA[JioOnline Lite, JioOnline Pro, JioOnline Custom]]></Data></string>
+  <string name="business_app_definition"><![CDATA[You can build you <b>personalized Android app</b> from your JioOnline website itself, for your customers.You can <b>send notifications</b> to your customers about your latest products and updates via the app]]></string>
+  <string name="whatsapp_bubble_close">You can disable this feature from your JioOnline app</string>
+  <string name="select_boost_from">Select JioOnline \n from the list</string>
+  <string name="boost_bubble">JioOnline Bubble</string>
+  <string name="social_media_connect_prompt">Please allow JioOnline to connect with your social media accounts. You will be able to sync your content automatically across channels, and also track all the analytics / customer interactions here.</string>
+  <string name="image_gallery_instructions_2" translatable="false">Number of images you can upload depends upon the JioOnline plan you’ve picked.</string>
+  <string name="update_nowfloats_app">You are using an old version of JioOnline. Update the app to get new features and enhancements</string>
+  <string name="facebook_chat_note" translatable="false"><b>Note:</b> Messages sent and received from\nFacebook via JioOnline will only be visible.</string>
+  <string name="all_boost_add_ons">All JioOnline add-ons</string>
+  <string name="search_boost_add_ons">Search JioOnline add-ons</string>
+  <string name="boost_features_mentioned_above">Enjoy all JioOnline features mentioned above</string>
+  <string name="business_setup_boost">business is successfully setup on JioOnline.</string>
+  <string name="processing_your_business_information">Setting up your business on JioOnline...</string>
+  <string name="processing_your_digital_channel">Setting up your digital channels on JioOnline...</string>
+  <string name="twitter_allows_digital_business_boost">Using JioOnline, you can now communicate with your followers on Twitter to build brand awareness and reach out to new customers.</string>
+  <string name="google_allows_digital_business_boost">Using JioOnline, you can now directly communicate with your customers on Google and reach out to more potential users.</string>
+  <string name="facebook_page_allows_digital_business_boost">Using JioOnline, you can now directly communicate with your customers on Facebook and reach out to more potential users.</string>
+  <string name="facebook_shop_allows_digital_business_boost">Using JioOnline, all your products and services will start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.</string>
+  <string name="channels_belong_to_respective_owners_boost_360_does_not_own_them"><b>Disclaimer:</b> The Names and Logos of Google Search, Google Maps, Facebook Page, Facebook Shop, WhatsApp Business &amp; Twitter belong to their respective owners. JioOnline does not own them.</string>
+  <string name="boost360_terms_conditions"><![CDATA[JioOnline - Terms & Conditions]]></string>
+  <string name="entransactional_updates_whatsapp_number">Allow JioOnline to send entransactional updates regarding you orders, invoices along with other promotional messages on this WhatsApp number.</string>
+  <string name="not_opted_for_boost_alerts">Not Opted For JioOnline Alerts</string>
+  <string name="digital_channel_in_boost">Digital channel in JioOnline</string>
+  <string name="boost_360">JioOnline</string>
+  <string name="terms_of_use_and_privacy_policy">By creating JioOnline account, you agree to our Terms of use and Privacy Policy</string>
+  <string name="boost360_privacy_policy" translatable="false">JioOnline - Privacy Policy</string>
+  <string name="let_s_create_your_boost_account">Let’s create your JioOnline account.</string>
+
+  <string name="referral_text_1">Hey, Check out JioOnline. I have been using to run my business online. http://bit.ly/ApporWeb?ref=</string>
+  <string name="referral_text_2">Hey, Check out JioOnline, I use it to run my business online. http://bit.ly/ApporWeb?ref=</string>
+  <string name="upgrade_boost_tnc_link">Read JioOnline TnC</string>
+  <string name="failed_local_storage_message">Failed to download all premium add-ons to your local storage. We recommend you to un-install &amp; re-install the JioOnline App.\n\nIf the issue persists, please do write to ria@nowflaots.com</string>
+  <string name="marketoffer_howtoOne">Open the JioOnline app/website/mobile-web, search for packs and choose your preferred <b>packs/addon</b>.<br /></string>
+  <string name="marketoffer_termTwo">This offer is valid only for your first ever transaction of the month on JioOnline.<br /></string>
+  <string name="on_boost360">on JioOnline</string>
+  <string-array name="about_tab_items">
+    <item>JioOnline Training &amp; Certification Program</item>
+    <item>FAQs</item>
+    <item>Like us on Facebook</item>
+    <item>Follow us on Twitter</item>
+    <item>Rate us on Play Store</item>
+    <item>Terms of use</item>
+    <item>Data privacy policy</item>
+  </string-array>
+
+  <string-array name="on_boarding_btnTexts">
+    <item>Learn How JioOnline Works</item>
+    <item>Take Your Site Health To Minimum 80%</item>
+    <item>Add An \"About Us\" Page</item>
+    <item>Add Products</item>
+    <item>What\'s Next</item>
+    <item>Broadcast Your Business On WhatsApp</item>
+  </string-array>
+
+  <string-array name="wildfire_parent_0">
+    <item>WildFire is the fastest way to get your potential customers to notice your brand, product or services. It is an inorganic JioOnline provided to the organic website, in form of targeted digital advertising that ensures customer calls and website visits.</item>
+  </string-array>
+
+  <string-array name="wildfire_parent_1">
+    <item>If you already have a JioOnline plan (organic SEO), you can simply activate WildFire for your category (prices vary because of difference in supply &amp; demand for keywords by category).</item>
+    <item>A mix of advertising tools, such as Google AdWords, Facebook Ads, etc. are used to automatically create the most optimised ads &amp; targeting for your website. Which ensure people searching for what’s being advertised end up calling your business number or on your website first.</item>
+    <item><![CDATA[<b>Note:</b> A minimum of three messages are required on your website for the WildFire plan to start.]]></item>
+  </string-array>
+
+  <string-array name="dictate_parent_2">
+    <item><![CDATA[<b>For which plans can the JioOnline Dictate be used?</b><br />JioOnline Dictate can be used for JioOnline Lite customers.]]></item>
+  </string-array>
+
+  <string-array name="delivery_points">
+    <item>If you have an existing website with an integrated payment gateway you can choose to integrate that with your product catalog. To accept payments via your JioOnline website, please add the relevant links to each one of your products via the Buy Online option in your JioOnline product catalog.</item>
+    <item>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the JioOnline Product catalogue.</item>
+  </string-array>
+
+  <string-array name="payment_method_messages">
+    <item name="message_assured_purchase">A service by JioOnline which ensures payment protection and seamless delivery of products.</item>
+    <item name="message_external_url">If you already listed your product on some order platform simply enter the URL here and handle to purchase from there.</item>
+    <item name="message_dont_want_to_sell">Select this if you just wish to list the product on the site and wants to only receive enquiries from your customers.</item>
+  </string-array>
+
+  <string name="payment_gateway_terms_point_one">JioOnline currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n</string>
+  <string name="payment_gateway_terms_point_two">Please note that JioOnline just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
+  <string name="payment_gateway_terms_point_three">JioOnline in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n</string>
+  <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by JioOnline). With this add-on activated on your JioOnline website your customers see that they are paying to your business and not to JioOnline.</string>
+
+  <string name="enter_the_domain_you_own_and_select_an_option_to_let_us_know_how_you_want_you_your_domain_to_be_mapped_to_this_boost_website">Enter the domain you own and select an option to let us know how you want you your domain to be mapped to this JioOnline website.</string>
+  <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my JioOnline website’s web address/URL.</string>
+  <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make JioOnline website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
+  <string name="visibility_create_account">gone</string>
+  <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to JioLocal Care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to JioLocal Care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
+
+  <string name="package_name_sign_up_visibility" translatable="false">com.jio.online</string>
+
+  <string name="ir_actionbarBackground">#EC008C</string>
+
+  <string name="AI_assistant_Ria">AI assistant Joa</string>
+
+  <string name="contact_us_number">18008899444</string>
+  <string name="contact_us_number_n">1800-889-9444</string>
+
+  <string name="settings_feedback_link">businesscare@jio.com</string>
+  <string name="riya_boost_360_app">businesscare@jio.com</string>
+
+  <string name="ria">Joa</string>
+  <string name="support_name">Joa</string>
+
+  <string name="ps_accept_tnc">By getting started, you agree to JioOnline <b><u>terms</u></b> and <b><u>conditions</u></b></string>
+  <string name="enter_your_number_hint">Please type your mobile number and get started with JioOnline.</string>
+  <string name="psn_no_account_heading">Bring your business\non JioOnline.</string>
+  <string name="psn_already_have_your_account">Already have your\nbusiness on JioOnline?</string>
+  <string name="psn_retrieve_account_hint">We will help you retrieve your JioOnline account using registered email ID or username</string>
+  <string name="psn_choose_method_to_retrieve_account">You can choose any of the below method to retrieve your business account on JioOnline</string>
+  <string name="psn_login_to_boost_360">Login to JioOnline</string>
+  <string name="website_available_text"> will also work as your username to login to JioOnline app and web.</string>
+  <string name="website_error_text"> username/subdomain not available. Try with something else.</string>
+  <string name="registration_complete_subheading"> business is successfully setup on JioOnline</string>
+
+  <string-array name="on_boarding_description">
+    <item>Hey, this is your JioOnline dashboard. Visit our <a href="https://www.jio.com/business/JioOnline-terms-and-conditions">FAQ</a> section for more information.</item>
+    <item>Site health indicates readiness of your account for online discovery. These basic factors ensure that your business is optimised to attract new customers online.</item>
+    <item>Now you are ready for getting discovered online. Your potential customers will lookout for more information. Take a look at these tips to add an "About Us".</item>
+    <item>Your potential customers are looking for your catalog online. Showcase it to them, to increase your revenues.</item>
+    <item>Manage your business on-the-go and get discovered online, real-time. Your digital success in your hands now.</item>
+    <item>Now your account experience is complete. Now, let us help you get 20 unique visitors to your new website. Why don\'t you broadcast your website on WhatsApp or share it with your existing customers?</item>
+  </string-array>
+
+  <string name="drop_us_contact" translatable="false"><![CDATA[You can drop us a line at <b><font color=#ffb900>businesscare@jio.com</font></b> or call us at <b><font color=#ffb900>1800-889-9444 </font></b> if you\'d like to enable this feature.]]></string>
+  <string name="drop_us_on_email_or_call">Please drop us a line at businesscare@jio.com or call us at 1800&#8211;889&#8211;9444 if you\'d like to enable this feature</string>
+  <string name="if_you_wish_to_change_email_address_please_contact_ria_nowfloats_com">If you wish to change email address, please contact businesscare@jio.com</string>
+  <string name="if_you_wish_to_change_business_category_please_contact_ria_nowfloats_com">If you wish to change business category, please contact businesscare@jio.com</string>
+  <string name="you_can_reach_customer_support_at_ria_">You can reach customer support at businesscare@jio.com or 1800-889-9444 for any queries.</string>
+  <string name="you_can_reach_customer_support_at_ria_1860">You can reach customer support at businesscare@jio.com or 1800-889-9444 for any queries.</string>
+  <string name="you_can_reach_customer_support_at_ria_nowfloats_com_or_1860_123_1233_for_any_queries" translatable="false">You can reach customer support at businesscare@jio.com or 1800-889-9444 for any queries.</string>
+  <string name="link_comments">I would like to map my existing domain to my JioOnline site %s.bizdigital.com\nplease reach out to me to discuss this in detail.</string>
+  <string name="please_reach_out_to_me">.bizdigital.com\nPlease reach out to me to discuss this in detail.</string>
+  <string name="please_reach_out_and_discuss_more_about_it">.bizdigital.com\nPlease reach out to me to discuss this in detail.</string>
+  <string name="verification_underway_details">This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to <u>businesscare@jio.com</u> with this screenshot attached..</string>
+
+  <string name="boost_360_tnc_presignup">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="settings_tou_url">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="settings_privacy_url">https://www.jio.com/business/JioOnline-privacy-policy</string>
+  <string name="setting_faq_url">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="boost_360_faqs">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="onboarding_about_product_url">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+
+  <string name="settings_facebook_like_link">https://www.facebook.com</string>
+  <string name="settings_about_us_link">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="product_training_link">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.jio.online</string>
+
+  <string name="ria_customer_mail">businesscare@jio.com</string>
+  <string name="ria_customer_number">18008899444</string>
+
+  <string name="tag_for_partners">.bizdigital.com</string>
+  <string name="website_domain_name">.bizdigital.com</string>
+  <string name="boost_360_tag_domain">bizdigital.com</string>
+  <string name="nowfloats.com">.bizdigital.com</string>
+  <string name="testmanage_nowfloats_com">businesscare@jio.com</string>
+  <string name="email_id_to_request_plans">businesscare@jio.com</string>
+  <string name="pranav_email">businesscare@jio.com</string>
+  <string name="wildfire_email">businesscare@jio.com</string>
+  <string name="signin_nowfloats_com">.bizdigital.com</string>
+
+  <string name="get_boost_360_tnc">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
+  <string name="need_help_desc">Please feel free to <a href="mailto: businesscare@jio.com">send an email at businesscare@jio.com</a>. Alternatively you can <a href="tel:18008899444">call us at 1800 889 9444</a>.</string>
+  <string name="business_category_is_to_be_selected_only_once_while_setting_up_your_business_account_on_boost_360_to_know_more_contact_support">Business category is to be selected only once while setting up your business account on JioOnline. To know more contact support.</string>
+
+</resources>

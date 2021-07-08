@@ -80,7 +80,6 @@ class ManageBusinessData(
     business_name_d("business_name_d", R.drawable.ic_business_info_n),
     restaurant_story_d("restaurant_story_d", R.drawable.restaurant_story),
     faculty_profiles_d("faculty_profiles_d", R.drawable.faculty_profiles),
-    business_description_d("business_descriptio_d", R.drawable.ic_business_info_n),
     client_logos_d("client_logos_d", R.drawable.client_logos),
     customer_order_d("customer_order_d", R.drawable.in_clinic_appointments),
     customer_booking_d("customer_booking_d", R.drawable.customer_booking_d),
@@ -91,7 +90,6 @@ class ManageBusinessData(
     table_reservations_d("table_reservations_d", R.drawable.table_reservations_d),
     ic_staff_profile_d("ic_staff_profile_d", R.drawable.ic_staff_profile_d);
 
-   //R.drawable.ic_project_terms_d
 
     companion object {
       fun fromName(name: String?): BusinessType? = values().firstOrNull { it.name == name }

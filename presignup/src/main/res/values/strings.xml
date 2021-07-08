@@ -73,5 +73,7 @@
     <string name="via_google" translatable="false">Via Google</string>
     <string name="via_mobile_otp" translatable="false">Via Mobile OTP</string>
     <string name="scan_qr_code" translatable="false">Scan QR code</string>
+    <string name="visibility_create_account" translatable="false">visible</string>
+    <string name="package_name_sign_up_visibility" translatable="false">xyz</string>
 
 </resources>

@@ -271,7 +271,7 @@
         android:paddingStart="@dimen/size_30"
         android:paddingEnd="@dimen/size_30"
         android:paddingBottom="@dimen/size_10"
-        android:text="All payment on your Boost website are processed through this payment gateway instead of default Boost Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway."
+        android:text="@string/all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway"
         android:textAlignment="gravity"
         android:textColor="@color/warm_grey"
         app:textType="BODY_1" />

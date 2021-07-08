@@ -60,10 +60,13 @@ fun DrScoreModel.getDrScoreData(drScoreUiList: ArrayList<DrScoreUiData>): ArrayL
   drs_segment?.forEach { segment ->
     val type = DrScoreSetupData.DrScoreType.fromId(segment.id)
     if (type != null) {
-      val drScoreItemList = ArrayList<DrScoreItem>()
+      var drScoreItemList = ArrayList<DrScoreItem>()
       segment.events.entries.forEach { event ->
         val drScoreUi = drScoreUiList.firstOrNull { it.id.equals(event.key, ignoreCase = true) }
         if (drScoreUi != null) drScoreItemList.add(DrScoreItem(drScoreUi, (event.value.state == 1)))
+      }
+      if(type.name == DrScoreSetupData.DrScoreType.BUSINESS_PROFILE.name){
+        drScoreItemList= ArrayList(drScoreItemList.sortedBy { DrScoreItem.DrScoreItemType.fromName(it.drScoreUiData?.id)?.priority?:0 })
       }
       list.add(DrScoreSetupData(type, segment.getScore(), drScoreItemList))
     }

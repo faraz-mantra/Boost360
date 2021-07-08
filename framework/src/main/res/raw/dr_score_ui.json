@@ -3,7 +3,7 @@
     {
       "id": "boolean_add_business_name",
       "title": "Add Business Name",
-      "desc": "  "
+      "desc": "This is how your customers identify you and is the first thing they see on your website."
     },
     {
       "id": "boolean_add_business_description",
@@ -13,18 +13,18 @@
     {
       "id": "boolean_add_clinic_logo",
       "title": "Add Business Logo",
-      "desc": "  "
+      "desc": "This will help customers easily identify your business online and is good for branding."
     },
     {
       "id": "boolean_add_featured_image_video",
       "title": "Add Featured Image",
       "desc": "An image that describes your business visually."
     },
-//    {
-//      "id": "boolean_select_what_you_sell",
-//      "title": "Select What You Sell",
-//      "desc": ""
-//    },
+    {
+      "id": "boolean_select_what_you_sell",
+      "title": "Select What You Sell",
+      "desc": "This helps you select the category that best matches the nature of your business"
+    },
     {
       "id": "boolean_add_business_hours",
       "title": "Add Business Hours",
@@ -48,7 +48,7 @@
     {
       "id": "boolean_social_channel_connected",
       "title": "Connect Social Media Channels",
-      "desc": "  "
+      "desc": "This will help you find new customers and increase your reach."
     },
     {
       "id": "number_services_added",
@@ -80,11 +80,11 @@
       "title": "Share Business Card with Customers",
       "desc": "Send your digital business card via Whatsapp or other social media."
     },
-//    {
-//      "id": "boolean_create_doctor_e_profile",
-//      "title": "Doctor E-Profile",
-//      "desc": ""
-//    },
+    {
+      "id": "boolean_create_doctor_e_profile",
+      "title": "Doctor E-Profile",
+      "desc": "i thought that might already be updated as i shared that yesterday with you"
+    },
     {
       "id": "boolean_create_sample_in_clinic_appointment",
       "title": "Create a Sample In-Clinic Appointment",
@@ -95,13 +95,13 @@
       "title": "Create a Sample Video consultation",
       "desc": "Now offer tele-medicine interactions to all your patients."
     },
-//    {
-//      "id": "boolean_manage_appointment_settings",
-//      "title": "Manage Appointment Settings",
-//      "desc": ""
-//    },
     {
-      "id": "boolean_respond_to_customer_enquiries",
+      "id": "boolean_manage_appointment_settings",
+      "title": "Manage Appointment Settings",
+      "desc": "Choose the time frame for which customers can schedule appointments."
+    },
+    {
+      "id": "boolean_respond_to_customesr_enquiries",
       "title": "Respond to Customer Enquiries",
       "desc": "Explore how to manage all your online enquiries."
     },
