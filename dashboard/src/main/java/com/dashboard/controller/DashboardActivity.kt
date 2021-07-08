@@ -6,6 +6,7 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -40,6 +41,7 @@ import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.pref.*
 import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
+import com.framework.utils.roundToFloat
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
@@ -195,9 +197,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   fun setPercentageData(score: Int) {
     val isHigh = (score >= 85)
     binding?.drawerView?.txtPercentage?.text = "$score% "
-    binding?.drawerView?.progressBar?.progress = score
-//    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-//    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+    val percentage = ((100 - score).toDouble() / 100).roundToFloat(2)
+    (binding?.drawerView?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
+    binding?.drawerView?.progressBar?.requestLayout()
   }
 
   private fun setUserData() {
