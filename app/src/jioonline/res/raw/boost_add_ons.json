@@ -193,7 +193,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
@@ -569,7 +569,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
@@ -864,7 +864,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Basic\nProfile"
             },
             {
               "businessType": "clinic_logo",
@@ -924,7 +924,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
@@ -1240,7 +1240,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Basic\nProfile"
             },
             {
               "businessType": "clinic_logo",
@@ -1300,7 +1300,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
@@ -1616,7 +1616,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Basic\nProfile"
             },
             {
               "businessType": "clinic_logo",
@@ -1676,7 +1676,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
@@ -2013,7 +2013,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Basic\nProfile"
             },
             {
               "businessType": "clinic_logo",
@@ -2073,7 +2073,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
@@ -2382,7 +2382,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Basic\nProfile"
             },
             {
               "businessType": "clinic_logo",
@@ -2442,7 +2442,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
@@ -2744,7 +2744,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Basic\nProfile"
             },
             {
               "businessType": "clinic_logo",
@@ -2804,7 +2804,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
@@ -3106,7 +3106,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Basic\nProfile"
             },
             {
               "businessType": "clinic_logo",
@@ -3166,7 +3166,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
@@ -3482,7 +3482,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Basic\nInformation"
+              "title": "Basic\nProfile"
             },
             {
               "businessType": "clinic_logo",
@@ -3542,7 +3542,7 @@
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business Profile"
+          "title": "Business Info"
         },
         {
           "isExpend": true,
