@@ -93,6 +93,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
+                            android:id="@+id/featureDetailsCartIcon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
@@ -247,6 +248,15 @@
                             android:scaleType="fitCenter"
                             android:textSize="@dimen/txt_14sp" />
 
+                        <ImageView
+                            android:id="@+id/image1222Copy"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_gravity="center"
+                            android:scaleType="fitCenter"
+                            android:textSize="@dimen/txt_14sp"
+                           />
+
 
                     </androidx.cardview.widget.CardView>
 
@@ -287,8 +297,8 @@
                             android:text="@string/facebook_lead_ads_upto_75_leads"
                             android:textColor="#2a2a2a"
                             android:textSize="@dimen/_14sdp"
-                            app:layout_constraintStart_toStartOf="@+id/title_top_1"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/title_top_1"
                             app:layout_constraintTop_toBottomOf="@+id/title_top_1" />
 
 

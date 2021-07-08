@@ -145,6 +145,7 @@
                     android:id="@+id/package_button_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/getnow_button"
                         android:layout_width="wrap_content"
@@ -163,6 +164,7 @@
                         android:textColor="@color/white"
                         android:textFontWeight="800"
                         android:textSize="@dimen/txt_10sp" />
+
                     <TextView
                         android:id="@+id/details_button"
                         android:layout_width="wrap_content"
