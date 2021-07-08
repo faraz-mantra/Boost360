@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.packages
 
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.lifecycle.ViewModelProviders
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -26,6 +28,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.cart.CartFragment
+import com.boost.upgrades.utils.CircleAnimationUtil
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
@@ -35,7 +38,16 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.package_fragment.*
 import kotlinx.android.synthetic.main.package_fragment_layout.*
+import kotlinx.android.synthetic.main.package_fragment_layout.badge121
+import kotlinx.android.synthetic.main.package_fragment_layout.offer_price
+import kotlinx.android.synthetic.main.package_fragment_layout.package_addons_recycler
+import kotlinx.android.synthetic.main.package_fragment_layout.package_back
+import kotlinx.android.synthetic.main.package_fragment_layout.package_cart_icon
+import kotlinx.android.synthetic.main.package_fragment_layout.package_profile_image
+import kotlinx.android.synthetic.main.package_fragment_layout.package_submit
+import kotlinx.android.synthetic.main.package_fragment_layout.package_title
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -97,6 +109,7 @@ class PackageFragmentNew : BaseFragment() {
 
         if(bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()){
             Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image)
+            Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image_copy_new)
         } else {
             package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
         }
@@ -119,21 +132,24 @@ class PackageFragmentNew : BaseFragment() {
                     //clear cartOrderInfo from SharedPref to requestAPI again
                     prefs.storeCartOrderInfo(null)
 
-                    viewModel.addItemToCart(CartModel(
-                            bundleData!!._kid,
-                            null,
-                            null,
-                            bundleData!!.name,
-                            "",
-                            bundleData!!.primary_image!!.url,
-                            offeredBundlePrice.toDouble(),
-                            originalBundlePrice.toDouble(),
-                            bundleData!!.overall_discount_percent,
-                            1,
-                            if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
-                            "bundles",
-                            null
-                    ))
+                    makeFlyAnimation(package_profile_image_copy_new)
+
+
+//                    viewModel.addItemToCart(CartModel(
+//                            bundleData!!._kid,
+//                            null,
+//                            null,
+//                            bundleData!!.name,
+//                            "",
+//                            bundleData!!.primary_image!!.url,
+//                            offeredBundlePrice.toDouble(),
+//                            originalBundlePrice.toDouble(),
+//                            bundleData!!.overall_discount_percent,
+//                            1,
+//                            if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
+//                            "bundles",
+//                            null
+//                    ))
                     val event_attributes: HashMap<String, Any> = HashMap()
                     bundleData!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
                     bundleData!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
@@ -338,5 +354,37 @@ class PackageFragmentNew : BaseFragment() {
         }
         package_addons_recycler.adapter = packageAdapter
     }
+
+    private fun makeFlyAnimation(targetView: ImageView) {
+
+        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView).setMoveDuration(600)
+            .setDestView(package_cart_icon).setAnimationListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    viewModel.addItemToCart(CartModel(
+                        bundleData!!._kid,
+                        null,
+                        null,
+                        bundleData!!.name,
+                        "",
+                        bundleData!!.primary_image!!.url,
+                        offeredBundlePrice.toDouble(),
+                        originalBundlePrice.toDouble(),
+                        bundleData!!.overall_discount_percent,
+                        1,
+                        if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
+                        "bundles",
+                        null
+                    ))
+
+                }
+
+
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            }).startAnimation()
+
+    }
+
 
 }
