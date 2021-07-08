@@ -297,7 +297,7 @@
   <string name="payment_link">Payment Link</string>
   <string name="summy_amount">INR 500</string>
   <string name="you_cannot_remove_all_items">You cannot remove all items.</string>
-  <string name="adding_appointment">Adding appointment</string>
+  <string name="adding_appointment">Adding Appointment</string>
   <string name="service_info">Service info</string>
   <string name="service_name">Service name*</string>
   <string name="select_service">Select service</string>
