@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.appservice.ui.catalog.widgets.ClickType
@@ -257,7 +258,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.highReadinessScoreView?.gone()
           binding?.lowReadinessScoreView?.visible()
           binding?.txtReadinessScore?.text = "${drScoreData!!.getDrsTotal()}"
-          binding?.progressScore?.progress = drScoreData.getDrsTotal()
+//          binding?.progressScore?.progress = drScoreData.getDrsTotal()
+          val percentage = ((100 - drScoreData.getDrsTotal()).toDouble() / 100).roundToFloat(2)
+          (binding?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
+          binding?.progressBar?.requestLayout()
           drScoreSetupList?.map { it1 ->
             it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout()
           }
