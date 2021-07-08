@@ -131,7 +131,7 @@
   <string name="add_a_customer_or_select_from_your_contact_book">Add a customer or select from your contact book.</string>
   <string name="customer_name">Customer name*</string>
   <string name="customer_phone_number">Customer Phone number*</string>
-  <string name="add_a_customer">Add a customer</string>
+  <string name="add_a_customer">Add a Customer</string>
   <string name="customer_email_id_optional">Customer Email ID (optional)</string>
   <string name="enter_customer_s_email_id">Enter customer’s Email ID</string>
   <string name="address">Address*</string>
@@ -153,12 +153,12 @@
   <string name="next">Next</string>
   <string name="shipping_address">Shipping Address</string>
   <string name="type_the_product_name">Type the product name</string>
-  <string name="add_product">Add products></string>
+  <string name="add_product">Add Products></string>
   <string name="item_total">Item Total</string>
   <string name="proceed">Proceed</string>
   <string name="review_billing_details">Review billing details</string>
-  <string name="review_confirm">Review &amp; confirm</string>
-  <string name="invoice_preview">Invoice preview</string>
+  <string name="review_confirm">Review &amp; Confirm</string>
+  <string name="invoice_preview">Invoice Preview</string>
   <string name="please_edit_review_the_order_details_and_confirm">Please edit/review the order details and confirm</string>
   <string name="billing_to">Billing to</string>
   <string name="items_included">Items included</string>
@@ -317,7 +317,7 @@
   <string name="gst_inclusive">GST inclusive</string>
   <string name="dummy_address_long">24 Subhas chandra avenue, Kolkata, West Bengal-712484GSTIN : DBS987654321010</string>
   <string name="appointment_confirmation_description">An Email and SMS with the appointment details will be sent to customer notifying them about the confirmation along with a secure payment link.</string>
-  <string name="string_review_and_confirm">Review and confirm</string>
+  <string name="string_review_and_confirm">Review and Confirm</string>
   <string name="select_appointment_date_and_time">Add appointment date and time</string>
   <string name="select_date_and_time">Select date and time</string>
   <string name="select_staff">Select Staff</string>
@@ -340,7 +340,7 @@
   <string name="view_appointment_dashboard">View appointment dashboard</string>
   <string name="appointment_created_successfully">Appointment created successfully</string>
   <string name="awaiting_confirmation_since">Awaiting confirmation since</string>
-  <string name="appointment_details">Appointment details</string>
+  <string name="appointment_details">Appointment Details</string>
   <string name="call_customer">CALL CUSTOMER</string>
   <string name="contact_number_not_available">Customer contact number not available</string>
   <string name="customer_email_not_available">Customer email not available</string>
