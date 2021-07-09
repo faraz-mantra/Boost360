@@ -15,7 +15,7 @@
       android:id="@+id/linearLayoutCompat4"
       android:layout_width="match_parent"
       android:layout_height="@dimen/size_56"
-      android:background="@color/gray_4e4e4e"
+      android:background="@color/black_4a4a4a"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
@@ -321,9 +321,9 @@
               android:id="@+id/txt_open_close"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginEnd="@dimen/size_10"
               android:maxLines="2"
               android:text="@string/open_now"
+              android:layout_marginEnd="@dimen/size_2"
               android:textColor="@color/white_green_light"
               android:textFontWeight="400"
               app:textAllCaps="true"
@@ -334,7 +334,7 @@
               android:id="@+id/ellipse_open_close"
               android:layout_width="@dimen/size_25"
               android:layout_height="@dimen/size_25"
-              android:layout_marginEnd="@dimen/size_14"
+              android:layout_marginEnd="@dimen/size_2"
               app:lottie_autoPlay="true"
               app:lottie_loop="true"
               app:lottie_rawRes="@raw/green_dot_json" />
