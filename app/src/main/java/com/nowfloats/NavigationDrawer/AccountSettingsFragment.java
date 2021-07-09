@@ -218,8 +218,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.exit_dialog, true)
                 .positiveText(getString(R.string.setting_logout))
                 .negativeText(getString(R.string.cancel))
-                .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.light_gray)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
