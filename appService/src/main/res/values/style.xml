@@ -149,7 +149,7 @@
     <item name="android:drawablePadding">@dimen/size_8</item>
   </style>
 
-  <style name="MaterialAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+  <style name="MaterialAlertDialogTheme" parent="MaterialCustomDialogTheme">
     <item name="android:colorPrimary">@color/white</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="colorControlNormal">@color/colorAccent</item>
