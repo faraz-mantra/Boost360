@@ -5,8 +5,8 @@
             <stroke android:width="0dp" android:color="#33000000" />
 
             <gradient
-                android:startColor="@color/colorPrimary"
-                android:endColor="@color/colorPrimary"
+                android:startColor="@color/ButtoncolorAccent"
+                android:endColor="@color/ButtoncolorAccent"
                 android:angle="90"/>
 
             <corners
