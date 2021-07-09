@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
+  android:padding="@dimen/size_10"
   android:shape="rectangle">
-
-  <corners android:radius="@dimen/_10sdp" />
-
+  <!-- you can use any color you want I used here gray color-->
   <solid android:color="@color/ButtoncolorAccent" />
-
-  <padding
-    android:bottom="-4dp"
-    android:left="12dp"
-    android:right="12dp"
-    android:top="-4dp" />
-
+  <corners android:radius="@dimen/size_10" />
 </shape>
