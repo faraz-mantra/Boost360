@@ -1266,16 +1266,16 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="select_action_dialog_title">Upload Featured Image</string>
   <string name="text_replace_image">Replace Image</string>
   <string name="text_delete_image">Delete Image</string>
-  <string name="product_detail_product_name">Product Name</string>
-  <string name="product_detail_product_descr">Product Description</string>
+  <string name="product_detail_product_name">Product name</string>
+  <string name="product_detail_product_descr">Product description</string>
   <string name="product_detail_currency">Select Currency</string>
-  <string name="product_detail_product_price">Product Price (Including all Taxes)</string>
-  <string name="product_details_discount">Discount Amount (If Any)</string>
-  <string name="product_detail_online_link">Buy Online Link (If Any)</string>
-  <string name="product_detail_priority">Select Priority</string>
-  <string name="product_details_shipment_dur">Shipment Duration In Days</string>
-  <string name="product_detail_availability">Product Availability</string>
-  <string name="product_detail_free_shipping">Free Shipping</string>
+  <string name="product_detail_product_price">Product price (Including all Taxes)</string>
+  <string name="product_details_discount">Discount amount (If Any)</string>
+  <string name="product_detail_online_link">Buy online link (If Any)</string>
+  <string name="product_detail_priority">Select priority</string>
+  <string name="product_details_shipment_dur">Shipment duration dn days</string>
+  <string name="product_detail_availability">Product availability</string>
+  <string name="product_detail_free_shipping">Free shipping</string>
   <string name="product_detail_delete_btn_text">Delete product</string>
   <string name="book_a_new_domain" translatable="false">Book a new domain</string>
   <string name="book_a_new_domain_included" translatable="false">Book new domain <i>(included in your package)</i></string>
@@ -2026,7 +2026,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="or">--or--</string>
   <string name="upload_file">UPLOAD FILE</string>
   <string name="brochure_pdf">Brochure.pdf</string>
-  <string name="product_category">Product Category</string>
+  <string name="product_category">Product category</string>
   <string name="services">Services</string>
   <string name="change">CHANGE</string>
   <string name="hello">hello</string>
@@ -2284,13 +2284,13 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="xxxx">XXXX</string>
   <string name="_1" translatable="false">1</string>
   <string name="delivery_package_dimensions">Delivery package dimensions</string>
-  <string name="package_weight">Package Weight</string>
+  <string name="package_weight">Package weight</string>
   <string name="gm">gm</string>
-  <string name="package_length">Package Length</string>
+  <string name="package_length">Package length</string>
   <string name="inch">inch</string>
-  <string name="package_height">Package Height</string>
+  <string name="package_height">Package height</string>
   <string name="xxx">XXX</string>
-  <string name="package_thickness">Package Thickness</string>
+  <string name="package_thickness">Package thickness</string>
   <string name="key_property">Key Property</string>
   <string name="other_specification">Other Specification</string>
   <string name="add_property">Add Property</string>
@@ -2337,8 +2337,8 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="_31_08_2017" translatable="false">31/08/2017</string>
   <string name="add_address">ADD ADDRESS</string>
   <string name="add_multiple_images">Add Multiple Images</string>
-  <string name="available_units">Available Units</string>
-  <string name="product_name">Product Name:</string>
+  <string name="available_units">Available units</string>
+  <string name="product_name">Product name:</string>
   <string name="one_piece_anime_full">One piece Anime full</string>
   <string name="unit_price">Unit Price:</string>
   <string name="discount_">Discount:</string>
@@ -3026,7 +3026,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="write_the_item_type_eg_book_smartphone_etc">Write the item type eg. Book, Smartphone etc.</string>
   <string name="variant_information">Variant Information</string>
   <string name="having_variants_of_this_product">Having variants of this product?</string>
-  <string name="product_description">Product Description</string>
+  <string name="product_description">Product description</string>
   <string name="describe_your_product_within_2000_characters_max">Describe your product within 2000 characters max ...</string>
   <string name="filter_tags">Filter Tags</string>
   <string name="type_a_filter_tag">Type a filter tag</string>
