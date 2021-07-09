@@ -157,25 +157,25 @@ class CircleAnimationUtil {
                         x,
                         x + dest[0] - (src[0] + (originX * scaleFactor - 2 * endRadius * scaleFactor) / 2) + (0.5f * destX - scaleFactor * endRadius)
                     )
-                    translatorX.interpolator =
-                        TimeInterpolator { input -> //                        return (float) (Math.sin((0.5f * input) * Math.PI));
-                            //-(1-x)^2+1
-                            (-Math.pow((input - 1).toDouble(), 2.0) + 1f).toFloat()
-                        }
-//                    translatorX.interpolator = LinearInterpolator()
+//                    translatorX.interpolator =
+//                        TimeInterpolator { input -> //                        return (float) (Math.sin((0.5f * input) * Math.PI));
+//                            //-(1-x)^2+1
+//                            (-Math.pow((input - 1).toDouble(), 2.0) + 1f).toFloat()
+//                        }
+                    translatorX.interpolator = LinearInterpolator()
                     val translatorY: Animator = ObjectAnimator.ofFloat(
                         mImageView,
                         View.Y,
                         y,
                         y + dest[1] - (src[1] + (originY * scaleFactor - 2 * endRadius * scaleFactor) / 2) + (0.5f * destY - scaleFactor * endRadius)
                     )
-                    translatorY.interpolator = LinearInterpolator()
-//                    translatorY.interpolator = TimeInterpolator { input ->
-//                        (-Math.pow(
-//                            (input - 1).toDouble(),
-//                            2.0
-//                        ) + 1f).toFloat()
-//                    }
+//                    translatorY.interpolator = LinearInterpolator()
+                    translatorY.interpolator = TimeInterpolator { input ->
+                        (-Math.pow(
+                            (input - 1).toDouble(),
+                            2.0
+                        ) + 1f).toFloat()
+                    }
                     val animSetXY = AnimatorSet()
                     val y1 = ObjectAnimator.ofFloat(
                         mImageView,
@@ -191,7 +191,7 @@ class CircleAnimationUtil {
                     )
                     val sy = ObjectAnimator.ofFloat(mImageView, "scaleY", 1f, 0.1f)
                     val sx = ObjectAnimator.ofFloat(mImageView, "scaleX", 1f, 0.1f)
-                    animSetXY.playTogether(x1, y1, sx, sy)
+                    animSetXY.playTogether(x1, y1, sx, sy,translatorX,translatorY)
                     animSetXY.duration = mMoveDuration.toLong()
 
                     val animatorMoveSet = AnimatorSet()

@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.compare
 
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
@@ -13,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,10 +33,7 @@ import com.boost.upgrades.interfaces.CompareListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
-import com.boost.upgrades.utils.Constants
-import com.boost.upgrades.utils.HorizontalMarginItemDecoration
-import com.boost.upgrades.utils.SharedPrefs
-import com.boost.upgrades.utils.WebEngageController
+import com.boost.upgrades.utils.*
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -47,6 +46,7 @@ import kotlinx.android.synthetic.main.compare_package_fragment.package_back
 import kotlinx.android.synthetic.main.compare_package_fragment.package_cart_icon
 import kotlinx.android.synthetic.main.compare_package_fragment.package_indicator2
 import kotlinx.android.synthetic.main.compare_package_fragment.package_viewpager
+import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONObject
 
 
@@ -118,7 +118,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
         )
         package_viewpager.addItemDecoration(itemDecoration)
         shimmer_view_compare.startShimmer()
-        if(arguments!!.containsKey("showCartIcon")){
+        if(requireArguments().containsKey("showCartIcon")){
             package_cart_icon.visibility = View.INVISIBLE
         }
 
@@ -160,7 +160,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
     }
 
     private fun loadData() {
-        val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
         var code: String = (activity as UpgradeActivity).experienceCode!!
         if (!code.equals("null", true)) {
@@ -472,7 +472,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
 
     }
 
-    override fun onPackageClicked(item: Bundles?) {
+    override fun onPackageClicked(item: Bundles?,imageView: ImageView) {
         if (!packageInCartStatus) {
             if (item != null) {
 
@@ -480,6 +480,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
                 for(i in item.included_features){
                     itemIds.add(i.feature_code)
                 }
+                makeFlyAnimation(imageView)
 
                 CompositeDisposable().add(
                         AppDatabase.getInstance(requireActivity().application)!!
@@ -537,7 +538,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
                                             badgeNumber = badgeNumber + 1
                                             Log.v("badgeNumber321", " "+ badgeNumber)
                                             Constants.CART_VALUE = badgeNumber
-                                            viewModel.getCartItems()
+//                                            viewModel.getCartItems()
                                         },
                                         {
                                             it.printStackTrace()
@@ -566,5 +567,21 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
      }
     }
 
+    private fun makeFlyAnimation(targetView: ImageView) {
+
+        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView).setMoveDuration(600)
+            .setDestView(package_cart_icon).setAnimationListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    viewModel.getCartItems()
+
+
+                }
+
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            }).startAnimation()
+
+    }
 
 }
