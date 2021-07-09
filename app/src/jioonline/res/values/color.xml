@@ -38,5 +38,8 @@
     <color name="bg_dark_grey">@color/colorPrimary</color>
     <color name="error_red">@color/ButtoncolorAccent</color>
     <color name="black_light_progress">#e371b7</color>
+    <color name="colorAccentPositive">@color/ButtoncolorAccent</color>
+    <color name="colorAccentNegative">@color/greyish_brown</color>
+    <color name="accent_lemon">#1A03007F</color>
 
 </resources>

@@ -277,6 +277,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     searchAutoComplete?.setTextColor(getColor(R.color.white))
     searchView?.queryHint = getString(R.string.search_staff)
     searchView?.setOnQueryTextListener(this)
+    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)){
+      menu.findItem(R.id.menu_help).isVisible = false
+    }
+
   }
 
   override fun onPrepareOptionsMenu(menu: Menu) {
