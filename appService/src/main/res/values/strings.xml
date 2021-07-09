@@ -266,10 +266,10 @@
   <!--  end of staff modules strings-->
   <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
   <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
-  <string name="product_category">Product Category*</string>
+  <string name="product_category">Product category*</string>
   <string name="select_or_create_a_service_category">Select or create a service category</string>
   <string name="write_the_name_of_your_product">Write the name of your product</string>
-  <string name="product_name">Product Name*</string>
+  <string name="product_name">Product name*</string>
   <string name="this_information_is_required_if_you_select">This information is required if you select delivery service.</string>
   <string name="product_specifications">Product specifications</string>
   <string name="in_case_this_product_is_associated_with_certified_by_any_brand">In case this product is associated with/certified by any brand.</string>
@@ -525,7 +525,7 @@
   <string name="done">Done</string>
   <string name="done_caps">DONE</string>
   <string name="create_a_product_category">Create a product category</string>
-  <string name="product_description">Product Description*</string>
+  <string name="product_description">Product description*</string>
   <string name="describe_this_product_in_around_2000_characters_at_max">Describe this product in around 2000 characters at max...</string>
   <string name="pricing_info">Pricing info</string>
   <string name="want_to_sell_this_product_online">Want to sell this product online?</string>
