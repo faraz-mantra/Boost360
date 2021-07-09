@@ -124,7 +124,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         deletePage.setVisibility(View.GONE);
         final TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
-        title.setText("New page");
+        title.setText("New Page");
         save.setImageResource(R.drawable.checkmark_icon);
         session = new UserSessionManager(getApplicationContext(), activity);
 
