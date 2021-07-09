@@ -754,7 +754,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                 netAmount += item.price
                 val widget = Widget(data?.category
                         ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-                        item.discount, Expiry("DAYS", 30), listOf(), true, true, item.item_name
+                        item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
                         ?: "",
                         item.price, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key
                         ?: "", item.item_id)
@@ -826,8 +826,8 @@ Log.v("package_validity_months", " "+ package_validity_months)
                             item.description_title,
                             item.discount,
                             Expiry(
-                                    "DAYS",
-                                    validity_days
+                                    "MONTHS",
+                                    default_validity_months
                             ),
                             listOf(),
                             true,
@@ -886,8 +886,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                                                     singleFeature.description_title,
                                                     singleIndludedFeature.feature_price_discount_percent,
                                                     Expiry(
-                                                            "DAYS",
-                                                            30 * singleBundle.min_purchase_months
+                                                            "MONTHS",default_validity_months
                                                     ),
                                                     listOf(),
                                                     true,
@@ -1007,7 +1006,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                 netAmount += item.price
                 val widget = Widget(data?.category
                         ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-                        item.discount, Expiry("DAYS", 30), listOf(), true, true, item.item_name
+                        item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
                         ?: "",
                         item.price, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key
                         ?: "", item.item_id)
@@ -1080,8 +1079,8 @@ Log.v("package_validity_months", " "+ package_validity_months)
                             item.description_title,
                             item.discount,
                             Expiry(
-                                    "DAYS",
-                                    validity_days
+                                    "MONTHS",
+                                    default_validity_months
                             ),
                             listOf(),
                             true,
@@ -1140,8 +1139,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                                                     singleFeature.description_title,
                                                     singleIndludedFeature.feature_price_discount_percent,
                                                     Expiry(
-                                                            "DAYS",
-                                                            30 * singleBundle.min_purchase_months
+                                                            "MONTHS",default_validity_months
                                                     ),
                                                     listOf(),
                                                     true,
