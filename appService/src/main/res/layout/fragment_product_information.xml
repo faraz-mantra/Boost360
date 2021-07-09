@@ -497,7 +497,7 @@
               android:layout_height="wrap_content"
               android:drawablePadding="@dimen/size_4"
               android:includeFontPadding="false"
-              android:text="Product Packing dimensions"
+              android:text="Product packing dimensions"
               android:textColor="@color/black_4a4a4a"
               android:visibility="visible"
               app:fontFamily="@font/semi_bold"
